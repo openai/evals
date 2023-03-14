@@ -1,0 +1,9 @@
+arithmetic-function:
+  id: arithmetic-function.dev.v0
+  metrics: [accuracy]
+arithmetic-function.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: arithmetic-function/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec_file: fact
