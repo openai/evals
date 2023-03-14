@@ -29,8 +29,10 @@ class ListMatch(evals.Eval):
         tools_predicted = set((item.removeprefix("- ") for item in sampled.splitlines()))
         tools_ground_truth = set(sample["ideal"])
 
+        # TODO: Remove this debugging print before changing PR to ready for review
         question = sample["input"][-1]["content"]
         print(f"{question}:\n{tools_predicted} vs {tools_ground_truth}")
+
         num_same = len(tools_predicted.intersection(tools_ground_truth))
 
         if num_same == 0:
