@@ -1,0 +1,9 @@
+reverse-string:
+  id: reverse-string.s1.simple-v0
+  description: Test the model's ability to gauge whether a string is a palindrome.
+  disclaimer: The evaluation may be affected due to the palindrome being in raw text.
+  metrics: [accuracy]
+reverse-string.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: check_palindrome/check_palindrome.jsonl
