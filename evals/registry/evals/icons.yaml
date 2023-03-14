@@ -8,3 +8,15 @@ icons.dev.v0:
     samples_jsonl: icons/samples.jsonl
     eval_type: cot_classify
     modelgraded_spec_file: icons
+
+icons-meta:
+  id: icons.dev.v0
+  metrics: [accuracy]
+
+icons-meta.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: icons/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec_file: icons
+    metaeval: true
