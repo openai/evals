@@ -1,0 +1,7 @@
+chess-match:
+  id: chess.match.dev.v0
+  metrics: [accuracy]
+chess.match.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: chess/match.jsonl
