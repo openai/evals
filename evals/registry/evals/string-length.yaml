@@ -1,0 +1,8 @@
+string-length:
+  id: string-length.v0
+  description: Test the model's ability to reverse complex and simple strings.
+  metrics: [accuracy]
+string-length.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: string_length/string_length.jsonl
