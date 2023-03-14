@@ -2,6 +2,12 @@
 
 🚨 Please make sure your PR follows these guidelines, __failure to follow the guidelines below will result in the PR being closed automatically__. Note that even if the criteria are met, that does not guarantee the PR will be merged nor GPT-4 access granted. 🚨
 
+__PLEASE READ THIS__:
+
+In order for a PR to be merged, it must fail on GPT-4. We are aware that right now, users do not have access, so you will not be able to tell if the eval fails or not. Please run your eval with GPT-3.5-Turbo, but keep in mind as we run the eval, if GPT-4 gets higher than 90% on the eval, we will likely reject since GPT-4 is already capable of completing the task.
+
+We plan to roll out a way for users submitting evals to see the eval performance on GPT-4 soon. Stay tuned! Until then, you will not be able to see the eval performance on GPT-4.
+
 ## Eval details 📑
 ### Eval name
 [Insert Eval name here]
@@ -66,3 +72,16 @@ We know that you might be excited to contribute to OpenAI's mission, help improv
 - [ ] (Ignore if not submitting code) I have run `pip install pre-commit; pre-commit install` and have verified that `black`, `isort`, and `autoflake` are running when I commit and push
 
 Failure to fill out all required fields will result in the PR being closed.
+
+### Eval JSON data 
+
+Since we are using Git LFS, we are asking eval submitters to add in their first 100 JSONL eval lines.
+
+<details>
+  <summary>View evals in JSON</summary>
+
+  ### Eval
+  ```jsonl
+  INSERT_EVAL_HERE
+  ```
+</details>
