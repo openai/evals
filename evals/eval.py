@@ -12,7 +12,7 @@ from typing import Any, Awaitable, Callable, Dict, List, Tuple
 from tqdm import tqdm
 
 from .base import ModelSpec, ModelSpecs
-from .record import Recorder, RecorderBase
+from .record import RecorderBase
 
 logger = logging.getLogger(__name__)
 
