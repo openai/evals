@@ -10,7 +10,13 @@ Here are some example JSONLs for reference and how they are used in evals. See o
 {"input": [{"role": "system", "content": "Complete the phrase as concisely as possible."}, {"role": "user", "content": "The first US president was "}], "ideal": "George Washington"}
 {"input": [{"role": "system", "content": "Complete the phrase as concisely as possible."}, {"role": "user", "content": "OpenAI was founded in 20"}], "ideal": "15"}
 ```
-
+Another example of a Match eval is:
+```json
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Spell this sentence backwards, character by character: We’ve trained a model called ChatGPT which interacts in a conversational way. The dialogue format makes it possible for ChatGPT to answer follow-up questions, admit its mistakes, challenge incorrect premises, and reject inappropriate requests."}], "ideal": ".stseuqer etairporppani tcejer dna ,sesimerp tcerrocni egnellahc ,sekatsim sti timda ,snoitseuq puwollof rewsna ot TPGtahC rof elbissop ti sekam tamrof eugolaid ehT .yaw lanoitasrevnoc a ni stcaretni hcihw TPGtahC dellac ledom a deniart ev’eW"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Spell this sentence backwards, character by character: Latencies will vary over time so we recommend benchmarking prior to making deployment decisions"}], "ideal": "snoisiced tnemyolped gnikam ot roirp gnikramhcneb dnemmocer ew os emit revo yrav lliw seicnetaL"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Spell this sentence backwards, character by character: Our mission is to ensure that artificial general intelligence—AI systems that are generally smarter than humans—benefits all of humanity."}], "ideal": ".ytinamuh fo lla stifeneb—snamuh naht retrams yllareneg era taht smetsys IA—ecnegilletni lareneg laicifitra taht erusne ot si noissim ruO"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Spell this sentence backwards, character by character: There are several things we think are important to do now to prepare for AGI."}], "ideal": ".IGA rof eraperp ot won od ot tnatropmi era kniht ew sgniht lareves era erehT"}
+```
 
 `test_fuzzy_match/samples.jsonl` In the associated eval from [`test-basic.yaml`](../evals/test-basic.yaml), we see this data is used in a `FuzzyMatch` class, which means we will check if a completion includes a normalized version of the "ideal" key or vice-versa.
 ```json
