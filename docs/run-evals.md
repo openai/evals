@@ -9,9 +9,9 @@ When using the `oaieval` command, you will need to provide both the model you wi
 oaieval gpt-3.5-turbo test-match
 ```
 
-In this example, `gpt-3.5-turbo` is the model to evaluate, and `test-match` is the eval to run. The valid model names are those which you have access to via the API. The valid eval names are specified in the YAML files under `evals/registry/evals`, and their corresponding implementations can be found in `evals/elsuite`.
+In this example, `gpt-3.5-turbo` is the model to evaluate, and `test-match` is the eval to run. The valid model names are those which you have access via the API. The valid eval names are specified in the YAML files under `evals/registry/evals`, and their corresponding implementations can be found in `evals/elsuite`.
 
-These CLIs can accept various flags to modify their default behavior. For example:
+These CLIs can accept various flags to modify their default behaviour. For example:
 - If you wish to log to a Snowflake database (which you have already set up as described in the [README](../README.md)), add `--no-local-run`.
 - By default, logging locally or to Snowflake will write to `tmp/evallogs`, and you can change this by setting a different `--record_path`.
 
@@ -25,7 +25,7 @@ oaievalset gpt-3.5-turbo test
 
 Similarly, `oaievalset` also expects a model name and an eval set name, for which the valid options are specified in the YAML files under `evals/registry/eval_sets`.
 
-By default we run with 10 threads. You can configure this, e.g.,
+By default, we run with 10 threads. You can configure this, e.g.,
 
 ```sh
 EVALS_THREADS=42 oaievalset gpt-3.5-turbo test
@@ -33,4 +33,4 @@ EVALS_THREADS=42 oaievalset gpt-3.5-turbo test
 
 If you have to stop your run or your run crashes, we've got you covered! `oaievalset` records the evals that finished in `/tmp/oaievalset/{model}.{eval_set}.progress.txt`. You can simply rerun the command to pick up where you left off. If you want to run the eval set starting from the beginning, delete this progress file.
 
-Unfortunately, you can't resume a single eval from the middle. You'll have to restart from the beginning, so try to keep your individual evals quick to run.
+Unfortunately, you can't resume a single eval from the middle. You'll have to restart from the beginning, so try to keep your evals quick to run.
