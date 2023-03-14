@@ -29,10 +29,6 @@ class ListMatch(evals.Eval):
         tools_predicted = set((item.removeprefix("- ") for item in sampled.splitlines()))
         tools_ground_truth = set(sample["ideal"])
 
-        # TODO: Remove this debugging print before changing PR to ready for review
-        question = sample["input"][-1]["content"]
-        print(f"{question}:\n{tools_predicted} vs {tools_ground_truth}")
-
         num_same = len(tools_predicted.intersection(tools_ground_truth))
 
         if num_same == 0:
@@ -43,6 +39,12 @@ class ListMatch(evals.Eval):
             precision = 1.0 * num_same / len(tools_predicted)
             recall = 1.0 * num_same / len(tools_ground_truth)
             f1 = (2 * precision * recall) / (precision + recall)
+
+        # TODO: Remove this debugging print before changing PR to ready for review
+        question = sample["input"][-1]["content"]
+        print(
+            f"\n{question}:\nPredicted: {tools_predicted}\nGround Truth: {tools_ground_truth}\nRecall: {recall}\n"
+        )
 
         evals.record.record_metrics(
             accuracy=float(tools_predicted == tools_ground_truth),
