@@ -1,0 +1,8 @@
+next-letter:
+  id: next-letter.s1.simple-v0
+  description: Test the model's ability to repeat a given text using the next letter in the alphabet.
+  metrics: [accuracy]
+next-letter.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: next_letter/next_letter.jsonl
