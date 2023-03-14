@@ -1,0 +1,8 @@
+sort-alphabetically:
+  id: sort-alphabetically.s1.simple-v0
+  description: Test the model's ability to sort long and short strings alphabetically.
+  metrics: [accuracy]
+sort-alphabetically.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: sort_alphabetically/samples.jsonl
