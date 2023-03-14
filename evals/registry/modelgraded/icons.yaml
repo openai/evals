@@ -1,0 +1,15 @@
+prompt: |-
+  Do the following icons represent the same concept?
+
+  Icon 1: {ideal}
+  Icon 2: {completion}
+choice_scores:
+  "Yes": 1.0
+  "No": 0.0
+  "Unsure": 0.5
+choice_strings:
+  - "Yes"
+  - "No"
+  - "Unsure"
+input_outputs:
+  input: completion

@@ -1,0 +1,10 @@
+icons:
+  id: icons.dev.v0
+  metrics: [accuracy]
+
+icons.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: icons/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec_file: icons
