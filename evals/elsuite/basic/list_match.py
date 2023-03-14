@@ -29,10 +29,14 @@ class ListMatch(evals.Eval):
         tools_predicted = set((item.removeprefix("- ") for item in sampled.splitlines()))
         tools_ground_truth = set(sample["ideal"])
 
+        question = sample["input"][-1]["content"]
+        print(f"{question}:\n{tools_predicted} vs {tools_ground_truth}")
         num_same = len(tools_predicted.intersection(tools_ground_truth))
 
         if num_same == 0:
             f1 = 0
+            recall = 0
+            precision = 0
         else:
             precision = 1.0 * num_same / len(tools_predicted)
             recall = 1.0 * num_same / len(tools_ground_truth)
@@ -41,6 +45,8 @@ class ListMatch(evals.Eval):
         evals.record.record_metrics(
             accuracy=float(tools_predicted == tools_ground_truth),
             f1_score=f1,
+            recall=recall,
+            precision=precision,
         )
 
     def run(self, recorder: RecorderBase):
@@ -48,6 +54,8 @@ class ListMatch(evals.Eval):
         self.eval_all_samples(recorder, samples)
 
         return {
+            "precision": np.mean(recorder.get_scores("precision")),
+            "recall": np.mean(recorder.get_scores("recall")),
             "accuracy": np.mean(recorder.get_scores("accuracy")),
             "f1_score": np.mean(recorder.get_scores("f1_score")),
         }
