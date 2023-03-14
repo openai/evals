@@ -1,0 +1,9 @@
+python-docstring:
+  id: python-docstring.dev.v0
+  description: Test the model's ability to write docstrings for Python functions.
+  disclaimer: The eval could struggle from the subjective nature of natural language, allowing for multiple correct answers.
+  metrics: [accuracy, sacrebleu_score]
+python-docstring.dev.v0:
+  class: evals.elsuite.translate:Translate
+  args:
+    samples_jsonl: python_docstring/python_docstring.jsonl
