@@ -1,0 +1,9 @@
+capital-cities:
+  id: capital-cities.s1.identify-v0
+  description: Test the model's ability to correctly identify the capital cities of countries.
+  disclaimer: The evaluation set is based on general knowledge of capital cities, may not cover all countries.
+  metrics: [accuracy]
+capital-cities.s1.identify-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+  samples_jsonl: capital_cities/capital_cities.json
