@@ -1,0 +1,8 @@
+indices:
+  id: indices.dev.v0
+  metrics: [accuracy]
+
+indices.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: indices/samples.jsonl
