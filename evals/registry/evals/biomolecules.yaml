@@ -1,0 +1,8 @@
+biomolecules:
+  id: biomolecules.s1.simple-v0
+  description: Test the model's ability to manipulate DNA/RNA/AA (reverse complement, transcription, translation).
+  metrics: [accuracy]
+biomolecules.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: biomolecules/biomolecules.jsonl
