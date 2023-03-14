@@ -1,3 +1,5 @@
+![image](https://user-images.githubusercontent.com/110826954/225098491-c9dc9620-1b9a-458f-84d3-f5baba960bb9.png)
+-------------------------------------
 # Evals
 
 Evals is a framework for evaluating OpenAI models and an open-source registry of benchmarks.
