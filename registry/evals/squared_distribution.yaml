@@ -1,0 +1,8 @@
+squared_distributions:
+  id: squared_distributions.dev.v0
+  metrics: [accuracy]
+
+squared_distributions.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: squared_distributions/samples.jsonl
