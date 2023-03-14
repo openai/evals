@@ -1,0 +1,9 @@
+code-review:
+  id: code-review.s1.simple-v0
+  description: Test the model's ability to assess a code change and make a review decision.
+  disclaimer: Dataset based on changes to an open source typescript CLI program. Overtime, we should expand with examples from many different types of programs.
+  metrics: [accuracy]
+code-review.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: code_review/code_review.jsonl
