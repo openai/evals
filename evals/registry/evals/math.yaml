@@ -1,0 +1,8 @@
+int-addition:
+  id: int-addition.s1.simple-v0
+  description: Ability to add numbers from 1 to 10 digits
+  metrics: [accuracy]
+int-addition.s1.simple-v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: math/int_addition.jsonl
