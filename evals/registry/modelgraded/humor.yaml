@@ -1,0 +1,14 @@
+prompt: |-
+  Is the following funny? 
+
+  {completion}
+choice_scores:
+  "Yes": 1.0
+  "No": 0.0
+  "Unsure": 0.5
+choice_strings:
+  - "Yes"
+  - "No"
+  - "Unsure"
+input_outputs:
+  input: completion

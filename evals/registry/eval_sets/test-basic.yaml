@@ -1,0 +1,5 @@
+test-basic:
+  evals:
+    - test-match
+    - test-fuzzy-match
+    - test-includes
