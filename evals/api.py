@@ -7,18 +7,12 @@ import logging
 from typing import Callable, Optional, Union
 
 from evals.base import ModelSpec
-from evals.prompt.base import (
-    ChatCompletionPrompt,
-    CompletionPrompt,
-    OpenAICreateChatPrompt,
-    OpenAICreatePrompt,
-    Prompt,
-)
+from evals.prompt.base import (ChatCompletionPrompt, CompletionPrompt,
+                               OpenAICreateChatPrompt, OpenAICreatePrompt,
+                               Prompt)
 from evals.record import record_match, record_sampling
-from evals.utils.api_utils import (
-    openai_chat_completion_create_retrying,
-    openai_completion_create_retrying,
-)
+from evals.utils.api_utils import (openai_chat_completion_create_retrying,
+                                   openai_completion_create_retrying)
 
 logger = logging.getLogger(__name__)
 

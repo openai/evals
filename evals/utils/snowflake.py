@@ -113,7 +113,8 @@ class SnowflakeConnection:
                 return cs.fetchall()
 
     def robust_query(self, max_trials: Optional[int] = None, *args, **kwargs):
-        from snowflake.connector.errors import OperationalError, ProgrammingError
+        from snowflake.connector.errors import (OperationalError,
+                                                ProgrammingError)
 
         ntrials = 0
         while True:

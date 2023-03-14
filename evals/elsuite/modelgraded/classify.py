@@ -12,12 +12,9 @@ import openai
 import evals
 import evals.record
 from evals.base import ModelSpec
-from evals.elsuite.utils import (
-    PromptFn,
-    format_necessary,
-    load_modelgraded_specs,
-    scrub_formatting_from_prompt,
-)
+from evals.elsuite.utils import (PromptFn, format_necessary,
+                                 load_modelgraded_specs,
+                                 scrub_formatting_from_prompt)
 
 INVALID_STR = "__invalid__"
 CHOICE_KEY = "choice"
