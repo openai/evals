@@ -1,0 +1,8 @@
+substitution-cipher:
+  id: substitution.s1.decrypt-v0
+  description: Test the model's ability to decipher text encoded using a given substitution cipher.
+  metrics: [accuracy]
+substitution.s1.decrypt-v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: substitution_cipher/substitution_cipher.jsonl
