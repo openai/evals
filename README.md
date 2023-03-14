@@ -3,11 +3,13 @@
 Evals is a framework for evaluating OpenAI models and an open-source registry of benchmarks.
 
 You can use Evals to create and run evaluations that:
+
 - use datasets to generate prompts,
 - measure the quality of completions provided by an OpenAI model, and
 - compare performance across different datasets and models.
 
 With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. To get started, we recommend that you follow these steps **in order**:
+
 1. Read through this doc and follow the [setup instructions below](README.md#Setup).
 2. Learn how to run existing evals: [run-evals.md](docs/run-evals.md).
 3. Familiarize yourself with the existing eval templates: [eval-templates.md](docs/eval-templates.md).
@@ -29,12 +31,14 @@ To run evals, you will need to set up and specify your OpenAI API key to run eva
 ### Downloading evals
 
 Our Evals registry is stored using [Git-LFS](https://git-lfs.com/). Once you have downloaded and installed LFS, you can fetch the evals with:
+
 ```sh
 git lfs fetch --all
 git lfs pull
 ```
 
 You may just want to fetch data for a select eval. You can achieve this via:
+
 ```sh
 git lfs fetch --include=evals/registry/data/${your eval}
 git lfs pull
@@ -82,4 +86,15 @@ I am a world-class prompt engineer. I choose not to code. How can I contribute m
 
 ## Disclaimer
 
-By contributing to Evals, you are agreeing to make your evaluation logic and data under the same MIT license as this repository. You must have adequate rights to upload any data used in an Eval. OpenAI reserves the right to use this data in future service improvements to our product. Contributions to OpenAI Evals will be subject to our usual Usage Policies: https://platform.openai.com/docs/usage-policies.
+By contributing to Evals, you are agreeing to make your evaluation logic and data under the same MIT license as this repository. You must have adequate rights to upload any data used in an Eval. OpenAI reserves the right to use this data in future service improvements to our product. Contributions to OpenAI Evals will be subject to our usual Usage Policies: <https://platform.openai.com/docs/usage-policies>.
+
+## Changelog
+
+### 0.1.2
+
+Author @EHGP:
+
+1. Docker containerization of Python 3.9 version with Docker Compose and shell execution.
+2. Markdown Linting of all Markdown files.
+3. Added `pre-commit` to `pyproject.toml`
+4. Added Github Actions file in `.github/workflows` to run `pre-commit` on push.

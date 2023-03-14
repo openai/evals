@@ -1,0 +1,110 @@
+# Workflow will use Python 3.8 in lint stages using flake8, black and pydocstyle, analyze stage with codeQL, test stage using pytest and build stage using Sphinx
+name: python-lint-analyze-test
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    pre-commit:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                python-version: [3.8]
+        steps:
+            - name: Set up creds
+              run: echo "machine github.com login github-ci-token password ${{secrets.GITHUB_TOKEN}}" > ~/.netrc
+
+            - uses: de-vri-es/setup-git-credentials@v2
+              with:
+                  credentials: ${{secrets.GITHUB_TOKEN}}
+
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: lint
+              uses: pre-commit/action@v3.0.0
+              with:
+                  extra_args: --all-files
+
+    analyze:
+        name: Analyze
+        runs-on: ubuntu-latest
+        permissions:
+            actions: read
+            contents: read
+            security-events: write
+
+        strategy:
+            fail-fast: false
+            matrix:
+                language: ["python"]
+                # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
+                # Learn more about CodeQL language support at https://git.io/codeql-language-support
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            # Initializes the CodeQL tools for scanning.
+            - name: Initialize CodeQL
+              uses: github/codeql-action/init@v2
+              with:
+                  languages: ${{ matrix.language }}
+                  # If you wish to specify custom queries, you can do so here or in a config file.
+                  # By default, queries listed here will override any specified in a config file.
+                  # Prefix the list here with "+" to use these queries and those in the config file.
+                  # queries: ./path/to/local/query, your-org/your-repo/queries@main
+
+            # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
+            # If this step fails, then you should remove it and run the build manually (see below)
+            - name: Autobuild
+              uses: github/codeql-action/autobuild@v2
+
+            # ℹ️ Command-line programs to run using the OS shell.
+            # 📚 https://git.io/JvXDl
+
+            # ✏️ If the Autobuild fails above, remove it and uncomment the following three lines
+            #    and modify them (or add more) to build your code if your project
+            #    uses a compiled language
+
+            #- run: |
+            #   make bootstrap
+            #   make release
+
+            - name: Perform CodeQL Analysis
+              uses: github/codeql-action/analyze@v2
+
+    # test:
+    #     runs-on: ubuntu-latest
+    #     strategy:
+    #         fail-fast: false
+    #         matrix:
+    #             python-version: [3.8]
+    #     steps:
+    #         - name: Checkout repository
+    #           uses: actions/checkout@v3
+
+    #         - name: Set up Python 3.8
+    #           uses: actions/setup-python@v3
+    #           with:
+    #               python-version: ${{ matrix.python-version }}
+    #               # Optional - x64 or x86 architecture, defaults to x64
+    #               architecture: "x64"
+
+    #         # You can test your matrix by printing the current Python version
+    #         - name: Display Python version
+    #           run: python -c "import sys; print(sys.version)"
+
+    #         - name: test
+    #           run: |
+    #               apt-get update --quiet
+    #               apt-get upgrade -y --quiet
+    #               apt-get install build-essential libssl-dev libffi-dev python3-dev -y --quiet
+    #               pip install --upgrade pip --quiet
+    #               pip install -r requirements.txt --quiet
+    #               pip install pytest --quiet
+    #               pip install . --quiet
+    #               python -m pytest

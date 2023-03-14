@@ -1,0 +1,14 @@
+version: "3"
+services:
+  open-ai-evals:
+    container_name: open-ai-evals
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    restart: always
+    # Update your eval command here
+    command: oaieval gpt-3.5-turbo test-match
+    volumes:
+      - './evals/registry:/app/evals/registry'
+      - './evals/scripts:/app/evals/scripts'

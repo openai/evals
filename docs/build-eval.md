@@ -21,6 +21,7 @@ If the dataset file is on your local machine, put the YAML file in `evals/regist
 ## Registering the eval
 
 Register the eval by adding a file to `evals/registry/evals/<eval_name>.yaml` using the elsuite registry format. For example, for a `Match` eval, it would be:
+
 ```
 <eval_name>:
   id: <eval_name>.dev.v0
@@ -32,9 +33,10 @@ Register the eval by adding a file to `evals/registry/evals/<eval_name>.yaml` us
     samples_jsonl: <eval_name>/samples.jsonl
 ```
 
-Upon running the eval, the data will be searched for in `evals/registry/data`, e.g. if `test_match/samples.jsonl` is the provided filepath the data is expected to be in `evals/registry/data/test_match/samples.jsonl`. 
+Upon running the eval, the data will be searched for in `evals/registry/data`, e.g. if `test_match/samples.jsonl` is the provided filepath the data is expected to be in `evals/registry/data/test_match/samples.jsonl`.
 
 The naming convention for evals is in the form `<eval_name>.<split>.<version>`.
+
 - `<eval_name>` is the eval name, used to group evals whose scores are comparable.
 - `<split>` is the data split, used to further group evals that are under the same `<base_eval>`. E.g., "val", "test", or "dev" for testing.
 - `<version>` is the version of the eval, which can be any descriptive text you'd like to use (though it's best if it does not contain ".").
@@ -44,9 +46,11 @@ In general, running the same eval name against the same model should always give
 ## Running the eval
 
 You can now run your eval on your data from the CLI with your choice of model:
+
 ```
 oaieval gpt-3.5-turbo <eval_name>
 ```
+
 Congratulations, you have built your eval! Keep iterating on it until you are confident in the results. Remember, if you change the data file, remove `/tmp/filecache` so that the eval is run with your updated data.
 
 ## For model-graded evals: a step-by-step workflow
@@ -65,6 +69,7 @@ We expect that the existing model-graded evals such as `fact`, `closedqa`, and `
 Important: if you are contributing code, make sure to run `pip install pre-commit; pre-commit install` before committing and pushing to ensure that `black`, `isort`, and `autoflake` are run.
 
 We are interested in curating a diverse and interesting set of evals on which to improve our models going forward. Here are some criteria for what we consider a good eval.
+
 - [ ] The eval should be thematically consistent. We'd like to see a number of prompts all revolving around the same use case, subject domain, failure mode, etc.
 - [ ] The eval should be challenging. If GPT-4 or GPT-3.5-Turbo do well on all of the prompts, this is not as interesting. Of course, the eval should also be possible given the models' limitations and constraints. Oftentimes, a good rule of thumb is whether a human (potentially a subject expert) could do well on the prompts.
 - [ ] The eval should be directionally clear. The data should include good signal around what is the right behavior. This means, for example, high-quality reference answers or an exhaustive rubric for evaluating answers.

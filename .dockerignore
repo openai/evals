@@ -1,3 +1,5 @@
+docs
+.github
+examples
 __pycache__/
 evals.egg-info/
-.env

@@ -3,6 +3,7 @@
 This tutorial will walk you through a simple example of writing and adding a custom eval. The example eval will test the model's ability to do basic arithmetic. We will assume that you have followed the setup instructions in the [README](../README.md) and gone through the other docs for how to run and build evals.
 
 When writing your own evals, the primary files of interest are:
+
 - `evals/api.py`, which provides common interfaces and utilities used by eval creators to sample from models and process the results,
 - `evals/record.py`, which defines the recorder classes which log eval results in different ways, such as to a local JSON file or to a remote Snowflake database, and
 - `evals/metrics.py`, which defines various common metrics of interest.
@@ -16,6 +17,7 @@ The first step is to create the datasets for your eval. Here, we will create toy
 We will use the new chat format described [here](https://platform.openai.com/docs/guides/chat/introduction). By default, we encourage all evals to be written using chat formatting if you want to evaluate our new models. Under the hood, we [convert](../evals/prompt/base.py) chat formatted data into raw strings for older non chat models.
 
 To create the toy datasets, in your terminal, type:
+
 ```bash
 echo -e '[{"role": "system", "content": "2+2=", "name": "example_user"}, {"role": "system", "content": "4", "name": "example_assistant"}]\n[{"role": "system", "content": "4*4=", "name": "example_user"}, {"role": "system", "content": "16", "name": "example_assistant"}]' > /tmp/train.jsonl
 echo -e '[{"role": "system", "content": "48+2=", "name": "example_user"}, {"role": "system", "content": "50", "name": "example_assistant"}]\n[{"role": "system", "content": "5*20=", "name": "example_user"}, {"role": "system", "content": "100", "name": "example_assistant"}]' > /tmp/test.jsonl
@@ -88,6 +90,7 @@ Generally, most `run` methods will follow the same pattern shown here: loading t
 
         evals.check_sampled_text(self.model_spec, prompt, expected=sample["answer"])
 ```
+
 You'll notice that `eval_sample` doesn't take the `recorder` as an argument. This is because `eval_all_samples` sets it to be the default recorder before calling `eval_sample`, and the recording utilities defined in `evals/record.py` use the default recorder. In this example, the `eval_sample` method passes off a lot of the heavy lifting to the `evals.check_sampled_text` utility function, which is defined in `evals/api.py`. This utility function queries the model, defined by `self.model_spec`, with the given `prompt` and checks to see if the result matches the `expected` answer (or one of them, if given a list). It then records these matches (or non matches) using the default recorder.
 
 `eval_sample` methods may vary greatly based on your use case. If you are building custom evals, it is a good idea to be familiar with the functions available to you in `evals/record.py`, `evals/metrics.py`, and especially `evals/api.py`.

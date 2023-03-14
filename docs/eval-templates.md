@@ -7,6 +7,7 @@ In using Evals, we have discovered several "templates" that accommodate many dif
 In cases where the desired model response has very little variation, such as answering multiple choice questions or simple questions with a straightforward answer, we have found the following templates to be useful.
 
 For a model completion `a` and a reference list of correct answers `B`, the following evals implement:
+
 - [`basic/match.py:Match`](../evals/elsuite/basic/match.py): `any([b.startswith(a) for b in B])`
 - [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(a in b) for b in B])`
 - [`basic/fuzzy_match.py:FuzzyMatch`](../evals/elsuite/basic/fuzzy_match.py): `any([(a in b or b in a) for b in B])`
@@ -43,6 +44,7 @@ Refer to the [`classify.py:ModelBasedClassify`](../evals/elsuite/modelgraded/cla
 To instantiate model-graded evals, create a YAML file in `evals/registry/modelgraded` which specifies values for the arguments described above. We have provided a few examples, which illustrate the process for creating a model-graded eval, but which we also believe are general enough to be useful out of the box for many evals.
 
 [`fact.yaml`](../evals/registry/modelgraded/fact.yaml): a factual consistency eval which, given a completion `a` and reference answer `b`, returns:
+
 - `"A"` if `a` $\subseteq$ `b`, i.e., the submitted answer is a subset of the expert answer and is fully consistent with it.
 - `"B"` if `a` $\supseteq$ `b`, i.e., the submitted answer is a superset of the expert answer and is fully consistent with it.
 - `"C"` if `a` $=$ `b`, i.e., the submitted answer contains all the same details as the expert answer.
@@ -50,6 +52,7 @@ To instantiate model-graded evals, create a YAML file in `evals/registry/modelgr
 - `"E"` if `a` $\approx$ `b`, i.e., the answers differ, but these differences don't matter from the perspective of factuality.
 
 [`closedqa.yaml`](../evals/registry/modelgraded/closedqa.yaml): a question answering eval which, given a prompt containing a question and the necessary information to answer the question, checks whether the model's answer is:
+
 - relevant, i.e., extracted from the information provided in the prompt,
 - concise, i.e., did not contain unnecessary details or information, and
 - correct, i.e., uses the extracted information to come to the right conclusion.
