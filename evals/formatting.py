@@ -5,9 +5,7 @@ import random
 from typing import Optional
 
 
-def make_abc(
-    answers, *, correct_idx=0, shuffle=True, rng: Optional[random.Random] = None
-):
+def make_abc(answers, *, correct_idx=0, shuffle=True, rng: Optional[random.Random] = None):
     """
     ARGS
     ====

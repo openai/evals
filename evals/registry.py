@@ -31,9 +31,7 @@ DEFAULT_SYSTEM_PATHS = [
 
 class Registry:
     def __init__(self, registry_paths: Sequence[Union[str, Path]] = DEFAULT_PATHS):
-        self._registry_paths = [
-            Path(p) if isinstance(p, str) else p for p in registry_paths
-        ]
+        self._registry_paths = [Path(p) if isinstance(p, str) else p for p in registry_paths]
 
     def make_callable(self, spec):
         return partial(make_object(spec.cls).create_and_run, **(spec.args or {}))

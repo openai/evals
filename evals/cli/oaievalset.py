@@ -85,11 +85,7 @@ def main() -> None:
     num_already_completed = num_evals - len(commands)
     for idx, command in enumerate(commands):
         real_idx = idx + num_already_completed
-        print(
-            highlight(
-                "Running command: " + " ".join(command) + f" ({real_idx+1}/{num_evals})"
-            )
-        )
+        print(highlight("Running command: " + " ".join(command) + f" ({real_idx+1}/{num_evals})"))
         subprocess.run(command, stdout=subprocess.PIPE, check=args.exit_on_error)
         progress.add(command)
 

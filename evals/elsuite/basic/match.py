@@ -21,9 +21,7 @@ class Match(evals.Eval):
         self.samples_jsonl = samples_jsonl
         self.num_few_shot = num_few_shot
         if self.num_few_shot > 0:
-            assert (
-                few_shot_jsonl is not None
-            ), "few shot requires few shot sample dataset"
+            assert few_shot_jsonl is not None, "few shot requires few shot sample dataset"
             self.few_shot_jsonl = few_shot_jsonl
             self.few_shot = evals.get_jsonl(self.few_shot_jsonl)
 
@@ -36,9 +34,7 @@ class Match(evals.Eval):
                 prompt += s["sample"]
             prompt += sample["input"][-1:]
 
-        return evals.check_sampled_text(
-            self.model_spec, prompt, expected=sample["ideal"]
-        )
+        return evals.check_sampled_text(self.model_spec, prompt, expected=sample["ideal"])
 
     def run(self, recorder):
         samples = evals.get_jsonl(self.samples_jsonl)

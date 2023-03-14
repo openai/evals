@@ -75,9 +75,7 @@ class SnowflakeConnection:
                 database=self.database,
                 schema="public",
                 password=self.password,
-                authenticator="externalbrowser"
-                if self.use_browser_auth
-                else "snowflake",
+                authenticator="externalbrowser" if self.use_browser_auth else "snowflake",
                 autocommit=self.autocommit,
                 client_prefetch_thread=16,
                 client_session_keep_alive=True,

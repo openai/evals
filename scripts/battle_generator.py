@@ -80,10 +80,7 @@ for prompt_name, subject1, subject2 in target_sets:
         for sample in samples:
             f.write(json.dumps(sample) + "\n")
     print(f"wrote {len(samples)} samples to {file_name}")
-    yaml_str += (
-        YAML.format(prompt_name=prompt_name, subject1=subject1, subject2=subject2)
-        + "\n\n"
-    )
+    yaml_str += YAML.format(prompt_name=prompt_name, subject1=subject1, subject2=subject2) + "\n\n"
 
 
 yaml_file = f"{get_yaml_dir()}/test-modelgraded-battle.yaml"

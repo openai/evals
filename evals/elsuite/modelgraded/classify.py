@@ -52,9 +52,7 @@ def choice_to_str(choice_strings: Iterable[str]) -> str:
     return " or ".join(f'"{choice}"' for choice in choice_strings)
 
 
-def clean_choice(
-    raw_choice: str, match_fn: Callable, choice_strings: Iterable[str]
-) -> str:
+def clean_choice(raw_choice: str, match_fn: Callable, choice_strings: Iterable[str]) -> str:
     """Clean a choice string to one of choice_strings. Return '__invalid__.' if no match."""
     raw_choice = raw_choice.strip()
     raw_choice = "".join(c for c in raw_choice if c not in string.punctuation)
@@ -82,9 +80,7 @@ def expand_args_dict(args_dict):
     keys = list(args_dict.keys())
     values = list(args_dict.values())
     new_values = [dict(zip(keys, v)) for v in itertools.product(*values)]
-    new_names = [
-        ":".join([f"{k}={v[0]}" for k, v in sorted(d.items())]) for d in new_values
-    ]
+    new_names = [":".join([f"{k}={v[0]}" for k, v in sorted(d.items())]) for d in new_values]
     return dict(zip(new_names, new_values))
 
 
@@ -123,9 +119,7 @@ class ModelBasedClassify(evals.Eval):
         self.choice_strings = modelgraded_specs.pop("choice_strings")
         # make sure each choice doesn't contain any punctuation
         for s in self.choice_strings:
-            assert not any(
-                c in s for c in string.punctuation
-            ), f"{s} contains punctuation"
+            assert not any(c in s for c in string.punctuation), f"{s} contains punctuation"
         #  (optional) 'choice_scores' is a dict that specifies the score for each choice string
         # if 'choice_scores' is specified, 'scores/' are computed and added to metrics
         self.choice_scores = modelgraded_specs.pop("choice_scores", {})
@@ -154,9 +148,7 @@ class ModelBasedClassify(evals.Eval):
                 not eval_type
             ), f"eval_type must be unspecified, if it is specified in modelgraded_spec_file"
             append_answer_prompt = False
-        assert (
-            self.eval_type in CHOICE_FNS
-        ), f"eval_type must be one of {list(CHOICE_FNS.keys())}"
+        assert self.eval_type in CHOICE_FNS, f"eval_type must be one of {list(CHOICE_FNS.keys())}"
         self.choice_fn = CHOICE_FNS[self.eval_type]
 
         # 'prompt' is a string that specifies the model-graded evaluation
@@ -186,9 +178,7 @@ class ModelBasedClassify(evals.Eval):
         # (optional) 'completion_sample_templates'
         # each key must be one of 'input_outputs'.values(). If 'multicomp_n' > 1, this template is filled 'multicomp_n' times
         # and the concatenated result is passed to 'prompt' template.
-        self.completion_sample_templates = modelgraded_specs.pop(
-            "completion_sample_templates", {}
-        )
+        self.completion_sample_templates = modelgraded_specs.pop("completion_sample_templates", {})
         assert all(
             k in self.input_outputs.values() for k in self.completion_sample_templates
         ), f"all {self.completion_sample_templates.keys()} must be in {self.input_outputs.values()}, "
@@ -206,24 +196,18 @@ class ModelBasedClassify(evals.Eval):
         Recorded metrics are always: one of the self.choice_strings, or "__invalid__".
         """
         if self.samples_renamings:
-            test_sample = {
-                self.samples_renamings.get(k, k): v for k, v in test_sample.items()
-            }
+            test_sample = {self.samples_renamings.get(k, k): v for k, v in test_sample.items()}
         if self.multicomp_n > 1:
             test_sample["n"] = self.multicomp_n
         completions = {}
         if self.metaeval:
             # assert outputs exist in the data
             for v in self.input_outputs.values():
-                assert (
-                    v in test_sample
-                ), f"Missing output '{v}' in sample {test_sample.keys()}"
+                assert v in test_sample, f"Missing output '{v}' in sample {test_sample.keys()}"
                 completions[v] = test_sample[v]
         # remove outputs from the data
         test_sample = {
-            k: v
-            for k, v in test_sample.items()
-            if k not in list(self.input_outputs.values())
+            k: v for k, v in test_sample.items() if k not in list(self.input_outputs.values())
         }
         for k in self.input_outputs:
             test_sample[k] = scrub_formatting_from_prompt(test_sample[k])
@@ -310,35 +294,21 @@ class ModelBasedClassify(evals.Eval):
                 # assumption: each INVALID_STR contributes the lowest score
                 lowest_score = min(self.choice_scores.values())
                 scores = [
-                    self.choice_scores[choice]
-                    if choice != INVALID_STR
-                    else lowest_score
+                    self.choice_scores[choice] if choice != INVALID_STR else lowest_score
                     for choice in chosen
                 ]
-                record_metrics[f"score/{metric}"] = sum(scores) / len(
-                    all_sample_metrics
-                )
+                record_metrics[f"score/{metric}"] = sum(scores) / len(all_sample_metrics)
             # compute the counts and ratios
             counts = dict(Counter(chosen))
             missing_samples = len(all_sample_metrics) - len(chosen)
             if missing_samples:
                 counts["__missing_samples__"] = missing_samples
-            record_metrics.update(
-                {f"counts/{metric}/{k}": v for k, v in counts.items()}
-            )
+            record_metrics.update({f"counts/{metric}/{k}": v for k, v in counts.items()})
             if self.metaeval:
-                metascores = [
-                    m[metric + "_metascore"] for m in all_sample_metrics if metric in m
-                ]
-                record_metrics[f"metascore/{metric}"] = sum(metascores) / len(
-                    all_sample_metrics
-                )
+                metascores = [m[metric + "_metascore"] for m in all_sample_metrics if metric in m]
+                record_metrics[f"metascore/{metric}"] = sum(metascores) / len(all_sample_metrics)
 
-        record_metrics[
-            "invalid_request_during_completion"
-        ] = self.invalid_request_during_completion
-        record_metrics[
-            "invalid_request_during_evaluation"
-        ] = self.invalid_request_during_evaluation
+        record_metrics["invalid_request_during_completion"] = self.invalid_request_during_completion
+        record_metrics["invalid_request_during_evaluation"] = self.invalid_request_during_evaluation
 
         return record_metrics

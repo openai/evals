@@ -15,9 +15,7 @@ ENCODER_LOCK = threading.Lock()
 OpenAICreatePrompt = Union[str, list[str], list[int], list[list[int]]]
 
 # This is the type accepted as the `prompt` field to `openai.ChatCompletion.create` calls
-OpenAIChatMessage = Dict[
-    str, str
-]  # A message is a dictionary with "role" and "content" keys
+OpenAIChatMessage = Dict[str, str]  # A message is a dictionary with "role" and "content" keys
 OpenAICreateChatPrompt = List[OpenAIChatMessage]  # A chat log is a list of messages
 
 
@@ -85,9 +83,7 @@ class CompletionPrompt(Prompt):
 
     raw_prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt]
 
-    def _render_chat_prompt_as_text(
-        self, prompt: OpenAICreateChatPrompt
-    ) -> OpenAICreatePrompt:
+    def _render_chat_prompt_as_text(self, prompt: OpenAICreateChatPrompt) -> OpenAICreatePrompt:
         return chat_prompt_to_text_prompt(prompt)
 
     def to_openai_create_prompt(self) -> OpenAICreatePrompt:

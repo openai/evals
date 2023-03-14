@@ -75,9 +75,7 @@ class RecorderBase:
         self,
         run_spec: evals.base.RunSpec,
     ) -> None:
-        self._sample_id: ContextVar[Optional[int]] = ContextVar(
-            "_sample_id", default=None
-        )
+        self._sample_id: ContextVar[Optional[int]] = ContextVar("_sample_id", default=None)
         self.run_spec = run_spec
         self._events: List[Event] = []
         self._last_flush_time = time.time()
@@ -112,9 +110,7 @@ class RecorderBase:
         if sample_id is None:
             sample_id = self.current_sample_id()
         if sample_id is None:
-            raise ValueError(
-                "No sample_id set! Either pass it in or use as_default_recorder!"
-            )
+            raise ValueError("No sample_id set! Either pass it in or use as_default_recorder!")
 
         return Event(
             run_id=self.run_spec.run_id,
@@ -142,9 +138,7 @@ class RecorderBase:
         if sample_id is None:
             sample_id = self.current_sample_id()
         if sample_id is None:
-            raise ValueError(
-                "No sample_id set! Either pass it in or use as_default_recorder!"
-            )
+            raise ValueError("No sample_id set! Either pass it in or use as_default_recorder!")
 
         with self._event_lock:
             event = Event(
@@ -168,9 +162,7 @@ class RecorderBase:
             self._flushes_started += 1
             self._flush_events_internal(events_to_write)
 
-    def record_match(
-        self, correct: bool, *, expected=None, picked=None, sample_id=None, **extra
-    ):
+    def record_match(self, correct: bool, *, expected=None, picked=None, sample_id=None, **extra):
         assert isinstance(
             correct, bool
         ), f"correct must be a bool, but was a {type(correct)}: {correct}"
@@ -280,9 +272,7 @@ class DummyRecorder(RecorderBase):
             accuracy_good = (
                 primary_metric == "accuracy" or primary_metric.startswith("pass@")
             ) and (data.get("correct", False) or data.get("accuracy", 0) > 0.5)
-            f1_score_good = (
-                primary_metric == "f1_score" and data.get("f1_score", 0) > 0.5
-            )
+            f1_score_good = primary_metric == "f1_score" and data.get("f1_score", 0) > 0.5
             if accuracy_good or f1_score_good:
                 msg = _green(msg)
             else:
@@ -455,9 +445,7 @@ def current_sample_id() -> str:
 
 
 def record_match(correct: bool, *, expected=None, picked=None, **extra):
-    return default_recorder().record_match(
-        correct, expected=expected, picked=picked, **extra
-    )
+    return default_recorder().record_match(correct, expected=expected, picked=picked, **extra)
 
 
 def record_embedding(prompt, embedding_type, **extra):
