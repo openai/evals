@@ -1,0 +1,8 @@
+chinese-pronunciation:
+    id: chinese-pronunciation.dev.v0
+    description: Test the accuracy of a model's pronunciation of Chinese characters.
+    metrics: [accuracy]
+chinese-pronunciation.dev.v0:
+    class: evals.elsuite.basic.match:Match
+    args:
+        samples_jsonl: chinese-pronunciation/samples.jsonl
