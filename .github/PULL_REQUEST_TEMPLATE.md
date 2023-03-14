@@ -66,3 +66,16 @@ We know that you might be excited to contribute to OpenAI's mission, help improv
 - [ ] (Ignore if not submitting code) I have run `pip install pre-commit; pre-commit install` and have verified that `black`, `isort`, and `autoflake` are running when I commit and push
 
 Failure to fill out all required fields will result in the PR being closed.
+
+### Eval JSON data 
+
+Since we are using Git LFS, we are asking eval submitters to add in their first 100 JSONL eval lines.
+
+<details>
+  <summary>View evals in JSON</summary>
+
+  ### Eval
+  ```jsonl
+  INSERT_EVAL_HERE
+  ```
+</details>
