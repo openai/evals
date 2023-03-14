@@ -1,0 +1,8 @@
+quality:
+  id: quality.dev.match-v1
+  description: Test the model's ability to answer multiple choice questions based on long documents (on average more than 5k tokens).
+  metrics: [accuracy]
+quality.dev.match-v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: quality/quality_dev.jsonl
