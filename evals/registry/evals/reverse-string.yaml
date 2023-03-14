@@ -1,6 +1,6 @@
 reverse-string:
   id: reverse-string.s1.simple-v0
-  description: Test the model's ability to reverse complex and simple strings.
+  description: Test the model's ability to reverse complex and simple text.
   disclaimer: The eval might be off due to model output being in unicode format vs raw text.
   metrics: [accuracy]
 reverse-string.s1.simple-v0:

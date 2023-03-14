@@ -1,0 +1,9 @@
+translate-text:
+  id: translate-text.s1.simple-v0
+  description: Test the model's ability to reverse complex and simple strings.
+  disclaimer: The eval might be off due to model output being in unicode formate vs raw text.
+  metrics: [accuracy]
+translate-text.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: translate/translate.jsonl
