@@ -30,6 +30,7 @@ Let's create a file called `arithmetic.py` under the `evals/elsuite` folder. We'
 ```python
 import random
 import textwrap
+import itertools
 
 import evals
 import evals.metrics
@@ -71,22 +72,27 @@ Generally, most `run` methods will follow the same pattern shown here: loading t
         1. Generate a prompt that contains the task statement, a few examples, and the test question.
         2. Check if the model generates the correct answer.
         """
-        stuffing = rng.sample(self.train_samples, self.train_samples_per_prompt)
+        test_prompt, test_expected = test_sample
 
+        # flatten a random sample of training examples to [{...}, {...}]
+        examples = itertools.chain.from_iterable(
+          rng.sample(self.train_samples, self.train_samples_per_prompt)
+        )
+
+        # set up a context and add examples
         prompt = [
             {"role": "system", "content": "Solve the following math problems"},
+            *examples,
         ]
 
-        for i, sample in enumerate(stuffing + [test_sample]):
-            if i < len(stuffing):
-                prompt += [
-                    {"role": "system", "content": sample["problem"], "name": "example_user"},
-                    {"role": "system", "content": sample["answer"], "name": "example_assistant"},
-                ]
-            else:
-                prompt += [{"role": "user", "content": sample["problem"]}]
+        # add the test prompt, and measure the response against expected result
+        prompt += [test_prompt]
 
-        evals.check_sampled_text(self.model_spec, prompt, expected=sample["answer"])
+        evals.check_sampled_text(
+          self.model_spec, 
+          prompt, 
+          expected=test_expected["content"],
+        )
 ```
 You'll notice that `eval_sample` doesn't take the `recorder` as an argument. This is because `eval_all_samples` sets it to be the default recorder before calling `eval_sample`, and the recording utilities defined in `evals/record.py` use the default recorder. In this example, the `eval_sample` method passes off a lot of the heavy lifting to the `evals.check_sampled_text` utility function, which is defined in `evals/api.py`. This utility function queries the model, defined by `self.model_spec`, with the given `prompt` and checks to see if the result matches the `expected` answer (or one of them, if given a list). It then records these matches (or non matches) using the default recorder.
 
