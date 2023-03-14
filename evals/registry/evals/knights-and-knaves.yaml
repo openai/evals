@@ -1,0 +1,8 @@
+knights-and-knaves:
+  id: knights-and-knaves.s1.simple-v0
+  description: Test the model's ability to perform logical reasoning by solving knights and knaves puzzles.
+  metrics: [accuracy]
+knights-and-knaves.s1.simple-v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: knights_and_knaves/knights_and_knaves.jsonl
