@@ -75,7 +75,7 @@ Failure to fill out all required fields will result in the PR being closed.
 
 ### Eval JSON data 
 
-Since we are using Git LFS, we are asking eval submitters to add in their first 100 JSONL eval lines.
+Since we are using Git LFS, we are asking eval submitters to add in at least the first 3 JSONL eval lines from their contribution here:
 
 <details>
   <summary>View evals in JSON</summary>
