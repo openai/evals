@@ -1,0 +1,9 @@
+general-knowledge:
+  id: general-knowledge.s1.simple-v0
+  description: Test the model's ability to consicely answer some simple general knowledge questions.
+  disclaimer: Dataset based on the US. Will include global GK questions later on.
+  metrics: [accuracy]
+general-knowledge.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: general_knowledge/general_knowledge.jsonl
