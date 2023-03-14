@@ -1,5 +1,6 @@
-import evals
 import numpy as np
+
+import evals
 from evals.elsuite import utils
 from evals.record import RecorderBase
 
