@@ -1,5 +1,7 @@
 squared_distributions:
   id: squared_distributions.dev.v0
+  description: Test the model's ability to assess the distribution of an array (either normal or uniform) after a squaring operation has been performed. Manual experimentation shows that gpt-4 can do this well with no transform applied, but fails when one is applied.
+  disclaimer: This dataset uses a single transform. Other transforms may have different difficulty.
   metrics: [accuracy]
 
 squared_distributions.dev.v0:
