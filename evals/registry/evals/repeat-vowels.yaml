@@ -1,0 +1,9 @@
+repeat-vowels:
+  id: repeat-vowels.s1.simple-v0
+  description: Test the model's ability to repeat vowels.
+  disclaimer: The eval might be off for longer strings.
+  metrics: [accuracy]
+repeat-vowels.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: repeat_vowels/repeat_vowels.jsonl
