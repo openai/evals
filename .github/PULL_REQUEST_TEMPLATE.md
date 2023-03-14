@@ -29,7 +29,7 @@ Your eval should be:
 - [ ] Thematically consistent: The eval should be thematically consistent. We'd like to see a number of prompts all demonstrating some particular failure mode. For example, we can  create an eval on cases where the model fails to reason about the physical world.
 - [ ] Contains failures where a human can do the task, but either GPT-4 or GPT-3.5-Turbo could not.
 - [ ] Includes good signal around what is the right behavior. This means either a correct answer for `Basic` evals or the `Fact` Model-graded eval, or an exhaustive rubric for evaluating answers for the `Criteria` Model-graded eval.
-- [ ] Include at least 100 high quality examples
+- [ ] Include at least 100 high quality examples (it is okay to only contribute 5-10 meaningful examples and have us test them with GPT-4 before adding all 100)
 
 If there is anything else that makes your eval worth including, please document it below.
 
