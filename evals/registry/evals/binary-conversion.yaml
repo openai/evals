@@ -1,0 +1,8 @@
+binary-conversion:
+  id: binary-conversion.s1.simple-v0
+  description: Test the model's ability to decode long strings of binary to text.
+  metrics: [accuracy]
+sort-alphabetically.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: binary_conversion/samples.jsonl
