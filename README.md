@@ -92,7 +92,7 @@ By contributing to Evals, you are agreeing to make your evaluation logic and dat
 
 ### 0.1.2
 
-Author @EHGP:
+Author [EHGP](https://github.com/ehgp):
 
 1. Docker containerization of Python 3.9 version with Docker Compose and shell execution.
 2. Markdown Linting of all Markdown files.
