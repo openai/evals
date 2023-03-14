@@ -1,0 +1,8 @@
+palindromic-substring:
+  id: palindromic-substring.s1.v0
+  description: Test the model's ability to find the largest palindromic substring in the given string.
+  metrics: [accuracy]
+palindromic-substring.s1.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: palindromic_substring/palindromic_substring.jsonl
