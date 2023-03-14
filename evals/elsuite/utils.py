@@ -12,7 +12,9 @@ from evals.prompt.base import chat_prompt_to_text_prompt, is_chat_prompt
 
 def load_modelgraded_specs(spec_file: str) -> str:
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    yaml_path = os.path.join(current_dir, "../registry/modelgraded", f"{spec_file}.yaml")
+    yaml_path = os.path.join(
+        current_dir, "../registry/modelgraded", f"{spec_file}.yaml"
+    )
     return yaml.load(open(yaml_path, "r"), Loader=yaml.FullLoader)
 
 
@@ -93,7 +95,9 @@ def scrub_formatting_from_prompt(prompt):
     if is_chat_prompt(prompt):
         for i, msg in enumerate(scrubbed_prompt):
             if "content" in msg:
-                scrubbed_prompt[i]["content"] = msg["content"].replace("{", "{{").replace("}", "}}")
+                scrubbed_prompt[i]["content"] = (
+                    msg["content"].replace("{", "{{").replace("}", "}}")
+                )
     else:
         scrubbed_prompt = scrubbed_prompt.replace("{", "{{").replace("}", "}}")
     return scrubbed_prompt
@@ -110,7 +114,9 @@ def format_necessary(template: str, **kwargs: dict[str, str]) -> str:
 class PromptFn:
     """Wrap calls to model with prompt"""
 
-    def __init__(self, prompt, model_spec, max_tokens, temperature=0, completion_kwargs=None):
+    def __init__(
+        self, prompt, model_spec, max_tokens, temperature=0, completion_kwargs=None
+    ):
         self.prompt = prompt
         self.max_tokens = max_tokens
         self.model_spec = model_spec
@@ -120,14 +126,17 @@ class PromptFn:
     def __call__(self, **kwargs):
         # if any input kwargs is chat prompt, convert to text prompt
         kwargs = {
-            k: chat_prompt_to_text_prompt(v) if is_chat_prompt(v) else v for k, v in kwargs.items()
+            k: chat_prompt_to_text_prompt(v) if is_chat_prompt(v) else v
+            for k, v in kwargs.items()
         }
         if is_chat_prompt(self.prompt):
             prompt = []
             for msg in self.prompt:
                 formatted_msg = copy.copy(msg)
                 if "content" in formatted_msg:
-                    formatted_msg["content"] = format_necessary(formatted_msg["content"], **kwargs)
+                    formatted_msg["content"] = format_necessary(
+                        formatted_msg["content"], **kwargs
+                    )
                 prompt.append(formatted_msg)
         else:
             # Prompt is a string

@@ -19,7 +19,10 @@ from evals.utils.misc import make_object
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_PATHS = [Path(__file__).parents[0].resolve() / "registry", Path.home() / ".evals"]
+DEFAULT_PATHS = [
+    Path(__file__).parents[0].resolve() / "registry",
+    Path.home() / ".evals",
+]
 
 DEFAULT_SYSTEM_PATHS = [
     Path(__file__).parents[0].resolve() / "registry",
@@ -28,7 +31,9 @@ DEFAULT_SYSTEM_PATHS = [
 
 class Registry:
     def __init__(self, registry_paths: Sequence[Union[str, Path]] = DEFAULT_PATHS):
-        self._registry_paths = [Path(p) if isinstance(p, str) else p for p in registry_paths]
+        self._registry_paths = [
+            Path(p) if isinstance(p, str) else p for p in registry_paths
+        ]
 
     def make_callable(self, spec):
         return partial(make_object(spec.cls).create_and_run, **(spec.args or {}))

@@ -32,7 +32,9 @@ def gzip_open(filename: str, mode: str = "rb", openhook: Any = open) -> gzip.Gzi
     return gzip.GzipFile(fileobj=openhook(filename, mode), mode=mode)
 
 
-def lz4_open(filename: str, mode: str = "rb", openhook: Any = open) -> lz4.frame.LZ4FrameFile:
+def lz4_open(
+    filename: str, mode: str = "rb", openhook: Any = open
+) -> lz4.frame.LZ4FrameFile:
     if mode and "b" not in mode:
         mode += "b"
 
@@ -64,7 +66,10 @@ def open_by_file_pattern(filename: str, mode: str = "r", **kwargs: Any) -> Any:
             if scheme == "" or scheme == "file":
                 return open_fn(
                     os.path.join(
-                        os.path.dirname(os.path.abspath(__file__)), "registry", "data", filename
+                        os.path.dirname(os.path.abspath(__file__)),
+                        "registry",
+                        "data",
+                        filename,
                     ),
                     mode=mode,
                 )
@@ -98,7 +103,9 @@ def filecache(func):
     name = func.__name__
 
     def wrapper(*args, **kwargs):
-        md5 = hashlib.md5((name + ":" + str((args, kwargs))).encode("utf-8")).hexdigest()
+        md5 = hashlib.md5(
+            (name + ":" + str((args, kwargs))).encode("utf-8")
+        ).hexdigest()
         pkl_path = f"{DIR}/{md5}.pkl"
         if os.path.exists(pkl_path):
             logger.debug(f"Loading from file cache: {pkl_path}")

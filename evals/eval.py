@@ -55,7 +55,9 @@ class Eval(abc.ABC):
     ):
         splits = name.split(".")
         if len(splits) < 2:
-            raise ValueError(f"Eval name must at least have <base_eval>.<split>. Got name {name}")
+            raise ValueError(
+                f"Eval name must at least have <base_eval>.<split>. Got name {name}"
+            )
 
         self.model_specs = model_specs
         self.seed = seed
@@ -65,8 +67,12 @@ class Eval(abc.ABC):
         raise NotImplementedError()
 
     @classmethod
-    def create_and_run(cls, model_specs: ModelSpecs, *args, **kwargs) -> Dict[str, float]:
-        logging.info(f"Running {cls.__name__} with {model_specs}, args: {args}, kwargs: {kwargs}")
+    def create_and_run(
+        cls, model_specs: ModelSpecs, *args, **kwargs
+    ) -> Dict[str, float]:
+        logging.info(
+            f"Running {cls.__name__} with {model_specs}, args: {args}, kwargs: {kwargs}"
+        )
         return cls(model_specs).run(*args, **kwargs)
 
     @property
@@ -93,7 +99,9 @@ class Eval(abc.ABC):
             async with semaphore:
                 return await eval_fn(args)
 
-        futures = [asyncio.ensure_future(eval_fn_with_semaphore(args)) for args in work_items]
+        futures = [
+            asyncio.ensure_future(eval_fn_with_semaphore(args)) for args in work_items
+        ]
 
         for future in tqdm(
             asyncio.as_completed(futures), total=len(samples), disable=not show_progress
@@ -135,5 +143,7 @@ class Eval(abc.ABC):
             else:
                 logger.info(f"Running in threaded mode with {threads} threads!")
                 iter = pool.imap_unordered(eval_sample, work_items)
-            idx_and_result = list(tqdm(iter, total=len(work_items), disable=not show_progress))
+            idx_and_result = list(
+                tqdm(iter, total=len(work_items), disable=not show_progress)
+            )
         return [r for _, r in sorted(idx_and_result)]

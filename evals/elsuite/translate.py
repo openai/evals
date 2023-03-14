@@ -24,7 +24,9 @@ class Translate(evals.Eval):
 
         self.num_few_shot = num_few_shot
         if self.num_few_shot > 0:
-            assert few_shot_jsonl is not None, "few shot requires few shot sample dataset"
+            assert (
+                few_shot_jsonl is not None
+            ), "few shot requires few shot sample dataset"
             self.few_shot_jsonl = few_shot_jsonl
             self.few_shot = evals.get_jsonl(self.few_shot_jsonl)
 
@@ -45,7 +47,9 @@ class Translate(evals.Eval):
         elif not isinstance(expected, list):
             expected = [expected]
 
-        sampled = evals.sample_freeform(self.model_spec, prompt, max_tokens=self.max_tokens)
+        sampled = evals.sample_freeform(
+            self.model_spec, prompt, max_tokens=self.max_tokens
+        )
 
         score = None
         if expected is not None:
@@ -56,7 +60,10 @@ class Translate(evals.Eval):
 
             if score is not None:
                 evals.record.record_match(
-                    match, expected=expected, sampled=sampled, sacrebleu_sentence_score=score
+                    match,
+                    expected=expected,
+                    sampled=sampled,
+                    sacrebleu_sentence_score=score,
                 )
             return match
 

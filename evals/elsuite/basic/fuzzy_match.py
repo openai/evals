@@ -33,7 +33,9 @@ class FuzzyMatch(evals.Eval):
         evals.record.record_match(
             True in matches,
             expected=correct_answers,
-            picked=[generated_answer for i in range(len(correct_answers)) if matches[i]],
+            picked=[
+                generated_answer for i in range(len(correct_answers)) if matches[i]
+            ],
         )
         evals.record.record_metrics(
             accuracy=float(True in matches),

@@ -75,7 +75,9 @@ class SnowflakeConnection:
                 database=self.database,
                 schema="public",
                 password=self.password,
-                authenticator="externalbrowser" if self.use_browser_auth else "snowflake",
+                authenticator="externalbrowser"
+                if self.use_browser_auth
+                else "snowflake",
                 autocommit=self.autocommit,
                 client_prefetch_thread=16,
                 client_session_keep_alive=True,
@@ -113,8 +115,7 @@ class SnowflakeConnection:
                 return cs.fetchall()
 
     def robust_query(self, max_trials: Optional[int] = None, *args, **kwargs):
-        from snowflake.connector.errors import (OperationalError,
-                                                ProgrammingError)
+        from snowflake.connector.errors import OperationalError, ProgrammingError
 
         ntrials = 0
         while True:

@@ -112,7 +112,9 @@ class ModelSpecs:
         if self.completions_ is None:
             raise ValueError("Completion model was not specified")
         if len(self.completions_) != 1:
-            raise ValueError("ModelSpecs.completion only works with a single completion model")
+            raise ValueError(
+                "ModelSpecs.completion only works with a single completion model"
+            )
         return self.completions_[0]
 
     @property
