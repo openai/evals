@@ -38,3 +38,7 @@ If you have to stop your run or your run crashes, we've got you covered! `oaieva
 Unfortunately, you can't resume a single eval from the middle. You'll have to restart from the beginning, so try to keep your individual evals quick to run.
 
 ## Running an eval through Docker
+
+1. Use .env file to set environment variables
+2. Run start_container.sh
+3. Reset container with reset_container.sh, the Docker volumes and container will be deleted to free up memory.
