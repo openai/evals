@@ -1,0 +1,9 @@
+test-tool-use:
+  id: test-tool-use.s1.simple-v0
+  description: Test that when provided with tool descriptions, it uses the appropriate tool for the job
+  metrics: [accuracy, f1_score]
+
+test-tool-use.s1.simple-v0:
+  class: evals.elsuite.basic.list_match:ListMatch
+  args:
+    samples_jsonl: test_tool_use/tool_selection.jsonl
