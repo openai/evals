@@ -1,0 +1,10 @@
+cross-domain-reasoning:
+  id: cross-domain-reasoning.v1
+  description: An evaluation testing the model's ability to reason across multiple domains, including math, science, history, and literature.
+  metrics: [accuracy]
+cross-domain-reasoning.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: cross_domain_reasoning/samples.jsonl
+    few_shot_jsonl: cross_domain_reasoning/few_shot.jsonl
+    num_few_shot: 5
