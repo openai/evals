@@ -1,0 +1,8 @@
+word-part-match:
+  id: word-part-match.dev.v0
+  metrics: [accuracy]
+
+word-part-match.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: word_part_match/samples.jsonl
