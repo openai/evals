@@ -6,4 +6,4 @@ base64-encode:
 base64-encode.s1.simple-v0:
   class: evals.elsuite.basic.includes:Includes
   args:
-    samples_jsonl: base64_encode/base64_encode.jsonl
+    samples_jsonl: base64-encode/base64-encode.jsonl
