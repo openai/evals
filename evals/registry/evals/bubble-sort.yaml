@@ -1,0 +1,8 @@
+bubble-sort:
+  id: bubble-sort.dev.v0
+  description: Check the model's ability to sort and determine the comparisons and swaps with the sort.
+  metrics: [accuracy]
+bubble-sort.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: bubble_sort/bubble_sort.jsonl
