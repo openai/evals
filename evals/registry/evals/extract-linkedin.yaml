@@ -1,0 +1,8 @@
+extract-linkedin:
+  id: extract-linkedin.dev.v0
+  description: Test the model's ability to extract linkedin URLs
+  metrics: [accuracy]
+extract-linkedin.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: extract_linkedin/samples.jsonl
