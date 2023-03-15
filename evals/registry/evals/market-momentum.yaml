@@ -1,0 +1,8 @@
+market-momentum:
+  id: market-momentum.s1.simple-v0
+  description: Test the model's ability to gauge stock market momentum based on NYTimes headlines.
+  metrics: [accuracy]
+market-momentum.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: market_momentum/market_momentum.jsonl
