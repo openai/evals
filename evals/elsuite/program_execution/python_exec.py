@@ -47,7 +47,7 @@ class Generalized24Exec(evals.Eval):
 
             
 
-            pattern1 = r"[+\-*\\() ]"
+            pattern1 = r"[+\-*/() ]"
             source_numbers = sorted([int(x) for x in re.split(pattern1, lhs) if len(x) > 0])
             gt_source_numbers = sorted([int(x) for x in re.split(pattern1, gtlhs) if len(x) > 0])
 
