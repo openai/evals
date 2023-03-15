@@ -120,16 +120,6 @@ influential-scientists-vs-presidents.dev.v0:
     eval_type: cot_classify
     modelgraded_spec_file: battle
 
-influential-scientists-vs-sports:
-  id: influential-scientists-vs-sports.dev.v0
-  metrics: [accuracy]
-influential-scientists-vs-sports.dev.v0:
-  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
-  args:
-    samples_jsonl: influential/battles/influential_scientists_vs_sports.jsonl
-    eval_type: cot_classify
-    modelgraded_spec_file: battle
-
 influential-scientists-vs-artists:
   id: influential-scientists-vs-artists.dev.v0
   metrics: [accuracy]
@@ -227,16 +217,6 @@ influential-philosophers-vs-presidents.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: influential/battles/influential_philosophers_vs_presidents.jsonl
-    eval_type: cot_classify
-    modelgraded_spec_file: battle
-
-influential-philosophers-vs-sports:
-  id: influential-philosophers-vs-sports.dev.v0
-  metrics: [accuracy]
-influential-philosophers-vs-sports.dev.v0:
-  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
-  args:
-    samples_jsonl: influential/battles/influential_philosophers_vs_sports.jsonl
     eval_type: cot_classify
     modelgraded_spec_file: battle
 
