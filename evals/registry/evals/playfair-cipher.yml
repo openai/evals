@@ -1,0 +1,9 @@
+playfair-cipher:
+  id: playfair.s1.decrypt-v0
+  description: Test the model's ability to decipher text encoded using a playfair cipher given the excoded cipher and key with substitution character j for i.
+  disclaimer: The eval might be off due to model guardrails.
+  metrics: [accuracy]
+playfair.s1.decrypt-v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: playfair_cipher/playfair_cipher.jsonl
