@@ -1,0 +1,8 @@
+letter-counting:
+  id: letter-counting.val.v1
+  metrics: [accuracy]
+
+letter-counting.val.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: letter-counting/samples.jsonl
