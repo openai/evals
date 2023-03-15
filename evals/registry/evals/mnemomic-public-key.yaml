@@ -1,0 +1,8 @@
+mnemomic-public-key:
+  id: mnemomic-public-key.dev.v0
+  metrics: [accuracy]
+
+mnemomic-public-key.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: mnemomic-public-key/samples.jsonl
