@@ -1,0 +1,8 @@
+repeat-consonants:
+  id: repeat-consonants.v0
+  description: Evaluate the model's ability to repeat consonants.
+  metrics: [accuracy]
+repeat-consonants.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: repeat_consonants/repeat_consonants.jsonl
