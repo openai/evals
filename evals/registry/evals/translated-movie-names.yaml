@@ -1,0 +1,8 @@
+translated-movie-names:
+  id: translated-movie-names.s1.simple-v0
+  description: Test the model's ability to handle multilingual questions with translated movies or books.
+  metrics: [accuracy]
+translated-movie-names.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: translated_movie_names/translated_movie_names.jsonl
