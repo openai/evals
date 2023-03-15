@@ -1,0 +1,9 @@
+chess-determine-legal_setup:
+  id: chess-determine-legal_setup
+  description: Train the model to detemine if a chess board has a legal setup using FEN notation
+  disclaimer: This fails in the GPT 4 web application 
+  metrics: [accuracy]
+chess-determine-legal_setup:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: chess-determine-legal_setup/samples.jsonl
