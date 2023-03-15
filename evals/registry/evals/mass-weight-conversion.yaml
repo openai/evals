@@ -1,0 +1,8 @@
+mass-weight-conversion:
+  id: mass-weight-conversion.s1.simple-v0
+  description: Test the model's ability to convert weight to mass.
+  metrics: [accuracy]
+mass-weight-conversion.s1.simple-v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: mass-weight-conversion/mass-weight-conversion.jsonl
