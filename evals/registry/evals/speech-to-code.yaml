@@ -1,0 +1,10 @@
+speech-to-code:
+  id: speech-to-code.dev.v0
+  description: An eval that, given spoken text, checks the accuracy of instructions for building a block of code.
+  disclaimer: This eval currently only handles small chunks of spoken text (~15 seconds each), and can be updated with longer sequences.
+  metrics: [accuracy]
+
+speech-to-code.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: speech_to_code/speech_to_code.jsonl
