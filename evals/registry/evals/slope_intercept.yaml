@@ -4,6 +4,6 @@ slope_intercept:
   metrics: [accuracy]
 
 slope_intercept.dev.v0:
-  class: evals.elsuite.basic.match:Includes
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: slope_intercept/samples.jsonl
