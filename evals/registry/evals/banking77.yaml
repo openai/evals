@@ -4,5 +4,5 @@ match_banking77:
   - accuracy
 match_banking77.test.v1:
   args:
-    samples_jsonl: C:\Users\ouass\PycharmProjects\gpt-4-eval\evals/registry\data\banking77\samples.jsonl
+    samples_jsonl: banking77/samples.jsonl
   class: evals.elsuite.basic.match:Match
