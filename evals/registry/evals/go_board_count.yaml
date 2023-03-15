@@ -1,0 +1,9 @@
+go_board_count:
+  id: go_board_count.dev.v0
+  metrics: [accuracy]
+go_board_count.dev.v0:
+  class: evals.elsuite.basic.erf_score_match:ErfScoreMatch
+  args:
+    samples_jsonl: go_board_count/match.jsonl
+    mean: 0.0
+    std: 18.42
