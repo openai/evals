@@ -3,6 +3,6 @@ mnemomic-public-key:
   metrics: [accuracy]
 
 mnemomic-public-key.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
   args:
     samples_jsonl: mnemomic-public-key/samples.jsonl
