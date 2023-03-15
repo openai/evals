@@ -4,6 +4,18 @@ This document walks through the end-to-end process for building an eval, which i
 
 The steps in this process are building your dataset, registering a new eval with your dataset, and running your eval. Crucially, we assume that you are using an [existing eval template](eval-templates.md) out of the box (if that's not the case, see [this example of building a custom eval](custom-eval.md)). If you are interested in contributing your eval publically, we also include some criteria at the bottom for what we think makes an interesting eval.
 
+We are looking for evals in the following categories:
+
+- Over-refusals
+- Safety
+- System message steerability
+- In-the-wild hallucinations
+- Math / logical / physical reasoning
+- Real-world use case (please describe in your PR how this capability would be used in a product)
+- Other foundational capability
+
+If you have an eval that falls outside this category but still is a diverse example, please contribute it!
+
 ## Formatting your data
 
 Once you have an eval in mind that you wish to implement, you will need to convert your samples into the right JSON lines (JSONL) format. A JSONL file is just a JSON file with a unique JSON object per line.
