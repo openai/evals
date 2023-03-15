@@ -38,7 +38,7 @@ def completion_query(
         If `model_spec` is not provided, we use the default model that was
             intialized at the beginning of the run.
     `prompt`: Either a `Prompt` object or a raw prompt that will get wrapped in
-        the approriate `Prompt` class.
+        the appropriate `Prompt` class.
     `kwargs`: Other arguments passed to the API.
 
     RETURNS
@@ -114,7 +114,7 @@ def check_sampled_text(
     `options`: The list of canonical options, defaults to `expected` if None.
         The completion will be converted to one of these options.
     `expected`: The desired completion or the list of desired completions.
-    `separator`: A callable which check the character sampled after the option
+    `separator`: A callable which checks the character sampled after the option
         to see if it is a valid separator.
 
     RETURNS
