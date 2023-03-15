@@ -1,0 +1,7 @@
+population-standard-deviation:
+  id: population-standard-deviation.dev.v0
+  metrics: [accuracy]
+population-standard-deviation.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: population-standard-deviation/samples.jsonl
