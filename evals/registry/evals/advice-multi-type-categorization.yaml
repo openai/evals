@@ -1,0 +1,8 @@
+advice-multi-type-categorization:
+  id: advice-multi-type-categorization-eval.dev.v0
+  metrics: [accuracy]
+advice-multi-type-categorization-eval.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: advice_multi_type_categorization/samples.jsonl
+    modelgraded_spec_file: closedqa
