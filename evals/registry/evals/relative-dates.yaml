@@ -1,0 +1,9 @@
+relative-dates:
+  id: relative-dates.2023.simple-v0
+  description: Test the model's ability to determine dates based on relative descriptions.
+  disclaimer: This eval only considers 2023 dates.
+  metrics: [accuracy]
+relative-dates.2023.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: relative_dates/relative_dates.jsonl
