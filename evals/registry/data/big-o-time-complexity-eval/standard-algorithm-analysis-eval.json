@@ -1,0 +1,54 @@
+{
+    "description": "This eval analyzes the time complexity of a given Python code.",
+    "input_format": {
+      "type": "string",
+      "description": "The Python code to analyze, as a string."
+    },
+    "output_format": {
+      "type": "string",
+      "description": "The time complexity of the input code, as a string representing the time complexity in Big O notation."
+    },
+    "example": [
+      {
+        "input": "A function that performs linear search on an array to find a given element.",
+        "output": "O(n)"
+      },
+      {
+        "input": "A function that performs binary search on a sorted array to find a given element.",
+        "output": "O(log n)"
+      },
+      {
+        "input": "A function that sorts an array using selection sort.",
+        "output": "O(n^2)"
+      },
+      {
+        "input": "A function that calculates the factorial of a given integer.",
+        "output": "O(n)"
+      },
+      {
+        "input": "The best case time complexity of selection sort",
+        "output": "Ω(n^2)"
+      },
+      {
+        "input": "A function that calculates the factorial of a given integer.",
+        "output": "O(n)"
+      },
+      {
+        "input": "What is the average time compleplexity of the quicksort",
+        "output": "O(n log n)"
+      }
+    ],
+    "code": {
+      "language": "python",
+      "description": "This function takes a string representation of Python code as input, and returns the time complexity of that code as a string using Big O notation. It analyzes the time complexity of the input code by measuring the execution time of the code on arrays of different sizes, and then uses the ratios of those execution times to estimate the time complexity of the code. The function uses the Python `timeit` module to measure the execution time, and analyzes the execution times on arrays of size 10, 100, and 1000 to estimate the time complexity.",
+      "source": "def analyze_time_complexity(code):\n    import timeit\n    n = [10, 100, 1000]\n    times = []\n    for i in n:\n        setup = f'arr = list(range({i})); x = {i-1}'\n        stmt = f'{code}(arr, x)'\n        t = timeit.timeit(stmt=stmt, setup=setup, number=10000)\n        times.append(t)\n    ratios = [times[i+1]/times[i] for i in range(len(times)-1)]\n    if all(ratio == ratios[0] for ratio in ratios):\n        return f'O({ratios[0]} * n)'\n    else:\n        return 'Cannot determine time complexity'"
+    },
+    "complexity": {
+      "time": "O(n)",
+      "space": "O(1)"
+    },
+    "references": ["https://en.wikipedia.org/wiki/Time_complexity"],
+    "contributors": ["Your name here"],
+    "license": "MIT"
+  }
+  

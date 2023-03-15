@@ -1,0 +1,8 @@
+bigo_of_standanard_algorithms.dev.v0:
+  id: bigo_of_standanard_algorithms.dev.v0
+  description: Check if the model can the time complexity of standard algorithms
+  metrics: [accuracy]
+big_o_of_standard_algorithms.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: big-o-time-complexity-eval/big-o-complexity-eval.jsonl
