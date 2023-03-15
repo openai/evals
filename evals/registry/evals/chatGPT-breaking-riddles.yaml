@@ -1,0 +1,9 @@
+chatGPT-breaking-riddles:
+  id: chatGPT-breaking-riddles.dev.v0
+  description: A collection of riddles that ChatGPT fails.  Let's see if GPT-4 can do better.
+  disclaimer: Highly sensitive to the system prompt.  When the system prompt tells ChatGPT to answer succintly, it fails these riddles.  When the system prompt asks ChatGPT to step through its logic carefully, results are much better.
+  metrics: [accuracy]
+chatGPT-breaking-riddles.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: chatgpt_breaking_riddles/samples.jsonl
