@@ -1,0 +1,9 @@
+matrix_multiplication:
+  id: matrix_multiplication.dev.v0
+  metrics: [accuracy]
+matrix_multiplication.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: matrix_multiplication/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec_file: matrix_multiplication

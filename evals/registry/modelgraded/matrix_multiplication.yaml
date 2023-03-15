@@ -1,0 +1,18 @@
+prompt: |-
+  Is the matrix multiplication done correctly and the final matrix is correct? 
+  [BEGIN DATA]
+  ***
+  [Candidate matrix]: {completion}
+  ***
+  [Correct Matrix]: {ideal}
+  ***
+  [END DATA]
+choice_scores:
+  "Yes": 1.0
+  "No": 0.0
+choice_strings:
+  - "Yes"
+  - "No"
+input_outputs:
+  input: completion
+
