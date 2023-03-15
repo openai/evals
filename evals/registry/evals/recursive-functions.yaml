@@ -1,9 +1,9 @@
 recursive-functions:
-   id: recursive-functions.s1.simple-v0
+   id: recursive-functions.s1.simple-v1
    description: Tests the model's ability to output the results of various recursive Python scenarios.
    disclaimer: All scenarios are currently based in Python, and are limited to simple (single-function) scenarios.
    metrics: [accuracy]
-recursive-functions.s1.simple-v0:
+recursive-functions.s1.simple-v1:
    class: evals.elsuite.basic.match:Match
    args:
      samples_jsonl: recursive_functions/recursive_functions.jsonl
