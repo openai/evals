@@ -1,6 +1,6 @@
 russe:
   id: russe.test.v0
-  description: Russian Word-in-Context dataset. Detect wheather a word has the same in both sentences or not.
+  description: Russian Word-in-Context dataset. Russian Word-in-Context dataset. Detect whether a word has the same meaning in both sentences or not.
   metrics: [accuracy]
 
 russe.test.v0:
