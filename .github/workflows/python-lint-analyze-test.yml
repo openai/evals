@@ -14,12 +14,12 @@ jobs:
             matrix:
                 python-version: [3.8]
         steps:
-            - name: Set up creds
-              run: echo "machine github.com login github-ci-token password ${{secrets.GITHUB_TOKEN}}" > ~/.netrc
+            # - name: Set up creds
+            #   run: echo "machine github.com login github-ci-token password ${{secrets.GITHUB_TOKEN}}" > ~/.netrc
 
-            - uses: de-vri-es/setup-git-credentials@v2
-              with:
-                  credentials: ${{secrets.GITHUB_TOKEN}}
+            # - uses: de-vri-es/setup-git-credentials@v2
+            #   with:
+            #       credentials: ${{secrets.GITHUB_TOKEN}}
 
             - name: Checkout repository
               uses: actions/checkout@v3
