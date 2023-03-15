@@ -1,0 +1,9 @@
+chess-calculate-best-move:
+  id: chess-best-move.best_move
+  description: Test the model's logical ability to calculate the best move compared to Stockfish
+  disclaimer: GPT3.5 cannot solve any of these
+  metrics: [accuracy]
+chess-best-move.best_move:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: chess_calculate_best_move/samples.jsonl
