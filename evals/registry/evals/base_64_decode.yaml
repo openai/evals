@@ -1,0 +1,9 @@
+base_64_decode:
+  id: base_64_decode.dev.v0
+  description: Test the accuracy of a model decoding base-64 text.
+  metrics: [accuracy]
+
+base_64_decode.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: base_64_decode/samples.jsonl
