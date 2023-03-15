@@ -1,0 +1,3 @@
+squad2:
+  evals:
+    - match_squad2_train

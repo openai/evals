@@ -1,0 +1,20 @@
+match_squad2_shuffled_dev:
+  id: match_squad2_shuffled_dev.test.v1
+  metrics:
+  - accuracy
+match_squad2_shuffled_dev.test.v1:
+  args:
+    few_shot_jsonl: ../evals/registry/data/squad2_shuffled/few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: ''
+  class: evals.elsuite.basic.match:Match
+match_squad2_shuffled_train:
+  id: match_squad2_shuffled_train.test.v1
+  metrics:
+  - accuracy
+match_squad2_shuffled_train.test.v1:
+  args:
+    few_shot_jsonl: ../evals/registry/data/squad2_shuffled/few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: ../evals/registry/data/squad2_shuffled/samples.jsonl
+  class: evals.elsuite.basic.match:Match
