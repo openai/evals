@@ -1,0 +1,8 @@
+movie-quotes:
+    id: movie-quotes.dev.v0
+    description: Test the model's ability to identify the source film from a quote.
+    metrics: [accuracy]
+movie-quotes.dev.v0:
+    class: evals.elsuite.basic.match:Match
+    args:
+        samples_jsonl: movie_quotes/movie_quotes.jsonl
