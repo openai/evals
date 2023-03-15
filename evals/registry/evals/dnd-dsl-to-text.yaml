@@ -1,0 +1,22 @@
+dnd-dsl-to-text:
+  id: dnd-dsl-to-text.dev.v0
+  description: This evaluation tests the model's ability to generalize its code explanation and long-context documentation-reading abilities to a domain-specific language (a game engine scripting language for Dungeons & Dragons).
+  disclaimer: The included documentation is very long and will likely not fit within the context length of smaller models.
+  metrics: [accuracy]
+dnd-dsl-to-text.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: dnd_dsl_to_text/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec_file: dnd-dsl-to-text
+
+dnd-dsl-to-text-meta:
+  id: dnd-dsl-to-text-meta.dev.v0
+  metrics: [accuracy]
+dnd-dsl-to-text-meta.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: dnd_dsl_to_text/meta_samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec_file: dnd-dsl-to-text
+    metaeval: true

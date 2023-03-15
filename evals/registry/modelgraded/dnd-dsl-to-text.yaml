@@ -1,0 +1,21 @@
+prompt: |-
+  You are comparing two abilities in D&D. Here is the data:
+  [BEGIN DATA]
+  ************
+  [Ability 1]: {ideal}
+  ************
+  [Ability 2]: {completion}
+  ************
+  [END DATA]
+  Compare the two abilities.
+  The second ability may be consistent with the first ability, or it may have one or more differences.
+  Ignore any differences in style, grammar, or punctuation.
+  Are the two abilities the same in terms of game mechanics? Answer "No" if there are any differences that affect game mechanics.
+choice_scores:
+  "Yes": 1.0
+  "No": 0.0
+choice_strings:
+  - "Yes"
+  - "No"
+input_outputs:
+  input: completion
