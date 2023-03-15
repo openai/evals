@@ -36,7 +36,7 @@ def completion_query(
     `model_spec`: `ModelSpec` containing model details to use in the query.
         This should be the dict returned by `registry.get_model()`.
         If `model_spec` is not provided, we use the default model that was
-            intialized at the beginning of the run.
+            initialized at the beginning of the run.
     `prompt`: Either a `Prompt` object or a raw prompt that will get wrapped in
         the approriate `Prompt` class.
     `kwargs`: Other arguments passed to the API.
