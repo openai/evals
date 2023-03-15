@@ -1,7 +1,7 @@
 test-tool-use:
   id: test-tool-use.s1.simple-v0
   description: Test that when provided with tool descriptions, it uses the appropriate tool for the job
-  metrics: [recall]
+  metrics: [f1]
 
 test-tool-use.s1.simple-v0:
   class: evals.elsuite.basic.list_match:ListMatch
