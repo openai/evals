@@ -1,0 +1,8 @@
+levenshtein-distance:
+  id: levenshtein-distance.s1.simple-v0
+  description: Test the model's ability to calculate levenshtein-distance in two words.
+  metrics: [accuracy]
+levenshtein-distance.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: levenshtein_distance/levenshtein_distance.jsonl
