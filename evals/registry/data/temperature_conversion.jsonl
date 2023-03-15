@@ -1,0 +1,5 @@
+{"input": [{"role": "system", "content": "Convert Celsius and Fahrenheit."}, {"role": "user", "content": "1000"}], "ideal": "1832"}
+{"input": [{"role": "system", "content": "Convert Celsius and Fahrenheit."}, {"role": "user", "content": "-1000C"}], "ideal": "-1768F"}
+{"input": [{"role": "system", "content": "Convert Celsius and Fahrenheit."}, {"role": "user", "content": "5000 Centigrade"}], "ideal": "9032 Fahrenheit"}
+{"input": [{"role": "system", "content": "Convert Celsius and Fahrenheit."}, {"role": "user", "content": "100 C"}], "ideal": "212 F"}
+{"input": [{"role": "system", "content": "Convert Celsius and Fahrenheit."}, {"role": "user", "content": "0"}], "ideal": "32"}
