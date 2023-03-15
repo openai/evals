@@ -1,0 +1,8 @@
+euler_problems:
+  id: euler_problems.dev.v0
+  description: Test the model's ability to tackle Euler problems and find a result.
+  metrics: [accuracy]
+euler_problems.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: euler_problems/euler_problems.jsonl
