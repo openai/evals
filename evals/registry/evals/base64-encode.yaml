@@ -1,0 +1,9 @@
+base64-encode:
+  id: base64-encode.s1.simple-v0
+  description: Test the model's ability to encode Base64 encoded text.
+  disclaimer: On larger strings, the model may not be able to encode the entire string correctly.
+  metrics: [accuracy]
+base64-encode.s1.simple-v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: base64_encode/base64_encode.jsonl
