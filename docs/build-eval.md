@@ -4,18 +4,6 @@ This document walks through the end-to-end process for building an eval, which i
 
 The steps in this process are building your dataset, registering a new eval with your dataset, and running your eval. Crucially, we assume that you are using an [existing eval template](eval-templates.md) out of the box (if that's not the case, see [this example of building a custom eval](custom-eval.md)). If you are interested in contributing your eval publically, we also include some criteria at the bottom for what we think makes an interesting eval.
 
-We are looking for evals in the following categories:
-
-- Over-refusals
-- Safety
-- System message steerability
-- In-the-wild hallucinations
-- Math / logical / physical reasoning
-- Real-world use case (please describe in your PR how this capability would be used in a product)
-- Other foundational capability
-
-If you have an eval that falls outside this category but still is a diverse example, please contribute it!
-
 ## Formatting your data
 
 Once you have an eval in mind that you wish to implement, you will need to convert your samples into the right JSON lines (JSONL) format. A JSONL file is just a JSON file with a unique JSON object per line.
@@ -28,7 +16,7 @@ For the basic evals `Match`, `Includes`, and `FuzzyMatch`, the other required ke
 
 We have implemented small subsets of the [CoQA](https://stanfordnlp.github.io/coqa/) dataset for various eval templates to illustrate how the data should be formatted. See [`coqa/match.jsonl`](../evals/registry/data/coqa/match.jsonl) for an example of data that is suitable for the `Match` basic eval template and [`coqa/samples.jsonl`](../evals/registry/data/coqa/samples.jsonl) for data that is suitable for `fact` and `closedqa` model-graded evals. Note that even though these two model-graded evals expect different keys, we can include the superset of keys in our data in order to support both evals.
 
-If the dataset file is on your local machine, put the YAML file in `evals/registry/evals/data/<eval_name>/samples.jsonl`. If it is in Cloud Object Storage, we support path-style URLs for the major clouds (for your personal use only, we will not accept PRs with cloud URLs).
+If the dataset file is on your local machine, put the `jsonl` file in `evals/registry/evals/data/<eval_name>/samples.jsonl`. If it is in Cloud Object Storage, we support path-style URLs for the major clouds (for your personal use only, we will not accept PRs with cloud URLs).
 
 ## Registering the eval
 
