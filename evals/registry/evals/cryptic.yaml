@@ -1,0 +1,7 @@
+cryptic-alpha-match:
+  id: cryptic.alpha-match.v0
+  metrics: [accuracy]
+cryptic.alpha-match.v0:
+  class: evals.elsuite.basic.alpha_match:AlphaMatch
+  args:
+    samples_jsonl: cryptic/samples.jsonl
