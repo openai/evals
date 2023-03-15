@@ -18,6 +18,9 @@ class ErfScoreMatch(Match):
     Since the integral of the gaussian is math.erf, we're looking for abs(math.erf(given) - math.erf(expected)),
     where given and expected are scaled to have mean 0 and standard deviation 1 (i.e. (x - m) / std).
 
+    To get something close to a 0%..100% metric, we will return average(1 - distance). Note that in very edge cases
+    it might return -100%, which is weird, but in most cases the distance will be in [0..1).
+
     Answer is expected to be given as a decimal number in data["sampled"].
     data["sampled"] may contain other space-separated tokens as long as they don't parse as decimal numbers.
 
@@ -48,7 +51,7 @@ class ErfScoreMatch(Match):
         return sum(
             self.calculate_erf_diff(self.parse(e.data["expected"]), self.parse(e.data["sampled"]))
             for e in events
-        )
+        ) / len(events)
 
     def parse(self, s):
         numbers = [n for n in s.split() if NUMBER_RE.match(n)]
@@ -59,7 +62,7 @@ class ErfScoreMatch(Match):
         return float("inf")
 
     def calculate_erf_diff(self, expected, picked):
-        return abs(math.erf(self.scale(expected)) - math.erf(self.scale(picked)))
+        return 1.0 - abs(math.erf(self.scale(expected)) - math.erf(self.scale(picked)))
 
     def scale(self, x):
         return (x - self.mean) / self.std
