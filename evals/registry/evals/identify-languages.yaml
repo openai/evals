@@ -1,0 +1,8 @@
+identify-languages:
+  id: identify-languages.s1.simple-v0
+  description: Test the model's ability to identify what is the official language spoken in a country.
+  metrics: [accuracy]
+identify-languages.s1.simple-v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: identify-languages/samples.jsonl
