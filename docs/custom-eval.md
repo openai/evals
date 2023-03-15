@@ -74,24 +74,20 @@ Generally, most `run` methods will follow the same pattern shown here: loading t
         """
         test_prompt, test_expected = test_sample
 
-        # flatten a random sample of training examples to [{...}, {...}]
-        examples = itertools.chain.from_iterable(
-          rng.sample(self.train_samples, self.train_samples_per_prompt)
-        )
+        # flatten a random sample of training samples to [{...}, {...}]
+        training_samples = rng.sample(self.train_samples, self.train_samples_per_prompt)
+        training_samples = itertools.chain.from_iterable(training_samples)
 
-        # set up context, add examples and test prompt
+        # set up a context, add examples and test prompt
         prompt = [
             {"role": "system", "content": "Solve the following math problems"},
-            *examples,
+            *training_samples,
             test_prompt,
         ]
 
         # evaluate the model's response against the expected answer
-        evals.check_sampled_text(
-          self.model_spec, 
-          prompt, 
-          expected=test_expected["content"],
-        )
+        expected = test_expected["content"]
+        evals.check_sampled_text(self.model_spec, prompt, expected)
 ```
 You'll notice that `eval_sample` doesn't take the `recorder` as an argument. This is because `eval_all_samples` sets it to be the default recorder before calling `eval_sample`, and the recording utilities defined in `evals/record.py` use the default recorder. In this example, the `eval_sample` method passes off a lot of the heavy lifting to the `evals.check_sampled_text` utility function, which is defined in `evals/api.py`. This utility function queries the model, defined by `self.model_spec`, with the given `prompt` and checks to see if the result matches the `expected` answer (or one of them, if given a list). It then records these matches (or non matches) using the default recorder.
 
