@@ -1,0 +1,8 @@
+domain-parser:
+  id: domain-parser.s1.simple-v0
+  description: Extract suffix from a domain.
+  metrics: [accuracy]
+domain-parser.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: domain-parser/domain-parser.jsonl
