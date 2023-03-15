@@ -1,0 +1,8 @@
+relative-dates:
+  id: relative-dates:.s1.v0
+  description: Test the models ability to parse out datetime and date entities and normalize them to ISO 8061 datetime from a provided "local" time
+  metrics: [accuracy]
+relative-dates:.s1.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: relative-dates/samples.jsonl
