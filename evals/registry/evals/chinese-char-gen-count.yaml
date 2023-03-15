@@ -1,0 +1,7 @@
+chinese-char-gen-count:
+  id: chinese-char-gen-count.dev.v0
+  metrics: [accuracy]
+chinese-char-gen-count.dev.v0:
+  class: evals.elsuite.modelgraded.chinese_character_generation_count:ChineseCharacterGenerationCount
+  args:
+    jsonl: chinese_character_generation_count/samples1.jsonl
