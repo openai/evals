@@ -1,7 +1,8 @@
 string-length:
   id: string-length.v0
-  description: Evaluate the model's ability to count the number of characters in 
-  a random alphanumeric string.
+  description:
+    Evaluate the model's ability to count the number of characters in a random
+    alphanumeric string.
   metrics: [accuracy]
 string-length.v0:
   class: evals.elsuite.basic.match:Match
