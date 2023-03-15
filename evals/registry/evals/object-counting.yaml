@@ -1,0 +1,8 @@
+object-counting:
+  id: object-counting.v0
+  description: This task measures the ability of a model to count a moderate number of simple objects while ignoring distractors. This is a variant of the same task in big bench with new object types.
+  metrics: [accuracy]
+object-counting.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: object_counting/object_counting.jsonl
