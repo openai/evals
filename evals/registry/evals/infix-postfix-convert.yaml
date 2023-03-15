@@ -1,0 +1,8 @@
+infix-postfix-convert:
+  id: infix-postfix-convert.dev.v0
+  description: Test the model's ability to convert complex infix expressions to their postfix forms.
+  metrics: [accuracy]
+infix-postfix-convert.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: infix_postfix_convert/samples.jsonl
