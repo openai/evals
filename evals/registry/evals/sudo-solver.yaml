@@ -1,0 +1,8 @@
+sudoku-solver:
+  id: sudoku-solver.dev.v0
+  metrics: [accuracy]
+
+sudoku-solver.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: sudoku-solver/samples.jsonl
