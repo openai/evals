@@ -1,0 +1,9 @@
+temperature_conversion:
+  id: temperature_conversion.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate temperature conversion ability between Celsius and Fahrenheit
+temperature_conversion.dev.match-v1:
+  class: evals.elsuite.temperature_conversion:TemperatureConversion
+  args:
+    train_jsonl: /tmp/train.jsonl
+    test_jsonl: /tmp/test.jsonl
