@@ -1,0 +1,9 @@
+regex-match:
+  id: regex.match.dev.v0
+  metrics: [accuracy]
+
+regex.match.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: regex-match/samples.jsonl
+    few_shot_jsonl: russe/few_shot.json
