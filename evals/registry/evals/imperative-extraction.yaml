@@ -1,0 +1,8 @@
+imperative-extraction:
+  id: imperative-extraction-eval.dev.v0
+  metrics: [accuracy]
+imperative-extraction-eval.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: imperative_extraction/samples.jsonl
+    modelgraded_spec_file: closedqa
