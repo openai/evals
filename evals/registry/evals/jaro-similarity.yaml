@@ -1,0 +1,8 @@
+jaro-similarity:
+  id: jaro-similarity.s1.simple-v0
+  description: Test the model's ability to calculate the normalized Jaro similarity between two input strings.
+  metrics: [accuracy]
+jaro-similarity.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: jaro_similarity/jaro_similarity.jsonl
