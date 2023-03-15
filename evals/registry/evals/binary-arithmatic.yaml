@@ -1,0 +1,8 @@
+binary-arithmatic:
+  id: binary-arithmatic.s1.simple-v0
+  description: Test the model's ability to perform arithmatic with binary numbers
+  metrics: [accuracy]
+binary-arithmatic.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: binary_arithmatic/binary_addition.jsonl

@@ -2,10 +2,12 @@
 This file defines the base specifications for models, evals, and runs. Running
 evals and most development work should not require familiarity with this file.
 """
+from __future__ import annotations
 import base64
 import datetime
 import os
 from typing import TYPE_CHECKING, Any, Dict, Mapping, Optional, Sequence
+
 
 if TYPE_CHECKING:
     from dataclasses import dataclass
