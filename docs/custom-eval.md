@@ -79,15 +79,14 @@ Generally, most `run` methods will follow the same pattern shown here: loading t
           rng.sample(self.train_samples, self.train_samples_per_prompt)
         )
 
-        # set up a context and add examples
+        # set up context, add examples and test prompt
         prompt = [
             {"role": "system", "content": "Solve the following math problems"},
             *examples,
+            test_prompt,
         ]
 
-        # add the test prompt, and measure the response against expected result
-        prompt += [test_prompt]
-
+        # evaluate the model's response against the expected answer
         evals.check_sampled_text(
           self.model_spec, 
           prompt, 
