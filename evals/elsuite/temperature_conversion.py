@@ -22,7 +22,7 @@ class TemperatureConversion(evals.Eval):
         stuffing = rng.sample(self.train_samples, self.train_samples_per_prompt)
 
         prompt = [
-            {"role": "system", "content": "Convert the following temperatures between Celsius and Fahrenheit"},
+            {"role": "system", "content": "Convert the following temperatures from Celsius to Fahrenheit"},
         ]
 
         for i, sample in enumerate(stuffing + [test_sample]):
