@@ -2,6 +2,6 @@ generalized_24:
   id: generalized_24.dev.v0
   metrics: [accuracy]
 generalized_24.dev.v0:
-  class: evals.elsuite.program_execution.python_exec:ArithmicExec
+  class: evals.elsuite.program_execution.python_exec:Generalized24Exec
   args:
     samples_jsonl: generalized_24/samples.jsonl

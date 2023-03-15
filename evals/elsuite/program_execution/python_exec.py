@@ -12,7 +12,7 @@ import numpy as np
 
 import re
 
-class ArithmicExec(evals.Eval):
+class Generalized24Exec(evals.Eval):
     def __init__(
         self,
         model_specs: evals.ModelSpecs,
