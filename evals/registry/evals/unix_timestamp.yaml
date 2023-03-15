@@ -1,0 +1,8 @@
+unix_timestamp:
+  id: unix_timestamp.dev.v0
+  description: Check the model's capability of converting human time into UNIX timestamp.
+  metrics: [accuracy]
+unix_timestamp.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: unix_timestamp/unix_timestamp.jsonl
