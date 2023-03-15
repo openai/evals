@@ -1,0 +1,8 @@
+prime-number:
+  id: prime-number.dev.v0
+  metrics: [accuracy]
+
+prime-number.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: prime_number/samples.jsonl
