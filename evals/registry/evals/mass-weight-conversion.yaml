@@ -1,6 +1,6 @@
 mass-weight-conversion:
   id: mass-weight-conversion.s1.simple-v0
-  description: Test the model's ability to convert weight to mass.
+  description: Test the model's ability to determine the gravitational attraction of planets in order to convert a weight to a mass or a mass to a weight.
   metrics: [accuracy]
 mass-weight-conversion.s1.simple-v0:
   class: evals.elsuite.basic.includes:Includes
