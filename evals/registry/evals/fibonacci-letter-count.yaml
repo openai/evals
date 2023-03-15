@@ -1,0 +1,8 @@
+fibonacci-letter-count:
+  id: fibonacci-letter-count.dev.v0
+  metrics: [accuracy]
+
+fibonacci-letter-count.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: fibonacci-letter-count/samples.jsonl
