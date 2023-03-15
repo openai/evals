@@ -1,0 +1,9 @@
+vowel-count:
+  id: vowel-count.dev.v0
+  description: A sentences dataset. Counts the number of vowels in the sentence.
+  metrics: [accuracy]
+
+vowel-count.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: vowel_count/samples.jsonl
