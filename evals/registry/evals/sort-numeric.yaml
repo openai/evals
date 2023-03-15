@@ -1,6 +1,6 @@
 sort-numbers:
   id: sort-numbers.s1.simple-v0
-  description: Test the model's ability to sort numbers, including testing edge cases such as negatives and currency-formatted numbers.
+  description: Tests performance sorting different comma-separated values under different circumstances (integers/decimals, positives/negatives, as well as currency-formatted values).
   metrics: [accuracy]
 sort-numbers.s1.simple-v0:
   class: evals.elsuite.basic.match:Match
