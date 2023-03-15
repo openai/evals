@@ -24,7 +24,7 @@ class Includes(evals.Eval):
             self.model_spec, sample["input"], max_tokens=self.max_tokens
         )
         includes_answer = any(
-            [evals.elsuite.utils.get_answer(sampled, ref) for ref in sample["ideal"]]
+            [evals.elsuite.utils.get_answer(sampled, ref) is not None for ref in sample["ideal"]]
         )
         evals.record.record_metrics(accuracy=float(includes_answer))
         return includes_answer
