@@ -1,0 +1,8 @@
+match-gaokao-physics:
+    id: match-gaokao-physics.dev.v0
+    description: Test the accuracy of Physics Gaokao(National College Entrance Examination).
+    metrics: [accuracy]
+match-gaokao-physics.dev.v0:
+    class: evals.elsuite.basic.match:Match
+    args:
+        samples_jsonl: gaokao_physics/samples.jsonl
