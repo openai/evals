@@ -1,0 +1,9 @@
+rewrite-second-letter-capital:
+  id: rewrite-second-letter-capital.s1.simple-v0
+  description: Test the model's ability to rewrite a string in a specific format where every second letter of a word has to be capital.
+  disclaimer: The eval might be off for longer strings.
+  metrics: [accuracy]
+rewrite-second-letter-capital.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: rewrite_second_letter_capital/rewrite_second_letter_capital.jsonl
