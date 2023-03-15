@@ -1,0 +1,9 @@
+quadratic-from-three-points:
+  id: quadratic-from-three-points.s1.simple-v0
+  description: Test the model's ability to find the equation of a quadratic polynomial given three points.
+  disclaimer: Selected so x and y values are integers in [-100, 100], and the coefficients are non-zero integers.
+  metrics: [accuracy]
+quadratic-from-three-points.s1.simple-v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: quadratic_from_three_points/quadratic_from_three_points.jsonl
