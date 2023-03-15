@@ -1,0 +1,8 @@
+mnemonic:
+  id: mnemonic.dev.v0
+  metrics: [accuracy]
+
+mnemonic.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: mnemonic/samples.jsonl
