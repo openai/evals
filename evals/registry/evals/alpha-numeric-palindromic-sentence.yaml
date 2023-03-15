@@ -1,0 +1,9 @@
+alpha-numeric-palindromic-sentence:
+  id: alpha-numeric-palindromic-sentence.s1.simple-v0
+  description: Test the model's ability to create a sentence which is a palindrome, such that also after converting each word to a number, which is the sum of characters in each word and the sum of each number in that word until a single digit is achieved, then the numeric representation of whole sentence is also a palindrome.
+  disclaimer: The eval might be off due to model output being in unicode formate vs raw text.
+  metrics: [accuracy]
+alpha-numeric-palindromic-sentence.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: alpha_numeric_palindromic_sentence/alpha_numeric_palindromic_sentence.jsonl
