@@ -1,0 +1,9 @@
+crm-fins-expert:
+  id: crm-fins-expert.dev.match-v1
+  description: Example eval that uses fuzzy matching to score completions.
+  metrics: [accuracy]
+crm-fins-expert.dev.match-v1:
+  class: evals.elsuite.contrib.positive_negative:PositiveNegativeMatch
+  args:
+    samples_jsonl: crm_fins_expert/crm_fins_expert.jsonl
+     
