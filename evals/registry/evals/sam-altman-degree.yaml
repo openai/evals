@@ -1,7 +1,7 @@
 sam-altman-degree:
   id: sam-altman-degree.s1.simple-v0
-  description: Test the model's ability to answer simple questions
-  disclaimer: The eval might not be valid  for all questions
+  description: Test the model's ability to answer where Sam Altman got his degree from
+  disclaimer: This is about the CEO of Openai
   metrics: [accuracy]
 sam-altman-degree.s1.simple-v0:
   class: evals.elsuite.basic.match:Match
