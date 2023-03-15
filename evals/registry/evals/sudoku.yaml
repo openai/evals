@@ -1,0 +1,10 @@
+sudoku:
+  id: sudoku.test.v1
+  metrics:
+  - accuracy
+sudoku.test.v1:
+  args:
+    few_shot_jsonl: sudoku/fewshot.jsonl
+    num_few_shot: 5
+    samples_jsonl: sudoku/samples.jsonl
+  class: evals.elsuite.basic.match:Match
