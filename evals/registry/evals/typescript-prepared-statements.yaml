@@ -1,0 +1,8 @@
+typescript-type-inference:
+  id: typescript-type-inference.dev.v0
+  metrics: [accuracy]
+
+typescript-type-inference.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: typescript_type_inference/typescript_type_inference.jsonl
