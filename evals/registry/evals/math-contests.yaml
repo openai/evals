@@ -1,0 +1,320 @@
+math_contest_2013_AMC_10A:
+  id: math_contest_2013_AMC_10A.test.v1
+  metrics:
+    - accuracy
+math_contest_2013_AMC_10A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2013_AMC_10A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2013_AMC_10B:
+  id: math_contest_2013_AMC_10B.test.v1
+  metrics:
+    - accuracy
+math_contest_2013_AMC_10B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2013_AMC_10B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2013_AMC_12A:
+  id: math_contest_2013_AMC_12A.test.v1
+  metrics:
+    - accuracy
+math_contest_2013_AMC_12A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2013_AMC_12A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2013_AMC_12B:
+  id: math_contest_2013_AMC_12B.test.v1
+  metrics:
+    - accuracy
+math_contest_2013_AMC_12B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2013_AMC_12B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2014_AMC_10A:
+  id: math_contest_2014_AMC_10A.test.v1
+  metrics:
+    - accuracy
+math_contest_2014_AMC_10A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2014_AMC_10A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2014_AMC_10B:
+  id: math_contest_2014_AMC_10B.test.v1
+  metrics:
+    - accuracy
+math_contest_2014_AMC_10B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2014_AMC_10B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2014_AMC_12A:
+  id: math_contest_2014_AMC_12A.test.v1
+  metrics:
+    - accuracy
+math_contest_2014_AMC_12A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2014_AMC_12A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2014_AMC_12B:
+  id: math_contest_2014_AMC_12B.test.v1
+  metrics:
+    - accuracy
+math_contest_2014_AMC_12B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2014_AMC_12B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2015_AMC_10A:
+  id: math_contest_2015_AMC_10A.test.v1
+  metrics:
+    - accuracy
+math_contest_2015_AMC_10A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2015_AMC_10A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2015_AMC_10B:
+  id: math_contest_2015_AMC_10B.test.v1
+  metrics:
+    - accuracy
+math_contest_2015_AMC_10B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2015_AMC_10B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2015_AMC_12A:
+  id: math_contest_2015_AMC_12A.test.v1
+  metrics:
+    - accuracy
+math_contest_2015_AMC_12A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2015_AMC_12A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2015_AMC_12B:
+  id: math_contest_2015_AMC_12B.test.v1
+  metrics:
+    - accuracy
+math_contest_2015_AMC_12B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2015_AMC_12B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2016_AMC_10A:
+  id: math_contest_2016_AMC_10A.test.v1
+  metrics:
+    - accuracy
+math_contest_2016_AMC_10A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2016_AMC_10A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2016_AMC_10B:
+  id: math_contest_2016_AMC_10B.test.v1
+  metrics:
+    - accuracy
+math_contest_2016_AMC_10B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2016_AMC_10B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2016_AMC_12A:
+  id: math_contest_2016_AMC_12A.test.v1
+  metrics:
+    - accuracy
+math_contest_2016_AMC_12A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2016_AMC_12A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2016_AMC_12B:
+  id: math_contest_2016_AMC_12B.test.v1
+  metrics:
+    - accuracy
+math_contest_2016_AMC_12B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2016_AMC_12B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2017_AMC_10A:
+  id: math_contest_2017_AMC_10A.test.v1
+  metrics:
+    - accuracy
+math_contest_2017_AMC_10A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2017_AMC_10A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2017_AMC_10B:
+  id: math_contest_2017_AMC_10B.test.v1
+  metrics:
+    - accuracy
+math_contest_2017_AMC_10B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2017_AMC_10B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2017_AMC_12A:
+  id: math_contest_2017_AMC_12A.test.v1
+  metrics:
+    - accuracy
+math_contest_2017_AMC_12A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2017_AMC_12A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2017_AMC_12B:
+  id: math_contest_2017_AMC_12B.test.v1
+  metrics:
+    - accuracy
+math_contest_2017_AMC_12B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2017_AMC_12B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2018_AMC_10A:
+  id: math_contest_2018_AMC_10A.test.v1
+  metrics:
+    - accuracy
+math_contest_2018_AMC_10A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2018_AMC_10A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2018_AMC_10B:
+  id: math_contest_2018_AMC_10B.test.v1
+  metrics:
+    - accuracy
+math_contest_2018_AMC_10B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2018_AMC_10B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2018_AMC_12A:
+  id: math_contest_2018_AMC_12A.test.v1
+  metrics:
+    - accuracy
+math_contest_2018_AMC_12A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2018_AMC_12A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2018_AMC_12B:
+  id: math_contest_2018_AMC_12B.test.v1
+  metrics:
+    - accuracy
+math_contest_2018_AMC_12B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2018_AMC_12B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2019_AMC_10A:
+  id: math_contest_2019_AMC_10A.test.v1
+  metrics:
+    - accuracy
+math_contest_2019_AMC_10A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2019_AMC_10A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2019_AMC_10B:
+  id: math_contest_2019_AMC_10B.test.v1
+  metrics:
+    - accuracy
+math_contest_2019_AMC_10B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2019_AMC_10B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2019_AMC_12A:
+  id: math_contest_2019_AMC_12A.test.v1
+  metrics:
+    - accuracy
+math_contest_2019_AMC_12A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2019_AMC_12A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2019_AMC_12B:
+  id: math_contest_2019_AMC_12B.test.v1
+  metrics:
+    - accuracy
+math_contest_2019_AMC_12B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2019_AMC_12B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2020_AMC_10A:
+  id: math_contest_2020_AMC_10A.test.v1
+  metrics:
+    - accuracy
+math_contest_2020_AMC_10A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2020_AMC_10A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2020_AMC_10B:
+  id: math_contest_2020_AMC_10B.test.v1
+  metrics:
+    - accuracy
+math_contest_2020_AMC_10B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2020_AMC_10B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2020_AMC_12A:
+  id: math_contest_2020_AMC_12A.test.v1
+  metrics:
+    - accuracy
+math_contest_2020_AMC_12A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2020_AMC_12A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2020_AMC_12B:
+  id: math_contest_2020_AMC_12B.test.v1
+  metrics:
+    - accuracy
+math_contest_2020_AMC_12B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2020_AMC_12B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2021_AMC_10A:
+  id: math_contest_2021_AMC_10A.test.v1
+  metrics:
+    - accuracy
+math_contest_2021_AMC_10A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2021_AMC_10A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2021_AMC_10B:
+  id: math_contest_2021_AMC_10B.test.v1
+  metrics:
+    - accuracy
+math_contest_2021_AMC_10B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2021_AMC_10B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2021_AMC_12A:
+  id: math_contest_2021_AMC_12A.test.v1
+  metrics:
+    - accuracy
+math_contest_2021_AMC_12A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2021_AMC_12A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2021_AMC_12B:
+  id: math_contest_2021_AMC_12B.test.v1
+  metrics:
+    - accuracy
+math_contest_2021_AMC_12B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2021_AMC_12B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2022_AMC_10A:
+  id: math_contest_2022_AMC_10A.test.v1
+  metrics:
+    - accuracy
+math_contest_2022_AMC_10A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2022_AMC_10A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2022_AMC_10B:
+  id: math_contest_2022_AMC_10B.test.v1
+  metrics:
+    - accuracy
+math_contest_2022_AMC_10B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_10/2022_AMC_10B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2022_AMC_12A:
+  id: math_contest_2022_AMC_12A.test.v1
+  metrics:
+    - accuracy
+math_contest_2022_AMC_12A.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2022_AMC_12A_samples.jsonl
+  class: evals.elsuite.basic.match:Match
+math_contest_2022_AMC_12B:
+  id: math_contest_2022_AMC_12B.test.v1
+  metrics:
+    - accuracy
+math_contest_2022_AMC_12B.test.v1:
+  args:
+    samples_jsonl: math_contests/amc_12/2022_AMC_12B_samples.jsonl
+  class: evals.elsuite.basic.match:Match
