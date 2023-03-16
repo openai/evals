@@ -9,6 +9,7 @@ from evals import completion_query
 
 # pip install https://github.com/amazon-science/mxeval if it doesnot exist
 from mxeval.execution import check_correctness
+
 # https://github.com/amazon-science/mxeval
 
 from typing import Callable, Optional, Union, Dict
@@ -22,11 +23,14 @@ from evals.prompt.base import (
 )
 from evals.record import record_match, record_sampling
 import logging
+
 logger = logging.getLogger(__name__)
 
 
 class MultiHumanEval(evals.Eval):
-    def __init__(self, language, train_jsonl, test_jsonl, train_samples_per_prompt=1, **kwargs):
+    def __init__(
+        self, language, train_jsonl, test_jsonl, train_samples_per_prompt=1, **kwargs
+    ):
         super().__init__(**kwargs)
         self.language = language
         self.train_jsonl = train_jsonl
@@ -42,45 +46,55 @@ class MultiHumanEval(evals.Eval):
         self.eval_all_samples(recorder, test_samples)
 
         return {
-            "accuracy":  evals.metrics.get_accuracy(recorder.get_events("match")),
+            "accuracy": evals.metrics.get_accuracy(recorder.get_events("match")),
         }
 
     def display_messages(self, messages):
         for message in messages:
             print(f"{message['role']}:\n{message['content']}\n")
 
-    def construct_messages(self,
-                           turn_idx,
-                           problem,
-                           execution_result=None,
-                           previous_response=None,
-                           messages=None,
-                           fewshot_examples=[]):
+    def construct_messages(
+        self,
+        turn_idx,
+        problem,
+        execution_result=None,
+        previous_response=None,
+        messages=None,
+        fewshot_examples=[],
+    ):
         if turn_idx == 0:
             prompt = problem["prompt"]
         else:
-            prompt = "Below is the error message\n-----------------------\n" \
-                     + execution_result \
-                     + f"\n-----------------------\nNow, please solve the following problem again\n\n" \
-                     + problem["prompt"]
+            prompt = (
+                "Below is the error message\n-----------------------\n"
+                + execution_result
+                + f"\n-----------------------\nNow, please solve the following problem again\n\n"
+                + problem["prompt"]
+            )
 
         if messages is None:
             assert turn_idx == 0
             # first turn: construct messages
             # (1) high level instruction
             messages = [
-                {"role": "system",
-                 "content": "You are an expert coder in all programming languages. Please continue writing code based on each function signature without repeat the function signature. If you write any explanations in English sentences, please wrap them in comments in the correct format according to that language."},
+                {
+                    "role": "system",
+                    "content": "You are an expert coder in all programming languages. Please continue writing code based on each function signature without repeat the function signature. If you write any explanations in English sentences, please wrap them in comments in the correct format according to that language.",
+                },
             ]
             # (2) examples
             for fs_example in fewshot_examples:
                 messages.append({"role": "user", "content": fs_example["prompt"]})
-                messages.append({"role": "assistant", "content": fs_example["canonical_solution"]})
+                messages.append(
+                    {"role": "assistant", "content": fs_example["canonical_solution"]}
+                )
             # (3) add the actual prompt
             messages.append({"role": "user", "content": prompt})
         else:
             # second turn: append user and assistant messages
-            assert previous_response is not None, "For next turn, we require providing the previous assistant's response"
+            assert (
+                previous_response is not None
+            ), "For next turn, we require providing the previous assistant's response"
             messages.append({"role": "assistant", "content": previous_response})
             messages.append({"role": "user", "content": prompt})
         return messages
@@ -104,28 +118,40 @@ class MultiHumanEval(evals.Eval):
         num_attempts = 3
         execution_result, messages, response, passed = None, None, None, False
         for turn_idx in range(num_attempts):
-            messages = self.construct_messages(turn_idx=turn_idx,
-                                               problem=test_sample,
-                                               execution_result=execution_result,
-                                               previous_response=response,
-                                               messages=messages,
-                                               fewshot_examples=fewshot_examples,
-                                              )
-            response, passed, execution_result = check_sampled_text_execute(self.model_spec,
-                                                                            prompt=messages,
-                                                                            problem=test_sample,
-                                                                            language=self.language,
-                                                                            )
+            messages = self.construct_messages(
+                turn_idx=turn_idx,
+                problem=test_sample,
+                execution_result=execution_result,
+                previous_response=response,
+                messages=messages,
+                fewshot_examples=fewshot_examples,
+            )
+            response, passed, execution_result = check_sampled_text_execute(
+                self.model_spec,
+                prompt=messages,
+                problem=test_sample,
+                language=self.language,
+            )
             if passed or turn_idx == num_attempts - 1:
                 # TODO - modify this class later to make it suitable for the metric
-                record_match(passed, expected="", picked=response, sampled=response, turn_idx=turn_idx)
+                record_match(
+                    passed,
+                    expected="",
+                    picked=response,
+                    sampled=response,
+                    turn_idx=turn_idx,
+                )
             if passed:
                 break
             if verbose:
-                print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!##################### turn {turn_idx} #####################!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                print(
+                    f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!##################### turn {turn_idx} #####################!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+                )
                 self.display_messages(messages)
                 print(f"assistant:\n{response}")
-                print(f"############################ task id {test_sample['task_id']} | turn idx {turn_idx} | passed = {passed} | ##############################")
+                print(
+                    f"############################ task id {test_sample['task_id']} | turn idx {turn_idx} | passed = {passed} | ##############################"
+                )
 
 
 def check_sampled_text_execute(
@@ -173,12 +199,13 @@ def check_sampled_text_execute(
         print("answer------")
         print(sampled)
 
-    execute_result = check_correctness(problem, sampled, language=language, timeout=20.0)
+    execute_result = check_correctness(
+        problem, sampled, language=language, timeout=20.0
+    )
     # passed (true or false), result (string from execution)
     if verbose:
         print("Correct=", execute_result["passed"])
         print("Result=", execute_result["result"])
-
 
     result = {
         "prompt": actual_prompt,
