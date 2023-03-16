@@ -1,0 +1,8 @@
+chinese-driver-exam:
+  id: chinese-driver-exam.dev.v0
+  metrics: [accuracy]
+
+chinese-driver-exam.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_driver_exam/samples.jsonl
