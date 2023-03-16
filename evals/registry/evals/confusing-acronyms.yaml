@@ -1,0 +1,8 @@
+confusing-acronyms:
+  id: confusing-acronyms.dev.v0
+  metrics: [accuracy]
+
+confusing-acronyms.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: confusing-acronyms/samples.jsonl
