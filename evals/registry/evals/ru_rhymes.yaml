@@ -1,0 +1,9 @@
+ru_rhyming_phrases:
+  id: ru_rhyming_phrases.dev.v0
+  description: Russian rhyming phrases for kids. This is a simple but important task for learning the rhyming patterns of Russian.
+  metrics: [accuracy]
+
+ru_rhyming_phrases.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: ru_rhyming_phrases/samples.jsonl
