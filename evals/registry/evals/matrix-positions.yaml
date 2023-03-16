@@ -1,0 +1,8 @@
+matrix-positions:
+  id: matrix-positions.dev.v0
+  metrics: [accuracy]
+
+matrix-positions.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: matrix_positions/matrix_positions.jsonl
