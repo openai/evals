@@ -1,5 +1,6 @@
 gpt4_facts:
   id: gpt4_facts.dev.v0
+  description: Evaluate the model's ability to recall and provide accurate facts from a diverse range of topics
   metrics: [accuracy]
 gpt4_facts.dev.v0:
   class: evals.elsuite.basic.match:Match
