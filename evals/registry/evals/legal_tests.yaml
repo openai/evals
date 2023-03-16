@@ -1,0 +1,8 @@
+legal_tests:
+  id: legal_tests.dev.v0
+  metrics:
+    - accuracy
+legal_tests.dev.v0:
+  args:
+    samples_jsonl: legal_tests/legal_tests.jsonl
+  class: evals.elsuite.basic.match:Match
