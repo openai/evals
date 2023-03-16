@@ -139,7 +139,6 @@ def check_sampled_text(
 
     picked = None
     for option in options:
-        # option = str(option)
         if not sampled.startswith(option):
             continue
         if (
