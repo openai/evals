@@ -1,0 +1,8 @@
+nostr-bot-detection:
+  id: nostr-bot-detection.dev.match-v1
+  description: Example eval that uses fuzzy matching to score completions.
+  metrics: [accuracy]
+nostr-bot-detection.dev.match-v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: nostr_bot_detection/samples.jsonl
