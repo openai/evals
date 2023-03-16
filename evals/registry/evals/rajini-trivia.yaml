@@ -1,8 +1,8 @@
-rajini_trivia:
-  id: rajini_trivia.s1.simple-v0
-  description: Example eval that uses fuzzy matching to score completions.
+rajini-trivia:
+  id: rajini-trivia.dev-v0
+  description: Is GPT-4 better thn an average Rajini fan?
   metrics: [f1_score]
-rajini_trivia.s1.simple-v0:
+rajini-trivia.dev-v0:
   class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
   args:
     samples_jsonl: rajini_trivia/samples.jsonl
