@@ -1,0 +1,9 @@
+generate-json:
+  id: generate-json.s1.simple-v0
+  description: Evaluate the results are in the correct JSON format.
+  disclaimer: This is an example disclaimer.
+  metrics: [accuracy]
+generate-json.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: generate_json/samples.jsonl
