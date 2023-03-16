@@ -15,4 +15,4 @@
   # Specify the arguments as a dictionary of JSONL URIs
   # These arguments can be anything that you want to pass to the class constructor
   args:
-    test_jsonl: /Users/sasha/github/evals/evals/registry/evals/data/2truths1lie/samples.jsonl
+    test_jsonl: 2truths1lie/samples.jsonl
