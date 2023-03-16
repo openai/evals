@@ -1,0 +1,9 @@
+sg-psle:
+  id: sg-psle.dev.v0
+  metrics: [accuracy]
+sg-psle.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: sg-psle/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec_file: fact
