@@ -1,0 +1,9 @@
+{
+    "name": "SpamEmailEval",
+    "description": "This evaluation checks the ability of the model to classify emails as spam or non-spam based on pre-processed features from the 'Spambase' dataset.",
+    "type": "Basic",
+    "path": "evals\\registry\\data\\SpamEmailEval\\SpamEmailEval.jsonl",
+    "class_name": "SpamEmailEval",
+    "version": 1
+  }
+  
