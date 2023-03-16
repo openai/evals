@@ -24,6 +24,7 @@ dependencies = [
     "pyyaml",
     "sacrebleu",
     "matplotlib",
+    "pytest",
 ]
 
 [project.scripts]
