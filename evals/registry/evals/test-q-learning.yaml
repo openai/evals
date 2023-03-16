@@ -1,0 +1,51 @@
+algorithm:
+  name: Q-Learning
+  parameters:
+    alpha: 0.1
+    gamma: 0.99
+    epsilon: 0.2
+    n_states: 10
+    n_episodes: 500
+    max_steps: 100
+
+environment:
+  type: Custom
+  properties:
+    state_space: 10
+    action_space: 2
+    state_rewards: random
+
+initialization:
+  Q_table:
+    shape: (n_states, 2)
+    values: zeros
+
+policy:
+  type: Epsilon-Greedy
+  parameters:
+    epsilon: 0.2
+
+training:
+  loop:
+    range: n_episodes
+  steps:
+    - Choose action using epsilon-greedy strategy
+    - Take action and observe next state and reward
+    - Update Q table
+    - Check if the agent reaches the last state
+
+output:
+  Q_table: print
+
+test:
+  function: test_agent
+  input: start_state
+
+evaluation:
+  function: test_multiple_scenarios
+  input: start_states
+  examples:
+    - 0
+    - 3
+    - 5
+    - 7
