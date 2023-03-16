@@ -17,7 +17,7 @@ class PositiveNegativeMatch(evals.Eval):
         self.samples_jsonl = samples_jsonl
 
     def eval_sample(self, test_sample, rng):
-        sample_id = test_sample["sample_id"]
+        test_sample["sample_id"]
         prompt = test_sample["input"]
         correct_answers = test_sample["positive"]
         incorrect_answers = test_sample["negative"]
@@ -48,9 +48,7 @@ class PositiveNegativeMatch(evals.Eval):
                 correct = False
                 break
 
-        evals.record.record_match(
-            correct=correct, expected=correct_answers, picked=correct_pick, sample_id=sample_id
-        )
+        evals.record.record_match(correct=correct, expected=correct_answers, picked=correct_pick)
 
     def run(self, recorder: RecorderBase):
         samples = evals.get_jsonl(self.samples_jsonl)
