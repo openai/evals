@@ -1,0 +1,9 @@
+# eval.yaml
+evaluation:
+  name: 'Multiplication Evaluation'
+  description: 'This evaluation tests the model's ability to perform multiplication with large numbers.'
+  metrics:
+    - name: 'Accuracy'
+      description: 'The percentage of questions answered correctly.'
+      formula: 'correct_answers / total_questions * 100'
+  questions_file: 'evals\registry\data\large_multiplication\large_multiplication_examples.jsonl'
