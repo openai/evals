@@ -1,0 +1,10 @@
+next-number-in-sequence:
+  id: next-number-in-sequence.dev.v0
+  description: Test the model's ability to determine a pattern of numbers in common IQ tests where each number is double the previous number - 2^index e.g. [7, 13, 24, 44, 80]
+  disclaimer: This eval contains 100 tests. Each sequence is created and tested seperately. 
+  metrics: [accuracy]
+
+next-number-in-sequence.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: next_number_in_sequence/next_number_in_sequence
