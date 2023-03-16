@@ -1,3 +1,12 @@
+# Open-Evals
+
+Open Evals is a framework extend openai's [Evals](README.md#Evals) for different language model.
+
+By define a customize `ModelRunner`, user can add different language model to Evals.
+Currently, we support openai and llama model runner.
+
+
+
 # Evals
 
 Evals is a framework for evaluating OpenAI models and an open-source registry of benchmarks.
