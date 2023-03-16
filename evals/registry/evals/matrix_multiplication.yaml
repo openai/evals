@@ -1,0 +1,19 @@
+# Define a base eval
+matrix_multiplication:
+  # id specifies the eval that this eval is an alias for
+  # in this case, arithmetic is an alias for arithmetic.dev.match-v1
+  # When you run `oaieval davinci arithmetic`, you are actually running `oaieval davinci arithmetic.dev.match-v1`
+  id: matrix_multiplication.dev.match-v1
+  # The metrics that this eval records
+  # The first metric will be considered to be the primary metric
+  metrics: [accuracy]
+  description: Evaluate model ability to do 3x3 matrix multiplication of numbers between -1 and 1
+# Define the eval
+matrix_multiplication.dev.match-v1:
+  # Specify the class name as a dotted path to the module and class
+  class: evals.elsuite.matrix_multiplication:MatrixMultiplication
+  # Specify the arguments as a dictionary of JSONL URIs
+  # These arguments can be anything that you want to pass to the class constructor
+  args:
+    train_jsonl: evals/registry/evals/matrix_multiplication/train.jsonl
+    test_jsonl: evals/registry/evals/matrix_multiplication/test.jsonl
