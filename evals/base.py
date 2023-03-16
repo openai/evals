@@ -20,6 +20,7 @@ class ModelSpec:
     """
 
     name: str
+    runner: str = "openai"  # how to execute the prediction
     model: Optional[str] = None
 
     is_chat: bool = False

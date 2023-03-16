@@ -1,31 +1,49 @@
-[project]
-name = "evals"
+[tool.poetry]
+name = "openevals"
 version = "0.1.1"
-requires-python = ">=3.8"
-dependencies = [
-    "mypy",
-    "openai",
-    "tiktoken",
-    "blobfile",
-    "backoff",
-    "numpy",
-    "snowflake-connector-python[pandas]",
-    "pandas",
-    "fire",
-    "pydantic",
-    "tqdm",
-    "nltk",
-    "filelock",
-    "mock",
-    "langdetect",
-    'termcolor',
-    "lz4",
-    "pyzstd",
-    "pyyaml",
-    "sacrebleu",
-    "matplotlib",
-]
+description = ""
+authors = ["Your Name <you@example.com>"]
+packages = [{ include = "evals" }]
 
-[project.scripts]
+[tool.poetry.dependencies]
+python = ">=3.8"
+mypy = "*"
+openai = "*"
+tiktoken = "*"
+blobfile = "*"
+backoff = "*"
+numpy = "*"
+snowflake-connector-python = { version = "*", extras = ["pandas"] }
+pandas = "*"
+fire = "*"
+pydantic = "*"
+tqdm = "*"
+nltk = "*"
+filelock = "*"
+mock = "*"
+langdetect = "*"
+termcolor = "*"
+lz4 = "*"
+pyzstd = "*"
+pyyaml = "*"
+sacrebleu = "*"
+matplotlib = "*"
+
+[tool.poetry.scripts]
 oaieval = "evals.cli.oaieval:main"
 oaievalset = "evals.cli.oaievalset:main"
+
+[tool.poetry.extras]
+pandas = ["snowflake-connector-python"]
+
+[tool.poetry-dynamic-versioning]
+enable = true
+pattern = "default-unprefixed"
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"
+
+[tool.poetry.plugins.openevals]
+openai = "evals.plugins.openai:OpenAIRunner"
+llama = "evals.plugins.llama:LlamaRunner"

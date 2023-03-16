@@ -1,9 +1,10 @@
 from typing import Any
 
+import numpy as np
+
 import evals
 import evals.elsuite.utils
 import evals.metrics
-import numpy as np
 
 
 class Includes(evals.Eval):

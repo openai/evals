@@ -5,7 +5,6 @@ import argparse
 import logging
 import shlex
 import sys
-from functools import cached_property
 from typing import Any, Mapping, Optional
 
 import openai
@@ -14,8 +13,10 @@ import evals
 import evals.api
 import evals.base
 import evals.record
-from evals.base import ModelSpec, ModelSpecs
+from evals.base import ModelSpecs
 from evals.registry import registry
+
+from ..plugins.manager import get_model_spec
 
 logger = logging.getLogger(__name__)
 
@@ -47,70 +48,6 @@ def parse_args(args=sys.argv[1:]) -> argparse.Namespace:
     return parser.parse_args(args)
 
 
-def n_ctx_from_model_name(model_name: str) -> Optional[int]:
-    """Returns n_ctx for a given API model name. Model list last updated 2023-03-14."""
-    # note that for most models, the max tokens is n_ctx + 1
-    DICT_OF_N_CTX_BY_MODEL_NAME_PREFIX: dict[str, int] = {
-        "gpt-3.5-turbo-": 4096,
-        "gpt-4-": 8192,
-        "gpt-4-32k-": 32768,
-    }
-    DICT_OF_N_CTX_BY_MODEL_NAME: dict[str, int] = {
-        "ada": 2048,
-        "text-ada-001": 2048,
-        "babbage": 2048,
-        "text-babbage-001": 2048,
-        "curie": 2048,
-        "text-curie-001": 2048,
-        "davinci": 2048,
-        "text-davinci-001": 2048,
-        "code-davinci-002": 8000,
-        "text-davinci-002": 4096,
-        "text-davinci-003": 4096,
-        "gpt-3.5-turbo": 4096,
-        "gpt-3.5-turbo-0301": 4096,
-        "gpt-4": 8192,
-        "gpt-4-0314": 8192,
-        "gpt-4-32k": 32768,
-        "gpt-4-32k-0314": 32768,
-    }
-    # first, look for a prefix match
-    for model_prefix, n_ctx in DICT_OF_N_CTX_BY_MODEL_NAME_PREFIX.items():
-        if model_name.startswith(model_prefix):
-            return n_ctx
-    # otherwise, look for an exact match and return None if not found
-    return DICT_OF_N_CTX_BY_MODEL_NAME.get(model_name, None)
-
-
-class ModelResolver:
-    # This is a temporary method to identify which models are chat models.
-    # Eventually, the OpenAI API should expose this information directly.
-    CHAT_MODELS = {
-        "gpt-3.5-turbo",
-        "gpt-3.5-turbo-0301",
-        "gpt-4",
-        "gpt-4-0314",
-        "gpt-4-32k",
-        "gpt-4-32k-0314",
-    }
-
-    def resolve(self, name: str) -> ModelSpec:
-        if name in self.api_model_ids:
-            result = ModelSpec(
-                name=name,
-                model=name,
-                is_chat=(name in self.CHAT_MODELS),
-                n_ctx=n_ctx_from_model_name(name),
-            )
-            return result
-
-        raise ValueError(f"Couldn't find model: {name}")
-
-    @cached_property
-    def api_model_ids(self):
-        return [m["id"] for m in openai.Model.list()["data"]]
-
-
 def run(args):
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
@@ -125,16 +62,11 @@ def run(args):
         eval_spec is not None
     ), f"Eval {args.eval} not found. Available: {list(sorted(registry._evals.keys()))}"
 
-    model_resolver = ModelResolver()
-
-    def get_model(name: str) -> ModelSpec:
-        return model_resolver.resolve(name)
-
-    completion_model_specs = [get_model(model) for model in args.model.split(",")]
+    completion_model_specs = [get_model_spec(model) for model in args.model.split(",")]
     model_specs = ModelSpecs(
         completions_=completion_model_specs,
-        embedding_=get_model(args.embedding_model) if args.embedding_model else None,
-        ranking_=get_model(args.ranking_model) if args.ranking_model else None,
+        embedding_=get_model_spec(args.embedding_model) if args.embedding_model else None,
+        ranking_=get_model_spec(args.ranking_model) if args.ranking_model else None,
     )
 
     run_config = {
