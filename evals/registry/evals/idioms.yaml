@@ -1,0 +1,11 @@
+idioms:
+  id: idioms.dev.v0
+  description: Questions and answers about the usage of idioms in a sentence
+  metrics:
+  - accuracy
+idioms.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    few_shot_jsonl: idioms/few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: idioms/samples.jsonl
