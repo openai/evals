@@ -10,8 +10,8 @@ multi-humaneval-js.dev.match-v1:
   class: evals.elsuite.multi_humaneval:MultiHumanEval
   args:
     language: javascript
-    train_jsonl: /Users/benathi/research/mxeval/data/mbxp/examples/mbxp_samples_javascript.jsonl
-    test_jsonl: /Users/benathi/research/mxeval/data/multilingual_humaneval/HumanEval_javascript_v1.1.jsonl
+    train_jsonl: multi-humaneval/mbxp_samples_javascript.jsonl
+    test_jsonl: multi-humaneval/HumanEval_javascript_v1.1.jsonl
 
 
 multi-humaneval-python:
@@ -24,8 +24,8 @@ multi-humaneval-python.dev.match-v1:
   class: evals.elsuite.multi_humaneval:MultiHumanEval
   args:
     language: python
-    train_jsonl: /Users/benathi/research/mxeval/data/mbxp/examples/mbxp_samples_python.jsonl
-    test_jsonl: /Users/benathi/research/mxeval/data/multilingual_humaneval/HumanEval.jsonl
+    train_jsonl: multi-humaneval/mbxp_samples_python.jsonl
+    test_jsonl: multi-humaneval/HumanEval.jsonl
 
 
 
@@ -33,8 +33,8 @@ multi-humaneval-php.dev.match-v1:
   class: evals.elsuite.multi_humaneval:MultiHumanEval
   args:
     language: php
-    train_jsonl: /Users/benathi/research/mxeval/data/mbxp/examples/mbxp_samples_php.jsonl
-    test_jsonl: /Users/benathi/research/mxeval/data/multilingual_humaneval/HumanEval_php_v1.1.jsonl
+    train_jsonl: multi-humaneval/mbxp_samples_php.jsonl
+    test_jsonl: multi-humaneval/HumanEval_php_v1.1.jsonl
 
 
 

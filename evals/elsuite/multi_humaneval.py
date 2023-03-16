@@ -117,6 +117,7 @@ class MultiHumanEval(evals.Eval):
                 prompt=messages,
                 problem=test_sample,
                 language=self.language,
+                turn_idx=turn_idx,
             )
             if passed or turn_idx == num_attempts - 1:
                 # TODO - modify this class later to make it suitable for the metric
@@ -136,6 +137,7 @@ def check_sampled_text_execute(
     prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
     problem: Dict,
     language: str,
+    turn_idx: int,
     *,
     options: Optional[list[str]] = None,
     separator: Callable[[str], bool] = None,
@@ -185,5 +187,6 @@ def check_sampled_text_execute(
     result["match"] = match
     result["metadata"] = metadata
     result["system_message"] = execute_result["result"]
+    result["turn_idx"] = turn_idx
     record_sampling(**result)
     return sampled, execute_result["passed"], execute_result["result"]
