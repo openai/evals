@@ -16,3 +16,4 @@ test:
     - diversity
     - joke-animals-vs-fruits
     - rap-people-vs-people
+    - gpt4facts
