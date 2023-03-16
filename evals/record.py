@@ -292,19 +292,23 @@ class LocalRecorder(RecorderBase):
         super().__init__(run_spec)
         self.event_file_path = log_path
         if log_path is not None:
-            with bf.BlobFile(log_path, "w") as f:
-                f.write(jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n")
+            with bf.BlobFile(log_path, "wb") as f:
+                f.write(
+                    (
+                        jsondumps({"spec": dataclasses.asdict(run_spec)}, ensure_ascii=False) + "\n"
+                    ).encode("utf-8")
+                )
 
     def _flush_events_internal(self, events_to_write: Sequence[Event]):
         start = time.time()
         try:
-            lines = [jsondumps(event) + "\n" for event in events_to_write]
+            lines = [jsondumps(event, ensure_ascii=False) + "\n" for event in events_to_write]
         except TypeError as e:
             logger.error(f"Failed to serialize events: {events_to_write}")
             raise e
 
-        with bf.BlobFile(self.event_file_path, "a") as f:
-            f.writelines(lines)
+        with bf.BlobFile(self.event_file_path, "ab") as f:
+            f.write(b"".join([l.encode("utf-8") for l in lines]))
 
         logger.info(
             f"Logged {len(lines)} rows of events to {self.event_file_path}: insert_time={t(time.time()-start)}"
