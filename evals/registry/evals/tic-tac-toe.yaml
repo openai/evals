@@ -1,0 +1,9 @@
+tic-tac-toe:
+  id: tic-tac-toe.s1.simple-v0
+  description: Test the model's ability to play the optimal tic-tac-toe move.
+  disclaimer: This test uses an ASCII representation for the board.
+  metrics: [accuracy]
+tic-tac-toe.s1.simple-v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: tic_tac_toe/samples.jsonl
