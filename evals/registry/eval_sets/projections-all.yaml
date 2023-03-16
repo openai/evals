@@ -1,0 +1,8 @@
+projections-all:
+  evals:
+    - wgs84
+    = grs80
+    - airy1830
+    - intl1924
+    - clarke1880
+    - grs67

@@ -1,0 +1,67 @@
+# WGS-84 Projection
+wgs84:
+  id: wgs84.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate arithmetic ability
+wgs84.dev.match-v1:
+  class: evals.elsuite.projections:DistanceProjection
+  args:
+    train_jsonl: ../data/projection-distances/wgs84/wgs84_train.jsonl
+    test_jsonl: ../data/projection-distances/wgs84/wgs84_test.jsonl
+
+# GRS-80 Projection
+grs80:
+  id: grs80.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate arithmetic ability
+grs80.dev.match-v1:
+  class: evals.elsuite.projections:DistanceProjection
+  args:
+    train_jsonl: ../data/projection-distances/GRS80/grs80_train.jsonl
+    test_jsonl: ../data/projection-distances/GRS80/grs80_test.jsonl
+    
+
+# Airy (1830) Projection
+airy1830:
+  id: airy1830.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate arithmetic ability
+airy1830.dev.match-v1:
+  class: evals.elsuite.projections:DistanceProjection
+  args:
+    train_jsonl: ../data/projection-distances/Airy1830/Airy1830_train.jsonl
+    test_jsonl: ../data/projection-distances/Airy1830/Airy1830_test.jsonl
+    
+# Intl 1924 Projection
+intl1924:
+  id: intl1924.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate arithmetic ability
+intl1924.dev.match-v1:
+  class: evals.elsuite.projections:DistanceProjection
+  args:
+    train_jsonl: ../data/projection-distances/Intl1924/Intl1924_train.jsonl
+    test_jsonl: ../data/projection-distances/Intl1924/Intl1924_test.jsonl
+
+# Clarke 1880 Projection
+clarke1880:
+  id: clarke1880.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate arithmetic ability
+clarke1880.dev.match-v1:
+  class: evals.elsuite.projections:DistanceProjection
+  args:
+    train_jsonl: ../data/projection-distances/Clarke1880/Clarke1880_train.jsonl
+    test_jsonl: ../data/projection-distances/Clarke1880/Clarke1880_test.jsonl
+
+# GRS-67 Projection
+grs67:
+  id: grs67.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate arithmetic ability
+grs.67.dev.match-v1:
+  class: evals.elsuite.projections:DistanceProjection
+  args:
+    train_jsonl: ../data/projection-distances/GRS67/grs67_train.jsonl
+    test_jsonl: ../data/projection-distances/GRS67/grs67_test.jsonl
+    
