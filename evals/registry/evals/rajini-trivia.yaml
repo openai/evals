@@ -1,0 +1,8 @@
+rajini_trivia:
+  id: rajini_trivia.s1.simple-v0
+  description: Example eval that uses fuzzy matching to score completions.
+  metrics: [f1_score]
+rajini_trivia.s1.simple-v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: rajini_trivia/samples.jsonl
