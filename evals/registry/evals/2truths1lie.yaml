@@ -1,0 +1,18 @@
+# Define a base eval
+2truths1lie:
+  # id specifies the eval that this eval is an alias for
+  # in this case, arithmetic is an alias for arithmetic.dev.match-v1
+  # When you run `oaieval davinci arithmetic`, you are actually running `oaieval davinci arithmetic.dev.match-v1`
+  id: 2truths1lie.dev.match-v1
+  # The metrics that this eval records
+  # The first metric will be considered to be the primary metric
+  metrics: [accuracy]
+  description: Evaluate 2truths1lie ability
+# Define the eval
+2truths1lie.dev.match-v1:
+  # Specify the class name as a dotted path to the module and class
+  class: evals.elsuite.2truths1lie:Truths2Lie1
+  # Specify the arguments as a dictionary of JSONL URIs
+  # These arguments can be anything that you want to pass to the class constructor
+  args:
+    test_jsonl: /Users/sasha/github/evals/evals/registry/evals/data/2truths1lie/samples.jsonl
