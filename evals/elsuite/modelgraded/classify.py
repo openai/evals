@@ -33,6 +33,7 @@ CHOICE_FNS = {
     "classify_cot": lambda x: x.strip().split("\n")[0].strip(),
     # e.g. "Let's think step by step. ...\nYes"
     "cot_classify": lambda x: x.strip().split("\n")[-1].strip(),
+    "cot_classify_jp": lambda x: x.strip().split("\n")[-1].strip(),
 }
 
 ANSWER_PROMPTS = {
@@ -42,6 +43,11 @@ ANSWER_PROMPTS = {
 First, write out in a step by step manner your reasoning to be sure that your conclusion is correct. Avoid simply stating the correct answer at the outset. Then print only a single choice from {choices} (without quotes or punctuation) on its own line corresponding to the correct answer. At the end, repeat just the answer by itself on a new line.
 
 Reasoning:""".strip(),
+    "cot_classify_jp": """
+まず、一歩一歩あなたの推論を書き出してください。単に正しい答えを最初に述べることを避けてください。次に、{choices}（引用符や句読点なし）から正しい答えに対応する1つの選択肢を単独の行に印刷します。最後に、答えだけを新しい行に繰り返してください。
+
+推論：
+    """.strip(),
 }
 
 EVAL_MODELSPEC = ModelSpec(name="gpt-3.5-turbo", model="gpt-3.5-turbo", is_chat=True)
