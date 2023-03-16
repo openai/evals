@@ -1,0 +1,13 @@
+name: SpamEmailEval
+description: >
+  This eval tests the ability of the model to correctly estimate the probability of emails being spam or not based on the content of the email.
+type: Basic
+input:
+  - role: system
+    content: You are an AI language model, and your task is to analyze email samples and provide the probability (in percentage) that the email is spam. Consider the sender, subject, and content when making your assessment.
+examples:
+  path: evals/registry/data/SpamEmailEval/examples.jsonl
+  format: JSONL
+grading:
+  - field: ideal
+    type: Exact
