@@ -1,0 +1,8 @@
+remove-prime-chars:
+  id: remove-prime-chars.dev.v0
+  description: Test the model's ability to remove characters at prime positions.
+  metrics: [accuracy]
+remove-prime-chars.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: remove_prime_chars/samples.jsonl
