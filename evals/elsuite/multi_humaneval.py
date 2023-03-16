@@ -1,36 +1,25 @@
+import logging
 import random
-import textwrap
-import os
-
-import evals
-import evals.metrics
-
-from evals import completion_query
+from typing import Callable, Dict, Optional, Union
 
 # pip install https://github.com/amazon-science/mxeval if it doesnot exist
 from mxeval.execution import check_correctness
 
+import evals
+import evals.metrics
+from evals import completion_query
+from evals.base import ModelSpec
+from evals.prompt.base import OpenAICreateChatPrompt, OpenAICreatePrompt, Prompt
+from evals.record import record_match, record_sampling
+
 # https://github.com/amazon-science/mxeval
 
-from typing import Callable, Optional, Union, Dict
-from evals.base import ModelSpec
-from evals.prompt.base import (
-    ChatCompletionPrompt,
-    CompletionPrompt,
-    OpenAICreateChatPrompt,
-    OpenAICreatePrompt,
-    Prompt,
-)
-from evals.record import record_match, record_sampling
-import logging
 
 logger = logging.getLogger(__name__)
 
 
 class MultiHumanEval(evals.Eval):
-    def __init__(
-        self, language, train_jsonl, test_jsonl, train_samples_per_prompt=1, **kwargs
-    ):
+    def __init__(self, language, train_jsonl, test_jsonl, train_samples_per_prompt=1, **kwargs):
         super().__init__(**kwargs)
         self.language = language
         self.train_jsonl = train_jsonl
@@ -85,9 +74,7 @@ class MultiHumanEval(evals.Eval):
             # (2) examples
             for fs_example in fewshot_examples:
                 messages.append({"role": "user", "content": fs_example["prompt"]})
-                messages.append(
-                    {"role": "assistant", "content": fs_example["canonical_solution"]}
-                )
+                messages.append({"role": "assistant", "content": fs_example["canonical_solution"]})
             # (3) add the actual prompt
             messages.append({"role": "user", "content": prompt})
         else:
@@ -114,7 +101,6 @@ class MultiHumanEval(evals.Eval):
         """
         fewshot_examples = rng.sample(self.train_samples, self.train_samples_per_prompt)
 
-        verbose = True
         num_attempts = 3
         execution_result, messages, response, passed = None, None, None, False
         for turn_idx in range(num_attempts):
@@ -181,14 +167,11 @@ def check_sampled_text_execute(
     choice = result["choices"][0]
 
     sampled = choice["text"].strip() if model_spec.strip_completion else choice["text"]
-    verbose = False
 
     if "```" in sampled:
         sampled = sampled.split("```")[1]
 
-    execute_result = check_correctness(
-        problem, sampled, language=language, timeout=20.0
-    )
+    execute_result = check_correctness(problem, sampled, language=language, timeout=20.0)
     # passed (true or false), result (string from execution)
 
     result = {
