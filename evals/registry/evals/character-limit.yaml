@@ -1,0 +1,8 @@
+character-limit:
+  id: character-limit.dev.match-v0
+  metrics: [accuracy]
+  description: Evaluate if the result stays within character limit when generating content
+character-limit.dev.match-v0:
+  class: evals.elsuite.character-limit:CharacterLimit
+  args:
+    samples_jsonl: character_limit/samples.jsonl
