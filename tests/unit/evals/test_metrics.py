@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 from unittest.mock import MagicMock
 
 import numpy as np
@@ -18,7 +18,7 @@ from evals import metrics
 )
 def test_get_accuracy(
     event_labels: List[bool],
-    expected: Optional[float],
+    expected: float,
 ) -> None:
     events = [MagicMock(data={"correct": value}) for value in event_labels]
     np.testing.assert_allclose(expected, metrics.get_accuracy(events), rtol=1e-3)
