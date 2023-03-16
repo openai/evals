@@ -23,7 +23,10 @@ class CharacterLimit(evals.Eval):
         prompt = []
 
         for i, sample in enumerate([test_sample]):
-            prompt += [{"role": "user", "content": sample[0]["content"]}]
+            prompt += [
+                {"role": "user", "content": sample["input"][0]["content"]},
+                {"role": "user", "content": sample["input"][1]["content"]},
+            ]
 
         result, actual_prompt, metadata = evals.completion_query(
             prompt=prompt,
@@ -33,7 +36,7 @@ class CharacterLimit(evals.Eval):
 
         choice = result["choices"][0]["text"]
         picked = None
-        expected = sample[1]["content"]
+        expected = sample["ideal"]
         sampled = None
 
         result = {
