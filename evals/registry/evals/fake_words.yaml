@@ -1,9 +1,0 @@
-fake_words:
-  id: fake_words.dev.v0
-  description: Test a model on its identification of words not in the English language.
-  metrics: [accuracy]
-
-fake_words.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: fake_words/samples.jsonl
