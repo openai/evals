@@ -1,0 +1,8 @@
+countries:
+  id: countries.dev.v0
+  metrics: [accuracy]
+
+countries.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: countries/samples.jsonl
