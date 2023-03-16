@@ -1,0 +1,8 @@
+chemistry_olympiad:
+  id: chemistry_olympiad.test.v1
+  metrics:
+    - accuracy
+chemistry_olympiad.test.v1:
+  args:
+    samples_jsonl: chemistry_olympiad/samples.jsonl
+  class: evals.elsuite.basic.match:Match
