@@ -1,0 +1,41 @@
+# Define a base eval
+multi-humaneval-js:
+  id: multi-humaneval-js.dev.match-v1
+  # The metrics that this eval records
+  # The first metric will be considered to be the primary metric
+  metrics: [accuracy]
+  description: Evaluate execution accuracies
+
+multi-humaneval-js.dev.match-v1:
+  class: evals.elsuite.multi_humaneval:MultiHumanEval
+  args:
+    language: javascript
+    train_jsonl: /Users/benathi/research/mxeval/data/mbxp/examples/mbxp_samples_javascript.jsonl
+    test_jsonl: /Users/benathi/research/mxeval/data/multilingual_humaneval/HumanEval_javascript_v1.1_mini.jsonl
+
+
+multi-humaneval-python:
+  id: multi-humaneval-python.dev.match-v1
+  # The metrics that this eval records
+  # The first metric will be considered to be the primary metric
+  metrics: [accuracy]
+  description: Evaluate execution accuracies
+multi-humaneval-python.dev.match-v1:
+  class: evals.elsuite.multi_humaneval:MultiHumanEval
+  args:
+    language: python
+    train_jsonl: /Users/benathi/research/mxeval/data/mbxp/examples/mbxp_samples_python.jsonl
+    test_jsonl: /Users/benathi/research/mxeval/data/multilingual_humaneval/HumanEval.jsonl
+
+
+
+multi-humaneval-php.dev.match-v1:
+  class: evals.elsuite.multi_humaneval:MultiHumanEval
+  args:
+    language: php
+    train_jsonl: /Users/benathi/research/mxeval/data/mbxp/examples/mbxp_samples_php.jsonl
+    test_jsonl: /Users/benathi/research/mxeval/data/multilingual_humaneval/HumanEval_php_v1.1.jsonl
+
+
+
+# create similar eval for other languages
