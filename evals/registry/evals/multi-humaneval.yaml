@@ -11,7 +11,7 @@ multi-humaneval-js.dev.match-v1:
   args:
     language: javascript
     train_jsonl: /Users/benathi/research/mxeval/data/mbxp/examples/mbxp_samples_javascript.jsonl
-    test_jsonl: /Users/benathi/research/mxeval/data/multilingual_humaneval/HumanEval_javascript_v1.1_mini.jsonl
+    test_jsonl: /Users/benathi/research/mxeval/data/multilingual_humaneval/HumanEval_javascript_v1.1.jsonl
 
 
 multi-humaneval-python:
