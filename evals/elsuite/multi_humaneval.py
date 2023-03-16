@@ -143,15 +143,6 @@ class MultiHumanEval(evals.Eval):
                 )
             if passed:
                 break
-            if verbose:
-                print(
-                    f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!##################### turn {turn_idx} #####################!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-                )
-                self.display_messages(messages)
-                print(f"assistant:\n{response}")
-                print(
-                    f"############################ task id {test_sample['task_id']} | turn idx {turn_idx} | passed = {passed} | ##############################"
-                )
 
 
 def check_sampled_text_execute(
@@ -194,18 +185,11 @@ def check_sampled_text_execute(
 
     if "```" in sampled:
         sampled = sampled.split("```")[1]
-    if verbose:
-        print("prompt", actual_prompt[-1]["content"])
-        print("answer------")
-        print(sampled)
 
     execute_result = check_correctness(
         problem, sampled, language=language, timeout=20.0
     )
     # passed (true or false), result (string from execution)
-    if verbose:
-        print("Correct=", execute_result["passed"])
-        print("Result=", execute_result["result"])
 
     result = {
         "prompt": actual_prompt,
