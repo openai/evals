@@ -1,0 +1,8 @@
+clinicaltrials-nct:
+  id: clinicaltrials-nct.dev.match-v1
+  description: Example eval that assesses whether GPT can accurately find the condition of a clinical trial using NCT numbers from open access clinicaltrials.gov
+  metrics: [accuracy]
+crm-fins-expert.dev.match-v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: clinicaltrials_nct/clinicaltrials_nct.jsonl
