@@ -4,7 +4,7 @@ wgs84:
   metrics: [accuracy]
   description: Evaluate WGS84 Projection
 wgs84.dev.match-v1:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: ../data/projection-distances/wgs84_samples.jsonl
     
@@ -15,7 +15,7 @@ grs80:
   metrics: [accuracy]
   description: Evaluate GRS-80 Projection
 grs80.dev.match-v1:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: ../data/projection-distances/GRS80_samples.jsonl
     
@@ -26,7 +26,7 @@ airy1830:
   metrics: [accuracy]
   description: Evaluate Airy 1830 Projection
 airy1830.dev.match-v1:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: ../data/projection-distances/Airy1830_samples.jsonl
     
@@ -36,7 +36,7 @@ intl1924:
   metrics: [accuracy]
   description: Evaluate Intl 1924 Projection
 intl1924.dev.match-v1:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: ../data/projection-distances/Intl1924_samples.jsonl
 
@@ -46,7 +46,7 @@ clarke1880:
   metrics: [accuracy]
   description: Evaluate Clarke 1880 Projection
 clarke1880.dev.match-v1:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: ../data/projection-distances/Clarke1880_samples.jsonl
 
@@ -56,7 +56,7 @@ grs67:
   metrics: [accuracy]
   description: Evaluate GRS67 Projection
 grs.67.dev.match-v1:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: ../data/projection-distances/GRS67_samples.jsonl
     
