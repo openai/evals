@@ -2,66 +2,61 @@
 wgs84:
   id: wgs84.dev.match-v1
   metrics: [accuracy]
-  description: Evaluate arithmetic ability
+  description: Evaluate WGS84 Projection
 wgs84.dev.match-v1:
-  class: evals.elsuite.projections:DistanceProjection
+  class: evals.elsuite.basic.match:Match
   args:
-    train_jsonl: ../data/projection-distances/wgs84/wgs84_train.jsonl
-    test_jsonl: ../data/projection-distances/wgs84/wgs84_test.jsonl
+    samples_jsonl: ../data/projection-distances/wgs84_samples.jsonl
+    
 
 # GRS-80 Projection
 grs80:
   id: grs80.dev.match-v1
   metrics: [accuracy]
-  description: Evaluate arithmetic ability
+  description: Evaluate GRS-80 Projection
 grs80.dev.match-v1:
-  class: evals.elsuite.projections:DistanceProjection
+  class: evals.elsuite.basic.match:Match
   args:
-    train_jsonl: ../data/projection-distances/GRS80/grs80_train.jsonl
-    test_jsonl: ../data/projection-distances/GRS80/grs80_test.jsonl
+    samples_jsonl: ../data/projection-distances/GRS80_samples.jsonl
     
 
 # Airy (1830) Projection
 airy1830:
   id: airy1830.dev.match-v1
   metrics: [accuracy]
-  description: Evaluate arithmetic ability
+  description: Evaluate Airy 1830 Projection
 airy1830.dev.match-v1:
-  class: evals.elsuite.projections:DistanceProjection
+  class: evals.elsuite.basic.match:Match
   args:
-    train_jsonl: ../data/projection-distances/Airy1830/Airy1830_train.jsonl
-    test_jsonl: ../data/projection-distances/Airy1830/Airy1830_test.jsonl
+    samples_jsonl: ../data/projection-distances/Airy1830_samples.jsonl
     
 # Intl 1924 Projection
 intl1924:
   id: intl1924.dev.match-v1
   metrics: [accuracy]
-  description: Evaluate arithmetic ability
+  description: Evaluate Intl 1924 Projection
 intl1924.dev.match-v1:
-  class: evals.elsuite.projections:DistanceProjection
+  class: evals.elsuite.basic.match:Match
   args:
-    train_jsonl: ../data/projection-distances/Intl1924/Intl1924_train.jsonl
-    test_jsonl: ../data/projection-distances/Intl1924/Intl1924_test.jsonl
+    samples_jsonl: ../data/projection-distances/Intl1924_samples.jsonl
 
 # Clarke 1880 Projection
 clarke1880:
   id: clarke1880.dev.match-v1
   metrics: [accuracy]
-  description: Evaluate arithmetic ability
+  description: Evaluate Clarke 1880 Projection
 clarke1880.dev.match-v1:
-  class: evals.elsuite.projections:DistanceProjection
+  class: evals.elsuite.basic.match:Match
   args:
-    train_jsonl: ../data/projection-distances/Clarke1880/Clarke1880_train.jsonl
-    test_jsonl: ../data/projection-distances/Clarke1880/Clarke1880_test.jsonl
+    samples_jsonl: ../data/projection-distances/Clarke1880_samples.jsonl
 
 # GRS-67 Projection
 grs67:
   id: grs67.dev.match-v1
   metrics: [accuracy]
-  description: Evaluate arithmetic ability
+  description: Evaluate GRS67 Projection
 grs.67.dev.match-v1:
-  class: evals.elsuite.projections:DistanceProjection
+  class: evals.elsuite.basic.match:Match
   args:
-    train_jsonl: ../data/projection-distances/GRS67/grs67_train.jsonl
-    test_jsonl: ../data/projection-distances/GRS67/grs67_test.jsonl
+    samples_jsonl: ../data/projection-distances/GRS67_samples.jsonl
     
