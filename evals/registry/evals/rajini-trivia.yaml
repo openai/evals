@@ -1,6 +1,6 @@
 rajini-trivia:
   id: rajini-trivia.dev-v0
-  description: Is GPT-4 better thn an average Rajini fan?
+  description: Is GPT-4 better than an average Rajini fan?
   metrics: [f1_score]
 rajini-trivia.dev-v0:
   class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
