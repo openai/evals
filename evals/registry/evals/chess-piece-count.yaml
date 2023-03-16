@@ -1,0 +1,8 @@
+chess-piece-count:
+  id: chess-piece-count.s1.simple-v0
+  description: Test the model's ability to understand chess moves, rules and theory
+  metrics: [accuracy]
+chess-piece-count.s1.simple-v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: chess_piece_count/fuzzy_match.jsonl
