@@ -1,5 +1,0 @@
-{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Please choose the unique one in one,0,ten."}], "ideal": "0"}
-{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Please choose the unique one in zoom,zoo,bike."}], "ideal": "bike"}
-{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Please choose the unique one in zoo,foo,bike."}], "ideal": "bike"}
-{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Please choose the unique one in moon,fool,bike."}], "ideal": "bike"}
-{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Please choose the unique one in man,女人,bike."}], "ideal": "bike"}
