@@ -3,6 +3,6 @@ word_count:
   metrics: [accuracy]
 
 word_count.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
   args:
     samples_jsonl: word_count/samples.jsonl
