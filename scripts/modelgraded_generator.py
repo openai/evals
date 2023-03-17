@@ -37,7 +37,6 @@ unlabeled_prompts = dict(
 )
 
 
-# we recommend using ChatGPT or GPT for generatons
 subjects = dict(
     animals=["cat", "bird", "hamster"],
     fruits=["apple", "banana", "orange"],
