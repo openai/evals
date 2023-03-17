@@ -1,0 +1,8 @@
+multiplication_evaluation:
+  id: multiplication_evaluation.dev.v0
+  metrics: [accuracy]
+
+multiplication_evaluation.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: multiplication_evaluation/samples.jsonl
