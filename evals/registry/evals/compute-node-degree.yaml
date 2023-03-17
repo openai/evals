@@ -1,0 +1,8 @@
+compute-node-degree:
+  id: compute-node-degree.undirected.v0
+  description: Test the model's ability to understand a graph and compute the degree of each node.
+  metrics: [accuracy]
+compute-node-degree.undirected.dev3.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: compute_node_degree/samples.jsonl
