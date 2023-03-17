@@ -1,0 +1,9 @@
+points-on-line:
+   id: points-on-line.s1.simple-v0
+   description: Tests the model's ability to calculate three points (start, center, end) on a line.
+   disclaimer: The tests are randomly generated with a min start point of (-1, -1, -1) and max of (1, 1, 1), with a max distance from start of (2, 2, 2).
+   metrics: [accuracy]
+points-on-line.s1.simple-v0:
+   class: evals.elsuite.basic.match:Match
+   args:
+     samples_jsonl: points_on_line/points_on_line.jsonl
