@@ -1,0 +1,8 @@
+query_generation:
+  id: query_generation.dev.v0
+  description: Test the model's ability to generate custom queries.
+  metrics: [f1_score]
+query_generation.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: query_generation/samples.jsonl
