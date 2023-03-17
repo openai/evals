@@ -26,6 +26,18 @@ dependencies = [
     "matplotlib",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "autoflake",
+    "black[jupyter]",
+    "ipykernel",
+    "ipython",
+    "isort",
+    "jupyter",
+    "notebook",
+    "pre-commit",
+]
+
 [project.scripts]
 oaieval = "evals.cli.oaieval:main"
 oaievalset = "evals.cli.oaievalset:main"
