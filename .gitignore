@@ -1,2 +1,5 @@
 __pycache__/
 evals.egg-info/
+*.code-workspace
+
+venv/
