@@ -1,0 +1,8 @@
+math_tests:
+  id: math_tests.dev.v0
+  metrics:
+    - accuracy
+math_tests.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: math_tests/samples.jsonl
