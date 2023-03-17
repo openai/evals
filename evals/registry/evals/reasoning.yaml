@@ -1,0 +1,8 @@
+reasoning:
+  id: reasoning.dev.v0
+  metrics: [accuracy]
+
+reasoning.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: reasoning/samples.jsonl
