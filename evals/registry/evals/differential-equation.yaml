@@ -1,0 +1,8 @@
+differential-equation:
+  id: differential-equation.dev.v0
+  metrics: [accuracy]
+
+differential-equation.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: differential-equation/samples.jsonl

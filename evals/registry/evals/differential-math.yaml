@@ -1,8 +1,0 @@
-differential-math:
-  id: differential-math.dev.v0
-  metrics: [accuracy]
-
-differential-math.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: differential-math/samples.jsonl
