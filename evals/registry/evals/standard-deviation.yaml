@@ -1,0 +1,9 @@
+standard-deviation:
+  id: standard-deviation.dev.v0
+  description: Test the model's ability to calculate the standard deviation of numbers
+  metrics: [accuracy]
+
+standard-deviation.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: standard-deviation/samples.jsonl
