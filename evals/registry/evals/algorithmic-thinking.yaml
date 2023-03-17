@@ -1,0 +1,73 @@
+algorithmic-thinking-builtin_sort:
+  description: Builtin sort (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)
+  id: algorithmic-thinking-builtin_sort.s1.simple-v0
+  metrics:
+  - accuracy
+algorithmic-thinking-builtin_sort.s1.simple-v0:
+  args:
+    samples_jsonl: algorithmic-thinking/builtin_sort/samples.jsonl
+  class: evals.elsuite.basic.match:Match
+algorithmic-thinking-cycle_detection:
+  description: Whether or not a cycle exists in the given directed graph (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)
+  id: algorithmic-thinking-cycle_detection.s1.simple-v0
+  metrics:
+  - accuracy
+algorithmic-thinking-cycle_detection.s1.simple-v0:
+  args:
+    samples_jsonl: algorithmic-thinking/cycle_detection/samples.jsonl
+  class: evals.elsuite.basic.match:Match
+algorithmic-thinking-dfs:
+  description: Whether or not a cycle exists in the given directed graph (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)
+  id: algorithmic-thinking-dfs.s1.simple-v0
+  metrics:
+  - accuracy
+algorithmic-thinking-dfs.s1.simple-v0:
+  args:
+    samples_jsonl: algorithmic-thinking/dfs/samples.jsonl
+  class: evals.elsuite.basic.match:Match
+algorithmic-thinking-max:
+  description: The maximum element of an array and its respective index (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)
+  id: algorithmic-thinking-max.s1.simple-v0
+  metrics:
+  - accuracy
+algorithmic-thinking-max.s1.simple-v0:
+  args:
+    samples_jsonl: algorithmic-thinking/max/samples.jsonl
+  class: evals.elsuite.basic.match:Match
+algorithmic-thinking-merge_sort:
+  description: Merge sort (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)
+  id: algorithmic-thinking-merge_sort.s1.simple-v0
+  metrics:
+  - accuracy
+algorithmic-thinking-merge_sort.s1.simple-v0:
+  args:
+    samples_jsonl: algorithmic-thinking/merge_sort/samples.jsonl
+  class: evals.elsuite.basic.match:Match
+algorithmic-thinking-min:
+  description: The minimum element of an array and its respective index (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)
+  id: algorithmic-thinking-min.s1.simple-v0
+  metrics:
+  - accuracy
+algorithmic-thinking-min.s1.simple-v0:
+  args:
+    samples_jsonl: algorithmic-thinking/min/samples.jsonl
+  class: evals.elsuite.basic.match:Match
+algorithmic-thinking-prefix_sum:
+  description: The prefix sum of an array including an initial 0 element (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)
+  id: algorithmic-thinking-prefix_sum.s1.simple-v0
+  metrics:
+  - accuracy
+algorithmic-thinking-prefix_sum.s1.simple-v0:
+  args:
+    samples_jsonl: algorithmic-thinking/prefix_sum/samples.jsonl
+  class: evals.elsuite.basic.match:Match
+algorithmic-thinking-union_find:
+  description: Operations (merge, are_connected) on a union find/disjoint set data
+    structure (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)
+  id: algorithmic-thinking-union_find.s1.simple-v0
+  metrics:
+  - accuracy
+algorithmic-thinking-union_find.s1.simple-v0:
+  args:
+    samples_jsonl: algorithmic-thinking/union_find/samples.jsonl
+  class: evals.elsuite.basic.match:Match
