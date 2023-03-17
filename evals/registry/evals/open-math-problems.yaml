@@ -1,0 +1,10 @@
+open-math-problems:
+  id: open-math-problems.s1.simple-v0
+  description: tet
+  disclaimer: test
+  metrics: [accuracy]
+open-math-problems.s1.simple-v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: open_math_problems/open_math_problems.jsonl
+    modelgraded_spec_file: open-math-problem

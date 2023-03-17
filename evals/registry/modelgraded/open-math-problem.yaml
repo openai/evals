@@ -1,0 +1,22 @@
+prompt: |-
+  You are comparing a submitted answer to an expert answer on a given question. Here is the data:
+  [BEGIN DATA]
+  ***
+  [Question]: {input}
+  ***
+  [Expert]: {ideal}
+  ***
+  [Submission]: {completion}
+  ***
+  [END DATA]
+
+  Compare the factual content of the submitted answer with the expert answer. Ignore any differences in style, grammar, or punctuation.
+  The submitted answer may either be fully consistent with the expert answer (in which case the submission is correct), or it may differ, in terms of facts, from the expert answer (in which case the submission is incorrect). Determine, in a step by step manner, your reasoning about which case applies to be sure that your conclusion is correct; avoid simply stating the correct answers at the outset. Then, print (without quotes or punctuation) only the single character "Y" (if the submission was correct) or "N" (if the submission was incorrect) on its own line. At the end, repeat just the letter again by itself on a new line.
+  Reasoning:
+eval_type: cot_classify
+choice_scores:
+  "Y": 1.0
+  "N": 0.0
+choice_strings: 'YN'
+input_outputs:
+  input: completion
