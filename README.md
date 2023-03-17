@@ -24,7 +24,7 @@ ____________________
 
 ## Setup
 
-To run evals, you will need to set up and specify your OpenAI API key to run evals. If you need to generate an API key, you can do so at [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys). After you obtain an API key, specify it using the `OPENAI_API_KEY` environment variable. **Please be aware of the [costs](https://openai.com/pricing) associated with using the API when running evals.**
+To run evals, you will need to set up and specify your OpenAI API key. You can generate one at <https://platform.openai.com/account/api-keys>. After you obtain an API key, specify it using the `OPENAI_API_KEY` environment variable. **Please be aware of the [costs](https://openai.com/pricing) associated with using the API when running evals.**
 
 ### Downloading evals
 
