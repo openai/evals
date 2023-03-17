@@ -40,7 +40,9 @@ class FuzzyMatch(evals.Eval):
         )
 
     def run(self, recorder: RecorderBase):
-        samples = evals.get_jsonl(self.samples_jsonl)
+        samples = evals.get_jsonl(
+            self.samples_jsonl, create_cache=recorder.run_spec.run_config['create_cache']
+        )
         self.eval_all_samples(recorder, samples)
 
         return {

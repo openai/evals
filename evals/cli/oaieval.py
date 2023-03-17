@@ -146,6 +146,7 @@ def run(args):
         "initial_settings": {
             "visible": visible,
         },
+        "create_cache": args.cache,
     }
 
     model_name = model_specs.completions_[0].name if len(model_specs.completions_) > 0 else "n/a"
@@ -170,9 +171,9 @@ def run(args):
     else:
         recorder = evals.record.Recorder(record_path, run_spec=run_spec)
 
-    api_extra_options = {}
-    if not args.cache:
-        api_extra_options["cache_level"] = 0
+    # api_extra_options = {}
+    # if not args.cache:
+    #     api_extra_options["cache_level"] = 0
 
     run_url = f"{run_spec.run_id}"
     logger.info(_purple(f"Run started: {run_url}"))

@@ -26,7 +26,7 @@ class Translate(evals.Eval):
         if self.num_few_shot > 0:
             assert few_shot_jsonl is not None, "few shot requires few shot sample dataset"
             self.few_shot_jsonl = few_shot_jsonl
-            self.few_shot = evals.get_jsonl(self.few_shot_jsonl)
+            self.few_shot = evals.get_jsonl(self.few_shot_jsonl, create_cache=False)
 
         self.bleu = BLEU(effective_order=True)
 
@@ -61,7 +61,9 @@ class Translate(evals.Eval):
             return match
 
     def run(self, recorder):
-        samples = evals.get_jsonl(self.samples_jsonl)
+        samples = evals.get_jsonl(
+            self.samples_jsonl, create_cache=recorder.run_spec.run_config['create_cache']
+        )
         self.eval_all_samples(recorder, samples)
         events = recorder.get_events("match")
 

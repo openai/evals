@@ -30,7 +30,9 @@ class Includes(evals.Eval):
         return includes_answer
 
     def run(self, recorder):
-        samples = evals.get_jsonl(self.samples_jsonl)
+        samples = evals.get_jsonl(
+            self.samples_jsonl, create_cache=recorder.run_spec.run_config['create_cache']
+        )
         self.eval_all_samples(recorder, samples)
         events = recorder.get_scores("accuracy")
         return {
