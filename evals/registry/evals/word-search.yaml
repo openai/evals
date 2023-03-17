@@ -1,0 +1,8 @@
+word-search:
+  id: word-search.dev.v0
+  metrics: [accuracy, f1_score]
+
+word-search.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: word-search/samples.v0.jsonl
