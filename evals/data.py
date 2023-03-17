@@ -14,7 +14,7 @@ import urllib
 from collections.abc import Iterator
 from functools import partial
 from pathlib import Path
-from typing import Any, Sequence, Union
+from typing import Any, Sequence, Union, Optional
 
 import blobfile as bf
 import lz4.frame
@@ -98,6 +98,11 @@ def filecache(func):
     name = func.__name__
 
     def wrapper(*args, **kwargs):
+        cache_enabled = kwargs.pop('create_cache', True)
+
+        if not cache_enabled:
+            return func(*args, **kwargs)
+
         md5 = hashlib.md5((name + ":" + str((args, kwargs))).encode("utf-8")).hexdigest()
         pkl_path = f"{DIR}/{md5}.pkl"
         if os.path.exists(pkl_path):
@@ -123,7 +128,7 @@ def get_lines(path) -> list[dict]:
 
 
 @filecache
-def get_jsonl(path: str) -> list[dict]:
+def get_jsonl(path: str, cache_enabled: Optional[bool] = None) -> list[dict]:
     """
     Extract json lines from the given path.
     If the path is a directory, look in subpaths recursively.
@@ -134,7 +139,7 @@ def get_jsonl(path: str) -> list[dict]:
         result = []
         for filename in bf.listdir(path):
             if filename.endswith(".jsonl"):
-                result += get_jsonl(os.path.join(path, filename))
+                result += get_jsonl(os.path.join(path, filename), cache_enabled)
         return result
     return _get_jsonl_file(path)
 
