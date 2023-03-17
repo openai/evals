@@ -200,12 +200,12 @@ class EnhancedJSONEncoder(json.JSONEncoder):
         return _to_py_types(o)
 
 
-def jsondumps(o: Any, **kwargs: Any) -> str:
-    return json.dumps(o, cls=EnhancedJSONEncoder, **kwargs)
+def jsondumps(o: Any, ensure_ascii: bool = False, **kwargs: Any) -> str:
+    return json.dumps(o, cls=EnhancedJSONEncoder, ensure_ascii=ensure_ascii, **kwargs)
 
 
-def jsondump(o: Any, fp: Any, **kwargs: Any) -> None:
-    json.dump(o, fp, cls=EnhancedJSONEncoder, **kwargs)
+def jsondump(o: Any, fp: Any, ensure_ascii: bool = False, **kwargs: Any) -> None:
+    json.dump(o, fp, cls=EnhancedJSONEncoder, ensure_ascii=ensure_ascii, **kwargs)
 
 
 def jsonloads(s: str, **kwargs: Any) -> Any:
