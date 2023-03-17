@@ -3,9 +3,9 @@
 Evals is a framework for evaluating OpenAI models and an open-source registry of benchmarks.
 
 You can use Evals to create and run evaluations that:
-- use datasets to generate prompts,
-- measure the quality of completions provided by an OpenAI model, and
-- compare performance across different datasets and models.
+- uses datasets to generate prompts,
+- measures the quality of completions provided by an OpenAI model, and
+- compares performance across different datasets and models.
 
 With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. To get started, we recommend that you follow these steps **in order**:
 1. Read through this doc and follow the [setup instructions below](README.md#Setup).
