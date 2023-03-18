@@ -1,0 +1,8 @@
+syllogisms-reasoning:
+  id: syllogisms-reasoning.dev.v0
+  metrics: [accuracy]
+
+syllogisms-reasoning.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: syllogisms-reasoning/samples.jsonl
