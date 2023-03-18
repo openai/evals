@@ -1,0 +1,9 @@
+lisp-paren-check:
+  id: lisp-paren-check.dev.v0
+  description: Test the model's ability to calculate the lisp paren of numbers.
+  metrics: [accuracy]
+
+lisp-paren-check.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: lisp-paren-check/samples.jsonl
