@@ -5,6 +5,8 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'evals/registry/**'
 
 jobs:
   check_files:
