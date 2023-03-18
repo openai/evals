@@ -1,0 +1,9 @@
+pattern_matrix_reasoning:
+  id: pattern_matrix_reasoning.dev.v0
+  description: Follow logical rule to determine what is next pattern in a sequence.
+  metrics: [accuracy]
+
+pattern_matrix_reasoning.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: pattern_matrix_reasoning/samples-snake-around.v0.jsonl
