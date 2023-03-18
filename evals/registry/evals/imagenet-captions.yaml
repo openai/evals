@@ -1,0 +1,8 @@
+imagenet_captions:
+  id: imagenet-captions.dev.v0
+  metrics: [accuracy]
+
+imagenet-captions.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: imagenet_captions/samples.jsonl
