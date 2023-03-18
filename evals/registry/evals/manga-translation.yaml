@@ -1,5 +1,5 @@
 manga-translation-page:
-  id: manga-translation.dev.v0
+  id: manga-translation-page.dev.v0
   metrics: [accuracy]
 manga-translation-page.dev.v0:
   class: evals.elsuite.basic.match:Match
@@ -7,7 +7,7 @@ manga-translation-page.dev.v0:
     samples_jsonl: manga-translation/pages.jsonl
 
 manga-translation-panel:
-  id: manga-translation.dev.v0
+  id: manga-translation-panel.dev.v0
   metrics: [accuracy]
 manga-translation-panel.dev.v0:
   class: evals.elsuite.basic.match:Match
@@ -15,7 +15,7 @@ manga-translation-panel.dev.v0:
     samples_jsonl: manga-translation/panels.jsonl
 
 manga-translation-bubble:
-  id: manga-translation.dev.v0
+  id: manga-translation-bubble.dev.v0
   metrics: [accuracy]
 manga-translation-bubble.dev.v0:
   class: evals.elsuite.basic.match:Match
