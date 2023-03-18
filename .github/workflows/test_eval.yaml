@@ -1,6 +1,7 @@
 name: Run new evals
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
