@@ -1,0 +1,8 @@
+stock-options:
+  id: stock-options.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-options.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_options.jsonl
