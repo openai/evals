@@ -1,3 +1,12 @@
+algorithmic-thinking-ackermann:
+  description: Output of the ackermann function (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)
+  id: algorithmic-thinking-ackermann.s1.simple-v0
+  metrics:
+  - accuracy
+algorithmic-thinking-ackermann.s1.simple-v0:
+  args:
+    samples_jsonl: algorithmic-thinking/ackermann/samples.jsonl
+  class: evals.elsuite.basic.match:Match
 algorithmic-thinking-builtin_sort:
   description: Builtin sort (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)
   id: algorithmic-thinking-builtin_sort.s1.simple-v0
@@ -24,6 +33,15 @@ algorithmic-thinking-dfs:
 algorithmic-thinking-dfs.s1.simple-v0:
   args:
     samples_jsonl: algorithmic-thinking/dfs/samples.jsonl
+  class: evals.elsuite.basic.match:Match
+algorithmic-thinking-heap:
+  description: Tracking the state of a min heap (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)
+  id: algorithmic-thinking-heap.s1.simple-v0
+  metrics:
+  - accuracy
+algorithmic-thinking-heap.s1.simple-v0:
+  args:
+    samples_jsonl: algorithmic-thinking/heap/samples.jsonl
   class: evals.elsuite.basic.match:Match
 algorithmic-thinking-max:
   description: The maximum element of an array and its respective index (from https://github.com/SimonBerens/LLM-Algorithm-Benchmark)

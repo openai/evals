@@ -1,8 +1,10 @@
 algorithmic-thinking:
   evals:
+  - algorithmic-thinking-ackermann
   - algorithmic-thinking-builtin_sort
   - algorithmic-thinking-cycle_detection
   - algorithmic-thinking-dfs
+  - algorithmic-thinking-heap
   - algorithmic-thinking-max
   - algorithmic-thinking-merge_sort
   - algorithmic-thinking-min
