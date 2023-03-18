@@ -1,0 +1,8 @@
+stock_option_spreads:
+  id: stock_option_call_spreads.dev.v0
+  metrics: [accuracy]
+
+stock_option_spreads.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_option_call_spreads/stock_option_call_spreads.jsonl
