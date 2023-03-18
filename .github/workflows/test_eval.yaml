@@ -5,6 +5,8 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'registry/evals/**.yaml'
 
 jobs:
   check_files:
