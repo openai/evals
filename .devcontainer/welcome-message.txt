@@ -1,4 +1,6 @@
 👋 Welcome to "evals" in GitHub Codespaces!
 
+💵 Please be aware of the costs associated with using the API when running evals.
+
 ❗ To run evals, safely add your API key. For more details, see: 
 https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
