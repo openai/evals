@@ -128,7 +128,7 @@ def get_lines(path) -> list[dict]:
 
 
 @filecache
-def get_jsonl(path: str, cache_enabled: Optional[bool] = None) -> list[dict]:
+def get_jsonl(path: str, create_cache: Optional[bool] = None) -> list[dict]:
     """
     Extract json lines from the given path.
     If the path is a directory, look in subpaths recursively.
@@ -139,7 +139,7 @@ def get_jsonl(path: str, cache_enabled: Optional[bool] = None) -> list[dict]:
         result = []
         for filename in bf.listdir(path):
             if filename.endswith(".jsonl"):
-                result += get_jsonl(os.path.join(path, filename), cache_enabled)
+                result += get_jsonl(os.path.join(path, filename), create_cache=create_cache)
         return result
     return _get_jsonl_file(path)
 
