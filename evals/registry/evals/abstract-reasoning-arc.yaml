@@ -1,0 +1,20 @@
+abstract-reasoning-arc:
+  id: abstract-reasoning-arc.match.training.v0
+  description: Test the model's ability to reason about abstract concepts.
+  metrics: [accuracy]
+abstract-reasoning-arc.match.training.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: abstract_reasoning_arc/training.jsonl
+abstract-reasoning-arc.match.evaluation.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: abstract_reasoning_arc/evaluation.jsonl
+abstract-reasoning-arc.fuzzy-match.training.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: abstract_reasoning_arc/training.jsonl
+abstract-reasoning-arc-fuzzy-match.evaluation.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: abstract_reasoning_arc/evaluation.jsonl
