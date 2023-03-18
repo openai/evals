@@ -7,3 +7,12 @@ logic-fact.dev.v0:
     samples_jsonl: logic/samples.jsonl
     eval_type: cot_classify
     modelgraded_spec_file: fact
+logic-derive-sentences:
+  id: logic-derive-sentences.dev.v0
+  metrics: [accuracy]
+logic-derive-sentences.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: logic/samples_derive_sentences.jsonl
+    eval_type: cot_classify
+    modelgraded_spec_file: fact
