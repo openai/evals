@@ -45,8 +45,14 @@ class Arithmetic(evals.Eval):
         """
         Called by the `oaieval` CLI to run the eval. The `eval_all_samples` method calls `eval_sample`.
         """
-        self.train_samples = evals.get_jsonl(self.train_jsonl)
-        test_samples = evals.get_jsonl(self.test_jsonl)
+        self.train_samples = evals.get_jsonl(
+            self.train_jsonl,
+            create_cache=recorder.run_spec.run_config['create_cache']
+        )
+        test_samples = evals.get_jsonl(
+            self.test_jsonl,
+            create_cache=recorder.run_spec.run_config['create_cache']
+        )
         self.eval_all_samples(recorder, test_samples)
 
         # Record overall metrics
