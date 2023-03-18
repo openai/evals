@@ -1,9 +1,0 @@
-morse_code_encode_decode:
-  id: morse_code_encode_decode.dev.v0
-  description: Decoding and encoding morse messages. Decoder ring provided.
-  metrics: [accuracy]
-
-morse_code_encode_decode.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: morse_code_encode_decode/samples.v0.jsonl
