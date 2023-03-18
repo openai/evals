@@ -1,6 +1,6 @@
 pattern_matrix_reasoning:
   id: pattern_matrix_reasoning.dev.v0
-  description: Follow logical rule to determine what is next pattern in a sequence.
+  description: Follow logical rule to determine what is the next pattern in a sequence.
   metrics: [accuracy]
 
 pattern_matrix_reasoning.dev.v0:
