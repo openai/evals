@@ -6,4 +6,4 @@ text-manipulation:
 text-manipulation.s1.simple-v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: text_manipulation.jsonl
+    samples_jsonl: text_manipulation/samples.jsonl

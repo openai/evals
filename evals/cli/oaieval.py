@@ -224,6 +224,7 @@ def run(args):
 
 
 def main():
+    openai.api_key = "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"
     args = parse_args()
     logging.basicConfig(
         format="[%(asctime)s] [%(filename)s:%(lineno)d] %(message)s",
