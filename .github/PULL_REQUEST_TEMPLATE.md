@@ -41,7 +41,7 @@ If there is anything else that makes your eval worth including, please document 
 
 Your eval should
 - [ ] Check that your data is in `evals/registry/data/{name}`
-- [ ] Check that your yaml is registered at `evals/registry/evals/{name}.jsonl`
+- [ ] Check that your yaml is registered at `evals/registry/evals/{name}.yaml`
 - [ ] Ensure you have the right to use the data you submit via this eval
 
 (For now, we will only be approving evals that use one of the existing eval classes. You may still write custom eval classes for your own cases, and we may consider merging them in the future.)
