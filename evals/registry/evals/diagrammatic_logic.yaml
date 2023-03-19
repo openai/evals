@@ -1,8 +1,8 @@
 diagrammatic_logic:
-  id: diagrammatic_logic.dev.v0
+  id: diagrammatic_logic.dev.v1
   metrics: [accuracy]
 
-diagrammatic_logic.dev.v0:
-  class: evals.elsuite.basic.includes:Includes
+diagrammatic_logic.dev.v1:
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: diagrammatic_logic/samples.jsonl
