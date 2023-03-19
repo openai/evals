@@ -6,4 +6,4 @@ quadratic-from-three-points:
 quadratic-from-three-points.s1.simple-v0:
   class: evals.elsuite.basic.includes:Includes
   args:
-    samples_jsonl: quadratic_from_three_points/quadratic_from_three_points2.jsonl
+    samples_jsonl: quadratic_from_three_points/quadratic_from_three_points.jsonl
