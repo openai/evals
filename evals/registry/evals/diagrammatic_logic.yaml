@@ -3,6 +3,6 @@ diagrammatic_logic:
   metrics: [accuracy]
 
 diagrammatic_logic.dev.v0:
-  class: evals.elsuite.basic.Includes:Includes
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: diagrammatic_logic/samples.jsonl
