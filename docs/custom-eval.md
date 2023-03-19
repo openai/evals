@@ -17,8 +17,8 @@ We will use the new chat format described [here](https://platform.openai.com/doc
 
 To create the toy datasets, in your terminal, type:
 ```bash
-echo -e '[{"role": "system", "content": "2+2=", "name": "example_user"}, {"role": "system", "content": "4", "name": "example_assistant"}]\n[{"role": "system", "content": "4*4=", "name": "example_user"}, {"role": "system", "content": "16", "name": "example_assistant"}]' > /tmp/train.jsonl
-echo -e '[{"role": "system", "content": "48+2=", "name": "example_user"}, {"role": "system", "content": "50", "name": "example_assistant"}]\n[{"role": "system", "content": "5*20=", "name": "example_user"}, {"role": "system", "content": "100", "name": "example_assistant"}]' > /tmp/test.jsonl
+echo -e '[{"role": "system", "problem": "2+2=", "name": "example_user"}, {"role": "system", "answer": "4", "name": "example_assistant"}]\n[{"role": "system", "problem": "4*4=", "name": "example_user"}, {"role": "system", "answer": "16", "name": "example_assistant"}]' > /tmp/test.jsonl
+echo -e '[{"role": "system", "problem": "48+2=", "name": "example_user"}, {"role": "system", "answer": "50", "name": "example_assistant"}]\n[{"role": "system", "problem": "5*20=", "name": "example_user"}, {"role": "system", "answer": "100", "name": "example_assistant"}]' > /tmp/train.jsonl
 ```
 
 ## Create an eval
@@ -80,13 +80,13 @@ Generally, most `run` methods will follow the same pattern shown here: loading t
         for i, sample in enumerate(stuffing + [test_sample]):
             if i < len(stuffing):
                 prompt += [
-                    {"role": "system", "content": sample["problem"], "name": "example_user"},
-                    {"role": "system", "content": sample["answer"], "name": "example_assistant"},
+                    {"role": "system", "content": sample[0]["problem"], "name": "example_user"},
+                    {"role": "system", "content": sample[1]["answer"], "name": "example_assistant"},
                 ]
             else:
-                prompt += [{"role": "user", "content": sample["problem"]}]
+                prompt += [{"role": "user", "content": sample[0]["problem"]}]
 
-        evals.check_sampled_text(self.model_spec, prompt, expected=sample["answer"])
+        evals.check_sampled_text(self.model_spec, prompt, expected=sample[1]["answer"])
 ```
 You'll notice that `eval_sample` doesn't take the `recorder` as an argument. This is because `eval_all_samples` sets it to be the default recorder before calling `eval_sample`, and the recording utilities defined in `evals/record.py` use the default recorder. In this example, the `eval_sample` method passes off a lot of the heavy lifting to the `evals.check_sampled_text` utility function, which is defined in `evals/api.py`. This utility function queries the model, defined by `self.model_spec`, with the given `prompt` and checks to see if the result matches the `expected` answer (or one of them, if given a list). It then records these matches (or non matches) using the default recorder.
 
