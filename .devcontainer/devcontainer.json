@@ -1,22 +1,15 @@
 {
-    "image": "mcr.microsoft.com/devcontainers/miniconda:0-3",
+    "image": "mcr.microsoft.com/devcontainers/python:0-3.9",
     "name": "evals",
     "customizations": {
         "vscode": {
             "extensions": [
-                "Alpha4.jsonl",
-                "DavidAnson.vscode-markdownlint",
-                "ms-python.black-formatter",
-                "ms-python.isort",
                 "ms-python.python",
                 "ms-python.vscode-pylance",
-                "ms-toolsai.jupyter",
-                "ms-vscode.makefile-tools",
                 "mutantdino.resourcemonitor",
                 "snowflake.snowflake-vsc",
-                "VisualStudioExptTeam.intellicode-api-usage-examples",
-                "VisualStudioExptTeam.vscodeintellicode-completions",
-                "VisualStudioExptTeam.vscodeintellicode"
+                "Alpha4.jsonl",
+                "ms-toolsai.jupyter@2023.3.1000771902"
             ],
             "settings": {
                 "[python]": {
@@ -29,7 +22,7 @@
                     "--line-length=100",
                     "--profile=black"
                 ],
-                "python.defaultInterpreterPath": "/opt/conda/bin/python",
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
                 "python.formatting.blackArgs": [
                     "--line-length=100",
                     "--exclude=\"\""
@@ -44,15 +37,8 @@
     "features": {
         "ghcr.io/devcontainers/features/git-lfs:1": {
             "version": "latest"
-        },
-        "ghcr.io/devcontainers/features/python:1": {
-            "installJupyterlab": true,
-            "installTools": true,
-            "version": "os-provided"
         }
     },
-    "onCreateCommand": "conda init bash && sudo cp .devcontainer/welcome-message.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt",
-    "postCreateCommand": "/opt/conda/bin/python -m pip install -e .[dev]",
-    "remoteUser": "vscode",
-    "waitFor": "postCreateCommand"
+    "onCreateCommand": "sudo cp .devcontainer/first-run-notice.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt",
+    "updateContentCommand": "python3.9 -m pip install -e .[dev] && make"
 }

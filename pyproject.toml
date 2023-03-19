@@ -30,12 +30,10 @@ dependencies = [
 dev = [
     "autoflake",
     "black[jupyter]",
-    "ipykernel",
-    "ipython",
     "isort",
-    "jupyter",
-    "notebook",
     "pre-commit",
+    "jupyter",
+    "notebook"
 ]
 
 [project.scripts]
