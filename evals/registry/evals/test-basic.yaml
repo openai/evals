@@ -19,7 +19,7 @@ test-fuzzy-match.s1.simple-v0:
 
 test-includes:
   id: test-includes.s1.simple-v0
-  description: Example eval that checks sampled text includes the expected output.
+  description: Example eval that uses fuzzy matching to score completions.
   metrics: [accuracy]
 test-includes.s1.simple-v0:
   class: evals.elsuite.basic.includes:Includes
