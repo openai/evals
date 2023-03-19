@@ -1,8 +1,8 @@
 chess-draw-by-insufficient-material:
-  id: chess-draw-by-insufficient-material.dev.v0
+  id: chess-draw-by-insufficient-material
   description: GPT4 via the web application is currently bad at analyzing positions for draw by insufficient material. This is a training set with 100 positions with draw by insufficient material with a prompt designed to ask for analysis. This fails currently in the web app running GPT4.
   metrics: [accuracy]
-chess-draw-by-insufficient-materiale.dev.v0:
+chess-draw-by-insufficient-materiale:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: chess-draw-by-insufficient-material/samples.jsonl
