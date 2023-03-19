@@ -1,8 +1,0 @@
-find-letter:
-  id: find-letter.dev.v0
-  metrics: [accuracy]
-
-find-letter.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: find-letter/samples.jsonl
