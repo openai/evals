@@ -1,0 +1,9 @@
+text-manipulation:
+  id: text-manipulation.s1.simple-v0
+  description: Test the model's ability to manipulate and modify certain letters, words and phrases in provided text
+  disclaimer: The model might get confused when asked to replace/modify a single letter within a provided text to something else due to the letter being only a single character
+  metrics: [accuracy]
+text-manipulation.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: text_manipulation.jsonl
