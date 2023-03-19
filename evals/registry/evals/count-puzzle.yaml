@@ -5,5 +5,5 @@ count-puzzle:
 count-puzzle.dev.match-v1:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: count_puzzle/samples.json
+    samples_jsonl: count_puzzle/samples.jsonl
     
