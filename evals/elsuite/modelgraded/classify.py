@@ -46,8 +46,6 @@ Reasoning:""".strip(),
     """.strip(),
 }
 
-EVAL_MODELSPEC = ModelSpec(name="gpt-3.5-turbo", model="gpt-3.5-turbo", is_chat=True)
-
 
 def choice_to_str(choice_strings: Iterable[str]) -> str:
     """Return a string of choices, e.g. '"Yes" or "No" or "Maybe"'."""
@@ -118,6 +116,13 @@ class ModelBasedClassify(evals.Eval):
         self.multicomp_n = multicomp_n
         self.multicomp_temperature = multicomp_temperature
         self.samples_renamings = samples_renamings or {}
+
+        if self.model_spec.name == "dummy-completion" or self.model_spec.name == "dummy-chat":
+            self.eval_modelspec = self.model_spec
+        else:
+            self.eval_modelspec = ModelSpec(
+                name="gpt-3.5-turbo", model="gpt-3.5-turbo", is_chat=True
+            )
 
         """import prompt and set attributes"""
         modelgraded_specs = load_modelgraded_specs(modelgraded_spec_file)
@@ -254,7 +259,7 @@ class ModelBasedClassify(evals.Eval):
             metrics = {}
             evaluate = PromptFn(
                 self.prompt,
-                model_spec=EVAL_MODELSPEC,
+                model_spec=self.eval_modelspec,
                 max_tokens=self.max_tokens,
             )
             eval_kwargs = dict(**completions, **test_sample)
