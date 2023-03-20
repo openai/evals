@@ -117,6 +117,16 @@ class ModelBasedClassify(evals.Eval):
         self.multicomp_temperature = multicomp_temperature
         self.samples_renamings = samples_renamings or {}
 
+        # check if multiple models are specified
+        if len(self.model_specs.completions) > 1:
+            assert self.multicomp_n == len(
+                self.model_specs.completions
+            ), f"multicomp_n={self.multicomp_n} must be equal to the number of models={len(self.model_specs.completions)} if multiple models are specified."
+        if self.multicomp_n > 1 and self.multicomp_temperature == 0:
+            logging.warning(
+                f"multicomp_temperature={self.multicomp_temperature} is 0 for {self.multicomp_n} model outputs. Specify multiple completion models, e.g. 'oaieval gpt-3.5-turbo,gpt-4 ...'?"
+            )
+
         if self.model_spec.name == "dummy-completion" or self.model_spec.name == "dummy-chat":
             self.eval_modelspec = self.model_spec
         else:
@@ -129,6 +139,8 @@ class ModelBasedClassify(evals.Eval):
 
         # 'choice_strings' is a list of strings that specifies the possible choices
         self.choice_strings = modelgraded_specs.pop("choice_strings")
+        if self.choice_strings == "from_n":
+            self.choice_strings = [str(i + 1) for i in range(self.multicomp_n)]
         # make sure each choice doesn't contain any punctuation
         for s in self.choice_strings:
             assert not any(c in s for c in string.punctuation), f"{s} contains punctuation"
@@ -230,9 +242,15 @@ class ModelBasedClassify(evals.Eval):
                         completion = ""
                         completion_i_template = self.completion_sample_templates[v]
                         for i in range(self.multicomp_n):
+                            if len(self.model_specs.completions) > 1:
+                                # use a separate model for each completion
+                                model_spec = self.model_specs.completions[i]
+                            else:
+                                # use the single model for all completions
+                                model_spec = self.model_spec
                             get_input_completion = PromptFn(
                                 test_sample[k],
-                                model_spec=self.model_spec,
+                                model_spec=model_spec,
                                 max_tokens=self.max_tokens,
                                 temperature=self.multicomp_temperature,
                             )
