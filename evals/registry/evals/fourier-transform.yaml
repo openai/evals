@@ -1,0 +1,8 @@
+fourier_transform:
+  id: fourier_transform.dev.v0
+  metrics: [accuracy]
+
+fourier_transform.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: fourier_transform/fourier_samples.jsonl
