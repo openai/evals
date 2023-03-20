@@ -51,6 +51,7 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
     """Returns n_ctx for a given API model name. Model list last updated 2023-03-14."""
     # note that for most models, the max tokens is n_ctx + 1
     DICT_OF_N_CTX_BY_MODEL_NAME_PREFIX: dict[str, int] = {
+        "dummy-": 2048,
         "gpt-3.5-turbo-": 4096,
         "gpt-4-": 8192,
         "gpt-4-32k-": 32768,
@@ -92,9 +93,19 @@ class ModelResolver:
         "gpt-4-0314",
         "gpt-4-32k",
         "gpt-4-32k-0314",
+        "dummy-chat",
+    }
+
+    DUMMY_MODELS = {
+        "dummy-chat",
+        "dummy-completion",
     }
 
     def resolve(self, name: str) -> ModelSpec:
+        if name in self.DUMMY_MODELS:
+            result = ModelSpec(name=name, model=name, is_chat=(name in self.CHAT_MODELS))
+            return result
+
         if name in self.api_model_ids:
             result = ModelSpec(
                 name=name,
