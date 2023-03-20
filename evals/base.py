@@ -122,7 +122,7 @@ class ModelSpecs:
         return self.completions_
 
     @property
-    def names(self) -> dict[str, Sequence[str]]:
+    def names(self) -> Dict[str, Sequence[str]]:
         dict = {}
         if self.completions_ is not None:
             dict["completions"] = [model.name for model in self.completions_]
