@@ -52,6 +52,22 @@ def fuzzy_match(s1: str, s2: str) -> bool:
     return s1 in s2 or s2 in s1
 
 
+def integer_accuracy(s1: str, s2: str) -> float:
+    s1 = normalize(s1)
+    s2 = normalize(s2)
+
+    if s1 == "" or s2 == "":
+        return 0
+
+    if int(s1) == 0 and int(s2) == 0:
+        return 1
+
+    # as suggested by chatgpt(4), we compute a similarity score
+    # 1 / (1 + |X - Y| / X) where x is the correct answer and y is guess
+    # this is a bounded score between 0 and 1
+    return 1 / (1 + abs(int(s1) - int(s2)) / int(s1))
+
+
 def get_scores_from_text(text: str) -> dict:
     pattern = r"## (.+?)\n.+?(\d)/5"
     matches = re.findall(pattern, text, re.DOTALL)

@@ -3,6 +3,6 @@ ith-primes:
   description: Checks the model's accuracy when queried about the i-th prime number.
   metrics: [accuracy]
 ith-primes.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.integer_accuracy:IntegerAccuracy
   args:
     samples_jsonl: ith_primes/ith-primes.jsonl
