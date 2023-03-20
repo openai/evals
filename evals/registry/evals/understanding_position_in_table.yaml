@@ -1,0 +1,8 @@
+understanding_position_in_table:
+  id: understanding_position_in_table.s1.simple-v0
+  description: The evaluation in question concerns the ability to draw tables with certain positions of "X" inside, putting the "X" in the correct positions. You are then asked to draw "X"s in specific boxes.
+  metrics: [accuracy]
+understanding_position_in_table.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: understanding_position_in_table/samples.jsonl
