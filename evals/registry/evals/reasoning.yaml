@@ -4,4 +4,4 @@ reasoning:
 reasoning.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: /reasoning/samples.jsonl
+    samples_jsonl: reasoning/samples.jsonl
