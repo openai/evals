@@ -1,0 +1,17 @@
+prompt: |-
+  You are to decide to label for this set data relate to coding, this will be the label set: 
+  
+  [Labels]: [A:'logic', B:'syntax', C:'library or dependencies', D:'unknow']
+  
+  [BEGIN DATA]
+  ************
+  {completion}
+  ************
+  [END DATA]
+
+  Answer with with ABCD using the label set that are being giving
+choice_strings: ABCDE
+input_outputs:
+  input: completion
+
+  #you can replace the label set and the purpose of the label
