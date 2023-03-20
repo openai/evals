@@ -7,6 +7,7 @@ test:
     - coqa-fact
     - coqa-fact-expl
     - coqa-closedqa
+    - coqa-closedqa-correct
     - logic-fact
     - joke-animals
     - joke-animals-likert

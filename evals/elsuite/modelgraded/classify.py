@@ -46,8 +46,6 @@ Reasoning:""".strip(),
     """.strip(),
 }
 
-EVAL_MODELSPEC = ModelSpec(name="gpt-3.5-turbo", model="gpt-3.5-turbo", is_chat=True)
-
 
 def choice_to_str(choice_strings: Iterable[str]) -> str:
     """Return a string of choices, e.g. '"Yes" or "No" or "Maybe"'."""
@@ -107,6 +105,7 @@ class ModelBasedClassify(evals.Eval):
         samples_renamings: Optional[dict[str, str]] = None,
         eval_type: Optional[str] = None,
         metaeval: bool = False,
+        modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
         **kwargs,
     ):
         super().__init__(model_specs, *args, **kwargs)
@@ -117,6 +116,13 @@ class ModelBasedClassify(evals.Eval):
         self.multicomp_n = multicomp_n
         self.multicomp_temperature = multicomp_temperature
         self.samples_renamings = samples_renamings or {}
+
+        if self.model_spec.name == "dummy-completion" or self.model_spec.name == "dummy-chat":
+            self.eval_modelspec = self.model_spec
+        else:
+            self.eval_modelspec = ModelSpec(
+                name="gpt-3.5-turbo", model="gpt-3.5-turbo", is_chat=True
+            )
 
         """import prompt and set attributes"""
         modelgraded_specs = load_modelgraded_specs(modelgraded_spec_file)
@@ -172,7 +178,9 @@ class ModelBasedClassify(evals.Eval):
 
         # (optional) 'args' is a dict of dicts that specifies additional arguments for 'prompt'
         # each value in 'args_dict' essentially defines a separate modelgraded classification eval and has own metrics!
+        # if 'modelgraded_spec_args' is specified in eval YAML, it is merged with 'args_dict'
         self.args_dict = modelgraded_specs.pop("args", {})
+        self.args_dict.update(modelgraded_spec_args or {})
         if self.args_dict:
             self.expanded_args_dict = expand_args_dict(self.args_dict)
         else:
@@ -251,7 +259,7 @@ class ModelBasedClassify(evals.Eval):
             metrics = {}
             evaluate = PromptFn(
                 self.prompt,
-                model_spec=EVAL_MODELSPEC,
+                model_spec=self.eval_modelspec,
                 max_tokens=self.max_tokens,
             )
             eval_kwargs = dict(**completions, **test_sample)
