@@ -1,0 +1,8 @@
+q-learning:
+  id: q-learning.s1.simple-v0
+  description: Test the model's ability to understand Q-learning concepts, rules, and theory
+  metrics: [accuracy]
+q-learning.s1.simple-v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: q-learn/q_learning_examples.jsonl
