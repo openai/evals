@@ -1,7 +1,7 @@
 logic-statements:
   id: logic-statements.dev.v0
   metrics: [accuracy]
-born-first.dev.v0:
+logic-statements.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: born_first/born_first.jsonl
+    samples_jsonl: logic-statements/logic-statements.jsonl
