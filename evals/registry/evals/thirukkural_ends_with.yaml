@@ -1,0 +1,8 @@
+thirukkural_ends_with:
+  id: thirukkural_ends_with.dev.v0
+  metrics: [accuracy]
+
+thirukkural_ends_with.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: thirukkural_ends_with/thirukkural_ends_with.jsonl

@@ -77,7 +77,7 @@ def open_by_file_pattern(filename: str, mode: str = "r", **kwargs: Any) -> Any:
 def _get_jsonl_file(path):
     logger.info(f"Fetching {path}")
     with open_by_file_pattern(path, mode="r") as f:
-        return list(map(json.loads, f.readlines()))
+        return list(map(lambda x: json.loads(x, strict=False), f.readlines()))
 
 
 def _get_json_file(path):
