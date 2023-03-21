@@ -1,61 +1,61 @@
-# Existing templates for evals
+# 既存のEval用テンプレート
 
-In using Evals, we have discovered several "templates" that accommodate many different benchmarks. We have implemented these templates in `evals/elsuite` in order to simplify the development of new evals. We believe that, with these templates, many evals will not require any coding to implement! Instead, you'll pick one of the existing templates and simply specify the dataset and parameters.
+Evalを使用する中で、我々は多くの異なるベンチマークに対応するいくつかの「テンプレート」を発見しました。これらのテンプレートを `evals/elsuite` に実装することで、新しいEvalの開発を簡略化することができます。これらのテンプレートを使えば、多くのEvalは実装のためのコーディングが不要になると考えています！その代わりに、既存のテンプレートの中から1つを選び、データセットとパラメータを指定するだけでよいのです。
 
-## Basic eval templates
+## Evalの基本テンプレート
 
-In cases where the desired model response has very little variation, such as answering multiple choice questions or simple questions with a straightforward answer, we have found the following templates to be useful.
+選択式の問題の解答や、答えが単純な質問など、望ましいモデルのレスポンスのバリエーションが少ないケースでは、以下のようなテンプレートが有効だと考えています。
 
-For a model completion `a` and a reference list of correct answers `B`, the following evals implement:
+モデル補完 `a` と正解の参照リスト `B` に対して、以下のEvalを実装する。
 - [`basic/match.py:Match`](../evals/elsuite/basic/match.py): `any([b.startswith(a) for b in B])`
 - [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(a in b) for b in B])`
 - [`basic/fuzzy_match.py:FuzzyMatch`](../evals/elsuite/basic/fuzzy_match.py): `any([(a in b or b in a) for b in B])`
 
-Which eval template you use will depend on your use case. It is always recommended that you inspect the completions from your model, as this will help you determine how and whether to tweak your prompt (or your reference answers) and pick your eval template. Academic benchmarks oftentimes fit the mold of these basic evals, and we have implemented several end-to-end examples of academic evals as Jupyter notebooks in the `examples` folder.
+どのEvalテンプレートを使用するかは、ユースケースによって異なります。プロンプト（または模範解答）をどのように、あるいはどう微調整し評価テンプレートを選択するかを決定するのに役立つので、モデルのcompletionを検査することを常にお勧めします。 学術的なベンチマークはこのような基本的なEvalの型に当てはまることが多く、学術的なEvalの端から端までの例をJupyterノートブックとして `examples` フォルダに実装しています。
 
-Sometimes, [custom eval logic](custom-eval.md) will better suit your needs. One example of this is the [machine translation](../evals/elsuite/translate.py) [eval example](../examples/lafand-mt.ipynb), in which there is a unique and clearly defined metric that we wish to use in our eval. You should use your best judgment when deciding between custom eval logic, using a basic eval template, or using model-graded evals as described next.
+場合によっては、[カスタムEvalロジック](custom-eval.md)の方がニーズに合っていることがあります。例えば、[機械翻訳](../evals/elsuite/translate.py) [eval example](../examples/lafand-mt.ipynb) では、evalに使用したいユニークで明確に定義された指標が存在します。Evalのロジックをカスタマイズするか、基本的なEvalテンプレートを使用するか、次に説明するモデルグレードによる評価を使用するかを決める際には、最善の判断を下す必要があります。
 
-## The model-graded eval template
+## モデルグレードによる評価テンプレート
 
-In cases where the desired model response can contain significant variation, such as answering an open-ended question, we have found that using the model to grade itself is a viable strategy for automated evaluation. In general, the evaluation model and the model being evaluated don't have to be the same, though we will assume that they are here for ease of explanation.
+自由記述の質問への解答など、モデルのレスポンスに大きなばらつきがあるケースでは、モデル自身を採点することが、自動評価のための有効な戦略であることが分かっています。一般的に、評価モデルと評価されるモデルは同じである必要はありませんが、ここでは説明を簡単にするために同じであると仮定します。
 
-[`modelgraded/classify.py:ModelBasedClassify`](../evals/elsuite/modelgraded/classify.py) implements the main logic behind our model-graded eval template. In short, we get the model's completion to the original prompt, wrap it in an evaluation prompt, and get the model's completion to the evaluation prompt, which we parse into our metrics of interest. Crucially, the evaluation prompt should prime the model to answer in such a way that is easily parsable, e.g., in multiple choice format or with a simple yes/no. We describe some example model-graded evals below, but first we specify the parameters for this eval template.
+[`modelgraded/classify.py:ModelBasedClassify`](../evals/elsuite/modelgraded/classify.py) は、モデルグレードの評価テンプレートのメインロジックを実装しています。要するに、モデルのプロンプトを取得し、それを評価プロンプトでラップし、モデルのプロンプトを評価プロンプトで取得し、それを解析して目的の指標に変換します。重要なのは、評価プロンプトはモデルが簡単にパースできるような方法で解答する必要があることです。例えば、選択式や単純な「はい/いいえ」で解答します。以下にモデルグレードによる評価例を示しますが、まずこの評価テンプレートのパラメータを指定します。
 
-### Parameters for model-graded evals
+### モデルグレードによるEvalの評価パラメータ
 
-Refer to the [`classify.py:ModelBasedClassify`](../evals/elsuite/modelgraded/classify.py) class to see how these parameters are used in the code.
+これらのパラメータがコード内でどのように使用されているかは、[`classify.py:ModelBasedClassify`](../eval/elsuite/modelgraded/classify.py) クラスを参照してください。
 
-- `prompt`: The evaluation prompt which should take in the model's completion to the original prompt, potentially along with some other information, and steer the model to provide an evaluation that is easily parsable. Portions denoted by curly braces (i.e., `{key}`) are filled in either from the data `input_outputs` or the additional `args` (see below).
-- `input_outputs`: A mapping specifying which inputs to use to generate which completions. For many evals, there will only be a single input-completion pair, though there can be more, e.g., when comparing two completions against each other.
-- `choice_strings`: The choices that we expect the model completion to contain given the evaluation prompt. For example, `"ABCDE"` or `["Yes", "No", "Unsure"]`. Any other choices returned by the model are parsed into `"__invalid__"`.
-- `choice_scores` (optional): A mapping of each choice to its score, which is logged as a metric. For example, if a response of `"Yes"` (resp. `"No"`) indicates that the model's original completion was good (resp. bad), we may assign this choice a score of 1 (resp. 0).
-- `eval_type` (optional): How we expect the model to format its response to the evaluation prompt. Currently the supported options are:
-  - `"cot_classify"` ("chain-of-thought then classify", i.e., reason then answer) expects that the parsable portion of the response (i.e., the portion containing the choice) will be at the end of the completion. We recommend this as the default as it typically provides most accurate model-graded evaluations.
-  - `"classify_cot"` (answer then reason) expects that the model response will contain the choice first.
-  - `"classify"` expects that the model response will only contain the choice.
+- `prompt`: このプロンプトは、元のプロンプトに対するモデルのプロンプトとcompletionを取り込み、他の情報と一緒に、簡単にパースできるような評価を提供するようにモデルを誘導します。 中括弧で囲まれた部分（すなわち `{key}` ）は、データの `input_outputs` または追加の `args` （下記参照）から入力されます。
+- `input_outputs`:どの入力を使ってどのような補完を生成するかを指定するマッピングです。多くのEvalでは、入力と補完のペアは1つだけですが、2つの補完を互いに比較する場合などには、もっと多く存在することがあります。
+- `choice_strings`: 評価プロンプトが与えられたときに、モデル補完に含まれると予想される選択肢。例: `"ABCDE"` または `["Yes", "No", "Unsure"]`. モデルが返すその他の選択肢は `"__invalid__"` にパースされます。
+- `choice_scores` (optional):それぞれの選択肢のスコアへのマッピングで、指標としてログに記録さ れます。例：「はい」（「いいえ」）のレスポンスがモデルの元の完成度が良かった（悪かった）ことを示す場合、この選択肢に1（0）のスコアを割り当てることができます。
+- `eval_type` (optional): 評価プロンプトに対するモデルのレスポンスをどのようにフォーマットするか。現在、サポートされているオプションは以下の通りです。
+  - `"cot_classify"` ("chain-of-thought then classify"、すなわち、理由→解答)は、レスポンスのパース可能な部分(すなわち、選択肢を含む部分)が、コンプリートの端から端までの間にあることを期待します。一般的に最も正確なモデルグレード評価を提供するため、デフォルトとしてこの方法を推奨します。
+  - `"classify_cot"` (解答→理由）は、モデルレスポンスに最初に選択肢が含まれることを想定しています。
+  - `"classify"` は、モデルのレスポンスに選択肢だけが含まれることを想定しています。
 
-  There are two ways to specify `eval_type`. The recommended way is in the `evals/registry/evals` YAML file. If done this way, an instruction will automatically be appended to `prompt` to steer the model towards the expected format (see `ANSWER_PROMPTS` in [the code](../evals/elsuite/modelgraded/classify.py)). Alternatively, you may specify `eval_type` in the `evals/registry/modelgraded` YAML, but you will need to include an appropriate instruction directly in the `prompt`.
-- `args` (optional): If specified, multiple evaluation calls will be made where the evaluation prompt is modified for each call with a different set of arguments.
-- `completion_sample_templates` (optional): If specified, determines how the model's output (or outputs, if `multicomp_n > 1`) will be formatted within the completion.
+  `eval_type`を指定する方法は2つあります。推奨される方法は `evals/registry/evals` の YAML ファイルに記述する方法です。この方法で指定すると、モデルを期待通りのフォーマットに誘導するために `prompt` に命令が自動的に付加されます（[コード](./eval/elsuite/modelgraded/classify.py)の `ANSWER_PROMPTS` を参照してください）。あるいは、`eval_type` を `evals/registry/modelgraded` の YAML で指定することもできますが、`prompt` に直接適切な命令を記述する必要があります。
+- args` (オプション)。指定すると、複数の評価コールが行われ、それぞれのコールに対して異なる引数のセットで評価プロンプトが変更されます。
+- `completion_sample_templates` (オプション): 指定すると、モデルの出力（`multicomp_n > 1`の場合は出力）が補完の中でどのようにフォーマットされるかを決定する。
 
-### Example model-graded evals
+### モデルグレードによる評価例
 
-To instantiate model-graded evals, create a YAML file in `evals/registry/modelgraded` which specifies values for the arguments described above. We have provided a few examples, which illustrate the process for creating a model-graded eval, but which we also believe are general enough to be useful out of the box for many evals.
+モデルグレードの評価を行うには、`evals/registry/modelgraded`にYAMLファイルを作成し、上記の引数に値を指定します。モデルグレードの評価を作成するためのプロセスを説明するために、いくつかの例を提供しましたがこれらの例は、多くのEvalですぐに使えるような一般的なものであると私たちは考えています。
 
-[`fact.yaml`](../evals/registry/modelgraded/fact.yaml): a factual consistency eval which, given a completion `a` and reference answer `b`, returns:
-- `"A"` if `a` $\subseteq$ `b`, i.e., the submitted answer is a subset of the expert answer and is fully consistent with it.
-- `"B"` if `a` $\supseteq$ `b`, i.e., the submitted answer is a superset of the expert answer and is fully consistent with it.
-- `"C"` if `a` $=$ `b`, i.e., the submitted answer contains all the same details as the expert answer.
-- `"D"` if `a` $\neq$ `b`, i.e., there is a disagreement between the submitted answer and the expert answer.
-- `"E"` if `a` $\approx$ `b`, i.e., the answers differ, but these differences don't matter from the perspective of factuality.
+[`fact.yaml`](../evals/registry/modelgraded/fact.yaml): 補完 `a` と模範解答 `b` が与えられると、事実に基づく整合性のある Eval を返す:
+- `"A"` if `a` $\subseteq$ `b`, つまり、提出された解答は、専門家の解答のサブセットであり、それと完全に一致する。
+- `"B"` if `a` $\supseteq$ `b`, すなわち、提出された解答は、専門家の解答のスーパーセットであり、それと完全に一致する。
+- `"C"` if `a` $=$ `b`, すなわち、提出された解答は、専門家の解答と同じ内容をすべて含んでいる。
+- `"D"` if `a` $\neq$ `b`, すなわち、提示された解答と専門家の解答の間に不一致がある場合です。
+- `"E"` if `a` $\approx$ `b`, 解答は異なるが、その違いは事実に基づいているかどうかという観点からは問題ではない、ということである。
 
-[`closedqa.yaml`](../evals/registry/modelgraded/closedqa.yaml): a question answering eval which, given a prompt containing a question and the necessary information to answer the question, checks whether the model's answer is:
-- relevant, i.e., extracted from the information provided in the prompt,
-- concise, i.e., did not contain unnecessary details or information, and
-- correct, i.e., uses the extracted information to come to the right conclusion.
+[`closedqa.yaml`](../evals/registry/modelgraded/closedqa.yaml): 質問に答える eval で、質問と質問に答えるために必要な情報を含むプロンプトが与えられたとき、モデルの解答が正しいかどうかをチェックします。
+- 関連する、すなわち指定されたプロンプトを提供する情報から抽出されたものである。
+- 簡潔、すなわち不必要な詳細や情報を含んでいない。
+- 正しい、すなわち、抽出された情報を使って正しい結論を出す。
 
-Note that this eval is implemented more generally as a "criteria-checking" eval which specifies the evaluation prompt as checking a given criterion and feeding in the above desiderata one by one. We believe that many other evals can be implemented by specifying a "rubric" detailing the criteria of interest and following the same prompt and yes/no choices.
+このEvalは、より一般的には、評価プロンプトを指定し、与えられた基準をチェックし、上記の要求事項を1つずつ入力させる「基準チェック型」Evalとして実装されていることにご注意ください。私たちは、興味深い基準を詳しく記した「ルーブリック」を指定し、同じプロンプトとイエス/ノーの選択肢に従うことで、他の多くのEvalが実装できると考えています。
 
-[`battle.yaml`](../evals/registry/modelgraded/battle.yaml): a head-to-head eval which compares two model completions for two potentially different prompts. `choice_scores` is used here to log how often the first completion is judged to be better than the second.
+[`battle.yaml`](../evals/registry/modelgraded/battle.yaml): 2つの異なるプロンプトに対する2つのモデルのcompletionを比較する、直接対決の評価です。ここでは `choice_scores` を使って、最初のcompletionが2番目のcompletionよりも優れていると判断される頻度をログに記録しています。
 
-We include additional examples which test more specific model capabilities (such as humor) and are thus less generalizable to other evals. However, these examples still serve to illustrate different ways to write evaluation prompts and set up model-graded evals. See [this section](build-eval.md#for-model-graded-evals-a-step-by-step-workflow) for more detailed steps on building model-graded evals.
+また、より具体的なモデル能力（ユーモアなど）をテストする例もあり、他のEvalへの汎用性は低いと思われる。しかし、これらの例は、評価プロンプトの書き方やモデルグレードによる評価の設定方法の違いについて説明するのに役立ちます。モデルグレードによるEvalをビルドするための詳細な手順については、[このセクション] (build-eval.md#for-model-graded-evals-a-step-by-step-workflow) を参照してください。
