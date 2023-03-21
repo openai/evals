@@ -1,18 +1,18 @@
 # Evals
 
-Evals is a framework for evaluating OpenAI models and an open-source registry of benchmarks.
+EvalはOpenAIモデルを評価するためのフレームワークであり、ベンチマークのオープンソースのレジストリでもある。
 
-You can use Evals to create and run evaluations that:
-- use datasets to generate prompts,
-- measure the quality of completions provided by an OpenAI model, and
-- compare performance across different datasets and models.
+Evalを使用すると、以下のような評価を作成し、実行することができます。
+- データセットを使ってプロンプトを生成する。
+- OpenAIモデルが提供するCompletionの品質を測定し、
+- 異なるデータセットやモデルで性能を比較することができます。
 
-With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. To get started, we recommend that you follow these steps **in order**:
-1. Read through this doc and follow the [setup instructions below](README.md#Setup).
-2. Learn how to run existing evals: [run-evals.md](docs/run-evals.md).
-3. Familiarize yourself with the existing eval templates: [eval-templates.md](docs/eval-templates.md).
-4. Walk through the process for building an eval: [build-eval.md](docs/build-eval.md)
-5. See an example of implementing custom eval logic: [custom-eval.md](docs/custom-eval.md).
+Evalでは、できるだけ少ないコードでevalをビルドすることができるようにすることを目的としています。開始するには、以下のステップを **順番に踏むことをお勧めします:
+1. このドキュメントを読み、以下の[セットアップ手順](README.md#Setup)に従ってください。
+2. 既存のevalを実行する方法について学びます。[run-evals.md](docs/run-evals.md).
+3. 既存のevalテンプレートに慣れましょう。[eval-templates.md](docs/eval-templates.md).
+4. evalをビルドする手順を確認する: [build-eval.md](docs/build-eval.md)
+5. カスタムevalロジックの実装例はこちらをご覧下さい。[custom-eval.md](docs/custom-eval.md).
 
 If you think you have an interesting eval, please open a PR with your contribution. OpenAI staff actively review these evals when considering improvements to upcoming models.
 
