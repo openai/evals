@@ -72,10 +72,6 @@ Do you have any examples of evals implemented in multiple different ways?
 
 - Yes! In particular, see `evals/registry/evals/coqa.yaml`. We have implemented small subsets of the [CoQA](https://stanfordnlp.github.io/coqa/) dataset for various eval templates to help illustrate the differences.
 
-I changed my data but this isn't reflected when running my eval, what's going on?
-
-- Your data may have been cached to `/tmp/filecache`. Try removing this cache and rerunning your eval.
-
 When I run an eval, it sometimes hangs at the very end (after the final report). What's going on?
 
 - This is a known issue, but you should be able to interrupt it safely and the eval should finish immediately after.
