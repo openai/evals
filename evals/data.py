@@ -103,7 +103,7 @@ def filecache(func):
         md5 = hashlib.md5((name + ":" + str((args, kwargs))).encode("utf-8")).hexdigest()
         pkl_path = f"{DIR}/{md5}.pkl"
         if os.path.exists(pkl_path):
-            logger.debug(f"Loading from file cache: {pkl_path}")
+            logger.info(f"Loading from file cache: {pkl_path}")
             with open(pkl_path, "rb") as f:
                 return pickle.load(f)
         start = time.time()
