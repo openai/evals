@@ -1,0 +1,8 @@
+longest-word:
+  id: longest-word.dev.v0
+  metrics: [accuracy]
+
+longest-word.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: longest-word/samples.v0.jsonl
