@@ -1,0 +1,55 @@
+name: Run new evals
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check_files:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        lfs: true
+    
+    - name: Install Git LFS
+      run: |
+        sudo apt-get install git-lfs
+        git lfs install
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyyaml
+        pip install -e .
+
+    - name: Get list of new YAML files in evals/registry/evals
+      id: get_files
+      run: |
+        # Use environment files to store the output
+        git diff --name-only --diff-filter=A ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '^evals/registry/evals/.*\.yaml$' | xargs > new_files
+        echo "new_files=$(cat new_files)" >> $GITHUB_ENV
+
+    - name: Run oaieval command for each new YAML file
+      run: |
+        files="${{ env.new_files }}"
+        if [ -n "$files" ]; then
+          for file in $files; do
+            echo "Processing $file"
+            first_key=$(python .github/workflows/parse_yaml.py $file)
+            echo "Eval Name: $first_key"
+            oaieval dummy-chat $first_key --max_samples 10
+            oaieval dummy-completion $first_key --max_samples 10
+          done
+        else
+          echo "No new YAML files found in evals/registry/evals"
+        fi
