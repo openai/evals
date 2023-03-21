@@ -34,3 +34,18 @@ coqa-closedqa.dev.v0:
   args:
     samples_jsonl: coqa/samples.jsonl
     modelgraded_spec_file: closedqa
+
+# (same as above, but only evaluate criteria=correct)
+coqa-closedqa-correct:
+  id: coqa-closedqa-correct.dev.v0
+  metrics: [accuracy]
+coqa-closedqa-correct.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: coqa/samples.jsonl
+    modelgraded_spec_file: closedqa
+    modelgraded_spec_args:
+      criteria:
+        correct: "correctness: Is the answer correct?"
+
+
