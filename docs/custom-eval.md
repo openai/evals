@@ -17,8 +17,8 @@ We will use the new chat format described [here](https://platform.openai.com/doc
 
 To create the toy datasets, in your terminal, type:
 ```bash
-echo -e '[{"role": "system", "problem": "2+2=", "name": "example_user"}, {"role": "system", "answer": "4", "name": "example_assistant"}]\n[{"role": "system", "problem": "4*4=", "name": "example_user"}, {"role": "system", "answer": "16", "name": "example_assistant"}]' > /tmp/test.jsonl
-echo -e '[{"role": "system", "problem": "48+2=", "name": "example_user"}, {"role": "system", "answer": "50", "name": "example_assistant"}]\n[{"role": "system", "problem": "5*20=", "name": "example_user"}, {"role": "system", "answer": "100", "name": "example_assistant"}]' > /tmp/train.jsonl
+echo -e '[{"role": "system", "problem": "2+2=", "name": "example_user"}, {"role": "system", "answer": "4", "name": "example_assistant"}]\n[{"role": "system", "problem": "4*4=", "name": "example_user"}, {"role": "system", "answer": "16", "name": "example_assistant"}]' > /tmp/train.jsonl
+echo -e '[{"role": "system", "problem": "48+2=", "name": "example_user"}, {"role": "system", "answer": "50", "name": "example_assistant"}]\n[{"role": "system", "problem": "5*20=", "name": "example_user"}, {"role": "system", "answer": "100", "name": "example_assistant"}]' > /tmp/test.jsonl
 ```
 
 ## Create an eval
