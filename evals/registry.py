@@ -4,6 +4,7 @@ add an entry in one of the YAML files in the `../registry` dir.
 By convention, every eval name should start with {base_eval}.{split}.
 """
 
+import difflib
 import functools
 import logging
 import os
@@ -57,6 +58,16 @@ class Registry:
             return type(**spec)
         except TypeError as e:
             raise TypeError(f"Error while processing {object} {name}: {e}")
+
+    def get_modelgraded_spec(self, name: str) -> dict[str, Any]:
+        assert name in self._modelgraded_specs, (
+            f"Modelgraded spec {name} not found. "
+            f"Closest matches: {difflib.get_close_matches(name, self._modelgraded_specs.keys(), n=5)}"
+        )
+        path = self._modelgraded_specs[name]
+        with open(path, "r") as f:
+            spec = yaml.safe_load(f)
+        return spec
 
     def get_eval(self, name: str) -> EvalSpec:
         return self._dereference(name, self._evals, "eval", EvalSpec)
@@ -136,6 +147,10 @@ class Registry:
             self._process_file(registry, file)
 
     def _load_registry(self, paths):
+        """Load registry from a list of paths.
+
+        Each path or yaml specifies a dictionary of name -> spec.
+        """
         registry = {}
         for path in paths:
             logging.info(f"Loading registry from {path}")
@@ -146,6 +161,24 @@ class Registry:
                     self._process_file(registry, path)
         return registry
 
+    def _load_registry_paths_only(self, paths, prefixes: Sequence[str] = []):
+        """Load registry from a list of paths.
+
+        Each path or yaml specifies one registry entry.
+        """
+        registry = {}
+        for path in paths:
+            for subpath in Path(path).glob("*"):
+                if os.path.isdir(subpath):
+                    self._load_registry_paths_only(
+                        [subpath], prefixes=prefixes + [os.path.basename(subpath)]
+                    )
+                else:
+                    name = ".".join(prefixes + [os.path.splitext(os.path.basename(subpath))[0]])
+                    assert name not in registry, f"duplicate entry: {name} from {subpath}"
+                    registry[name] = subpath
+        return registry
+
     @functools.cached_property
     def _eval_sets(self):
         return self._load_registry([p / "eval_sets" for p in self._registry_paths])
@@ -153,6 +186,10 @@ class Registry:
     @functools.cached_property
     def _evals(self):
         return self._load_registry([p / "evals" for p in self._registry_paths])
+
+    @functools.cached_property
+    def _modelgraded_specs(self):
+        return self._load_registry_paths_only([p / "modelgraded" for p in self._registry_paths])
 
 
 registry = Registry()

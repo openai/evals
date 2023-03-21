@@ -13,12 +13,7 @@ import openai
 import evals
 import evals.record
 from evals.base import ModelSpec
-from evals.elsuite.utils import (
-    PromptFn,
-    format_necessary,
-    load_modelgraded_specs,
-    scrub_formatting_from_prompt,
-)
+from evals.elsuite.utils import PromptFn, format_necessary, scrub_formatting_from_prompt
 
 INVALID_STR = "__invalid__"
 CHOICE_KEY = "choice"
@@ -135,7 +130,7 @@ class ModelBasedClassify(evals.Eval):
             )
 
         """import prompt and set attributes"""
-        modelgraded_specs = load_modelgraded_specs(modelgraded_spec_file)
+        modelgraded_specs = self.registry.get_modelgraded_spec(modelgraded_spec_file)
 
         # 'choice_strings' is a list of strings that specifies the possible choices
         self.choice_strings = modelgraded_specs.pop("choice_strings")
