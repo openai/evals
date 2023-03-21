@@ -44,7 +44,7 @@ Register the eval by adding a file to `evals/registry/evals/<eval_name>.yaml` us
     samples_jsonl: <eval_name>/samples.jsonl
 ```
 
-Upon running the eval, the data will be searched for in `evals/registry/data`, e.g. if `test_match/samples.jsonl` is the provided filepath the data is expected to be in `evals/registry/data/test_match/samples.jsonl`. 
+Upon running the eval, the data will be searched for in `evals/registry/data`, e.g. if `test_match/samples.jsonl` is the provided filepath the data is expected to be in `evals/registry/data/test_match/samples.jsonl`.
 
 The naming convention for evals is in the form `<eval_name>.<split>.<version>`.
 - `<eval_name>` is the eval name, used to group evals whose scores are comparable.
@@ -59,7 +59,7 @@ You can now run your eval on your data from the CLI with your choice of model:
 ```
 oaieval gpt-3.5-turbo <eval_name>
 ```
-Congratulations, you have built your eval! Keep iterating on it until you are confident in the results. Remember, if you change the data file, remove `/tmp/filecache` so that the eval is run with your updated data.
+Congratulations, you have built your eval! Keep iterating on it until you are confident in the results.
 
 ## For model-graded evals: a step-by-step workflow
 
