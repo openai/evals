@@ -1,0 +1,9 @@
+score-threshold-evaluation:
+  id: score-threshold-evaluation.dev.v0
+  metrics: [accuracy]
+
+score-threshold-evaluation.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  description: Eval that askes chatgpt to provide feedback if the score is at or above a threshold.
+  args:
+    samples_jsonl: score-threshold-evaluation/samples.jsonl
