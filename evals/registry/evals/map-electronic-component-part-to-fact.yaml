@@ -1,0 +1,8 @@
+map-electronic-component-part-to-fact:
+  id: map-electronic-component-part-to-fact.dev.v0
+  metrics: [accuracy]
+
+map-electronic-component-part-to-fact.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: map-electronic-component-part-to-fact/samples.jsonl
