@@ -1,0 +1,8 @@
+lat_long_identify:
+  id: lat_long_identify.dev.v0
+  metrics: [accuracy]
+
+lat_long_identify.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: lat_long_identify/samples.jsonl
