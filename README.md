@@ -14,21 +14,21 @@ Evalでは、できるだけ少ないコードでevalをビルドすることが
 4. evalをビルドする手順を確認する: [build-eval.md](docs/build-eval.md)
 5. カスタムevalロジックの実装例はこちらをご覧下さい。[custom-eval.md](docs/custom-eval.md).
 
-If you think you have an interesting eval, please open a PR with your contribution. OpenAI staff actively review these evals when considering improvements to upcoming models.
+もし、あなたが興味深いevalをお持ちでしたら、ぜひPRを開いて投稿してください。OpenAIのスタッフは、次期モデルの改良を検討する際に、これらのevalを積極的に検討します。
 
 ____________________
-🚨 For a limited time, we will be granting GPT-4 access to those who contribute high quality evals. Please follow the instructions mentioned above and note that spam or low quality submissions will be ignored❗️
+🚨 期間限定で、質の高いevalを投稿していただいた方にGPT-4へのアクセス権を付与します。上記の指示に従ってください。スパムや低品質の投稿は無視されますのでご注意ください❗️
 
-Access will be granted to the email address associated with an accepted Eval. Due to high volume, we are unable to grant access to any email other than the one used for the pull request.
+アクセスは、受け付けたEvalに紐づくEメールアドレスに付与されます。大量にあるため、プルリクエストに使用されたEメール以外へのアクセスは許可されません。
 ____________________
 
-## Setup
+## セットアップ
 
-To run evals, you will need to set up and specify your OpenAI API key. You can generate one at <https://platform.openai.com/account/api-keys>. After you obtain an API key, specify it using the `OPENAI_API_KEY` environment variable. **Please be aware of the [costs](https://openai.com/pricing) associated with using the API when running evals.**
+Evalを実行するには、OpenAI APIキーの設定と指定が必要です。<https://platform.openai.com/account/api-keys>で生成することができます。APIキーを取得したら、環境変数 `OPENAI_API_KEY` を使って指定します。**Evalを実行する際にAPIを使用する際に発生する[コスト](https://openai.com/pricing)にご注意ください。**
 
-### Downloading evals
+### evalのダウンロード
 
-Our Evals registry is stored using [Git-LFS](https://git-lfs.com/). Once you have downloaded and installed LFS, you can fetch the evals with:
+当社のEvalレジストリは、[Git-LFS](https://git-lfs.com/)を使用して保存されています。LFSをダウンロードし、インストールすると、evalを取得することができます。
 ```sh
 git lfs fetch --all
 git lfs pull
