@@ -34,52 +34,52 @@ git lfs fetch --all
 git lfs pull
 ```
 
-You may just want to fetch data for a select eval. You can achieve this via:
+たとえばevalで選択したデータを取得したいだけの場合もあります。 その場合次を経由して実現する事が出来ます:
 ```sh
 git lfs fetch --include=evals/registry/data/${your eval}
 git lfs pull
 ```
 
-### Making evals
+### Evalの作成
 
-If you are going to be creating evals, we suggest cloning this repo directly from GitHub and installing the requirements using the following command:
+Evalを開発するのであれば、このレポをGitHubから直接クローンし、以下のコマンドで要件をインストールすることをお勧めします。
 
 ```sh
 pip install -e .
 ```
 
-Using `-e`, changes you make to your eval will be reflected immediately without having to reinstall.
+また`-e`を使用することで、Evalに加えた変更がすぐに反映され、再インストールの必要がありません。
 
-### Running evals
+### Evalの実行
 
-If you don't want to contribute new evals, but simply want to run them locally, you can install the evals package via pip:
+新しいEvalを投稿するのではなく、単にローカル環境で動作させたい場合は、pipでevalsパッケージをインストールできます。
 
 ```sh
 pip install evals
 ```
 
-We provide the option for you to log your eval results to a Snowflake database, if you have one or wish to set one up. For this option, you will further have to specify the `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_DATABASE`, `SNOWFLAKE_USERNAME`, and `SNOWFLAKE_PASSWORD` environment variables.
+Snowflakeデータベースをお持ちの方、またはセットアップしたい方には、Evalの結果をSnowflakeデータベースにログするオプションを用意しています。このオプションでは、さらに `SNOWFLAKE_ACCOUNT`、`SNOWFLAKE_DATABASE`、`SNOWFLAKE_USERNAME`、`SNOWFLAKE_PASSWORD` 環境変数を指定する必要があります。
 
 ## FAQ
 
-Do you have any examples of how to build an eval from start to finish?
+Evalを最初から最後までビルドする例などありますか？
 
-- Yes! These are in the `examples` folder. We recommend that you also read through [build-eval.md](docs/build-eval.md) in order to gain a deeper understanding of what is happening in these examples.
+- はい ！それらは `examples` フォルダにあります。 
+これらのサンプルで起こっていることをより深く理解するために、[build-eval.md] (docs/build-eval.md) にも目を通すことをお勧めします。
 
-Do you have any examples of evals implemented in multiple different ways?
+Evalを複数の異なる方法で実装している例はありますか？
 
-- Yes! In particular, see `evals/registry/evals/coqa.yaml`. We have implemented small subsets of the [CoQA](https://stanfordnlp.github.io/coqa/) dataset for various eval templates to help illustrate the differences.
+- はい ！特に、`eval/registry/eval/coqa.yaml`を参照してください。違いをわかりやすくするために、[CoQA](https://stanfordnlp.github.io/coqa/)データセットの小さなサブセットを様々なEvalテンプレートに実装しています。
 
-I changed my data but this isn't reflected when running my eval, what's going on?
+データを変更したのですが、Evalを実行しても反映さ れません、どうなっているのでしょうか？
 
-- Your data may have been cached to `/tmp/filecache`. Try removing this cache and rerunning your eval.
+- データが `/tmp/filecache` にキャッシュされている可能性があります。このキャッシュを削除してEvalを再実行してみてください。
 
-There's a lot of code, and I just want to spin up a quick eval. Help? OR,
+たくさんのコードがありますが、簡単にEvalを回したいんです。お手伝いしますか？ それとも
+私は世界的なプロンプトエンジニアでコードを書かないことにしています。どうすれば私の知見を提供できますか？
 
-I am a world-class prompt engineer. I choose not to code. How can I contribute my wisdom?
+- 既存の[evalテンプレート](docs/eval-templates.md)に従って、ベーシックまたはモデルグレードによるEvalをビルドする場合、評価コードを書く必要は全くありません! データをJSONフォーマットで提供し、EvalのパラメータをYAMLで指定するだけです。[build-eval.md](docs/build-eval.md) はこれらのステップを解説していて、 `examples` フォルダにある Jupyter ノートブックでこの手順を補足することができるので、すぐに始めることができます。しかしよいEvalを作るには必然的に、慎重な考察と厳密な実験が必要であることを心に留めておいてください!
 
-- If you follow an existing [eval template](docs/eval-templates.md) to build a basic or model-graded eval, you don't need to write any evaluation code at all! Just provide your data in JSON format and specify your eval parameters in YAML. [build-eval.md](docs/build-eval.md) walks you through these steps, and you can supplement these instructions with the Jupyter notebooks in the `examples` folder to help you get started quickly. Keep in mind, though, that a good eval will inevitably require careful thought and rigorous experimentation!
+## 免責事項
 
-## Disclaimer
-
-By contributing to Evals, you are agreeing to make your evaluation logic and data under the same MIT license as this repository. You must have adequate rights to upload any data used in an Eval. OpenAI reserves the right to use this data in future service improvements to our product. Contributions to OpenAI Evals will be subject to our usual Usage Policies: https://platform.openai.com/docs/usage-policies.
+Evalに貢献することで、あなたの評価ロジックとデータをこのリポジトリと同じMITライセンスで公開することに同意したものとみなされます。Evalで使用されるデータをアップロードするための適切な権利を有している必要があります。OpenAIは、このデータを将来的に商品におけるサービス改善に利用する権利を有します。OpenAI Evalへの投稿は、通常の利用規定に従うものとします。https://platform.openai.com/docs/usage-policies.
