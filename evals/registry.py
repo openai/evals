@@ -21,10 +21,6 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_PATHS = [Path(__file__).parents[0].resolve() / "registry", Path.home() / ".evals"]
 
-DEFAULT_SYSTEM_PATHS = [
-    Path(__file__).parents[0].resolve() / "registry",
-]
-
 
 class Registry:
     def __init__(self, registry_paths: Sequence[Union[str, Path]] = DEFAULT_PATHS):
