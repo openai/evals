@@ -10,6 +10,7 @@ import json
 import logging
 import os
 import pickle
+import time
 import urllib
 from collections.abc import Iterator
 from functools import partial
@@ -96,6 +97,7 @@ def _stream_jsonl_file(path) -> Iterator:
 def filecache(func):
     DIR = "/tmp/filecache"
     name = func.__name__
+    cache_threshold = float(os.environ.get("FILECACHE_THRESHOLD", "300"))
 
     def wrapper(*args, **kwargs):
         md5 = hashlib.md5((name + ":" + str((args, kwargs))).encode("utf-8")).hexdigest()
@@ -104,10 +106,20 @@ def filecache(func):
             logger.debug(f"Loading from file cache: {pkl_path}")
             with open(pkl_path, "rb") as f:
                 return pickle.load(f)
+        start = time.time()
         result = func(*args, **kwargs)
-        Path(DIR).mkdir(parents=True, exist_ok=True)
-        with open(pkl_path, "wb") as f:
-            pickle.dump(result, f)
+        total_time = time.time() - start
+        if cache_threshold >= 0 and total_time > cache_threshold:
+            logger.warning(
+                f"""
+Running {name} took {total_time:.2f} seconds! This exceeds the caching threshold of {cache_threshold} seconds.
+Caching file to {pkl_path} for future loads. If you make changes to your data, make sure to delete the file cache.
+The FILECACHE_THRESHOLD environment variable determines the threshold, in seconds. Use FILECACHE_THRESHOLD=-1 to disable caching.
+                """.strip()
+            )
+            Path(DIR).mkdir(parents=True, exist_ok=True)
+            with open(pkl_path, "wb") as f:
+                pickle.dump(result, f)
         return result
 
     return wrapper
