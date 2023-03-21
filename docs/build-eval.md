@@ -1,38 +1,39 @@
-# Building an eval
+# Evalをビルドする
 
-This document walks through the end-to-end process for building an eval, which is a dataset and a choice of eval class. The `examples` folder contains Jupyter notebooks that follow the steps below to build several academic evals, thus helping to illustrate the overall process.
+このドキュメントでは、Evalをビルドするときの端から端までのプロセス（データセットとEvalクラスの選択）を解説しています。`examples`フォルダには、以下のステップに従っていくつかの学術的なEvalをビルドするJupyterノートブックが含まれており、全体のプロセスを説明するのに役立ちます。
 
-The steps in this process are building your dataset, registering a new eval with your dataset, and running your eval. Crucially, we assume that you are using an [existing eval template](eval-templates.md) out of the box (if that's not the case, see [this example of building a custom eval](custom-eval.md)). If you are interested in contributing your eval publically, we also include some criteria at the bottom for what we think makes an interesting eval.
+このプロセスのステップは、 データセット内にevalをビルドする、 そのデータを使い新しいEvalを登録する、そしてそのEvalを実行するというものです。重要なのは、あなたが[既存のevalテンプレート](eval-templates.md)をそのまま使っていると仮定していることです（そうでない場合は、[カスタムevalをビルドする例](custom-eval.md)をご参照ください）。もし、あなたが自分のevalを公開することに興味があるのであれば、私たちが考える興味深いEvalの基準も下部に記載しています。
 
-We are looking for evals in the following categories:
+以下のカテゴリーでEvalを募集しています。
 
-- Over-refusals
-- Safety
-- System message steerability
-- In-the-wild hallucinations
-- Math / logical / physical reasoning
-- Real-world use case (please describe in your PR how this capability would be used in a product)
-- Other foundational capability
+- 過剰な拒否反応
+- 安全性
+- システムメッセージの操作可能性
+- 既に広まっているhallucination。
+- 数学／論理／物理的な推論
+- 現実のユースケース（この機能が商品でどのように使用されるかをPRで記述してください。）
+- その他の基礎的能力
 
-If you have an eval that falls outside this category but still is a diverse example, please contribute it!
+このカテゴリーから外れていても、多様な事例となるEvalがあれば、ぜひ投稿してください。
 
-## Formatting your data
+## データをフォーマットする
 
-Once you have an eval in mind that you wish to implement, you will need to convert your samples into the right JSON lines (JSONL) format. A JSONL file is just a JSON file with a unique JSON object per line.
+実装したいEvalが決まったら、サンプルを正しいJSON行（JSONL）フォーマットに変換する必要があります。JSONLファイルは、1行に1つのユニークなJSONオブジェクトを持つ、ただのJSONファイルです。
 
-We include some examples of JSONL eval files in [registry/data/README.md](../evals/registry/data/README.md)
+JSONLのEvalファイルの例を[registry/data/README.md](../eval/registry/data/README.md)で紹介しています。
 
-Each JSON object will represent one data point in your eval. The keys you need in the JSON object depend on the eval template. All templates expect an `"input"` key which is the prompt, ideally specified in [chat format](https://platform.openai.com/docs/guides/chat/introduction) (though strings are also supported). We recommend chat format even if you are evaluating non chat models. If you are evaluating both chat and non chat models, we handle the conversion between chat formatted prompts and raw string prompts (see the conversion logic [here](../evals/prompt/base.py)).
+各JSONオブジェクトは、Evalの1つのデータポイントを表します。JSONオブジェクトに必要なキーは、Evalのテンプレートに依存します。すべてのテンプレートで `"input"` キーが必要とされ、プロンプトは理想的には [chat format](https://platform.openai.com/docs/guides/chat/introduction) で指定されているものとします (文字列もサポートされています)。チャット以外のモデルを評価する場合でも、チャットフォーマットを推奨します。チャットモデルと非チャットモデルの両方を評価する場合、チャットフォーマットのプロンプトと生の文字列プロンプトの間での変換を行います（変換ロジックは [こちら](../eval/prompt/base.py) を参照してください）。
 
-For the basic evals `Match`, `Includes`, and `FuzzyMatch`, the other required key is `"ideal"`, which is a string (or a list of strings) specifying the correct reference answer(s). For model-graded evals, the required keys vary based on the eval but is determined by the `{key}`s in the evaluation `prompt` that are not covered by the (optional) `args`.
+基本的なEvalである `Match`、`Includes`、`FuzzyMatch` において、その他のキーとして必要なものは `"ideal"` で、これは正しい基準解答を指定する文字列 (または文字列のリスト) です。モデルグレードによる評価では、必要なキーは Eval によって異なりますが、（オプションの） `args` でカバーできない `{key}` を `prompt` で指定することで決定されます。
 
-We have implemented small subsets of the [CoQA](https://stanfordnlp.github.io/coqa/) dataset for various eval templates to illustrate how the data should be formatted. See [`coqa/match.jsonl`](../evals/registry/data/coqa/match.jsonl) for an example of data that is suitable for the `Match` basic eval template and [`coqa/samples.jsonl`](../evals/registry/data/coqa/samples.jsonl) for data that is suitable for `fact` and `closedqa` model-graded evals. Note that even though these two model-graded evals expect different keys, we can include the superset of keys in our data in order to support both evals.
+[CoQA](https://stanfordnlp.github.io/coqa/)データセットの小さなサブセットを様々なEvalテンプレートに実装し、データがどのようにフォーマットされる必要があるかを説明しました。基本的な評価テンプレートである `Match` に適したデータの例として [`coqa/match.jsonl`](../evals/registry/data/coqa/match.jsonl) を、`fact` と `closedqa` モデルグレードによる評価に適したデータとして [`coqa/samples.jsonl`](../evals/registry/data/coqa/samples.jsonl) を参考にしています。
+この2つのモデルグレードによる評価では、異なるキーを想定していますが、両方のEvalをサポートするために、データにキーのスーパーセットを含めることができることに注意してください。
 
-If the dataset file is on your local machine, put the `jsonl` file in `evals/registry/evals/data/<eval_name>/samples.jsonl`. If it is in Cloud Object Storage, we support path-style URLs for the major clouds (for your personal use only, we will not accept PRs with cloud URLs).
+データセットファイルがローカルマシン上にある場合は、`jsonl`ファイルを `evals/registry/evals/data/<eval_name>/samples.jsonl` に置いてください。Cloud Object Storageにある場合は、主要なクラウドの パス・スタイルのURLをサポートします（個人的な利用に限定し、クラウドURLでのPRは受け付けません）。
 
-## Registering the eval
+## Evalの登録について
 
-Register the eval by adding a file to `evals/registry/evals/<eval_name>.yaml` using the elsuite registry format. For example, for a `Match` eval, it would be:
+elsuiteのレジストリフォーマットを用いて、`eval/registry/eval/<eval_name>.yaml`にファイルを追加して、Evalを登録します。例えば、`Match`のEvalの場合、次のようになります:
 ```
 <eval_name>:
   id: <eval_name>.dev.v0
@@ -44,42 +45,42 @@ Register the eval by adding a file to `evals/registry/evals/<eval_name>.yaml` us
     samples_jsonl: <eval_name>/samples.jsonl
 ```
 
-Upon running the eval, the data will be searched for in `evals/registry/data`, e.g. if `test_match/samples.jsonl` is the provided filepath the data is expected to be in `evals/registry/data/test_match/samples.jsonl`. 
+例えば、`test_match/samples.jsonl`を提供した場合、データは `evals/registry/data/test_match/samples.jsonl` にあることが期待されます。
 
-The naming convention for evals is in the form `<eval_name>.<split>.<version>`.
-- `<eval_name>` is the eval name, used to group evals whose scores are comparable.
-- `<split>` is the data split, used to further group evals that are under the same `<base_eval>`. E.g., "val", "test", or "dev" for testing.
-- `<version>` is the version of the eval, which can be any descriptive text you'd like to use (though it's best if it does not contain ".").
+Evalの命名規則は、`<eval_name>.<split>.<version>`という形式になっています。
+- `<eval_name>`はevalの名前で、スコアが同程度のEvalをグループ化するために使用します。
+- 同じ`<base_eval>`の下にあるevalをさらにグループ化するために使用される`<split>`はデータスプリットです。例えば、"val"、"test"、"dev" などをテスト用に使用します。
+- `<version>` はEvalのバージョンで、任意の説明テキストを使用することができます（ただし、". "を含まないことが望ましいです）。
 
-In general, running the same eval name against the same model should always give similar results so that others can reproduce it. Therefore, when you change your eval, you should bump the version.
+一般的に、同じモデルに対して同じEvalを実行すると、常に同じような結果が得られ、他の人がそれを再現できるようになります。従って、Evalを変更した場合は、バージョンを上げる必要があります。
 
-## Running the eval
+## Evalの実行
 
-You can now run your eval on your data from the CLI with your choice of model:
+これで、CLIからデータを使って、好きなモデルでEvalを実行することができるようになりました。
 ```
 oaieval gpt-3.5-turbo <eval_name>
 ```
-Congratulations, you have built your eval! Keep iterating on it until you are confident in the results. Remember, if you change the data file, remove `/tmp/filecache` so that the eval is run with your updated data.
+おめでとうございます！Evalをビルドすることができました。結果に自信が持てるようになるまで、繰り返し練習してください。データファイルを変更した場合は、`/tmp/filecache`を削除して、更新されたデータでEvalを実行することを忘れないでください。
 
-## For model-graded evals: a step-by-step workflow
+## モデルグレードによる評価のために：ステップバイステップのワークフロー
 
-We expect that the existing model-graded evals such as `fact`, `closedqa`, and `battle` will fit many use cases. However, other use cases may benefit from more customization, e.g., a different evaluation prompt. For these, there will be a bit more work involved, but generally still no coding required!
+我々は、`fact`、`closedqa`、`battle`といった既存のモデルグレードによる評価が、多くのユースケースに適合することを期待しています。しかし、他のユースケースでは、例えば異なる評価プロンプトのような、より多くのカスタマイズのメリットを享受できるかもしれません。このような場合は、もう少し作業が必要になりますが、通常はコーディングの必要はありません。
 
-1. If you can't use an existing model-graded eval, create a new YAML in `evals/registry/modelgraded` to specify the [parameters](eval-templates.md#parameters-for-model-graded-evals) of your eval. See [`humor.yaml`](../evals/registry/modelgraded/humor.yaml) for an example.
-    - Note that, even if you are creating a new YAML, you may find it easiest to copy an existing YAML as a starting point. For example, model-graded evals which check a model completion against a rubric can copy `closedqa.yaml` and just edit the `args`.
-2. Next, you will create your dataset and register your eval, as described above. See [`joke_fruits_labeled.jsonl`](../evals/registry/data/test_metaeval/joke_fruits_labeled.jsonl) and [`joke-fruits`](../evals/registry/evals/test-modelgraded.yaml), for example.
-    - Note that it is recommended to specify `eval_type` at this step, when you register your eval, rather than step 1.
-3. Run your eval, e.g., `oaleval gpt-3.5-turbo joke-fruits`.
-4. (Recommended) Add a meta-eval for the model-graded eval! Each model-graded eval comes with a few knobs to tune, mainly `prompt` but also `eval_type`. In order to make sure the eval is of high quality, we recommend each model-graded eval contribution come with "choice labels", which are basically human-provided labels for which evaluation choice the model should have made. As an example (pretending that these jokes are actually funny), see the `"choice"` keys in [`joke_fruits_labeled.jsonl`](../evals/registry/data/test_metaeval/joke_fruits_labeled.jsonl), which are not used by the `joke-fruits` eval but are used by the [`joke-fruits-meta`](../evals/registry/evals/test-modelgraded.yaml) meta-eval right below it . After running the meta-eval, e.g., `oaieval gpt-3.5-turbo joke-fruits-meta`, the report will output `metascore/` accuracies, which should be close to "1.0" for a good model-graded eval.
+1. 既存のモデルグレードによる評価が使えない場合は、`evals/registry/modelgraded`に新しいYAMLを作成して、評価の[パラメータ](eval-templates.md#parameters for-model-graded-eval) を指定してください。例として [`humor.yaml`](../evals/registry/modelgraded/humor.yaml) を見てください。
+    - 新しい YAML を作成する場合でも、出発点として既存の YAML をコピーするのが一番簡単だと気づくかもしれないことに注目してください。例えば、モデルの完成度をルールに基づいてチェックするモデルグレードのEvalでは `closedqa.yaml` をコピーして `args` を編集するだけでよいでしょう。
+2. 次に、上記のようにデータセットを作成し、Evalを登録します。例えば、[`joke_fruits_labeled.jsonl`](../eval/registry/data/test_metaeval/joke_fruits_labeled.jsonl)や[`joke-fruits`](../eval/registry/eval/test-modelgraded.yaml)などを見てください。
+    - なお、Evalを登録する際には、ステップ1ではなく、このステップの時点で`eval_type`を指定することが推奨されます。
+3. 例えば`oaleval gpt-3.5-turbo joke-fruits`のように、Evalを実行します。
+4. (推奨) モデルグレードの評価用のメタ評価を追加する! モデルグレードの評価には、主に `prompt` や `eval_type` など、調整するためのノブがいくつかあります。モデルグレードの評価を高品質にするために、モデルグレードの評価には "choice labels "をつけることを推奨します。choice labelsとは、モデルがどの評価を選択すべきかを示す、人間が提供するラベルのことです。例として、(これらのジョークが実際に面白いということにして) [`joke_fruits_labeled.jsonl`](../evals/registry/data/test_metaeval/joke_fruits_labeled.) の `"choice"` キーを見てください。 jsonl)、これは `joke-fruits` Eval では使用されませんが、そのすぐ下の [`joke-fruits-meta`](../evals/registry/evals/test-modelgraded.yaml) メタEval では使用されます . メタ評価の実行後、例えば `oaieval gpt-3.5-turbo joke-fruits-meta` とすると、レポートには `metascore/` という精度が出力されますが、これは良いモデルグレードの評価では "1.0" に近い精度になるはずです。
 
-## Criteria for contributing an eval
+## Evalを投稿する基準
 
-Important: if you are contributing code, make sure to run `pip install pre-commit; pre-commit install` before committing and pushing to ensure that `black`, `isort`, and `autoflake` are run.
+重要: コードを提供する場合、`black`, `isort`, `autoflake` が実行されていることを確認するために、コミットおよびプッシュする前に `pip install pre-commit; pre-commit install` を実行していることを確認してください。
 
-We are interested in curating a diverse and interesting set of evals on which to improve our models going forward. Here are some criteria for what we consider a good eval.
-- [ ] The eval should be thematically consistent. We'd like to see a number of prompts all revolving around the same use case, subject domain, failure mode, etc.
-- [ ] The eval should be challenging. If GPT-4 or GPT-3.5-Turbo do well on all of the prompts, this is not as interesting. Of course, the eval should also be possible given the models' limitations and constraints. Oftentimes, a good rule of thumb is whether a human (potentially a subject expert) could do well on the prompts.
-- [ ] The eval should be directionally clear. The data should include good signal around what is the right behavior. This means, for example, high-quality reference answers or an exhaustive rubric for evaluating answers.
-- [ ] The eval should be carefully crafted. Before you submit, you should think through whether you have engineered your prompts for good performance, whether you are using the best eval template, whether you have spot checked your results to ensure accuracy, etc.
+今後、モデルを改善するために、多様で興味深いEvalを収集することに関心があります。ここでは、私たちが考えるよいEvalの基準をいくつか紹介します。
+- [ ] Evalはテーマごとに一貫性があることが望ましい。同じユースケース、テーマ分野、失敗例などを中心に、多くのプロンプトが展開されることを望みます。
+- [ ] Evalはチャレンジングであるべきだ。GPT-4やGPT-3.5-Turboがすべてのプロンプトでうまくいくと、これはあまり面白くない。もちろん、モデルの限界や制約を考慮した上で、Evalは実現可能であるべきです。多くの場合、人間（専門家の可能性もある）がそのプロンプトをうまく処理できるかどうかが、良い経験則となります。
+- [ ] Evalの方向性は明確であるべきです。データには、何が正しい行動なのかを示す適切なシグナルが含まれていなければなりません。これは、例えば、高品質の模範解答や、解答を評価するための包括的な基準を意味します。
+- [ ] Evalは慎重に作成する必要があります。提出する前に、よいパフォーマンスが得られるようにプロンプトを工夫したか、最適なEvalテンプレートを使用しているか、結果の正確性を確認するために抜き打ちチェックを行ったか、などをよく考えてみてください。
 
-Once you are ready to contribute your eval publicly, submit a PR and the OpenAI team will be happy to look it over. Make sure to fill out all parts of the template that is prepopulated into the PR message. Note that submitting a PR does not guarantee that OpenAI will eventually merge it. We will run our own checks and use our best judgment when considering which evals to follow up with.
+Evalを公開する準備ができたら、PRを送信してください。PRメッセージにあらかじめ入力されているテンプレートのすべての部分を埋めるようにしてください。PRを提出しても、OpenAIが最終的にマージすることを保証するものではないことに注意してください。私たちは独自のチェックを行い、どのEvalをフォローアップするかを検討する際に、最善の判断を下します。
