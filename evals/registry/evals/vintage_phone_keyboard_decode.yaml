@@ -1,0 +1,8 @@
+vintage_phone_keyboard_decode:
+  id: vintage_phone_keyboard_decode.dev.v0
+  metrics: [accuracy]
+
+vintage_phone_keyboard_decode.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: vintage_phone_keyboard_decode/samples.jsonl
