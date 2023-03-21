@@ -1,36 +1,36 @@
-# How to run evals
+# Evalの実行方法について
 
-We provide two command line interfaces (CLIs): `oaieval` for running a single eval and `oaievalset` for running a set of evals.
+単一のEvalを実行するための`oaieval`と、一連のEvalを実行するための`oaievalset`という2つのコマンドラインインターフェース(CLI)を提供しています。
 
-## Running an eval
+## Evalの実行
 
-When using the `oaieval` command, you will need to provide both the model you wish to evaluate as well as the eval to run. E.g.,
+`oaieval`コマンドを使用する場合、評価したいモデルと実行するevalの両方を提供する必要があります。例えば
 ```sh
 oaieval gpt-3.5-turbo test-match
 ```
 
-In this example, `gpt-3.5-turbo` is the model to evaluate, and `test-match` is the eval to run. The valid model names are those which you have access to via the API. The valid eval names are specified in the YAML files under `evals/registry/evals`, and their corresponding implementations can be found in `evals/elsuite`.
+この例では、`gpt-3.5-turbo`が評価するモデルで、`test-match`が実行するEvalです。有効なモデル名は、API経由でアクセスできるものです。有効なEval名は `evals/registry/evals` にあるYAMLファイルで指定され、対応する実装は `evals/elsuite` で確認することが出来ます。
 
-These CLIs can accept various flags to modify their default behavior. For example:
-- If you wish to log to a Snowflake database (which you have already set up as described in the [README](../README.md)), add `--no-local-run`.
-- By default, logging locally or to Snowflake will write to `tmp/evallogs`, and you can change this by setting a different `--record_path`.
+これらのCLIはデフォルトの動作を変更するために、さまざまなフラグを受け付けます。例として以下のようなものがあります:
+- Snowflakeデータベース（[README](../README.md)に記載されている通りに設定済み）にログを記録したい場合 は `--no-local-run` を追加します。
+- デフォルトでは、 ローカルまたはSnowflakeへのログは `tmp/evallogs` に書き込まれますが、異なる `--record_path` を設定することで、これを変更することができます。
 
-You can run `oaieval --help` to see a full list of CLI options.
+`oaieval --help`を実行すると、CLIオプションのすべてのリストを見ることができます。
 
-## Running an eval set
+## Evalセットの実行
 
 ```sh
 oaievalset gpt-3.5-turbo test
 ```
 
-Similarly, `oaievalset` also expects a model name and an eval set name, for which the valid options are specified in the YAML files under `evals/registry/eval_sets`.
+同様に、`oaievalset`もモデル名とEvalセット名を必要とし、有効なオプションは `evals/registry/eval_sets` 以下のYAMLファイルに記述されています。
 
-By default we run with 10 threads. You can configure this, e.g.,
+デフォルトでは10スレッドで実行されます。例えば以下のように設定することができます。
 
 ```sh
 EVALS_THREADS=42 oaievalset gpt-3.5-turbo test
 ```
 
-If you have to stop your run or your run crashes, we've got you covered! `oaievalset` records the evals that finished in `/tmp/oaievalset/{model}.{eval_set}.progress.txt`. You can simply rerun the command to pick up where you left off. If you want to run the eval set starting from the beginning, delete this progress file.
+もし実行を中止したり、クラッシュしたりすることがあっても、大丈夫です!  `oaievalset`は終了したEvalを `/tmp/oaievalset/{model}.{eval_set}.progress.txt` に記録しています。コマンドを再実行するだけで、前回の続きから再開することができます。 もし、Evalセットを最初から実行したい場合は、このプログレスファイルを削除してください。
 
-Unfortunately, you can't resume a single eval from the middle. You'll have to restart from the beginning, so try to keep your individual evals quick to run.
+残念ながら、一つのEvalを途中から再開することはできません。 最初からやり直すことになるので、個々のEvalを素早く実行するように心がけましょう。
