@@ -74,6 +74,10 @@ I changed my data but this isn't reflected when running my eval, what's going on
 
 - Your data may have been cached to `/tmp/filecache`. Try removing this cache and rerunning your eval.
 
+When I run an eval, it sometimes hangs at the very end (after the final report). What's going on?
+
+- This is a known issue, but you should be able to interrupt it safely and the eval should finish immediately after.
+
 There's a lot of code, and I just want to spin up a quick eval. Help? OR,
 
 I am a world-class prompt engineer. I choose not to code. How can I contribute my wisdom?
