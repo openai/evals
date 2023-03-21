@@ -1,31 +1,31 @@
-# How to add a custom eval
+# カスタムEvalの追加方法について
 
-This tutorial will walk you through a simple example of writing and adding a custom eval. The example eval will test the model's ability to do basic arithmetic. We will assume that you have followed the setup instructions in the [README](../README.md) and gone through the other docs for how to run and build evals.
+このチュートリアルでは、カスタムEvalの作成と追加を行う簡単な例を解説します。このEvalの例では、モデルが基本的な計算をする能力についてテストします。 ここでは、あなたが[README](../README.md)にあるセットアップの指示に従った上で、Evalを実行してビルドする方法に関する他のドキュメントに目を通したことを前提としています。
 
-When writing your own evals, the primary files of interest are:
-- `evals/api.py`, which provides common interfaces and utilities used by eval creators to sample from models and process the results,
-- `evals/record.py`, which defines the recorder classes which log eval results in different ways, such as to a local JSON file or to a remote Snowflake database, and
-- `evals/metrics.py`, which defines various common metrics of interest.
+独自のEvalを作成する場合、主に以下のファイルが注目されます:
+- `evals/api.py` は、Eval の作成者がモデルからサンプリングして結果を処理するために使用する共通のインターフェースとユーティリティを提供します。
+- `evals/record.py` は、Eval の結果をローカルの JSON ファイルやリモートの Snowflake データベースなど、さまざまな方法でログに記録するレコーダークラスを定義したものです。
+- `evals/metrics.py` は、様々な興味深い一般的な指標を定義しています。
 
-These files provide a suite of tools for writing new evals. Once you have gone through this tutorial, you can see a more realistic example of these tools in action with the [machine translation](../evals/elsuite/translate.py) [eval example](../examples/lafand-mt.ipynb), which also implements custom eval logic in lieu of using an existing template.
+これらのファイルは、新しいEvalを書くためのツール群を提供します。このチュートリアルを終えたら、[機械翻訳](../evals/elsuite/translate.py) [eval example](../examples/lafand-mt.ipynb) でこれらのツールがよりリアルに動作する例を見ることができます。このファイルは既存のテンプレートを使う代わりに、カスタムevalロジックも実装されています。
 
-## Create your datasets
+## データセットの作成
 
-The first step is to create the datasets for your eval. Here, we will create toy train and test sets of just two examples each. The test examples are what we will evaluate the model on, and we'll include the train examples as few-shot examples in the prompt to the model.
+まず最初に、Eval用のデータセットを作成します。ここでは、2つずつの例からなるtoy trainとtestのセットを作成します。 testの例はモデルを評価するもので、trainの例はモデルへのプロンプトにFew-shotの例を含めることにします。
 
-We will use the new chat format described [here](https://platform.openai.com/docs/guides/chat/introduction). By default, we encourage all evals to be written using chat formatting if you want to evaluate our new models. Under the hood, we [convert](../evals/prompt/base.py) chat formatted data into raw strings for older non chat models.
+私たちは、[こちら](https://platform.openai.com/docs/guides/chat/introduction)で説明されている新しいチャットのフォーマットを使用する予定です。デフォルトで、私たちの新しいモデルを評価したいのであれば、すべてのEvalはチャットのフォーマットで書かれることを推奨します。 内部ではチャットフォーマットのデータをチャット以外の古いモデルのための生の文字列に[変換](../evals/prompt/base.py)しています。
 
-To create the toy datasets, in your terminal, type:
+トイデータセットを作成するためにターミナルで次のように入力します:
 ```bash
 echo -e '[{"role": "system", "content": "2+2=", "name": "example_user"}, {"role": "system", "content": "4", "name": "example_assistant"}]\n[{"role": "system", "content": "4*4=", "name": "example_user"}, {"role": "system", "content": "16", "name": "example_assistant"}]' > /tmp/train.jsonl
 echo -e '[{"role": "system", "content": "48+2=", "name": "example_user"}, {"role": "system", "content": "50", "name": "example_assistant"}]\n[{"role": "system", "content": "5*20=", "name": "example_user"}, {"role": "system", "content": "100", "name": "example_assistant"}]' > /tmp/test.jsonl
 ```
 
-## Create an eval
+## Evalの作成
 
-The next step is to write a Python class that represents the actual evaluation. This class uses your datasets to create prompts, which are passed to the model to generate completions. Evaluation classes generally will inherit from the `evals.Eval` base class (defined in `evals/eval.py`) and will override two methods: `eval_sample` and `run`.
+次のステップは、実際の評価を表す Python クラスを作成することです。このクラスはデータセット内にプロンプトを作成し、それをモデルに渡すことでcompletionを生成します。評価クラスは一般的に `evals.Eval` ベースクラス (`evals/eval.py` で定義) を継承し、 `eval_sample` と `run` という2つのメソッドをオーバーライドします。
 
-Let's create a file called `arithmetic.py` under the `evals/elsuite` folder. We'll start by defining the eval class. Its `__init__` method will take in the arguments we need (references to the train and test sets) along with other `kwargs` that will be handled by the base class. We'll also define the `run` method which takes in a `recorder` and returns the final metrics of interest.
+`eval/elsuite`フォルダの下に `arithmetic.py` というファイルを作成しましょう。まず、Eval クラスを定義します。その `__init__` メソッドは、必要な引数（トレーニングセットとテストセットへの参照）と、ベースクラスによって処理されるその他の `kwargs` を受け取ります。また、`recorder` を受け取って対象の最終的なメトリクスを返す `run` メソッドを定義します。
 
 ```python
 import random
@@ -55,7 +55,7 @@ class Arithmetic(evals.Eval):
         }
 ```
 
-Generally, most `run` methods will follow the same pattern shown here: loading the data, calling `eval_all_samples`, and aggregating the results (in this case, using the `get_accuracy` function in `evals/metrics.py`). `eval_all_samples` takes in both the `recorder` and the `test_samples` and, under the hood, will call the `eval_sample` method on each sample in `test_samples`. So let's write that `eval_sample` method now:
+一般的に、ほとんどの `run` メソッドはここで示されているのと同じパターンをたどります。データを読み込み、 `eval_all_samples` を呼び出し、結果を集計します（このケースでは、 `evals/metrics.py` の `get_accuracy` 関数を使用しています）。`eval_all_samples` は `recorder` と `test_samples` の両方を取り込み、内部では `test_samples` の各サンプルに対して `eval_sample` メソッドを呼び出すことになります。ではその`eval_sample`メソッドを書いてみましょう。
 
 ```python
     def eval_sample(self, test_sample, rng: random.Random):
@@ -88,15 +88,15 @@ Generally, most `run` methods will follow the same pattern shown here: loading t
 
         evals.check_sampled_text(self.model_spec, prompt, expected=sample["answer"])
 ```
-You'll notice that `eval_sample` doesn't take the `recorder` as an argument. This is because `eval_all_samples` sets it to be the default recorder before calling `eval_sample`, and the recording utilities defined in `evals/record.py` use the default recorder. In this example, the `eval_sample` method passes off a lot of the heavy lifting to the `evals.check_sampled_text` utility function, which is defined in `evals/api.py`. This utility function queries the model, defined by `self.model_spec`, with the given `prompt` and checks to see if the result matches the `expected` answer (or one of them, if given a list). It then records these matches (or non matches) using the default recorder.
+このとき、`eval_sample` は `recorder` を引数として受け取らないことに気づくでしょう。これは `eval_all_samples` が `eval_sample` を呼び出す前にデフォルトのレコーダとして設定しおり、 `evals/record.py` で定義されているレコードユーティリティはデフォルトのレコーダを使用するからです。この例では、`eval_sample`メソッドは、`eval/api.py`で定義されている `evals.check_sampled_text` ユーティリティ関数に多くの重い作業を引き継いでいます。このユーティリティ関数は `self.model_spec` で定義されたモデルに、与えられた `prompt` を問い合わせ、その結果が `expected` な解答（リストが与えられた場合はそのうちの一つ）と一致するかどうかを確認する。そして、デフォルトのレコーダーを使用して、これらのマッチ（または非マッチ）を記録します。
 
-`eval_sample` methods may vary greatly based on your use case. If you are building custom evals, it is a good idea to be familiar with the functions available to you in `evals/record.py`, `evals/metrics.py`, and especially `evals/api.py`.
+また、`eval_sample`メソッドはユースケースによって大きく異なる可能性があります。カスタムEvalをビルドする場合、`eval/record.py`, `evals/metrics.py`, そして特に `evals/api.py` で利用できる関数に精通しておくと良いでしょう。
 
-## Register your eval
+## Evalを登録する
 
-The next step is to register your eval in the registry so that it can be run using the `oaieval` CLI.
+次のステップは、`oaieval` CLI を使って実行できるように、Eval をレジストリに登録することです。
 
-Let's create a file called `arithmetic.yaml` under the `evals/registry/evals` folder and add an entry for our eval as follows:
+ここでは`eval/registry/eval`フォルダの下に`arithmetic.yaml`というファイルを作成し、以下のようにevalのエントリーを追加してみましょう。
 
 ```yaml
 # Define a base eval
@@ -120,18 +120,18 @@ arithmetic.dev.match-v1:
     test_jsonl: /tmp/test.jsonl
 ```
 
-The `args` field should match the arguments that your eval class `__init__` method expects.
+また、`args`フィールドは、Evalクラスの `__init__` メソッドが受け取るべき引数と一致させる必要があります。
 
-## Run your eval
+## Evalの実行
 
-The final step is to run your eval and view the results.
+最後に、Evalを実行し、結果を表示します。
 
 ```sh
 pip install .  # you can omit this if you used `pip install -e .` to install
 oaieval gpt-3.5-turbo arithmetic
 ```
 
-If you run with the `gpt-3.5-turbo` model, you should see an output similar to this (we have cleaned up the output here slightly for readability):
+もし`gpt-3.5-turbo`モデルで実行すると、次のような出力が参照されるはずです（ここでは読みやすくするために出力を少し整理しています）。
 
 ```
 % oaieval gpt-3.5-turbo arithmetic
@@ -147,4 +147,4 @@ If you run with the `gpt-3.5-turbo` model, you should see an output similar to t
 ... [record.py:309] Logged 6 rows of events to /tmp/evallogs/<run_id>_gpt-3.5-turbo_arithmetic.jsonl: insert_time=2.038ms
 ```
 
-If you notice evals has cached your data and you need to clear that cache, you can do so with `rm -rf /tmp/filecache`.
+もしEvalがデータをキャッシュされていることに気づき、そのキャッシュをクリアする必要がある場合は、`rm -rf /tmp/filecache`でクリアすることができます。
