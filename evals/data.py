@@ -4,16 +4,13 @@ This file defines utilities for working with data and files of various types.
 import csv
 import dataclasses
 import gzip
-import hashlib
 import itertools
 import json
 import logging
 import os
-import pickle
 import urllib
 from collections.abc import Iterator
 from functools import partial
-from pathlib import Path
 from typing import Any, Sequence, Union
 
 import blobfile as bf
@@ -93,27 +90,6 @@ def _stream_jsonl_file(path) -> Iterator:
             yield json.loads(line)
 
 
-def filecache(func):
-    DIR = "/tmp/filecache"
-    name = func.__name__
-
-    def wrapper(*args, **kwargs):
-        md5 = hashlib.md5((name + ":" + str((args, kwargs))).encode("utf-8")).hexdigest()
-        pkl_path = f"{DIR}/{md5}.pkl"
-        if os.path.exists(pkl_path):
-            logger.debug(f"Loading from file cache: {pkl_path}")
-            with open(pkl_path, "rb") as f:
-                return pickle.load(f)
-        result = func(*args, **kwargs)
-        Path(DIR).mkdir(parents=True, exist_ok=True)
-        with open(pkl_path, "wb") as f:
-            pickle.dump(result, f)
-        return result
-
-    return wrapper
-
-
-@filecache
 def get_lines(path) -> list[dict]:
     """
     Get a list of lines from a file.
@@ -122,7 +98,6 @@ def get_lines(path) -> list[dict]:
         return f.readlines()
 
 
-@filecache
 def get_jsonl(path: str) -> list[dict]:
     """
     Extract json lines from the given path.
@@ -139,12 +114,10 @@ def get_jsonl(path: str) -> list[dict]:
     return _get_jsonl_file(path)
 
 
-@filecache
 def get_jsonls(paths: Sequence[str], line_limit=None) -> list[dict]:
     return list(iter_jsonls(paths, line_limit))
 
 
-@filecache
 def get_json(path) -> dict:
     if bf.isdir(path):
         raise ValueError("Path is a directory, only files are supported")
