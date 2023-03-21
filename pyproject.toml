@@ -24,6 +24,8 @@ dependencies = [
     "pyyaml",
     "sacrebleu",
     "matplotlib",
+    "rouge-score",
+    "scipy",
 ]
 
 [project.scripts]
