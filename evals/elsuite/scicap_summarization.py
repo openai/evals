@@ -107,5 +107,4 @@ class ScicapSummarization(evals.Eval):
             sampled=sampled,
             **score_dict,
         )
-
         return match
