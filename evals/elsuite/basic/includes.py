@@ -20,8 +20,10 @@ class Includes(evals.Eval):
         self.samples_jsonl = samples_jsonl
 
     def eval_sample(self, sample: Any, *_):
+        plugins = sample.get("plugins", [])
+        
         sampled = evals.sample_freeform(
-            self.model_spec, sample["input"], max_tokens=self.max_tokens
+            self.model_spec, sample["input"], max_tokens=self.max_tokens, plugins=plugins
         )
         includes_answer = any(
             [evals.elsuite.utils.get_answer(sampled, ref) for ref in sample["ideal"]]

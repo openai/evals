@@ -6,7 +6,7 @@ import logging
 import threading
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Dict, List, Union
+from typing import Dict, List, Optional, Text, Union
 
 logger = logging.getLogger(__name__)
 ENCODER_LOCK = threading.Lock()
@@ -18,7 +18,6 @@ OpenAICreatePrompt = Union[str, list[str], list[int], list[list[int]]]
 OpenAIChatMessage = Dict[str, str]  # A message is a dictionary with "role" and "content" keys
 OpenAICreateChatPrompt = List[OpenAIChatMessage]  # A chat log is a list of messages
 
-
 def chat_prompt_to_text_prompt(prompt: OpenAICreateChatPrompt) -> str:
     """
     Render a chat prompt as a text prompt. User and assistant messages are separated by newlines
@@ -29,22 +28,43 @@ def chat_prompt_to_text_prompt(prompt: OpenAICreateChatPrompt) -> str:
     chat_to_prefixes = {
         # roles
         "system": "",
+        "user": "User",
+        "assistant": "Assistant",
         # names
-        "example_user": "User: ",
-        "example_assistant": "Assistant: ",
+        "example_user": "User",
+        "example_assistant": "Assistant",
+        "tool": "Tool",
     }
 
     # For a single message, be it system, user, or assistant, just return the message
     if len(prompt) == 1:
         return prompt[0]["content"]
 
-    text = ""
+    lines = []
     for msg in prompt:
-        role = msg["name"] if "name" in msg else msg["role"]
-        prefix = chat_to_prefixes.get(role, role.capitalize() + ": ")
+        role: Optional[Text] = msg.get("role")
+        name: Optional[Text] = msg.get("name")
+        receiver: Optional[Text] = msg.get("recipient", None)
+        
+        prefix = chat_to_prefixes.get(role, role.capitalize())
+        
+        # Tool special case
+        if name is not None:
+            prefix += f" ({name})"
+
+        # Receiver name
+        if receiver is not None:
+            mapped_receiver = chat_to_prefixes.get(receiver, receiver.capitalize())
+            prefix += f" -> {mapped_receiver}"
+
+        # Add a separator
+        prefix += ": "
+
         content = msg["content"]
-        text += f"{prefix}{content}\n"
-    text += "Assistant: "
+        lines.append(f"{prefix}{content}")
+        
+    text = "\n".join(lines)
+    text += f"{chat_to_prefixes['assistant']}: "
     return text.lstrip()
 
 

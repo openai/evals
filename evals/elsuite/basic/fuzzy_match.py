@@ -18,12 +18,13 @@ class FuzzyMatch(evals.Eval):
         self.samples_jsonl = samples_jsonl
 
     def eval_sample(self, test_sample, rng):
-        prompt, correct_answers = test_sample["input"], test_sample["ideal"]
+        prompt, correct_answers, plugins = test_sample["input"], test_sample["ideal"], test_sample.get("plugins", [])
         generated_answer = evals.sample_freeform(
             self.model_spec,
             prompt,
             temperature=0.0,
             max_tokens=16,
+            plugins=plugins
         )
         matches = [
             utils.fuzzy_match(generated_answer, correct_answer)

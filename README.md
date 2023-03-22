@@ -82,6 +82,10 @@ I am a world-class prompt engineer. I choose not to code. How can I contribute m
 
 - If you follow an existing [eval template](docs/eval-templates.md) to build a basic or model-graded eval, you don't need to write any evaluation code at all! Just provide your data in JSON format and specify your eval parameters in YAML. [build-eval.md](docs/build-eval.md) walks you through these steps, and you can supplement these instructions with the Jupyter notebooks in the `examples` folder to help you get started quickly. Keep in mind, though, that a good eval will inevitably require careful thought and rigorous experimentation!
 
+I want to add an evaluation for a plugin I'm thinking of developing. How do I do that?
+
+- Writing a plugin-based eval is a bit more involved than a basic or model-graded eval. You will need to write some evaluation code, but you can still use the existing [eval templates](docs/eval-templates.md) to help you get started. [plugin-eval.md](docs/plugin-eval.md) walks you through the process of building your own plugin.
+
 ## Disclaimer
 
 By contributing to Evals, you are agreeing to make your evaluation logic and data under the same MIT license as this repository. You must have adequate rights to upload any data used in an Eval. OpenAI reserves the right to use this data in future service improvements to our product. Contributions to OpenAI Evals will be subject to our usual Usage Policies: https://platform.openai.com/docs/usage-policies.

@@ -15,7 +15,7 @@ from typing import Any, Iterator, Sequence, Type, Union
 
 import yaml
 
-from evals.base import BaseEvalSpec, EvalSetSpec, EvalSpec
+from evals.base import BaseEvalSpec, EvalSetSpec, EvalSpec, PluginSpec
 from evals.utils.misc import make_object
 
 logger = logging.getLogger(__name__)
@@ -71,6 +71,9 @@ class Registry:
 
     def get_eval_set(self, name: str) -> EvalSetSpec:
         return self._dereference(name, self._eval_sets, "eval set", EvalSetSpec)
+
+    def get_plugin(self, name: str) -> PluginSpec:
+        return self._dereference(name, self._plugins, "plugin", PluginSpec)
 
     def get_evals(self, patterns: Sequence[str]) -> Iterator[EvalSpec]:
         # valid patterns: hello, hello.dev*, hello.dev.*-v1
@@ -169,6 +172,11 @@ class Registry:
     @functools.cached_property
     def _modelgraded_specs(self):
         return self._load_registry([p / "modelgraded" for p in self._registry_paths])
+    
+    @functools.cached_property
+    def _plugins(self):
+        return self._load_registry([p / "plugins" for p in self._registry_paths])
+
 
 
 registry = Registry()

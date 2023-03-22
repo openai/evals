@@ -33,6 +33,8 @@ class Translate(evals.Eval):
     def eval_sample(self, sample: Any, *_):
         prompt = sample["input"]
         expected = sample["ideal"]
+        plugins = sample.get("plugins", [])
+        
         if self.num_few_shot > 0:
             assert is_chat_prompt(sample["input"]), "few shot requires chat prompt"
             prompt = sample["input"][:-1]
@@ -45,7 +47,12 @@ class Translate(evals.Eval):
         elif not isinstance(expected, list):
             expected = [expected]
 
-        sampled = evals.sample_freeform(self.model_spec, prompt, max_tokens=self.max_tokens)
+        sampled = evals.sample_freeform(
+            self.model_spec,
+            prompt,
+            max_tokens=self.max_tokens,
+            plugins=plugins,
+        )
 
         score = None
         if expected is not None:

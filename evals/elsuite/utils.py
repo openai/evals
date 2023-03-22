@@ -2,6 +2,7 @@ import copy
 import re
 import string
 from collections import Counter, defaultdict
+from typing import List, Optional
 
 from evals.api import sample_freeform
 from evals.prompt.base import chat_prompt_to_text_prompt, is_chat_prompt
@@ -101,12 +102,13 @@ def format_necessary(template: str, **kwargs: dict[str, str]) -> str:
 class PromptFn:
     """Wrap calls to model with prompt"""
 
-    def __init__(self, prompt, model_spec, max_tokens, temperature=0, completion_kwargs=None):
+    def __init__(self, prompt, model_spec, max_tokens, temperature=0, completion_kwargs=None, plugins: Optional[List[str]] = None):
         self.prompt = prompt
         self.max_tokens = max_tokens
         self.model_spec = model_spec
         self.temperature = temperature
         self.completion_kwargs = completion_kwargs or {}
+        self.plugins = plugins or []
 
     def __call__(self, **kwargs):
         # if any input kwargs is chat prompt, convert to text prompt
@@ -132,6 +134,7 @@ class PromptFn:
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0,
+            plugins=self.plugins,
             **self.completion_kwargs,
         )
         return completion, prompt

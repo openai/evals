@@ -235,6 +235,9 @@ class ModelBasedClassify(evals.Eval):
         if not self.metaeval:
             try:
                 for k, v in self.input_outputs.items():
+                    this_sample = test_sample[k]
+                    plugins = this_sample.get("plugins", [])
+                    
                     if self.multicomp_n > 1 and v in self.completion_sample_templates:
                         completion = ""
                         completion_i_template = self.completion_sample_templates[v]
@@ -246,10 +249,11 @@ class ModelBasedClassify(evals.Eval):
                                 # use the single model for all completions
                                 model_spec = self.model_spec
                             get_input_completion = PromptFn(
-                                test_sample[k],
+                                this_sample,
                                 model_spec=model_spec,
                                 max_tokens=self.max_tokens,
                                 temperature=self.multicomp_temperature,
+                                plugins=plugins,
                             )
                             completion_i, _ = get_input_completion()
                             completion += format_necessary(
@@ -260,9 +264,10 @@ class ModelBasedClassify(evals.Eval):
                             )
                     else:
                         get_input_completion = PromptFn(
-                            test_sample[k],
+                            this_sample,
                             model_spec=self.model_spec,
                             max_tokens=self.max_tokens,
+                            plugins=plugins,
                         )
                         completion, _ = get_input_completion()
                     completions[v] = completion

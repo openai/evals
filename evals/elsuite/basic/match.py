@@ -27,6 +27,7 @@ class Match(evals.Eval):
 
     def eval_sample(self, sample: Any, *_):
         prompt = sample["input"]
+        plugins = sample.get("plugins", [])
         if self.num_few_shot > 0:
             assert is_chat_prompt(sample["input"]), "few shot requires chat prompt"
             prompt = sample["input"][:-1]
@@ -34,7 +35,7 @@ class Match(evals.Eval):
                 prompt += s["sample"]
             prompt += sample["input"][-1:]
 
-        return evals.check_sampled_text(self.model_spec, prompt, expected=sample["ideal"])
+        return evals.check_sampled_text(self.model_spec, prompt, expected=sample["ideal"], plugins=plugins)
 
     def run(self, recorder):
         samples = evals.get_jsonl(self.samples_jsonl)

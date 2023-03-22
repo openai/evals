@@ -1,0 +1,11 @@
+openai.bird.1:
+  class: evallib.plugin.openai.bird:MyBirds
+
+openai.todo.1:
+  class: evals.plugin.openai.todo:TodoList
+
+openai.clock.1:
+  class: evals.plugin.openai.clock:Clock
+
+openai.text_analyzer.1:
+  class: evals.plugin.openai.text_analyzer:TextAnalyzer

@@ -148,3 +148,13 @@ class RunSpec:
         rand_suffix = base64.b32encode(os.urandom(5)).decode("ascii")
         self.run_id = now.strftime("%y%m%d%H%M%S") + rand_suffix
         self.created_at = str(now)
+
+
+@dataclass
+class PluginSpec:
+    """
+    Specification for this plugin.
+    """
+
+    cls: str
+    args: Optional[Dict[str, Any]] = None
