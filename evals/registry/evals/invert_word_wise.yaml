@@ -6,4 +6,5 @@ invert_word_wise:
 invert_word_wise.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: invert_word_wise/samples.jsonl
+    samples_jsonl: invert_word_wise/invert.jsonl
+    
