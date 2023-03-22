@@ -88,3 +88,18 @@ diversity.dev.v0:
     modelgraded_spec_file: diversity
     multicomp_n: 4
     multicomp_temperature: 0.4
+
+# a simple modelgraded eval checking which of 2 completions to the sample prompt is the best response
+# this example uses a labeled dataset, but ignore "completion" and "choice"
+# command: `oaleval gpt-3.5-turbo,gpt-4 best`
+best:
+  id: best.dev.v0
+  metrics: [accuracy]
+best.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: test_metaeval/joke_fruits_labeled.jsonl
+    eval_type: cot_classify
+    modelgraded_spec_file: best
+    multicomp_n: 2
+    multicomp_temperature: 0.0
