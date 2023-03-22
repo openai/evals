@@ -1,0 +1,8 @@
+matrix_sequences:
+  id: matrix_sequences.dev.v0
+  metrics: [accuracy]
+
+matrix_sequences.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: matrix_sequences/samples.v2.jsonl
