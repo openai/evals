@@ -1,0 +1,11 @@
+
+graphql-bug-fix:
+  id: graphql-bug-fix.strict.v0
+  description: Fix simple bugs in a GraphQL query given the corresponding schema.
+  disclaimer: Example schema uses a sample of official Open Targets GraphQL schema for the purpose of real-use case evaluation.
+  metrics: [accuracy]
+graphql-bug-fix.strict.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: graphql-bug-fix/queries.jsonl
+
