@@ -206,6 +206,8 @@ class ModelBasedClassify(evals.Eval):
             ), "completion_sample_templates must be specified if multicomp_n > 1"
 
         # since we accept optional args, we need to check that all args are used
+        for key in ("key", "group"):
+            modelgraded_specs.pop(key, None)
         assert not modelgraded_specs, f"Unused args: {modelgraded_specs}. Typo in YAML?"
 
     def eval_sample(self, test_sample: dict, rng: Random) -> None:

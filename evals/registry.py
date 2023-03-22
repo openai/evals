@@ -64,10 +64,7 @@ class Registry:
             f"Modelgraded spec {name} not found. "
             f"Closest matches: {difflib.get_close_matches(name, self._modelgraded_specs.keys(), n=5)}"
         )
-        path = self._modelgraded_specs[name]
-        with open(path, "r") as f:
-            spec = yaml.safe_load(f)
-        return spec
+        return self._modelgraded_specs[name]
 
     def get_eval(self, name: str) -> EvalSpec:
         return self._dereference(name, self._evals, "eval", EvalSpec)
@@ -161,24 +158,6 @@ class Registry:
                     self._process_file(registry, path)
         return registry
 
-    def _load_registry_paths_only(self, paths, prefixes: Sequence[str] = []):
-        """Load registry from a list of paths.
-
-        Each path or yaml specifies one registry entry.
-        """
-        registry = {}
-        for path in paths:
-            for subpath in Path(path).glob("*"):
-                if os.path.isdir(subpath):
-                    self._load_registry_paths_only(
-                        [subpath], prefixes=prefixes + [os.path.basename(subpath)]
-                    )
-                else:
-                    name = ".".join(prefixes + [os.path.splitext(os.path.basename(subpath))[0]])
-                    assert name not in registry, f"duplicate entry: {name} from {subpath}"
-                    registry[name] = subpath
-        return registry
-
     @functools.cached_property
     def _eval_sets(self):
         return self._load_registry([p / "eval_sets" for p in self._registry_paths])
@@ -189,7 +168,7 @@ class Registry:
 
     @functools.cached_property
     def _modelgraded_specs(self):
-        return self._load_registry_paths_only([p / "modelgraded" for p in self._registry_paths])
+        return self._load_registry([p / "modelgraded" for p in self._registry_paths])
 
 
 registry = Registry()
