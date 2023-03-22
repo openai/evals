@@ -1,0 +1,14 @@
+convert-number-ex:
+  evals:
+    - convert-number-bin2oct
+    - convert-number-bin2dec
+    - convert-number-bin2hex
+    - convert-number-oct2bin
+    - convert-number-oct2dec
+    - convert-number-oct2hex
+    - convert-number-dec2bin
+    - convert-number-dec2oct
+    - convert-number-dec2hex
+    - convert-number-hex2bin
+    - convert-number-hex2oct
+    - convert-number-hex2dec

@@ -1,0 +1,108 @@
+
+convert-number-bin2oct:
+  id: convert-number-bin2oct.dev.v0
+  metrics: [accuracy]
+convert-number-bin2oct.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/bin2oct.jsonl
+
+
+convert-number-bin2dec:
+  id: convert-number-bin2dec.dev.v0
+  metrics: [accuracy]
+convert-number-bin2dec.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/bin2dec.jsonl
+
+
+convert-number-bin2hex:
+  id: convert-number-bin2hex.dev.v0
+  metrics: [accuracy]
+convert-number-bin2hex.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/bin2hex.jsonl
+
+
+convert-number-oct2bin:
+  id: convert-number-oct2bin.dev.v0
+  metrics: [accuracy]
+convert-number-oct2bin.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/oct2bin.jsonl
+
+
+convert-number-oct2dec:
+  id: convert-number-oct2dec.dev.v0
+  metrics: [accuracy]
+convert-number-oct2dec.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/oct2dec.jsonl
+
+
+convert-number-oct2hex:
+  id: convert-number-oct2hex.dev.v0
+  metrics: [accuracy]
+convert-number-oct2hex.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/oct2hex.jsonl
+
+
+convert-number-dec2bin:
+  id: convert-number-dec2bin.dev.v0
+  metrics: [accuracy]
+convert-number-dec2bin.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/dec2bin.jsonl
+
+
+convert-number-dec2oct:
+  id: convert-number-dec2oct.dev.v0
+  metrics: [accuracy]
+convert-number-dec2oct.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/dec2oct.jsonl
+
+
+convert-number-dec2hex:
+  id: convert-number-dec2hex.dev.v0
+  metrics: [accuracy]
+convert-number-dec2hex.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/dec2hex.jsonl
+
+
+convert-number-hex2bin:
+  id: convert-number-hex2bin.dev.v0
+  metrics: [accuracy]
+convert-number-hex2bin.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/hex2bin.jsonl
+
+
+convert-number-hex2oct:
+  id: convert-number-hex2oct.dev.v0
+  metrics: [accuracy]
+convert-number-hex2oct.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/hex2oct.jsonl
+
+
+convert-number-hex2dec:
+  id: convert-number-hex2dec.dev.v0
+  metrics: [accuracy]
+convert-number-hex2dec.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convert-number/hex2dec.jsonl
+
