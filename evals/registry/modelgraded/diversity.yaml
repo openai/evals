@@ -1,14 +1,15 @@
-prompt: |-
-  Are the following {n} texts diverse?
+diversity:
+  prompt: |-
+    Are the following {n} texts diverse?
 
-  {completion}
-completion_sample_templates:
-  completion: "{i}. {output}\n"
-choice_scores:
-  "Yes": 1.0
-  "No": 0.0
-choice_strings:
-  - "Yes"
-  - "No"
-input_outputs:
-  input: completion
+    {completion}
+  completion_sample_templates:
+    completion: "{i}. {output}\n"
+  choice_scores:
+    "Yes": 1.0
+    "No": 0.0
+  choice_strings:
+    - "Yes"
+    - "No"
+  input_outputs:
+    input: completion
