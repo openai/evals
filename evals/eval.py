@@ -3,17 +3,18 @@ This file defines the base class for evals.
 """
 import abc
 import asyncio
+import concurrent.futures
 import logging
 import os
 import random
-import concurrent.futures
 from multiprocessing.pool import ThreadPool
-from typing import Any, Awaitable, Callable, Dict, List, Tuple
+from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple
 
 from tqdm import tqdm
 
 from .base import ModelSpec, ModelSpecs
-from .record import Recorder, RecorderBase
+from .record import RecorderBase
+from .registry import Registry
 
 logger = logging.getLogger(__name__)
 
@@ -53,6 +54,7 @@ class Eval(abc.ABC):
         model_specs: ModelSpecs,
         seed: int = 20220722,
         name: str = "no_name_eval.default",
+        registry: Optional[Registry] = None,
     ):
         splits = name.split(".")
         if len(splits) < 2:
@@ -61,6 +63,7 @@ class Eval(abc.ABC):
         self.model_specs = model_specs
         self.seed = seed
         self.name = name
+        self.registry = registry or Registry()
 
     def eval_sample(self, sample: Any, rng: random.Random):
         raise NotImplementedError()
