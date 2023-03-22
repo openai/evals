@@ -1,0 +1,8 @@
+utf8_text_hex_encode:
+  id: utf8_text_hex_encode.dev.v0
+  metrics: [accuracy]
+
+utf8_text_hex_encode.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: hex_encode/utf8_samples.jsonl
