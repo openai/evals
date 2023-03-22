@@ -1,0 +1,9 @@
+preconditions-callout:
+  id: preconditions-callout.s1.simple-v0
+  description: Test the model's ability to preserve preconditions and callout.
+  disclaimer: The eval might be off due to model output being in unicode formate vs raw text.
+  metrics: [accuracy]
+preconditions-callout.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: preconditions-callout/preconditions-callout.jsonl
