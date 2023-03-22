@@ -39,3 +39,4 @@ rap-people-vs-fruits.dev.v0:
     samples_jsonl: test_multiio/battles/rap_people_vs_fruits.jsonl
     eval_type: cot_classify
     modelgraded_spec_file: battle
+
