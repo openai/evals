@@ -1,0 +1,8 @@
+remove_letter:
+  id: remove_letter.dev.v0
+  metrics: [accuracy]
+
+remove_letter.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: remove_letter/samples.jsonl
