@@ -45,7 +45,7 @@ elsuiteのレジストリフォーマットを用いて、`eval/registry/eval/<e
     samples_jsonl: <eval_name>/samples.jsonl
 ```
 
-もし`test_match/samples.jsonl`が提供されたファイルパスである場合、データは `evals/registry/data/test_match/samples.jsonl` にあることが期待されています。
+例えば `test_match/samples.jsonl` が提供されたファイルであれば、データは `evals/registry/data/test_match/samples.jsonl` にあることが期待されます。
 
 評価の命名規則は、`<eval_name>.<split>.<version>`という形式になっています。
 - `<eval_name>`は評価の名前で、スコアが同程度の評価をグループ化するために使用します。
@@ -60,7 +60,7 @@ elsuiteのレジストリフォーマットを用いて、`eval/registry/eval/<e
 ```
 oaieval gpt-3.5-turbo <eval_name>
 ```
-おめでとうございます！評価をビルドすることができました。結果に自信が持てるようになるまで、繰り返し練習してください。データファイルを変更した場合は、`/tmp/filecache`を削除して、更新されたデータで評価を実行することを忘れないでください。
+おめでとうございます！これで評価（eval）をビルドすることができました！結果に自信が持てるようになるまで、繰り返し練習してください。
 
 ## モデルによる評価のため：ステップバイステップのワークフロー
 
