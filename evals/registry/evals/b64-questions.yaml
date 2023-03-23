@@ -1,0 +1,8 @@
+b64-questions:
+  id: b64-questions.dev.v0
+  description: Test the model's ability to encode responses in base64.
+  metrics: [accuracy]
+b64-questions.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: b64_questions/samples.jsonl
