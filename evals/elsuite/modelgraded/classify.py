@@ -141,9 +141,9 @@ class ModelBasedClassify(evals.Eval):
         if self.choice_strings == "from_n":
             self.choice_strings = [str(i + 1) for i in range(self.multicomp_n)]
         elif self.choice_strings == "from_n_abc":
-            self.choice_strings = [string.ascii_lowercase[i] for i in range(self.multicomp_n)]
+            self.choice_strings = [string.ascii_lowercase[i % 26] for i in range(self.multicomp_n)]
         elif self.choice_strings == "from_n_ABC":
-            self.choice_strings = [string.ascii_uppercase[i] for i in range(self.multicomp_n)]
+            self.choice_strings = [string.ascii_uppercase[i % 26] for i in range(self.multicomp_n)]
         # make sure each choice doesn't contain any punctuation
         for s in self.choice_strings:
             assert not any(c in s for c in string.punctuation), f"{s} contains punctuation"
@@ -263,6 +263,8 @@ class ModelBasedClassify(evals.Eval):
                             completion += format_necessary(
                                 completion_i_template,
                                 i=i + 1,
+                                i_abc=string.ascii_lowercase[i],
+                                i_ABC=string.ascii_uppercase[i],
                                 output=completion_i,
                                 n=self.multicomp_n,
                             )
