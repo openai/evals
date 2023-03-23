@@ -4,6 +4,7 @@ add an entry in one of the YAML files in the `../registry` dir.
 By convention, every eval name should start with {base_eval}.{split}.
 """
 
+import difflib
 import functools
 import logging
 import os
@@ -20,10 +21,6 @@ from evals.utils.misc import make_object
 logger = logging.getLogger(__name__)
 
 DEFAULT_PATHS = [Path(__file__).parents[0].resolve() / "registry", Path.home() / ".evals"]
-
-DEFAULT_SYSTEM_PATHS = [
-    Path(__file__).parents[0].resolve() / "registry",
-]
 
 
 class Registry:
@@ -61,6 +58,13 @@ class Registry:
             return type(**spec)
         except TypeError as e:
             raise TypeError(f"Error while processing {object} {name}: {e}")
+
+    def get_modelgraded_spec(self, name: str) -> dict[str, Any]:
+        assert name in self._modelgraded_specs, (
+            f"Modelgraded spec {name} not found. "
+            f"Closest matches: {difflib.get_close_matches(name, self._modelgraded_specs.keys(), n=5)}"
+        )
+        return self._modelgraded_specs[name]
 
     def get_eval(self, name: str) -> EvalSpec:
         return self._dereference(name, self._evals, "eval", EvalSpec)
@@ -140,6 +144,10 @@ class Registry:
             self._process_file(registry, file)
 
     def _load_registry(self, paths):
+        """Load registry from a list of paths.
+
+        Each path or yaml specifies a dictionary of name -> spec.
+        """
         registry = {}
         for path in paths:
             logging.info(f"Loading registry from {path}")
@@ -157,6 +165,10 @@ class Registry:
     @functools.cached_property
     def _evals(self):
         return self._load_registry([p / "evals" for p in self._registry_paths])
+
+    @functools.cached_property
+    def _modelgraded_specs(self):
+        return self._load_registry([p / "modelgraded" for p in self._registry_paths])
 
 
 registry = Registry()

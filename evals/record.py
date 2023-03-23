@@ -292,8 +292,8 @@ class LocalRecorder(RecorderBase):
         super().__init__(run_spec)
         self.event_file_path = log_path
         if log_path is not None:
-            with bf.BlobFile(log_path, "w") as f:
-                f.write(jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n")
+            with bf.BlobFile(log_path, "wb") as f:
+                f.write((jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n").encode("utf-8"))
 
     def _flush_events_internal(self, events_to_write: Sequence[Event]):
         start = time.time()
@@ -303,8 +303,8 @@ class LocalRecorder(RecorderBase):
             logger.error(f"Failed to serialize events: {events_to_write}")
             raise e
 
-        with bf.BlobFile(self.event_file_path, "a") as f:
-            f.writelines(lines)
+        with bf.BlobFile(self.event_file_path, "ab") as f:
+            f.write(b"".join([l.encode("utf-8") for l in lines]))
 
         logger.info(
             f"Logged {len(lines)} rows of events to {self.event_file_path}: insert_time={t(time.time()-start)}"
@@ -314,8 +314,8 @@ class LocalRecorder(RecorderBase):
         self._flushes_done += 1
 
     def record_final_report(self, final_report: Any):
-        with bf.BlobFile(self.event_file_path, "a") as f:
-            f.write(jsondumps({"final_report": final_report}) + "\n")
+        with bf.BlobFile(self.event_file_path, "ab") as f:
+            f.write((jsondumps({"final_report": final_report}) + "\n").encode("utf-8"))
 
         logging.info(f"Final report: {final_report}. Logged to {self.event_file_path}")
 
@@ -341,8 +341,8 @@ class Recorder(RecorderBase):
         self._conn = snowflake_connection
 
         if log_path is not None:
-            with bf.BlobFile(log_path, "w") as f:
-                f.write(jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n")
+            with bf.BlobFile(log_path, "wb") as f:
+                f.write((jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n").encode("utf-8"))
 
         query = """
             INSERT ALL INTO runs (run_id, model_name, eval_name, base_eval, split, run_config, settings, created_by, created_at)
@@ -407,15 +407,15 @@ class Recorder(RecorderBase):
                 )
                 idx_l = idx_r
 
-            with bf.BlobFile(self.event_file_path, "a") as f:
-                f.writelines(lines)
+            with bf.BlobFile(self.event_file_path, "ab") as f:
+                f.write(b"".join([l.encode("utf-8") for l in lines]))
             self._last_flush_time = time.time()
             self._flushes_done += 1
 
     def record_final_report(self, final_report: Any):
         with self._writing_lock:
-            with bf.BlobFile(self.event_file_path, "a") as f:
-                f.write(jsondumps({"final_report": final_report}) + "\n")
+            with bf.BlobFile(self.event_file_path, "ab") as f:
+                f.write((jsondumps({"final_report": final_report}) + "\n").encode("utf-8"))
             query = """
                 UPDATE runs
                 SET final_report = PARSE_JSON(%(final_report)s)
