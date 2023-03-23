@@ -211,7 +211,13 @@ def run(args, registry: Optional[Registry] = None):
     extra_eval_params = parse_extra_eval_params(args.extra_eval_params)
 
     eval_class = registry.get_class(eval_spec)
-    eval = eval_class(model_specs=model_specs, seed=args.seed, name=eval_name, **extra_eval_params)
+    eval = eval_class(
+        model_specs=model_specs,
+        seed=args.seed,
+        name=eval_name,
+        registry=registry,
+        **extra_eval_params,
+    )
     result = eval.run(recorder)
     recorder.record_final_report(result)
 

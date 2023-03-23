@@ -13,12 +13,7 @@ import openai
 import evals
 import evals.record
 from evals.base import ModelSpec
-from evals.elsuite.utils import (
-    PromptFn,
-    format_necessary,
-    load_modelgraded_specs,
-    scrub_formatting_from_prompt,
-)
+from evals.elsuite.utils import PromptFn, format_necessary, scrub_formatting_from_prompt
 
 INVALID_STR = "__invalid__"
 CHOICE_KEY = "choice"
@@ -135,12 +130,16 @@ class ModelBasedClassify(evals.Eval):
             )
 
         """import prompt and set attributes"""
-        modelgraded_specs = load_modelgraded_specs(modelgraded_spec_file)
+        modelgraded_specs = self.registry.get_modelgraded_spec(modelgraded_spec_file)
 
         # 'choice_strings' is a list of strings that specifies the possible choices
         self.choice_strings = modelgraded_specs.pop("choice_strings")
         if self.choice_strings == "from_n":
             self.choice_strings = [str(i + 1) for i in range(self.multicomp_n)]
+        elif self.choice_strings == "from_n_abc":
+            self.choice_strings = [string.ascii_lowercase[i % 26] for i in range(self.multicomp_n)]
+        elif self.choice_strings == "from_n_ABC":
+            self.choice_strings = [string.ascii_uppercase[i % 26] for i in range(self.multicomp_n)]
         # make sure each choice doesn't contain any punctuation
         for s in self.choice_strings:
             assert not any(c in s for c in string.punctuation), f"{s} contains punctuation"
@@ -211,6 +210,8 @@ class ModelBasedClassify(evals.Eval):
             ), "completion_sample_templates must be specified if multicomp_n > 1"
 
         # since we accept optional args, we need to check that all args are used
+        for key in ("key", "group"):
+            modelgraded_specs.pop(key, None)
         assert not modelgraded_specs, f"Unused args: {modelgraded_specs}. Typo in YAML?"
 
     def eval_sample(self, test_sample: dict, rng: Random) -> None:
@@ -258,6 +259,8 @@ class ModelBasedClassify(evals.Eval):
                             completion += format_necessary(
                                 completion_i_template,
                                 i=i + 1,
+                                i_abc=string.ascii_lowercase[i % 26],
+                                i_ABC=string.ascii_uppercase[i % 26],
                                 output=completion_i,
                                 n=self.multicomp_n,
                             )
