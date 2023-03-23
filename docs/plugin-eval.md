@@ -20,11 +20,9 @@ To create a new plugin, follow these steps:
 
 Evaluations with plugins enabled take an additional arguement - `plugins` - which is a list of plugins to enable. The evaluation framework will automatically instantiate the plugins from the registry for each sampling.  Please note, we currently require chat-style inputs for plugins.
 
-A message with a recipient of `{namespace}.{api_name}` will call the corresponding function on the plugin. The content should be a JSON string containing the arguments to pass to the API. The return value of the API will be returned to the AI model as a JSON string.
+Before sending a request to the model, we will iteratively call `plugin_actions` on the relevant plugins.  One plugin instance will be used per sample, so plugins will retain state over that request.
 
-When the last message in the input is a plugin call, the AI model will be called after invoking the plugin.  This framework does not (currently) support chaining plugins, or calling plugins conditioned on the model response.
-
-NOTE: By enabling plugins, we may mutate the message chain.  Currently, we append the plugin's description to the end of the system message (Or insert a new system message if none was provided). This is done to ensure that the model has context to know how to use the plugin.
+NOTE: By enabling plugins, we may mutate the overall message chain.  Currently, we append the plugin's description to the end of the system message (Or insert a new system message if none was provided). This is done to ensure that the model has context to know how to use the plugin.
 
 ```JSON
 {
@@ -35,6 +33,13 @@ NOTE: By enabling plugins, we may mutate the message chain.  Currently, we appen
   "ideal": [
     "Red-tailed hawk"
   ],
+  "plugin_actions": [
+    {
+        "namespace": "MyBirds",
+        "endpoint": "listBirds",
+        "content": {}
+    }
+  ],
   "input": [
     {
       "role": "system",
@@ -43,11 +48,6 @@ NOTE: By enabling plugins, we may mutate the message chain.  Currently, we appen
     {
       "role": "user",
       "content": "Can you list all of the birds in my birds list which are in the Accipitridae family?"
-    },
-    {
-      "role": "assistant",
-      "content": "{}",
-      "recipient": "MyBirds.listBirds"
     }
   ]
 }
@@ -78,6 +78,8 @@ NOTE: By enabling plugins, we may mutate the message chain.  Currently, we appen
 ### Evaluation Examples
 
 - Create evaluation examples that involve your custom plugin. Plugins should be enabled on a per-example basis, allowing us to group examples of how the plugin changes the model's behavior with examples that might not use the plugin at all but are related requests.
+
+- Model-graded evaluations tend to work better than string-based evaluations.
 
 - Make sure your evaluation passes the `plugins` dictionary to the sampling command. This will ensure that the model is aware of your plugin and can use it during local evaluation.
 

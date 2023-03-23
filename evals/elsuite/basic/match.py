@@ -2,6 +2,7 @@ from typing import Any
 
 import evals
 import evals.metrics
+from evals.plugin.base import Plugin, PluginAction
 from evals.prompt.base import is_chat_prompt
 
 
@@ -27,7 +28,9 @@ class Match(evals.Eval):
 
     def eval_sample(self, sample: Any, *_):
         prompt = sample["input"]
-        plugins = sample.get("plugins", [])
+        plugins = Plugin.load(sample.get("plugins", []))
+        plugin_actions = PluginAction.load(sample.get("plugin_actions", []))
+        
         if self.num_few_shot > 0:
             assert is_chat_prompt(sample["input"]), "few shot requires chat prompt"
             prompt = sample["input"][:-1]
@@ -35,7 +38,13 @@ class Match(evals.Eval):
                 prompt += s["sample"]
             prompt += sample["input"][-1:]
 
-        return evals.check_sampled_text(self.model_spec, prompt, expected=sample["ideal"], plugins=plugins)
+        return evals.check_sampled_text(
+            self.model_spec,
+            prompt,
+            expected=sample["ideal"],
+            plugins=plugins,
+            plugin_actions=plugin_actions
+        )
 
     def run(self, recorder):
         samples = evals.get_jsonl(self.samples_jsonl)

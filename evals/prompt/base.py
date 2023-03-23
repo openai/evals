@@ -54,11 +54,12 @@ def chat_prompt_to_text_prompt(prompt: OpenAICreateChatPrompt) -> str:
 
         # Receiver name
         if receiver is not None:
-            mapped_receiver = chat_to_prefixes.get(receiver, receiver.capitalize())
+            mapped_receiver = chat_to_prefixes.get(receiver, receiver)
             prefix += f" -> {mapped_receiver}"
 
         # Add a separator
-        prefix += ": "
+        if prefix:
+            prefix += ": "
 
         content = msg["content"]
         lines.append(f"{prefix}{content}")

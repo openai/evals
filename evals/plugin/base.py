@@ -1,4 +1,5 @@
 import copy
+from dataclasses import dataclass
 import functools
 import inspect
 import json
@@ -81,7 +82,40 @@ def api_description(
 
     return decorator
 
+@dataclass
+class PluginAction:
+    namespace: Text
+    endpoint: Text
+    content: dict
+    
+    def invocation_message(self) -> dict:
+        return {
+            "role": "assistant",
+            "recipient": f"{self.namespace}.{self.endpoint}",
+            "content": json.dumps(self.content),
+        }
+    
+    @classmethod
+    def load(self, json_data: dict) -> List["PluginAction"]:
+        actions = []
+        for action in json_data:
+            actions.append(
+                PluginAction(
+                    namespace=action["namespace"],
+                    endpoint=action["endpoint"],
+                    content=action["content"],
+                )
+            )
+        return actions
+            
+    def metadata(self) -> dict:
+        return {
+            "namespace": self.namespace,
+            "endpoint": self.endpoint,
+            "content": self.content,
+        }
 
+    
 class Plugin:
     @staticmethod
     def parse_function(func: Text) -> Tuple[Text, Text]:
@@ -90,6 +124,15 @@ class Plugin:
 
         namespace, api_name = func.split(".")
         return namespace, api_name
+
+    @staticmethod
+    def load(plugins: Optional[List[Text]]) -> List["Plugin"]:
+        if plugins is None or len(plugins) == 0:
+            return []
+        
+        plugin_specifications: List[PluginSpec] = _retrieve_plugin_specifications(plugins)
+        enabled_plugins: OrderedDict[Text, Plugin] = _create_ordered_plugin_instances(plugin_specifications)
+        return list(enabled_plugins.values())
 
     @staticmethod
     def invoke(function, function_args: Optional[Dict[Text, Any]] = None) -> Dict[Text, Text]:
@@ -130,16 +173,6 @@ class Plugin:
     @classmethod
     def namespace(cls) -> Text:
         return cls._api_namespace
-
-    def get_method_by_name(self, api_name: Text) -> Callable[..., Any]:
-        # Iterate over class methods and return the method with a matching API name
-        for _, method in inspect.getmembers(self, predicate=inspect.isroutine):
-            method_api_name: Text = getattr(method, API_NAME, None)
-            if method_api_name is not None and method_api_name == api_name:
-                return method
-
-        # Raise an error if the API is not found
-        raise ValueError(f"Plugin '{self.namespace()} does not have API '{api_name}'")
 
     @classmethod
     def description(cls) -> Text:
@@ -190,6 +223,21 @@ class Plugin:
     def convert_response(self, response_data: dict) -> Text:
         return json.dumps(response_data)
 
+    def get_method_by_name(self, api_name: Text) -> Callable[..., Any]:
+        # Iterate over class methods and return the method with a matching API name
+        for _, method in inspect.getmembers(self, predicate=inspect.isroutine):
+            method_api_name: Text = getattr(method, API_NAME, None)
+            if method_api_name is not None and method_api_name == api_name:
+                return method
+
+        # Raise an error if the API is not found
+        raise ValueError(f"Plugin '{self.namespace()} does not have API '{api_name}'")
+    
+    def metadata(self) -> dict:
+        return {
+            "namespace": self.namespace(),
+        }
+    
 def _retrieve_plugin_specifications(plugins: Optional[List[Text]]) -> List[PluginSpec]:
     plugin_specifications: List[PluginSpec] = []
     for plugin in plugins:
@@ -211,20 +259,12 @@ def _create_ordered_plugin_instances(plugin_specifications: List[PluginSpec]) ->
         enabled_plugins[namespace] = plugin
     return enabled_plugins
 
-def _instantiate_plugins(plugins: Optional[List[Text]]) -> OrderedDict[Text, Plugin]:
-    if plugins is None or len(plugins) == 0:
-        return []
-    
-    plugin_specifications: List[PluginSpec] = _retrieve_plugin_specifications(plugins)
-    enabled_plugins: OrderedDict[Text, Plugin] = _create_ordered_plugin_instances(plugin_specifications)
-    return enabled_plugins
-
 def _invoke_plugin(invocation_message: Dict[Text, Text], enabled_plugins: Dict[Text, Plugin]) -> Dict[Text, Text]:
-    invocation_message_contents: Optional[Text] = invocation_message.get("contents")
+    invocation_message_content: Optional[Text] = invocation_message.get("content")
     recipient: Optional[Text] = invocation_message.get("recipient")
     
-    assert invocation_message_contents is not None, "Plugin invocation requires contents"
-    assert recipient is not None, "Plugin invocation requires recipient to know which plugin to invoke"
+    assert invocation_message_content is not None, f"Plugin invocation requires content - {invocation_message}"
+    assert recipient is not None, f"Plugin invocation requires recipient to know which plugin to invoke - {invocation_message}"
 
     namespace, function_name = Plugin.parse_function(recipient)
     assert namespace in enabled_plugins, f"Plugin {namespace} not found"
@@ -233,10 +273,10 @@ def _invoke_plugin(invocation_message: Dict[Text, Text], enabled_plugins: Dict[T
     plugin_function = selected_plugin.get_method_by_name(function_name)
 
     try:
-        function_args = json.loads(invocation_message_contents)
+        function_args = json.loads(invocation_message_content)
     except Exception as e:
         raise ValueError(
-            f"Could not parse plugin invocation contents: {invocation_message_contents}"
+            f"Could not parse plugin invocation content: {invocation_message_content}"
         ) from e
 
     plugin_response: Dict[Text, Text] = Plugin.invoke(plugin_function, function_args)
@@ -244,7 +284,9 @@ def _invoke_plugin(invocation_message: Dict[Text, Text], enabled_plugins: Dict[T
 
 
 def evaluate_prompt_with_plugins(
-    prompt: OpenAICreateChatPrompt, plugins: Optional[List[Text]]
+    prompt: OpenAICreateChatPrompt,
+    plugins: Optional[List[Plugin]],
+    actions: Optional[List[PluginAction]],
 ) -> OpenAICreateChatPrompt:
     # If users provided one or more plugins, we need to:
     # 1. Add the plugin descriptions to the system message
@@ -259,12 +301,10 @@ def evaluate_prompt_with_plugins(
     # Copy the prompt so that we don't modify something the user assumes is static
     result: OpenAICreateChatPrompt = [copy.deepcopy(message) for message in prompt]
         
-    enabled_plugins: OrderedDict[Text, Plugin] = _instantiate_plugins(plugins)
+    
+    enabled_plugins: OrderedDict[Text, Plugin] = dict([(plugin.namespace(), plugin) for plugin in plugins])
 
-    # If the last message is an assistant message with a plugin,
-    # we should use that plugin and submit that to the model
     first_message = result[0]
-
     # Setup plugins system message
     plugins_system_message = "\n\n".join([plugin.description() for plugin in enabled_plugins.values()])
     if first_message["role"] == "system":
@@ -276,11 +316,15 @@ def evaluate_prompt_with_plugins(
         }
         result.insert(0, message)
 
-    # Currently, if the last message has a recipient field, it is calling a plugin
-    last_message = result[-1]
-    last_message_recipient = last_message.get("recipient", None)
-    if last_message_recipient:
-        plugin_response = _invoke_plugin(invocation_message=last_message, enabled_plugins=enabled_plugins)
+    # Evaluate each of the actions.  This does not currently support
+    # assistant responses to plugin actions at each step
+    if actions is None:
+        actions = []
+        
+    for action in actions:
+        invocation_message = action.invocation_message()
+        result.append(invocation_message)
+        plugin_response = _invoke_plugin(invocation_message=invocation_message, enabled_plugins=enabled_plugins)
         result.append(plugin_response)
 
     return result

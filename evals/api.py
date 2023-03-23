@@ -3,29 +3,23 @@ This file provides common interfaces and utilities used by eval creators to
 sample from models and process the results.
 """
 
-from collections import OrderedDict
-import copy
-import json
 import logging
-from typing import Callable, Dict, List, Optional, Text, Union
-from evals.registry import registry
+from typing import Callable, List, Optional, Union
 
-from evals.base import ModelSpec, PluginSpec
-from evals.plugin.base import Plugin, evaluate_prompt_with_plugins
+from evals.base import ModelSpec
+from evals.plugin.base import Plugin, PluginAction, evaluate_prompt_with_plugins
 from evals.prompt.base import (
     ChatCompletionPrompt,
     CompletionPrompt,
     OpenAICreateChatPrompt,
     OpenAICreatePrompt,
     Prompt,
-    is_chat_prompt,
 )
 from evals.record import record_match, record_sampling
 from evals.utils.api_utils import (
     openai_chat_completion_create_retrying,
     openai_completion_create_retrying,
 )
-from evals.utils.misc import make_object
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +27,8 @@ logger = logging.getLogger(__name__)
 def completion_query(
     model_spec: ModelSpec,
     prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
-    plugins: Optional[list[str]] = None,
+    plugins: Optional[List[Plugin]] = None,
+    plugin_actions: Optional[List[PluginAction]] = None,
     **kwargs,
 ) -> tuple[dict, Union[OpenAICreatePrompt, OpenAICreateChatPrompt], dict]:
     """
@@ -55,7 +50,7 @@ def completion_query(
     The prompt that was fed into the API call as a str.
     A dict containing metadata about the query.
     """
-    prompt = evaluate_prompt_with_plugins(prompt, plugins)
+    prompt = evaluate_prompt_with_plugins(prompt, plugins, actions=plugin_actions)
     
     if not isinstance(prompt, Prompt):
         assert (
@@ -97,7 +92,10 @@ def completion_query(
     if result:
         metadata["completion_id"] = result.get("id", None)
         metadata["model"] = result.get("model", None)
-        metadata["plugins"] = plugins
+        metadata["plugins"] = {
+            "enabled": [plugin.metadata() for plugin in plugins],
+            "actions": [action.metadata() for action in plugin_actions]
+        }
 
         if model_spec.is_chat:
             for choice in result["choices"]:
@@ -113,7 +111,8 @@ def check_sampled_text(
     *,
     options: Optional[list[str]] = None,
     separator: Callable[[str], bool] = None,
-    plugins: Optional[list[str]] = None,
+    plugins: Optional[List[Plugin]] = None,
+    plugin_actions: Optional[List[PluginAction]] = None,
 ) -> Optional[str]:
     """
     Generates a completion using the prompt, checks whether the completion is
@@ -145,6 +144,7 @@ def check_sampled_text(
         temperature=0.0,
         model_spec=model_spec,
         plugins=plugins,
+        plugin_actions=plugin_actions,
     )
     choice = result["choices"][0]
 
@@ -188,7 +188,8 @@ def sample_freeform(
     stop: Optional[str] = None,
     n_samples: int = None,
     return_logprobs: bool = False,
-    plugins: Optional[list[str]] = None,
+    plugins: Optional[List[Plugin]] = None,
+    plugin_actions: Optional[List[PluginAction]] = None,
     **kwargs,
 ) -> Union[str, list[str], dict]:
     """
@@ -226,6 +227,7 @@ def sample_freeform(
         model_spec=model_spec,
         headers={},
         plugins=plugins,
+        plugin_actions=plugin_actions,
         **kwargs,
     )
     sampled = [choice["text"] for choice in response["choices"]]

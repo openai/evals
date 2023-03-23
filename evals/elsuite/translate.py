@@ -1,4 +1,5 @@
 from typing import Any
+from evals.plugin.base import Plugin, PluginAction, instantiate_plugins
 
 from sacrebleu.metrics.bleu import BLEU
 
@@ -33,7 +34,10 @@ class Translate(evals.Eval):
     def eval_sample(self, sample: Any, *_):
         prompt = sample["input"]
         expected = sample["ideal"]
-        plugins = sample.get("plugins", [])
+        
+        plugins = Plugin.load(sample.get("plugins", []))
+        plugin_actions = PluginAction.load(sample.get("plugin_actions", []))
+        
         
         if self.num_few_shot > 0:
             assert is_chat_prompt(sample["input"]), "few shot requires chat prompt"
@@ -52,6 +56,7 @@ class Translate(evals.Eval):
             prompt,
             max_tokens=self.max_tokens,
             plugins=plugins,
+            plugin_actions=plugin_actions,
         )
 
         score = None

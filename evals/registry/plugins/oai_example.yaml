@@ -1,5 +1,5 @@
 openai.bird.1:
-  class: evallib.plugin.openai.bird:MyBirds
+  class: evals.plugin.openai.bird:MyBirds
 
 openai.todo.1:
   class: evals.plugin.openai.todo:TodoList

@@ -1,4 +1,5 @@
 import evals
+from evals.plugin.base import Plugin, PluginAction
 import numpy as np
 from evals.elsuite import utils
 from evals.record import RecorderBase
@@ -10,7 +11,7 @@ class FuzzyMatch(evals.Eval):
         model_specs: evals.ModelSpecs,
         samples_jsonl: str,
         *args,
-        max_tokens: int = 500,
+        max_tokens: int = 16,
         **kwargs,
     ):
         super().__init__(model_specs, *args, **kwargs)
@@ -18,13 +19,17 @@ class FuzzyMatch(evals.Eval):
         self.samples_jsonl = samples_jsonl
 
     def eval_sample(self, test_sample, rng):
-        prompt, correct_answers, plugins = test_sample["input"], test_sample["ideal"], test_sample.get("plugins", [])
+        prompt, correct_answers = test_sample["input"], test_sample["ideal"]
+        plugins = Plugin.load(test_sample.get("plugins", []))
+        plugin_actions = PluginAction.load(test_sample.get("plugin_actions", []))
+        
         generated_answer = evals.sample_freeform(
             self.model_spec,
             prompt,
             temperature=0.0,
-            max_tokens=16,
-            plugins=plugins
+            max_tokens=self.max_tokens,
+            plugins=plugins,
+            plugin_actions=plugin_actions
         )
         matches = [
             utils.fuzzy_match(generated_answer, correct_answer)
