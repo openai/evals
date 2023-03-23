@@ -263,8 +263,8 @@ class ModelBasedClassify(evals.Eval):
                             completion += format_necessary(
                                 completion_i_template,
                                 i=i + 1,
-                                i_abc=string.ascii_lowercase[i],
-                                i_ABC=string.ascii_uppercase[i],
+                                i_abc=string.ascii_lowercase[i % 26],
+                                i_ABC=string.ascii_uppercase[i % 26],
                                 output=completion_i,
                                 n=self.multicomp_n,
                             )
