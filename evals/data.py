@@ -14,7 +14,6 @@ from functools import partial
 from typing import Any, Sequence, Union
 
 import blobfile as bf
-from evals import registry
 import lz4.frame
 import pydantic
 import pyzstd
@@ -61,14 +60,11 @@ def open_by_file_pattern(filename: str, mode: str = "r", **kwargs: Any) -> Any:
             scheme = urllib.parse.urlparse(filename).scheme
             if scheme == "" or scheme == "file":
                 registry_path = os.path.join(
-                    os.path.dirname(os.path.abspath(__file__)),
-                    "registry",
-                    "data",
-                    filename
+                    os.path.dirname(os.path.abspath(__file__)), "registry", "data", filename
                 )
                 if not bf.exists(registry_path):
                     raise RuntimeError(f"Did not find file at '{registry_path}'")
-                
+
                 return open_fn(
                     registry_path,
                     mode=mode,

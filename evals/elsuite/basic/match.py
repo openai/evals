@@ -30,7 +30,7 @@ class Match(evals.Eval):
         prompt = sample["input"]
         plugins = Plugin.load(sample.get("plugins", []))
         plugin_actions = PluginAction.load(sample.get("plugin_actions", []))
-        
+
         if self.num_few_shot > 0:
             assert is_chat_prompt(sample["input"]), "few shot requires chat prompt"
             prompt = sample["input"][:-1]
@@ -43,7 +43,7 @@ class Match(evals.Eval):
             prompt,
             expected=sample["ideal"],
             plugins=plugins,
-            plugin_actions=plugin_actions
+            plugin_actions=plugin_actions,
         )
 
     def run(self, recorder):

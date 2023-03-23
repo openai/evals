@@ -172,11 +172,10 @@ class Registry:
     @functools.cached_property
     def _modelgraded_specs(self):
         return self._load_registry([p / "modelgraded" for p in self._registry_paths])
-    
+
     @functools.cached_property
     def _plugins(self):
         return self._load_registry([p / "plugins" for p in self._registry_paths])
-
 
 
 registry = Registry()

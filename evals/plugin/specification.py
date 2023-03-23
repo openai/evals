@@ -2,6 +2,7 @@ from typing import Any, Optional
 
 from pydantic import BaseModel
 
+
 def comment_content(content: str) -> str:
     return "".join(
         [

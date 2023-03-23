@@ -1,15 +1,15 @@
 import copy
-from dataclasses import dataclass
 import functools
 import inspect
 import json
 import re
+from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, OrderedDict, Text, Tuple
-from evals.registry import registry
-from evals.base import PluginSpec
 
+from evals.base import PluginSpec
 from evals.plugin.specification import Api, KwargsFunctionSignature, Param, comment_content
 from evals.prompt.base import OpenAICreateChatPrompt, is_chat_prompt
+from evals.registry import registry
 from evals.utils.misc import make_object
 
 API_NAMESPACE = "_api_namespace"
@@ -82,19 +82,20 @@ def api_description(
 
     return decorator
 
+
 @dataclass
 class PluginAction:
     namespace: Text
     endpoint: Text
     content: dict
-    
+
     def invocation_message(self) -> dict:
         return {
             "role": "assistant",
             "recipient": f"{self.namespace}.{self.endpoint}",
             "content": json.dumps(self.content),
         }
-    
+
     @classmethod
     def load(self, json_data: dict) -> List["PluginAction"]:
         actions = []
@@ -107,7 +108,7 @@ class PluginAction:
                 )
             )
         return actions
-            
+
     def metadata(self) -> dict:
         return {
             "namespace": self.namespace,
@@ -115,7 +116,7 @@ class PluginAction:
             "content": self.content,
         }
 
-    
+
 class Plugin:
     @staticmethod
     def parse_function(func: Text) -> Tuple[Text, Text]:
@@ -129,9 +130,11 @@ class Plugin:
     def load(plugins: Optional[List[Text]]) -> List["Plugin"]:
         if plugins is None or len(plugins) == 0:
             return []
-        
+
         plugin_specifications: List[PluginSpec] = _retrieve_plugin_specifications(plugins)
-        enabled_plugins: OrderedDict[Text, Plugin] = _create_ordered_plugin_instances(plugin_specifications)
+        enabled_plugins: OrderedDict[Text, Plugin] = _create_ordered_plugin_instances(
+            plugin_specifications
+        )
         return list(enabled_plugins.values())
 
     @staticmethod
@@ -232,12 +235,13 @@ class Plugin:
 
         # Raise an error if the API is not found
         raise ValueError(f"Plugin '{self.namespace()} does not have API '{api_name}'")
-    
+
     def metadata(self) -> dict:
         return {
             "namespace": self.namespace(),
         }
-    
+
+
 def _retrieve_plugin_specifications(plugins: Optional[List[Text]]) -> List[PluginSpec]:
     plugin_specifications: List[PluginSpec] = []
     for plugin in plugins:
@@ -247,24 +251,36 @@ def _retrieve_plugin_specifications(plugins: Optional[List[Text]]) -> List[Plugi
         plugin_specifications.append(plugin_spec)
     return plugin_specifications
 
-def _create_ordered_plugin_instances(plugin_specifications: List[PluginSpec]) -> OrderedDict[Text, Plugin]:
+
+def _create_ordered_plugin_instances(
+    plugin_specifications: List[PluginSpec],
+) -> OrderedDict[Text, Plugin]:
     enabled_plugins = OrderedDict()
     for plugin_spec in plugin_specifications:
         plugin: Plugin = make_object(plugin_spec.cls, plugin_spec.args, {})()
         namespace = plugin.namespace()
 
         if namespace in enabled_plugins:
-            raise ValueError(f"Duplicate plugin namespace not allowed, found '{namespace}' twice when instantiating the following plugins: {plugins}.")
+            raise ValueError(
+                f"Duplicate plugin namespace not allowed, found '{namespace}' twice when instantiating the following plugins: {plugins}."
+            )
 
         enabled_plugins[namespace] = plugin
     return enabled_plugins
 
-def _invoke_plugin(invocation_message: Dict[Text, Text], enabled_plugins: Dict[Text, Plugin]) -> Dict[Text, Text]:
+
+def _invoke_plugin(
+    invocation_message: Dict[Text, Text], enabled_plugins: Dict[Text, Plugin]
+) -> Dict[Text, Text]:
     invocation_message_content: Optional[Text] = invocation_message.get("content")
     recipient: Optional[Text] = invocation_message.get("recipient")
-    
-    assert invocation_message_content is not None, f"Plugin invocation requires content - {invocation_message}"
-    assert recipient is not None, f"Plugin invocation requires recipient to know which plugin to invoke - {invocation_message}"
+
+    assert (
+        invocation_message_content is not None
+    ), f"Plugin invocation requires content - {invocation_message}"
+    assert (
+        recipient is not None
+    ), f"Plugin invocation requires recipient to know which plugin to invoke - {invocation_message}"
 
     namespace, function_name = Plugin.parse_function(recipient)
     assert namespace in enabled_plugins, f"Plugin {namespace} not found"
@@ -294,19 +310,26 @@ def evaluate_prompt_with_plugins(
     #    - If it is, we need to call that plugin to obtain the result prior to sending to the model
     if plugins is None or len(plugins) == 0:
         return prompt
-    
-    assert is_chat_prompt(prompt), f"Plugin use requires a chat-style prompt.\n\nAttempted to use plugins: {plugins} with prompt: {prompt}"
-    assert len(prompt) > 0, f"Plugin use requires a non-empty prompt.\n\nAttempted to use plugins: {plugins} with prompt: {prompt}"
-    
+
+    assert is_chat_prompt(
+        prompt
+    ), f"Plugin use requires a chat-style prompt.\n\nAttempted to use plugins: {plugins} with prompt: {prompt}"
+    assert (
+        len(prompt) > 0
+    ), f"Plugin use requires a non-empty prompt.\n\nAttempted to use plugins: {plugins} with prompt: {prompt}"
+
     # Copy the prompt so that we don't modify something the user assumes is static
     result: OpenAICreateChatPrompt = [copy.deepcopy(message) for message in prompt]
-        
-    
-    enabled_plugins: OrderedDict[Text, Plugin] = dict([(plugin.namespace(), plugin) for plugin in plugins])
+
+    enabled_plugins: OrderedDict[Text, Plugin] = dict(
+        [(plugin.namespace(), plugin) for plugin in plugins]
+    )
 
     first_message = result[0]
     # Setup plugins system message
-    plugins_system_message = "\n\n".join([plugin.description() for plugin in enabled_plugins.values()])
+    plugins_system_message = "\n\n".join(
+        [plugin.description() for plugin in enabled_plugins.values()]
+    )
     if first_message["role"] == "system":
         first_message["content"] += f"\n\n{plugins_system_message}"
     else:
@@ -320,11 +343,13 @@ def evaluate_prompt_with_plugins(
     # assistant responses to plugin actions at each step
     if actions is None:
         actions = []
-        
+
     for action in actions:
         invocation_message = action.invocation_message()
         result.append(invocation_message)
-        plugin_response = _invoke_plugin(invocation_message=invocation_message, enabled_plugins=enabled_plugins)
+        plugin_response = _invoke_plugin(
+            invocation_message=invocation_message, enabled_plugins=enabled_plugins
+        )
         result.append(plugin_response)
 
     return result

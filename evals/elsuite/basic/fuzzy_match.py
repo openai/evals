@@ -1,7 +1,8 @@
-import evals
-from evals.plugin.base import Plugin, PluginAction
 import numpy as np
+
+import evals
 from evals.elsuite import utils
+from evals.plugin.base import Plugin, PluginAction
 from evals.record import RecorderBase
 
 
@@ -22,14 +23,14 @@ class FuzzyMatch(evals.Eval):
         prompt, correct_answers = test_sample["input"], test_sample["ideal"]
         plugins = Plugin.load(test_sample.get("plugins", []))
         plugin_actions = PluginAction.load(test_sample.get("plugin_actions", []))
-        
+
         generated_answer = evals.sample_freeform(
             self.model_spec,
             prompt,
             temperature=0.0,
             max_tokens=self.max_tokens,
             plugins=plugins,
-            plugin_actions=plugin_actions
+            plugin_actions=plugin_actions,
         )
         matches = [
             utils.fuzzy_match(generated_answer, correct_answer)

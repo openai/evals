@@ -51,7 +51,7 @@ def completion_query(
     A dict containing metadata about the query.
     """
     prompt = evaluate_prompt_with_plugins(prompt, plugins, actions=plugin_actions)
-    
+
     if not isinstance(prompt, Prompt):
         assert (
             isinstance(prompt, str)
@@ -94,7 +94,7 @@ def completion_query(
         metadata["model"] = result.get("model", None)
         metadata["plugins"] = {
             "enabled": [plugin.metadata() for plugin in plugins],
-            "actions": [action.metadata() for action in plugin_actions]
+            "actions": [action.metadata() for action in plugin_actions],
         }
 
         if model_spec.is_chat:

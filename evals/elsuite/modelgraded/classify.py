@@ -7,7 +7,6 @@ import string
 from collections import Counter
 from random import Random
 from typing import Callable, Iterable, Optional, Union
-from evals.plugin.base import Plugin, PluginAction
 
 import openai
 
@@ -15,6 +14,7 @@ import evals
 import evals.record
 from evals.base import ModelSpec
 from evals.elsuite.utils import PromptFn, format_necessary, scrub_formatting_from_prompt
+from evals.plugin.base import Plugin, PluginAction
 
 INVALID_STR = "__invalid__"
 CHOICE_KEY = "choice"
@@ -247,7 +247,7 @@ class ModelBasedClassify(evals.Eval):
                     this_sample = test_sample[k]
                     plugins = Plugin.load(test_sample.get("plugins", []))
                     plugin_actions = PluginAction.load(test_sample.get("plugin_actions", []))
-                    
+
                     if self.multicomp_n > 1 and v in self.completion_sample_templates:
                         completion = ""
                         completion_i_template = self.completion_sample_templates[v]

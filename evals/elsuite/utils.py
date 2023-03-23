@@ -103,7 +103,16 @@ def format_necessary(template: str, **kwargs: dict[str, str]) -> str:
 class PromptFn:
     """Wrap calls to model with prompt"""
 
-    def __init__(self, prompt, model_spec, max_tokens, temperature=0, completion_kwargs=None, plugins: Optional[List[Plugin]] = None, plugin_actions: Optional[List[PluginAction]] = None):
+    def __init__(
+        self,
+        prompt,
+        model_spec,
+        max_tokens,
+        temperature=0,
+        completion_kwargs=None,
+        plugins: Optional[List[Plugin]] = None,
+        plugin_actions: Optional[List[PluginAction]] = None,
+    ):
         self.prompt = prompt
         self.max_tokens = max_tokens
         self.model_spec = model_spec

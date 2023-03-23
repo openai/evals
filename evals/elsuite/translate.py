@@ -1,10 +1,10 @@
 from typing import Any
-from evals.plugin.base import Plugin, PluginAction, instantiate_plugins
 
 from sacrebleu.metrics.bleu import BLEU
 
 import evals
 import evals.metrics
+from evals.plugin.base import Plugin, PluginAction
 from evals.prompt.base import is_chat_prompt
 
 
@@ -34,11 +34,10 @@ class Translate(evals.Eval):
     def eval_sample(self, sample: Any, *_):
         prompt = sample["input"]
         expected = sample["ideal"]
-        
+
         plugins = Plugin.load(sample.get("plugins", []))
         plugin_actions = PluginAction.load(sample.get("plugin_actions", []))
-        
-        
+
         if self.num_few_shot > 0:
             assert is_chat_prompt(sample["input"]), "few shot requires chat prompt"
             prompt = sample["input"][:-1]
