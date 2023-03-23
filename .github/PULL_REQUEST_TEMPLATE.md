@@ -1,81 +1,82 @@
-# Thank you for contributing an eval! ♥️
+# evalを投稿していただきありがとうございます！♥️
 
-🚨 Please make sure your PR follows these guidelines, __failure to follow the guidelines below will result in the PR being closed automatically__. Note that even if the criteria are met, that does not guarantee the PR will be merged nor GPT-4 access granted. 🚨
+🚨 このガイドラインに沿ったPRをお願いします、__以下のガイドラインに従わない場合PRは自動的にクローズされます__。なお条件を満たしていたとしても、PRがマージされることやGPT-4へのアクセス権が付与されることを保証するものではありません。 🚨
 
-__PLEASE READ THIS__:
+__お読みください__:
 
-In order for a PR to be merged, it must fail on GPT-4. We are aware that right now, users do not have access, so you will not be able to tell if the eval fails or not. Please run your eval with GPT-3.5-Turbo, but keep in mind as we run the eval, if GPT-4 gets higher than 90% on the eval, we will likely reject since GPT-4 is already capable of completing the task.
+PRがマージされるためには、GPT-4で失敗する必要があります。たった今、ユーザーはアクセスできないので、evalが失敗したかどうかがわからないことを承知しています。GPT-3.5-Turboでevalを実行してください、ただしevalを実行する際に注意して頂きたいことがあります、 GPT-4が90%以上の評価を得た場合、GPT-4はすでにタスクを完了する能力を有しているため、おそらく不合格となるでしょう。
 
-We plan to roll out a way for users submitting evals to see the eval performance on GPT-4 soon. Stay tuned! Until then, you will not be able to see the eval performance on GPT-4. We encourage partial PR's with ~5-10 example that we can then run the evals on and share the results with you so you know how your eval does with GPT-4 before writing all 100 examples.
+近日中に、GPT-4での評価性能を、評価を提出するユーザに見ていただけるような方法を公開する予定です。 ご期待ください！
+それまでは、GPT-4での評価性能を見ることはできません。100個のサンプルを全て書く前にGPT-4での評価結果を知ることができるように、5〜10個のサンプルで部分的なPRをすることを推奨します。
 
-## Eval details 📑
-### Eval name
+## 評価の詳細 📑
+### 評価名称
 [Insert Eval name here]
 
-### Eval description
+### 評価の説明
 
 [Insert a short description of what your eval does here]
 
-### What makes this a useful eval?
+### これを有益な評価とする理由は何でしょうか？
 
 [Insert why this eval is worth including and any additional context]
 
-## Criteria for a good eval ✅
+## よい評価の基準 ✅
 
-Below are some of the criteria we look for in a good eval. In general, we are seeking cases where the model does not do a good job despite being capable of generating a good response (note that there are some things large language models cannot do, so those would not make good evals).
+以下は、私たちがよい評価を探すための基準の一部です。 一般的には、良いレスポンスを生成する能力があるにもかかわらず、モデルが上手く機能していないケースを求めています（大規模言語モデルにはできないことがあるため、そのような場合は良い評価にはなり得ないことにご注意ください）。
 
-Your eval should be:
+あなたのevalは、こうあるべきです：
 
-- [ ] Thematically consistent: The eval should be thematically consistent. We'd like to see a number of prompts all demonstrating some particular failure mode. For example, we can  create an eval on cases where the model fails to reason about the physical world.
-- [ ] Contains failures where a human can do the task, but either GPT-4 or GPT-3.5-Turbo could not.
-- [ ] Includes good signal around what is the right behavior. This means either a correct answer for `Basic` evals or the `Fact` Model-graded eval, or an exhaustive rubric for evaluating answers for the `Criteria` Model-graded eval.
-- [ ] Include at least 100 high quality examples (it is okay to only contribute 5-10 meaningful examples and have us test them with GPT-4 before adding all 100)
+- [ ] テーマに一貫性があること： Evalはテーマごとに一貫性を持たせる必要があります。いくつかのプロンプトが、すべてある特定の失敗モードを示すようにしたい。例えば、モデルが物理的な世界を推論することに失敗する場合の評価を作成することができます。
+- [ ] 人間には出来るが、GPT-4またはGPT-3.5-Turboには出来ないタスクを含む。
+- [ ] 正しい振る舞いに関する適切な基準や手がかりが含まれている事。これは、`Basic`評価の正しい答え、または`Fact`モデルによる評価、または`Criteria`モデルによる評価の答えを評価するための詳細な基準を意味します。
+- [ ] 高品質な例を100個以上含むこと（5～10個の有意義な例のみを提供し、GPT-4でテストしてから100個すべてを追加しても問題ありません）
 
-If there is anything else that makes your eval worth including, please document it below.
+もしあなたの評価に含める価値がある他の要素がある場合は、以下に文書化してください。
 
-### Unique eval value
+### 独自の評価値
 
-> Insert what makes your eval high quality that was not mentioned above. (Not required)
+> 上記以外で、あなたの評価を高品質にするものを記入してください。(必須ではありません)
 
-## Eval structure 🏗️
+## 評価の構造 🏗️
 
 Your eval should
-- [ ] Check that your data is in `evals/registry/data/{name}`
-- [ ] Check that your yaml is registered at `evals/registry/evals/{name}.jsonl`
-- [ ] Ensure you have the right to use the data you submit via this eval
+- [ ] データが `evals/registry/data/{name}` にあるか確認する
+- [ ] yamlが `evals/registry/evals/{name}.jsonl` に登録されていることを確認する。
+- [ ] この評価を通じて提出されたデータを使用する権利を有することを確認する
 
-(For now, we will only be approving evals that use one of the existing eval classes. You may still write custom eval classes for your own cases, and we may consider merging them in the future.)
+(今のところ、既存の評価クラスのいずれかを使用する評価のみを承認することにしています。ただし、あなたのケースに合わせた独自の評価クラスを作成する事もできますし、将来的にはそれらを統合する事も考慮されるでしょう)
 
-## Final checklist 👀
+## 最終チェック項目 👀
 
-### Submission agreement
+### 投稿に関する合意事項
 
-By contributing to Evals, you are agreeing to make your evaluation logic and data under the same MIT license as this repository. You must have adequate rights to upload any data used in an Eval. OpenAI reserves the right to use this data in future service improvements to our product. Contributions to OpenAI Evals will be subject to our usual Usage Policies (https://platform.openai.com/docs/usage-policies).
+評価に貢献することで、あなたの評価ロジックとデータをこのリポジトリと同じMITライセンス下に置くことに同意したものとみなされます。評価で使用されるデータをアップロードするための適切な権利を有している必要があります。OpenAIは、このデータを将来の商品でサービス改善する際に使用する権利を有します。OpenAI Evalsへの貢献は、通常の使用ポリシー(https://platform.openai.com/docs/usage-policies)に従うことになります。
 
-- [ ] I agree that my submission will be made available under an MIT license and complies with OpenAI's usage policies.
+- [ ] 私は、私の投稿がMITライセンスの下で公開され、OpenAIの使用方針に従うことに同意します。
 
-### Email address validation
+### メールアドレスの検証
 
-If your submission is accepted, we will be granting GPT-4 access to a limited number of contributors. Access will be given to the email address associated with the merged pull request.
+投稿が受付けられた際には、限られた数の貢献者にGPT-4へのアクセスを許可する予定です。アクセス権は、マージされたプルリクエストに関連付けられたメールアドレスに付与される予定です。
 
-- [ ] I acknowledge that GPT-4 access will only be granted, if applicable, to the email address used for my merged pull request.
+- [ ] 私はGPT-4へのアクセスは、必要に応じてマージされたプルリクエストに使用されたメールアドレスにのみ付与されることを認めます。
 
-### Limited availability acknowledgement
+### 利用制限の確認
 
-We know that you might be excited to contribute to OpenAI's mission, help improve our models, and gain access to GPT-4. However, due to the requirements mentioned above and high volume of submissions, we will not be able to accept all submissions and thus not grant everyone who opens a PR GPT-4 access. We know this is disappointing, but we hope to set the right expectation before you open this PR.
+OpenAIのミッションに貢献し、モデルの改良に貢献し、GPT-4へのアクセスを得たいとお考えの方もいらっしゃるかと思います。しかし、上記の要件と大量の投稿のため、すべての投稿を受け付けることができず、PRを公開した方全員にGPT-4へのアクセスを許可することはできません。 残念なことではありますが、このPRを公開する前に、適切な期待を持たせることができればと思います。
 
-- [ ] I understand that opening a PR, even if it meets the requirements above, does not guarantee the PR will be merged nor GPT-4 access granted.
+- [ ] 私は、PRを公開した場合、それが上記の要件を満たしていたとしても、PRがマージされることやGPT-4への アクセス権が付与されることが 保証されないことを理解しています。
 
-### Submit eval
+### 評価の提出
 
-- [ ] I have filled out all required fields in the evals PR form
-- [ ] (Ignore if not submitting code) I have run `pip install pre-commit; pre-commit install` and have verified that `black`, `isort`, and `autoflake` are running when I commit and push
+- [ ] 評価PRフォームの必須項目はすべて入力しました
+- [ ] (コードを投稿しない場合は無視してください) `pip install pre-commit; pre-commit install` を実行し、コミットしてプッシュした際に `black`, `isort`, `autoflake` が実行されていることを確かめました。
 
-Failure to fill out all required fields will result in the PR being closed.
+必須項目にご記入いただけない場合は、PRは終了とさせていただきます。
 
-### Eval JSON data 
+### JSONデータを評価する
 
-Since we are using Git LFS, we are asking eval submitters to add in as many Eval Samples (at least 5) from their contribution here:
+Git LFSを使用しているため、評価投稿者には、貢献した内容からできるだけ多くの評価サンプル（少なくとも5つ）をここに追加していただくようお願いしています：
 
 <details>
   <summary>View evals in JSON</summary>
