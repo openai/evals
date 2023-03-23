@@ -6,7 +6,7 @@ import logging
 import string
 from collections import Counter
 from random import Random
-from typing import Callable, Iterable, Optional
+from typing import Callable, Iterable, Optional, Union
 
 import openai
 
@@ -95,7 +95,7 @@ class ModelBasedClassify(evals.Eval):
         *args,
         match_fn: str = "starts_or_endswith",
         max_tokens: int = 1024,
-        multicomp_n: int = 1,
+        multicomp_n: Union[int, str] = 1,
         multicomp_temperature: float = 0.4,
         samples_renamings: Optional[dict[str, str]] = None,
         eval_type: Optional[str] = None,
@@ -104,23 +104,27 @@ class ModelBasedClassify(evals.Eval):
         **kwargs,
     ):
         super().__init__(model_specs, *args, **kwargs)
+        n_models = len(self.model_specs.completions)
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
         self.match_fn = MATCH_FNS[match_fn]
         self.metaeval = metaeval
-        self.multicomp_n = multicomp_n
+        if multicomp_n == "from_models":
+            assert n_models > 1, f"multicomp_n='from_models' but only 1 model is specified."
+            self.multicomp_n = n_models
+        else:
+            assert isinstance(
+                multicomp_n, int
+            ), f"multicomp_n={multicomp_n} must be an int or 'from_models'."
+            self.multicomp_n = multicomp_n
         self.multicomp_temperature = multicomp_temperature
         self.samples_renamings = samples_renamings or {}
 
         # check if multiple models are specified
         if len(self.model_specs.completions) > 1:
-            assert self.multicomp_n == len(
-                self.model_specs.completions
+            assert (
+                self.multicomp_n == n_models
             ), f"multicomp_n={self.multicomp_n} must be equal to the number of models={len(self.model_specs.completions)} if multiple models are specified."
-        if self.multicomp_n > 1 and self.multicomp_temperature == 0:
-            logging.warning(
-                f"multicomp_temperature={self.multicomp_temperature} is 0 for {self.multicomp_n} model outputs. Specify multiple completion models, e.g. 'oaieval gpt-3.5-turbo,gpt-4 ...'?"
-            )
 
         if self.model_spec.name == "dummy-completion" or self.model_spec.name == "dummy-chat":
             self.eval_modelspec = self.model_spec
