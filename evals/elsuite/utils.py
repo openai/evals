@@ -1,19 +1,10 @@
 import copy
-import os
 import re
 import string
 from collections import Counter, defaultdict
 
-import yaml
-
 from evals.api import sample_freeform
 from evals.prompt.base import chat_prompt_to_text_prompt, is_chat_prompt
-
-
-def load_modelgraded_specs(spec_file: str) -> str:
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    yaml_path = os.path.join(current_dir, "../registry/modelgraded", f"{spec_file}.yaml")
-    return yaml.load(open(yaml_path, "r"), Loader=yaml.FullLoader)
 
 
 def get_answer(text, answer_prompt):

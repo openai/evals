@@ -2,22 +2,18 @@
 Generic eval that uses a prompt + classification.
 """
 import itertools
+import logging
 import string
 from collections import Counter
 from random import Random
-from typing import Callable, Iterable, Optional
+from typing import Callable, Iterable, Optional, Union
 
 import openai
 
 import evals
 import evals.record
 from evals.base import ModelSpec
-from evals.elsuite.utils import (
-    PromptFn,
-    format_necessary,
-    load_modelgraded_specs,
-    scrub_formatting_from_prompt,
-)
+from evals.elsuite.utils import PromptFn, format_necessary, scrub_formatting_from_prompt
 
 INVALID_STR = "__invalid__"
 CHOICE_KEY = "choice"
@@ -25,26 +21,25 @@ MATCH_FNS = {
     "include": lambda x, y: float(x in y),
     "exact": lambda x, y: float(x == y),
     "endswith": lambda x, y: x.endswith(y),
-}
-CHOICE_FNS = {
-    # e.g. "Yes"
-    "classify": lambda x: x.strip(),
-    # e.g. "Yes\n The reasons are: ..."
-    "classify_cot": lambda x: x.strip().split("\n")[0].strip(),
-    # e.g. "Let's think step by step. ...\nYes"
-    "cot_classify": lambda x: x.strip().split("\n")[-1].strip(),
+    "starts_or_endswith": lambda x, y: x.startswith(y) or x.endswith(y),
 }
 
 ANSWER_PROMPTS = {
+    # e.g. "Yes"
     "classify": "Answer the question by printing only a single choice from {choices} (without quotes or punctuation) corresponding to the correct answer with no other text.".strip(),
+    # e.g. "Yes\n The reasons are: ..."
     "classify_cot": "First, answer by printing a single choice from {choices} (without quotes or punctuation) corresponding to the correct answer. Then, from the next line, explain your reasonings step by step.".strip(),
+    # e.g. "Let's think step by step. ...\nYes"
     "cot_classify": """
 First, write out in a step by step manner your reasoning to be sure that your conclusion is correct. Avoid simply stating the correct answer at the outset. Then print only a single choice from {choices} (without quotes or punctuation) on its own line corresponding to the correct answer. At the end, repeat just the answer by itself on a new line.
 
 Reasoning:""".strip(),
-}
+    "cot_classify_jp": """
+まず、一歩一歩あなたの推論を書き出してください。単に正しい答えを最初に述べることを避けてください。次に、{choices}（引用符や句読点なし）から正しい答えに対応する1つの選択肢を単独の行に書きだしてください。最後に、答えだけを新しい行に繰り返してください。
 
-EVAL_MODELSPEC = ModelSpec(name="gpt-3.5-turbo", model="gpt-3.5-turbo", is_chat=True)
+推論：
+    """.strip(),
+}
 
 
 def choice_to_str(choice_strings: Iterable[str]) -> str:
@@ -52,15 +47,19 @@ def choice_to_str(choice_strings: Iterable[str]) -> str:
     return " or ".join(f'"{choice}"' for choice in choice_strings)
 
 
-def clean_choice(raw_choice: str, match_fn: Callable, choice_strings: Iterable[str]) -> str:
-    """Clean a choice string to one of choice_strings. Return '__invalid__.' if no match."""
-    raw_choice = raw_choice.strip()
-    raw_choice = "".join(c for c in raw_choice if c not in string.punctuation)
-    if not raw_choice:
-        return INVALID_STR
-    for choice in choice_strings:
-        if match_fn(raw_choice, choice):
-            return choice
+def get_choice(text: str, eval_type: str, match_fn: Callable, choice_strings: Iterable[str]) -> str:
+    """Clean the answer string to a choice string to one of choice_strings. Return '__invalid__.' if no match."""
+    lines = text.strip().split("\n")
+    if eval_type.startswith("cot_classify"):
+        lines = lines[::-1]  # reverse lines
+    for line in lines:
+        line = line.strip()
+        line = "".join(c for c in line if c not in string.punctuation)
+        if not line:
+            continue
+        for choice in choice_strings:
+            if match_fn(line, choice):
+                return choice
     return INVALID_STR
 
 
@@ -94,29 +93,57 @@ class ModelBasedClassify(evals.Eval):
         samples_jsonl: str,
         modelgraded_spec_file: str,
         *args,
-        match_fn: str = "endswith",
+        match_fn: str = "starts_or_endswith",
         max_tokens: int = 1024,
-        multicomp_n: int = 1,
+        multicomp_n: Union[int, str] = 1,
         multicomp_temperature: float = 0.4,
         samples_renamings: Optional[dict[str, str]] = None,
         eval_type: Optional[str] = None,
         metaeval: bool = False,
+        modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
         **kwargs,
     ):
         super().__init__(model_specs, *args, **kwargs)
+        n_models = len(self.model_specs.completions)
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
         self.match_fn = MATCH_FNS[match_fn]
         self.metaeval = metaeval
-        self.multicomp_n = multicomp_n
+        if multicomp_n == "from_models":
+            assert n_models > 1, f"multicomp_n='from_models' but only 1 model is specified."
+            self.multicomp_n = n_models
+        else:
+            assert isinstance(
+                multicomp_n, int
+            ), f"multicomp_n={multicomp_n} must be an int or 'from_models'."
+            self.multicomp_n = multicomp_n
         self.multicomp_temperature = multicomp_temperature
         self.samples_renamings = samples_renamings or {}
 
+        # check if multiple models are specified
+        if len(self.model_specs.completions) > 1:
+            assert (
+                self.multicomp_n == n_models
+            ), f"multicomp_n={self.multicomp_n} must be equal to the number of models={len(self.model_specs.completions)} if multiple models are specified."
+
+        if self.model_spec.name == "dummy-completion" or self.model_spec.name == "dummy-chat":
+            self.eval_modelspec = self.model_spec
+        else:
+            self.eval_modelspec = ModelSpec(
+                name="gpt-3.5-turbo", model="gpt-3.5-turbo", is_chat=True
+            )
+
         """import prompt and set attributes"""
-        modelgraded_specs = load_modelgraded_specs(modelgraded_spec_file)
+        modelgraded_specs = self.registry.get_modelgraded_spec(modelgraded_spec_file)
 
         # 'choice_strings' is a list of strings that specifies the possible choices
         self.choice_strings = modelgraded_specs.pop("choice_strings")
+        if self.choice_strings == "from_n":
+            self.choice_strings = [str(i + 1) for i in range(self.multicomp_n)]
+        elif self.choice_strings == "from_n_abc":
+            self.choice_strings = [string.ascii_lowercase[i % 26] for i in range(self.multicomp_n)]
+        elif self.choice_strings == "from_n_ABC":
+            self.choice_strings = [string.ascii_uppercase[i % 26] for i in range(self.multicomp_n)]
         # make sure each choice doesn't contain any punctuation
         for s in self.choice_strings:
             assert not any(c in s for c in string.punctuation), f"{s} contains punctuation"
@@ -135,7 +162,6 @@ class ModelBasedClassify(evals.Eval):
         #   - "classify_cot": answer then reason (explanation)
         # if 'eval_type' is not supplied from modelgraded_specs, then it must be supplied as an argument.
         #   - Importantly, it also assumes the answer prompt needs to be appended to the prompt.
-        # 'eval_type' sets 'choice_fn', a function that takes the model's raw response and returns the choice string
         self.eval_type = modelgraded_specs.pop("eval_type", None)
         if not self.eval_type:
             append_answer_prompt = True  # append answer prompt to prompt
@@ -148,8 +174,6 @@ class ModelBasedClassify(evals.Eval):
                 not eval_type
             ), f"eval_type must be unspecified, if it is specified in modelgraded_spec_file"
             append_answer_prompt = False
-        assert self.eval_type in CHOICE_FNS, f"eval_type must be one of {list(CHOICE_FNS.keys())}"
-        self.choice_fn = CHOICE_FNS[self.eval_type]
 
         # 'prompt' is a string that specifies the model-graded evaluation
         prompt = modelgraded_specs.pop("prompt")
@@ -169,7 +193,9 @@ class ModelBasedClassify(evals.Eval):
 
         # (optional) 'args' is a dict of dicts that specifies additional arguments for 'prompt'
         # each value in 'args_dict' essentially defines a separate modelgraded classification eval and has own metrics!
+        # if 'modelgraded_spec_args' is specified in eval YAML, it is merged with 'args_dict'
         self.args_dict = modelgraded_specs.pop("args", {})
+        self.args_dict.update(modelgraded_spec_args or {})
         if self.args_dict:
             self.expanded_args_dict = expand_args_dict(self.args_dict)
         else:
@@ -188,6 +214,8 @@ class ModelBasedClassify(evals.Eval):
             ), "completion_sample_templates must be specified if multicomp_n > 1"
 
         # since we accept optional args, we need to check that all args are used
+        for key in ("key", "group"):
+            modelgraded_specs.pop(key, None)
         assert not modelgraded_specs, f"Unused args: {modelgraded_specs}. Typo in YAML?"
 
     def eval_sample(self, test_sample: dict, rng: Random) -> None:
@@ -219,9 +247,15 @@ class ModelBasedClassify(evals.Eval):
                         completion = ""
                         completion_i_template = self.completion_sample_templates[v]
                         for i in range(self.multicomp_n):
+                            if len(self.model_specs.completions) > 1:
+                                # use a separate model for each completion
+                                model_spec = self.model_specs.completions[i]
+                            else:
+                                # use the single model for all completions
+                                model_spec = self.model_spec
                             get_input_completion = PromptFn(
                                 test_sample[k],
-                                model_spec=self.model_spec,
+                                model_spec=model_spec,
                                 max_tokens=self.max_tokens,
                                 temperature=self.multicomp_temperature,
                             )
@@ -229,6 +263,8 @@ class ModelBasedClassify(evals.Eval):
                             completion += format_necessary(
                                 completion_i_template,
                                 i=i + 1,
+                                i_abc=string.ascii_lowercase[i % 26],
+                                i_ABC=string.ascii_uppercase[i % 26],
                                 output=completion_i,
                                 n=self.multicomp_n,
                             )
@@ -248,7 +284,7 @@ class ModelBasedClassify(evals.Eval):
             metrics = {}
             evaluate = PromptFn(
                 self.prompt,
-                model_spec=EVAL_MODELSPEC,
+                model_spec=self.eval_modelspec,
                 max_tokens=self.max_tokens,
             )
             eval_kwargs = dict(**completions, **test_sample)
@@ -259,8 +295,11 @@ class ModelBasedClassify(evals.Eval):
             for metric, args in args_dict.items():
                 args = {k: v[1] for k, v in args.items()}
                 evaluation, _ = evaluate(**args, **eval_kwargs)
-                raw_choice = self.choice_fn(evaluation)
-                choice = clean_choice(raw_choice, self.match_fn, self.choice_strings)
+                choice = get_choice(evaluation, self.eval_type, self.match_fn, self.choice_strings)
+                if choice == INVALID_STR:
+                    logging.warn(
+                        f"Choices {self.choice_strings} not parsable for {self.eval_type}: {evaluation}"
+                    )
                 metrics[metric] = choice
                 if self.metaeval:
                     assert (

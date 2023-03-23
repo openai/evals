@@ -1,10 +1,10 @@
 [project]
 name = "evals"
 version = "0.1.1"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = [
     "mypy",
-    "openai",
+    "openai >= 0.27.2",
     "tiktoken",
     "blobfile",
     "backoff",
