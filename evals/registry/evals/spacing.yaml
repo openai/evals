@@ -1,0 +1,7 @@
+spacing-include:
+  id: spacing-include.dev.v0
+  metrics: [accuracy]
+spacing-include.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: spacing/samples.jsonl
