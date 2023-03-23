@@ -1,0 +1,7 @@
+hand_ranks-match:
+  id: hand_ranks.test.v1
+  metrics: [accuracy]
+hand_ranks.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: poker_hand_ranks/full_samples.jsonl
