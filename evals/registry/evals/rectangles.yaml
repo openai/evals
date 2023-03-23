@@ -1,0 +1,9 @@
+rectangles:
+  id: rectangles.dev.v0
+  metrics: [accuracy]
+
+rectangles.dev.v0:
+  class: evals.elsuite.rectangles:Rectangles
+  args:
+    train_jsonl: rectangles/train.jsonl
+    test_jsonl: rectangles/test.jsonl
