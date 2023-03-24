@@ -4,4 +4,4 @@ family-tree-logical-reasoning-match:
 family-tree.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: family_tree_logical_reasoning/family_tree_logical_reasoning.jsonl
+    samples_jsonl: family-tree-logical-reasoning/samples.jsonl
