@@ -1,0 +1,8 @@
+follow_transactions:
+  id: follow_transactions.dev.v0
+  metrics: [accuracy]
+
+follow_transactions.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: follow_transactions/samples.jsonl
