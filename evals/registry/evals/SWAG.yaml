@@ -1,0 +1,7 @@
+SWAG:
+  id: SWAG.v1
+  metrics: [accuracy]
+SWAG.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: SWAG/samples.jsonl
