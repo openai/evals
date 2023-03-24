@@ -65,7 +65,7 @@ Congratulations, you have built your eval! Keep iterating on it until you are co
 
 We expect that the existing model-graded evals such as `fact`, `closedqa`, and `battle` will fit many use cases. However, other use cases may benefit from more customization, e.g., a different evaluation prompt. For these, there will be a bit more work involved, but generally still no coding required!
 
-1. If you can't use an existing model-graded eval, create a new YAML in `evals/registry/modelgraded` to specify the [parameters](eval-templates.md#parameters-for-model-graded-evals) of your eval. See [`humor.yaml`](../evals/registry/modelgraded/humor.yaml) for an example.
+1. If you can't use an existing model-graded eval, create a new YAML or create a new entry to an existing YAML in `evals/registry/modelgraded` to specify the [parameters](eval-templates.md#parameters-for-model-graded-evals) of your eval. See [`humor.yaml`](../evals/registry/modelgraded/humor.yaml) for an example.
     - Note that, even if you are creating a new YAML, you may find it easiest to copy an existing YAML as a starting point. For example, model-graded evals which check a model completion against a rubric can copy `closedqa.yaml` and just edit the `args`.
 2. Next, you will create your dataset and register your eval, as described above. See [`joke_fruits_labeled.jsonl`](../evals/registry/data/test_metaeval/joke_fruits_labeled.jsonl) and [`joke-fruits`](../evals/registry/evals/test-modelgraded.yaml), for example.
     - Note that it is recommended to specify `eval_type` at this step, when you register your eval, rather than step 1.
