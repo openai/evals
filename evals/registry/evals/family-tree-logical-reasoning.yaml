@@ -1,0 +1,7 @@
+family-tree-logical-reasoning-match:
+  id: family-tree.dev.v0
+  metrics: [accuracy]
+family-tree.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: family_tree_logical_reasoning/family_tree_logical_reasoning.jsonl
