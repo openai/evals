@@ -1,0 +1,9 @@
+play-twenty-four:
+  id: play-twenty-four.dev.v0
+  description: Test the model's ability to play the arithmetic game 24.
+  metrics: [accuracy]
+
+play-twenty-four.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: play-twenty-four/samples.jsonl
