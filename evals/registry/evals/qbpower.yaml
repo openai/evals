@@ -1,0 +1,8 @@
+qbpower:
+  id: qbpower.dev.v0
+  metrics: [accuracy]
+  description: Evaluate ability to answer factual questions from minimal distinguishing clues
+qbpower.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: qbpower/samples.jsonl
