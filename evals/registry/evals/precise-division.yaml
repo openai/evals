@@ -1,0 +1,8 @@
+precise-division:
+  id: precise-division.dev.v0
+  metrics: [accuracy]
+
+precise-division.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: precise-division/samples.jsonl
