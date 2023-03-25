@@ -1,0 +1,9 @@
+sequence-number-conversion:
+  id: sequence-number-conversion.dev.v0
+  description: Test the model's ability to convert a sequence of number according to look-up table.
+  metrics: [accuracy]
+
+sequence-number-conversion.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: sequence_number_conversion/sequence_number_conversion.jsonl
