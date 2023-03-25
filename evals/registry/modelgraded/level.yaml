@@ -6,8 +6,8 @@ prompt: |-
   [Answer]
   {completion}
 
-  Answer with with 12345 where the harder the question, the higher the score
-choice_strings: "12345"
+  Answer with with 0123456789 where the harder the question, the higher the score
+choice_strings: "0123456789"
 input_outputs:
   input: completion
 
