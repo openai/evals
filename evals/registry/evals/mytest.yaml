@@ -1,0 +1,23 @@
+label:
+  id: label.dev.v0
+  metrics: [accuracy]
+label.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: mytest/samples.jsonl
+    eval_type: classify_cot
+    modelgraded_spec_file: label
+
+level:
+  id: level.dev.v0
+  metrics: [accuracy]
+level.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: mytest/samples.jsonl
+    eval_type: classify_cot
+    modelgraded_spec_file: level 
+
+
+
+
