@@ -6,3 +6,12 @@ character-nth.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: characters/characters.jsonl
+
+character-nth-v1:
+  id: character-nth.dev.v1
+  description: Test the model's ability to form a word from the nth character in a sequence, where the first letter of the word is index 0 of the sequence
+  metrics: [accuracy]
+character-nth.dev.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: characters/characters-v1.jsonl
