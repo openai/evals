@@ -1,7 +1,7 @@
 singapore_math:
   id: singapore_math.dev.v0
   metrics: [accuracy]
-  description: Evaluate arithmetic ability on challenging Singapore math questions. Questions are open-ended (not multiple choice). Contributed from Mind Stretcher's (https://mindstretcher.com) internal database of questions.
+  description: Evaluate arithmetic ability on challenging Singapore math questions. Questions are open-ended (not multiple choice). Contributed from Mind Stretcher's (https://mindstretcher.com) internal corpus of questions.
 
 singapore_math.dev.v0:
   class: evals.elsuite.singapore_math:SingaporeMath
