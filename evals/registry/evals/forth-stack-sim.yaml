@@ -24,3 +24,21 @@ forth-stack-sim-detailed.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: forth_stack_sim/detailed_samples.jsonl
+
+forth-stack-sim-basic-steps:
+  id: forth-stack-sim-basic-steps.dev.v0
+  description: Test the model's ability to simulate a simple forth stack machine with a basic explanation and asking for step-by-step walkthrough
+  metrics: [accuracy]
+forth-stack-sim-basic-steps.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: forth_stack_sim/basic_steps_samples.jsonl
+
+forth-stack-sim-detailed-steps:
+  id: forth-stack-sim-detailed-steps.dev.v0
+  description: Test the model's ability to simulate a simple forth stack machine with a detailed explanation and asking for a step-by-step walkthrough
+  metrics: [accuracy]
+forth-stack-sim-detailed-steps.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: forth_stack_sim/detailed_steps_samples.jsonl
