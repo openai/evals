@@ -10,7 +10,7 @@ joke-animals.dev.v0:
       input1: "input"
       completion1: "completion"
     eval_type: cot_classify
-    modelgraded_spec_file: humor
+    modelgraded_spec: humor
 
 # (same eval as above, but with likert scale of 1-5)
 joke-animals-likert:
@@ -24,7 +24,7 @@ joke-animals-likert.dev.v0:
       input1: "input"
       completion1: "completion"
     eval_type: cot_classify
-    modelgraded_spec_file: humor_likert
+    modelgraded_spec: humor_likert
 
 # a simple modelgraded eval checking if a completion is funny or not
 # this example uses a labeled dataset, but ignores "completion" and "choice"
@@ -36,7 +36,7 @@ joke-fruits.dev.v0:
   args:
     samples_jsonl: test_metaeval/joke_fruits_labeled.jsonl
     eval_type: cot_classify
-    modelgraded_spec_file: humor
+    modelgraded_spec: humor
 
 # a meta-evaluation of a modelgraded eval checking if a completion is funny or not
 # this example uses a labeled dataset with "completion" and "choice"
@@ -48,7 +48,7 @@ joke-fruits-meta.dev.v0:
   args:
     samples_jsonl: test_metaeval/joke_fruits_labeled.jsonl
     eval_type: cot_classify
-    modelgraded_spec_file: humor
+    modelgraded_spec: humor
     metaeval: true
 
 # (above, but with "answer then explain", rather than "reason then answer")
@@ -60,7 +60,7 @@ joke-fruits-expl-meta.dev.v0:
   args:
     samples_jsonl: test_metaeval/joke_fruits_labeled.jsonl
     eval_type: classify_cot
-    modelgraded_spec_file: humor
+    modelgraded_spec: humor
     metaeval: true
 
 # (above, but with "answer" only)
@@ -72,7 +72,7 @@ joke-fruits-ans-meta.dev.v0:
   args:
     samples_jsonl: test_metaeval/joke_fruits_labeled.jsonl
     eval_type: classify
-    modelgraded_spec_file: humor
+    modelgraded_spec: humor
     metaeval: true
 
 # a simple modelgraded eval checking if 4 completions to the sample prompt is diverse
@@ -85,7 +85,7 @@ diversity.dev.v0:
   args:
     samples_jsonl: test_metaeval/joke_fruits_labeled.jsonl
     eval_type: cot_classify
-    modelgraded_spec_file: diversity
+    modelgraded_spec: diversity
     multicomp_n: 4
     multicomp_temperature: 0.4
 
@@ -100,6 +100,6 @@ best.dev.v0:
   args:
     samples_jsonl: test_metaeval/joke_fruits_labeled.jsonl
     eval_type: cot_classify
-    modelgraded_spec_file: best
+    modelgraded_spec: best
     multicomp_n: from_models
     multicomp_temperature: 0.0

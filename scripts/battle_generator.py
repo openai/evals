@@ -3,7 +3,6 @@
 import json
 import os
 import string
-from typing import Any
 
 REGISTRY_PATH = os.path.join(os.path.dirname(__file__), "../evals/registry")
 
@@ -25,7 +24,7 @@ YAML = """
   args:
     samples_jsonl: test_multiio/battles/{prompt_name}_{subject1}_vs_{subject2}.jsonl
     eval_type: cot_classify
-    modelgraded_spec_file: battle
+    modelgraded_spec: battle
 """.strip()
 
 
