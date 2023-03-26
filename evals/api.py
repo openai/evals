@@ -139,7 +139,7 @@ def check_sampled_text(
 
     picked = None
     for option in options:
-        if not sampled.startswith(option):
+        if not sampled.endswith(option):
             continue
         if (
             separator is not None
