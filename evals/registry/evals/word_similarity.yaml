@@ -1,0 +1,7 @@
+word_similarity:
+  id: word_similarity.dev.v0
+  metrics: [accuracy]
+word_similarity.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: word_similarity/samples.jsonl
