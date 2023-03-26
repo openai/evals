@@ -1,0 +1,7 @@
+text-length:
+  id: text-length.v1
+  metrics: [accuracy]
+text-length.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: text-length/samples.jsonl
