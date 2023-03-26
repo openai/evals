@@ -31,6 +31,6 @@ class SingaporeMath(evals.Eval):
         # Extract the answer from the model's explanation
         # Instructions help ensure formatting of the answer is consistent with the correct answer
         prompt += [{"role": "system", "content": explanation}]
-        prompt += [{"role": "user", "content": "Based on the above, what is the answer to the question? Please only output the answer as a number with no further explanation, words or units. Unless otherwise instructured, if the answer is a fraction, output it as a decimal number only if it is a terminating decimal."}]
+        prompt += [{"role": "user", "content": "Based on the above, what is the answer to the original question? Please only output the answer as a number with no further explanation, words or units. Unless otherwise instructed, if the answer is a fraction, output it as a decimal number only if it is a terminating decimal. Your answer format should be <answer> with no other words."}]
 
         evals.check_sampled_text(self.model_spec, prompt, expected=test_sample["ideal"])
