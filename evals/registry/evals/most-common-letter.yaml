@@ -1,0 +1,7 @@
+most-common-letter:
+  id: most-common-letter.v1
+  metrics: [accuracy]
+most-common-letter.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: most-common-letter/samples.jsonl
