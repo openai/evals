@@ -14,7 +14,7 @@ coqa-fact.dev.v0:
   args:
     samples_jsonl: coqa/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec_file: fact
+    modelgraded_spec: fact
 
 coqa-fact-expl:
   id: coqa-fact-expl.dev.v0
@@ -24,7 +24,7 @@ coqa-fact-expl.dev.v0:
   args:
     samples_jsonl: coqa/samples.jsonl
     eval_type: classify_cot
-    modelgraded_spec_file: fact
+    modelgraded_spec: fact
 
 coqa-closedqa:
   id: coqa-closedqa.dev.v0
@@ -33,7 +33,7 @@ coqa-closedqa.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: coqa/samples.jsonl
-    modelgraded_spec_file: closedqa
+    modelgraded_spec: closedqa
 
 # (same as above, but only evaluate criteria=correct)
 coqa-closedqa-correct:
@@ -43,7 +43,7 @@ coqa-closedqa-correct.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: coqa/samples.jsonl
-    modelgraded_spec_file: closedqa
+    modelgraded_spec: closedqa
     modelgraded_spec_args:
       criteria:
         correct: "correctness: Is the answer correct?"
