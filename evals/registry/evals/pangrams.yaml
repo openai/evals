@@ -1,0 +1,8 @@
+pangrams:
+  id: pangrams.test.v1
+  metrics:
+  - accuracy
+pangrams.test.v1:
+  args:
+    samples_jsonl: pangrams/samples.jsonl
+  class: evals.elsuite.basic.match:Match
