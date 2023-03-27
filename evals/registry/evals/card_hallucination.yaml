@@ -1,0 +1,11 @@
+card_hallucination:
+  id: card_hallucination.dev.v0
+  description: Test the model's ability to determine if a Flesh and Blood card exists.
+  metrics: [accuracy]
+card_hallucination.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: card_hallucination/card_hallucination.jsonl
+    eval_type: cot_classify
+    match_fn: endswith
+    modelgraded_spec_file: fact
