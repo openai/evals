@@ -1,6 +1,7 @@
 """
 Generic eval that uses a prompt + classification.
 """
+import copy
 import itertools
 import logging
 import string
@@ -135,6 +136,7 @@ class ModelBasedClassify(evals.Eval):
 
         """import prompt and set attributes"""
         modelgraded_specs = self.registry.get_modelgraded_spec(modelgraded_spec)
+        modelgraded_specs = copy.deepcopy(modelgraded_specs)  # since pop() is used
 
         # 'choice_strings' is a list of strings that specifies the possible choices
         self.choice_strings = modelgraded_specs.pop("choice_strings")
