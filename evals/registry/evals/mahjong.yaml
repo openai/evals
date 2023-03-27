@@ -1,0 +1,8 @@
+mahjong:
+  id: mahjong.dev.v0
+  metrics: [accuracy]
+
+mahjong.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: mahjong/samples.jsonl
