@@ -1,0 +1,8 @@
+hidden-words:
+  id: hidden-words.dev.v0
+  metrics: [accuracy]
+
+hidden-words.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: hidden-words/samples.jsonl
