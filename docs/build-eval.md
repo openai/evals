@@ -28,7 +28,7 @@ For the basic evals `Match`, `Includes`, and `FuzzyMatch`, the other required ke
 
 We have implemented small subsets of the [CoQA](https://stanfordnlp.github.io/coqa/) dataset for various eval templates to illustrate how the data should be formatted. See [`coqa/match.jsonl`](../evals/registry/data/coqa/match.jsonl) for an example of data that is suitable for the `Match` basic eval template and [`coqa/samples.jsonl`](../evals/registry/data/coqa/samples.jsonl) for data that is suitable for `fact` and `closedqa` model-graded evals. Note that even though these two model-graded evals expect different keys, we can include the superset of keys in our data in order to support both evals.
 
-If the dataset file is on your local machine, put the YAML file in `evals/registry/evals/data/<eval_name>/samples.jsonl`. If it is in Cloud Object Storage, we support path-style URLs for the major clouds (for your personal use only, we will not accept PRs with cloud URLs).
+If the dataset file is on your local machine, put the `jsonl` file in `evals/registry/evals/data/<eval_name>/samples.jsonl`. If it is in Cloud Object Storage, we support path-style URLs for the major clouds (for your personal use only, we will not accept PRs with cloud URLs).
 
 ## Registering the eval
 
@@ -69,7 +69,7 @@ Congratulations, you have built your eval! Keep iterating on it until you are co
 
 We expect that the existing model-graded evals such as `fact`, `closedqa`, and `battle` will fit many use cases. However, other use cases may benefit from more customization, e.g., a different evaluation prompt. For these, there will be a bit more work involved, but generally still no coding required!
 
-1. If you can't use an existing model-graded eval, create a new YAML in `evals/registry/modelgraded` to specify the [parameters](eval-templates.md#parameters-for-model-graded-evals) of your eval. See [`humor.yaml`](../evals/registry/modelgraded/humor.yaml) for an example.
+1. If you can't use an existing model-graded eval, create a new YAML or create a new entry to an existing YAML in `evals/registry/modelgraded` to specify the [parameters](eval-templates.md#parameters-for-model-graded-evals) of your eval. See [`humor.yaml`](../evals/registry/modelgraded/humor.yaml) for an example.
     - Note that, even if you are creating a new YAML, you may find it easiest to copy an existing YAML as a starting point. For example, model-graded evals which check a model completion against a rubric can copy `closedqa.yaml` and just edit the `args`.
 2. Next, you will create your dataset and register your eval, as described above. See [`joke_fruits_labeled.jsonl`](../evals/registry/data/test_metaeval/joke_fruits_labeled.jsonl) and [`joke-fruits`](../evals/registry/evals/test-modelgraded.yaml), for example.
     - Note that it is recommended to specify `eval_type` at this step, when you register your eval, rather than step 1.

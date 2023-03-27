@@ -5,6 +5,7 @@ import argparse
 import json
 import subprocess
 from pathlib import Path
+from typing import Optional
 
 from evals.registry import Registry
 
@@ -41,7 +42,7 @@ def highlight(str: str) -> str:
     return f"\033[1;32m>>> {str}\033[0m"
 
 
-def main() -> None:
+def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run eval sets through the API")
     parser.add_argument("model", type=str, help="Name of a completion model.")
     parser.add_argument("eval_set", type=str, help="Name of eval set. See registry.")
@@ -57,9 +58,11 @@ def main() -> None:
         default=True,
         help="Exit if any oaieval command fails.",
     )
-    args, unknown_args = parser.parse_known_args()
+    return parser
 
-    registry = Registry()
+
+def run(args, unknown_args, registry: Optional[Registry] = None) -> None:
+    registry = registry or Registry()
     commands: list[Task] = []
     eval_set = registry.get_eval_set(args.eval_set)
     for eval in registry.get_evals(eval_set.evals):
@@ -90,6 +93,12 @@ def main() -> None:
         progress.add(command)
 
     print(highlight("All done!"))
+
+
+def main() -> None:
+    parser = get_parser()
+    args, unknown_args = parser.parse_known_args()
+    run(args, unknown_args)
 
 
 if __name__ == "__main__":

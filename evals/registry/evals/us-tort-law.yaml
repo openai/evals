@@ -1,0 +1,11 @@
+us-tort-law:
+  id: us-tort-law.dev.v0
+  description: Multiple choice questions (with answers) about United States tort law.
+  metrics:
+  - accuracy
+us-tort-law.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    few_shot_jsonl: us_tort_law/few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: us_tort_law/samples.jsonl
