@@ -1,0 +1,8 @@
+comprehensive-graph-reasoning:
+  id: comprehensive-graph-reasoning.dev.v0
+  metrics: [accuracy]
+
+comprehensive-graph-reasoning.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: comprehensive-graph-reasoning/samples.jsonl

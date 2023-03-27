@@ -23,7 +23,7 @@ class FuzzyMatch(evals.Eval):
             self.model_spec,
             prompt,
             temperature=0.0,
-            max_tokens=16,
+            max_tokens=50,
         )
         matches = [
             utils.fuzzy_match(generated_answer, correct_answer)
