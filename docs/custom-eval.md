@@ -17,8 +17,8 @@ We will use the new chat format described [here](https://platform.openai.com/doc
 
 To create the toy datasets, in your terminal, type:
 ```bash
-echo -e '[{"role": "system", "content": "2+2=", "name": "example_user"}, {"role": "system", "content": "4", "name": "example_assistant"}]\n[{"role": "system", "content": "4*4=", "name": "example_user"}, {"role": "system", "content": "16", "name": "example_assistant"}]' > /tmp/train.jsonl
-echo -e '[{"role": "system", "content": "48+2=", "name": "example_user"}, {"role": "system", "content": "50", "name": "example_assistant"}]\n[{"role": "system", "content": "5*20=", "name": "example_user"}, {"role": "system", "content": "100", "name": "example_assistant"}]' > /tmp/test.jsonl
+echo -e '{"problem": "2+2=", "answer": "4"}\n{"problem": "4*4=", "answer": "16"}' > /tmp/train.jsonl
+echo -e '{"problem": "48+2=", "answer": "50"}\n{"problem": "5*20=", "answer": "100"}' > /tmp/test.jsonl
 ```
 
 ## Create an eval
