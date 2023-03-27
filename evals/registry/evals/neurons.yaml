@@ -1,0 +1,8 @@
+neurons:
+  id: neurons.dev.v0
+  metrics: [accuracy]
+
+neurons.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: neurons/samples.jsonl
