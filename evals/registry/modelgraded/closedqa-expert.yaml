@@ -25,6 +25,5 @@ args:
     conciseness: "conciseness: Is the answer concise and to the point?"
     correct: "correctness: Is the answer correct?"
 input_outputs:
-  input1: "completion1"
-  #already with a bit modify
-  input2: "completion2"
+  input1: completion1
+  input2: completion2
