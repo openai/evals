@@ -8,10 +8,13 @@ from evals.prompt.base import chat_prompt_to_text_prompt, is_chat_prompt
 
 
 def get_answer(text, answer_prompt):
-    idx = text.rfind(answer_prompt)
-    if idx == -1:
+   idx = text.rfind(answer_prompt)
+   if idx == -1:
         return None
-    return text[idx + len(answer_prompt) :]
+   elif idx + len(answer_prompt) == len(text):
+        return text
+   else:
+        return text[idx + len(answer_prompt) :]
 
 
 def get_consensus(answers):
