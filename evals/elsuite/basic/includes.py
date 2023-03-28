@@ -23,9 +23,10 @@ class Includes(evals.Eval):
         sampled = evals.sample_freeform(
             self.model_spec, sample["input"], max_tokens=self.max_tokens
         )
-        includes_answer = any(
-            [evals.elsuite.utils.get_answer(sampled, ref) for ref in sample["ideal"]]
-        )
+        if isinstance(sample["ideal"], list):
+            includes_answer = any([evals.elsuite.utils.get_answer(sampled, ref) for ref in sample["ideal"]])
+        else:
+            includes_answer = evals.elsuite.utils.get_answer(sampled, sample["ideal"])
         evals.record.record_metrics(accuracy=float(includes_answer))
         return includes_answer
 
