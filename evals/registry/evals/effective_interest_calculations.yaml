@@ -1,0 +1,8 @@
+effective_interest_calculations:
+  id: effective_interest_calculations.dev.v0
+  metrics: [accuracy]
+
+effective_interest_calculations.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: effective_interest_calculations/samples.jsonl
