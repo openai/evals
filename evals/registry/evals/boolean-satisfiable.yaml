@@ -1,0 +1,8 @@
+boolean-satisfiable:
+  id: boolean-satisfiable.dev.v0
+  metrics: [accuracy]
+
+boolean-satisfiable.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: boolean-satisfiable/samples.jsonl
