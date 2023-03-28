@@ -1,0 +1,8 @@
+number_of_ways_problem:
+  id: number_of_ways_problem.dev.v0
+  description: Test the model's ability to recognize and evaluate 0/1 knapsack problem.
+  metrics: [accuracy]
+number_of_ways_problem.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: number_of_ways_problem/samples.jsonl
