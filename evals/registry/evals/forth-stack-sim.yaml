@@ -1,0 +1,8 @@
+forth-stack-sim:
+  id: forth-stack-sim.dev.v0
+  description: Test the model's ability to simulate a simple forth stack machine
+  metrics: [accuracy]
+forth-stack-sim.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: forth_stack_sim/samples.jsonl
