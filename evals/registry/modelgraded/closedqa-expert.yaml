@@ -2,9 +2,9 @@ prompt: |-
   You are assessing a submitted answer on a given task based on a criterion. Here is the data:
   [BEGIN DATA]
   ***
-  [Question]: {completion1}
+  [Question]: {input1}
   ***
-  [Submission]: {completion2}
+  [Submission]: {input2}
   ***
   [Criterion]: {criteria}
   ***
