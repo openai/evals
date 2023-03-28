@@ -22,7 +22,7 @@ Evaluations with plugins enabled take an additional arguement - `plugins` - whic
 
 Before sending a request to the model, we will iteratively call `plugin_actions` on the relevant plugins.  One plugin instance will be used per sample, so plugins will retain state over that request.
 
-NOTE: By enabling plugins, we may mutate the overall message chain.  Currently, we append the plugin's description to the end of the system message (Or insert a new system message if none was provided). This is done to ensure that the model has context to know how to use the plugin.
+NOTE: By enabling plugins, the input list may be mutated.  Currently, we append the plugin's description to the end of the system message (Or insert a new system message if none was provided). This is done to ensure that the model has context to know how to use the plugin.
 
 ```JSON
 {
@@ -94,3 +94,35 @@ NOTE: By enabling plugins, we may mutate the overall message chain.  Currently, 
 - Plugins can be forked by changing the namespace, but this should be done with care. We cannot allow two plugins with the same namespace to exist in practice.
 
 - Fixing bugs in existing plugins may be done if necessary, but please be thoughtful if the bug fix meaningfully changes the plugin's behavior. Not all plugins will be perfect, and evaluating our model's ability to recover from buggy behavior is an important part of the evaluation process.
+
+## Evaluation Workflows
+
+There are several factors to consider when assessing a model's performance using plugins.
+
+### State Population
+
+The method by which a plugin is populated with data is an important consideration when evaluating the model's behavior. There are two main ways to populate a plugin:
+
+#### Externally Populated
+
+In this scenario, the plugin is pre-populated with data outside of the current conversation. This allows the evaluation of the model's ability to rely on the plugin to obtain information about the state of the world. For example, a calendar plugin could be pre-populated with a meeting, and the model would then be asked to provide details about that meeting.
+
+#### Internally Populated
+
+If a plugin is updated within the same conversation as the evaluation, it has been internally populated. In this scenario, the model's behavior is evaluated based on its ability to accurately query the plugin for updated information rather than relying on its assumed state of the plugin. For instance, after scheduling an event, the model should use the calendar plugin to check the entire day's schedule instead of relying on its memory even if it 'knows' that the event was scheduled based on a prior action.
+
+### Evaluation Workflows
+
+The interaction between the user and the model is an important consideration when evaluating the model's behavior. We've identified a few main workflows:
+
+#### User Workflow
+
+Users will sometimes specify a dependent sequence of actions to be executed by the AI model. The evaluation focuses on whether the model invoked the correct plugin endpoints and if the final result was accurate. For example, a user might ask the model to add two items to a list and then display all the items in the list.
+
+#### Agentic Workflow
+
+As AI models are increasingly being used for more autonomous tasks, this workflow aims to evaluate their ability to accomplish a single, high-level task. Here, the user assigns a task to the model, and the model is expected to perform the necessary steps to complete it using relevant plugins and information. For example, a user might ask the model to "set up a vacation," and the model would then organize the vacation details accordingly.
+
+#### Multi-Party Workflow
+
+This workflow evaluates the model's ability to interact and communicate effectively with multiple users or other models concurrently. The assessment focuses on whether the parties are able to collaborate and whether a model is able to use the information provided by the other parties to accomplish its task. For example, a user might ask the model to "schedule a meeting with Bob about graham cracker production", and the model would then use the relevant plugins and information to coordinate the meeting, possibly by querying Bob or an agent authorized to schedule meetings on his behalf to determine his availability.
