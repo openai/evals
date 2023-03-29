@@ -1,0 +1,9 @@
+ascii-digit-recognition:
+  id: ascii-digit-recognition.dev.v0
+  metrics: [accuracy]
+  description: Evaluate ASCII digit recognition ability
+
+ascii-digit-recognition.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: ascii-digit-recognition/samples.jsonl
