@@ -6,4 +6,4 @@ logic-fact.dev.v0:
   args:
     samples_jsonl: logic/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec_file: fact
+    modelgraded_spec: fact

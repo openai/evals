@@ -121,8 +121,7 @@ class ModelResolver:
     def api_model_ids(self):
         return [m["id"] for m in openai.Model.list()["data"]]
 
-
-def run(args, registry: Optional[Registry] = None):
+def run(args, model_resolver: ModelResolver, registry: Optional[Registry] = None):
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
 
@@ -136,8 +135,6 @@ def run(args, registry: Optional[Registry] = None):
     assert (
         eval_spec is not None
     ), f"Eval {args.eval} not found. Available: {list(sorted(registry._evals.keys()))}"
-
-    model_resolver = ModelResolver()
 
     def get_model(name: str) -> ModelSpec:
         return model_resolver.resolve(name)
@@ -241,7 +238,7 @@ def main():
     logging.getLogger("openai").setLevel(logging.WARN)
     if hasattr(openai.error, "set_display_cause"):
         openai.error.set_display_cause()
-    run(args)
+    run(args, model_resolver=ModelResolver())
 
 
 if __name__ == "__main__":
