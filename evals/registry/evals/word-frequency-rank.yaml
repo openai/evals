@@ -1,0 +1,8 @@
+word-frequency-rank:
+  id: word-frequency-rank.v0
+  description: An evaluation of identifying unique words, sorting them based on their occurrence count, and then arranging them alphabetically.
+  metrics: [accuracy]
+word-frequency-rank.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: word-frequency-rank/samples.jsonl
