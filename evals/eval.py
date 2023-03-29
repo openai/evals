@@ -15,6 +15,7 @@ from tqdm import tqdm
 from .base import ModelSpec, ModelSpecs
 from .record import RecorderBase
 from .registry import Registry
+from .data import get_jsonl
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +56,7 @@ class Eval(abc.ABC):
         seed: int = 20220722,
         name: str = "no_name_eval.default",
         registry: Optional[Registry] = None,
+        samples_jsonl: Optional[str] = None,
     ):
         splits = name.split(".")
         if len(splits) < 2:
@@ -64,6 +66,7 @@ class Eval(abc.ABC):
         self.seed = seed
         self.name = name
         self.registry = registry or Registry()
+        self.samples_jsonl = samples_jsonl
 
     def eval_sample(self, sample: Any, rng: random.Random):
         raise NotImplementedError()
@@ -153,3 +156,11 @@ class Eval(abc.ABC):
                 iter = pool.imap_unordered(worker_thread, work_items)
             idx_and_result = list(tqdm(iter, total=len(work_items), disable=not show_progress))
         return [r for _, r in sorted(idx_and_result)]
+
+    def get_samples(self):
+        if self.samples_jsonl is None:
+            raise ValueError(
+                    "To use `get_samples`, you must provide a `samples_jsonl` path."
+                    "Got `None`.")
+
+        return get_jsonl(self.samples_jsonl)

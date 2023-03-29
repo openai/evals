@@ -97,6 +97,7 @@ def completion_query(
     return result, openai_create_prompt, metadata
 
 
+# TODO(hwc): remove this
 def check_sampled_text(
     model_spec: ModelSpec,
     prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
@@ -123,13 +124,6 @@ def check_sampled_text(
     =======
     The option that was picked, i.e., matched the completion, or None.
     """
-    if isinstance(expected, tuple):
-        expected = list(expected)
-    elif not isinstance(expected, list):
-        expected = [expected]
-    if options is None:
-        options = expected
-
     result, actual_prompt, metadata = completion_query(
         prompt=prompt,
         temperature=0.0,
@@ -138,6 +132,31 @@ def check_sampled_text(
     choice = result["choices"][0]
 
     sampled = choice["text"].strip() if model_spec.strip_completion else choice["text"]
+
+    return record_and_check_match(
+        prompt=actual_prompt,
+        sampled=sampled,
+        expected=expected,
+        metadata=metadata,
+        separator=separator,
+        options=options,
+    )
+
+
+def record_and_check_match(
+    prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt],
+    sampled: str,
+    expected: Union[str, list[str], tuple[str]],
+    metadata: dict,
+    separator: Callable[[str], bool] = None,
+    options: Optional[list[str]] = None,
+):
+    if isinstance(expected, tuple):
+        expected = list(expected)
+    elif not isinstance(expected, list):
+        expected = [expected]
+    if options is None:
+        options = expected
 
     picked = None
     for option in options:
@@ -153,7 +172,7 @@ def check_sampled_text(
         break
 
     result = {
-        "prompt": actual_prompt,
+        "prompt": prompt,
         "sampled": sampled,
         "options": options,
         "picked": picked,
@@ -175,7 +194,7 @@ def sample_freeform(
     top_p: float = 0.9,
     max_tokens: int = 512,
     stop: Optional[str] = None,
-    n_samples: int = None,
+    n_samples: Optional[int] = None,
     return_logprobs: bool = False,
     **kwargs,
 ) -> Union[str, list[str], dict]:
@@ -215,10 +234,51 @@ def sample_freeform(
         headers={},
         **kwargs,
     )
+    return postprocess_sample_freeform(
+        response,
+        actual_prompt,
+        metadata,
+        model_spec,
+        n_samples=n_samples,
+        return_logprobs=return_logprobs,
+        **kwargs)
+
+
+def postprocess_sample_freeform(
+    response: dict,
+    prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
+    metadata: dict,
+    model_spec: ModelSpec,
+    *,
+    n_samples: Optional[int] = None,
+    return_logprobs: bool = False,
+    **kwargs,
+) -> Union[str, list[str], dict]:
+    """
+    Records the sampled response, prompt and metedata, and returns the sampled text.
+    Typically called after `sample_freeform`.
+
+    ARGS
+    ====
+    `response`: The result of the API call.
+    `prompt`: See `completion_query`.
+    `n_samples`: The number of samples to generate (1 if None).
+    `return_logprobs`: If True, returns the tokens and corresponding logprobs
+        in addition to the sampled text.
+    `kwargs`: See `completion_query`.
+
+    RETURNS
+    =======
+    If `return_logprobs` is True, returns a dict with the sampled text, tokens,
+        and corresponding logprobs. If `n_samples` is None, the outer list is
+        removed from all values.
+    Otherwise, returns the sampled text, or a list of sampled texts if
+        `n_samples` is not None.
+    """
     sampled = [choice["text"] for choice in response["choices"]]
     if n_samples is None:
         sampled = sampled[0]
-    record_sampling(prompt=actual_prompt, sampled=sampled, metadata=metadata)
+    record_sampling(prompt=prompt, sampled=sampled, metadata=metadata)
 
     if return_logprobs:
         assert not model_spec.is_chat, "logprobs only works for non-chat models"

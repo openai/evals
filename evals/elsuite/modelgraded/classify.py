@@ -319,7 +319,7 @@ class ModelBasedClassify(evals.Eval):
         return choice
 
     def run(self, recorder):
-        samples = evals.get_jsonl(self.samples_jsonl)
+        samples = self.get_samples()
 
         self.eval_all_samples(recorder, samples)
         all_sample_metrics = recorder.get_metrics()

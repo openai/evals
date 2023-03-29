@@ -4,6 +4,7 @@ from sacrebleu.metrics.bleu import BLEU
 
 import evals
 import evals.metrics
+from evals.elsuite import utils
 from evals.prompt.base import is_chat_prompt
 
 
@@ -16,6 +17,7 @@ class Translate(evals.Eval):
         max_tokens: int = 500,
         num_few_shot: int = 0,
         few_shot_jsonl: str = None,
+        completion_fn: utils.CompletionFn = evals.completion_query,
         **kwargs,
     ):
         super().__init__(model_specs, *args, **kwargs)
@@ -29,6 +31,7 @@ class Translate(evals.Eval):
             self.few_shot = evals.get_jsonl(self.few_shot_jsonl)
 
         self.bleu = BLEU(effective_order=True)
+        self._completion_fn = completion_fn
 
     def eval_sample(self, sample: Any, *_):
         prompt = sample["input"]
@@ -45,7 +48,13 @@ class Translate(evals.Eval):
         elif not isinstance(expected, list):
             expected = [expected]
 
-        sampled = evals.sample_freeform(self.model_spec, prompt, max_tokens=self.max_tokens)
+        response, actual_prompt, metadata = self._completion_fn(
+            prompt=prompt,
+            max_tokens=self.max_tokens,
+            model_spec=self.model_spec,
+        )
+        sampled: str = evals.postprocess_sample_freeform(
+                response, actual_prompt, metadata, self.model_spec)
 
         score = None
         if expected is not None:
@@ -61,7 +70,7 @@ class Translate(evals.Eval):
             return match
 
     def run(self, recorder):
-        samples = evals.get_jsonl(self.samples_jsonl)
+        samples = self.get_samples()
         self.eval_all_samples(recorder, samples)
         events = recorder.get_events("match")
 
