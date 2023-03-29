@@ -15,7 +15,7 @@ import evals.api
 import evals.base
 import evals.record
 from evals.base import ModelSpec, ModelSpecs
-from evals.registry import registry
+from evals.registry import Registry
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ def _purple(str):
     return f"\033[1;35m{str}\033[0m"
 
 
-def parse_args(args=sys.argv[1:]) -> argparse.Namespace:
+def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run evals through the API")
     parser.add_argument("model", type=str, help="Name of a completion model.")
     parser.add_argument("eval", type=str, help="Name of an eval. See registry.")
@@ -44,7 +44,7 @@ def parse_args(args=sys.argv[1:]) -> argparse.Namespace:
     parser.add_argument("--local-run", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
-    return parser.parse_args(args)
+    return parser
 
 
 def n_ctx_from_model_name(model_name: str) -> Optional[int]:
@@ -121,8 +121,7 @@ class ModelResolver:
     def api_model_ids(self):
         return [m["id"] for m in openai.Model.list()["data"]]
 
-
-def run(args):
+def run(args, model_resolver: ModelResolver, registry: Optional[Registry] = None):
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
 
@@ -131,12 +130,11 @@ def run(args):
     if args.max_samples is not None:
         evals.eval.set_max_samples(args.max_samples)
 
+    registry = registry or Registry()
     eval_spec = registry.get_eval(args.eval)
     assert (
         eval_spec is not None
     ), f"Eval {args.eval} not found. Available: {list(sorted(registry._evals.keys()))}"
-
-    model_resolver = ModelResolver()
 
     def get_model(name: str) -> ModelSpec:
         return model_resolver.resolve(name)
@@ -210,7 +208,13 @@ def run(args):
     extra_eval_params = parse_extra_eval_params(args.extra_eval_params)
 
     eval_class = registry.get_class(eval_spec)
-    eval = eval_class(model_specs=model_specs, seed=args.seed, name=eval_name, **extra_eval_params)
+    eval = eval_class(
+        model_specs=model_specs,
+        seed=args.seed,
+        name=eval_name,
+        registry=registry,
+        **extra_eval_params,
+    )
     result = eval.run(recorder)
     recorder.record_final_report(result)
 
@@ -224,7 +228,8 @@ def run(args):
 
 
 def main():
-    args = parse_args()
+    parser = get_parser()
+    args = parser.parse_args(sys.argv[1:])
     logging.basicConfig(
         format="[%(asctime)s] [%(filename)s:%(lineno)d] %(message)s",
         level=logging.INFO,
@@ -233,7 +238,7 @@ def main():
     logging.getLogger("openai").setLevel(logging.WARN)
     if hasattr(openai.error, "set_display_cause"):
         openai.error.set_display_cause()
-    run(args)
+    run(args, model_resolver=ModelResolver())
 
 
 if __name__ == "__main__":

@@ -1,0 +1,8 @@
+bigrams:
+  id: bigrams.dev.v0
+  metrics: [accuracy]
+
+bigrams.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: bigrams/samples.jsonl
