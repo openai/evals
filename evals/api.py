@@ -71,6 +71,7 @@ def completion_query(
     if model_spec.is_chat:
         result = openai_chat_completion_create_retrying(
             model=model_spec.model,
+            engine=model_spec.engine,
             api_base=model_spec.api_base,
             api_key=model_spec.api_key,
             messages=openai_create_prompt,
@@ -79,6 +80,7 @@ def completion_query(
     else:
         result = openai_completion_create_retrying(
             model=model_spec.model,
+            engine=model_spec.engine,
             api_base=model_spec.api_base,
             api_key=model_spec.api_key,
             prompt=openai_create_prompt,
