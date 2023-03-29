@@ -14,7 +14,7 @@ import evals
 import evals.record
 from evals.base import ModelSpec
 from evals.elsuite.utils import PromptFn, format_necessary, scrub_formatting_from_prompt
-from evals.plugin.base import Plugin, PluginAction
+from evals.plugin.base import Plugin
 
 INVALID_STR = "__invalid__"
 CHOICE_KEY = "choice"
@@ -246,7 +246,6 @@ class ModelBasedClassify(evals.Eval):
                 for k, v in self.input_outputs.items():
                     this_sample = test_sample[k]
                     plugins = Plugin.load(test_sample.get("plugins", []))
-                    plugin_actions = PluginAction.load(test_sample.get("plugin_actions", []))
 
                     if self.multicomp_n > 1 and v in self.completion_sample_templates:
                         completion = ""
@@ -264,7 +263,6 @@ class ModelBasedClassify(evals.Eval):
                                 max_tokens=self.max_tokens,
                                 temperature=self.multicomp_temperature,
                                 plugins=plugins,
-                                plugin_actions=plugin_actions,
                             )
                             completion_i, _ = get_input_completion()
                             completion += format_necessary(
@@ -281,7 +279,6 @@ class ModelBasedClassify(evals.Eval):
                             model_spec=self.model_spec,
                             max_tokens=self.max_tokens,
                             plugins=plugins,
-                            plugin_actions=plugin_actions,
                         )
                         completion, _ = get_input_completion()
                     completions[v] = completion

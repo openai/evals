@@ -5,7 +5,7 @@ from collections import Counter, defaultdict
 from typing import List, Optional
 
 from evals.api import sample_freeform
-from evals.plugin.base import Plugin, PluginAction
+from evals.plugin.base import Plugin
 from evals.prompt.base import chat_prompt_to_text_prompt, is_chat_prompt
 
 
@@ -80,13 +80,23 @@ def f1_score(prediction: str, answers: list[str]) -> float:
     return max([_f1_score(prediction, answer) for answer in answers])
 
 
+def is_plugin_action_message(message):
+    return "role" in message and message["role"] == "plugin"
+
+
 def scrub_formatting_from_prompt(prompt):
     scrubbed_prompt = copy.copy(prompt)
 
     if is_chat_prompt(prompt):
         for i, msg in enumerate(scrubbed_prompt):
-            if "content" in msg:
-                scrubbed_prompt[i]["content"] = msg["content"].replace("{", "{{").replace("}", "}}")
+            if "content" not in msg:
+                continue
+
+            content = msg["content"]
+            if is_plugin_action_message(msg):
+                scrubbed_prompt[i]["content"] = content
+            else:
+                scrubbed_prompt[i]["content"] = content.replace("{", "{{").replace("}", "}}")
     else:
         scrubbed_prompt = scrubbed_prompt.replace("{", "{{").replace("}", "}}")
     return scrubbed_prompt
@@ -111,7 +121,6 @@ class PromptFn:
         temperature=0,
         completion_kwargs=None,
         plugins: Optional[List[Plugin]] = None,
-        plugin_actions: Optional[List[PluginAction]] = None,
     ):
         self.prompt = prompt
         self.max_tokens = max_tokens
@@ -119,7 +128,6 @@ class PromptFn:
         self.temperature = temperature
         self.completion_kwargs = completion_kwargs or {}
         self.plugins = plugins or []
-        self.plugin_actions = plugin_actions or []
 
     def __call__(self, **kwargs):
         # if any input kwargs is chat prompt, convert to text prompt
@@ -130,7 +138,7 @@ class PromptFn:
             prompt = []
             for msg in self.prompt:
                 formatted_msg = copy.copy(msg)
-                if "content" in formatted_msg:
+                if "content" in formatted_msg and not is_plugin_action_message(formatted_msg):
                     formatted_msg["content"] = format_necessary(formatted_msg["content"], **kwargs)
                 prompt.append(formatted_msg)
         else:
@@ -146,7 +154,6 @@ class PromptFn:
             frequency_penalty=0,
             presence_penalty=0,
             plugins=self.plugins,
-            plugin_actions=self.plugin_actions,
             **self.completion_kwargs,
         )
         return completion, prompt

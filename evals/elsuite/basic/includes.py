@@ -5,7 +5,7 @@ import numpy as np
 import evals
 import evals.elsuite.utils
 import evals.metrics
-from evals.plugin.base import Plugin, PluginAction
+from evals.plugin.base import Plugin
 
 
 class Includes(evals.Eval):
@@ -23,14 +23,12 @@ class Includes(evals.Eval):
 
     def eval_sample(self, sample: Any, *_):
         plugins = Plugin.load(sample.get("plugins", []))
-        plugin_actions = PluginAction.load(sample.get("plugin_actions", []))
 
         sampled = evals.sample_freeform(
             self.model_spec,
             sample["input"],
             max_tokens=self.max_tokens,
             plugins=plugins,
-            plugin_actions=plugin_actions,
         )
         includes_answer = any(
             [evals.elsuite.utils.get_answer(sampled, ref) for ref in sample["ideal"]]

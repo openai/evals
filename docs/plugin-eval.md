@@ -20,7 +20,7 @@ To create a new plugin, follow these steps:
 
 Evaluations with plugins enabled take an additional arguement - `plugins` - which is a list of plugins to enable. The evaluation framework will automatically instantiate the plugins from the registry for each sampling.  Please note, we currently require chat-style inputs for plugins.
 
-Before sending a request to the model, we will iteratively call `plugin_actions` on the relevant plugins.  One plugin instance will be used per sample, so plugins will retain state over that request.
+Before sending a request to the model, we will iterate through the `input` messages, invoking the relevant plugins.  One plugin instance will be used per sample, so plugins will retain state throughout that request.
 
 NOTE: By enabling plugins, the input list may be mutated.  Currently, we append the plugin's description to the end of the system message (Or insert a new system message if none was provided). This is done to ensure that the model has context to know how to use the plugin.
 
@@ -33,13 +33,6 @@ NOTE: By enabling plugins, the input list may be mutated.  Currently, we append 
   "ideal": [
     "Red-tailed hawk"
   ],
-  "plugin_actions": [
-    {
-        "namespace": "MyBirds",
-        "endpoint": "listBirds",
-        "content": {}
-    }
-  ],
   "input": [
     {
       "role": "system",
@@ -48,6 +41,12 @@ NOTE: By enabling plugins, the input list may be mutated.  Currently, we append 
     {
       "role": "user",
       "content": "Can you list all of the birds in my birds list which are in the Accipitridae family?"
+    },
+    {
+      "role": "plugin",
+      "namespace": "MyBirds",
+      "endpoint": "listBirds",
+      "content": {}
     }
   ]
 }
@@ -99,7 +98,7 @@ NOTE: By enabling plugins, the input list may be mutated.  Currently, we append 
 
 There are several factors to consider when assessing a model's performance using plugins.
 
-### State Population
+### Plugin State Population
 
 The method by which a plugin is populated with data is an important consideration when evaluating the model's behavior. There are two main ways to populate a plugin:
 
@@ -121,7 +120,7 @@ Users will sometimes specify a dependent sequence of actions to be executed by t
 
 #### Agentic Workflow
 
-As AI models are increasingly being used for more autonomous tasks, this workflow aims to evaluate their ability to accomplish a single, high-level task. Here, the user assigns a task to the model, and the model is expected to perform the necessary steps to complete it using relevant plugins and information. For example, a user might ask the model to "set up a vacation," and the model would then organize the vacation details accordingly.
+As AI models are increasingly being used for more autonomous tasks, we aim to evaluate their ability to accomplish a single, high-level task. Here, the user assigns a task to the model, and the model is expected to perform the necessary steps to complete it using relevant plugins and information. For example, a user might ask the model to "set up a vacation," and the model would then organize the vacation details accordingly.
 
 #### Multi-Party Workflow
 

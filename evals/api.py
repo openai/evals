@@ -7,7 +7,7 @@ import logging
 from typing import Callable, List, Optional, Union
 
 from evals.base import ModelSpec
-from evals.plugin.base import Plugin, PluginAction, evaluate_prompt_with_plugins
+from evals.plugin.base import Plugin, PluginEvaluationContext, evaluate_prompt_with_plugins
 from evals.prompt.base import (
     ChatCompletionPrompt,
     CompletionPrompt,
@@ -28,7 +28,6 @@ def completion_query(
     model_spec: ModelSpec,
     prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
     plugins: Optional[List[Plugin]] = None,
-    plugin_actions: Optional[List[PluginAction]] = None,
     **kwargs,
 ) -> tuple[dict, Union[OpenAICreatePrompt, OpenAICreateChatPrompt], dict]:
     """
@@ -50,7 +49,8 @@ def completion_query(
     The prompt that was fed into the API call as a str.
     A dict containing metadata about the query.
     """
-    prompt = evaluate_prompt_with_plugins(prompt, plugins, actions=plugin_actions)
+    context: PluginEvaluationContext = evaluate_prompt_with_plugins(prompt, plugins)
+    prompt = context.updated_prompt
 
     if not isinstance(prompt, Prompt):
         assert (
@@ -94,7 +94,7 @@ def completion_query(
         metadata["model"] = result.get("model", None)
         metadata["plugins"] = {
             "enabled": [plugin.metadata() for plugin in plugins],
-            "actions": [action.metadata() for action in plugin_actions],
+            "actions": [action.metadata() for action in context.actions],
         }
 
         if model_spec.is_chat:
@@ -112,7 +112,6 @@ def check_sampled_text(
     options: Optional[list[str]] = None,
     separator: Callable[[str], bool] = None,
     plugins: Optional[List[Plugin]] = None,
-    plugin_actions: Optional[List[PluginAction]] = None,
 ) -> Optional[str]:
     """
     Generates a completion using the prompt, checks whether the completion is
@@ -144,7 +143,6 @@ def check_sampled_text(
         temperature=0.0,
         model_spec=model_spec,
         plugins=plugins,
-        plugin_actions=plugin_actions,
     )
     choice = result["choices"][0]
 
@@ -189,7 +187,6 @@ def sample_freeform(
     n_samples: int = None,
     return_logprobs: bool = False,
     plugins: Optional[List[Plugin]] = None,
-    plugin_actions: Optional[List[PluginAction]] = None,
     **kwargs,
 ) -> Union[str, list[str], dict]:
     """
@@ -227,7 +224,6 @@ def sample_freeform(
         model_spec=model_spec,
         headers={},
         plugins=plugins,
-        plugin_actions=plugin_actions,
         **kwargs,
     )
     sampled = [choice["text"] for choice in response["choices"]]

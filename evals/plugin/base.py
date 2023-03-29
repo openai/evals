@@ -85,6 +85,15 @@ def api_description(
 
 @dataclass
 class PluginAction:
+    """
+    A class representing an action that can be performed by a plugin.
+
+    Attributes:
+        namespace (Text): The namespace of the plugin.
+        endpoint (Text): The endpoint of the action.
+        content (dict): A dictionary containing the data an action will be called with.
+    """
+
     namespace: Text
     endpoint: Text
     content: dict
@@ -96,17 +105,18 @@ class PluginAction:
             "content": json.dumps(self.content),
         }
 
+    def load(json_data: dict) -> "PluginAction":
+        return PluginAction(
+            namespace=json_data["namespace"],
+            endpoint=json_data["endpoint"],
+            content=json_data["content"],
+        )
+
     @classmethod
-    def load(self, json_data: dict) -> List["PluginAction"]:
+    def load_all(self, json_data: dict) -> List["PluginAction"]:
         actions = []
         for action in json_data:
-            actions.append(
-                PluginAction(
-                    namespace=action["namespace"],
-                    endpoint=action["endpoint"],
-                    content=action["content"],
-                )
-            )
+            actions.append(PluginAction.load(action))
         return actions
 
     def metadata(self) -> dict:
@@ -242,6 +252,13 @@ class Plugin:
         }
 
 
+@dataclass
+class PluginEvaluationContext:
+    original_prompt: OpenAICreateChatPrompt
+    updated_prompt: OpenAICreateChatPrompt
+    actions: List[PluginAction]
+
+
 def _retrieve_plugin_specifications(plugins: Optional[List[Text]]) -> List[PluginSpec]:
     plugin_specifications: List[PluginSpec] = []
     for plugin in plugins:
@@ -302,14 +319,20 @@ def _invoke_plugin(
 def evaluate_prompt_with_plugins(
     prompt: OpenAICreateChatPrompt,
     plugins: Optional[List[Plugin]],
-    actions: Optional[List[PluginAction]],
-) -> OpenAICreateChatPrompt:
+) -> PluginEvaluationContext:
+    # A list of all the PluginAction events called during this evaluation
+    executed_actions = []
+
     # If users provided one or more plugins, we need to:
     # 1. Add the plugin descriptions to the system message
     # 2. Evaluate the last message to see if it's a plugin message
     #    - If it is, we need to call that plugin to obtain the result prior to sending to the model
     if plugins is None or len(plugins) == 0:
-        return prompt
+        return PluginEvaluationContext(
+            original_prompt=prompt,
+            updated_prompt=prompt,
+            actions=executed_actions,
+        )
 
     assert is_chat_prompt(
         prompt
@@ -341,15 +364,31 @@ def evaluate_prompt_with_plugins(
 
     # Evaluate each of the actions.  This does not currently support
     # assistant responses to plugin actions at each step
-    if actions is None:
-        actions = []
+    # TODO: Plugin Actions
+    # Look for role=plugin, try to load a PluginAction
+    output = []
+    for message in result:
+        updated_messages = []
 
-    for action in actions:
-        invocation_message = action.invocation_message()
-        result.append(invocation_message)
-        plugin_response = _invoke_plugin(
-            invocation_message=invocation_message, enabled_plugins=enabled_plugins
-        )
-        result.append(plugin_response)
+        if message["role"] == "plugin":
+            action = PluginAction.load(message)
+            executed_actions.append(action)
+            invocation_message: Dict[Text, Text] = action.invocation_message()
 
-    return result
+            response: Dict[Text, Text] = _invoke_plugin(
+                invocation_message=invocation_message, enabled_plugins=enabled_plugins
+            )
+
+            # Update all the messages
+            updated_messages.append(invocation_message)
+            updated_messages.append(response)
+        else:
+            updated_messages.append(message)
+
+        output.extend(updated_messages)
+
+    return PluginEvaluationContext(
+        original_prompt=prompt,
+        updated_prompt=output,
+        actions=executed_actions,
+    )
