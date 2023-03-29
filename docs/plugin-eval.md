@@ -111,7 +111,7 @@ Assuming a plugin named `MyCalendar` with `addMeeting` and `listMeetings` endpoi
 ```JSON
 {
   "plugins": [
-    "openai.calendar.1"
+    "openai.calendar.1",
   ],
   "ideal": [
     "You have a meeting with the CEO at 2pm."
@@ -130,7 +130,7 @@ Assuming a plugin named `MyCalendar` with `addMeeting` and `listMeetings` endpoi
     },
     {
       "role": "user",
-      "content": "What is my next meeting?"
+      "content": "List all of my meetings"
     },
     {
       "role": "plugin",
