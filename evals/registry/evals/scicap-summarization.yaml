@@ -7,7 +7,7 @@ scicap-summarization.dev.match-v1:
   # Specify the class name as a dotted path to the module and class
   class: evals.elsuite.scicap_summarization:ScicapSummarization
   args:
-    test_jsonl: scicap_summarization/eval_scicap_sum_10.jsonl
+    test_jsonl: scicap_summarization/eval_scicap_sum_5.jsonl
     rouge1_random_jsonl: scicap_summarization/rouge1.jsonl
     rouge2_random_jsonl: scicap_summarization/rouge2.jsonl
     rougeL_random_jsonl: scicap_summarization/rougeL.jsonl
