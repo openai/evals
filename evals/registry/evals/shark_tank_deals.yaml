@@ -1,5 +1,6 @@
 shark_tank_deals:
-  id: shark_tank_deals.dev.v0
+  id: shark_tank_deals.v0
+  description: Test model's ability to recall Shark Tank deal history (GPT4 underperforming vs GPT3.5)
   metrics: [accuracy]
 
 shark_tank_deals.dev.v0:
