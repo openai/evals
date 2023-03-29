@@ -3,7 +3,7 @@ shark_tank_deals:
   description: Test model's ability to recall Shark Tank deal history (GPT4 underperforming vs GPT3.5)
   metrics: [accuracy]
 
-shark_tank_deals.dev.v0:
+shark_tank_deals.v0:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: shark_tank_deals/samples.jsonl
