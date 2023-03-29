@@ -31,6 +31,7 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument("--embedding_model", type=str, default="")
     parser.add_argument("--ranking_model", type=str, default="")
     parser.add_argument("--extra_eval_params", type=str, default="")
+    parser.add_argument("--modelspec_extra_options", type=str, default="")
     parser.add_argument("--max_samples", type=int, default=None)
     parser.add_argument("--cache", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--visible", action=argparse.BooleanOptionalAction, default=None)
@@ -45,6 +46,26 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
     return parser
+
+
+def parse_extra_eval_params(param_str: Optional[str]) -> Mapping[str, Any]:
+    """Parse a string of the form "key1=value1,key2=value2" into a dict."""
+    if not param_str:
+        return {}
+
+    def to_number(x):
+        try:
+            return int(x)
+        except:
+            pass
+        try:
+            return float(x)
+        except:
+            pass
+        return x
+
+    str_dict = dict(kv.split("=") for kv in param_str.split(","))
+    return {k: to_number(v) for k, v in str_dict.items()}
 
 
 def n_ctx_from_model_name(model_name: str) -> Optional[int]:
@@ -121,6 +142,7 @@ class ModelResolver:
     def api_model_ids(self):
         return [m["id"] for m in openai.Model.list()["data"]]
 
+
 def run(args, model_resolver: ModelResolver, registry: Optional[Registry] = None):
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
@@ -140,6 +162,10 @@ def run(args, model_resolver: ModelResolver, registry: Optional[Registry] = None
         return model_resolver.resolve(name)
 
     completion_model_specs = [get_model(model) for model in args.model.split(",")]
+
+    for spec in completion_model_specs:
+        spec.extra_options = parse_extra_eval_params(args.modelspec_extra_options)
+
     model_specs = ModelSpecs(
         completions_=completion_model_specs,
         embedding_=get_model(args.embedding_model) if args.embedding_model else None,
@@ -185,25 +211,6 @@ def run(args, model_resolver: ModelResolver, registry: Optional[Registry] = None
 
     run_url = f"{run_spec.run_id}"
     logger.info(_purple(f"Run started: {run_url}"))
-
-    def parse_extra_eval_params(param_str: Optional[str]) -> Mapping[str, Any]:
-        """Parse a string of the form "key1=value1,key2=value2" into a dict."""
-        if not param_str:
-            return {}
-
-        def to_number(x):
-            try:
-                return int(x)
-            except:
-                pass
-            try:
-                return float(x)
-            except:
-                pass
-            return x
-
-        str_dict = dict(kv.split("=") for kv in param_str.split(","))
-        return {k: to_number(v) for k, v in str_dict.items()}
 
     extra_eval_params = parse_extra_eval_params(args.extra_eval_params)
 
