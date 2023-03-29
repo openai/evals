@@ -92,13 +92,21 @@ class PluginAction:
         namespace (Text): The namespace of the plugin.
         endpoint (Text): The endpoint of the action.
         content (dict): A dictionary containing the data an action will be called with.
+        include_in_conversation (bool): Whether or not to include the action in the conversation transcript.
     """
 
     namespace: Text
     endpoint: Text
     content: dict
 
+    include_in_conversation: bool = True
+
     def invocation_message(self) -> dict:
+        if not self.include_in_conversation:
+            raise ValueError(
+                "Cannot include action in conversation if include_in_conversation is False"
+            )
+
         return {
             "role": "assistant",
             "recipient": f"{self.namespace}.{self.endpoint}",
@@ -124,6 +132,7 @@ class PluginAction:
             "namespace": self.namespace,
             "endpoint": self.endpoint,
             "content": self.content,
+            "include_in_conversation": self.include_in_conversation,
         }
 
 
@@ -379,9 +388,10 @@ def evaluate_prompt_with_plugins(
                 invocation_message=invocation_message, enabled_plugins=enabled_plugins
             )
 
-            # Update all the messages
-            updated_messages.append(invocation_message)
-            updated_messages.append(response)
+            if action.include_in_conversation:
+                # Update all the messages
+                updated_messages.append(invocation_message)
+                updated_messages.append(response)
         else:
             updated_messages.append(message)
 

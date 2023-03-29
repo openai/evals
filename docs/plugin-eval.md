@@ -96,7 +96,7 @@ NOTE: By enabling plugins, the input list may be mutated.  Currently, we append 
 
 ## Evaluation Workflows
 
-There are several factors to consider when assessing a model's performance using plugins.
+There are several factors to consider when assessing a model's performance using plugins.  We welcome additional contributions to this section, as it is not exhaustive.
 
 ### Plugin State Population
 
@@ -106,13 +106,107 @@ The method by which a plugin is populated with data is an important consideratio
 
 In this scenario, the plugin is pre-populated with data outside of the current conversation. This allows the evaluation of the model's ability to rely on the plugin to obtain information about the state of the world. For example, a calendar plugin could be pre-populated with a meeting, and the model would then be asked to provide details about that meeting.
 
+Assuming a plugin named `MyCalendar` with `addMeeting` and `listMeetings` endpoints, the following input would be used to populate the plugin externally.  Setting the `include_in_conversation` flag to `false` will prevent the `addMeeting` action from being recorded in the conversation, allowing the plugin to act as if it was externally populated.  By default, this flag is `true`.
+
+```JSON
+{
+  "plugins": [
+    "openai.calendar.1"
+  ],
+  "ideal": [
+    "You have a meeting with the CEO at 2pm."
+  ],
+  "input": [
+    {
+      "role": "plugin",
+      "namespace": "MyCalendar",
+      "endpoint": "addMeeting",
+      "content": {"time": "2pm", "title": "Meeting with CEO"},
+      "include_in_conversation": false
+    },
+    {
+      "role": "system",
+      "content": "You are a helpful assistant."
+    },
+    {
+      "role": "user",
+      "content": "What is my next meeting?"
+    },
+    {
+      "role": "plugin",
+      "namespace": "MyCalendar",
+      "endpoint": "listMeetings",
+      "content": {}
+    }
+  ]
+}
+```
+
 #### Internally Populated
 
-If a plugin is updated within the same conversation as the evaluation, it has been internally populated. In this scenario, the model's behavior is evaluated based on its ability to accurately query the plugin for updated information rather than relying on its assumed state of the plugin. For instance, after scheduling an event, the model should use the calendar plugin to check the entire day's schedule instead of relying on its memory even if it 'knows' that the event was scheduled based on a prior action.
+If a plugin is updated within the same conversation as the evaluation, it has been internally populated. In this scenario, the model's behavior is evaluated based on its ability to accurately query the plugin for updated information rather than relying on its assumed state of the plugin. 
+
+For instance, after adding two items to a todolist, the model should still use the todolist plugin to check the entire day's schedule instead of relying on the conversation state.  Below, we have an example of a plugin with some externally populated state ("Call a friend"), as well as two internally populated items - getting milk and picking up the dry cleaning.
+
+The below example is a bit limited, as our local plugins code currently does not support asking the assistant which action should be next.
+
+```JSON
+{
+  "plugins": [
+    "openai.todo.1"
+  ],
+  "ideal": [
+    "The list should include getting milk, picking up the dry cleaning, and calling a friend"
+  ],
+  "input": [
+    {
+      "role": "plugin",
+      "namespace": "TodoList",
+      "endpoint": "addItem",
+      "content": {"name": "Call a friend"},
+      "include_in_conversation": false
+    },
+    {
+      "role": "system",
+      "content": "You are a helpful assistant."
+    },
+    {
+      "role": "user",
+      "content": "Can you add 'Get milk' to my todo list?"
+    },
+    {
+      "role": "plugin",
+      "namespace": "TodoList",
+      "endpoint": "addItem",
+      "content": {"name": "Get milk"},
+    },
+    {
+      "role": "user",
+      "content": "Can you add 'Pickup the dry cleaning' to my todo list?"
+    },
+    {
+      "role": "plugin",
+      "namespace": "TodoList",
+      "endpoint": "addItem",
+      "content": {"name": "Pickup the dry cleaning"},
+    },
+    {
+      "role": "user",
+      "content": "What items are on my todo list?"
+    },
+    {
+      "role": "plugin",
+      "namespace": "TodoList",
+      "endpoint": "listItems",
+      "content": {}
+    }
+  ]
+}
+```
 
 ### Evaluation Workflows
 
-The interaction between the user and the model is an important consideration when evaluating the model's behavior. We've identified a few main workflows:
+The interaction between the user and the model is an important consideration when evaluating the model's behavior. We've outlined a few interesting workflows below.
 
 #### User Workflow
 
