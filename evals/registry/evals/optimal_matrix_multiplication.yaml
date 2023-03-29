@@ -1,0 +1,8 @@
+optimal_matrix_multiplication:
+  id: optimal_matrix_multiplication.dev.v0
+  metrics: [accuracy]
+
+optimal_matrix_multiplication.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: optimal_matrix_multiplication/samples.jsonl
