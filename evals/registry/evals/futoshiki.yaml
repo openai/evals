@@ -1,0 +1,8 @@
+futoshiki:
+  id: futoshiki.dev.v0
+  metrics: [accuracy]
+
+futoshiki.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: futoshiki/samples.jsonl
