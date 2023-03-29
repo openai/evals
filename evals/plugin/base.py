@@ -102,11 +102,6 @@ class PluginAction:
     include_in_conversation: bool = True
 
     def invocation_message(self) -> dict:
-        if not self.include_in_conversation:
-            raise ValueError(
-                "Cannot include action in conversation if include_in_conversation is False"
-            )
-
         return {
             "role": "assistant",
             "recipient": f"{self.namespace}.{self.endpoint}",
@@ -118,6 +113,7 @@ class PluginAction:
             namespace=json_data["namespace"],
             endpoint=json_data["endpoint"],
             content=json_data["content"],
+            include_in_conversation=json_data.get("include_in_conversation", True),
         )
 
     @classmethod

@@ -70,6 +70,39 @@ def chat_prompt_to_text_prompt(prompt: OpenAICreateChatPrompt) -> str:
     return text.lstrip()
 
 
+def _prepare_chat_prompt(prompt: OpenAICreateChatPrompt) -> OpenAICreateChatPrompt:
+    prompts = []
+    for msg in prompt:
+        role: Text = msg["role"]
+        content: Text = msg["content"]
+        # TODO: Handle recipient, name, etc.
+        if role == "tool":
+            name: Optional[Text] = msg.get("name")
+
+            content_prefix = ""
+
+            if name is not None:
+                content_prefix += f"Tool ({name}): "
+
+            updated_message = {"role": "assistant", "content": f"{content_prefix}{content}"}
+            prompts.append(updated_message)
+        elif role == "assistant":
+            recipient: Optional[Text] = msg.get("recipient")
+            if recipient is not None:
+                updated_message = {
+                    "role": "assistant",
+                    "content": f"To {recipient}: {content}",
+                }
+                prompts.append(updated_message)
+            else:
+                prompts.append(msg)
+
+        else:
+            prompts.append(msg)
+
+    return prompts
+
+
 def text_prompt_to_chat_prompt(prompt: str) -> OpenAICreateChatPrompt:
     assert isinstance(prompt, str), f"Expected a text prompt, got {prompt}"
     return [
@@ -133,5 +166,5 @@ class ChatCompletionPrompt(Prompt):
 
     def to_openai_create_prompt(self) -> OpenAICreateChatPrompt:
         if is_chat_prompt(self.raw_prompt):
-            return self.raw_prompt
+            return _prepare_chat_prompt(self.raw_prompt)
         return self._render_text_as_chat_prompt(self.raw_prompt)

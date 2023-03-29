@@ -14,11 +14,13 @@ class TodoList(Plugin):
 
     @api_description(name="listItems", description="API for fetching all TODO items.")
     def list_todos(self) -> dict:
-        return self.todos
+        return {
+            "items": self.todos,
+        }
 
     @api_description(
         name="addTodo",
-        description="Determine if a bird is in your list",
+        description="Add a new TODO item",
         api_args={
             "item": {
                 "type": "string",
@@ -29,4 +31,19 @@ class TodoList(Plugin):
     )
     def add_todo(self, item: Text) -> dict:
         self.todos.append(item)
+        return {}
+
+    @api_description(
+        name="removeTodo",
+        description="Remove a TODO item",
+        api_args={
+            "item": {
+                "type": "string",
+                "optional": False,
+                "description": "Description of the todo item.",
+            }
+        },
+    )
+    def remove_todo(self, item: Text) -> dict:
+        self.todos.remove(item)
         return {}

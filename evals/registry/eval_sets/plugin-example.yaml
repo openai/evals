@@ -1,0 +1,9 @@
+test-plugin-bird-example:
+  evals:
+    - plugin.bird.examples.enabled
+    - plugin.bird.examples.disabled
+
+test-plugin-todo-example:
+  evals:
+    - plugin.todo.examples.enabled
+    - plugin.todo.examples.disabled

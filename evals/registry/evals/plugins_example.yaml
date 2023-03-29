@@ -1,12 +1,52 @@
-plugin.examples:
-  id: plugin.examples.v1
+plugin.bird.examples.enabled:
+  id: plugin.bird.examples.enabled:.v1
   metrics: [accuracy]
-  description: Assess model's ability to use example plugins
+  description: Assess model's ability to use the example bird plugin
 
-plugin.examples.v1:
+plugin.bird.examples.enabled:.v1:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     max_tokens: 100
-    samples_jsonl: openai/plugins/bird/samples.jsonl
+    samples_jsonl: openai/plugins/bird/samples_enabled.jsonl
+    eval_type: classify
+    modelgraded_spec_file: fact
+
+plugin.bird.examples.disabled:
+  id: plugin.bird.examples.disabled.v1
+  metrics: [accuracy]
+  description: Assess model's ability to handle relevant requests when the plugin is disabled
+
+plugin.bird.examples.disabled.v1:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    max_tokens: 100
+    samples_jsonl: openai/plugins/bird/samples_disabled.jsonl
+    eval_type: classify
+    modelgraded_spec_file: fact
+
+
+plugin.todo.examples.enabled:
+  id: plugin.todo.examples.enabled:.v1
+  metrics: [accuracy]
+  description: Assess model's ability to use the example todo plugin
+
+plugin.todo.examples.enabled:.v1:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    max_tokens: 100
+    samples_jsonl: openai/plugins/todo/samples_enabled.jsonl
+    eval_type: classify
+    modelgraded_spec_file: fact
+
+plugin.todo.examples.disabled:
+  id: plugin.todo.examples.disabled.v1
+  metrics: [accuracy]
+  description: Assess model's ability to handle relevant requests when the todo plugin is disabled
+
+plugin.todo.examples.disabled.v1:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    max_tokens: 100
+    samples_jsonl: openai/plugins/todo/samples_disabled.jsonl
     eval_type: classify
     modelgraded_spec_file: fact
