@@ -1,0 +1,8 @@
+invalid-json:
+  id: invalid-json.test.v1
+  metrics:
+  - accuracy
+invalid-json.test.v1:
+  args:
+    samples_jsonl: invalid-json/samples.jsonl
+  class: evals.elsuite.basic.match:Match
