@@ -19,7 +19,9 @@ OpenAIChatMessage = Dict[str, str]  # A message is a dictionary with "role" and 
 OpenAICreateChatPrompt = List[OpenAIChatMessage]  # A chat log is a list of messages
 
 
-def chat_prompt_to_text_prompt(prompt: OpenAICreateChatPrompt) -> str:
+def chat_prompt_to_text_prompt(
+    prompt: OpenAICreateChatPrompt, render_for_completion: bool = True
+) -> str:
     """
     Render a chat prompt as a text prompt. User and assistant messages are separated by newlines
     and prefixed with "User: " and "Assistant: ", respectively, unless there is only one message.
@@ -44,14 +46,15 @@ def chat_prompt_to_text_prompt(prompt: OpenAICreateChatPrompt) -> str:
         prefix = chat_to_prefixes.get(role, role.capitalize() + ": ")
         content = msg["content"]
         text += f"{prefix}{content}\n"
-    text += "Assistant: "
+    if render_for_completion:
+        text += "Assistant: "
     return text.lstrip()
 
 
-def text_prompt_to_chat_prompt(prompt: str) -> OpenAICreateChatPrompt:
+def text_prompt_to_chat_prompt(prompt: str, role: str = "system") -> OpenAICreateChatPrompt:
     assert isinstance(prompt, str), f"Expected a text prompt, got {prompt}"
     return [
-        {"role": "system", "content": prompt},
+        {"role": role, "content": prompt},
     ]
 
 
