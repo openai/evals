@@ -1,0 +1,8 @@
+shark_tank_deals:
+  id: shark_tank_deals.dev.v0
+  metrics: [accuracy]
+
+shark_tank_deals.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: shark_tank_deals/samples.jsonl
