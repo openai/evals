@@ -1,0 +1,8 @@
+partially_solved_crossword_clues:
+  id: partially_solved_crossword_clues.dev.v0
+  metrics: [accuracy]
+
+partially_solved_crossword_clues.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: partially_solved_crossword_clues/samples.jsonl

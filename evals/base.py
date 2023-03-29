@@ -21,6 +21,7 @@ class ModelSpec:
 
     name: str
     model: Optional[str] = None
+    api_base: Optional[str] = None
 
     is_chat: bool = False
 
@@ -28,6 +29,7 @@ class ModelSpec:
     organization: Optional[str] = None
     api_key: Optional[str] = None
     extra_options: Optional[Mapping[str, Any]] = None
+    metadata: Optional[Mapping[str, Any]] = None
     headers: Optional[Mapping[str, Any]] = None
     strip_completion: bool = True
     n_ctx: Optional[int] = None
@@ -111,8 +113,6 @@ class ModelSpecs:
     def completion(self) -> ModelSpec:
         if self.completions_ is None:
             raise ValueError("Completion model was not specified")
-        if len(self.completions_) != 1:
-            raise ValueError("ModelSpecs.completion only works with a single completion model")
         return self.completions_[0]
 
     @property
