@@ -1,0 +1,8 @@
+infiniteloop-match:
+  id: infiniteloop-match.s1.simple-v0
+  description: Test the model's ability to recognized if a piece of code can get into a state where it would run forever.
+  metrics: [accuracy]
+infiniteloop-match.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: infiniteloop-match/infiniteloop-match.jsonl
