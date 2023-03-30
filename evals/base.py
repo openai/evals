@@ -21,6 +21,7 @@ class ModelSpec:
 
     name: str
     model: Optional[str] = None
+    engine: Optional[str] = None
     api_base: Optional[str] = None
 
     is_chat: bool = False
@@ -42,9 +43,6 @@ class ModelSpec:
             self.extra_options = {}
         if self.headers is None:
             self.headers = {}
-
-        if self.model is None:
-            raise ValueError(f"Must specify a model")
 
 
 @dataclass

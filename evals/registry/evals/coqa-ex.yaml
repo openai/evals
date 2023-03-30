@@ -1,7 +1,7 @@
 coqa-match:
-  id: coqa.match.dev.v0
+  id: coqa-match.dev.v0
   metrics: [accuracy]
-coqa.match.dev.v0:
+coqa-match.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: coqa/match.jsonl

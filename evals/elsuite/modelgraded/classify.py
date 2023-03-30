@@ -100,6 +100,7 @@ class ModelBasedClassify(evals.Eval):
         multicomp_temperature: float = 0.4,
         samples_renamings: Optional[dict[str, str]] = None,
         eval_type: Optional[str] = None,
+        eval_model: str = "gpt-3.5-turbo",
         metaeval: bool = False,
         modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
         **kwargs,
@@ -130,9 +131,7 @@ class ModelBasedClassify(evals.Eval):
         if self.model_spec.name == "dummy-completion" or self.model_spec.name == "dummy-chat":
             self.eval_modelspec = self.model_spec
         else:
-            self.eval_modelspec = ModelSpec(
-                name="gpt-3.5-turbo", model="gpt-3.5-turbo", is_chat=True
-            )
+            self.eval_modelspec = ModelSpec(name=eval_model, model=eval_model, is_chat=True)
 
         """import prompt and set attributes"""
         modelgraded_specs = self.registry.get_modelgraded_spec(modelgraded_spec)
