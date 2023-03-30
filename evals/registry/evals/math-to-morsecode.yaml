@@ -1,0 +1,8 @@
+math-to-morsecode:
+  id: math-to-morsecode.dev.v0
+  metrics: [accuracy]
+
+math-to-morsecode.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: math-to-morsecode/samples.jsonl
