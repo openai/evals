@@ -20,6 +20,11 @@ If you have an eval that falls outside this category but still is a diverse exam
 
 Once you have an eval in mind that you wish to implement, you will need to convert your samples into the right JSON lines (JSONL) format. A JSONL file is just a JSON file with a unique JSON object per line.
 
+You can use the `openai` CLI (available with [OpenAI-Python](https://github.com/openai/openai-python)) to transform data from some common file types into JSONL:
+``` 
+openai tools fine_tunes.prepare_data -f data[.csv, .json, .txt, .xlsx or .tsv]
+```
+
 We include some examples of JSONL eval files in [registry/data/README.md](../evals/registry/data/README.md)
 
 Each JSON object will represent one data point in your eval. The keys you need in the JSON object depend on the eval template. All templates expect an `"input"` key which is the prompt, ideally specified in [chat format](https://platform.openai.com/docs/guides/chat/introduction) (though strings are also supported). We recommend chat format even if you are evaluating non chat models. If you are evaluating both chat and non chat models, we handle the conversion between chat formatted prompts and raw string prompts (see the conversion logic [here](../evals/prompt/base.py)).
