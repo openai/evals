@@ -1,9 +1,0 @@
-nash_equilibria:
-  id: nash_equilibria.v0
-  description: Test model's ability to reason about Nash Equilibria in 2 player games
-  metrics: [accuracy]
-
-nash_equilibria.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: nash_equilibria/samples.jsonl

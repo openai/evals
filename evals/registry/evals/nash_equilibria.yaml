@@ -4,6 +4,6 @@ nash_equilibria:
   metrics: [accuracy]
 
 nash_equilibria.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
   args:
     samples_jsonl: nash_equilibria/samples.jsonl
