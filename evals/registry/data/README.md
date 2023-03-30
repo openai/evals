@@ -39,3 +39,6 @@ Another example of a Match eval is:
 {"input":[{"role":"system","content":"There are five people in a room. Each person will either always tell the truth or always tell a lie. Each person is asked the following question: How many liars are among you? The answers are: \"one\", \"two\", \"three\", \"four\", \"five\". How many liars are in the room?"}],"ideal":"There are four liars."}
 ```
 
+### Dataset attributions
+
+This work includes data from the Illinois Intentional Tort Qualitative Dataset, which was compiled by the Qualitative Reasoning Group at Northwestern University. The dataset is freely available under the Creative Commons Attribution 4.0 license from https://www.qrg.northwestern.edu/Resources/caselawcorpus.html
