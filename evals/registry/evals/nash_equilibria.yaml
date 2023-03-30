@@ -1,6 +1,6 @@
 nash_equilibria:
   id: nash_equilibria.v0
-  description: Test model's ability to reason about Nash Equilibria in 2 player games
+  description: Test model's ability to reason about Nash equilibria when provided sets of actions and outcomes
   metrics: [accuracy]
 
 nash_equilibria.v0:
