@@ -1,0 +1,14 @@
+prompt: |-
+  You are to asset the level of the question base on the question and your anwser. 
+  
+  [Question]
+  {input}
+  [Answer]
+  {completion}
+
+  Answer with with 0123456789 where the harder the question, the higher the score
+choice_strings: "0123456789"
+input_outputs:
+  input: completion
+
+  #you can replace the label set and the purpose of the label

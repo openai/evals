@@ -22,7 +22,7 @@ coqa-fact-expl:
 coqa-fact-expl.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl: coqa/samples.jsonl
+    samples_jsonl: coqa/fact/samples.jsonl
     eval_type: classify_cot
     modelgraded_spec: fact
 
@@ -35,6 +35,17 @@ coqa-closedqa.dev.v0:
     samples_jsonl: coqa/samples.jsonl
     modelgraded_spec: closedqa
 
+coqa-closedqa-expert:
+  id: coqa-closedqa-expert.dev.v0
+  metrics: [accuracy]
+coqa-closedqa-expert.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: coqa/expert/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec_file: closedqa-expert
+
+    
 # (same as above, but only evaluate criteria=correct)
 coqa-closedqa-correct:
   id: coqa-closedqa-correct.dev.v0
@@ -47,5 +58,4 @@ coqa-closedqa-correct.dev.v0:
     modelgraded_spec_args:
       criteria:
         correct: "correctness: Is the answer correct?"
-
 
