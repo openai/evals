@@ -1,0 +1,19 @@
+test:
+  evals:
+    - test-match
+    - test-fuzzy-match
+    - test-includes
+    - coqa-match
+    - coqa-fact
+    - coqa-fact-expl
+    - coqa-closedqa
+    - coqa-closedqa-correct
+    - logic-fact
+    - joke-animals
+    - joke-animals-likert
+    - joke-fruits
+    - joke-fruits-meta
+    - joke-fruits-expl-meta
+    - diversity
+    - joke-animals-vs-fruits
+    - rap-people-vs-people

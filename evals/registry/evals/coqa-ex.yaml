@@ -42,8 +42,8 @@ coqa-closedqa-expert.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: coqa/expert/samples.jsonl
+    eval_type: cot_classify
     modelgraded_spec_file: closedqa-expert
-
 
     
 # (same as above, but only evaluate criteria=correct)
