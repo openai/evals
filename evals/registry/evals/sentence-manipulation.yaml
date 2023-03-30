@@ -1,0 +1,8 @@
+sentence-manipulation:
+  id: sentence-manipulation.test.v1
+  metrics:
+    - accuracy
+sentence-manipulation.test.v1:
+  args:
+    samples_jsonl: sentence-manipulation/samples.jsonl
+  class: evals.elsuite.basic.match:Match
