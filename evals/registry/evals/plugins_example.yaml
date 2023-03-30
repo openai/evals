@@ -9,7 +9,7 @@ plugin.bird.examples.enabled:.v1:
     max_tokens: 100
     samples_jsonl: openai/plugins/bird/samples_enabled.jsonl
     eval_type: classify
-    modelgraded_spec_file: fact
+    modelgraded_spec: fact
 
 plugin.bird.examples.disabled:
   id: plugin.bird.examples.disabled.v1
@@ -22,7 +22,7 @@ plugin.bird.examples.disabled.v1:
     max_tokens: 100
     samples_jsonl: openai/plugins/bird/samples_disabled.jsonl
     eval_type: classify
-    modelgraded_spec_file: fact
+    modelgraded_spec: fact
 
 
 plugin.todo.examples.enabled:
@@ -36,7 +36,7 @@ plugin.todo.examples.enabled:.v1:
     max_tokens: 100
     samples_jsonl: openai/plugins/todo/samples_enabled.jsonl
     eval_type: classify
-    modelgraded_spec_file: fact
+    modelgraded_spec: fact
 
 plugin.todo.examples.disabled:
   id: plugin.todo.examples.disabled.v1
@@ -49,4 +49,4 @@ plugin.todo.examples.disabled.v1:
     max_tokens: 100
     samples_jsonl: openai/plugins/todo/samples_disabled.jsonl
     eval_type: classify
-    modelgraded_spec_file: fact
+    modelgraded_spec: fact
