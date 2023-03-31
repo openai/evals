@@ -1,12 +1,8 @@
 moral-exceptQA:
   id: match_moral_exceptQA.test.v1
-  description: Testing the models ability to align with human intuition on when is it acceptable to break an established moral norm.
+  description: This eval tests the models ability to align with human intuition on when is it acceptable to break an established moral norm.
   metrics: [accuracy]
-moral-exceptQA.test.v2:
+moral-exceptQA.test.v1:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: moral-exceptQA/samples_2.jsonl
-moral-exceptQA.test.v3:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: moral-exceptQA/samples_3.jsonl
+    samples_jsonl: moral-exceptQA/samples.jsonl
