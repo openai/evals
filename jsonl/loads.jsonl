@@ -1,0 +1,5 @@
+{"input": "What is the factored load for a roof structure with a dead load of 10 kN/m2 and a live load of 5 kN/m2?", "output": "The factored load for the given roof structure is 19.5 kN/m2."}
+{"input": "Calculate the factored load for a floor system with a dead load of 15 kN/m2 and a live load of 10 kN/m2.", "output": "The factored load for the given floor system is 34.5 kN/m2."}
+{"input": "What is the factored load for a bridge deck with a dead load of 20 kN/m2 and a live load of 25 kN/m2?", "output": "The factored load for the given bridge deck is 56.25 kN/m2."}
+{"input": "Calculate the factored load for a column with a dead load of 100 kN and a live load of 50 kN.", "output": "The factored load for the given column is 175 kN."}
+{"input": "What is the factored load for a retaining wall with a dead load of 15 kN/m and a live load of 5 kN/m?", "output": "The factored load for the given retaining wall is 24 kN/m."}
