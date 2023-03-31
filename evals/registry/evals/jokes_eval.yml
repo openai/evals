@@ -1,0 +1,8 @@
+joke_eval:
+  id: joke_eval.dev.v0
+  metrics: [accuracy]
+
+joke_eval.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: jokes_dataset.jsonl

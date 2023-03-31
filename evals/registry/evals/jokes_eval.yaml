@@ -1,0 +1,10 @@
+joke_eval:
+  id: joke_eval.dev.v1
+  metrics: [creativity]
+  description: Evaluate joke punchline generation ability
+joke_eval.dev.v1:
+  class: evals.elsuite.joke_eval:JokeEval
+  args:
+    train_jsonl: /tmp/joke_train.jsonl
+    test_jsonl: /tmp/joke_test.jsonl  # Replace this with your actual test dataset
+
