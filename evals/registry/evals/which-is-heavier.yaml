@@ -1,0 +1,8 @@
+which-is-heavier:
+  id: which-is-heavier.dev.v0
+  description: Test the model's ability to determine which of two quantities is heavier when the heavier quantity is made up of lighter objects (and vice versa).
+  metrics: [accuracy]
+which-is-heavier.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: which_is_heavier/which_is_heavier.jsonl

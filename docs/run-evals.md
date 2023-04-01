@@ -25,11 +25,12 @@ oaievalset gpt-3.5-turbo test
 
 Similarly, `oaievalset` also expects a model name and an eval set name, for which the valid options are specified in the YAML files under `evals/registry/eval_sets`.
 
-By default we run with 10 threads. You can configure this, e.g.,
+By default we run with 10 threads, and each thread times out and restarts after 40 seconds. You can configure this, e.g.,
 
 ```sh
-EVALS_THREADS=42 oaievalset gpt-3.5-turbo test
+EVALS_THREADS=42 EVALS_THREAD_TIMEOUT=600 oaievalset gpt-3.5-turbo test
 ```
+Running with more threads will make the eval faster, though keep in mind the costs and your [rate limits](https://platform.openai.com/docs/guides/rate-limits/overview). Running with a higher thread timeout may be necessary if you expect each sample to take a long time, e.g., the data contain long prompts that elicit long responses from the model.
 
 If you have to stop your run or your run crashes, we've got you covered! `oaievalset` records the evals that finished in `/tmp/oaievalset/{model}.{eval_set}.progress.txt`. You can simply rerun the command to pick up where you left off. If you want to run the eval set starting from the beginning, delete this progress file.
 
