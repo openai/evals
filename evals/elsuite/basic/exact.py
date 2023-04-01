@@ -1,9 +1,10 @@
 from typing import Any
-import json
+
 import evals
 import evals.metrics
 from evals.prompt.base import is_chat_prompt
 from evals.record import record_match, record_sampling
+
 
 def strict_match(response: str, ideal: str) -> int:
     if response is None or ideal is None:
@@ -13,6 +14,7 @@ def strict_match(response: str, ideal: str) -> int:
         return True
     else:
         return False
+
 
 class Match(evals.Eval):
     def __init__(
@@ -43,20 +45,13 @@ class Match(evals.Eval):
                 prompt += s["sample"]
             prompt += sample["input"][-1:]
 
-        print(prompt)
-
         result, actual_prompt, metadata = evals.completion_query(
-        prompt=prompt,
-        temperature=0.0,
-        model_spec=self.model_spec)
-
-        print(result)
+            prompt=prompt, temperature=0.0, model_spec=self.model_spec
+        )
 
         choice = result["choices"][0]
 
         score = strict_match(choice["text"], sample["ideal"])
-
-        print(score)
 
         result = {
             "prompt": actual_prompt,
