@@ -1,0 +1,107 @@
+stock-options-bear-call-spread:
+  id: stock-options-bear-call-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-options-bear-call-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_options_bear_call_spread.jsonl
+
+stock-options-bull-call-spread:
+  id: stock-options-bull-call-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-options-bull-call-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_options_bull_call_spread.jsonl
+
+stock-options-iron-butteryfly-spread:
+  id: stock-options-iron-butteryfly-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-options-iron-butteryfly-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_options_iron_butteryfly_spread.jsonl
+
+stock-options-inverse-iron-butterfly-spread:
+  id: stock-options-inverse-iron-butterfly-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-options-inverse-iron-butterfly-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_options_inverse_iron_butterfly_spread.jsonl
+
+stock-options-iron-condor-spread:
+  id: stock-options-iron-condor-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-options-iron-condor-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_options_iron_condor_spread.jsonl
+
+stock-options-inverse-iron-condor-spread:
+  id: stock-options-inverse-iron-condor-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-options-inverse-iron-condor-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_options_inverse_iron_condor_spread.jsonl
+
+stock-option-terms-bear-call-spread:
+  id: stock-option-terms-bear-call-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-option-terms-bear-call-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_option_terms_bear_call_spread.jsonl
+
+stock-option-terms-bull-call-spread:
+  id: stock-option-terms-bull-call-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-option-terms-bull-call-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_option_terms_bull_call_spread.jsonl
+
+stock-option-terms-iron-butteryfly-spread:
+  id: stock-option-terms-iron-butterfly-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-option-terms-iron-butterfly-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_option_terms_iron_butterfly_spread.jsonl
+
+stock-option-terms-inverse-iron-butteryfly-spread:
+  id: stock-option-terms-inverse-iron-butteryfly-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-option-terms-inverse-iron-butteryfly-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_option_terms_inverse_iron_butteryfly_spread.jsonl
+
+stock-option-terms-iron-condor-spread:
+  id: stock-option-terms-iron-condor-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-option-terms-iron-condor-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_option_terms_iron_condor_spread.jsonl
+
+stock-option-terms-inverse-iron-condor-spread:
+  id: stock-option-terms-inverse-iron-condor-spread.dev.v0
+  description: Test the model's ability to interpret stock option trading positions.
+  metrics: [accuracy]
+stock-option-terms-inverse-iron-condor-spread.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stock_options/stock_option_terms_inverse_iron_condor_spread.jsonl

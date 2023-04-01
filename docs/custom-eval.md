@@ -146,5 +146,3 @@ If you run with the `gpt-3.5-turbo` model, you should see an output similar to t
 ... [oaieval.py:172] accuracy: 1.0
 ... [record.py:309] Logged 6 rows of events to /tmp/evallogs/<run_id>_gpt-3.5-turbo_arithmetic.jsonl: insert_time=2.038ms
 ```
-
-If you notice evals has cached your data and you need to clear that cache, you can do so with `rm -rf /tmp/filecache`.

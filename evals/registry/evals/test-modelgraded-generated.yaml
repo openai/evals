@@ -8,5 +8,5 @@ mg-humor-people_jp.dev.v0:
   args:
     samples_jsonl: test_modelgraded/humor_people_jp.jsonl
     eval_type: cot_classify_jp
-    modelgraded_spec_file: humor_jp
+    modelgraded_spec: humor_jp
 
