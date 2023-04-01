@@ -1,0 +1,8 @@
+ascii-art-text-recognition:
+  id: ascii-art-text-recognition.dev.v0
+  description: Test the model's ability to recognize text represented by ASCII art 
+  metrics: [accuracy]
+ascii-art-text-recognition.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: ascii_art_text_recognition/samples.jsonl
