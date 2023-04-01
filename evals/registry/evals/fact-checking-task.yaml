@@ -1,0 +1,7 @@
+fact-checking-task:
+  id: fact-checking-task.dev.v0
+  metrics: [accuracy]
+fact-checking-task.dev.v0:
+  class: evals.elsuite.basic.exact:Match
+  args:
+    samples_jsonl: fact-checking-task/samples.jsonl
