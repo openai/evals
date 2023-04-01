@@ -1,0 +1,8 @@
+next-number-sequence:
+  id: next-number-sequence.dev.v0
+  description: Test the model's ability to find the next number in a sequence.
+  metrics: [accuracy]
+next-number-sequence.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: next-number-sequence/samples.jsonl
