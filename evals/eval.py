@@ -112,6 +112,7 @@ class Eval(abc.ABC):
         recorder: RecorderBase,
         samples,
         show_progress=True,
+        record_raw_sample=True,
     ):
         """
         Evaluate all provided samples in parallel.
@@ -129,7 +130,8 @@ class Eval(abc.ABC):
             base_name, split = self.name.split(".")[0:2]
             sample_id = f"{base_name}.{split}.{idx}"
             with recorder.as_default_recorder(sample_id):
-                recorder.record_raw(sample)
+                if record_raw_sample:
+                    recorder.record_raw(sample)
                 seed = f"{sample_id}:{self.seed}".encode("utf-8")
                 rng = random.Random(seed)
                 return idx, self.eval_sample(sample, rng)
