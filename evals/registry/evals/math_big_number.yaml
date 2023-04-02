@@ -1,0 +1,7 @@
+math_big_number:
+  id: math_big_number.v1
+  metrics: [accuracy]
+math_big_number.v1:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: math_big_number/v1.jsonl
