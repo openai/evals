@@ -1,0 +1,9 @@
+kazakh-lexicon:
+  id: kazakh-lexicon.dev.v0
+  description: Test the model's ability to distinguish between existing and hallucinated Kazakh words.
+  metrics: [accuracy]
+
+kazakh-lexicon.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: kazakh_lexicon/samples.jsonl
