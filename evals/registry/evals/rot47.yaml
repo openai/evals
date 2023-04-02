@@ -1,0 +1,8 @@
+rot47:
+  id: rot47.s1.simple-v0
+  description: Test the model's ability to perform the simple ROT47 character level operation.
+  metrics: [accuracy]
+rot47.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: rot47/rot47.jsonl
