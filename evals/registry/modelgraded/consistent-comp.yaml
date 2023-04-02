@@ -1,0 +1,42 @@
+consistent-comp:
+  prompt: |-
+    Below are two responses given to the same question asked using slightly different instructions.
+    An expert response, which contains a correct answer, is provided for reference.
+    [BEGIN DATA]
+    ************
+    [Response 1]: {completion1}
+    ************
+    [Response 2]: {completion2}
+    ************
+    [Expert answer]: {ideal}
+    [END DATA]
+    
+    Your task is to answer the following question: {criteria}
+    Follow the steps below to answer this question. Avoid simply stating the answer at the outset.
+    Here are the steps:
+    Step 1: Copy the final answers from Response 1 and Response 2.
+    Step 2: Copy the Expert answer provided above.
+    Step 3: Copy the question from the task.
+    Step 4: Carefully write your answer to the question based on the three steps above and then state the answer as "Yes" or "No".
+    
+    After going through the steps above, repeat your answer as just "Yes" or "No" (without quotes or punctuation) on a new line. 
+    Important: don't include any other text - print only the answer in the form "Yes" or "No" (without quotes or punctuation).
+    
+    
+    Step 1: The final answer from Response 1 is
+  choice_strings:
+    - "Yes"
+    - "No"
+  choice_scores:
+    "Yes": 1.0
+    "No": 0.0
+  args:
+    criteria:
+      both_answer_correct: "Are the final answers in Response 1 and Response 2 BOTH consistent with the expert answer?"
+      both_answer_same: "Are the final answers in Response 1 and Response 2 the same?"
+      non_cot_correct: "Is the final answer in Response 1 consistent with the expert answer?"
+      cot_correct: "Is the final answer in Response 2 consistent with the expert answer?"
+  input_outputs:
+    input1: completion1
+    input2: completion2
+  eval_type: "cot_classify"

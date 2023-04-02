@@ -1,0 +1,9 @@
+consistent-comp:
+  id: consistent-comp.dev.v0
+  description: To test whether the model generates accurate and consistent responses to compositional questions regardless of COT vs non-COT prompting. Good performance requires that both kinds of prompting result in same correct final answers. The goal is to assess the model's capacity for engaging in internal dialogue to answer compositional questions, overcoming its inherent autoregressive limitations.
+  metrics: [accuracy]
+consistent-comp.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: consistent-comp/consistent-comp.jsonl
+    modelgraded_spec: consistent-comp
