@@ -1,0 +1,17 @@
+counting-marbles:
+  id: counting-marbles.dev.v0
+  description: Counting marbles and buttons in simple scenarios.
+  metrics: [accuracy]
+counting-marbles.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: counting/counting_marbles.jsonl
+
+counting-cards:
+  id: counting-cards.dev.v0
+  description: Counting how many playing cards are in various sets.
+  metrics: [accuracy]
+counting-cards.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: counting/counting_cards.jsonl
