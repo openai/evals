@@ -11,7 +11,7 @@ With Evals, we aim to make it as simple as possible to build an eval while writi
 1. Read through this doc and follow the [setup instructions below](README.md#Setup).
 2. Learn how to run existing evals: [run-evals.md](docs/run-evals.md).
 3. Familiarize yourself with the existing eval templates: [eval-templates.md](docs/eval-templates.md).
-4. Walk through the process for building an eval: [build-eval.md](docs/build-eval.md)
+4. Walk through the process for building an eval: [build-eval.md](docs/build-eval.md).
 5. See an example of implementing custom eval logic: [custom-eval.md](docs/custom-eval.md).
 
 If you think you have an interesting eval, please open a PR with your contribution. OpenAI staff actively review these evals when considering improvements to upcoming models.
