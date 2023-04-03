@@ -1,0 +1,16 @@
+backgammon-can-hit:
+  id: backgammon-can-hit.match.dev.v0
+  metrics:
+  - accuracy
+backgammon-can-hit.match.dev.v0:
+  args:
+    samples_jsonl: backgammon/backgammon-can-hit.jsonl
+  class: evals.elsuite.basic.match:Match
+backgammon-illegal-move:
+  id: backgammon-illegal-move.match.dev.v0
+  metrics:
+  - accuracy
+backgammon-illegal-move.match.dev.v0:
+  args:
+    samples_jsonl: backgammon/backgammon-illegal-move.jsonl
+  class: evals.elsuite.basic.match:Match
