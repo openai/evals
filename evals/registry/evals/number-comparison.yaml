@@ -1,0 +1,7 @@
+number-comparison:
+  id: number-comparison.test.v1
+  metrics: [accuracy]
+number-comparison.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: number-comparison/english-phrase.jsonl
