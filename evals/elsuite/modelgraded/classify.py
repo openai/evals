@@ -1,6 +1,7 @@
 """
 Generic eval that uses a prompt + classification.
 """
+import copy
 import itertools
 import logging
 import string
@@ -91,7 +92,7 @@ class ModelBasedClassify(evals.Eval):
         self,
         model_specs: evals.ModelSpecs,
         samples_jsonl: str,
-        modelgraded_spec_file: str,
+        modelgraded_spec: str,
         *args,
         match_fn: str = "starts_or_endswith",
         max_tokens: int = 1024,
@@ -99,6 +100,7 @@ class ModelBasedClassify(evals.Eval):
         multicomp_temperature: float = 0.4,
         samples_renamings: Optional[dict[str, str]] = None,
         eval_type: Optional[str] = None,
+        eval_model: str = "gpt-3.5-turbo",
         metaeval: bool = False,
         modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
         **kwargs,
@@ -129,12 +131,11 @@ class ModelBasedClassify(evals.Eval):
         if self.model_spec.name == "dummy-completion" or self.model_spec.name == "dummy-chat":
             self.eval_modelspec = self.model_spec
         else:
-            self.eval_modelspec = ModelSpec(
-                name="gpt-3.5-turbo", model="gpt-3.5-turbo", is_chat=True
-            )
+            self.eval_modelspec = ModelSpec(name=eval_model, model=eval_model, is_chat=True)
 
         """import prompt and set attributes"""
-        modelgraded_specs = self.registry.get_modelgraded_spec(modelgraded_spec_file)
+        modelgraded_specs = self.registry.get_modelgraded_spec(modelgraded_spec)
+        modelgraded_specs = copy.deepcopy(modelgraded_specs)  # since pop() is used
 
         # 'choice_strings' is a list of strings that specifies the possible choices
         self.choice_strings = modelgraded_specs.pop("choice_strings")
@@ -165,14 +166,12 @@ class ModelBasedClassify(evals.Eval):
         self.eval_type = modelgraded_specs.pop("eval_type", None)
         if not self.eval_type:
             append_answer_prompt = True  # append answer prompt to prompt
-            assert (
-                eval_type
-            ), "eval_type must be specified, in modelgraded_spec_file or as an argument"
+            assert eval_type, "eval_type must be specified, in modelgraded_spec or as an argument"
             self.eval_type = eval_type
         else:
             assert (
                 not eval_type
-            ), f"eval_type must be unspecified, if it is specified in modelgraded_spec_file"
+            ), f"eval_type must be unspecified, if it is specified in modelgraded_spec"
             append_answer_prompt = False
 
         # 'prompt' is a string that specifies the model-graded evaluation
@@ -288,8 +287,11 @@ class ModelBasedClassify(evals.Eval):
                 max_tokens=self.max_tokens,
             )
             eval_kwargs = dict(**completions, **test_sample)
-            if self.expanded_args_dict:
+            if self.expanded_args_dict and len(self.expanded_args_dict) > 1:
                 args_dict = self.expanded_args_dict
+            elif self.expanded_args_dict and len(self.expanded_args_dict) == 1:
+                # if there is only one combination, don't bother with the metric name
+                args_dict = {CHOICE_KEY: v for v in self.expanded_args_dict.values()}
             else:
                 args_dict = {CHOICE_KEY: {}}
             for metric, args in args_dict.items():
@@ -322,7 +324,7 @@ class ModelBasedClassify(evals.Eval):
         all_sample_metrics = recorder.get_metrics()
 
         record_metrics = {}
-        if self.expanded_args_dict:
+        if self.expanded_args_dict and len(self.expanded_args_dict) > 1:
             metrics = sorted(self.expanded_args_dict)
         else:
             metrics = [CHOICE_KEY]

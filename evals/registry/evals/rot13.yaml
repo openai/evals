@@ -1,0 +1,8 @@
+rot13:
+  id: rot13.s1.simple-v0
+  description: Test the model's ability to perform the simple ROT13 character level operation.
+  metrics: [accuracy]
+rot13.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: rot13/rot13.jsonl
