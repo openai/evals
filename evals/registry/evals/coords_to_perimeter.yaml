@@ -1,0 +1,8 @@
+coords_to_perimeter:
+  id: coords_to_perimeter.dev.v0
+  metrics: [accuracy]
+
+coords_to_perimeter.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: coords_to_perimeter/samples.jsonl
