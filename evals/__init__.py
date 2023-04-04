@@ -1,8 +1,8 @@
 from .api import (
     CompletionFn,
+    CompletionResult,
     OpenAICompletionFn,
-    OpenAIReturnType,
-    ReturnType,
+    OpenAICompletionResult,
     check_sampled_text,
     postprocess_sample_freeform,
     record_and_check_match,

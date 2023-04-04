@@ -23,13 +23,13 @@ class Includes(evals.Eval):
         self._completion_fn = completion_fn
 
     def eval_sample(self, sample: Any, *_):
-        response = self._completion_fn(
+        result = self._completion_fn(
             prompt=sample["input"],
             max_tokens=self.max_tokens,
             model_spec=self.model_spec,
         )
         sampled: str = evals.postprocess_sample_freeform(
-            response.extract_completions(), response.prompt, response.metadata, self.model_spec
+            result.get_completions(), result.prompt, self.model_spec
         )
 
         includes_answer = any([utils.get_answer(sampled, ref) for ref in sample["ideal"]])

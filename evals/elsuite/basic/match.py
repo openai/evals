@@ -37,18 +37,17 @@ class Match(evals.Eval):
             prompt += sample["input"][-1:]
 
         # TODO(hwc): is there a case where we want to use `result` other than "choices"?
-        response = self._completion_fn(
+        result = self._completion_fn(
             prompt=prompt,
             temperature=0.0,
             model_spec=self.model_spec,
         )
-        choice = response.extract_completions()[0]
+        choice = result.get_completions()[0]
         sampled = choice.strip() if self.model_spec.strip_completion else choice
         return evals.record_and_check_match(
-            prompt=response.prompt,
+            prompt=result.prompt,
             sampled=sampled,
             expected=sample["ideal"],
-            metadata=response.metadata,
         )
 
     def run(self, recorder):

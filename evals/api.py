@@ -5,7 +5,8 @@ sample from models and process the results.
 
 import logging
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, List, Optional, Protocol, Union
+from functools import cached_property
+from typing import Any, Callable, Optional, Protocol, Union
 
 from evals.base import ModelSpec
 from evals.prompt.base import (
@@ -24,16 +25,17 @@ from evals.utils.api_utils import (
 logger = logging.getLogger(__name__)
 
 
-class ReturnType(ABC):
-    def __init__(self, raw_data: Any, prompt: Any, metadata: Dict[str, Any] = None):
+class CompletionResult(ABC):
+    def __init__(self, raw_data: Any):
         self.raw_data = raw_data
-        self.prompt: str = prompt
-        self.completions: List[str] = self.extract_completions()
-        self.metadata = metadata if metadata is not None else {}
 
     @abstractmethod
-    def extract_completions(self) -> List[str]:
+    def get_completions(self) -> list[str]:
         pass
+
+    @cached_property
+    def completions(self) -> list[str]:
+        return self.get_completions()
 
 
 class CompletionFn(Protocol):
@@ -42,7 +44,7 @@ class CompletionFn(Protocol):
         model_spec: ModelSpec,
         prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
         **kwargs,
-    ) -> ReturnType:
+    ) -> CompletionResult:
         """
         ARGS
         ====
@@ -58,15 +60,15 @@ class CompletionFn(Protocol):
         =======
         The result of the API call.
         The prompt that was fed into the API call as a str.
-        A dict containing metadata about the query.
         """
 
 
-class OpenAIReturnType(ReturnType):
-    def __init__(self, raw_data: Any, prompt: Any, metadata: Dict[str, Any] = None):
-        super().__init__(raw_data, prompt, metadata)
+class OpenAICompletionResult(CompletionResult):
+    def __init__(self, raw_data: Any, prompt: Any):
+        super().__init__(raw_data)
+        self.prompt = prompt
 
-    def extract_completions(self) -> List[str]:
+    def get_completions(self) -> list[str]:
         completions = []
         if self.raw_data:
             if "choices" in self.raw_data:
@@ -84,7 +86,7 @@ class OpenAICompletionFn(CompletionFn):
         model_spec: ModelSpec,
         prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
         **kwargs,
-    ) -> OpenAIReturnType:
+    ) -> OpenAICompletionResult:
         """
         Query the API for a completion.
 
@@ -102,7 +104,6 @@ class OpenAICompletionFn(CompletionFn):
         =======
         The result of the API call.
         The prompt that was fed into the API call as a str.
-        A dict containing metadata about the query.
         """
         if not isinstance(prompt, Prompt):
             assert (
@@ -142,13 +143,7 @@ class OpenAICompletionFn(CompletionFn):
                 **{**kwargs, **model_spec.extra_options},
             )
 
-        metadata = {}
-
-        if result:
-            metadata["completion_id"] = result.get("id", None)
-            metadata["model"] = result.get("model", None)
-
-        return OpenAIReturnType(raw_data=result, prompt=openai_create_prompt, metadata=metadata)
+        return OpenAICompletionResult(raw_data=result, prompt=openai_create_prompt)
 
 
 # TODO(hwc): remove this
@@ -184,14 +179,13 @@ def check_sampled_text(
         model_spec=model_spec,
     )
 
-    completion = result.extract_completions()[0]
+    completion = result.get_completions()[0]
     sampled = completion.strip() if model_spec.strip_completion else completion
 
     return record_and_check_match(
         prompt=result.prompt,
         sampled=sampled,
         expected=expected,
-        metadata=result.metadata,
         separator=separator,
         options=options,
     )
@@ -201,7 +195,6 @@ def record_and_check_match(
     prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt],
     sampled: str,
     expected: Union[str, list[str], tuple[str]],
-    metadata: dict,
     separator: Callable[[str], bool] = None,
     options: Optional[list[str]] = None,
 ):
@@ -234,7 +227,6 @@ def record_and_check_match(
     match = picked in expected
     result["expected"] = expected
     result["match"] = match
-    result["metadata"] = metadata
     record_sampling(**result)
     record_match(match, expected=expected, picked=picked, sampled=sampled)
     return picked
@@ -291,9 +283,8 @@ def sample_freeform(
     )
 
     return postprocess_sample_freeform(
-        result.extract_completions(),
+        result.get_completions(),
         result.prompt,
-        result.metadata,
         model_spec,
         n_samples=n_samples,
         return_logprobs=return_logprobs,
@@ -304,7 +295,6 @@ def sample_freeform(
 def postprocess_sample_freeform(
     completions: list[str],
     prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
-    metadata: dict,
     model_spec: ModelSpec,
     *,
     n_samples: Optional[int] = None,
@@ -334,7 +324,7 @@ def postprocess_sample_freeform(
     """
     if n_samples is None:
         sampled = completions[0]
-    record_sampling(prompt=prompt, sampled=sampled, metadata=metadata)
+    record_sampling(prompt=prompt, sampled=sampled)
 
     if return_logprobs:
         assert not model_spec.is_chat, "logprobs only works for non-chat models"

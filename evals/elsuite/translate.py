@@ -47,13 +47,13 @@ class Translate(evals.Eval):
         elif not isinstance(expected, list):
             expected = [expected]
 
-        response = self._completion_fn(
+        result = self._completion_fn(
             prompt=prompt,
             max_tokens=self.max_tokens,
             model_spec=self.model_spec,
         )
         sampled: str = evals.postprocess_sample_freeform(
-            response.extract_completions(), response.prompt, response.metadata, self.model_spec
+            result.get_completions(), result.prompt, self.model_spec
         )
 
         score = None
