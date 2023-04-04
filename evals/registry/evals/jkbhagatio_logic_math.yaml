@@ -1,0 +1,8 @@
+jkbhagatio_logic_math:
+  id: jkbhagatio_logic_math.dev.v0
+  metrics: [accuracy]
+
+jkbhagatio_logic_math.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: jkbhagatio_logic_math/samples.jsonl
