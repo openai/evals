@@ -1,0 +1,8 @@
+translate-stylised-text:
+  id: translate-stylised-text.dev.v0
+  metrics: [accuracy]
+
+translate-stylised-text.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: translate-stylised-text/samples.jsonl
