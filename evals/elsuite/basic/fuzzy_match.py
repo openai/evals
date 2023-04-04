@@ -1,5 +1,6 @@
-import evals
 import numpy as np
+
+import evals
 from evals.elsuite import utils
 from evals.record import RecorderBase
 
@@ -11,7 +12,7 @@ class FuzzyMatch(evals.Eval):
         samples_jsonl: str,
         *args,
         max_tokens: int = 500,
-        completion_fn: utils.CompletionFn = evals.completion_query,
+        completion_fn: evals.CompletionFn = evals.OpenAICompletionFn(),
         **kwargs,
     ):
         super().__init__(model_specs, *args, **kwargs)
@@ -22,14 +23,15 @@ class FuzzyMatch(evals.Eval):
     def eval_sample(self, test_sample, rng):
         del rng
         prompt, correct_answers = test_sample["input"], test_sample["ideal"]
-        response, actual_prompt, metadata = self._completion_fn(
+        response = self._completion_fn(
             prompt=prompt,
             temperature=0.0,  # Q: why are these hardcoded?
             max_tokens=16,
             model_spec=self.model_spec,
         )
         generated_answer: str = evals.postprocess_sample_freeform(
-                response, actual_prompt, metadata, self.model_spec)
+            response.extract_completions(), response.prompt, response.metadata, self.model_spec
+        )
 
         matches = [
             utils.fuzzy_match(generated_answer, correct_answer)

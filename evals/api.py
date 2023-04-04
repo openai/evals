@@ -25,10 +25,11 @@ logger = logging.getLogger(__name__)
 
 
 class ReturnType(ABC):
-    def __init__(self, raw_data: Any, metadata: Dict[str, Any] = None):
+    def __init__(self, raw_data: Any, prompt: Any, metadata: Dict[str, Any] = None):
         self.raw_data = raw_data
-        self.metadata = metadata if metadata is not None else {}
+        self.prompt: str = prompt
         self.completions: List[str] = self.extract_completions()
+        self.metadata = metadata if metadata is not None else {}
 
     @abstractmethod
     def extract_completions(self) -> List[str]:
@@ -62,8 +63,8 @@ class CompletionFn(Protocol):
 
 
 class OpenAIReturnType(ReturnType):
-    def __init__(self, raw_data: Any, metadata: Dict[str, Any] = None):
-        super().__init__(raw_data, metadata)
+    def __init__(self, raw_data: Any, prompt: Any, metadata: Dict[str, Any] = None):
+        super().__init__(raw_data, prompt, metadata)
 
     def extract_completions(self) -> List[str]:
         completions = []
@@ -79,6 +80,7 @@ class OpenAIReturnType(ReturnType):
 
 class OpenAICompletionFn(CompletionFn):
     def __call__(
+        self,
         model_spec: ModelSpec,
         prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
         **kwargs,
@@ -145,9 +147,8 @@ class OpenAICompletionFn(CompletionFn):
         if result:
             metadata["completion_id"] = result.get("id", None)
             metadata["model"] = result.get("model", None)
-            metadata["actual_prompt"] = openai_create_prompt
 
-        return OpenAIReturnType(raw_data=result, metadata=metadata)
+        return OpenAIReturnType(raw_data=result, prompt=openai_create_prompt, metadata=metadata)
 
 
 # TODO(hwc): remove this
@@ -183,11 +184,11 @@ def check_sampled_text(
         model_spec=model_spec,
     )
 
-    choice = result.extract_completions()[0]
-    sampled = choice["text"].strip() if model_spec.strip_completion else choice["text"]
+    completion = result.extract_completions()[0]
+    sampled = completion.strip() if model_spec.strip_completion else completion
 
     return record_and_check_match(
-        prompt=result.metadata["actual_prompt"],
+        prompt=result.prompt,
         sampled=sampled,
         expected=expected,
         metadata=result.metadata,
@@ -242,8 +243,8 @@ def record_and_check_match(
 def sample_freeform(
     model_spec: ModelSpec,
     prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
-    completion_fn: CompletionFn = OpenAICompletionFn(),
     *,
+    completion_fn: CompletionFn = OpenAICompletionFn(),
     temperature: float = 1.0,
     top_p: float = 0.9,
     max_tokens: int = 512,
@@ -277,7 +278,7 @@ def sample_freeform(
     Otherwise, returns the sampled text, or a list of sampled texts if
         `n_samples` is not None.
     """
-    response, actual_prompt, metadata = completion_fn(
+    result = completion_fn(
         prompt=prompt,
         temperature=temperature,
         top_p=top_p,
@@ -288,10 +289,11 @@ def sample_freeform(
         headers={},
         **kwargs,
     )
+
     return postprocess_sample_freeform(
-        response,
-        actual_prompt,
-        metadata,
+        result.extract_completions(),
+        result.prompt,
+        result.metadata,
         model_spec,
         n_samples=n_samples,
         return_logprobs=return_logprobs,
@@ -300,7 +302,7 @@ def sample_freeform(
 
 
 def postprocess_sample_freeform(
-    response: dict,
+    completions: list[str],
     prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
     metadata: dict,
     model_spec: ModelSpec,
@@ -330,9 +332,8 @@ def postprocess_sample_freeform(
     Otherwise, returns the sampled text, or a list of sampled texts if
         `n_samples` is not None.
     """
-    sampled = [choice["text"] for choice in response["choices"]]
     if n_samples is None:
-        sampled = sampled[0]
+        sampled = completions[0]
     record_sampling(prompt=prompt, sampled=sampled, metadata=metadata)
 
     if return_logprobs:

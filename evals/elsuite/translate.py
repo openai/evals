@@ -4,7 +4,6 @@ from sacrebleu.metrics.bleu import BLEU
 
 import evals
 import evals.metrics
-from evals.elsuite import utils
 from evals.prompt.base import is_chat_prompt
 
 
@@ -17,7 +16,7 @@ class Translate(evals.Eval):
         max_tokens: int = 500,
         num_few_shot: int = 0,
         few_shot_jsonl: str = None,
-        completion_fn: utils.CompletionFn = evals.completion_query,
+        completion_fn: evals.CompletionFn = evals.OpenAICompletionFn(),
         **kwargs,
     ):
         super().__init__(model_specs, *args, **kwargs)
@@ -48,13 +47,14 @@ class Translate(evals.Eval):
         elif not isinstance(expected, list):
             expected = [expected]
 
-        response, actual_prompt, metadata = self._completion_fn(
+        response = self._completion_fn(
             prompt=prompt,
             max_tokens=self.max_tokens,
             model_spec=self.model_spec,
         )
         sampled: str = evals.postprocess_sample_freeform(
-                response, actual_prompt, metadata, self.model_spec)
+            response.extract_completions(), response.prompt, response.metadata, self.model_spec
+        )
 
         score = None
         if expected is not None:
