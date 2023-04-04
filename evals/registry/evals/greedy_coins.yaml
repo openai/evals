@@ -1,0 +1,8 @@
+greedy_coins:
+  id: greedy_coins.dev.v0
+  metrics: [accuracy]
+
+greedy_coins.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: greedy_coins/file.jsonl
