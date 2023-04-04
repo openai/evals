@@ -1,0 +1,9 @@
+japanese-lexicon:
+  id: japanese-lexicon.dev.v0
+  description: Test the model's ability to distinguish between appropriate Japanese idioms.
+  metrics: [accuracy]
+
+japanese-lexicon.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: japanese_lexicon/samples.jsonl
