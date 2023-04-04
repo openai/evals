@@ -1,0 +1,8 @@
+number-pattern:
+  id: number-pattern.dev.v0
+  metrics: [accuracy]
+
+number-pattern.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: number_pattern/samples.jsonl

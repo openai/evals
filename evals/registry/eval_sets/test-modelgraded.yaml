@@ -12,4 +12,3 @@ test-modelgraded:
     - rap-people-vs-people
     - rap-animals-vs-fruits
     - rap-people-vs-fruits
-    - mg-humor-people_jp
