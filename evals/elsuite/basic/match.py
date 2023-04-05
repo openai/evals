@@ -45,8 +45,9 @@ class Match(evals.Eval):
         choice = result.get_completions()[0]
         sampled = choice.strip() if self.model_spec.strip_completion else choice
 
+        evals.record.record_sampling(prompt=prompt, sampled=sampled)
+
         return evals.record_and_check_match(
-            prompt=result.prompt,
             sampled=sampled,
             expected=sample["ideal"],
         )

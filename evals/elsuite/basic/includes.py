@@ -23,13 +23,14 @@ class Includes(evals.Eval):
         self._completion_fn = completion_fn
 
     def eval_sample(self, sample: Any, *_):
+        prompt = sample["input"]
         result = self._completion_fn(
-            prompt=sample["input"],
+            prompt=prompt,
             max_tokens=self.max_tokens,
             model_spec=self.model_spec,
         )
         sampled = result.get_completions()[0]
-        evals.record.record_sampling(prompt=result.prompt, sampled=sampled)
+        evals.record.record_sampling(prompt=prompt, sampled=sampled)
 
         includes_answer = any([utils.get_answer(sampled, ref) for ref in sample["ideal"]])
         evals.record.record_metrics(accuracy=float(includes_answer))

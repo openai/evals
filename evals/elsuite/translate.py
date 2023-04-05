@@ -53,7 +53,7 @@ class Translate(evals.Eval):
             model_spec=self.model_spec,
         )
         sampled = result.get_completions()[0]
-        evals.record.record_sampling(prompt=result.prompt, sampled=sampled)
+        evals.record.record_sampling(prompt=prompt, sampled=sampled)
 
         score = None
         if expected is not None:

@@ -30,7 +30,7 @@ class FuzzyMatch(evals.Eval):
             model_spec=self.model_spec,
         )
         sampled = result.get_completions()[0]
-        evals.record.record_sampling(prompt=result.prompt, sampled=sampled)
+        evals.record.record_sampling(prompt=prompt, sampled=sampled)
 
         matches = [utils.fuzzy_match(sampled, correct_answer) for correct_answer in correct_answers]
         evals.record.record_match(
