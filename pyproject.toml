@@ -24,7 +24,7 @@ dependencies = [
     "pyyaml",
     "sacrebleu",
     "matplotlib",
-    "setuptools_scm",  # Add this line
+    "setuptools_scm",
 ]
 
 [project.scripts]
