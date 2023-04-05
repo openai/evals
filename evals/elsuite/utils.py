@@ -2,18 +2,9 @@ import copy
 import re
 import string
 from collections import Counter, defaultdict
-from typing import Union
-from typing_extensions import Protocol
 
 from evals.api import sample_freeform
 from evals.prompt.base import chat_prompt_to_text_prompt, is_chat_prompt
-
-from evals.base import ModelSpec
-from evals.prompt.base import (
-    OpenAICreateChatPrompt,
-    OpenAICreatePrompt,
-    Prompt,
-)
 
 
 def get_answer(text, answer_prompt):
@@ -144,31 +135,3 @@ class PromptFn:
             **self.completion_kwargs,
         )
         return completion, prompt
-
-
-class CompletionFn(Protocol):
-
-    def __call__(
-        self,
-        model_spec: ModelSpec,
-        prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
-        **kwargs
-    ) ->tuple[dict, Union[OpenAICreatePrompt, OpenAICreateChatPrompt], dict]:
-        """
-        ARGS
-        ====
-        `model_spec`: `ModelSpec` containing model details to use in the query.
-            This should be the dict returned by `registry.get_model()`.
-            If `model_spec` is not provided, we use the default model that was
-                intialized at the beginning of the run.
-        `prompt`: Either a `Prompt` object or a raw prompt that will get wrapped in
-            the approriate `Prompt` class.
-        `kwargs`: Other arguments passed to the API.
-
-        RETURNS
-        =======
-        The result of the API call.
-        The prompt that was fed into the API call as a str.
-        A dict containing metadata about the query.
-        """
-        pass

@@ -2,7 +2,6 @@ from typing import Any
 
 import evals
 import evals.metrics
-from evals.elsuite import utils
 from evals.prompt.base import is_chat_prompt
 
 
@@ -15,7 +14,7 @@ class Match(evals.Eval):
         max_tokens: int = 500,
         num_few_shot: int = 0,
         few_shot_jsonl: str = None,
-        completion_fn: utils.CompletionFn = evals.completion_query,
+        completion_fn: evals.CompletionFn = evals.OpenAIChatCompletionFn(),
         **kwargs,
     ):
         super().__init__(model_specs, *args, **kwargs)
@@ -38,22 +37,22 @@ class Match(evals.Eval):
             prompt += sample["input"][-1:]
 
         # TODO(hwc): is there a case where we want to use `result` other than "choices"?
-        result, actual_prompt, metadata = self._completion_fn(
+        result = self._completion_fn(
             prompt=prompt,
             temperature=0.0,
             model_spec=self.model_spec,
         )
-        choice = result["choices"][0]
-        sampled = choice["text"].strip() if self.model_spec.strip_completion else choice["text"]
+        choice = result.get_completions()[0]
+        sampled = choice.strip() if self.model_spec.strip_completion else choice
+
         return evals.record_and_check_match(
-                prompt=actual_prompt,
-                sampled=sampled,
-                expected=sample["ideal"],
-                metadata=metadata
+            prompt=result.prompt,
+            sampled=sampled,
+            expected=sample["ideal"],
         )
 
     def run(self, recorder):
-        samples= self.get_samples()
+        samples = self.get_samples()
         self.eval_all_samples(recorder, samples)
         events = recorder.get_events("match")
         return {
