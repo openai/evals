@@ -60,7 +60,7 @@ class CompletionFn(Protocol):
 
 class OpenAICompletionResult(CompletionResult):
     def __init__(self, raw_data: Any, prompt: Any):
-        self.raw_data = raw_data
+        super().__init__(raw_data)
         self.prompt = prompt
 
     def get_completions(self) -> list[str]:
