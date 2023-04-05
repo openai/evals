@@ -44,7 +44,7 @@ def zstd_open(filename: str, mode: str = "rb", openhook: Any = open) -> pyzstd.Z
 
 
 def exists_data_in_registry(filename: str):
-    pth = (os.path.join(os.path.dirname(os.path.abspath(__file__)), "registry", "data", filename),)
+    pth = os.path.join(os.path.dirname(os.path.abspath(__file__)), "registry", "data", filename)
     return os.path.exists(pth)
 
 

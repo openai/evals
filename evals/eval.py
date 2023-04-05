@@ -170,6 +170,7 @@ class Eval(abc.ABC):
             with open_by_file_pattern(self.samples_jsonl, "r") as f:
                 first_line = f.readline()
             if "version https://git-lfs.github.com/spec/v1" in first_line:
+                logger.info(f"{self.samples_jsonl} is in git-lfs. Downloading...")
                 git_lfs_installed = False
                 try:
                     subprocess.run(["git-lfs", "--version"], check=True, capture_output=True)
