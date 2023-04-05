@@ -7,15 +7,16 @@ import concurrent.futures
 import logging
 import os
 import random
+import subprocess
 from multiprocessing.pool import ThreadPool
 from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple
 
 from tqdm import tqdm
 
 from .base import ModelSpec, ModelSpecs
+from .data import get_jsonl
 from .record import RecorderBase
 from .registry import Registry
-from .data import get_jsonl
 
 logger = logging.getLogger(__name__)
 
@@ -162,7 +163,31 @@ class Eval(abc.ABC):
     def get_samples(self):
         if self.samples_jsonl is None:
             raise ValueError(
-                    "To use `get_samples`, you must provide a `samples_jsonl` path."
-                    "Got `None`.")
+                "To use `get_samples`, you must provide a `samples_jsonl` path." "Got `None`."
+            )
+
+        if os.path.exists(self.samples_jsonl):
+            with open(self.samples_jsonl, "r") as f:
+                first_line = f.readline()
+            if "version https://git-lfs.github.com/spec/v1" in first_line:
+                git_lfs_installed = False
+                try:
+                    subprocess.run(["git-lfs", "--version"], check=True, capture_output=True)
+                    git_lfs_installed = True
+                except subprocess.CalledProcessError:
+                    pass
+
+                if not git_lfs_installed:
+                    try:
+                        subprocess.run(["git", "lfs", "install"], check=True, capture_output=True)
+                    except subprocess.CalledProcessError as e:
+                        raise RuntimeError(
+                            "Failed to install git-lfs. Please install it manually."
+                        ) from e
+
+                try:
+                    subprocess.run(["git", "lfs", "pull"], check=True, capture_output=True)
+                except subprocess.CalledProcessError as e:
+                    raise RuntimeError("Failed to download the file using git-lfs.") from e
 
         return get_jsonl(self.samples_jsonl)
