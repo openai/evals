@@ -48,6 +48,14 @@ class ModelSpec:
 
 
 @dataclass
+class CompletionFnSpec:
+    cls: str
+    args: Optional[Dict[str, Any]] = None
+    key: Optional[str] = None
+    group: Optional[str] = None
+
+
+@dataclass
 class BaseEvalSpec:
     """
     Specification for a base eval.

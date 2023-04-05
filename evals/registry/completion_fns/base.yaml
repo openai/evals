@@ -1,0 +1,10 @@
+# should be loaded dynamically, but for now, we'll just hardcode it
+test-completion:
+  class: evals.api:OpenAICompletionFn
+  args:
+    model: text-davinci-003
+
+test-chat-completion:
+  class: evals.api:OpenAIChatCompletionFn
+  args:
+    model: gpt-3.5-turbo

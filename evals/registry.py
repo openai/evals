@@ -14,8 +14,9 @@ from pathlib import Path
 from typing import Any, Iterator, Sequence, Type, Union
 
 import yaml
+from evals.api import CompletionFn
 
-from evals.base import BaseEvalSpec, EvalSetSpec, EvalSpec
+from evals.base import BaseEvalSpec, CompletionFnSpec, EvalSetSpec, EvalSpec
 from evals.utils.misc import make_object
 
 logger = logging.getLogger(__name__)
@@ -29,6 +30,9 @@ class Registry:
 
     def make_callable(self, spec):
         return partial(make_object(spec.cls).create_and_run, **(spec.args or {}))
+
+    def make_completion_fn(self, spec: CompletionFnSpec) -> CompletionFn:
+        return make_object(spec.cls)(**spec.args or {})
 
     def get_class(self, spec: dict) -> Any:
         return make_object(spec.cls, **(spec.args if spec.args else {}))
@@ -65,6 +69,10 @@ class Registry:
             f"Closest matches: {difflib.get_close_matches(name, self._modelgraded_specs.keys(), n=5)}"
         )
         return self._modelgraded_specs[name]
+
+    def get_completion_fn(self, name: str) -> CompletionFnSpec:
+        return self._dereference(name, self._completion_fns, "completion_fns", CompletionFnSpec)
+
 
     def get_eval(self, name: str) -> EvalSpec:
         return self._dereference(name, self._evals, "eval", EvalSpec)
@@ -169,6 +177,10 @@ class Registry:
     @functools.cached_property
     def _modelgraded_specs(self):
         return self._load_registry([p / "modelgraded" for p in self._registry_paths])
+
+    @functools.cached_property
+    def _completion_fns(self):
+        return self._load_registry([p / "completion_fns" for p in self._registry_paths])
 
 
 registry = Registry()

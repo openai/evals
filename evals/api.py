@@ -3,6 +3,7 @@ This file provides common interfaces and utilities used by eval creators to
 sample from models and process the results.
 """
 
+from dataclasses import dataclass
 import logging
 from abc import ABC, abstractmethod
 from typing import Any, Callable, Optional, Protocol, Union
@@ -88,6 +89,9 @@ class OpenAICompletionResult(OpenAICompletionResult):
 
 
 class OpenAICompletionFn(CompletionFn):
+    def __init__(self, model: Optional[str] = None):
+        self.model = model
+
     def __call__(
         self,
         model_spec: ModelSpec,
@@ -108,11 +112,13 @@ class OpenAICompletionFn(CompletionFn):
         openai_create_prompt: OpenAICreatePrompt = prompt.to_openai_create_prompt()
 
         result = openai_completion_create_retrying(
-            model=model_spec.model,
-            api_base=model_spec.api_base,
-            api_key=model_spec.api_key,
+            model=self.model,
+            # model=model_spec.model,
+            # api_base=model_spec.api_base,
+            # api_key=model_spec.api_key,
             prompt=openai_create_prompt,
-            **{**kwargs, **model_spec.extra_options},
+            # **{**kwargs, **model_spec.extra_options},
+            **kwargs,
         )
         result = OpenAICompletionResult(raw_data=result, prompt=openai_create_prompt)
         record_sampling(prompt=result.prompt, sampled=result.get_completions())
