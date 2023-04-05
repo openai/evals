@@ -9,11 +9,14 @@ import functools
 import logging
 import os
 import re
-from functools import partial
+from functools import cached_property, partial
 from pathlib import Path
-from typing import Any, Iterator, Sequence, Type, Union
+from typing import Any, Iterator, Optional, Sequence, Type, Union
+from urllib.parse import urlparse, parse_qs
+import openai
 
 import yaml
+from evals.api import CompletionFn, DummyCompletionFn, OpenAIChatCompletionFn, OpenAICompletionFn
 
 from evals.base import BaseEvalSpec, EvalSetSpec, EvalSpec
 from evals.utils.misc import make_object
@@ -22,13 +25,90 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_PATHS = [Path(__file__).parents[0].resolve() / "registry", Path.home() / ".evals"]
 
+def n_ctx_from_model_name(model_name: str) -> Optional[int]:
+    """Returns n_ctx for a given API model name. Model list last updated 2023-03-14."""
+    # note that for most models, the max tokens is n_ctx + 1
+    DICT_OF_N_CTX_BY_MODEL_NAME_PREFIX: dict[str, int] = {
+        "gpt-3.5-turbo-": 4096,
+        "gpt-4-": 8192,
+        "gpt-4-32k-": 32768,
+    }
+    DICT_OF_N_CTX_BY_MODEL_NAME: dict[str, int] = {
+        "ada": 2048,
+        "text-ada-001": 2048,
+        "babbage": 2048,
+        "text-babbage-001": 2048,
+        "curie": 2048,
+        "text-curie-001": 2048,
+        "davinci": 2048,
+        "text-davinci-001": 2048,
+        "code-davinci-002": 8000,
+        "text-davinci-002": 4096,
+        "text-davinci-003": 4096,
+        "gpt-3.5-turbo": 4096,
+        "gpt-3.5-turbo-0301": 4096,
+        "gpt-4": 8192,
+        "gpt-4-0314": 8192,
+        "gpt-4-32k": 32768,
+        "gpt-4-32k-0314": 32768,
+    }
+    # first, look for a prefix match
+    for model_prefix, n_ctx in DICT_OF_N_CTX_BY_MODEL_NAME_PREFIX.items():
+        if model_name.startswith(model_prefix):
+            return n_ctx
+    # otherwise, look for an exact match and return None if not found
+    return DICT_OF_N_CTX_BY_MODEL_NAME.get(model_name, None)
 
 class Registry:
     def __init__(self, registry_paths: Sequence[Union[str, Path]] = DEFAULT_PATHS):
         self._registry_paths = [Path(p) if isinstance(p, str) else p for p in registry_paths]
 
-    def make_callable(self, spec):
-        return partial(make_object(spec.cls).create_and_run, **(spec.args or {}))
+    @cached_property
+    def api_model_ids(self):
+        return [m["id"] for m in openai.Model.list()["data"]]
+
+    def make_completion_fn(self, url: str) -> CompletionFn:
+        """
+        Create a CompletionFn from a URL. The URL can be one of the following formats:
+        1. openai-model-id (e.g. "gpt-3.5-turbo")
+        2. a.b.c:Class?arg1=val1&arg2=val2
+        """
+        parsed = urlparse(url)
+
+        # If the URL is just a model ID, treat it as an OpenAI API model
+        if parsed.scheme == "":
+            model = parsed.path
+            if model == "dummy":
+                return DummyCompletionFn()
+
+            n_ctx = n_ctx_from_model_name(model)
+
+            CHAT_MODELS = {
+                "gpt-3.5-turbo",
+                "gpt-3.5-turbo-0301",
+                "gpt-4",
+                "gpt-4-0314",
+                "gpt-4-32k",
+                "gpt-4-32k-0314",
+            }
+
+            if model in CHAT_MODELS:
+                return OpenAIChatCompletionFn(model=model, n_ctx=n_ctx)
+            elif model in self.api_model_ids:
+                return OpenAICompletionFn(model=model, n_ctx=n_ctx)
+            else:
+                raise ValueError(f"Couldn't find OpenAI API model: {model}")
+
+        # Otherwise, use the class specified in the URL
+        cls = parsed.scheme + ":" + parsed.path
+        args = parse_qs(parsed.query)
+        for k, v in args.items():
+            if len(v) == 1:
+                args[k] = v[0]
+
+        instance = make_object(cls)(**args or {})
+        assert isinstance(instance, CompletionFn), f"{url} point to a CompletionFn"
+        return instance
 
     def get_class(self, spec: dict) -> Any:
         return make_object(spec.cls, **(spec.args if spec.args else {}))

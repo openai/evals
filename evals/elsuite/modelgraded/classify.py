@@ -12,8 +12,8 @@ from typing import Callable, Iterable, Optional, Union
 import openai
 
 import evals
+from evals.api import CompletionFn, DummyCompletionFn, OpenAIChatCompletionFn
 import evals.record
-from evals.base import ModelSpec
 from evals.elsuite.utils import PromptFn, format_necessary, scrub_formatting_from_prompt
 
 INVALID_STR = "__invalid__"
@@ -90,7 +90,7 @@ class ModelBasedClassify(evals.Eval):
 
     def __init__(
         self,
-        model_specs: evals.ModelSpecs,
+        completion_fns: list[CompletionFn],
         samples_jsonl: str,
         modelgraded_spec: str,
         *args,
@@ -104,8 +104,8 @@ class ModelBasedClassify(evals.Eval):
         modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
         **kwargs,
     ):
-        super().__init__(model_specs, *args, **kwargs)
-        n_models = len(self.model_specs.completions)
+        super().__init__(completion_fns, *args, **kwargs)
+        n_models = len(self.completion_fns)
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
         self.match_fn = MATCH_FNS[match_fn]
@@ -122,16 +122,16 @@ class ModelBasedClassify(evals.Eval):
         self.samples_renamings = samples_renamings or {}
 
         # check if multiple models are specified
-        if len(self.model_specs.completions) > 1:
+        if len(self.completion_fns) > 1:
             assert (
                 self.multicomp_n == n_models
-            ), f"multicomp_n={self.multicomp_n} must be equal to the number of models={len(self.model_specs.completions)} if multiple models are specified."
+            ), f"multicomp_n={self.multicomp_n} must be equal to the number of models={len(self.completion_fns)} if multiple models are specified."
 
-        if self.model_spec.name == "dummy-completion" or self.model_spec.name == "dummy-chat":
-            self.eval_modelspec = self.model_spec
+        if isinstance(self.completion_fn, DummyCompletionFn):
+            self.eval_completion_fn = self.completion_fn
         else:
-            self.eval_modelspec = ModelSpec(
-                name="gpt-3.5-turbo", model="gpt-3.5-turbo", is_chat=True
+            self.eval_completion_fn = OpenAIChatCompletionFn(
+                model="gpt-3.5-turbo"
             )
 
         """import prompt and set attributes"""
@@ -247,15 +247,15 @@ class ModelBasedClassify(evals.Eval):
                         completion = ""
                         completion_i_template = self.completion_sample_templates[v]
                         for i in range(self.multicomp_n):
-                            if len(self.model_specs.completions) > 1:
+                            if len(self.completion_fns) > 1:
                                 # use a separate model for each completion
-                                model_spec = self.model_specs.completions[i]
+                                completion_fn = self.completion_fns[i]
                             else:
                                 # use the single model for all completions
-                                model_spec = self.model_spec
+                                completion_fn = self.completion_fn
                             get_input_completion = PromptFn(
                                 test_sample[k],
-                                model_spec=model_spec,
+                                completion_fn=completion_fn,
                                 max_tokens=self.max_tokens,
                                 temperature=self.multicomp_temperature,
                             )
@@ -271,7 +271,7 @@ class ModelBasedClassify(evals.Eval):
                     else:
                         get_input_completion = PromptFn(
                             test_sample[k],
-                            model_spec=self.model_spec,
+                            completion_fn=self.completion_fn,
                             max_tokens=self.max_tokens,
                         )
                         completion, _ = get_input_completion()
@@ -284,7 +284,7 @@ class ModelBasedClassify(evals.Eval):
             metrics = {}
             evaluate = PromptFn(
                 self.prompt,
-                model_spec=self.eval_modelspec,
+                completion_fn=self.eval_completion_fn,
                 max_tokens=self.max_tokens,
             )
             eval_kwargs = dict(**completions, **test_sample)
