@@ -5,4 +5,4 @@ security-advice:
 security-advice.dev.v0:
   class: evals.elsuite.basic.includes:Includes
   args:
-    samples_jsonl: security_advice/samples.jsonl
+    samples_jsonl: security-advice/samples.jsonl
