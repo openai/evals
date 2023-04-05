@@ -14,7 +14,7 @@ from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple
 from tqdm import tqdm
 
 from .base import ModelSpec, ModelSpecs
-from .data import get_jsonl
+from .data import exists_data_in_registry, get_jsonl, open_by_file_pattern
 from .record import RecorderBase
 from .registry import Registry
 
@@ -166,8 +166,8 @@ class Eval(abc.ABC):
                 "To use `get_samples`, you must provide a `samples_jsonl` path." "Got `None`."
             )
 
-        if os.path.exists(self.samples_jsonl):
-            with open(self.samples_jsonl, "r") as f:
+        if exists_data_in_registry(self.samples_jsonl):
+            with open_by_file_pattern(self.samples_jsonl, "r") as f:
                 first_line = f.readline()
             if "version https://git-lfs.github.com/spec/v1" in first_line:
                 git_lfs_installed = False
@@ -182,7 +182,7 @@ class Eval(abc.ABC):
                         subprocess.run(["git", "lfs", "install"], check=True, capture_output=True)
                     except subprocess.CalledProcessError as e:
                         raise RuntimeError(
-                            "Failed to install git-lfs. Please install it manually."
+                            "Failed to install git-lfs. Please install it manually with `git lfs install`."
                         ) from e
 
                 try:
@@ -190,4 +190,8 @@ class Eval(abc.ABC):
                 except subprocess.CalledProcessError as e:
                     raise RuntimeError("Failed to download the file using git-lfs.") from e
 
-        return get_jsonl(self.samples_jsonl)
+        jsonl = get_jsonl(self.samples_jsonl)
+        assert isinstance(jsonl, list) and all(
+            isinstance(x, dict) for x in jsonl
+        ), "Failed to load samples."
+        return jsonl

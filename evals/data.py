@@ -43,6 +43,11 @@ def zstd_open(filename: str, mode: str = "rb", openhook: Any = open) -> pyzstd.Z
     return pyzstd.ZstdFile(openhook(filename, mode), mode=mode)
 
 
+def exists_data_in_registry(filename: str):
+    pth = (os.path.join(os.path.dirname(os.path.abspath(__file__)), "registry", "data", filename),)
+    return os.path.exists(pth)
+
+
 def open_by_file_pattern(filename: str, mode: str = "r", **kwargs: Any) -> Any:
     """Can read/write to files on gcs/local with or without gzipping. If file
     is stored on gcs, streams with blobfile. Otherwise use vanilla python open. If
