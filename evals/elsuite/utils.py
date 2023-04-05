@@ -101,10 +101,10 @@ def format_necessary(template: str, **kwargs: dict[str, str]) -> str:
 class PromptFn:
     """Wrap calls to model with prompt"""
 
-    def __init__(self, prompt, model_spec, max_tokens, temperature=0, completion_kwargs=None):
+    def __init__(self, prompt, completion_fn, max_tokens, temperature=0, completion_kwargs=None):
         self.prompt = prompt
         self.max_tokens = max_tokens
-        self.model_spec = model_spec
+        self.completion_fn = completion_fn
         self.temperature = temperature
         self.completion_kwargs = completion_kwargs or {}
 
@@ -125,8 +125,8 @@ class PromptFn:
             prompt = format_necessary(self.prompt, **kwargs)
 
         completion = sample_freeform(
-            self.model_spec,
             prompt,
+            completion_fn=self.completion_fn,
             max_tokens=self.max_tokens,
             temperature=self.temperature,
             top_p=1,

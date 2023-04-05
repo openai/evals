@@ -5,9 +5,8 @@ sample from models and process the results.
 
 import logging
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Optional, Protocol, Union
+from typing import Any, Callable, Optional, Protocol, Union, runtime_checkable
 
-from evals.base import ModelSpec
 from evals.prompt.base import (
     ChatCompletionPrompt,
     CompletionPrompt,
@@ -25,28 +24,21 @@ logger = logging.getLogger(__name__)
 
 
 class CompletionResult(ABC):
-    def __init__(self, raw_data: Any):
-        self.raw_data = raw_data
-
     @abstractmethod
     def get_completions(self) -> list[str]:
         pass
 
 
+@runtime_checkable
 class CompletionFn(Protocol):
     def __call__(
         self,
-        model_spec: ModelSpec,
         prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
         **kwargs,
     ) -> CompletionResult:
         """
         ARGS
         ====
-        `model_spec`: `ModelSpec` containing model details to use in the query.
-            This should be the dict returned by `registry.get_model()`.
-            If `model_spec` is not provided, we use the default model that was
-                intialized at the beginning of the run.
         `prompt`: Either a `Prompt` object or a raw prompt that will get wrapped in
             the approriate `Prompt` class.
         `kwargs`: Other arguments passed to the API.
@@ -60,7 +52,7 @@ class CompletionFn(Protocol):
 
 class OpenAICompletionResult(CompletionResult):
     def __init__(self, raw_data: Any, prompt: Any):
-        super().__init__(raw_data)
+        self.raw_data = raw_data
         self.prompt = prompt
 
     def get_completions(self) -> list[str]:
@@ -88,19 +80,37 @@ class OpenAICompletionResult(OpenAICompletionResult):
 
 
 class OpenAICompletionFn(CompletionFn):
+    def __init__(
+        self,
+        model: Optional[str] = None,
+        api_base: Optional[str] = None,
+        api_key: Optional[str] = None,
+        n_ctx: Optional[int] = None,
+        extra_options: Optional[dict] = {},
+    ):
+        self.model = model
+        self.api_base = api_base
+        self.api_key = api_key
+        self.n_ctx = n_ctx
+        self.extra_options = extra_options
+
     def __call__(
         self,
-        model_spec: ModelSpec,
         prompt: Union[OpenAICreatePrompt, Prompt],
         **kwargs,
     ) -> OpenAICompletionResult:
         if not isinstance(prompt, Prompt):
             assert (
                 isinstance(prompt, str)
-                or (isinstance(prompt, list) and all(isinstance(token, int) for token in prompt))
-                or (isinstance(prompt, list) and all(isinstance(token, str) for token in prompt))
-                or (isinstance(prompt, list) and all(isinstance(msg, dict) for msg in prompt))
-            ), f"Got type {type(prompt)}, with val {type(prompt[0])} for prompt, expected str or list[int] or list[str] or list[dict[str, str]]"
+                or (
+                    isinstance(prompt, list)
+                    and all(isinstance(token, int) for token in prompt)
+                )
+                or (
+                    isinstance(prompt, list)
+                    and all(isinstance(token, str) for token in prompt)
+                )
+            ), f"Got type {type(prompt)}, with val {type(prompt[0])} for prompt, expected str or list[int] or list[str]"
 
             prompt = CompletionPrompt(
                 raw_prompt=prompt,
@@ -109,11 +119,11 @@ class OpenAICompletionFn(CompletionFn):
         openai_create_prompt: OpenAICreatePrompt = prompt.to_openai_create_prompt()
 
         result = openai_completion_create_retrying(
-            model=model_spec.model,
-            api_base=model_spec.api_base,
-            api_key=model_spec.api_key,
+            model=self.model,
+            api_base=self.api_base,
+            api_key=self.api_key,
             prompt=openai_create_prompt,
-            **{**kwargs, **model_spec.extra_options},
+            **{**kwargs, **self.extra_options},
         )
         result = OpenAICompletionResult(raw_data=result, prompt=openai_create_prompt)
         record_sampling(prompt=result.prompt, sampled=result.get_completions())
@@ -121,9 +131,22 @@ class OpenAICompletionFn(CompletionFn):
 
 
 class OpenAIChatCompletionFn(CompletionFn):
+    def __init__(
+        self,
+        model: Optional[str] = None,
+        api_base: Optional[str] = None,
+        api_key: Optional[str] = None,
+        n_ctx: Optional[int] = None,
+        extra_options: Optional[dict] = {},
+    ):
+        self.model = model
+        self.api_base = api_base
+        self.api_key = api_key
+        self.n_ctx = n_ctx
+        self.extra_options = extra_options
+
     def __call__(
         self,
-        model_spec: ModelSpec,
         prompt: Union[OpenAICreateChatPrompt, Prompt],
         **kwargs,
     ) -> OpenAIChatCompletionResult:
@@ -142,18 +165,30 @@ class OpenAIChatCompletionFn(CompletionFn):
         openai_create_prompt: OpenAICreateChatPrompt = prompt.to_openai_create_prompt()
 
         result = openai_chat_completion_create_retrying(
-            model=model_spec.model,
-            api_base=model_spec.api_base,
-            api_key=model_spec.api_key,
+            model=self.model,
+            api_base=self.api_base,
+            api_key=self.api_key,
             messages=openai_create_prompt,
-            **{**kwargs, **model_spec.extra_options},
+            **{**kwargs, **self.extra_options},
         )
-        result = OpenAIChatCompletionResult(raw_data=result, prompt=openai_create_prompt)
+        result = OpenAIChatCompletionResult(
+            raw_data=result, prompt=openai_create_prompt
+        )
         record_sampling(prompt=result.prompt, sampled=result.get_completions())
         return result
 
+class DummyCompletionResult(CompletionResult):
+    def get_completions(self) -> list[str]:
+        return ["This is a dummy response."]
+
+
+class DummyCompletionFn(CompletionFn):
+    def __call__(self, prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt], **kwargs) -> CompletionResult:
+        return DummyCompletionResult()
+
 
 def record_and_check_match(
+    prompt: Any,
     sampled: str,
     expected: Union[str, list[str], tuple[str]],
     separator: Callable[[str], bool] = None,
@@ -180,6 +215,7 @@ def record_and_check_match(
         break
 
     result = {
+        "prompt": prompt,
         "sampled": sampled,
         "options": options,
         "picked": picked,
@@ -193,7 +229,6 @@ def record_and_check_match(
 
 
 def sample_freeform(
-    model_spec: ModelSpec,
     prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
     *,
     completion_fn: CompletionFn = OpenAIChatCompletionFn(),
@@ -231,7 +266,6 @@ def sample_freeform(
         max_tokens=max_tokens,
         stop=stop,
         n=(1 if n_samples is None else n_samples),
-        model_spec=model_spec,
         headers={},
         **kwargs,
     )
