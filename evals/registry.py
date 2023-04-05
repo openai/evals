@@ -4,6 +4,8 @@ add an entry in one of the YAML files in the `../registry` dir.
 By convention, every eval name should start with {base_eval}.{split}.
 """
 
+import copy
+import difflib
 import functools
 import logging
 import os
@@ -14,16 +16,13 @@ from typing import Any, Iterator, Sequence, Type, Union
 
 import yaml
 
-from evals.base import BaseEvalSpec, EvalSetSpec, EvalSpec
+from evals.base import BaseEvalSpec, EvalSetSpec, EvalSpec, ModelSpec
+from evals.elsuite.modelgraded.base import ModelGradedSpec
 from evals.utils.misc import make_object
 
 logger = logging.getLogger(__name__)
 
 DEFAULT_PATHS = [Path(__file__).parents[0].resolve() / "registry", Path.home() / ".evals"]
-
-DEFAULT_SYSTEM_PATHS = [
-    Path(__file__).parents[0].resolve() / "registry",
-]
 
 
 class Registry:
@@ -36,8 +35,14 @@ class Registry:
     def get_class(self, spec: dict) -> Any:
         return make_object(spec.cls, **(spec.args if spec.args else {}))
 
-    def _dereference(self, name: str, d: dict, object: str, type: Type) -> dict:
+    def _dereference(self, name: str, d: dict, object: str, type: Type, **kwargs: dict) -> dict:
         if not name in d:
+            logger.warning(
+                (
+                    f"{object} '{name}' not found. "
+                    f"Closest matches: {difflib.get_close_matches(name, d.keys(), n=5)}"
+                )
+            )
             return None
 
         def get_alias():
@@ -56,11 +61,22 @@ class Registry:
             name = alias
 
         spec = d[name]
+        if kwargs:
+            spec = copy.deepcopy(spec)
+            spec.update(kwargs)
 
         try:
             return type(**spec)
         except TypeError as e:
-            raise TypeError(f"Error while processing {object} {name}: {e}")
+            raise TypeError(f"Error while processing {object} '{name}': {e}")
+
+    def get_model(self, name: str) -> ModelSpec:
+        return self._dereference(name, self._models, "model", ModelSpec)
+
+    def get_modelgraded_spec(self, name: str, **kwargs: dict) -> dict[str, Any]:
+        return self._dereference(
+            name, self._modelgraded_specs, "modelgraded spec", ModelGradedSpec, **kwargs
+        )
 
     def get_eval(self, name: str) -> EvalSpec:
         return self._dereference(name, self._evals, "eval", EvalSpec)
@@ -140,6 +156,10 @@ class Registry:
             self._process_file(registry, file)
 
     def _load_registry(self, paths):
+        """Load registry from a list of paths.
+
+        Each path or yaml specifies a dictionary of name -> spec.
+        """
         registry = {}
         for path in paths:
             logging.info(f"Loading registry from {path}")
@@ -157,6 +177,14 @@ class Registry:
     @functools.cached_property
     def _evals(self):
         return self._load_registry([p / "evals" for p in self._registry_paths])
+
+    @functools.cached_property
+    def _modelgraded_specs(self):
+        return self._load_registry([p / "modelgraded" for p in self._registry_paths])
+
+    @functools.cached_property
+    def _models(self):
+        return self._load_registry([p / "models" for p in self._registry_paths])
 
 
 registry = Registry()
