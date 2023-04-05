@@ -99,7 +99,8 @@ class OpenAICompletionFn(CompletionFn):
                 isinstance(prompt, str)
                 or (isinstance(prompt, list) and all(isinstance(token, int) for token in prompt))
                 or (isinstance(prompt, list) and all(isinstance(token, str) for token in prompt))
-            ), f"Got type {type(prompt)}, with val {type(prompt[0])} for prompt, expected str or list[int] or list[str]"
+                or (isinstance(prompt, list) and all(isinstance(msg, dict) for msg in prompt))
+            ), f"Got type {type(prompt)}, with val {type(prompt[0])} for prompt, expected str or list[int] or list[str] or list[dict[str, str]]"
 
             prompt = CompletionPrompt(
                 raw_prompt=prompt,
@@ -127,9 +128,12 @@ class OpenAIChatCompletionFn(CompletionFn):
         **kwargs,
     ) -> OpenAIChatCompletionResult:
         if not isinstance(prompt, Prompt):
-            assert isinstance(prompt, list) and all(
-                isinstance(msg, dict) for msg in prompt
-            ), f"Got type {type(prompt)}, with val {type(prompt[0])} for prompt, expected list[dict[str, str]]"
+            assert (
+                isinstance(prompt, str)
+                or (isinstance(prompt, list) and all(isinstance(token, int) for token in prompt))
+                or (isinstance(prompt, list) and all(isinstance(token, str) for token in prompt))
+                or (isinstance(prompt, list) and all(isinstance(msg, dict) for msg in prompt))
+            ), f"Got type {type(prompt)}, with val {type(prompt[0])} for prompt, expected str or list[int] or list[str] or list[dict[str, str]]"
 
             prompt = ChatCompletionPrompt(
                 raw_prompt=prompt,
@@ -194,7 +198,7 @@ def sample_freeform(
     model_spec: ModelSpec,
     prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
     *,
-    completion_fn: CompletionFn = OpenAICompletionFn(),
+    completion_fn: CompletionFn = OpenAIChatCompletionFn(),
     temperature: float = 1.0,
     top_p: float = 0.9,
     max_tokens: int = 512,
