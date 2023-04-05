@@ -58,7 +58,7 @@ class CompletionFn(Protocol):
         """
 
 
-class OpenAICompletionResult:
+class OpenAICompletionResult(CompletionResult):
     def __init__(self, raw_data: Any, prompt: Any):
         self.raw_data = raw_data
         self.prompt = prompt
