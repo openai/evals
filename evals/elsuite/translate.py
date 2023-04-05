@@ -16,7 +16,7 @@ class Translate(evals.Eval):
         max_tokens: int = 500,
         num_few_shot: int = 0,
         few_shot_jsonl: str = None,
-        completion_fn: evals.CompletionFn = evals.OpenAICompletionFn(),
+        completion_fn: evals.CompletionFn = evals.OpenAIChatCompletionFn(),
         **kwargs,
     ):
         super().__init__(model_specs, *args, **kwargs)
@@ -52,9 +52,8 @@ class Translate(evals.Eval):
             max_tokens=self.max_tokens,
             model_spec=self.model_spec,
         )
-        sampled: str = evals.postprocess_sample_freeform(
-            result.get_completions(), result.prompt, self.model_spec
-        )
+        sampled = result.get_completions()[0]
+        evals.record.record_sampling(prompt=result.prompt, sampled=sampled)
 
         score = None
         if expected is not None:

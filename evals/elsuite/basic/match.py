@@ -14,7 +14,7 @@ class Match(evals.Eval):
         max_tokens: int = 500,
         num_few_shot: int = 0,
         few_shot_jsonl: str = None,
-        completion_fn: evals.CompletionFn = evals.OpenAICompletionFn(),
+        completion_fn: evals.CompletionFn = evals.OpenAIChatCompletionFn(),
         **kwargs,
     ):
         super().__init__(model_specs, *args, **kwargs)
@@ -44,6 +44,7 @@ class Match(evals.Eval):
         )
         choice = result.get_completions()[0]
         sampled = choice.strip() if self.model_spec.strip_completion else choice
+
         return evals.record_and_check_match(
             prompt=result.prompt,
             sampled=sampled,

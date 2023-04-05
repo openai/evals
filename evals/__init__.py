@@ -1,10 +1,9 @@
 from .api import (
     CompletionFn,
     CompletionResult,
+    OpenAIChatCompletionFn,
     OpenAICompletionFn,
     OpenAICompletionResult,
-    check_sampled_text,
-    postprocess_sample_freeform,
     record_and_check_match,
     sample_freeform,
 )

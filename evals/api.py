@@ -5,7 +5,6 @@ sample from models and process the results.
 
 import logging
 from abc import ABC, abstractmethod
-from functools import cached_property
 from typing import Any, Callable, Optional, Protocol, Union
 
 from evals.base import ModelSpec
@@ -33,10 +32,6 @@ class CompletionResult(ABC):
     def get_completions(self) -> list[str]:
         pass
 
-    @cached_property
-    def completions(self) -> list[str]:
-        return self.get_completions()
-
 
 class CompletionFn(Protocol):
     def __call__(
@@ -63,20 +58,32 @@ class CompletionFn(Protocol):
         """
 
 
-class OpenAICompletionResult(CompletionResult):
+class OpenAICompletionResult:
     def __init__(self, raw_data: Any, prompt: Any):
-        super().__init__(raw_data)
+        self.raw_data = raw_data
         self.prompt = prompt
 
     def get_completions(self) -> list[str]:
+        raise NotImplementedError
+
+
+class OpenAIChatCompletionResult(OpenAICompletionResult):
+    def get_completions(self) -> list[str]:
         completions = []
-        if self.raw_data:
-            if "choices" in self.raw_data:
-                for choice in self.raw_data["choices"]:
-                    if "message" in choice:  # chat response
-                        completions.append(choice["message"]["content"])
-                    else:  # non-chat response
-                        completions.append(choice["text"])
+        if self.raw_data and "choices" in self.raw_data:
+            for choice in self.raw_data["choices"]:
+                if "message" in choice:
+                    completions.append(choice["message"]["content"])
+        return completions
+
+
+class OpenAICompletionResult(OpenAICompletionResult):
+    def get_completions(self) -> list[str]:
+        completions = []
+        if self.raw_data and "choices" in self.raw_data:
+            for choice in self.raw_data["choices"]:
+                if "text" in choice:
+                    completions.append(choice["text"])
         return completions
 
 
@@ -84,111 +91,60 @@ class OpenAICompletionFn(CompletionFn):
     def __call__(
         self,
         model_spec: ModelSpec,
-        prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
+        prompt: Union[OpenAICreatePrompt, Prompt],
         **kwargs,
     ) -> OpenAICompletionResult:
-        """
-        Query the API for a completion.
-
-        ARGS
-        ====
-        `model_spec`: `ModelSpec` containing model details to use in the query.
-            This should be the dict returned by `registry.get_model()`.
-            If `model_spec` is not provided, we use the default model that was
-                intialized at the beginning of the run.
-        `prompt`: Either a `Prompt` object or a raw prompt that will get wrapped in
-            the approriate `Prompt` class.
-        `kwargs`: Other arguments passed to the API.
-
-        RETURNS
-        =======
-        The result of the API call.
-        The prompt that was fed into the API call as a str.
-        """
         if not isinstance(prompt, Prompt):
             assert (
                 isinstance(prompt, str)
                 or (isinstance(prompt, list) and all(isinstance(token, int) for token in prompt))
                 or (isinstance(prompt, list) and all(isinstance(token, str) for token in prompt))
-                or (isinstance(prompt, list) and all(isinstance(msg, dict) for msg in prompt))
-            ), f"Got type {type(prompt)}, with val {type(prompt[0])} for prompt, expected str or list[int] or list[str] or list[dict[str, str]]"
+            ), f"Got type {type(prompt)}, with val {type(prompt[0])} for prompt, expected str or list[int] or list[str]"
 
-            if model_spec.is_chat:
-                prompt = ChatCompletionPrompt(
-                    raw_prompt=prompt,
-                )
-            else:
-                prompt = CompletionPrompt(
-                    raw_prompt=prompt,
-                )
-
-        openai_create_prompt: Union[
-            OpenAICreatePrompt, OpenAICreateChatPrompt
-        ] = prompt.to_openai_create_prompt()
-
-        if model_spec.is_chat:
-            result = openai_chat_completion_create_retrying(
-                model=model_spec.model,
-                api_base=model_spec.api_base,
-                api_key=model_spec.api_key,
-                messages=openai_create_prompt,
-                **{**kwargs, **model_spec.extra_options},
+            prompt = CompletionPrompt(
+                raw_prompt=prompt,
             )
-        else:
-            result = openai_completion_create_retrying(
-                model=model_spec.model,
-                api_base=model_spec.api_base,
-                api_key=model_spec.api_key,
-                prompt=openai_create_prompt,
-                **{**kwargs, **model_spec.extra_options},
-            )
+
+        openai_create_prompt: OpenAICreatePrompt = prompt.to_openai_create_prompt()
+
+        result = openai_completion_create_retrying(
+            model=model_spec.model,
+            api_base=model_spec.api_base,
+            api_key=model_spec.api_key,
+            prompt=openai_create_prompt,
+            **{**kwargs, **model_spec.extra_options},
+        )
 
         return OpenAICompletionResult(raw_data=result, prompt=openai_create_prompt)
 
 
-# TODO(hwc): remove this
-def check_sampled_text(
-    model_spec: ModelSpec,
-    prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
-    expected: Union[str, list[str], tuple[str]],
-    completion_fn: CompletionFn = OpenAICompletionFn(),
-    *,
-    options: Optional[list[str]] = None,
-    separator: Callable[[str], bool] = None,
-) -> Optional[str]:
-    """
-    Generates a completion using the prompt, checks whether the completion is
-        one of the expected completions, and then records the result.
+class OpenAIChatCompletionFn(CompletionFn):
+    def __call__(
+        self,
+        model_spec: ModelSpec,
+        prompt: Union[OpenAICreateChatPrompt, Prompt],
+        **kwargs,
+    ) -> OpenAIChatCompletionResult:
+        if not isinstance(prompt, Prompt):
+            assert isinstance(prompt, list) and all(
+                isinstance(msg, dict) for msg in prompt
+            ), f"Got type {type(prompt)}, with val {type(prompt[0])} for prompt, expected list[dict[str, str]]"
 
-    ARGS
-    ====
-    `model_spec`: See `completion_query`.
-    `prompt`: See `completion_query`.
-    `options`: The list of canonical options, defaults to `expected` if None.
-        The completion will be converted to one of these options.
-    `expected`: The desired completion or the list of desired completions.
-    `separator`: A callable which check the character sampled after the option
-        to see if it is a valid separator.
+            prompt = ChatCompletionPrompt(
+                raw_prompt=prompt,
+            )
 
-    RETURNS
-    =======
-    The option that was picked, i.e., matched the completion, or None.
-    """
-    result = completion_fn(
-        prompt=prompt,
-        model_spec=model_spec,
-    )
+        openai_create_prompt: OpenAICreateChatPrompt = prompt.to_openai_create_prompt()
 
-    completion = result.get_completions()[0]
-    sampled = completion.strip() if model_spec.strip_completion else completion
+        result = openai_chat_completion_create_retrying(
+            model=model_spec.model,
+            api_base=model_spec.api_base,
+            api_key=model_spec.api_key,
+            messages=openai_create_prompt,
+            **{**kwargs, **model_spec.extra_options},
+        )
 
-    return record_and_check_match(
-        prompt=result.prompt,
-        sampled=sampled,
-        expected=expected,
-        separator=separator,
-        options=options,
-    )
+        return OpenAIChatCompletionResult(raw_data=result, prompt=openai_create_prompt)
 
 
 def record_and_check_match(
@@ -242,7 +198,6 @@ def sample_freeform(
     max_tokens: int = 512,
     stop: Optional[str] = None,
     n_samples: Optional[int] = None,
-    return_logprobs: bool = False,
     **kwargs,
 ) -> Union[str, list[str], dict]:
     """
@@ -281,76 +236,6 @@ def sample_freeform(
         headers={},
         **kwargs,
     )
-
-    return postprocess_sample_freeform(
-        result.get_completions(),
-        result.prompt,
-        model_spec,
-        n_samples=n_samples,
-        return_logprobs=return_logprobs,
-        **kwargs,
-    )
-
-
-def postprocess_sample_freeform(
-    completions: list[str],
-    prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
-    model_spec: ModelSpec,
-    *,
-    n_samples: Optional[int] = None,
-    return_logprobs: bool = False,
-    **kwargs,
-) -> Union[str, list[str], dict]:
-    """
-    Records the sampled response, prompt and metedata, and returns the sampled text.
-    Typically called after `sample_freeform`.
-
-    ARGS
-    ====
-    `response`: The result of the API call.
-    `prompt`: See `completion_query`.
-    `n_samples`: The number of samples to generate (1 if None).
-    `return_logprobs`: If True, returns the tokens and corresponding logprobs
-        in addition to the sampled text.
-    `kwargs`: See `completion_query`.
-
-    RETURNS
-    =======
-    If `return_logprobs` is True, returns a dict with the sampled text, tokens,
-        and corresponding logprobs. If `n_samples` is None, the outer list is
-        removed from all values.
-    Otherwise, returns the sampled text, or a list of sampled texts if
-        `n_samples` is not None.
-    """
-    if n_samples is None:
-        sampled = completions[0]
-    record_sampling(prompt=prompt, sampled=sampled)
-
-    if return_logprobs:
-        assert not model_spec.is_chat, "logprobs only works for non-chat models"
-        assert not kwargs.get("logprobs") is None
-
-        def _maybe_tokens(logprobs: Optional[dict]) -> Optional[list[str]]:
-            return logprobs["tokens"] if logprobs is not None else None
-
-        def _maybe_logprobs(logprobs: Optional[dict]) -> Optional[list[float]]:
-            return logprobs["token_logprobs"] if logprobs is not None else None
-
-        def _maybe_top_logprobs(logprobs: Optional[dict]) -> Optional[list[dict[str, float]]]:
-            return [dict(x) for x in logprobs["top_logprobs"]] if logprobs is not None else None
-
-        tokens = [_maybe_tokens(choice["logprobs"]) for choice in response["choices"]]
-        logprobs = [_maybe_logprobs(choice["logprobs"]) for choice in response["choices"]]
-        top_logprobs = [_maybe_top_logprobs(choice["logprobs"]) for choice in response["choices"]]
-        if n_samples is None:
-            tokens = tokens[0]
-            logprobs = logprobs[0]
-            top_logprobs = top_logprobs[0]
-        return {
-            "text": sampled,
-            "tokens": tokens,
-            "logprobs": logprobs,
-            "top_logprobs": top_logprobs,
-        }
-
+    sampled = result.get_completions()[0]
+    record_sampling(prompt=result.prompt, sampled=sampled)
     return sampled
