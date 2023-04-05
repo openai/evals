@@ -1,0 +1,8 @@
+security-advice:
+  id: security-advice.dev.v0
+  description: Test the model's ability to determine which of two quantities is heavier when the heavier quantity is made up of lighter objects (and vice versa).
+  metrics: [accuracy]
+security-advice.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: security_advice/samples.jsonl
