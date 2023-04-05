@@ -24,11 +24,9 @@ dependencies = [
     "pyyaml",
     "sacrebleu",
     "matplotlib",
+    "setuptools_scm",  # Add this line
 ]
 
 [project.scripts]
 oaieval = "evals.cli.oaieval:main"
 oaievalset = "evals.cli.oaievalset:main"
-
-[tool.setuptools]
-include = ["evals/registry/data/**/*.jsonl"]
