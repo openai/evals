@@ -154,7 +154,6 @@ class OpenAIChatCompletionFn(CompletionFn):
 
 
 def record_and_check_match(
-    prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt],
     sampled: str,
     expected: Union[str, list[str], tuple[str]],
     separator: Callable[[str], bool] = None,
@@ -181,7 +180,6 @@ def record_and_check_match(
         break
 
     result = {
-        "prompt": prompt,
         "sampled": sampled,
         "options": options,
         "picked": picked,
@@ -190,7 +188,7 @@ def record_and_check_match(
     result["expected"] = expected
     result["match"] = match
     record_sampling(**result)
-    record_match(match, expected=expected, picked=picked, sampled=sampled)
+    record_match(match, expected=expected, picked=picked, sampled=sampled, options=options)
     return picked
 
 
