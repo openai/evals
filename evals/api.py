@@ -114,8 +114,9 @@ class OpenAICompletionFn(CompletionFn):
             prompt=openai_create_prompt,
             **{**kwargs, **model_spec.extra_options},
         )
-
-        return OpenAICompletionResult(raw_data=result, prompt=openai_create_prompt)
+        result = OpenAICompletionResult(raw_data=result, prompt=openai_create_prompt)
+        record_sampling(prompt=result.prompt, sampled=result.get_completions())
+        return result
 
 
 class OpenAIChatCompletionFn(CompletionFn):
@@ -143,8 +144,9 @@ class OpenAIChatCompletionFn(CompletionFn):
             messages=openai_create_prompt,
             **{**kwargs, **model_spec.extra_options},
         )
-
-        return OpenAIChatCompletionResult(raw_data=result, prompt=openai_create_prompt)
+        result = OpenAIChatCompletionResult(raw_data=result, prompt=openai_create_prompt)
+        record_sampling(prompt=result.prompt, sampled=result.get_completions())
+        return result
 
 
 def record_and_check_match(
@@ -213,16 +215,11 @@ def sample_freeform(
     `max_tokens`: Passed to `openai.Completion.create`.
     `stop`: Passed to `openai.Completion.create`.
     `n_samples`: The number of samples to generate (1 if None).
-    `return_logprobs`: If True, returns the tokens and corresponding logprobs
-        in addition to the sampled text.
     `kwargs`: See `completion_query`.
 
     RETURNS
     =======
-    If `return_logprobs` is True, returns a dict with the sampled text, tokens,
-        and corresponding logprobs. If `n_samples` is None, the outer list is
-        removed from all values.
-    Otherwise, returns the sampled text, or a list of sampled texts if
+    Returns the sampled text, or a list of sampled texts if
         `n_samples` is not None.
     """
     result = completion_fn(
@@ -237,5 +234,4 @@ def sample_freeform(
         **kwargs,
     )
     sampled = result.get_completions()[0]
-    record_sampling(prompt=result.prompt, sampled=sampled)
     return sampled
