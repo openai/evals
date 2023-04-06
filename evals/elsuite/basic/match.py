@@ -1,8 +1,8 @@
 from typing import Any
 
 import evals
-from evals.api import CompletionFn
 import evals.metrics
+from evals.api import CompletionFn
 from evals.prompt.base import is_chat_prompt
 
 
@@ -18,6 +18,7 @@ class Match(evals.Eval):
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
+        assert len(completion_fns) == 1, "match only supports one completion fn"
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
         self.num_few_shot = num_few_shot
