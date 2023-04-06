@@ -14,18 +14,15 @@ class Includes(evals.Eval):
         completion_fns: list[CompletionFn],
         samples_jsonl: str,
         *args,
-        max_tokens: int = 500,
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
-        self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
 
     def eval_sample(self, sample: Any, *_):
         prompt = sample["input"]
         result = self.completion_fn(
             prompt=prompt,
-            max_tokens=self.max_tokens,
         )
         sampled = result.get_completions()[0]
 
