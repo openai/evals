@@ -3,7 +3,6 @@ from typing import Any
 import numpy as np
 
 import evals
-from evals.api import CompletionFn
 import evals.metrics
 from evals.api import CompletionFn
 from evals.elsuite import utils
@@ -18,8 +17,7 @@ class Includes(evals.Eval):
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
-        assert len(completion_fns) == 1, "includes only supports one completion fn"
-        self.max_tokens = max_tokens
+        assert len(completion_fns) == 1, "Includes only supports one completion fn"
         self.samples_jsonl = samples_jsonl
 
     def eval_sample(self, sample: Any, *_):
