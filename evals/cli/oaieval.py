@@ -36,6 +36,7 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--log_to_file", type=str, default=None, help="Log to a file instead of stdout"
     )
+    parser.add_argument("--registry_path", type=str, default=None, action='append', help='Path to the registry')
     parser.add_argument("--debug", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--local-run", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
@@ -52,6 +53,9 @@ def run(args, registry: Optional[Registry] = None):
         evals.eval.set_max_samples(args.max_samples)
 
     registry = registry or Registry()
+    if args.registry_path:
+        registry.add_registry_paths(args.registry_path)
+
     eval_spec = registry.get_eval(args.eval)
     assert (
         eval_spec is not None
