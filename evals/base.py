@@ -13,6 +13,18 @@ else:
     from pydantic.dataclasses import dataclass
 
 @dataclass
+class CompletionFnSpec:
+    """
+    Specification for a CompletionFn.
+    """
+
+    cls: str
+    args: Optional[Dict[str, Any]] = None
+    key: Optional[str] = None
+    group: Optional[str] = None
+
+
+@dataclass
 class BaseEvalSpec:
     """
     Specification for a base eval.

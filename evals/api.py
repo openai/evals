@@ -166,9 +166,20 @@ class OpenAIChatCompletionFn(CompletionFn):
             messages=openai_create_prompt,
             **{**kwargs, **self.extra_options},
         )
-        result = OpenAIChatCompletionResult(raw_data=result, prompt=openai_create_prompt)
+        result = OpenAIChatCompletionResult(
+            raw_data=result, prompt=openai_create_prompt
+        )
         record_sampling(prompt=result.prompt, sampled=result.get_completions())
         return result
+
+class DummyCompletionResult(CompletionResult):
+    def get_completions(self) -> list[str]:
+        return ["This is a dummy response."]
+
+
+class DummyCompletionFn(CompletionFn):
+    def __call__(self, prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt], **kwargs) -> CompletionResult:
+        return DummyCompletionResult()
 
 
 class DummyCompletionResult(CompletionResult):
@@ -219,7 +230,6 @@ def record_and_check_match(
     match = picked in expected
     result["expected"] = expected
     result["match"] = match
-    record_sampling(**result)
     record_match(match, expected=expected, picked=picked, sampled=sampled, options=options)
     return picked
 
