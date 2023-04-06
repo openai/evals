@@ -1,9 +1,9 @@
 test-modelgraded:
   evals:
     - logic-fact
-    - joke-animals
-    - joke-animals-likert
     - joke-fruits
+    - joke-fruits-v2
+    - joke-fruits-likert
     - joke-fruits-meta
     - joke-fruits-expl-meta
     - joke-fruits-ans-meta

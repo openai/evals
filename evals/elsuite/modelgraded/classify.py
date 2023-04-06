@@ -19,7 +19,7 @@ from evals.elsuite.modelgraded.classify_utils import (
     concat_n_completions,
     get_choice,
 )
-from evals.elsuite.utils import PromptFn, format_prompt, scrub_formatting_from_prompt
+from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt
 
 
 class ModelBasedClassify(evals.Eval):
@@ -72,14 +72,13 @@ class ModelBasedClassify(evals.Eval):
             self.eval_modelspec = ModelSpec(name=eval_model, model=eval_model, is_chat=True)
 
         spec_kwargs = {"multicomp_n": self.multicomp_n}
-        if eval_type:
-            spec_kwargs["eval_type"] = eval_type
-            spec_kwargs["append_answer_prompt"] = True  # append answer prompt to prompt
         if modelgraded_spec_args:
             spec_kwargs["args"] = modelgraded_spec_args
         self.mg: ModelGradedSpec = self.registry.get_modelgraded_spec(
             modelgraded_spec, **spec_kwargs
         )
+        if eval_type:
+            self.mg.append_answer_prompt(eval_type)
 
     def eval_sample(self, test_sample: dict, rng: Random) -> None:
         """Evaluate a single sample.
@@ -148,7 +147,7 @@ class ModelBasedClassify(evals.Eval):
             args_dict = {CHOICE_KEY: {}}
         for metric, args in args_dict.items():
             args = {k: v[1] for k, v in args.items()}
-            prompt = format_prompt(self.mg.prompt, **args, **completions, **test_sample)
+            prompt = self.mg.format(**args, **completions, **test_sample)
             evaluate = PromptFn(
                 prompt,
                 model_spec=self.eval_modelspec,
