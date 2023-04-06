@@ -1,6 +1,7 @@
 from typing import Any
 
 import evals
+from evals.api import CompletionFn
 import evals.metrics
 from evals.api import CompletionFn
 from evals.prompt.base import is_chat_prompt
@@ -41,8 +42,6 @@ class Match(evals.Eval):
             temperature=0.0,
         )
         sampled = result.get_completions()[0]
-
-        evals.record.record_sampling(prompt=prompt, sampled=sampled)
 
         return evals.record_and_check_match(
             prompt=prompt,

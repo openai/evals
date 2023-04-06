@@ -29,7 +29,6 @@ class FuzzyMatch(evals.Eval):
             max_tokens=16,
         )
         sampled = result.get_completions()[0]
-        evals.record.record_sampling(prompt=prompt, sampled=sampled)
 
         matches = [utils.fuzzy_match(sampled, correct_answer) for correct_answer in correct_answers]
         evals.record.record_match(

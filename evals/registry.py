@@ -18,7 +18,7 @@ import openai
 import yaml
 from evals.api import CompletionFn, DummyCompletionFn, OpenAIChatCompletionFn, OpenAICompletionFn
 
-from evals.base import BaseEvalSpec, EvalSetSpec, EvalSpec
+from evals.base import BaseEvalSpec, CompletionFnSpec, EvalSetSpec, EvalSpec
 from evals.utils.misc import make_object
 
 logger = logging.getLogger(__name__)
@@ -67,47 +67,39 @@ class Registry:
     def api_model_ids(self):
         return [m["id"] for m in openai.Model.list()["data"]]
 
-    def make_completion_fn(self, url: str) -> CompletionFn:
+    def make_completion_fn(self, name: str) -> CompletionFn:
         """
-        Create a CompletionFn from a URL. The URL can be one of the following formats:
+        Create a CompletionFn. The name can be one of the following formats:
         1. openai-model-id (e.g. "gpt-3.5-turbo")
-        2. a.b.c:Class?arg1=val1&arg2=val2
+        2. completion-fn-id (from the registry)
         """
-        parsed = urlparse(url)
 
-        # If the URL is just a model ID, treat it as an OpenAI API model
-        if parsed.scheme == "":
-            model = parsed.path
-            if model == "dummy":
-                return DummyCompletionFn()
+        if name == "dummy":
+            return DummyCompletionFn()
 
-            n_ctx = n_ctx_from_model_name(model)
+        n_ctx = n_ctx_from_model_name(name)
 
-            CHAT_MODELS = {
-                "gpt-3.5-turbo",
-                "gpt-3.5-turbo-0301",
-                "gpt-4",
-                "gpt-4-0314",
-                "gpt-4-32k",
-                "gpt-4-32k-0314",
-            }
+        CHAT_MODELS = {
+            "gpt-3.5-turbo",
+            "gpt-3.5-turbo-0301",
+            "gpt-4",
+            "gpt-4-0314",
+            "gpt-4-32k",
+            "gpt-4-32k-0314",
+        }
 
-            if model in CHAT_MODELS:
-                return OpenAIChatCompletionFn(model=model, n_ctx=n_ctx)
-            elif model in self.api_model_ids:
-                return OpenAICompletionFn(model=model, n_ctx=n_ctx)
-            else:
-                raise ValueError(f"Couldn't find OpenAI API model: {model}")
+        if name in CHAT_MODELS:
+            return OpenAIChatCompletionFn(model=name, n_ctx=n_ctx)
+        elif name in self.api_model_ids:
+            return OpenAICompletionFn(model=name, n_ctx=n_ctx)
 
-        # Otherwise, use the class specified in the URL
-        cls = parsed.scheme + ":" + parsed.path
-        args = parse_qs(parsed.query)
-        for k, v in args.items():
-            if len(v) == 1:
-                args[k] = v[0]
+        # No match, so try to find a completion-fn-id in the registry
+        spec = self.get_completion_fn(name)
+        if spec is None:
+            raise ValueError(f"Could not find CompletionFn in the registry with ID {name}")
 
-        instance = make_object(cls)(**args or {})
-        assert isinstance(instance, CompletionFn), f"{url} point to a CompletionFn"
+        instance = make_object(spec.cls)(**spec.args or {})
+        assert isinstance(instance, CompletionFn), f"{name} must be a CompletionFn"
         return instance
 
     def get_class(self, spec: dict) -> Any:
@@ -145,6 +137,9 @@ class Registry:
             f"Closest matches: {difflib.get_close_matches(name, self._modelgraded_specs.keys(), n=5)}"
         )
         return self._modelgraded_specs[name]
+
+    def get_completion_fn(self, name: str) -> CompletionFnSpec:
+        return self._dereference(name, self._completion_fns, "completion_fn", CompletionFnSpec)
 
     def get_eval(self, name: str) -> EvalSpec:
         return self._dereference(name, self._evals, "eval", EvalSpec)
@@ -237,6 +232,10 @@ class Registry:
                 else:
                     self._process_file(registry, path)
         return registry
+
+    @functools.cached_property
+    def _completion_fns(self):
+        return self._load_registry([p / "completion_fns" for p in self._registry_paths])
 
     @functools.cached_property
     def _eval_sets(self):

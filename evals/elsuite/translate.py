@@ -3,6 +3,7 @@ from typing import Any
 from sacrebleu.metrics.bleu import BLEU
 
 import evals
+from evals.api import CompletionFn
 import evals.metrics
 from evals.prompt.base import is_chat_prompt
 
@@ -10,16 +11,15 @@ from evals.prompt.base import is_chat_prompt
 class Translate(evals.Eval):
     def __init__(
         self,
-        model_specs: evals.ModelSpecs,
+        completion_fns: list[CompletionFn],
         samples_jsonl: str,
         *args,
         max_tokens: int = 500,
         num_few_shot: int = 0,
         few_shot_jsonl: str = None,
-        completion_fn: evals.CompletionFn = evals.OpenAIChatCompletionFn(),
         **kwargs,
     ):
-        super().__init__(model_specs, *args, **kwargs)
+        super().__init__(completion_fns, *args, **kwargs)
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
 
@@ -30,7 +30,6 @@ class Translate(evals.Eval):
             self.few_shot = evals.get_jsonl(self.few_shot_jsonl)
 
         self.bleu = BLEU(effective_order=True)
-        self._completion_fn = completion_fn
 
     def eval_sample(self, sample: Any, *_):
         prompt = sample["input"]
@@ -47,13 +46,11 @@ class Translate(evals.Eval):
         elif not isinstance(expected, list):
             expected = [expected]
 
-        result = self._completion_fn(
+        result = self.completion_fn(
             prompt=prompt,
             max_tokens=self.max_tokens,
-            model_spec=self.model_spec,
         )
         sampled = result.get_completions()[0]
-        evals.record.record_sampling(prompt=prompt, sampled=sampled)
 
         score = None
         if expected is not None:
