@@ -16,6 +16,7 @@ class FuzzyMatch(evals.Eval):
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
+        assert len(completion_fns) == 1, "FuzzyMatch only supports one completion fn"
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
 

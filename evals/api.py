@@ -111,7 +111,7 @@ class OpenAICompletionFn(CompletionFn):
                 raw_prompt=prompt,
             )
 
-        openai_create_prompt: OpenAICreatePrompt = prompt.to_openai_create_prompt()
+        openai_create_prompt: OpenAICreatePrompt = prompt.to_formatted_prompt()
 
         result = openai_completion_create_retrying(
             model=self.model,
@@ -157,7 +157,7 @@ class OpenAIChatCompletionFn(CompletionFn):
                 raw_prompt=prompt,
             )
 
-        openai_create_prompt: OpenAICreateChatPrompt = prompt.to_openai_create_prompt()
+        openai_create_prompt: OpenAICreateChatPrompt = prompt.to_formatted_prompt()
 
         result = openai_chat_completion_create_retrying(
             model=self.model,
@@ -166,11 +166,10 @@ class OpenAIChatCompletionFn(CompletionFn):
             messages=openai_create_prompt,
             **{**kwargs, **self.extra_options},
         )
-        result = OpenAIChatCompletionResult(
-            raw_data=result, prompt=openai_create_prompt
-        )
+        result = OpenAIChatCompletionResult(raw_data=result, prompt=openai_create_prompt)
         record_sampling(prompt=result.prompt, sampled=result.get_completions())
         return result
+
 
 class DummyCompletionResult(CompletionResult):
     def get_completions(self) -> list[str]:
@@ -178,7 +177,9 @@ class DummyCompletionResult(CompletionResult):
 
 
 class DummyCompletionFn(CompletionFn):
-    def __call__(self, prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt], **kwargs) -> CompletionResult:
+    def __call__(
+        self, prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt], **kwargs
+    ) -> CompletionResult:
         return DummyCompletionResult()
 
 
