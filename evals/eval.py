@@ -12,7 +12,8 @@ from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple
 
 from tqdm import tqdm
 
-from .base import ModelSpec, ModelSpecs
+from evals.api import CompletionFn
+
 from .record import RecorderBase
 from .registry import Registry
 from .data import get_jsonl
@@ -52,7 +53,7 @@ class Eval(abc.ABC):
 
     def __init__(
         self,
-        model_specs: ModelSpecs,
+        completion_fns: list[CompletionFn],
         seed: int = 20220722,
         name: str = "no_name_eval.default",
         registry: Optional[Registry] = None,
@@ -62,7 +63,7 @@ class Eval(abc.ABC):
         if len(splits) < 2:
             raise ValueError(f"Eval name must at least have <base_eval>.<split>. Got name {name}")
 
-        self.model_specs = model_specs
+        self.completion_fns = completion_fns
         self.seed = seed
         self.name = name
         self.registry = registry or Registry()
@@ -71,15 +72,10 @@ class Eval(abc.ABC):
     def eval_sample(self, sample: Any, rng: random.Random):
         raise NotImplementedError()
 
-    @classmethod
-    def create_and_run(cls, model_specs: ModelSpecs, *args, **kwargs) -> Dict[str, float]:
-        logging.info(f"Running {cls.__name__} with {model_specs}, args: {args}, kwargs: {kwargs}")
-        return cls(model_specs).run(*args, **kwargs)
-
     @property
-    def model_spec(self) -> ModelSpec:
-        """Helper for more ergonomic access to a single model."""
-        return self.model_specs.completion
+    def completion_fn(self) -> CompletionFn:
+        """Helper for more ergonomic access to a single CompletionFn."""
+        return self.completion_fns[0]
 
     @abc.abstractmethod
     def run(self, recorder: RecorderBase) -> Dict[str, float]:

@@ -4,30 +4,26 @@ import numpy as np
 
 import evals
 import evals.metrics
+from evals.api import CompletionFn
 from evals.elsuite import utils
 
 
 class Includes(evals.Eval):
     def __init__(
         self,
-        model_specs: evals.ModelSpecs,
+        completion_fns: list[CompletionFn],
         samples_jsonl: str,
         *args,
-        max_tokens: int = 500,
-        completion_fn: evals.CompletionFn = evals.OpenAIChatCompletionFn(),
         **kwargs,
     ):
-        super().__init__(model_specs, *args, **kwargs)
-        self.max_tokens = max_tokens
+        super().__init__(completion_fns, *args, **kwargs)
+        assert len(completion_fns) == 1, "Includes only supports one completion fn"
         self.samples_jsonl = samples_jsonl
-        self._completion_fn = completion_fn
 
     def eval_sample(self, sample: Any, *_):
         prompt = sample["input"]
-        result = self._completion_fn(
+        result = self.completion_fn(
             prompt=prompt,
-            max_tokens=self.max_tokens,
-            model_spec=self.model_spec,
         )
         sampled = result.get_completions()[0]
 
