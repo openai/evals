@@ -102,15 +102,10 @@ class OpenAICompletionFn(CompletionFn):
         if not isinstance(prompt, Prompt):
             assert (
                 isinstance(prompt, str)
-                or (
-                    isinstance(prompt, list)
-                    and all(isinstance(token, int) for token in prompt)
-                )
-                or (
-                    isinstance(prompt, list)
-                    and all(isinstance(token, str) for token in prompt)
-                )
-            ), f"Got type {type(prompt)}, with val {type(prompt[0])} for prompt, expected str or list[int] or list[str]"
+                or (isinstance(prompt, list) and all(isinstance(token, int) for token in prompt))
+                or (isinstance(prompt, list) and all(isinstance(token, str) for token in prompt))
+                or (isinstance(prompt, list) and all(isinstance(msg, dict) for msg in prompt))
+            ), f"Got type {type(prompt)}, with val {type(prompt[0])} for prompt, expected str or list[int] or list[str] or list[dict[str, str]]"
 
             prompt = CompletionPrompt(
                 raw_prompt=prompt,

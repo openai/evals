@@ -73,10 +73,10 @@ class Registry:
         1. openai-model-id (e.g. "gpt-3.5-turbo")
         2. a.b.c:Class?arg1=val1&arg2=val2
         """
-        parsed = urlparse(url)
 
         # If the URL is just a model ID, treat it as an OpenAI API model
-        if parsed.scheme == "":
+        if ":" not in url:
+            parsed = urlparse(url)
             model = parsed.path
             if model == "dummy":
                 return DummyCompletionFn()
@@ -100,7 +100,15 @@ class Registry:
                 raise ValueError(f"Couldn't find OpenAI API model: {model}")
 
         # Otherwise, use the class specified in the URL
-        cls = parsed.scheme + ":" + parsed.path
+        parsed = urlparse(url)
+
+        cls = ""
+        if parsed.scheme:
+            cls += parsed.scheme + ":"
+        cls += parsed.path
+
+        print(cls)
+
         args = parse_qs(parsed.query)
         for k, v in args.items():
             if len(v) == 1:
