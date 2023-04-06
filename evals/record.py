@@ -346,7 +346,7 @@ class Recorder(RecorderBase):
 
         query = """
             INSERT ALL INTO runs (run_id, model_name, eval_name, base_eval, split, run_config, settings, created_by, created_at)
-            VALUES (%(run_id)s, %(completion_fns)s, %(eval_name)s, %(base_eval)s, %(split)s, run_config, settings, %(created_by)s, %(created_at)s)
+            VALUES (%(run_id)s, %(model_name)s, %(eval_name)s, %(base_eval)s, %(split)s, run_config, settings, %(created_by)s, %(created_at)s)
             SELECT PARSE_JSON(%(run_config)s) AS run_config, PARSE_JSON(%(settings)s) AS settings
         """
         self._conn.robust_query(
