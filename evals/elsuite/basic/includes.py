@@ -30,7 +30,6 @@ class Includes(evals.Eval):
             model_spec=self.model_spec,
         )
         sampled = result.get_completions()[0]
-        evals.record.record_sampling(prompt=prompt, sampled=sampled)
 
         includes_answer = any([utils.get_answer(sampled, ref) for ref in sample["ideal"]])
         evals.record.record_metrics(accuracy=float(includes_answer))

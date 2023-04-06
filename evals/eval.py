@@ -130,8 +130,6 @@ class Eval(abc.ABC):
             base_name, split = self.name.split(".")[0:2]
             sample_id = f"{base_name}.{split}.{idx}"
             with recorder.as_default_recorder(sample_id):
-                if record_raw_sample:
-                    recorder.record_raw(sample)
                 seed = f"{sample_id}:{self.seed}".encode("utf-8")
                 rng = random.Random(seed)
                 return idx, self.eval_sample(sample, rng)

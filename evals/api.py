@@ -187,7 +187,6 @@ def record_and_check_match(
     match = picked in expected
     result["expected"] = expected
     result["match"] = match
-    record_sampling(**result)
     record_match(match, expected=expected, picked=picked, sampled=sampled, options=options)
     return picked
 
