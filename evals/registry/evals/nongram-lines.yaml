@@ -1,0 +1,8 @@
+nonogram-lines:
+  id: nonogram-lines.dev.v0
+  metrics: [accuracy]
+
+nonogram-lines.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: nonogram-lines/samples.jsonl
