@@ -1,17 +1,17 @@
 # Evals
 
-Evals is a framework for evaluating language models (LMs) and model programs. It also includes an open-source registry of benchmarks.
+Evals is a framework for evaluating large language models (LLMs) and LLM Programs. It also includes an open-source registry of challenging benchmark evals.
 
 You can use Evals to create and run evaluations that:
 - use datasets to generate prompts,
-- measure the quality of completions provided by LMs or model programs, and
-- compare performance across different datasets and completion functions.
+- measure the quality of completions provided by LLMs or LLM programs, and
+- compare performance across different datasets.
 
-Completion functions implement a common protocol that map inputs to string completions. Evals can now be run on any implementation of the Completion Function (`CompletionFn`) protocol.
+(April 7 update): We now support evaluating the performance of any end-to-end application logic via the [Completion Function Protocol](docs/completion-fns.md).
 
 With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. To get started, we recommend that you follow these steps:
 
-To get set up with evals, rread through this doc and follow the [setup instructions below](README.md#Setup).
+To get set up with evals, follow the [setup instructions below](README.md#Setup).
 
 #### Running evals
 - Learn how to run existing evals: [run-evals.md](docs/run-evals.md).
@@ -22,7 +22,7 @@ To get set up with evals, rread through this doc and follow the [setup instructi
 - See an example of implementing custom eval logic: [custom-eval.md](docs/custom-eval.md).
 
 #### Writing CompletionFns
-6. Writing your own completion functions
+- Write your own completion functions: [completion-fns.md](docs/completion-fns.md)
 
 If you think you have an interesting eval, please open a PR with your contribution. OpenAI staff actively review these evals when considering improvements to upcoming models.
 

@@ -33,7 +33,7 @@ class CompletionResult(ABC):
 class CompletionFn(Protocol):
     def __call__(
         self,
-        prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
+        prompt: Union[str, OpenAICreateChatPrompt],
         **kwargs,
     ) -> CompletionResult:
         """
