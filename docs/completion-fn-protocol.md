@@ -2,6 +2,10 @@
 
 Here are the interfaces needed to implement the completion function protocol. Any implementation of this interface can be used inside `oaieval`.
 
+Reference implementations:
+- [OpenAICompletionFn](../evals/completion_fns/openai.py)
+- [LangChainLLMCompletionFn](../evals/completion_fns/langchain_llm.py)
+
 #### CompletionFn
 Completion functions should implement the `CompletionFn` interface:
 ```python
