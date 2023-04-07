@@ -1,13 +1,13 @@
 # Evals
 
-Evals is a framework for evaluating large language models (LLMs) and LLM Programs. It also includes an open-source registry of challenging benchmark evals.
+Evals is a framework for evaluating large language models (LLMs) and other prompt completion functions. It also includes an open-source registry of challenging benchmark evals.
 
 You can use Evals to create and run evaluations that:
 - use datasets to generate prompts,
-- measure the quality of completions provided by LLMs or LLM programs, and
+- measure the quality of completions provided by prompt completion functions, and
 - compare performance across different datasets.
 
-(April 7 update): We now support evaluating the performance of any end-to-end application logic via the [Completion Function Protocol](docs/completion-fns.md).
+(April 7 update): We now support evaluating the performance of any prompt completion function, like LLMs, prompt chains or tool-using agents, via the [Completion Function Protocol](docs/completion-fns.md).
 
 With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. To get started, we recommend that you follow these steps:
 
