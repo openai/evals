@@ -9,21 +9,22 @@ import functools
 import logging
 import os
 import re
-from functools import cached_property, partial
+from functools import cached_property
 from pathlib import Path
 from typing import Any, Iterator, Optional, Sequence, Type, Union
-from urllib.parse import urlparse, parse_qs
+
 import openai
-
 import yaml
-from evals.api import CompletionFn, DummyCompletionFn, OpenAIChatCompletionFn, OpenAICompletionFn
 
+from evals import OpenAIChatCompletionFn, OpenAICompletionFn
+from evals.api import CompletionFn, DummyCompletionFn
 from evals.base import BaseEvalSpec, CompletionFnSpec, EvalSetSpec, EvalSpec
 from evals.utils.misc import make_object
 
 logger = logging.getLogger(__name__)
 
 DEFAULT_PATHS = [Path(__file__).parents[0].resolve() / "registry", Path.home() / ".evals"]
+
 
 def n_ctx_from_model_name(model_name: str) -> Optional[int]:
     """Returns n_ctx for a given API model name. Model list last updated 2023-03-14."""
@@ -58,6 +59,7 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
             return n_ctx
     # otherwise, look for an exact match and return None if not found
     return DICT_OF_N_CTX_BY_MODEL_NAME.get(model_name, None)
+
 
 class Registry:
     def __init__(self, registry_paths: Sequence[Union[str, Path]] = DEFAULT_PATHS):

@@ -12,8 +12,8 @@ from typing import Callable, Iterable, Optional, Union
 import openai
 
 import evals
-from evals.api import CompletionFn, DummyCompletionFn, OpenAIChatCompletionFn
 import evals.record
+from evals import CompletionFn, DummyCompletionFn, OpenAIChatCompletionFn
 from evals.elsuite.utils import PromptFn, format_necessary, scrub_formatting_from_prompt
 
 INVALID_STR = "__invalid__"
@@ -130,9 +130,7 @@ class ModelBasedClassify(evals.Eval):
         if isinstance(self.completion_fn, DummyCompletionFn):
             self.eval_completion_fn = self.completion_fn
         else:
-            self.eval_completion_fn = OpenAIChatCompletionFn(
-                model="gpt-3.5-turbo"
-            )
+            self.eval_completion_fn = OpenAIChatCompletionFn(model="gpt-3.5-turbo")
 
         """import prompt and set attributes"""
         modelgraded_specs = self.registry.get_modelgraded_spec(modelgraded_spec)
