@@ -1,0 +1,17 @@
+music-theory-seventh-chord-notes:
+  id: music-theory-seventh-chord-notes.dev.v0
+  description: Test the model's ability to spell out the notes in a seventh chord
+  metrics: [accuracy]
+music-theory-seventh-chord-notes.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: music_theory/music_theory_seventh_chord_notes.jsonl
+
+music-theory-seventh-chord-names:
+  id: music-theory-seventh-chord-names.dev.v0
+  description: Test the model's ability to identify four notes to a chord
+  metrics: [accuracy]
+music-theory-seventh-chord-names.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: music_theory/music_theory_seventh_chord_names.jsonl
