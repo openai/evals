@@ -1,18 +1,28 @@
 # Evals
 
-Evals is a framework for evaluating OpenAI models and an open-source registry of benchmarks.
+Evals is a framework for evaluating language models (LMs) and model programs. It also includes an open-source registry of benchmarks.
 
 You can use Evals to create and run evaluations that:
 - use datasets to generate prompts,
-- measure the quality of completions provided by an OpenAI model, and
-- compare performance across different datasets and models.
+- measure the quality of completions provided by LMs or model programs, and
+- compare performance across different datasets and completion functions.
 
-With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. To get started, we recommend that you follow these steps **in order**:
-1. Read through this doc and follow the [setup instructions below](README.md#Setup).
-2. Learn how to run existing evals: [run-evals.md](docs/run-evals.md).
-3. Familiarize yourself with the existing eval templates: [eval-templates.md](docs/eval-templates.md).
-4. Walk through the process for building an eval: [build-eval.md](docs/build-eval.md)
-5. See an example of implementing custom eval logic: [custom-eval.md](docs/custom-eval.md).
+Completion functions implement a common protocol that map inputs to string completions. Evals can now be run on any implementation of the Completion Function (`CompletionFn`) protocol.
+
+With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. To get started, we recommend that you follow these steps:
+
+To get set up with evals, rread through this doc and follow the [setup instructions below](README.md#Setup).
+
+#### Running evals
+- Learn how to run existing evals: [run-evals.md](docs/run-evals.md).
+- Familiarize yourself with the existing eval templates: [eval-templates.md](docs/eval-templates.md).
+
+#### Writing evals
+- Walk through the process for building an eval: [build-eval.md](docs/build-eval.md)
+- See an example of implementing custom eval logic: [custom-eval.md](docs/custom-eval.md).
+
+#### Writing CompletionFns
+6. Writing your own completion functions
 
 If you think you have an interesting eval, please open a PR with your contribution. OpenAI staff actively review these evals when considering improvements to upcoming models.
 
