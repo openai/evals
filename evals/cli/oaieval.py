@@ -24,7 +24,11 @@ def _purple(str):
 
 def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run evals through the API")
-    parser.add_argument("completion_fn", type=str, help="One or more CompletionFn URLs, separated by commas (,). The format of a CompletionFn URL can be two forms: 1) an OpenAI API model followed by query parameters (e.g. `gpt-3.5-turbo?api_key=..`) or 2) a path to a Python class followed by query parameters (e.g. `evals.api:OpenAICompletionFn?model=text-davinci-003`).")
+    parser.add_argument(
+        "completion_fn",
+        type=str,
+        help="One or more CompletionFn URLs, separated by commas (,). The format of a CompletionFn URL can be two forms: 1) an OpenAI API model followed by query parameters (e.g. `gpt-3.5-turbo?api_key=..`) or 2) a path to a Python class followed by query parameters (e.g. `evals:OpenAICompletionFn?model=text-davinci-003`).",
+    )
     parser.add_argument("eval", type=str, help="Name of an eval. See registry.")
     parser.add_argument("--extra_eval_params", type=str, default="")
     parser.add_argument("--max_samples", type=int, default=None)
@@ -36,12 +40,15 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--log_to_file", type=str, default=None, help="Log to a file instead of stdout"
     )
-    parser.add_argument("--registry_path", type=str, default=None, action='append', help='Path to the registry')
+    parser.add_argument(
+        "--registry_path", type=str, default=None, action="append", help="Path to the registry"
+    )
     parser.add_argument("--debug", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--local-run", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
     return parser
+
 
 def run(args, registry: Optional[Registry] = None):
     if args.debug:

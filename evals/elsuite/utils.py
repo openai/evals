@@ -2,9 +2,16 @@ import copy
 import re
 import string
 from collections import Counter, defaultdict
+from typing import Optional, Union
 
-from evals.api import sample_freeform
-from evals.prompt.base import chat_prompt_to_text_prompt, is_chat_prompt
+from evals import CompletionFn
+from evals.prompt.base import (
+    OpenAICreateChatPrompt,
+    OpenAICreatePrompt,
+    Prompt,
+    chat_prompt_to_text_prompt,
+    is_chat_prompt,
+)
 
 
 def get_answer(text, answer_prompt):
@@ -99,14 +106,26 @@ def format_necessary(template: str, **kwargs: dict[str, str]) -> str:
 
 
 class PromptFn:
-    """Wrap calls to model with prompt"""
+    """
+    Wrap calls to a completion_fn with a prompt template with applicable keyword args.
+    This will pass many args relevant to OpenAI Completion API, may be ignored by other completion_fn.
+    """
 
-    def __init__(self, prompt, completion_fn, max_tokens, temperature=0, completion_kwargs=None):
+    def __init__(
+        self,
+        prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
+        completion_fn: CompletionFn,
+        max_tokens: int,
+        temperature: int = 0,
+        n_samples: Optional[int] = None,
+        completion_kwargs: Optional[dict] = {},
+    ):
         self.prompt = prompt
         self.max_tokens = max_tokens
         self.completion_fn = completion_fn
         self.temperature = temperature
-        self.completion_kwargs = completion_kwargs or {}
+        self.completion_kwargs = completion_kwargs
+        self.n_samples = n_samples
 
     def __call__(self, **kwargs):
         # if any input kwargs is chat prompt, convert to text prompt
@@ -124,14 +143,15 @@ class PromptFn:
             # Prompt is a string
             prompt = format_necessary(self.prompt, **kwargs)
 
-        completion = sample_freeform(
-            prompt,
-            completion_fn=self.completion_fn,
+        result = self.completion_fn(
+            prompt=prompt,
             max_tokens=self.max_tokens,
             temperature=self.temperature,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0,
+            n=(1 if self.n_samples is None else self.n_samples),
             **self.completion_kwargs,
         )
-        return completion, prompt
+        sampled = result.get_completions()[0]
+        return sampled, prompt

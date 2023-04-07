@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 ENCODER_LOCK = threading.Lock()
 
 # This is an approximation to the type accepted as the `prompt` field to `openai.Completion.create` calls
-OpenAICreatePrompt = Union[str, list[str], list[int], list[list[int]]]
+OpenAICreatePrompt = Union[str, list[str]]
 
 # This is the type accepted as the `prompt` field to `openai.ChatCompletion.create` calls
 OpenAIChatMessage = Dict[str, str]  # A message is a dictionary with "role" and "content" keys
@@ -65,8 +65,7 @@ class Prompt(ABC):
     @abstractmethod
     def to_formatted_prompt(self):
         """
-        Return the actual data to be passed as the `prompt` field to either `openai.ChatCompletion.create`,
-        if the model is a chat model, or `openai.Completion.create` otherwise.
+        Return the actual data to be passed as the `prompt` field to your model.
         See the above types to see what each API call is able to handle.
         """
 
