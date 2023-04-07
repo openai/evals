@@ -18,8 +18,3 @@ langchain_flan-t5-xl:
     llm: HuggingFaceHub
     llm_kwargs:
       repo_id: google/flan-t5-xl
-
-langchain_anthropic:
-  class: evals.completion_fns.langchain_llm:LangChainLLMCompletionFn
-  args:
-    llm: Anthropic
