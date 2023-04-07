@@ -190,6 +190,19 @@ def record_and_check_match(
     separator: Callable[[str], bool] = None,
     options: Optional[list[str]] = None,
 ):
+    """
+    Records and checks if a sampled response from a CompletionFn matches the expected result.
+
+    Args:
+        prompt: The input prompt.
+        sampled: The sampled response from the model.
+        expected: The expected response or list of responses.
+        separator: Optional function to check if a character is a separator.
+        options: Optional list of options to match against the sampled response.
+
+    Returns:
+        The matched option or None if no match found.
+    """
     if isinstance(expected, tuple):
         expected = list(expected)
     elif not isinstance(expected, list):
@@ -221,48 +234,3 @@ def record_and_check_match(
     result["match"] = match
     record_match(match, expected=expected, picked=picked, sampled=sampled, options=options)
     return picked
-
-
-def sample_freeform(
-    prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
-    *,
-    completion_fn: CompletionFn = OpenAIChatCompletionFn(),
-    temperature: float = 1.0,
-    top_p: float = 0.9,
-    max_tokens: int = 512,
-    stop: Optional[str] = None,
-    n_samples: Optional[int] = None,
-    **kwargs,
-) -> Union[str, list[str], dict]:
-    """
-    Samples a freeform response from the specified model, records the sampling,
-        and returns the sampled text.
-
-    ARGS
-    ====
-    `model_spec`: See `completion_query`.
-    `prompt`: See `completion_query`.
-    `temperature`: Passed to `openai.Completion.create`.
-    `top_p`: Passed to `openai.Completion.create`.
-    `max_tokens`: Passed to `openai.Completion.create`.
-    `stop`: Passed to `openai.Completion.create`.
-    `n_samples`: The number of samples to generate (1 if None).
-    `kwargs`: See `completion_query`.
-
-    RETURNS
-    =======
-    Returns the sampled text, or a list of sampled texts if
-        `n_samples` is not None.
-    """
-    result = completion_fn(
-        prompt=prompt,
-        temperature=temperature,
-        top_p=top_p,
-        max_tokens=max_tokens,
-        stop=stop,
-        n=(1 if n_samples is None else n_samples),
-        headers={},
-        **kwargs,
-    )
-    sampled = result.get_completions()[0]
-    return sampled
