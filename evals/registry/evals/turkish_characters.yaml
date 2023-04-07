@@ -1,0 +1,8 @@
+turkish_characters:
+  id: turkish_characters.dev.v0
+  metrics: [accuracy]
+
+turkish_characters.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: turkish_characters/samples.jsonl
