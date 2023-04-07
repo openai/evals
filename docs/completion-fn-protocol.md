@@ -13,7 +13,7 @@ class CompletionFn(Protocol):
     ) -> CompletionResult:
 ```
 
-We take a `prompt` representing a single sample from an eval. These prompts can be represented as either a text string or a list of messages in [OpenAI Chat format](https://platform.openai.com/docs/guides/chat/introduction). To work with the existing evals, Completion Function implementations would need to handle both types of inputs, but we provide helper functionality to convert Chat formatted messages into text strings if that is the preferred input for your program:
+We take a `prompt` representing a single sample from an eval. These prompts can be represented as either a text string or a list of messages in [OpenAI Chat format](https://platform.openai.com/docs/guides/chat/introduction). To work with the existing evals, Completion Function implementations would need to handle both types of inputs, but we provide helper functionality to convert Chat formatted messages into a text string if that is the preferred input for your program:
 ```python
 from evals.prompt.base import CompletionPrompt
 
