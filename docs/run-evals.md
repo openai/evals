@@ -10,7 +10,7 @@ oaieval gpt-3.5-turbo test-match
 ```
 The valid eval names are specified in the YAML files under `evals/registry/evals` and their corresponding implementations can be found in `evals/elsuite`.
 
-`gpt-3.5-turbo` is an implementation of the [`CompletionFn` protocol](completion-fn-protocol.md). Any implementation of the `CompletionFn` protocol can be run against `oaieval`. By default, we support calling `oaieval` with any model availableon the OpenAI API or with CompletionFunctions available in [`evals/registry/completion_fns`](../evals/registry/completion_fns/). 
+In this example, `gpt-3.5-turbo` is an OpenAI model that we dynamically instantiate as a completion function using `OpenAIChatCompletionFn(model=gpt-3.5-turbo)`. Any implementation of the `CompletionFn` protocol can be run against `oaieval`. By default, we support calling `oaieval` with any model availableon the OpenAI API or with CompletionFunctions available in [`evals/registry/completion_fns`](../evals/registry/completion_fns/). 
 
 More details on `CompletionFn` found here: [`completion-fns.md`](completion-fns.md)
 
