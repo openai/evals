@@ -1,0 +1,8 @@
+solve-for-variable:
+  id: solve-for-variable.dev.v0
+  metrics: [accuracy]
+
+solve-for-variable.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: solve-for-variable/samples.jsonl
