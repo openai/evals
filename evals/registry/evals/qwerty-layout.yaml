@@ -1,0 +1,8 @@
+qwerty-layout:
+  id: qwerty-layout.dev.v0
+  metrics: [accuracy]
+
+qwerty-layout.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: qwerty-layout/samples.jsonl
