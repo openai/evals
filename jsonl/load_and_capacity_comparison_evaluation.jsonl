@@ -1,0 +1,5 @@
+{"input": "If the capacity of a beam is 100 kN/m and the load is 50 kN/m, is the beam safe?", "output": "The beam is safe for the given load."}
+{"input": "What is the safety factor for a slab with a capacity of 60 kN/m2 and a load of 30 kN/m2?", "output": "The safety factor for the given slab is 2."}
+{"input": "If the capacity of a column is 500 kN and the load is 300 kN, is the column safe?", "output": "The column is safe for the given load."}
+{"input": "What is the load capacity of a pile with a diameter of 1 meter and a length of 15 meters?", "output": "The load capacity of the given pile is 1350 kN."}
+{"input": "If the capacity of a foundation is 1000 kN/m2 and the load is 500 kN/m2, is the foundation safe?", "output": "The foundation is safe for the given load."}
