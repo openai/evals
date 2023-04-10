@@ -4,6 +4,7 @@ add an entry in one of the YAML files in the `../registry` dir.
 By convention, every eval name should start with {base_eval}.{split}.
 """
 
+import copy
 import difflib
 import functools
 import logging
@@ -111,8 +112,14 @@ class Registry:
     def get_class(self, spec: dict) -> Any:
         return make_object(spec.cls, **(spec.args if spec.args else {}))
 
-    def _dereference(self, name: str, d: dict, object: str, type: Type) -> dict:
+    def _dereference(self, name: str, d: dict, object: str, type: Type, **kwargs: dict) -> dict:
         if not name in d:
+            logger.warning(
+                (
+                    f"{object} '{name}' not found. "
+                    f"Closest matches: {difflib.get_close_matches(name, d.keys(), n=5)}"
+                )
+            )
             return None
 
         def get_alias():
@@ -131,18 +138,22 @@ class Registry:
             name = alias
 
         spec = d[name]
+        if kwargs:
+            spec = copy.deepcopy(spec)
+            spec.update(kwargs)
 
         try:
             return type(**spec)
         except TypeError as e:
-            raise TypeError(f"Error while processing {object} {name}: {e}")
+            raise TypeError(f"Error while processing {object} '{name}': {e}")
 
-    def get_modelgraded_spec(self, name: str) -> dict[str, Any]:
-        assert name in self._modelgraded_specs, (
-            f"Modelgraded spec {name} not found. "
-            f"Closest matches: {difflib.get_close_matches(name, self._modelgraded_specs.keys(), n=5)}"
+    def get_model(self, name: str) -> ModelSpec:
+        return self._dereference(name, self._models, "model", ModelSpec)
+
+    def get_modelgraded_spec(self, name: str, **kwargs: dict) -> dict[str, Any]:
+        return self._dereference(
+            name, self._modelgraded_specs, "modelgraded spec", ModelGradedSpec, **kwargs
         )
-        return self._modelgraded_specs[name]
 
     def get_completion_fn(self, name: str) -> CompletionFnSpec:
         return self._dereference(name, self._completion_fns, "completion_fn", CompletionFnSpec)
@@ -254,6 +265,10 @@ class Registry:
     @functools.cached_property
     def _modelgraded_specs(self):
         return self._load_registry([p / "modelgraded" for p in self._registry_paths])
+
+    @functools.cached_property
+    def _models(self):
+        return self._load_registry([p / "models" for p in self._registry_paths])
 
 
 registry = Registry()
