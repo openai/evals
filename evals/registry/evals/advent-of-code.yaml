@@ -1,0 +1,9 @@
+advent-of-code:
+  id: advent-of-code.dev.v0
+  description: Test the model's ability to solve hard problems from Advent Of Code.
+  metrics: [accuracy]
+
+advent-of-code.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: advent-of-code/samples.jsonl
