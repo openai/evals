@@ -1,10 +1,10 @@
 # Evals
 
-Evals is a framework for evaluating LLMs (large language models) or systems built using LLMs as components. An "eval" is a task used to evaluate the quality of a system's behavior. The Evals framework also includes an open-source registry of challenging evals.
+Evals is a framework for evaluating LLMs (large language models) or systems built using LLMs as components. It also includes an open-source registry of challenging evals.
 
-(April 7 update): We now support evaluating the behavior of any system including prompt chains or tool-using agents, via the [Completion Function Protocol](docs/completion-fns.md).
+We now support evaluating the behavior of any system including prompt chains or tool-using agents, via the [Completion Function Protocol](docs/completion-fns.md).
 
-With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. To get started, we recommend that you follow these steps:
+With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. An "eval" is a task used to evaluate the quality of a system's behavior. To get started, we recommend that you follow these steps:
 
 To get set up with evals, follow the [setup instructions below](README.md#Setup).
 
