@@ -61,7 +61,7 @@ class OpenAICompletionFn:
 
     def __call__(
         self,
-        prompt: Union[OpenAICreatePrompt, Prompt],
+        prompt: Union[str, OpenAICreateChatPrompt],
         **kwargs,
     ) -> OpenAICompletionResult:
         if not isinstance(prompt, Prompt):
@@ -108,7 +108,7 @@ class OpenAIChatCompletionFn:
 
     def __call__(
         self,
-        prompt: Union[OpenAICreateChatPrompt, Prompt],
+        prompt: Union[str, OpenAICreateChatPrompt],
         **kwargs,
     ) -> OpenAIChatCompletionResult:
         if not isinstance(prompt, Prompt):

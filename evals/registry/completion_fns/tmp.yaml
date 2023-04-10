@@ -1,6 +1,0 @@
-# for testing, remove before committing
-
-testing:
-  class: evals:OpenAIChatCompletionFn
-  args:
-    model: gpt-3.5-turbo

@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 ENCODER_LOCK = threading.Lock()
 
 # This is an approximation to the type accepted as the `prompt` field to `openai.Completion.create` calls
-OpenAICreatePrompt = Union[str, list[str]]
+OpenAICreatePrompt = Union[str, list[str], list[int], list[list[int]]]
 
 # This is the type accepted as the `prompt` field to `openai.ChatCompletion.create` calls
 OpenAIChatMessage = Dict[str, str]  # A message is a dictionary with "role" and "content" keys

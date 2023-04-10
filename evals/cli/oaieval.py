@@ -27,7 +27,7 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "completion_fn",
         type=str,
-        help="One or more CompletionFn URLs, separated by commas (,). The format of a CompletionFn URL can be two forms: 1) an OpenAI API model followed by query parameters (e.g. `gpt-3.5-turbo?api_key=..`) or 2) a path to a Python class followed by query parameters (e.g. `evals:OpenAICompletionFn?model=text-davinci-003`).",
+        help="One or more CompletionFn URLs, separated by commas (,). A CompletionFn can either be the name of a model available in the OpenAI API or a key in the registry (see evals/registry/completion_fns).",
     )
     parser.add_argument("eval", type=str, help="Name of an eval. See registry.")
     parser.add_argument("--extra_eval_params", type=str, default="")
