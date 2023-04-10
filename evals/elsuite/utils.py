@@ -4,7 +4,7 @@ import string
 from collections import Counter, defaultdict
 
 from evals.api import sample_freeform
-from evals.prompt.base import chat_prompt_to_text_prompt, is_chat_prompt
+from evals.prompt.base import OpenAICreatePrompt, chat_prompt_to_text_prompt, is_chat_prompt
 
 
 def get_answer(text, answer_prompt):
@@ -93,9 +93,32 @@ def scrub_formatting_from_prompt(prompt):
 def format_necessary(template: str, **kwargs: dict[str, str]) -> str:
     """Format a template string with only necessary kwargs."""
     keys = [k[1] for k in string.Formatter().parse(template) if k[1]]
-    assert all(k in kwargs for k in keys), f"Required: {keys}, got: {sorted(kwargs)}"
+    assert all(
+        k in kwargs for k in keys
+    ), f"Required: {keys}, got: {sorted(kwargs)}.\nTemplate:\n{template}"
     cur_keys = {k: kwargs[k] for k in keys}
     return template.format(**cur_keys)
+
+
+def format_prompt(prompt: OpenAICreatePrompt, **kwargs: dict[str, str]) -> OpenAICreatePrompt:
+    """Format a prompt with only necessary kwargs."""
+    # if any input kwargs is chat prompt, convert to text prompt
+    kwargs = {
+        k: chat_prompt_to_text_prompt(v, for_completion=False) if is_chat_prompt(v) else v
+        for k, v in kwargs.items()
+    }
+    if is_chat_prompt(prompt):
+        new_prompt = []
+        for msg in prompt:
+            formatted_msg = copy.copy(msg)
+            if "content" in formatted_msg:
+                formatted_msg["content"] = format_necessary(formatted_msg["content"], **kwargs)
+            new_prompt.append(formatted_msg)
+        prompt = new_prompt
+    else:
+        # Prompt is a string
+        prompt = format_necessary(prompt, **kwargs)
+    return prompt
 
 
 class PromptFn:
@@ -108,25 +131,10 @@ class PromptFn:
         self.temperature = temperature
         self.completion_kwargs = completion_kwargs or {}
 
-    def __call__(self, **kwargs):
-        # if any input kwargs is chat prompt, convert to text prompt
-        kwargs = {
-            k: chat_prompt_to_text_prompt(v, render_for_completion=False)
-            if is_chat_prompt(v)
-            else v
-            for k, v in kwargs.items()
-        }
-        if is_chat_prompt(self.prompt):
-            prompt = []
-            for msg in self.prompt:
-                formatted_msg = copy.copy(msg)
-                if "content" in formatted_msg:
-                    formatted_msg["content"] = format_necessary(formatted_msg["content"], **kwargs)
-                prompt.append(formatted_msg)
-        else:
-            # Prompt is a string
-            prompt = format_necessary(self.prompt, **kwargs)
-
+    def __call__(self, skip_format: bool = False, **kwargs):
+        prompt = self.prompt
+        if not skip_format:
+            prompt = format_prompt(prompt, **kwargs)
         completion = sample_freeform(
             self.model_spec,
             prompt,
