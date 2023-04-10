@@ -1,0 +1,9 @@
+letter_count:
+  id: letter_count.dev.v0
+  description: Test model's ability to count number of times a letter appears in a given word.
+  metrics: [accuracy]
+
+letter_count.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: letter_count/samples.jsonl
