@@ -11,8 +11,6 @@ import openai
 import evals
 import evals.record
 from evals import CompletionFn, DummyCompletionFn, OpenAIChatCompletionFn
-from evals.elsuite.utils import PromptFn, format_necessary, scrub_formatting_from_prompt
-
 from evals.elsuite.modelgraded.base import ModelGradedSpec
 from evals.elsuite.modelgraded.classify_utils import (
     CHOICE_KEY,
@@ -151,7 +149,7 @@ class ModelBasedClassify(evals.Eval):
             args = {k: v[1] for k, v in args.items()}
             prompt = self.mg.format(**args, **completions, **test_sample)
             evaluate = PromptFn(
-                self.prompt,
+                prompt,
                 completion_fn=self.eval_completion_fn,
                 max_tokens=self.max_tokens,
             )

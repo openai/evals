@@ -31,7 +31,6 @@ def get_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("eval", type=str, help="Name of an eval. See registry.")
     parser.add_argument("--extra_eval_params", type=str, default="")
-    parser.add_argument("--modelspec_extra_options", type=str, default="")
     parser.add_argument("--max_samples", type=int, default=None)
     parser.add_argument("--cache", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--visible", action=argparse.BooleanOptionalAction, default=None)
@@ -110,6 +109,25 @@ def run(args, registry: Optional[Registry] = None):
     run_url = f"{run_spec.run_id}"
     logger.info(_purple(f"Run started: {run_url}"))
 
+    def parse_extra_eval_params(param_str: Optional[str]) -> Mapping[str, Any]:
+        """Parse a string of the form "key1=value1,key2=value2" into a dict."""
+        if not param_str:
+            return {}
+
+        def to_number(x):
+            try:
+                return int(x)
+            except:
+                pass
+            try:
+                return float(x)
+            except:
+                pass
+            return x
+
+        str_dict = dict(kv.split("=") for kv in param_str.split(","))
+        return {k: to_number(v) for k, v in str_dict.items()}
+
     extra_eval_params = parse_extra_eval_params(args.extra_eval_params)
 
     eval_class = registry.get_class(eval_spec)
@@ -143,7 +161,7 @@ def main():
     logging.getLogger("openai").setLevel(logging.WARN)
     if hasattr(openai.error, "set_display_cause"):
         openai.error.set_display_cause()
-    run(args, model_resolver=ModelResolver())
+    run(args)
 
 
 if __name__ == "__main__":

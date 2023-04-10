@@ -20,6 +20,7 @@ import yaml
 from evals import OpenAIChatCompletionFn, OpenAICompletionFn
 from evals.api import CompletionFn, DummyCompletionFn
 from evals.base import BaseEvalSpec, CompletionFnSpec, EvalSetSpec, EvalSpec
+from evals.elsuite.modelgraded.base import ModelGradedSpec
 from evals.utils.misc import make_object
 
 logger = logging.getLogger(__name__)
@@ -147,10 +148,11 @@ class Registry:
         except TypeError as e:
             raise TypeError(f"Error while processing {object} '{name}': {e}")
 
-    def get_model(self, name: str) -> ModelSpec:
-        return self._dereference(name, self._models, "model", ModelSpec)
-
     def get_modelgraded_spec(self, name: str, **kwargs: dict) -> dict[str, Any]:
+        assert name in self._modelgraded_specs, (
+            f"Modelgraded spec {name} not found. "
+            f"Closest matches: {difflib.get_close_matches(name, self._modelgraded_specs.keys(), n=5)}"
+        )
         return self._dereference(
             name, self._modelgraded_specs, "modelgraded spec", ModelGradedSpec, **kwargs
         )
@@ -265,10 +267,6 @@ class Registry:
     @functools.cached_property
     def _modelgraded_specs(self):
         return self._load_registry([p / "modelgraded" for p in self._registry_paths])
-
-    @functools.cached_property
-    def _models(self):
-        return self._load_registry([p / "models" for p in self._registry_paths])
 
 
 registry = Registry()
