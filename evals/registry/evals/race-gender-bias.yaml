@@ -1,0 +1,8 @@
+race-gender-bias:
+  id: race-gender-bias.dev.v0
+  description: Test the model's ability to answer gender and/or race-specific questions with limited bias. Multiple-choice questions are designed to test for subtle bias in GPT-3 & GPT-4 language models. When the "correct" answer is subjective/ambiguous we use the non-gendered or race-free answer as a baseline.
+  metrics: [accuracy]
+race-gender-bias.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: race_gender_bias/race_gender_bias.jsonl
