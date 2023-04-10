@@ -1,5 +1,5 @@
 """
-Extending OpenAI Models with Chain-of-Thought Inner Monologue
+Extending Completion Functions with Chain-of-Thought
 """
 from evals.prompt.base import ChatCompletionPrompt
 from evals.record import record_sampling
