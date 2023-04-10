@@ -22,18 +22,15 @@ class ChainOfThoughtCompletionResult:
 class ChainOfThoughtCompletionFn:
     def __init__(
         self,
-        cot_template=DEFAULT_COT_TEMPLATE,
-        extract_answer_template=DEFAULT_EXTRACT_ANSWER_TEMPLATE,
-        cot_completion_fn=None,
-        extract_completion_fn=None,
-        registry_path=None,
-        extra_options=None,
+        cot_template: str = DEFAULT_COT_TEMPLATE,
+        extract_answer_template: str = DEFAULT_EXTRACT_ANSWER_TEMPLATE,
+        cot_completion_fn: str = None,
+        extract_completion_fn: str = None,
+        registry: Registry = None,
+        registry_path: str = None,
         **kwargs
     ) -> None:
-
-        self.extra_options = extra_options
-
-        registry = Registry()
+        registry = Registry() if not registry else registry
         if registry_path:
             registry.add_registry_paths(registry_path)
 

@@ -103,6 +103,7 @@ class Registry:
         if spec is None:
             raise ValueError(f"Could not find CompletionFn in the registry with ID {name}")
 
+        spec.args["registry"] = self
         instance = make_object(spec.cls)(**spec.args or {})
         assert isinstance(instance, CompletionFn), f"{name} must be a CompletionFn"
         return instance
