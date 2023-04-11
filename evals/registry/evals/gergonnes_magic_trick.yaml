@@ -1,0 +1,8 @@
+gergonnes_magic_trick:
+  id: gergonnes_magic_trick.dev.v0
+  description: Test the model's ability to follow a piece of code, and evaluate the correct response to a problem given a console log output in a single shot situation.
+  metrics: [accuracy]
+gergonnes_magic_trick.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: gergonnes_magic_trick/match.jsonl
