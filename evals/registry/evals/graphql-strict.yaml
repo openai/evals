@@ -1,0 +1,8 @@
+graphql-strict:
+  id: graphql-strict.dev.v0
+  metrics: [accuracy]
+
+graphql-strict.dev.v0:
+  class: evals.elsuite.graphql.strict:GraphQLStrict
+  args:
+    samples_jsonl: graphql/basic_samples.jsonl
