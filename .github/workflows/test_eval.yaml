@@ -15,7 +15,7 @@ jobs:
       with:
         fetch-depth: 0
         lfs: true
-    
+
     - name: Install Git LFS
       run: |
         sudo apt-get install git-lfs
@@ -47,8 +47,7 @@ jobs:
             echo "Processing $file"
             first_key=$(python .github/workflows/parse_yaml.py $file)
             echo "Eval Name: $first_key"
-            oaieval dummy-chat $first_key --max_samples 10
-            oaieval dummy-completion $first_key --max_samples 10
+            oaieval dummy $first_key --max_samples 10
           done
         else
           echo "No new YAML files found in evals/registry/evals"

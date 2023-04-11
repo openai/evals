@@ -60,7 +60,7 @@ In general, running the same eval name against the same model should always give
 
 ## Running the eval
 
-You can now run your eval on your data from the CLI with your choice of model:
+You can now run your eval on your data from the CLI with your choice of model or completion function:
 ```
 oaieval gpt-3.5-turbo <eval_name>
 ```
