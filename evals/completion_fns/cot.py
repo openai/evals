@@ -1,6 +1,7 @@
 """
 Extending Completion Functions with Chain-of-Thought
 """
+from evals.api import CompletionFn, CompletionResult
 from evals.prompt.base import ChatCompletionPrompt
 from evals.record import record_sampling
 from evals.registry import Registry
@@ -11,7 +12,7 @@ DEFAULT_EXTRACT_ANSWER_TEMPLATE = (
 )
 
 
-class ChainOfThoughtCompletionResult:
+class ChainOfThoughtCompletionResult(CompletionResult):
     def __init__(self, response) -> None:
         self.response = response
 
@@ -19,7 +20,7 @@ class ChainOfThoughtCompletionResult:
         return [self.response.strip()]
 
 
-class ChainOfThoughtCompletionFn:
+class ChainOfThoughtCompletionFn(CompletionFn):
     def __init__(
         self,
         cot_template: str = DEFAULT_COT_TEMPLATE,
