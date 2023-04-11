@@ -2,4 +2,3 @@ recursive-include evals *.py
 recursive-include evals *.yaml
 recursive-include evals *.sql
 recursive-include evals/registry/data *.jsonl
-recursive-include evals *.jsonl

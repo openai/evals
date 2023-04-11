@@ -38,7 +38,6 @@ class ModelBasedClassify(evals.Eval):
         multicomp_temperature: float = 0.4,
         samples_renamings: Optional[dict[str, str]] = None,
         eval_type: Optional[str] = None,
-        eval_model: str = "gpt-3.5-turbo",
         metaeval: bool = False,
         modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
         **kwargs,
