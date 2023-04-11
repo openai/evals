@@ -1,5 +1,6 @@
 import importlib
 from typing import Optional
+from evals.api import CompletionFn, CompletionResult
 
 from langchain.llms import BaseLLM
 
@@ -7,7 +8,7 @@ from evals.prompt.base import CompletionPrompt
 from evals.record import record_sampling
 
 
-class LangChainLLMCompletionResult:
+class LangChainLLMCompletionResult(CompletionResult):
     def __init__(self, response) -> None:
         self.response = response
 
@@ -15,7 +16,7 @@ class LangChainLLMCompletionResult:
         return [self.response.strip()]
 
 
-class LangChainLLMCompletionFn:
+class LangChainLLMCompletionFn(CompletionFn):
     def __init__(self, llm: str, llm_kwargs: Optional[dict] = {}, **kwargs) -> None:
         # Import and resolve self.llm to an instance of llm argument here, assuming it's always a subclass of BaseLLM
         module = importlib.import_module("langchain.llms")
