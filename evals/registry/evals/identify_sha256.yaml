@@ -1,0 +1,8 @@
+identify_sha256:
+  id: identify_sha256.dev.v0
+  metrics: [accuracy]
+
+identify_sha256.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: identify_sha256/samples.jsonl
