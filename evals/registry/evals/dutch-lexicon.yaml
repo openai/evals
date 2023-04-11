@@ -1,3 +1,4 @@
+dutch-lexicon:
   id: dutch-lexicon.dev.v0
   description: Test the model's ability to distinguish between existing and often misspelled and hallucinated Dutch words.
   metrics: [accuracy]
