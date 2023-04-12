@@ -28,11 +28,10 @@ class Includes(evals.Eval):
             prompt=prompt,
         )
         sampled = result.get_completions()[0]
-        if self.ignore_case:
-            sampled = sampled.lower()
-            sample["ideal"] = [ref.lower() for ref in sample["ideal"]]
 
-        includes_answer = any([utils.get_answer(sampled, ref) for ref in sample["ideal"]])
+        includes_answer = any(
+            [utils.get_answer(sampled, ref, self.ignore_case) for ref in sample["ideal"]]
+        )
         evals.record.record_metrics(accuracy=float(includes_answer))
         return includes_answer
 
