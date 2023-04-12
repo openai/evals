@@ -1,0 +1,8 @@
+﻿every_nth_word:
+  id: every_nth_word.val.v0
+  metrics: [accuracy]
+
+every_nth_word.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: every_nth_word/samples.jsonl
