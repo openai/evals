@@ -71,3 +71,27 @@ We are interested in curating a diverse and interesting set of evals on which to
 - [ ] The eval should be carefully crafted. Before you submit, you should think through whether you have engineered your prompts for good performance, whether you are using the best eval template, whether you have spot checked your results to ensure accuracy, etc.
 
 Once you are ready to contribute your eval publicly, submit a PR and the OpenAI team will be happy to look it over. Make sure to fill out all parts of the template that is prepopulated into the PR message. Note that submitting a PR does not guarantee that OpenAI will eventually merge it. We will run our own checks and use our best judgment when considering which evals to follow up with.
+
+
+
+#this doc in short
+This document provides a step-by-step guide for building an eval, which consists of a dataset and a choice of eval class. The process involves building the dataset, registering the eval with the dataset, and running the eval. The examples folder contains Jupyter notebooks that demonstrate how to build several academic evals, thereby illustrating the overall process.
+
+Before proceeding, ensure that you are using an existing eval template out of the box. If that's not the case, see this example of building a custom eval.
+
+Once you have an eval in mind that you want to implement, you need to format your samples into the right JSON lines (JSONL) format. Each JSON object represents one data point in your eval. The keys you need in the JSON object depend on the eval template. All templates expect an "input" key, which is the prompt, ideally specified in chat format (though strings are also supported). For basic evals Match, Includes, and FuzzyMatch, the other required key is "ideal", which is a string (or a list of strings) specifying the correct reference answer(s). For model-graded evals, the required keys vary based on the eval.
+
+Examples of JSONL eval files can be found in registry/data/README.md. We have implemented small subsets of the CoQA dataset for various eval templates to illustrate how the data should be formatted. See coqa/match.jsonl for an example of data that is suitable for the Match basic eval template and coqa/samples.jsonl for data that is suitable for fact and closedqa model-graded evals.
+
+To register the eval, add a file to evals/registry/evals/<eval_name>.yaml using the elsuite registry format. Upon running the eval, the data will be searched for in evals/registry/data.
+
+The naming convention for evals is in the form <eval_name>.<split>.<version>. In general, running the same eval name against the same model should always give similar results so that others can reproduce it. Therefore, when you change your eval, you should bump the version.
+
+To run your eval on your data from the CLI with your choice of model, use the following command:
+
+php
+Copy code
+oaieval gpt-3.5-turbo <eval_name>
+If you are interested in contributing your eval publicly, we also include some criteria at the bottom for what we think makes an interesting eval.
+
+For model-graded evals such as fact, closedqa, and battle, we expect that they will fit many use cases. However, if you need more customization, create a new YAML in evals/registry/model....
