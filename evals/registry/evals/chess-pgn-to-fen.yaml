@@ -1,0 +1,9 @@
+chess-pgn-to-fen:
+  id: chess-pgn-to-fen.dev.v0
+  description: Test the model's ability to convert a given chess move sequence to its matching FEN string
+  metrics: [accuracy]
+
+chess-pgn-to-fen.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chess-pgn-to-fen/samples.jsonl
