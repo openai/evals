@@ -103,10 +103,9 @@ class RetrievalCompletionFn(CompletionFn):
             ].text.values
         )
 
-        # Ensure it is in string format
         prompt = ChatCompletionPrompt(prompt).to_formatted_prompt()
-
         retrieval_prompt = [{"role": "system", "content": self.retrieval_template + topk}] + prompt
+
         answer = self.completion_fn_instance(prompt=retrieval_prompt, **kwargs).get_completions()[0]
         record_sampling(prompt=retrieval_prompt, sampled=answer)
         return RetrievalCompletionResult(answer)
