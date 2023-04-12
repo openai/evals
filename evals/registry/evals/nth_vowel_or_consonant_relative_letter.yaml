@@ -1,9 +1,0 @@
-nth_vowel_or_consonant_relative_letter:
-  id: nth_vowel_or_consonant_relative_letter.dev.v0
-  description: Test the model's ability to identify the letter that immediately precedes or follows the nth vowel or consonant in a given word.
-  metrics: [accuracy]
-
-nth_vowel_or_consonant_relative_letter.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: nth_vowel_or_consonant_relative_letter/samples.jsonl

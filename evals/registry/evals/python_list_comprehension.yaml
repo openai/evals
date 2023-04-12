@@ -1,0 +1,9 @@
+python_list_comprehension:
+  id: python_list_comprehension.dev.v0
+  description: Test model's ability to understand a basic usage of python's list comprehension syntax.
+  metrics: [accuracy]
+
+python_list_comprehension.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: python_list_comprehension/samples.jsonl
