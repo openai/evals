@@ -1,4 +1,6 @@
 from typing import Any, Optional, Union
+from evals.api import CompletionFn, CompletionResult
+from evals.base import CompletionFnSpec
 
 from evals.prompt.base import (
     ChatCompletionPrompt,
@@ -14,7 +16,7 @@ from evals.utils.api_utils import (
 )
 
 
-class OpenAIBaseCompletionResult:
+class OpenAIBaseCompletionResult(CompletionResult):
     def __init__(self, raw_data: Any, prompt: Any):
         self.raw_data = raw_data
         self.prompt = prompt
@@ -43,7 +45,7 @@ class OpenAICompletionResult(OpenAIBaseCompletionResult):
         return completions
 
 
-class OpenAICompletionFn:
+class OpenAICompletionFn(CompletionFn):
     def __init__(
         self,
         model: Optional[str] = None,
@@ -90,7 +92,7 @@ class OpenAICompletionFn:
         return result
 
 
-class OpenAIChatCompletionFn:
+class OpenAIChatCompletionFn(CompletionFnSpec):
     def __init__(
         self,
         model: Optional[str] = None,
