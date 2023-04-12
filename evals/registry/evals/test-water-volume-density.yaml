@@ -1,0 +1,9 @@
+water-volume-density:
+  id: water-volume-density.s1.simple-v0
+  description: Testing the models ability to answer multiple choice questions about the physical properties of water.
+  disclaimer:  The density of water is at its greatest at 4°C. The formula for calculating density is p = m/V, where p is the density, m is the mass and V is the volume.
+  metrics: [accuracy]
+water-volume-density.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: test_water_density/questions.jsonl
