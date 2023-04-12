@@ -1,0 +1,8 @@
+test-japanese-units:
+  id: test-japanese-units.dev.v0
+  description: Example eval that uses fuzzy matching to score completions.
+  metrics: [accuracy]
+test-japanese-units.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: test_japanese_units/samples.jsonl
