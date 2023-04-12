@@ -58,6 +58,7 @@ class RetrievalCompletionFn(CompletionFn):
         embeddings_and_text_path: str,
         retrieval_template: str = DEFAULT_RETRIEVAL_TEMPLATE,
         k: int = 4,
+        embedding_model: str = "text-embedding-ada-002",
         registry: Optional[Registry] = None,
         registry_path: Optional[str] = None,
         **_kwargs: Any
@@ -78,6 +79,7 @@ class RetrievalCompletionFn(CompletionFn):
 
         self.embeddings_df = load_embeddings(embeddings_and_text_path)
 
+        self.embedding_model = embedding_model
         self.k = k
 
         self.retrieval_template = retrieval_template
@@ -91,7 +93,7 @@ class RetrievalCompletionFn(CompletionFn):
         """
         # Embed the prompt
         embedded_prompt = openai.Embedding.create(
-            model="text-embedding-ada-002", input=CompletionPrompt(prompt).to_formatted_prompt()
+            model=self.embedding_model, input=CompletionPrompt(prompt).to_formatted_prompt()
         )["data"][0]["embedding"]
 
         embs = self.embeddings_df["embedding"].to_list()
