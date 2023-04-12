@@ -1,8 +1,9 @@
 graphql-fuzzy:
-  id: graphql-strict.dev.v0
+  id: graphql-fuzzy.dev.v0
   metrics: [accuracy]
 
 graphql-fuzzy.dev.v0:
-  class: evals.elsuite.graphql.strict:GraphQLFuzzy
+  class: evals.elsuite.graphql:GraphQL
   args:
     samples_jsonl: graphql/basic_samples.jsonl
+    fuzzy: True

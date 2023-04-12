@@ -26,6 +26,7 @@ dependencies = [
     "matplotlib",
     "setuptools_scm",
     "graphql-core",
+    "deepdiff",
 ]
 
 [project.scripts]
