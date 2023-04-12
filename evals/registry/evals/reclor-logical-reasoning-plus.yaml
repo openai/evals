@@ -1,0 +1,7 @@
+reclor-logical-reasoning-plus:
+  id: reclor-logical-reasoning-plus.dev.v0
+  metrics: [accuracy]
+reclor-logical-reasoning-plus.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: reclor-logical-reasoning-plus/reclor-logical-reasoning-plus.jsonl
