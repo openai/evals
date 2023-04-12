@@ -1,42 +1,35 @@
 # a simple modelgraded eval checking if a completion is funny or not
-joke-animals:
-  id: joke-animals.dev.v0
-  metrics: [accuracy]
-joke-animals.dev.v0:
-  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
-  args:
-    samples_jsonl: test_multiio/battles/joke_animals_vs_fruits.jsonl
-    samples_renamings:
-      input1: "input"
-      completion1: "completion"
-    eval_type: cot_classify
-    modelgraded_spec: humor
-
-# (same eval as above, but with likert scale of 1-5)
-joke-animals-likert:
-  id: joke-animals-likert.dev.v0
-  metrics: [accuracy]
-joke-animals-likert.dev.v0:
-  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
-  args:
-    samples_jsonl: test_multiio/battles/joke_animals_vs_fruits.jsonl
-    samples_renamings:
-      input1: "input"
-      completion1: "completion"
-    eval_type: cot_classify
-    modelgraded_spec: humor_likert
-
-# a simple modelgraded eval checking if a completion is funny or not
-# this example uses a labeled dataset, but ignores "completion" and "choice"
 joke-fruits:
   id: joke-fruits.dev.v0
   metrics: [accuracy]
 joke-fruits.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl: test_metaeval/joke_fruits_labeled.jsonl
+    samples_jsonl: test_modelgraded/joke_fruits.jsonl
     eval_type: cot_classify
     modelgraded_spec: humor
+
+# (same eval as above, but with format_type="out_message")
+joke-fruits-v2:
+  id: joke-fruits-v2.dev.v0
+  metrics: [accuracy]
+joke-fruits-v2.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: test_modelgraded/joke_fruits.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: humor_out_message
+
+# (same eval as above, but with likert scale of 1-5)
+joke-fruits-likert:
+  id: joke-fruits-likert.dev.v0
+  metrics: [accuracy]
+joke-fruits-likert.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: test_modelgraded/joke_fruits.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: humor_likert
 
 # a meta-evaluation of a modelgraded eval checking if a completion is funny or not
 # this example uses a labeled dataset with "completion" and "choice"
@@ -76,21 +69,19 @@ joke-fruits-ans-meta.dev.v0:
     metaeval: true
 
 # a simple modelgraded eval checking if 4 completions to the sample prompt is diverse
-# this example uses a labeled dataset, but ignore "completion" and "choice"
 diversity:
   id: diversity.dev.v0
   metrics: [accuracy]
 diversity.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl: test_metaeval/joke_fruits_labeled.jsonl
+    samples_jsonl: test_modelgraded/joke_fruits.jsonl
     eval_type: cot_classify
     modelgraded_spec: diversity
     multicomp_n: 4
     multicomp_temperature: 0.4
 
 # a simple modelgraded eval checking which of N completions to the sample prompt is the best response
-# this example uses a labeled dataset, but ignore "completion" and "choice"
 # command: `oaleval gpt-3.5-turbo,gpt-4 best`
 best:
   id: best.dev.v0
@@ -98,7 +89,7 @@ best:
 best.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl: test_metaeval/joke_fruits_labeled.jsonl
+    samples_jsonl: test_modelgraded/joke_fruits.jsonl
     eval_type: cot_classify
     modelgraded_spec: best
     multicomp_n: from_models
