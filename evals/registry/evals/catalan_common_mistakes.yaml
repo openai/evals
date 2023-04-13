@@ -1,0 +1,9 @@
+catalan_common_mistakes:
+  id: catalan_common_mistakes.dev.v0
+  description: Test the model's ability to identify wrong Catalan sentences, which are mostly interferences with the Spanish language.
+  metrics: [accuracy]
+
+catalan_common_mistakes.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: catalan_common_mistakes/samples.jsonl
