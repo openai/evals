@@ -1,0 +1,9 @@
+serbian-lexicon:
+  id: serbian-lexicon.dev.v0
+  description: Test the model's ability to distinguish between existing and hallucinated Serbian words.
+  metrics: [accuracy]
+
+belarusian-lexicon.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: serbian_lexicon/samples.jsonl
