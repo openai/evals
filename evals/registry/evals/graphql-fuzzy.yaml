@@ -7,3 +7,4 @@ graphql-fuzzy.dev.v0:
   args:
     samples_jsonl: graphql/basic_samples.jsonl
     fuzzy: True
+    extract_gql: True

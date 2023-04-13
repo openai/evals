@@ -19,6 +19,7 @@ class GraphQL(evals.Eval):
         completion_fns: list[CompletionFn],
         samples_jsonl: str,
         fuzzy = False,
+        extract_gql = True,
         *args,
         max_tokens: int = 500,
         **kwargs,
@@ -28,6 +29,7 @@ class GraphQL(evals.Eval):
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
         self.fuzzy = fuzzy
+        self.extract_gql = extract_gql
 
 
     def eval_sample(self, test_sample, rng):
@@ -53,19 +55,22 @@ class GraphQL(evals.Eval):
 
     def match_graphql( self, answer: str, truth: str ) -> bool:
 
-        extracted_gql_answer = self.extract_gql(answer)
-        extracted_gql_truth = self.extract_gql(truth)
+        gql_answer = answer
+        gql_truth = truth
+        if self.extract_gql:
+            gql_answer = self.extract_gql(answer)
+            gql_truth = self.extract_gql(truth)
 
-        if not (extracted_gql_answer and extracted_gql_truth):
+        if not (gql_answer and gql_truth):
             return True
 
-        if not (extracted_gql_answer or extracted_gql_truth):
+        if not (gql_answer or gql_truth):
             return False
 
         try:
-            truth_ast = parse(strip_ignored_characters(extracted_gql_truth))
+            truth_ast = parse(strip_ignored_characters(gql_truth))
             truth_dict = ast_to_dict(truth_ast)
-            answer_ast = parse(strip_ignored_characters(extracted_gql_answer))
+            answer_ast = parse(strip_ignored_characters(gql_answer))
             answer_dict = ast_to_dict(answer_ast)
             diff = {}
             if self.fuzzy:

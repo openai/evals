@@ -6,3 +6,4 @@ graphql-strict.dev.v0:
   class: evals.elsuite.graphql:GraphQL
   args:
     samples_jsonl: graphql/basic_samples.jsonl
+    extract_gql: False
