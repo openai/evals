@@ -58,8 +58,8 @@ class GraphQL(evals.Eval):
         gql_answer = answer
         gql_truth = truth
         if self.extract_gql:
-            gql_answer = self.extract_gql(answer)
-            gql_truth = self.extract_gql(truth)
+            gql_answer = self.extract_graphQL(gql_answer)
+            gql_truth = self.extract_graphQL(gql_truth)
 
         if not (gql_answer and gql_truth):
             return True
@@ -83,7 +83,7 @@ class GraphQL(evals.Eval):
             print("Exception ---- ", e)
             return False
 
-    def extract_gql(self, string: str) -> str:
+    def extract_graphQL(self, string: str) -> str:
         match_group = re.search(r'(query|mutation|subscription)\s([a-zA-Z][a-zA-Z0-9]*)\s{', string)
         if match_group:
             gql = match_group.group()
