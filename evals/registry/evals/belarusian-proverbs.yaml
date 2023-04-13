@@ -1,0 +1,9 @@
+belarusian-proverbs:
+  description: Test the model's ability to complete proverbs in belarusian language
+  id: belarusian-proverbs.dev.v0
+  metrics:
+  - accuracy
+belarusian-proverbs.dev.v0:
+  args:
+    samples_jsonl: belarusian_proverbs/samples.jsonl
+  class: evals.elsuite.basic.match:Match
