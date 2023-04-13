@@ -1,0 +1,8 @@
+film_review:
+  id: film_review.dev.v0
+  metrics: [accuracy]
+
+film_review.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: film_review/samples.jsonl
