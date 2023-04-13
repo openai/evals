@@ -1,0 +1,33 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="BadExpressionStatementJS" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="LanguageDetectionInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="9">
+            <item index="0" class="java.lang.String" itemvalue="pandas" />
+            <item index="1" class="java.lang.String" itemvalue="selenium" />
+            <item index="2" class="java.lang.String" itemvalue="pyppeteer" />
+            <item index="3" class="java.lang.String" itemvalue="gevent" />
+            <item index="4" class="java.lang.String" itemvalue="pycryptodome" />
+            <item index="5" class="java.lang.String" itemvalue="gunicorn" />
+            <item index="6" class="java.lang.String" itemvalue="docx" />
+            <item index="7" class="java.lang.String" itemvalue="async" />
+            <item index="8" class="java.lang.String" itemvalue="opencv-python" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N801" />
+          <option value="N802" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

@@ -1,0 +1,8 @@
+chinese_typos:
+  id: chinese.typos.dev.v0
+  description: Test the model's ability to distinguish between existing and hallucinated Chinese words.
+  metrics: [accuracy]
+chinese.typos.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_typos/samples.jsonl
