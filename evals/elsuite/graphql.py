@@ -1,5 +1,7 @@
 import numpy as np
 
+import re
+
 import evals
 from evals.api import CompletionFn
 from evals.elsuite import utils
@@ -50,10 +52,20 @@ class GraphQL(evals.Eval):
 
 
     def match_graphql( self, answer: str, truth: str ) -> bool:
+
+        extracted_gql_answer = self.extract_gql(answer)
+        extracted_gql_truth = self.extract_gql(truth)
+
+        if not (extracted_gql_answer and extracted_gql_truth):
+            return True
+
+        if not (extracted_gql_answer or extracted_gql_truth):
+            return False
+
         try:
-            truth_ast = parse(strip_ignored_characters(truth))
+            truth_ast = parse(strip_ignored_characters(extracted_gql_truth))
             truth_dict = ast_to_dict(truth_ast)
-            answer_ast = parse(strip_ignored_characters(answer))
+            answer_ast = parse(strip_ignored_characters(extracted_gql_answer))
             answer_dict = ast_to_dict(answer_ast)
             diff = {}
             if self.fuzzy:
@@ -65,6 +77,24 @@ class GraphQL(evals.Eval):
         except Exception as e:
             print("Exception ---- ", e)
             return False
+
+    def extract_gql(self, string: str) -> str:
+        match_group = re.search(r'(query|mutation|subscription)\s([a-zA-Z][a-zA-Z0-9]*)\s{', string)
+        if match_group:
+            gql = match_group.group()
+            start_index = match_group.end() - 1
+            open_braces = 1
+            end_index = start_index + 1
+            while open_braces > 0 and end_index < len(string):
+                if string[end_index] == '{':
+                    open_braces += 1
+                elif string[end_index] == '}':
+                    open_braces -= 1
+                end_index += 1
+            if open_braces == 0:
+                gql += string[start_index+1:end_index].strip()
+                return gql
+        return None
 
     def run(self, recorder: RecorderBase):
         samples = self.get_samples()
