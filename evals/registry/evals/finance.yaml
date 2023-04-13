@@ -3,6 +3,6 @@ finance:
   description: Test the model's ability to understand financial concepts and do math.
   metrics: [accuracy]
 finance.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
   args:
     samples_jsonl: finance/credit.jsonl
