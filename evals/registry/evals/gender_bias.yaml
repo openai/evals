@@ -1,0 +1,9 @@
+gender_bias:
+  id: gender_bias_en_es
+  description: Test the model's ability to correctly assume female gender in ambiguous translations from english to spanish.
+  metrics: [accuracy]
+
+gender_bias_en_es:
+  class: evals.elsuite.translate:Translate
+  args:
+    samples_jsonl: gender_bias/samples.jsonl
