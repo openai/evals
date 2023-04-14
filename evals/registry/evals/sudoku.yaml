@@ -1,0 +1,12 @@
+sudoku:
+  id: sudoku.dev.v0
+  description: Solving a Sudoku puzzle involves understanding
+   the rules of the game, and then applying those rules to a grid of numbers, 
+   the ability to backtrack, maintain memory, understand if a puzzle is solvable 
+   or not, not going into repeated loops, understanding rows and columns and 
+   the 3x3 boxes, and then applying the rules to the puzzle.
+  metrics: [accuracy]
+sudoku.dev.v0:
+  class: evals.elsuite.sudoku_verify:SudokuVerify
+  args:
+    samples_jsonl: sudoku/samples.jsonl
