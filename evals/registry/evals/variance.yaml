@@ -1,0 +1,9 @@
+variance:
+  id: variance.dev.v0
+  description: Test the model's ability to calculate the z-score of numbers
+  metrics: [accuracy]
+
+variance.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: variance/samples.jsonl
