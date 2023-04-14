@@ -1,0 +1,9 @@
+electrical-arithmetic:
+  id: electrical-arithmetic.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate electrical principles arithmetic ability
+electrical-arithmetic.dev.match-v1:
+  class: evals.elsuite.electrical-arithmetic:ElectricalArithmetic
+  args:
+    train_jsonl: electrical_arithmetic/train.jsonl
+    test_jsonl: electrical_arithmetic/test.jsonl
