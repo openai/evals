@@ -1,0 +1,7 @@
+anime-translation:
+  id: anime-translation.dev.v0
+  metrics: [sacrebleu_score]
+anime-translation.dev.v0:
+  class: evals.elsuite.translate:Translate
+  args:
+    samples_jsonl: anime-translation/samples.jsonl
