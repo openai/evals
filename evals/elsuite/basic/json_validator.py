@@ -4,7 +4,6 @@ from typing import Any
 import numpy as np
 
 import evals
-import evals.metrics
 import evals.record
 from evals.api import CompletionFn
 
