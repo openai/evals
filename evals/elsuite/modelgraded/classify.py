@@ -1,87 +1,25 @@
 """
 Generic eval that uses a prompt + classification.
 """
-import itertools
-import string
+import logging
 from collections import Counter
 from random import Random
-from typing import Callable, Iterable, Optional
+from typing import Optional, Union
 
 import openai
 
 import evals
 import evals.record
-from evals.base import ModelSpec
-from evals.elsuite.utils import (
-    PromptFn,
-    format_necessary,
-    load_modelgraded_specs,
-    scrub_formatting_from_prompt,
+from evals import CompletionFn, DummyCompletionFn, OpenAIChatCompletionFn
+from evals.elsuite.modelgraded.base import ModelGradedSpec
+from evals.elsuite.modelgraded.classify_utils import (
+    CHOICE_KEY,
+    INVALID_STR,
+    MATCH_FNS,
+    concat_n_completions,
+    get_choice,
 )
-
-INVALID_STR = "__invalid__"
-CHOICE_KEY = "choice"
-MATCH_FNS = {
-    "include": lambda x, y: float(x in y),
-    "exact": lambda x, y: float(x == y),
-    "endswith": lambda x, y: x.endswith(y),
-}
-CHOICE_FNS = {
-    # e.g. "Yes"
-    "classify": lambda x: x.strip(),
-    # e.g. "Yes\n The reasons are: ..."
-    "classify_cot": lambda x: x.strip().split("\n")[0].strip(),
-    # e.g. "Let's think step by step. ...\nYes"
-    "cot_classify": lambda x: x.strip().split("\n")[-1].strip(),
-}
-
-ANSWER_PROMPTS = {
-    "classify": "Answer the question by printing only a single choice from {choices} (without quotes or punctuation) corresponding to the correct answer with no other text.".strip(),
-    "classify_cot": "First, answer by printing a single choice from {choices} (without quotes or punctuation) corresponding to the correct answer. Then, from the next line, explain your reasonings step by step.".strip(),
-    "cot_classify": """
-First, write out in a step by step manner your reasoning to be sure that your conclusion is correct. Avoid simply stating the correct answer at the outset. Then print only a single choice from {choices} (without quotes or punctuation) on its own line corresponding to the correct answer. At the end, repeat just the answer by itself on a new line.
-
-Reasoning:""".strip(),
-}
-
-EVAL_MODELSPEC = ModelSpec(name="gpt-3.5-turbo", model="gpt-3.5-turbo", is_chat=True)
-
-
-def choice_to_str(choice_strings: Iterable[str]) -> str:
-    """Return a string of choices, e.g. '"Yes" or "No" or "Maybe"'."""
-    return " or ".join(f'"{choice}"' for choice in choice_strings)
-
-
-def clean_choice(raw_choice: str, match_fn: Callable, choice_strings: Iterable[str]) -> str:
-    """Clean a choice string to one of choice_strings. Return '__invalid__.' if no match."""
-    raw_choice = raw_choice.strip()
-    raw_choice = "".join(c for c in raw_choice if c not in string.punctuation)
-    if not raw_choice:
-        return INVALID_STR
-    for choice in choice_strings:
-        if match_fn(raw_choice, choice):
-            return choice
-    return INVALID_STR
-
-
-def expand_args_dict(args_dict):
-    """Expand a dict of dicts, with namings.
-
-    args_dict = {
-        "a": {"a1": 1, "a2": 2},
-        "b": {"b1": 3, "b2": 4},
-    }
-    expand_args_dict(args_dict) = {
-        "a=a1:b=b1": {"a": ("a1", 1), "b": ("b1", 3)},
-        "a=a1:b=b2": {"a": ("a1", 1), "b": ("b2", 4)},
-    ...}
-    """
-    args_dict = {k: list(v.items()) for k, v in args_dict.items()}
-    keys = list(args_dict.keys())
-    values = list(args_dict.values())
-    new_values = [dict(zip(keys, v)) for v in itertools.product(*values)]
-    new_names = [":".join([f"{k}={v[0]}" for k, v in sorted(d.items())]) for d in new_values]
-    return dict(zip(new_names, new_values))
+from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt
 
 
 class ModelBasedClassify(evals.Eval):
@@ -90,105 +28,56 @@ class ModelBasedClassify(evals.Eval):
 
     def __init__(
         self,
-        model_specs: evals.ModelSpecs,
+        completion_fns: list[CompletionFn],
         samples_jsonl: str,
-        modelgraded_spec_file: str,
+        modelgraded_spec: str,
         *args,
-        match_fn: str = "endswith",
+        match_fn: str = "starts_or_endswith",
         max_tokens: int = 1024,
-        multicomp_n: int = 1,
+        multicomp_n: Union[int, str] = 1,
         multicomp_temperature: float = 0.4,
         samples_renamings: Optional[dict[str, str]] = None,
         eval_type: Optional[str] = None,
         metaeval: bool = False,
+        modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
         **kwargs,
     ):
-        super().__init__(model_specs, *args, **kwargs)
+        super().__init__(completion_fns, *args, **kwargs)
+        n_models = len(self.completion_fns)
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
         self.match_fn = MATCH_FNS[match_fn]
         self.metaeval = metaeval
-        self.multicomp_n = multicomp_n
+        if multicomp_n == "from_models":
+            assert n_models > 1, f"multicomp_n='from_models' but only 1 model is specified."
+            self.multicomp_n = n_models
+        else:
+            assert isinstance(
+                multicomp_n, int
+            ), f"multicomp_n={multicomp_n} must be an int or 'from_models'."
+            self.multicomp_n = multicomp_n
         self.multicomp_temperature = multicomp_temperature
         self.samples_renamings = samples_renamings or {}
 
-        """import prompt and set attributes"""
-        modelgraded_specs = load_modelgraded_specs(modelgraded_spec_file)
-
-        # 'choice_strings' is a list of strings that specifies the possible choices
-        self.choice_strings = modelgraded_specs.pop("choice_strings")
-        # make sure each choice doesn't contain any punctuation
-        for s in self.choice_strings:
-            assert not any(c in s for c in string.punctuation), f"{s} contains punctuation"
-        #  (optional) 'choice_scores' is a dict that specifies the score for each choice string
-        # if 'choice_scores' is specified, 'scores/' are computed and added to metrics
-        self.choice_scores = modelgraded_specs.pop("choice_scores", {})
-        if self.choice_scores == "from_strings":
-            self.choice_scores = {c: float(c) for c in self.choice_strings}
-        assert all(
-            isinstance(v, (int, float)) for v in self.choice_scores.values()
-        ), f"choice_scores must be a dict of floats, not {self.choice_scores}"
-
-        # (optional) 'eval_type' is a string that specifies the type of classification algorithm
-        #   - "classify": only answer
-        #   - "cot_classify": reason then answer (chain-of-thought) <- most recommended
-        #   - "classify_cot": answer then reason (explanation)
-        # if 'eval_type' is not supplied from modelgraded_specs, then it must be supplied as an argument.
-        #   - Importantly, it also assumes the answer prompt needs to be appended to the prompt.
-        # 'eval_type' sets 'choice_fn', a function that takes the model's raw response and returns the choice string
-        self.eval_type = modelgraded_specs.pop("eval_type", None)
-        if not self.eval_type:
-            append_answer_prompt = True  # append answer prompt to prompt
+        # check if multiple models are specified
+        if len(self.completion_fns) > 1:
             assert (
-                eval_type
-            ), "eval_type must be specified, in modelgraded_spec_file or as an argument"
-            self.eval_type = eval_type
+                self.multicomp_n == n_models
+            ), f"multicomp_n={self.multicomp_n} must be equal to the number of models={len(self.completion_fns)} if multiple models are specified."
+
+        if isinstance(self.completion_fn, DummyCompletionFn):
+            self.eval_completion_fn = self.completion_fn
         else:
-            assert (
-                not eval_type
-            ), f"eval_type must be unspecified, if it is specified in modelgraded_spec_file"
-            append_answer_prompt = False
-        assert self.eval_type in CHOICE_FNS, f"eval_type must be one of {list(CHOICE_FNS.keys())}"
-        self.choice_fn = CHOICE_FNS[self.eval_type]
+            self.eval_completion_fn = OpenAIChatCompletionFn(model="gpt-3.5-turbo")
 
-        # 'prompt' is a string that specifies the model-graded evaluation
-        prompt = modelgraded_specs.pop("prompt")
-        assert isinstance(prompt, str), f"prompt must be a string, not {type(prompt)}"
-        if append_answer_prompt:
-            prompt += "\n\n" + ANSWER_PROMPTS[self.eval_type].format(
-                choices=choice_to_str(self.choice_strings)
-            )
-        self.prompt = [{"role": "user", "content": prompt}]
-
-        # 'input_outputs' is a dict that specifies the input and output keys in the sample
-        # output key is the model's raw response to input key. These are used for filling 'prompt' template.
-        self.input_outputs = modelgraded_specs.pop("input_outputs")
-        assert isinstance(
-            self.input_outputs, dict
-        ), f"input_outputs must be a dict, not {type(self.input_outputs)}"
-
-        # (optional) 'args' is a dict of dicts that specifies additional arguments for 'prompt'
-        # each value in 'args_dict' essentially defines a separate modelgraded classification eval and has own metrics!
-        self.args_dict = modelgraded_specs.pop("args", {})
-        if self.args_dict:
-            self.expanded_args_dict = expand_args_dict(self.args_dict)
-        else:
-            self.expanded_args_dict = {}
-
-        # (optional) 'completion_sample_templates'
-        # each key must be one of 'input_outputs'.values(). If 'multicomp_n' > 1, this template is filled 'multicomp_n' times
-        # and the concatenated result is passed to 'prompt' template.
-        self.completion_sample_templates = modelgraded_specs.pop("completion_sample_templates", {})
-        assert all(
-            k in self.input_outputs.values() for k in self.completion_sample_templates
-        ), f"all {self.completion_sample_templates.keys()} must be in {self.input_outputs.values()}, "
-        if self.multicomp_n > 1:
-            assert (
-                self.completion_sample_templates
-            ), "completion_sample_templates must be specified if multicomp_n > 1"
-
-        # since we accept optional args, we need to check that all args are used
-        assert not modelgraded_specs, f"Unused args: {modelgraded_specs}. Typo in YAML?"
+        spec_kwargs = {"multicomp_n": self.multicomp_n}
+        if modelgraded_spec_args:
+            spec_kwargs["args"] = modelgraded_spec_args
+        self.mg: ModelGradedSpec = self.registry.get_modelgraded_spec(
+            modelgraded_spec, **spec_kwargs
+        )
+        if eval_type:
+            self.mg.append_answer_prompt(eval_type)
 
     def eval_sample(self, test_sample: dict, rng: Random) -> None:
         """Evaluate a single sample.
@@ -202,40 +91,43 @@ class ModelBasedClassify(evals.Eval):
         completions = {}
         if self.metaeval:
             # assert outputs exist in the data
-            for v in self.input_outputs.values():
+            for v in self.mg.input_outputs.values():
                 assert v in test_sample, f"Missing output '{v}' in sample {test_sample.keys()}"
                 completions[v] = test_sample[v]
         # remove outputs from the data
         test_sample = {
-            k: v for k, v in test_sample.items() if k not in list(self.input_outputs.values())
+            k: v for k, v in test_sample.items() if k not in list(self.mg.input_outputs.values())
         }
-        for k in self.input_outputs:
+        for k in self.mg.input_outputs:
             test_sample[k] = scrub_formatting_from_prompt(test_sample[k])
 
         if not self.metaeval:
             try:
-                for k, v in self.input_outputs.items():
-                    if self.multicomp_n > 1 and v in self.completion_sample_templates:
-                        completion = ""
-                        completion_i_template = self.completion_sample_templates[v]
+                for k, v in self.mg.input_outputs.items():
+                    if self.multicomp_n > 1 and v in self.mg.completion_sample_templates:
+                        completion_i_s = []
                         for i in range(self.multicomp_n):
+                            if len(self.completion_fns) > 1:
+                                # use a separate model for each completion
+                                completion_fn = self.completion_fns[i]
+                            else:
+                                # use the single model for all completions
+                                completion_fn = self.completion_fn
                             get_input_completion = PromptFn(
                                 test_sample[k],
-                                model_spec=self.model_spec,
+                                completion_fn=completion_fn,
                                 max_tokens=self.max_tokens,
                                 temperature=self.multicomp_temperature,
                             )
                             completion_i, _ = get_input_completion()
-                            completion += format_necessary(
-                                completion_i_template,
-                                i=i + 1,
-                                output=completion_i,
-                                n=self.multicomp_n,
-                            )
+                            completion_i_s.append(completion_i)
+                        completion = concat_n_completions(
+                            completion_i_s, self.mg.completion_sample_templates[v]
+                        )
                     else:
                         get_input_completion = PromptFn(
                             test_sample[k],
-                            model_spec=self.model_spec,
+                            completion_fn=self.completion_fn,
                             max_tokens=self.max_tokens,
                         )
                         completion, _ = get_input_completion()
@@ -244,57 +136,70 @@ class ModelBasedClassify(evals.Eval):
                 self.invalid_request_during_completion += 1
                 return
 
-        try:
-            metrics = {}
+        metrics = {}
+        if self.mg.expanded_args_dict and len(self.mg.expanded_args_dict) > 1:
+            args_dict = self.mg.expanded_args_dict
+        elif self.mg.expanded_args_dict and len(self.mg.expanded_args_dict) == 1:
+            # if there is only one combination, don't bother with the metric name
+            args_dict = {CHOICE_KEY: v for v in self.mg.expanded_args_dict.values()}
+        else:
+            args_dict = {CHOICE_KEY: {}}
+        for metric, args in args_dict.items():
+            args = {k: v[1] for k, v in args.items()}
+            prompt = self.mg.format(**args, **completions, **test_sample)
             evaluate = PromptFn(
-                self.prompt,
-                model_spec=EVAL_MODELSPEC,
+                prompt,
+                completion_fn=self.eval_completion_fn,
                 max_tokens=self.max_tokens,
             )
-            eval_kwargs = dict(**completions, **test_sample)
-            if self.expanded_args_dict:
-                args_dict = self.expanded_args_dict
-            else:
-                args_dict = {CHOICE_KEY: {}}
-            for metric, args in args_dict.items():
-                args = {k: v[1] for k, v in args.items()}
-                evaluation, _ = evaluate(**args, **eval_kwargs)
-                raw_choice = self.choice_fn(evaluation)
-                choice = clean_choice(raw_choice, self.match_fn, self.choice_strings)
-                metrics[metric] = choice
-                if self.metaeval:
-                    assert (
-                        metric in test_sample
-                    ), f"Missing label for metric '{metric}' in sample {test_sample.keys()}"
-                    metrics[metric + "_metascore"] = choice == test_sample[metric]
-
-        except openai.error.InvalidRequestError:
-            self.invalid_request_during_evaluation += 1
-            return
+            try:
+                evaluation, _ = evaluate(skip_format=True)
+            except openai.error.InvalidRequestError:
+                logging.warn(f"Invalid request during evaluation: {prompt}")
+                self.invalid_request_during_evaluation += 1
+                return
+            choice = get_choice(
+                evaluation, self.mg.eval_type, self.match_fn, self.mg.choice_strings
+            )
+            if choice == INVALID_STR:
+                logging.warn(
+                    f"Choices {self.mg.choice_strings} not parsable for {self.mg.eval_type}: {evaluation}"
+                )
+            metrics[metric] = choice
+            if self.metaeval:
+                assert (
+                    metric in test_sample
+                ), f"Missing label for metric '{metric}' in sample {test_sample.keys()}"
+                metrics[metric + "_metascore"] = choice == test_sample[metric]
 
         evals.record.record_metrics(**metrics)
 
         return choice
 
     def run(self, recorder):
-        samples = evals.get_jsonl(self.samples_jsonl)
+        samples = self.get_samples()
 
         self.eval_all_samples(recorder, samples)
-        all_sample_metrics = recorder.get_metrics()
-
         record_metrics = {}
-        if self.expanded_args_dict:
-            metrics = sorted(self.expanded_args_dict)
+        record_metrics["invalid_request_during_completion"] = self.invalid_request_during_completion
+        record_metrics["invalid_request_during_evaluation"] = self.invalid_request_during_evaluation
+
+        all_sample_metrics = recorder.get_metrics()
+        if not all_sample_metrics:
+            return record_metrics
+
+        if self.mg.expanded_args_dict and len(self.mg.expanded_args_dict) > 1:
+            metrics = sorted(self.mg.expanded_args_dict)
         else:
             metrics = [CHOICE_KEY]
         for metric in metrics:
             chosen = [m[metric] for m in all_sample_metrics if metric in m]
             # if there is a best choice, compute the score
-            if self.choice_scores:
+            if self.mg.choice_scores:
                 # assumption: each INVALID_STR contributes the lowest score
-                lowest_score = min(self.choice_scores.values())
+                lowest_score = min(self.mg.choice_scores.values())
                 scores = [
-                    self.choice_scores[choice] if choice != INVALID_STR else lowest_score
+                    self.mg.choice_scores[choice] if choice != INVALID_STR else lowest_score
                     for choice in chosen
                 ]
                 record_metrics[f"score/{metric}"] = sum(scores) / len(all_sample_metrics)
@@ -307,8 +212,5 @@ class ModelBasedClassify(evals.Eval):
             if self.metaeval:
                 metascores = [m[metric + "_metascore"] for m in all_sample_metrics if metric in m]
                 record_metrics[f"metascore/{metric}"] = sum(metascores) / len(all_sample_metrics)
-
-        record_metrics["invalid_request_during_completion"] = self.invalid_request_during_completion
-        record_metrics["invalid_request_during_evaluation"] = self.invalid_request_during_evaluation
 
         return record_metrics
