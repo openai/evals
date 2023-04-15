@@ -1,0 +1,8 @@
+answer_type:
+  id: answer_type.dev.v0
+  metrics: [accuracy]
+
+answer_type.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: answer_type/samples.jsonl
