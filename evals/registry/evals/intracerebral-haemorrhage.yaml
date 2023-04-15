@@ -1,0 +1,9 @@
+intracerebral-haemorrhage:
+  id: intracerebral-haemorrhage.v0
+  description: Test model's capability of predicting the risk of intracerebral haemorrhage in patients with complex chronic diseases
+  metrics: [accuracy]
+intracerebral-haemorrhage.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: intracerebral-haemorrhage/samples.jsonl
+
