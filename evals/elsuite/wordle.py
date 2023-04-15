@@ -85,3 +85,30 @@ class Wordle(evals.Eval):
         self.train_jsonl = train_jsonl
         self.test_jsonl = test_jsonl
 
+def test_functions_modified_v2(guesses, results, next_guess, word_data):
+    # Test get_word_score_modified function
+    word_list = [entry["word"] for entry in word_data]
+    word_score_modified = get_word_score(
+        next_guess, 
+        list(guesses), 
+        list(results), 
+        word_list
+    )
+    
+    # Test get_combined_word_score_modified_v2 function
+    combined_word_score, is_valid_guess = get_combined_word_score_modified_v2(
+        next_guess, 
+        list(guesses), 
+        list(results), 
+        word_data
+    )
+    
+    # Print the results
+    print("Output of get_word_score_modified function:", word_score_modified)
+    print("Output of get_combined_word_score_modified_v2 function:", combined_word_score, is_valid_guess)
+
+if __name__ == "__main__":
+    guesses = ("arose", "intro")
+    results = ("XOOXX", "XXVOO")
+    next_guess = "tutor"
+    
