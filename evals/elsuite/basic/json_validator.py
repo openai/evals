@@ -21,7 +21,6 @@ class JsonValidator(evals.Eval):
         completion_fns: list[CompletionFn],
         samples_jsonl: str,
         *args,
-        max_tokens: int = 500,
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
