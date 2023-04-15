@@ -1,9 +1,8 @@
 import json
 from typing import Any
 
-import numpy as np
-
 import evals
+import evals.metrics
 import evals.record
 from evals.api import CompletionFn
 
@@ -27,7 +26,6 @@ class JsonValidator(evals.Eval):
     ):
         super().__init__(completion_fns, *args, **kwargs)
         assert len(completion_fns) == 1, "JsonValidator only supports one completion fn"
-        self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
 
     def eval_sample(self, sample: Any, *_):
@@ -37,12 +35,12 @@ class JsonValidator(evals.Eval):
             temperature=0.0,
         )
         sampled = result.get_completions()[0]
-        return evals.record.record_metrics(
-            is_valid_json=is_valid_json(sampled),
-        )
+        return evals.record.record_match(is_valid_json(sampled), expected=None, picked=sampled)
 
     def run(self, recorder):
         samples = self.get_samples()
         self.eval_all_samples(recorder, samples)
-        metrics = recorder.get_metrics()
-        return {"num_valid_json": np.mean([m["is_valid_json"] for m in metrics])}
+        events = recorder.get_events("match")
+        return {
+            "accuracy": evals.metrics.get_accuracy(events),
+        }
