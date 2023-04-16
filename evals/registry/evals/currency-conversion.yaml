@@ -1,0 +1,8 @@
+currency-conversion:
+  id: currency-conversion.dev.v0
+  metrics: [accuracy]
+
+currency-conversion.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: currency-conversion/samples.jsonl
