@@ -1,0 +1,17 @@
+prime_factorization:
+  id: prime_factorization.dev.v0
+  metrics: [accuracy]
+
+prime_factorization.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: prime_factorization/samples.jsonl
+
+prime_factorization_big:
+  id: prime_factorization_big.dev.v0
+  metrics: [accuracy]
+
+prime_factorization_big.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: prime_factorization/samples_big.jsonl
