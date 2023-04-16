@@ -1,0 +1,9 @@
+gregorian-to-hebrew-calendar:
+  id: gregorian-to-hebrew-calendar.dev.v0
+  description: Test the model's ability to convert dates between the Gregorian and Hebrew calendar systems.
+  metrics: [accuracy]
+
+gregorian-to-hebrew-calendar.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: gregorian-to-hebrew-calendar/samples.jsonl
