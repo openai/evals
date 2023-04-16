@@ -1,0 +1,12 @@
+non-compound-names:
+  id: non-compound-names.dev.v0
+  metrics: [accuracy]
+
+non-compound-names.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: non-compound-names/samples.jsonl
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria:
+        incorrect: "correctness: A compound word is a word that is made up of two or more words, such as \"handbag\", \"Wealthsimple\", \"PureGain\" or \"airplane\". If you can take the word, such as \"Wealthsimple\", and split it up into two words, such as \"Wealth\" and \"simple\", then it is a compound word. To be correct, the answer should not contain any compound words. Is the answer correct?"
