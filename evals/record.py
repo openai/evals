@@ -354,7 +354,7 @@ class Recorder(RecorderBase):
             params={
                 "run_id": run_spec.run_id,
                 # TODO: model_name -> completion_fns
-                "model_name": jsondumps(run_spec.completion_fns),
+                "model_name": jsondumps(dict(completions=run_spec.completion_fns)),
                 "eval_name": run_spec.eval_name,
                 "base_eval": run_spec.base_eval,
                 "split": run_spec.split,
