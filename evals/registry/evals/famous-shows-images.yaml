@@ -1,0 +1,9 @@
+famous-shows-images:
+  id: famous-shows-images.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate image url to check what shows inside those.
+famous-shows-images.dev.match-v1:
+  class: evals.elsuite.famous-shows-images:FamousShowsImages
+  args:
+    train_jsonl: famous_shows_images/train.jsonl
+    test_jsonl: famous_shows_images/test.jsonl
