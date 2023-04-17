@@ -20,6 +20,7 @@ from evals.elsuite.modelgraded.classify_utils import (
     get_choice,
 )
 from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt
+from evals.registry import Registry
 
 
 class ModelBasedClassify(evals.Eval):
@@ -31,6 +32,7 @@ class ModelBasedClassify(evals.Eval):
         completion_fns: list[CompletionFn],
         samples_jsonl: str,
         modelgraded_spec: str,
+        registry: Registry,
         *args,
         match_fn: str = "starts_or_endswith",
         max_tokens: int = 1024,
@@ -39,6 +41,7 @@ class ModelBasedClassify(evals.Eval):
         samples_renamings: Optional[dict[str, str]] = None,
         eval_type: Optional[str] = None,
         metaeval: bool = False,
+        eval_completion_fn: Optional[str] = None,
         modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
         **kwargs,
     ):
@@ -48,6 +51,7 @@ class ModelBasedClassify(evals.Eval):
         self.samples_jsonl = samples_jsonl
         self.match_fn = MATCH_FNS[match_fn]
         self.metaeval = metaeval
+        self.registry = registry
         if multicomp_n == "from_models":
             assert n_models > 1, f"multicomp_n='from_models' but only 1 model is specified."
             self.multicomp_n = n_models
@@ -67,6 +71,8 @@ class ModelBasedClassify(evals.Eval):
 
         if isinstance(self.completion_fn, DummyCompletionFn):
             self.eval_completion_fn = self.completion_fn
+        elif eval_completion_fn:
+            self.eval_completion_fn = self.registry.make_completion_fn(eval_completion_fn)
         else:
             self.eval_completion_fn = OpenAIChatCompletionFn(model="gpt-3.5-turbo")
 
