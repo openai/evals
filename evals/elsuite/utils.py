@@ -14,8 +14,12 @@ from evals.prompt.base import (
 )
 
 
-def get_answer(text, answer_prompt):
-    idx = text.rfind(answer_prompt)
+def get_answer(text, answer_prompt, ignore_case=False):
+    if ignore_case:
+        idx = text.lower().rfind(answer_prompt.lower())
+    else:
+        idx = text.rfind(answer_prompt)
+
     if idx == -1:
         return None
     return text[idx + len(answer_prompt) :]
