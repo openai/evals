@@ -1,10 +1,17 @@
 graphql-fuzzy:
-  id: graphql-fuzzy.dev.v0
+  id: graphql-fuzzy.dev.v1
   metrics: [accuracy]
 
 graphql-fuzzy.dev.v0:
   class: evals.elsuite.graphql:GraphQL
   args:
     samples_jsonl: graphql/basic_samples.jsonl
+    fuzzy: True
+    extract_gql: True
+
+graphql-fuzzy.dev.v1:
+  class: evals.elsuite.graphql:GraphQL
+  args:
+    samples_jsonl: graphql/ai_generated.jsonl
     fuzzy: True
     extract_gql: True

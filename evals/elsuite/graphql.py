@@ -74,7 +74,9 @@ class GraphQL(evals.Eval):
             answer_dict = ast_to_dict(answer_ast)
             diff = {}
             if self.fuzzy:
-                diff = DeepDiff(truth_dict, answer_dict, ignore_order=True, exclude_paths=["root['definitions'][0]['name']"], exclude_regex_paths=r".\['alias'\].")
+                #  exclude path: ["root['definitions'][0]['name']"] for query name.
+                #  exclude_regex_paths .\['alias'\]. -> if query has any aliases, .*\['arguments'\]\[[0-9]+\]([\['value'\]\['fields'\]\[[0-9]+\])\['value'\]\['value'\] = if arguement has any filter values
+                diff = DeepDiff(truth_dict, answer_dict, ignore_order=True, exclude_paths=["root['definitions'][0]['name']"], exclude_regex_paths=r".\['alias'\].|.*\['arguments'\]\[[0-9]+\]([\['value'\]\['fields'\]\[[0-9]+\])\['value'\]\['value'\]")
             else:
                 diff = DeepDiff(truth_dict, answer_dict)
 
