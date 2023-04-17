@@ -1,0 +1,8 @@
+game-translation-multilang:
+  id: lexical-constraints.dev.v0
+  description: Using ChatGPT to translate documents and materials related to games into multiple languages with lexical constraints.
+  metrics: [accuracy]
+lexical-constraints.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: game-translation-multilang/lexical-constraints.jsonl
