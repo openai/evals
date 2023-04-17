@@ -1,0 +1,9 @@
+raw_edibility:
+  id: raw_edibility.s1.simple-v0
+  description: Example eval that checks sampled text matches the expected output.
+  metrics: [accuracy]
+
+raw_edibility.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: raw_edibility/samples.jsonl
