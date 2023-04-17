@@ -1,0 +1,9 @@
+table_understanding:
+  id: table_understanding.dev.v0
+  metrics: [accuracy]
+  description: Evaluate table understanding ability
+
+table_understanding.dev.v0:
+  class: evals.elsuite.table_understanding:TableUnderstanding
+  args:
+    samples_jsonl: table_understanding/sample.jsonl
