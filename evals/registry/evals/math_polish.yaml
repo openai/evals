@@ -3,6 +3,6 @@ math_polish:
   description: Test the model's ability to solve simple math problems written in Polish language using words and respond in the same way.
   metrics: [accuracy]
 math_polish.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.match_exact_words:MatchExactWords
   args:
     samples_jsonl: math_polish/samples.jsonl
