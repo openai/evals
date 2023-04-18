@@ -1,6 +1,6 @@
 japanese_driving_license:
   id: japanese_driving_license.s1.simple-v0
-  description: Test the model's ability to answer correctly at Japanese Driving licence exam.
+  description: Test the model's ability to correctly answer Japanese Driving licence exam.
   metrics: [accuracy]
 japanese_driving_license.s1.simple-v0:
   class: evals.elsuite.basic.match:Match
