@@ -1,0 +1,11 @@
+sarcasm-spanish:
+  id: sarcasm-spanish.dev.v1
+  description: an evaluation on sarcasm in the Spanish language, based on work here - https://www.kaggle.com/datasets/mikahama/the-best-sarcasm-annotated-dataset-in-spanish
+  metrics: [accuracy]
+sarcasm-spanish.dev.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: sarcasm/samples-spanish.jsonl
+    few_shot_jsonl: sarcasm/few_shot-spanish.jsonl
+    num_few_shot: 5
+    
