@@ -1,0 +1,8 @@
+character-count-numbers:
+  id: character-count-numbers.dev.v0
+  description: Count of starting character in range of numbers
+  metrics: [accuracy]
+character-count-numbers.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: character-count-numbers/samples.jsonl
