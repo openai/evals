@@ -23,7 +23,7 @@ class FamousShowsImages(evals.Eval):
         stuffing = rng.sample(self.train_samples, self.train_samples_per_prompt)
 
         prompt = [
-            {"role": "system", "content": "Solve the following math problems"},
+            {"role": "system", "content": "Give the movie name from the image url"},
         ]
 
         for i, sample in enumerate(stuffing + [test_sample]):
