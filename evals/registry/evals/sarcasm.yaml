@@ -19,3 +19,4 @@ sarcasm-spanish.dev.v1:
     samples_jsonl: sarcasm/samples-spanish.jsonl
     few_shot_jsonl: sarcasm/few_shot-spanish.jsonl
     num_few_shot: 5
+    
