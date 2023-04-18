@@ -75,8 +75,12 @@ class GraphQL(evals.Eval):
             diff = {}
             if self.fuzzy:
                 #  exclude path: ["root['definitions'][0]['name']"] for query name.
-                #  exclude_regex_paths .\['alias'\]. -> if query has any aliases, .*\['arguments'\]\[[0-9]+\]([\['value'\]\['fields'\]\[[0-9]+\])\['value'\]\['value'\] = if arguement has any filter values
-                diff = DeepDiff(truth_dict, answer_dict, ignore_order=True, exclude_paths=["root['definitions'][0]['name']"], exclude_regex_paths=r".\['alias'\].|.*\['arguments'\]\[[0-9]+\]([\['value'\]\['fields'\]\[[0-9]+\])\['value'\]\['value'\]")
+                #  exclude_regex_paths .*\['alias'\].* -> if query has any aliases, .*\['arguments'\]\[[0-9]+\]([\['value'\]\['fields'\]\[[0-9]+\])\['value'\]\['value'\] = if arguement has any filter values
+                diff = DeepDiff(truth_dict, answer_dict, ignore_order=True, exclude_paths=["root['definitions'][0]['name']"], exclude_regex_paths=r".*\['alias'\].*|.*\['arguments'\]\[[0-9]+\]([\['value'\]\['fields'\]\[[0-9]+\])\['value'\]\['value'\]")
+                allowed_changes = ["dictionary_item_added", "iterable_item_added"]
+                for change in allowed_changes:
+                    if change in diff.keys():
+                        del diff[change]
             else:
                 diff = DeepDiff(truth_dict, answer_dict)
 
@@ -86,7 +90,7 @@ class GraphQL(evals.Eval):
             return False
 
     def extract_graphQL(self, string: str) -> str:
-        match_group = re.search(r'(query|mutation|subscription)\s([a-zA-Z][a-zA-Z0-9]*)\s{', string)
+        match_group = re.search(r'(query|mutation|subscription)\s([a-zA-Z][a-zA-Z0-9]*\s){0,1}\{', string)
         if match_group:
             gql = match_group.group()
             start_index = match_group.end() - 1
