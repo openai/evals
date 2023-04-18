@@ -1,0 +1,9 @@
+othello-moves:
+  id: othello-moves.dev.v0
+  description: Test the model's ability to reason about board states for the game Othello/Reversi and follow the game rules in order to pick valid moves 
+  metrics: [accuracy]
+
+othello-moves.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: othello-moves/samples.jsonl
