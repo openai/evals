@@ -1,0 +1,8 @@
+last-word-nth:
+  id: last-word-nth.s1.simple-v0
+  description: Test the model's ability to tell what the last word of a sentence is, but by asking it indirectly based on its index.
+  metrics: [accuracy]
+last-word-nth.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: last_word_nth/samples.jsonl

@@ -1,0 +1,9 @@
+bulgarian-lexicon:
+  id: bulgarian-lexicon.dev.v0
+  description: Test the model's ability to distinguish between existing and hallucinated Bulgarian words.
+  metrics: [accuracy]
+
+bulgarian-lexicon.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: bulgarian-lexicon/samples.jsonl

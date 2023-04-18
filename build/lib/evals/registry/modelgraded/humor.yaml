@@ -1,0 +1,68 @@
+humor:
+  prompt: |-
+    Is the following funny? 
+
+    {completion}
+  choice_scores:
+    "Yes": 1.0
+    "No": 0.0
+    "Unsure": 0.5
+  choice_strings:
+    - "Yes"
+    - "No"
+    - "Unsure"
+  input_outputs:
+    input: completion
+
+humor_out_message:
+  prompt: |-
+    Was the assistant's (your) last response above to the user funny?
+  choice_scores:
+    "Yes": 1.0
+    "No": 0.0
+    "Unsure": 0.5
+  choice_strings:
+    - "Yes"
+    - "No"
+    - "Unsure"
+  format_type: out_message
+  input_outputs:
+    input: completion
+
+humor_likert:
+  prompt: |-
+    Is the following funny?
+
+    {completion}
+
+    Answer using the scale of 1 to 5, where 5 is the funniest.
+  choice_strings: "12345"
+  choice_scores: from_strings
+  input_outputs:
+    input: completion
+
+humor_jp:
+  prompt: |-
+    以下の文章って面白い？
+
+    （始まり）
+
+    {completion}
+
+    （終わり）
+
+    ５段階の中から選んでください。
+    
+    1. 退屈 - このレベルの面白さはほとんど感じられず、退屈で時間が過ぎるのが遅いと感じるでしょう。興味を惹かれる要素がほとんどなく、全体的に魅力に欠けます。
+
+    2. やや面白い - このレベルでは、若干の面白さが感じられますが、それでも十分ではありません。物語性やコンセプトには一定の魅力があるものの、期待外れであり、時間を過ごすにはまだ物足りないかもしれません。
+
+    3. まあまあ面白い - このレベルの面白さは、平均的で満足できる範囲です。ある程度の興味深い要素やストーリーがあり、時間を過ごすのに適していますが、特別印象に残るものではないかもしれません。
+
+    4. 面白い - このレベルでは、かなりの面白さが感じられ、魅力的なストーリーやキャラクターが存在します。多くの人が楽しめる内容であり、興味を持続させる要素が豊富に含まれています。ただし、最高の評価には僅かに及ばない部分が残っています。
+
+    5. 大変面白い - このレベルの面白さは、非常に優れており、観る者を魅了し、心に強く残る体験ができます。独創的なストーリーや魅力的なキャラクターが際立ち、多くの人が共感や感動を覚えるでしょう。このレベルの面白さは、他のものと比較しても突出していると言えます。
+  choice_scores: from_strings
+  choice_strings: "12345"
+  input_outputs:
+    input: completion

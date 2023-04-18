@@ -1,0 +1,25 @@
+battle:
+  prompt: |-
+    You are comparing two responses to the following two instructions.
+
+    [Instruction 1]
+    {input1}
+    [Response 1]
+    {completion1}
+
+    [Instruction 2]
+    {input2}
+    [Response 2]
+    {completion2}
+
+
+    Is the first response better than the second? You must provide one answer based on your subjective view.
+  choice_strings:
+    - "Yes"
+    - "No"
+  choice_scores:
+    "Yes": 1.0
+    "No": 0.0
+  input_outputs:
+    input1: completion1
+    input2: completion2

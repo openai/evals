@@ -1,0 +1,5 @@
+{"sample": [{"role": "user", "content": "paul ryan's wonk shtick is getting old", "name": "example_user"}, {"role": "assistant", "content": "0", "name": "example_assistant"}]}
+{"sample": [{"role": "user", "content": "masturbatory prose style fails to reach climax", "name": "example_user"}, {"role": "assistant", "content": "1", "name": "example_assistant"}]}
+{"sample": [{"role": "user", "content": "temple university receives anonymous donation to build center for discrediting rape allegations", "name": "example_user"}, {"role": "assistant", "content": "1", "name": "example_assistant"}]}
+{"sample": [{"role": "user", "content": "gop gasps as red-eyed shadow counsel smashes out of gestation tank", "name": "example_user"}, {"role": "assistant", "content": "1", "name": "example_assistant"}]}
+{"sample": [{"role": "user", "content": "area russian to hug you", "name": "example_user"}, {"role": "assistant", "content": "1", "name": "example_assistant"}]}

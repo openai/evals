@@ -1,0 +1,122 @@
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Abraham Lincoln born before Franklin Pierce? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Abraham Lincoln born before Andrew Johnson? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Andrew Jackson born before John Quincy Adams? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Andrew Jackson born before William Harrison? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Andrew Johnson born before Franklin Pierce? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Andrew Johnson born before Abraham Lincoln? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Benjamin Harrison born before James Garfield? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Benjamin Harrison born before Chester A. Arthur? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Benjamin Harrison born before Grover Cleveland? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Benjamin Harrison born before Grover Cleveland? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Bill Clinton born before George W. Bush? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Bill Clinton born before Donald Trump? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Bill Clinton born before Joe Biden? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Calvin Coolidge born before Warren Harding? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Calvin Coolidge born before Herbert Hoover? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Chester A. Arthur born before Ulysses S. Grant? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Chester A. Arthur born before Rutherford B. Hayes? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Chester A. Arthur born before James Garfield? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Chester A. Arthur born before Grover Cleveland? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Chester A. Arthur born before Benjamin Harrison? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Chester A. Arthur born before Grover Cleveland? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Donald Trump born before Bill Clinton? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Donald Trump born before George W. Bush? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Donald Trump born before Joe Biden? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Dwight Eisenhower born before Harry Truman? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Franklin Pierce born before Millard Fillmore? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Franklin Pierce born before Abraham Lincoln? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Franklin Pierce born before Andrew Johnson? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Franklin Roosevelt born before Herbert Hoover? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Franklin Roosevelt born before Harry Truman? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was George H.W. Bush born before John F. Kennedy? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was George H.W. Bush born before Jimmy Carter? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was George W. Bush born before Bill Clinton? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was George W. Bush born before Donald Trump? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was George W. Bush born before Joe Biden? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was George Washington born before John Adams? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Gerald Ford born before John F. Kennedy? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Gerald Ford born before Lyndon Johnson? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Gerald Ford born before Richard Nixon? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Gerald Ford born before Ronald Reagan? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Grover Cleveland born before James Garfield? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Grover Cleveland born before James Garfield? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Grover Cleveland born before Chester A. Arthur? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Grover Cleveland born before Chester A. Arthur? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Grover Cleveland born before Benjamin Harrison? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Grover Cleveland born before Grover Cleveland? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Grover Cleveland born before Grover Cleveland? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Grover Cleveland born before William McKinley? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Grover Cleveland born before Benjamin Harrison? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Grover Cleveland born before William McKinley? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Harry Truman born before Franklin Roosevelt? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Harry Truman born before Dwight Eisenhower? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Herbert Hoover born before Calvin Coolidge? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Herbert Hoover born before Franklin Roosevelt? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Buchanan born before John Tyler? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Buchanan born before James Polk? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Buchanan born before Zachary Taylor? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Garfield born before Chester A. Arthur? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Garfield born before Grover Cleveland? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Garfield born before Benjamin Harrison? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Garfield born before Grover Cleveland? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Madison born before Thomas Jefferson? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Madison born before James Monroe? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Monroe born before James Madison? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Polk born before John Tyler? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Polk born before Millard Fillmore? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was James Polk born before James Buchanan? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Jimmy Carter born before John F. Kennedy? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Jimmy Carter born before George H.W. Bush? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Joe Biden born before Bill Clinton? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Joe Biden born before George W. Bush? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Joe Biden born before Donald Trump? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John Adams born before George Washington? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John Adams born before Thomas Jefferson? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John F. Kennedy born before Richard Nixon? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John F. Kennedy born before Gerald Ford? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John F. Kennedy born before Jimmy Carter? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John F. Kennedy born before Ronald Reagan? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John F. Kennedy born before George H.W. Bush? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John Quincy Adams born before Andrew Jackson? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John Quincy Adams born before William Harrison? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John Tyler born before Martin Van Buren? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John Tyler born before James Polk? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John Tyler born before Zachary Taylor? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was John Tyler born before James Buchanan? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Lyndon Johnson born before Richard Nixon? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Lyndon Johnson born before Gerald Ford? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Lyndon Johnson born before Ronald Reagan? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Martin Van Buren born before John Tyler? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Martin Van Buren born before Zachary Taylor? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Millard Fillmore born before James Polk? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Millard Fillmore born before Franklin Pierce? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Richard Nixon born before John F. Kennedy? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Richard Nixon born before Lyndon Johnson? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Richard Nixon born before Gerald Ford? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Richard Nixon born before Ronald Reagan? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Ronald Reagan born before John F. Kennedy? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Ronald Reagan born before Lyndon Johnson? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Ronald Reagan born before Richard Nixon? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Ronald Reagan born before Gerald Ford? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Rutherford B. Hayes born before Ulysses S. Grant? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Rutherford B. Hayes born before Chester A. Arthur? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Theodore Roosevelt born before William Taft? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Theodore Roosevelt born before Woodrow Wilson? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Theodore Roosevelt born before Warren Harding? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Thomas Jefferson born before John Adams? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Thomas Jefferson born before James Madison? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Ulysses S. Grant born before Rutherford B. Hayes? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Ulysses S. Grant born before Chester A. Arthur? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Warren Harding born before Theodore Roosevelt? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Warren Harding born before Calvin Coolidge? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was William Harrison born before John Quincy Adams? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was William Harrison born before Andrew Jackson? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was William McKinley born before Grover Cleveland? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was William McKinley born before Grover Cleveland? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was William Taft born before Theodore Roosevelt? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was William Taft born before Woodrow Wilson? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Woodrow Wilson born before Theodore Roosevelt? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Woodrow Wilson born before William Taft? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Zachary Taylor born before Martin Van Buren? Answer Y or N."}], "ideal": "N"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Zachary Taylor born before John Tyler? Answer Y or N."}], "ideal": "Y"}
+{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Was Zachary Taylor born before James Buchanan? Answer Y or N."}], "ideal": "Y"}

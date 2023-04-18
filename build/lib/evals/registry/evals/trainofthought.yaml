@@ -1,0 +1,9 @@
+trainofthought-logic:
+  id: trainofthought-logic.dev.v0
+  metrics: [accuracy]
+trainofthought-logic.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: trainofthought/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact

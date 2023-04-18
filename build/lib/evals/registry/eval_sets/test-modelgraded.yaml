@@ -1,0 +1,14 @@
+test-modelgraded:
+  evals:
+    - logic-fact
+    - joke-fruits
+    - joke-fruits-v2
+    - joke-fruits-likert
+    - joke-fruits-meta
+    - joke-fruits-expl-meta
+    - joke-fruits-ans-meta
+    - diversity
+    - joke-animals-vs-fruits
+    - rap-people-vs-people
+    - rap-animals-vs-fruits
+    - rap-people-vs-fruits
