@@ -1,0 +1,9 @@
+wordle:
+  id: wordle.dev.guess-v1
+  metrics: [information_gain, entropy_score, position_score]
+  description: Evaluates the ability for the model to come up with high-quality follow-up guesses for the game Wordle
+wordle.dev.guess-v1
+  class: evals.elsuite.wordle:Wordle
+  args:
+    samples_jsonl: evals/registry/data/wordle/samples.jsonl
+    words_jsonl: evals/registry/data/wordle/wordle_scored.jsonl
