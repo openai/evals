@@ -33,32 +33,38 @@ class Wordle(evals.Eval):
 
         result = self.completion_fn(prompt)
 
-        guess = result.get_completions[0]
+        guess = result.get_completions()[0]
 
         information_gain = self.calculate_information_gain(guess, guesses, feedback, sol)
         entropy_score = self.entropy_scores.get(guess, 0.0)
         position_score = self.position_scores.get(guess, 0.0)
         valid_guess = is_valid_guess(guess, guesses, feedback)
 
-        evals.record.record_event('guess', information_gain=information_gain, entropy_score=entropy_score, position_score=position_score, valid_guess=valid_guess)
+        evals.record.record_metrics(information_gain=information_gain, entropy_score=entropy_score, position_score=position_score, valid_guess=valid_guess)
         
 
     def run(self, recorder):
         samples = self.get_samples()
-        self.eval_all_samples(samples, recorder)
-        events = recorder.get_events('guess')
+        self.eval_all_samples(recorder, samples)
+        events = recorder.get_events('metrics')
         info_gained = [event.data['information_gain'] for event in events]
         entropy = [event.data['entropy_score'] for event in events]
         position_score = [event.data['position_score'] for event in events]
 
+        num_valid_guesses = 0
+        for event in events:
+            if event.data['valid_guess']:
+                num_valid_guesses += 1
+
         return {
             'information_gain': np.mean(info_gained),
             'entropy_score': np.mean(entropy),
-            'position_score': np.mean(position_score)
+            'position_score': np.mean(position_score),
+            'total_valid_guesses': num_valid_guesses
         }
 
 
-    def load_jsonl_to_list(file_path):
+    def load_jsonl_to_list(self, file_path):
         data_list = []
         with open(file_path, 'r') as file:
             for line in file:
@@ -109,16 +115,20 @@ class Wordle(evals.Eval):
             word_list = [word for word in word_list if is_compatible(word, prev_guess, prev_feedback)]
 
         # Calculate initial entropy
-        initial_entropy = calculate_entropy(self.word_list)
+        initial_entropy = calculate_entropy(word_list)
+
+        print("Initial entropy: {}".format(initial_entropy))
 
         # Calculate the actual feedback for the guess based on the solution
         actual_feedback = get_actual_feedback(guess, solution)
 
         # Get the set of words compatible with the actual feedback
-        remaining_words = [word for word in self.word_list if is_compatible(word, guess, actual_feedback)]
+        remaining_words = [word for word in word_list if is_compatible(word, guess, actual_feedback)]
 
         # Calculate the entropy of the remaining words
         remaining_entropy = calculate_entropy(remaining_words)
+
+        print("Remaining entropy: {}".format(remaining_entropy))
 
         # Information gain is the difference between initial entropy and remaining entropy
         information_gain = initial_entropy - remaining_entropy
