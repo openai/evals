@@ -1,0 +1,8 @@
+geography:
+  id: geography.match.dev.v0
+  metrics: [accuracy]
+
+geography.match.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: geography/samples.jsonl
