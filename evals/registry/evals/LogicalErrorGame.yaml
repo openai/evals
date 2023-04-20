@@ -1,0 +1,10 @@
+LogicalErrorGame:
+  id: LogicalErrorGame.dev.v0
+  description: This eval tests the correctness of the word chosen by GPT-4 during a text based game of Hangman though the scope is broader than a simple game, as well as the implications of its decision-making, ability to store simple words in different contexts and correctly call upon those words with logical consistency. Any normal human being would be able to successfully accomplish this simple task.
+  metrics: [accuracy]
+
+LogicalErrorGame.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: LogicalErrorGame/LogicalErrorGame.jsonl
+
