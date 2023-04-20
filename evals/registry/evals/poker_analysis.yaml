@@ -1,0 +1,8 @@
+poker_analysis:
+  id: poker_analysis.test.v1
+  metrics: [accuracy]
+
+poker_analysis.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: poker_analysis/samples.jsonl
