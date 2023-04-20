@@ -1,0 +1,8 @@
+transaction-grouping-matching:
+  id: transaction-grouping-matching.dev.v0
+  description: Match transactions using groups of transactions when needed 
+  metrics: [accuracy]
+character-count-numbers.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: transaction_grouping_matching/samples.jsonl
