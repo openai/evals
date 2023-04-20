@@ -1,11 +1,13 @@
-import numpy as np
-from math import log2
-import json
 import copy
-from random import Random
+import json
+from math import log2
+from typing import Any, List
+
+import numpy as np
+
 import evals
 import evals.metrics
-from typing import Any, List, Tuple, Dict
+
 
 class Wordle(evals.Eval):
     def __init__(self, samples_jsonl, words_jsonl, **kwargs):
@@ -18,13 +20,15 @@ class Wordle(evals.Eval):
         self.samples_jsonl = samples_jsonl
 
     def eval_sample(self, sample: Any, *_):
-        def is_valid_guess(guess: str, previous_guesses: List[str], previous_feedback: List[str]) -> bool:
+        def is_valid_guess(
+            guess: str, previous_guesses: List[str], previous_feedback: List[str]
+        ) -> bool:
             for prev_guess, prev_feedback in zip(previous_guesses, previous_feedback):
                 for letter, feedback in zip(prev_guess, prev_feedback):
-                    if feedback == 'X' and letter in guess:
+                    if feedback == "X" and letter in guess:
                         return False
             return True
-        
+
         guesses = sample["guesses"]
         feedback = sample["results"]
         sol = sample["solution"]
@@ -40,56 +44,55 @@ class Wordle(evals.Eval):
         position_score = self.position_scores.get(guess, 0.0)
         valid_guess = is_valid_guess(guess, guesses, feedback)
 
-        evals.record.record_metrics(information_gain=information_gain, entropy_score=entropy_score, position_score=position_score, valid_guess=valid_guess)
-        
+        evals.record.record_metrics(
+            information_gain=information_gain,
+            entropy_score=entropy_score,
+            position_score=position_score,
+            valid_guess=valid_guess,
+        )
 
     def run(self, recorder):
         samples = self.get_samples()
         self.eval_all_samples(recorder, samples)
-        events = recorder.get_events('metrics')
-        info_gained = [event.data['information_gain'] for event in events]
-        entropy = [event.data['entropy_score'] for event in events]
-        position_score = [event.data['position_score'] for event in events]
+        events = recorder.get_events("metrics")
+        info_gained = [event.data["information_gain"] for event in events]
+        entropy = [event.data["entropy_score"] for event in events]
+        position_score = [event.data["position_score"] for event in events]
 
         num_valid_guesses = 0
         for event in events:
-            if event.data['valid_guess']:
+            if event.data["valid_guess"]:
                 num_valid_guesses += 1
 
         return {
-            'information_gain': np.mean(info_gained),
-            'entropy_score': np.mean(entropy),
-            'position_score': np.mean(position_score),
-            'total_valid_guesses': num_valid_guesses
+            "information_gain": np.mean(info_gained),
+            "entropy_score": np.mean(entropy),
+            "position_score": np.mean(position_score),
+            "total_valid_guesses": num_valid_guesses,
         }
-
 
     def load_jsonl_to_list(self, file_path):
         data_list = []
-        with open(file_path, 'r') as file:
+        with open(file_path, "r") as file:
             for line in file:
                 obj = json.loads(line)
                 data_list.append(obj)
         return data_list
 
-
     def calculate_information_gain(
-        self,
-        guess: str,
-        previous_guesses: List[str],
-        previous_feedback: List[str],
-        solution: str
+        self, guess: str, previous_guesses: List[str], previous_feedback: List[str], solution: str
     ) -> float:
         def is_compatible(word: str, guess: str, feedback: str) -> bool:
-            feedback_calculated = ''
-            for w, g in zip(word, guess):
-                if w == g:
-                    feedback_calculated += 'V'
-                elif w in guess:
-                    feedback_calculated += 'O'
-                else:
-                    feedback_calculated += 'X'
-            return feedback_calculated == feedback
+            for i, (g, f) in enumerate(zip(guess, feedback)):
+                if f == "X" and g in word:
+                    return False
+                elif f == "O" and g in word:
+                    if g == word[i]:
+                        return False
+                elif f == "V":
+                    if not g in word:
+                        return False
+            return True
 
         def calculate_entropy(words: List[str]) -> float:
             word_count = len(words)
@@ -97,44 +100,44 @@ class Wordle(evals.Eval):
                 return 0
             probability = 1.0 / word_count
             return -word_count * probability * log2(probability)
-        
+
         def get_actual_feedback(guess: str, solution: str) -> str:
-            feedback = ''
+            feedback = ""
             for g, s in zip(guess, solution):
                 if g == s:
-                    feedback += 'V'
+                    feedback += "V"
                 elif g in solution:
-                    feedback += 'O'
+                    feedback += "O"
                 else:
-                    feedback += 'X'
+                    feedback += "X"
             return feedback
 
         word_list = copy.copy(self.word_list)
         # Filter the word list based on previous guesses and feedback
         for prev_guess, prev_feedback in zip(previous_guesses, previous_feedback):
-            word_list = [word for word in word_list if is_compatible(word, prev_guess, prev_feedback)]
+            word_list = [
+                word for word in word_list if is_compatible(word, prev_guess, prev_feedback)
+            ]
 
         # Calculate initial entropy
         initial_entropy = calculate_entropy(word_list)
-
-        print("Initial entropy: {}".format(initial_entropy))
 
         # Calculate the actual feedback for the guess based on the solution
         actual_feedback = get_actual_feedback(guess, solution)
 
         # Get the set of words compatible with the actual feedback
-        remaining_words = [word for word in word_list if is_compatible(word, guess, actual_feedback)]
+        remaining_words = [
+            word for word in word_list if is_compatible(word, guess, actual_feedback)
+        ]
 
         # Calculate the entropy of the remaining words
         remaining_entropy = calculate_entropy(remaining_words)
-
-        print("Remaining entropy: {}".format(remaining_entropy))
 
         # Information gain is the difference between initial entropy and remaining entropy
         information_gain = initial_entropy - remaining_entropy
 
         return information_gain
-    
+
     def create_prompt(self, guesses, feedback):
         prompt = """You are a helpful assistant that helps solve a Wordle word puzzle.
     Your job is to guess the word that the puzzle is trying to solve.
@@ -153,24 +156,26 @@ class Wordle(evals.Eval):
     - the fifth letter is found and you should always use it again in the same position
 
     Here are the guesses so far this round, along with the feedback received:\n"""
-        
+
         # Loop through the guesses and feedback, format them as strings, and add them to the prompt
         for guess, fb in zip(guesses, feedback):
             prompt += f"Guess: {guess}\nFeedback: {fb}\n"
 
         prompt += '\nYour goal is to provide a guess that will receive the feedback "VVVVV" (all letters are in the right position).\n'
-        prompt += 'Try to gain as much information as possible from the feedback you receive.\n'
-        prompt += 'Your ONLY response should be a 5-letter word that you want to guess next.\n\nGuess:'
-        
+        prompt += "Try to gain as much information as possible from the feedback you receive.\n"
+        prompt += (
+            "Your ONLY response should be a 5-letter word that you want to guess next.\n\nGuess:"
+        )
+
         return prompt
+
 
 if __name__ == "__main__":
 
-    with open('examples.jsonl', 'r') as f:
+    with open("examples.jsonl", "r") as f:
         examples = [json.loads(line) for line in f]
 
     # Extract guesses, results, and word data from examples
-    guesses = [example['guesses'] for example in examples]
-    results = [example['results'] for example in examples]
-    word_data = examples[0]['word_list']
-    
+    guesses = [example["guesses"] for example in examples]
+    results = [example["results"] for example in examples]
+    word_data = examples[0]["word_list"]
