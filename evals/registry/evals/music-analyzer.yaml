@@ -1,0 +1,9 @@
+music-analyzer:
+  id: music-analyzer.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate electrical principles arithmetic ability
+music-analyzer.dev.match-v1:
+  class: evals.elsuite.music-analyzer:MusicAnalyzer
+  args:
+    train_jsonl: music_analyzer/train.jsonl
+    test_jsonl: music_analyzer/test.jsonl
