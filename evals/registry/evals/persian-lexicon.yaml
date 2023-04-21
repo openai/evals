@@ -1,6 +1,6 @@
 persian-lexicon:
   id: persian-lexicon.dev.v1
-  description: Test the model's ability to distinguish misspeled (thus non-existend) and correct words in Persian language.
+  description: Test the model's ability to distinguish misspeled (thus non-existent) and correct words in Persian language.
   metrics: [accuracy]
 
 persian-lexicon.dev.v0:
