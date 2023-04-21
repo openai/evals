@@ -1,0 +1,8 @@
+chess-tactical-observer:
+  id: chess-tactical-observer.v0
+  description: Test models ability to identify critical tactical observations in a chess position. In this simple variant, we only test the model's ability to determine if a particular piece is pinned (to its king).
+  metrics: [accuracy]
+chess-tactical-observer-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    match_jsonl: chess-tactical-observer/match.jsonl
