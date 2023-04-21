@@ -1,0 +1,9 @@
+lyrics-analyzer:
+  id: lyrics-analyzer.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate electrical principles arithmetic ability
+lyrics-analyzer.dev.match-v1:
+  class: evals.elsuite.lyrics-analyzer:LyricsAnalyzer
+  args:
+    train_jsonl: lyrics_analyzer/train.jsonl
+    test_jsonl: lyrics_analyzer/test.jsonl
