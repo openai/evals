@@ -130,7 +130,7 @@ class Eval(abc.ABC):
             with recorder.as_default_recorder(sample_id):
                 seed = f"{sample_id}:{self.seed}".encode("utf-8")
                 rng = random.Random(seed)
-                return idx, self.eval_sample(sample, rng)
+                return idx, self.eval_sample(sample, rng, recorder)
 
         def worker_thread(args):
             """
@@ -162,3 +162,12 @@ class Eval(abc.ABC):
             )
 
         return get_jsonl(self.samples_jsonl)
+
+def csv_rccount_cell_create(model_spec, **kwargs):
+    from evals.elsuite.basic import csv_eval
+    
+    return csv_eval.CSVFormatWithRowsColumnsAndData(
+        model_spec=model_spec,
+        data_jsonl="csv-rccount-cell/csv_create_eval.jsonl",
+        **kwargs,
+    )

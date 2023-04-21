@@ -1,0 +1,8 @@
+csv-rccount-cell-generate-fill-define:
+  id: csv-rccount-cell-generate-fill-define.dev.v0
+  metrics: [accuracy]
+
+csv-rccount-cell-generate-fill-define.dev.v0:
+  class: evals.elsuite.basic.csv_eval:CSVFormatWithRowsColumnsAndData
+  args:
+    data_jsonl: csv-rccount-cell/csv_generate_fill_define_eval.jsonl

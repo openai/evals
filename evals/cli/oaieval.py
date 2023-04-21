@@ -51,6 +51,7 @@ def get_parser() -> argparse.ArgumentParser:
 
 
 def run(args, registry: Optional[Registry] = None):
+    
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
 
@@ -64,6 +65,7 @@ def run(args, registry: Optional[Registry] = None):
         registry.add_registry_paths(args.registry_path)
 
     eval_spec = registry.get_eval(args.eval)
+    print(f"eval_spec: {eval_spec}")
     assert (
         eval_spec is not None
     ), f"Eval {args.eval} not found. Available: {list(sorted(registry._evals.keys()))}"
@@ -129,15 +131,20 @@ def run(args, registry: Optional[Registry] = None):
         return {k: to_number(v) for k, v in str_dict.items()}
 
     extra_eval_params = parse_extra_eval_params(args.extra_eval_params)
+    
+    print(f"extra_eval_params: {extra_eval_params}")
 
     eval_class = registry.get_class(eval_spec)
-    eval = eval_class(
-        completion_fns=completion_fn_instances,
-        seed=args.seed,
-        name=eval_name,
-        registry=registry,
-        **extra_eval_params,
-    )
+    model_spec = completion_fn_instances[0]
+    eval_spec.args["model_spec"] = model_spec
+    print(f"eval_class: {eval_class}")
+    eval = eval_class(**eval_spec.args, 
+                      completion_fns=completion_fn_instances, 
+                      seed=args.seed, 
+                      name=eval_name, 
+                      registry=registry, 
+                      **extra_eval_params)
+
     result = eval.run(recorder)
     recorder.record_final_report(result)
 
