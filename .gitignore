@@ -3,3 +3,4 @@ evals.egg-info/
 
 # MacOS folder metadata
 .DS_Store
+.vscode/

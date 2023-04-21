@@ -1,0 +1,8 @@
+imperial_date_to_string:
+  id: imperial_date_to_string.dev.v0
+  metrics: [accuracy]
+
+imperial_date_to_string.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: imperial_date_to_string/samples.jsonl

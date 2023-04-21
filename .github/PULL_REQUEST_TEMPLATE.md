@@ -6,7 +6,7 @@ __PLEASE READ THIS__:
 
 In order for a PR to be merged, it must fail on GPT-4. We are aware that right now, users do not have access, so you will not be able to tell if the eval fails or not. Please run your eval with GPT-3.5-Turbo, but keep in mind as we run the eval, if GPT-4 gets higher than 90% on the eval, we will likely reject since GPT-4 is already capable of completing the task.
 
-We plan to roll out a way for users submitting evals to see the eval performance on GPT-4 soon. Stay tuned! Until then, you will not be able to see the eval performance on GPT-4.
+We plan to roll out a way for users submitting evals to see the eval performance on GPT-4 soon. Stay tuned! Until then, you will not be able to see the eval performance on GPT-4. **Starting April 10, the minimum eval count is 15 samples, we hope this makes it easier to create and contribute evals.**
 
 ## Eval details 📑
 ### Eval name
@@ -29,7 +29,7 @@ Your eval should be:
 - [ ] Thematically consistent: The eval should be thematically consistent. We'd like to see a number of prompts all demonstrating some particular failure mode. For example, we can  create an eval on cases where the model fails to reason about the physical world.
 - [ ] Contains failures where a human can do the task, but either GPT-4 or GPT-3.5-Turbo could not.
 - [ ] Includes good signal around what is the right behavior. This means either a correct answer for `Basic` evals or the `Fact` Model-graded eval, or an exhaustive rubric for evaluating answers for the `Criteria` Model-graded eval.
-- [ ] Include at least 100 high quality examples
+- [ ] **Include at least 15 high quality examples.**
 
 If there is anything else that makes your eval worth including, please document it below.
 
@@ -41,7 +41,7 @@ If there is anything else that makes your eval worth including, please document 
 
 Your eval should
 - [ ] Check that your data is in `evals/registry/data/{name}`
-- [ ] Check that your yaml is registered at `evals/registry/evals/{name}.jsonl`
+- [ ] Check that your yaml is registered at `evals/registry/evals/{name}.yaml`
 - [ ] Ensure you have the right to use the data you submit via this eval
 
 (For now, we will only be approving evals that use one of the existing eval classes. You may still write custom eval classes for your own cases, and we may consider merging them in the future.)
@@ -75,7 +75,7 @@ Failure to fill out all required fields will result in the PR being closed.
 
 ### Eval JSON data 
 
-Since we are using Git LFS, we are asking eval submitters to add in their first 100 JSONL eval lines.
+Since we are using Git LFS, we are asking eval submitters to add in as many Eval Samples (at least 5) from their contribution here:
 
 <details>
   <summary>View evals in JSON</summary>

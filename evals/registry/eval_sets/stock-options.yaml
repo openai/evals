@@ -1,0 +1,14 @@
+stock-options:
+  evals:
+    - stock-options-bear-call-spread
+    - stock-options-bull-call-spread
+    - stock-options-iron-butteryfly-spread
+    - stock-options-inverse-iron-butterfly-spread
+    - stock-options-iron-condor-spread
+    - stock-options-inverse-iron-condor-spread
+    - stock-option-terms-bear-call-spread
+    - stock-option-terms-bull-call-spread
+    - stock-option-terms-iron-butteryfly-spread
+    - stock-option-terms-inverse-iron-butterfly-spread
+    - stock-option-terms-iron-condor-spread
+    - stock-option-terms-inverse-iron-condor-spread

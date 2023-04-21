@@ -1,0 +1,8 @@
+aba_mrpc_true_false:
+  id: aba_mrpc_true_false.dev.v0
+  metrics: [accuracy]
+
+aba_mrpc_true_false.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: aba_mrpc_true_false/samples.jsonl

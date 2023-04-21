@@ -6,7 +6,6 @@ import logging
 import backoff
 import openai
 
-
 @backoff.on_exception(
     wait_gen=backoff.expo,
     exception=(
