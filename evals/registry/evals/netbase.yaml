@@ -1,0 +1,9 @@
+netbase:
+  id: netbase.dev.v0
+  description: Test the model's common world knowledge. Netbase (netbase.pannous.com) is a collection of almost a billion facts about the world from sources such as Freebase, Wikidata, DBPedia, OpenStreetMap...
+  metrics: [accuracy]
+
+netbase.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: netbase/samples.jsonl
