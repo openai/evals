@@ -1,9 +1,0 @@
-subset_evaluation_with_names:
-  id: subset_evaluation_with_names.dev.v0
-  description: Test the model's ability to determine which names are present in the first list but not the second list, considering that the order of last name and first name in the second list is uncertain. The model should return the names sorted from A to Z by first name.
-  metrics: [accuracy]
-subset_evaluation_with_names.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: subset_evaluation_with_names/samples.jsonl
-
