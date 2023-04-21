@@ -1,0 +1,10 @@
+positive-binary-operations:
+  id: positive-binary-operations.test.v1
+  metrics:
+  - accuracy
+positive-binary-operations.test.v1:
+  args:
+    few_shot_jsonl: positive-binary-operations/fewshot.jsonl
+    num_few_shot: 10
+    samples_jsonl: positive-binary-operations/samples.jsonl
+  class: evals.elsuite.basic.match:Match
