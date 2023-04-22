@@ -1,0 +1,48 @@
+mazes-singlemove-3x3:
+    id: mazes-singlemove-3x3.test.v2
+    metrics: [accuracy]
+mazes-singlemove-3x3.test.v2:
+    class: evals.elsuite.basic.match:Match
+    args:
+        samples_jsonl: mazes/3x3-mazes-singlemove.jsonl
+
+mazes-singlemove-4x4:
+    id: mazes-singlemove-4x4.test.v2
+    metrics: [accuracy]
+mazes-singlemove-4x4.test.v2:
+    class: evals.elsuite.basic.match:Match
+    args:
+        samples_jsonl: mazes/4x4-mazes-singlemove.jsonl
+
+mazes-singlemove-10x10:
+    id: mazes-singlemove-10x10.test.v2
+    metrics: [accuracy]
+mazes-singlemove-10x10.test.v2:
+    class: evals.elsuite.basic.match:Match
+    args:
+        samples_jsonl: mazes/10x10-mazes-singlemove.jsonl
+
+mazes-3x3:
+  id: mazes-3x3.test.v2
+  metrics: [accuracy]
+mazes-3x3.test.v2:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: mazes/3x3-mazes.jsonl
+
+mazes-4x4:
+  id: mazes-4x4.test.v2
+  metrics: [accuracy]
+mazes-4x4.test.v2:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: mazes/4x4-mazes.jsonl
+
+mazes-10x10:
+    id: mazes-10x10.test.v2
+    metrics: [accuracy]
+mazes-10x10.test.v2:
+    class: evals.elsuite.basic.match:Match
+    args:
+        samples_jsonl: mazes/10x10-mazes.jsonl
+
