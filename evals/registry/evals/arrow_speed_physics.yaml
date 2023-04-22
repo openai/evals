@@ -1,0 +1,9 @@
+arrow_speed_physics:
+  id: arrow_speed_physics.dev.v0
+  description: Test the model's ability to determine basic physics results
+  disclaimer: This dataset consists of simple physics problems consisting of determine the kinetic energy, speed, or mass of an arrow when 2 of the 3 variables are known. It is not intended to be a comprehensive test of the model's ability to perform physics.
+  metrics: [accuracy]
+arrow_speed_physics.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: arrow_speed_physics/samples.jsonl
