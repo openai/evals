@@ -1,0 +1,9 @@
+algebra-word-problems:
+  id: algebra-word-problems.s1.simple-v0
+  description: Test the model's ability to perform basic algebra word problems
+  disclaimer: This dataset consists of simple algebra problems. It is not intended to be a comprehensive test of the model's ability to perform algebra.
+  metrics: [accuracy]
+algebra-word-problems.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: algebra_word_problems/samples.jsonl
