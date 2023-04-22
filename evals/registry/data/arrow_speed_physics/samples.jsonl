@@ -1,7 +1,20 @@
+{"input": "What is the formula for kinetic energy? Please provide just the formula no additional information. Only provide me with \"KE = X\"", "ideal": ["KE = 1/2 mv^2", "KE = 1/2mv^2"]}
+{"input":  "What is the formula to convert kinetic energy ft-lbs to joules?", "ideal":  ["1 ft-lb = 1.3558 J"]}
+{"input":  "Please convert 94 ft-lbs to joules to 2 decimals?", "ideal":  ["127.4"]}
+{"input":  "What is the formula to convert feet per second (ft/s) to meters per second (m/s)?", "ideal":  ["m/s = ft/s x 0.3048", "0.3048", "1 ft/s = 0.3048 m/s"]}
 {"input": "Given an arrow has a mass of 535 grains and a kinetic energy of 94 ft lbs what is the arrow speed?  Please output the answer in the format of \"XXX.XX Ft/Sec\" do not provide the details of how you got the answer only show the output I described.", "ideal": "281.32 Ft/Sec"}
 {"input": "An arrow has a kinetic energy of 80 Joules and its mass is 0.03 kg. What is the approximate speed of the arrow? Please output the answer in the format of \"XXX.XX m/s\" do not provide the details of how you got the answer only show the output I described.", "ideal": "73.03 m/s"}
 {"input": "The kinetic energy of an arrow is 45 Joules and it has a mass of 0.025 kg. Calculate the approximate speed of the arrow. Please output the answer in the format of \"XXX.XX m/s\" do not provide the details of how you got the answer only show the output I described.", "ideal": "60 m/s"}
 {"input": "Given an arrow has a mass of 535 grains and a velocity of 281 ft/sec what is the kinetic energy in ft/lbs?  Please output the answer in the format of \"XXX.XX Ft-Lbs\" do not provide the details of how you got the answer only show the output I described.", "ideal": "93.78 Ft-Lbs"}
 {"input": "Given an arrow has a velocity of 281 ft/sec and 93.78 ft/lbs of kinetic energy what is the weight of this arrow in grains?  Please output the answer in the format of \"XXX.XX grn\" do not provide the details of how you got the answer only show the output I described.", "ideal": "535 grn"}
-{"input": "Given an arrow has a velocity of 281 ft/sec and 93.78 ft/lbs of kinetic energy what is the weight of this arrow in grains?  Please output the answer in the format of \"XXX.XX grn\" do not provide the details of how you got the answer only show the output I described.", "ideal": "535 grn"}
-{"input": "What is the formula for kinetic energy? Please provide just the formula no additional information. Only provide me with \"KE = X\"", "ideal": ["KE = 1/2 mv^2", "KE = 1/2mv^2"]}
+{"input": "If an arrow has a mass of 535 grains and a kinetic energy of 94 ft lbs what is the arrow speed?  Please output the answer in the format of \"XXX.XX Ft/Sec\" do not provide the details of how you got the answer only show the output I described.", "ideal": "281.32 Ft/Sec"}
+{"input": "If an arrow has a mass of 535 grains and a velocity of 281 ft/sec what is the kinetic energy in ft/lbs?  Please output the answer in the format of \"XXX.XX Ft-Lbs\" do not provide the details of how you got the answer only show the output I described.", "ideal": "93.78 Ft-Lbs"}
+{"input": "Given the kinetic energy formula of KE = 1/2 mv^2, if KE = 94 ft-lbs and m = 535 grains what is v in feet per second (ft/s)?", "ideal":  ["281.32 ft/s"]}
+{"input": "Given the kinetic energy formula of KE = 1/2 mv^2, if m = 535 grains and v = 281 ft/s what is KE in ft-lbs?", "ideal":  ["93.78 ft-lbs"]}
+{"input": "Given the kinetic energy formula of KE = 1/2 mv^2, if v = 281 ft/s and KE 93.78 ft-lbs what is m in grains?", "ideal":  ["535"]}
+{"input": "Given the kinetic energy formula of KE = 1/2 mv^2, if m = 0.03 kg and v = 73.03 m/s what is KE in joules?", "ideal":  ["80"]}
+{"input": "Given the kinetic energy formula of KE = 1/2 mv^2, if KE = 80 Joules and m = 0.03 kg what is v in meters per second (m/s)?", "ideal":  ["73.03"]}
+{"input": "Given the kinetic energy formula of KE = 1/2 mv^2, if v = 73.03 m/s and KE 80 Joules what is m in kg?", "ideal":  ["0.03"]}
+{"input": "Given the kinetic energy formula of KE = 1/2 mv^2, if m = 0.025 kg and v = 60 m/s what is KE in joules?", "ideal":  ["45"]}
+{"input": "Given the kinetic energy formula of KE = 1/2 mv^2, if KE = 45 Joules and m = 0.025 kg what is v in meters per second (m/s)?", "ideal":  ["60"]}
+{"input": "Given the kinetic energy formula of KE = 1/2 mv^2, if v = 60 m/s and KE 45 Joules what is m in kg?", "ideal":  ["0.025"]}
