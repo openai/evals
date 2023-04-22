@@ -10,7 +10,6 @@ from evals.registry import Registry
 
 Task = list[str]
 
-
 class Progress:
     def __init__(self, file: str) -> None:
         self.file = Path(file)
