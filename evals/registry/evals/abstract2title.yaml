@@ -4,7 +4,7 @@ abstract2title:
   - accuracy
 abstract2title.test.v1:
   args:
-    few_shot_jsonl: d:\evals\examples\..\evals\registry\data\abstract2title\few_shot.jsonl
+    few_shot_jsonl: abstract2title\few_shot.jsonl
     num_few_shot: 1
-    samples_jsonl: d:\evals\examples\..\evals\registry\data\abstract2title\samples.jsonl
+    samples_jsonl: abstract2title\samples.jsonl
   class: evals.elsuite.translate:Translate
