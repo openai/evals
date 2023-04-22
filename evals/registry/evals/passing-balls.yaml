@@ -1,0 +1,8 @@
+passing-balls:
+  id: passing-balls.dev.v0
+  metrics: [accuracy]
+
+passing-balls.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: passing-balls/passing-balls.jsonl
