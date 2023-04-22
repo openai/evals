@@ -6,7 +6,6 @@ import json
 import subprocess
 from pathlib import Path
 from typing import Optional
-
 from evals.registry import Registry
 
 Task = list[str]
