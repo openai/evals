@@ -1,0 +1,10 @@
+animal-size:
+  id: animal-size.test.v0
+  metrics: [accuracy]
+
+animal-size.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: animal_size/samples.jsonl
+    few_shot_jsonl: animal_size/few_shot.jsonl
+    num_few_shot: 4

@@ -1,0 +1,10 @@
+color-wheel:
+  id: color-wheel.test.v0
+  metrics: [accuracy]
+
+color-wheel.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: color_wheel/samples.jsonl
+    few_shot_jsonl: color_wheel/few_shot.jsonl
+    num_few_shot: 5

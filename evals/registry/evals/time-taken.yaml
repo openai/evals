@@ -1,0 +1,10 @@
+time-taken:
+  id: time-taken.test.v0
+  metrics: [accuracy]
+
+time-taken.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: time_taken/samples.jsonl
+    few_shot_jsonl: time_taken/few_shot.jsonl
+    num_few_shot: 5

@@ -1,0 +1,10 @@
+animal-speed:
+  id: animal-speed.test.v0
+  metrics: [accuracy]
+
+animal-speed.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: animal_speed/samples.jsonl
+    few_shot_jsonl: animal_speed/few_shot.jsonl
+    num_few_shot: 4

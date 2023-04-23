@@ -1,0 +1,8 @@
+russian-grammar:
+  id: russian-grammar.test.v0
+  metrics: [accuracy]
+
+russian-grammar.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: russian_grammar/hard_samples.jsonl
