@@ -1,0 +1,8 @@
+airports-by-country:
+  id: airports-by-country.dev.v0
+  metrics: [accuracy]
+
+airports-by-country.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: airports-by-country/samples.jsonl
