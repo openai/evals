@@ -1,0 +1,10 @@
+gmsl_predictor:
+  id: gmsl_predictor.dev.v0
+  metrics: [mse, mae, rmse, r2]
+  description: Predict Global Mean Sea Level (GMSL) variation with Global Isometric Adjustment (GIA).
+gmsl_predictor.dev.v0:
+  class: evals.elsuite.gmsl_predictor:GMSLPredictor
+  args:
+    train_jsonl: gmsl_predictor/train.jsonl
+    test_jsonl: gmsl_predictor/test.jsonl
+
