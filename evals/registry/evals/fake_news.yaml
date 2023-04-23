@@ -1,0 +1,9 @@
+fake_news:
+  id: fake_news.dev.v0
+  description: Test the model's ability to detect unreliable (fake) news.
+  metrics: [accuracy]
+
+fake_news.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: fake_news/samples.jsonl
