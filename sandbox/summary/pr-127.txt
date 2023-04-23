@@ -1,0 +1,1 @@
+The pull request describes a set of Russian NLP tasks based on a school exam called Unified State Exam. The tasks involve identifying errors in the placement of stress in Russian words. The evaluation data is provided in JSON format and includes input prompts and ideal answers. The purpose of the evaluation is to better understand Russian grammar and accents.
