@@ -1,0 +1,5 @@
+sudoku-solve:
+  id: sudoku.solve.dev.v0
+  description: Test the model's ability to solve sudoku puzzles
+  metrics: [accuracy]
+sudoku.solve.dev.v0:  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch  args:    samples_jsonl: sudoku-solve/sudoku-solve.jsonl
