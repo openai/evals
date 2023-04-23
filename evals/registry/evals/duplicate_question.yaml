@@ -1,0 +1,8 @@
+duplicate_question:
+  id: duplicate_question.dev.v0
+  metrics: [accuracy]
+
+duplicate_question.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: duplicate_question/samples.jsonl
