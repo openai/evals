@@ -1,0 +1,8 @@
+hebrew-bible:
+  id: hebrew-bible.v0
+  description: Simple questions on the bible, similar to preliminary questions in the international yearly bible contest in Israel.
+  metrics: [accuracy]
+hebrew-bible.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: hebrew_bible/samples.jsonl
