@@ -1,5 +1,0 @@
-sudoku-check:
-  id: sudoku.check.dev.v0
-  description: Test the model's ability to check sudoku puzzle solutions
-  metrics: [accuracy]
-sudoku.check.dev.v0:  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch  args:    samples_jsonl: sudoku-check/match.jsonl
