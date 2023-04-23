@@ -1,6 +1,6 @@
 fake_news:
   id: fake_news.dev.v0
-  description: Test the model's ability to detect unreliable (fake) news.
+  description: Test the model's ability to classify the level of truthfulness in a news headline.
   metrics: [accuracy]
 
 fake_news.dev.v0:
