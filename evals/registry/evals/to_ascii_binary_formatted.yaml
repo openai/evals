@@ -1,0 +1,9 @@
+to_ascii_binary_formatted:
+  id: to_ascii_binary_formatted.dev.v0
+  description: Convert text to ASCII binary and then apply formatting. This is a test of multiple operations on a simple input.
+  metrics:
+    - accuracy
+to_ascii_binary_formatted.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: to_ascii_binary_formatted/samples.jsonl
