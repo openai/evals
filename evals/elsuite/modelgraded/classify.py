@@ -143,40 +143,29 @@ class ModelBasedClassify(evals.Eval):
                 return
 
         metrics = {}
-        if self.mg.expanded_args_dict and len(self.mg.expanded_args_dict) > 1:
-            args_dict = self.mg.expanded_args_dict
-        elif self.mg.expanded_args_dict and len(self.mg.expanded_args_dict) == 1:
-            # if there is only one combination, don't bother with the metric name
-            args_dict = {CHOICE_KEY: v for v in self.mg.expanded_args_dict.values()}
-        else:
-            args_dict = {CHOICE_KEY: {}}
-        for metric, args in args_dict.items():
-            args = {k: v[1] for k, v in args.items()}
-            prompt = self.mg.format(**args, **completions, **test_sample)
-            evaluate = PromptFn(
-                prompt,
-                completion_fn=self.eval_completion_fn,
-                max_tokens=self.max_tokens,
+        prompt = self.mg.format(**completions, **test_sample)
+        evaluate = PromptFn(
+            prompt,
+            completion_fn=self.eval_completion_fn,
+            max_tokens=self.max_tokens,
+        )
+        try:
+            evaluation, _ = evaluate(skip_format=True)
+        except openai.error.InvalidRequestError:
+            logging.warn(f"Invalid request during evaluation: {prompt}")
+            self.invalid_request_during_evaluation += 1
+            return
+        choice = get_choice(evaluation, self.mg.eval_type, self.match_fn, self.mg.choice_strings)
+        if choice == INVALID_STR:
+            logging.warn(
+                f"Choices {self.mg.choice_strings} not parsable for {self.mg.eval_type}: {evaluation}"
             )
-            try:
-                evaluation, _ = evaluate(skip_format=True)
-            except openai.error.InvalidRequestError:
-                logging.warn(f"Invalid request during evaluation: {prompt}")
-                self.invalid_request_during_evaluation += 1
-                return
-            choice = get_choice(
-                evaluation, self.mg.eval_type, self.match_fn, self.mg.choice_strings
-            )
-            if choice == INVALID_STR:
-                logging.warn(
-                    f"Choices {self.mg.choice_strings} not parsable for {self.mg.eval_type}: {evaluation}"
-                )
-            metrics[metric] = choice
-            if self.metaeval:
-                assert (
-                    metric in test_sample
-                ), f"Missing label for metric '{metric}' in sample {test_sample.keys()}"
-                metrics[metric + "_metascore"] = choice == test_sample[metric]
+        metrics[CHOICE_KEY] = choice
+        if self.metaeval:
+            assert (
+                CHOICE_KEY in test_sample
+            ), f"Missing label for metric '{CHOICE_KEY}' in sample {test_sample.keys()}"
+            metrics[CHOICE_KEY + "_metascore"] = choice == test_sample[CHOICE_KEY]
 
         evals.record.record_metrics(**metrics)
 
@@ -194,29 +183,26 @@ class ModelBasedClassify(evals.Eval):
         if not all_sample_metrics:
             return record_metrics
 
-        if self.mg.expanded_args_dict and len(self.mg.expanded_args_dict) > 1:
-            metrics = sorted(self.mg.expanded_args_dict)
-        else:
-            metrics = [CHOICE_KEY]
-        for metric in metrics:
-            chosen = [m[metric] for m in all_sample_metrics if metric in m]
-            # if there is a best choice, compute the score
-            if self.mg.choice_scores:
-                # assumption: each INVALID_STR contributes the lowest score
-                lowest_score = min(self.mg.choice_scores.values())
-                scores = [
-                    self.mg.choice_scores[choice] if choice != INVALID_STR else lowest_score
-                    for choice in chosen
-                ]
-                record_metrics[f"score/{metric}"] = sum(scores) / len(all_sample_metrics)
-            # compute the counts and ratios
-            counts = dict(Counter(chosen))
-            missing_samples = len(all_sample_metrics) - len(chosen)
-            if missing_samples:
-                counts["__missing_samples__"] = missing_samples
-            record_metrics.update({f"counts/{metric}/{k}": v for k, v in counts.items()})
-            if self.metaeval:
-                metascores = [m[metric + "_metascore"] for m in all_sample_metrics if metric in m]
-                record_metrics[f"metascore/{metric}"] = sum(metascores) / len(all_sample_metrics)
+        chosen = [m[CHOICE_KEY] for m in all_sample_metrics if CHOICE_KEY in m]
+        # if there is a best choice, compute the score
+        if self.mg.choice_scores:
+            # assumption: each INVALID_STR contributes the lowest score
+            lowest_score = min(self.mg.choice_scores.values())
+            scores = [
+                self.mg.choice_scores[choice] if choice != INVALID_STR else lowest_score
+                for choice in chosen
+            ]
+            record_metrics[f"score/{CHOICE_KEY}"] = sum(scores) / len(all_sample_metrics)
+        # compute the counts and ratios
+        counts = dict(Counter(chosen))
+        missing_samples = len(all_sample_metrics) - len(chosen)
+        if missing_samples:
+            counts["__missing_samples__"] = missing_samples
+        record_metrics.update({f"counts/{CHOICE_KEY}/{k}": v for k, v in counts.items()})
+        if self.metaeval:
+            metascores = [
+                m[CHOICE_KEY + "_metascore"] for m in all_sample_metrics if CHOICE_KEY in m
+            ]
+            record_metrics[f"metascore/{CHOICE_KEY}"] = sum(metascores) / len(all_sample_metrics)
 
         return record_metrics
