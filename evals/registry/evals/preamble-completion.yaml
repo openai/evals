@@ -1,0 +1,7 @@
+preamble-completion:
+  id: preamble-completion.dev.v0
+  metrics: [accuracy]
+preamble-completion.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: preamble-completion/samples.jsonl
