@@ -4,7 +4,7 @@ cissp-study-questions:
   - accuracy
 cissp-study-questions.test.v1:
   args:
-    few_shot_jsonl: /Users/randylariar/evals/examples/../evals/registry/data/cissp-study-questions/few_shot.jsonl
+    few_shot_jsonl: cissp-study-questions/few_shot.jsonl
     num_few_shot: 4
-    samples_jsonl: /Users/randylariar/evals/examples/../evals/registry/data/cissp-study-questions/samples.jsonl
+    samples_jsonl: cissp-study-questions/samples.jsonl
   class: evals.elsuite.basic.match:Match
