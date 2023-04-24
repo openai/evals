@@ -1,0 +1,29 @@
+music-measure-calculation-zeroshot:
+  id: music-measure-calculation-zeroshot.test.v0
+  metrics: [accuracy]
+  description: Given a time sigature and duration series, calculates the number of measures (zeroshot)
+
+music-measure-calculation-zeroshot.test.v0:
+  class: evals.elsuite.basic.Fuzzy_Match:FuzzyMatch
+  args:
+    samples_jsonl: music-measure-calculation/music-measure-calculation-zeroshot.jsonl
+
+music-measure-calculation-fewshot:
+  id: music-measure-calculation-fewshot.test.v0
+  metrics: [accuracy]
+  description: Given a time sigature and duration series, calculates the number of measures (fewshot)
+
+music-measure-calculation-fewshot.test.v0:
+  class: evals.elsuite.basic.Fuzzy_Match:FuzzyMatch
+  args:
+    samples_jsonl: music-measure-calculation/music-measure-calculation-fewshot.jsonl
+
+music-measure-calculation-hard:
+  id: music-measure-calculation-hard.test.v0
+  metrics: [accuracy]
+  description: Given a time sigature and duration series, calculates the number of measures (fewshot)
+
+music-measure-calculation-hard.test.v0:
+  class: evals.elsuite.basic.Fuzzy_Match:FuzzyMatch
+  args:
+    samples_jsonl: music-measure-calculation/music-measure-calculation-hard.jsonl
