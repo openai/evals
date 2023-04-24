@@ -1,0 +1,8 @@
+fraction_tape_diagram:
+  id: fraction_tape_diagram.dev.v0
+  metrics: [accuracy]
+
+fraction_tape_diagram.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: fraction_tape_diagram/samples.jsonl
