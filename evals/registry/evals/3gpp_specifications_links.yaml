@@ -1,0 +1,8 @@
+3gpp_specifications_links:
+  id: 3gpp_specifications_links.s1.simple-v0
+  description: Test the model's ability to provide correct link to a 3GPP specification based on title
+  metrics: [accuracy]
+3gpp_specifications_links.s1.simple-v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: 3gpp_specifications_links/samples.jsonl
