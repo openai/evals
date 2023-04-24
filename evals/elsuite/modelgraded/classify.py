@@ -10,15 +10,9 @@ import openai
 
 import evals
 import evals.record
-from evals import CompletionFn, DummyCompletionFn, OpenAIChatCompletionFn
+from evals import CompletionFn, OpenAIChatCompletionFn
 from evals.elsuite.modelgraded.base import ModelGradedSpec
-from evals.elsuite.modelgraded.classify_utils import (
-    CHOICE_KEY,
-    INVALID_STR,
-    MATCH_FNS,
-    concat_n_completions,
-    get_choice,
-)
+from evals.elsuite.modelgraded.classify_utils import CHOICE_KEY, INVALID_STR, concat_n_completions
 from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt
 from evals.registry import Registry
 
@@ -34,43 +28,37 @@ class ModelBasedClassify(evals.Eval):
         modelgraded_spec: str,
         registry: Registry,
         *args,
-        match_fn: str = "starts_or_endswith",
         max_tokens: int = 1024,
         multicomp_n: Union[int, str] = 1,
         multicomp_temperature: float = 0.4,
         samples_renamings: Optional[dict[str, str]] = None,
         eval_type: Optional[str] = None,
         metaeval: bool = False,
-        eval_completion_fn: Optional[str] = None,
         modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
+        if len(self.completion_fns) == 1:
+            self.eval_completion_fn = OpenAIChatCompletionFn(model="gpt-3.5-turbo")
+        else:
+            # treat last completion_fn as eval_completion_fn
+            self.eval_completion_fn = self.completion_fns[-1]
+            self.completion_fns = self.completion_fns[:-1]
         n_models = len(self.completion_fns)
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
-        self.match_fn = MATCH_FNS[match_fn]
         self.metaeval = metaeval
         self.registry = registry
         if multicomp_n == "from_models":
-            assert n_models > 1, f"multicomp_n='from_models' but only 1 model is specified."
+            assert n_models > 1
             self.multicomp_n = n_models
         else:
-            assert isinstance(
-                multicomp_n, int
-            ), f"multicomp_n={multicomp_n} must be an int or 'from_models'."
+            assert isinstance(multicomp_n, int)
             self.multicomp_n = multicomp_n
         if len(self.completion_fns) > 1:
             assert self.multicomp_n == n_models
         self.multicomp_temperature = multicomp_temperature
         self.samples_renamings = samples_renamings or {}
-
-        if isinstance(self.completion_fn, DummyCompletionFn):
-            self.eval_completion_fn = self.completion_fn
-        elif eval_completion_fn:
-            self.eval_completion_fn = self.registry.make_completion_fn(eval_completion_fn)
-        else:
-            self.eval_completion_fn = OpenAIChatCompletionFn(model="gpt-3.5-turbo")
 
         spec_kwargs = {"multicomp_n": self.multicomp_n}
         self.mg: ModelGradedSpec = self.registry.get_modelgraded_spec(
@@ -86,77 +74,68 @@ class ModelBasedClassify(evals.Eval):
 
         Recorded metrics are always: one of the self.choice_strings, or "__invalid__".
         """
+        # process test_sample
         if self.samples_renamings:
             test_sample = {self.samples_renamings.get(k, k): v for k, v in test_sample.items()}
         if self.multicomp_n > 1:
             test_sample["n"] = self.multicomp_n
-        completions = {}
-        if self.metaeval:
-            # assert outputs exist in the data
-            for v in self.mg.input_outputs.values():
-                assert v in test_sample, f"Missing output '{v}' in sample {test_sample.keys()}"
-                completions[v] = test_sample[v]
-        # remove outputs from the data
-        test_sample = {
-            k: v for k, v in test_sample.items() if k not in list(self.mg.input_outputs.values())
-        }
         for k in self.mg.input_outputs:
             test_sample[k] = scrub_formatting_from_prompt(test_sample[k])
 
-        if not self.metaeval:
-            try:
-                for k, v in self.mg.input_outputs.items():
-                    if self.multicomp_n > 1 and v in self.mg.completion_sample_templates:
-                        completion_i_s = []
-                        for i in range(self.multicomp_n):
-                            if len(self.completion_fns) > 1:
-                                # use a separate model for each completion
-                                completion_fn = self.completion_fns[i]
-                            else:
-                                # use the single model for all completions
-                                completion_fn = self.completion_fn
-                            get_input_completion = PromptFn(
-                                test_sample[k],
-                                completion_fn=completion_fn,
-                                max_tokens=self.max_tokens,
-                                temperature=self.multicomp_temperature,
-                            )
-                            completion_i, _ = get_input_completion()
-                            completion_i_s.append(completion_i)
-                        completion = concat_n_completions(
-                            completion_i_s, self.mg.completion_sample_templates[v]
-                        )
-                    else:
+        # run policy completions
+        completions = {}
+        try:
+            for k, v in self.mg.input_outputs.items():
+                if v in test_sample:  # test_sample already has completion, skip.
+                    continue
+                if self.multicomp_n > 1 and v in self.mg.completion_sample_templates:
+                    completion_i_s = []
+                    for i in range(self.multicomp_n):
+                        if len(self.completion_fns) > 1:
+                            # use a separate model for each completion
+                            completion_fn = self.completion_fns[i]
+                        else:
+                            # use the single model for all completions
+                            completion_fn = self.completion_fn
                         get_input_completion = PromptFn(
                             test_sample[k],
-                            completion_fn=self.completion_fn,
+                            completion_fn=completion_fn,
                             max_tokens=self.max_tokens,
+                            temperature=self.multicomp_temperature,
                         )
-                        completion, _ = get_input_completion()
-                    completions[v] = completion
-            except openai.error.InvalidRequestError:
-                self.invalid_request_during_completion += 1
-                return
+                        completion_i, _ = get_input_completion()
+                        completion_i_s.append(completion_i)
+                    completion = concat_n_completions(
+                        completion_i_s, self.mg.completion_sample_templates[v]
+                    )
+                else:
+                    get_input_completion = PromptFn(
+                        test_sample[k],
+                        completion_fn=self.completion_fn,
+                        max_tokens=self.max_tokens,
+                    )
+                    completion, _ = get_input_completion()
+                completions[v] = completion
+        except openai.error.InvalidRequestError:
+            self.invalid_request_during_completion += 1
+            return
 
+        # run modelgraded eval
         metrics = {}
         prompt = self.mg.format(**completions, **test_sample)
-        evaluate = PromptFn(
-            prompt,
-            completion_fn=self.eval_completion_fn,
-            max_tokens=self.max_tokens,
-        )
         try:
-            evaluation, _ = evaluate(skip_format=True)
+            choice = self.mg.classify(
+                prompt=prompt,
+                completion_fn=self.eval_completion_fn,
+                max_tokens=self.max_tokens,
+            )
         except openai.error.InvalidRequestError:
             logging.warn(f"Invalid request during evaluation: {prompt}")
             self.invalid_request_during_evaluation += 1
             return
-        choice = get_choice(evaluation, self.mg.eval_type, self.match_fn, self.mg.choice_strings)
-        if choice == INVALID_STR:
-            logging.warn(
-                f"Choices {self.mg.choice_strings} not parsable for {self.mg.eval_type}: {evaluation}"
-            )
         metrics[CHOICE_KEY] = choice
+
+        # run metaeval if requested
         if self.metaeval:
             assert (
                 CHOICE_KEY in test_sample
