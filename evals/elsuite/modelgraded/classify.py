@@ -60,14 +60,10 @@ class ModelBasedClassify(evals.Eval):
                 multicomp_n, int
             ), f"multicomp_n={multicomp_n} must be an int or 'from_models'."
             self.multicomp_n = multicomp_n
+        if len(self.completion_fns) > 1:
+            assert self.multicomp_n == n_models
         self.multicomp_temperature = multicomp_temperature
         self.samples_renamings = samples_renamings or {}
-
-        # check if multiple models are specified
-        if len(self.completion_fns) > 1:
-            assert (
-                self.multicomp_n == n_models
-            ), f"multicomp_n={self.multicomp_n} must be equal to the number of models={len(self.completion_fns)} if multiple models are specified."
 
         if isinstance(self.completion_fn, DummyCompletionFn):
             self.eval_completion_fn = self.completion_fn
@@ -77,13 +73,13 @@ class ModelBasedClassify(evals.Eval):
             self.eval_completion_fn = OpenAIChatCompletionFn(model="gpt-3.5-turbo")
 
         spec_kwargs = {"multicomp_n": self.multicomp_n}
-        if modelgraded_spec_args:
-            spec_kwargs["args"] = modelgraded_spec_args
         self.mg: ModelGradedSpec = self.registry.get_modelgraded_spec(
             modelgraded_spec, **spec_kwargs
         )
         if eval_type:
             self.mg.append_answer_prompt(eval_type)
+        if modelgraded_spec_args:
+            self.mg.fill_args(**modelgraded_spec_args)
 
     def eval_sample(self, test_sample: dict, rng: Random) -> None:
         """Evaluate a single sample.

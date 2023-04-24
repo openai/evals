@@ -1,7 +1,7 @@
 import string
 from typing import TYPE_CHECKING, Optional, Union
 
-from evals.elsuite.modelgraded.classify_utils import ANSWER_PROMPTS, choice_to_str, expand_args_dict
+from evals.elsuite.modelgraded.classify_utils import ANSWER_PROMPTS, choice_to_str
 from evals.elsuite.utils import format_prompt
 from evals.prompt.base import OpenAICreateChatPrompt, is_chat_prompt
 
@@ -21,7 +21,6 @@ class ModelGradedSpec:
     format_type: str = "in_message"
     choice_scores: Optional[Union[dict[str, Union[float, int]], str]] = None
     multicomp_n: Optional[int] = None
-    args: Optional[dict[str, dict[str, str]]] = None
     expand_args_dict: Optional[dict[str, dict[str, tuple[str]]]] = None
     completion_sample_templates: Optional[dict[str, str]] = None
 
@@ -56,11 +55,6 @@ class ModelGradedSpec:
             self.input_outputs, dict
         ), f"input_outputs must be a dict, not {type(self.input_outputs)}"
 
-        # (optional) 'args' is a dict of dicts that specifies additional arguments for 'prompt'
-        # each value in 'args' essentially defines a separate modelgraded classification eval and has own metrics!
-        self.args = self.args or {}
-        self.expanded_args_dict = expand_args_dict(self.args)
-
         # (optional) 'completion_sample_templates'
         # each key must be one of 'input_outputs'.values(). If 'multicomp_n' > 1, this template is filled 'multicomp_n' times
         # and the concatenated result is passed to 'prompt' template.
@@ -92,6 +86,11 @@ class ModelGradedSpec:
         else:
             raise ValueError(f"append_type must be 'as_content' or 'as_message', not {append_type}")
         self.eval_type = eval_type
+
+    def fill_args(self, **kwargs: dict[str, str]) -> OpenAICreateChatPrompt:
+        """Fill 'prompt' template with 'kwargs'."""
+        self.prompt = format_prompt(self.prompt, allow_missing=True, **kwargs)
+        return self.prompt
 
     def format(self, **kwargs: dict[str, OpenAICreateChatPrompt]) -> OpenAICreateChatPrompt:
         """Return an OpenAICreateChatPrompt that can be passed PromptFn for modelgraded eval.

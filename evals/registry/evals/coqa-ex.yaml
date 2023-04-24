@@ -46,7 +46,7 @@ coqa-closedqa-relevance.dev.v0:
     samples_jsonl: coqa/samples.jsonl
     modelgraded_spec: closedqa
     modelgraded_spec_args:
-      crtieria: "relevance: Is the submission referring to a real quote from the text?"
+      criteria: "relevance: Is the submission referring to a real quote from the text?"
 
 coqa-closedqa-conciseness:
   id: coqa-closedqa-conciseness.dev.v0
@@ -57,4 +57,4 @@ coqa-closedqa-conciseness.dev.v0:
     samples_jsonl: coqa/samples.jsonl
     modelgraded_spec: closedqa
     modelgraded_spec_args:
-      crtieria: "conciseness: Is the answer concise and to the point?"
+      criteria: "conciseness: Is the answer concise and to the point?"

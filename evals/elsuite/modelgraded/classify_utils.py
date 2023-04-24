@@ -1,4 +1,3 @@
-import itertools
 import string
 from typing import Callable, Iterable
 
@@ -66,25 +65,3 @@ def concat_n_completions(completions: Iterable[str], template_i: str) -> str:
             n=len(completions),
         )
     return completion.strip()
-
-
-def expand_args_dict(args_dict):
-    """Expand a dict of dicts, with namings.
-
-    args_dict = {
-        "a": {"a1": 1, "a2": 2},
-        "b": {"b1": 3, "b2": 4},
-    }
-    expand_args_dict(args_dict) = {
-        "a=a1:b=b1": {"a": ("a1", 1), "b": ("b1", 3)},
-        "a=a1:b=b2": {"a": ("a1", 1), "b": ("b2", 4)},
-    ...}
-    """
-    if not args_dict:
-        return {}
-    args_dict = {k: list(v.items()) for k, v in args_dict.items()}
-    keys = list(args_dict.keys())
-    values = list(args_dict.values())
-    new_values = [dict(zip(keys, v)) for v in itertools.product(*values)]
-    new_names = [":".join([f"{k}={v[0]}" for k, v in sorted(d.items())]) for d in new_values]
-    return dict(zip(new_names, new_values))
