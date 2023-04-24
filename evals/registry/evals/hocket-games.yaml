@@ -1,0 +1,39 @@
+hocket-games:
+  id: hocket-games.test.v0
+  metrics: [accuracy]
+  description: Determines the last note sung in a musical hocket game.
+
+hocket-games.test.v0:
+  class: evals.elsuite.basic.Fuzzy_Match:FuzzyMatch
+  args:
+    samples_jsonl: hocket-games/hocket-games.jsonl
+
+hocket-games-simple:
+  id: hocket-games-simple.test.v0
+  metrics: [accuracy]
+  description: Determines the last note sung in a simple musical hocket game.
+
+hocket-games-simple.test.v0:
+  class: evals.elsuite.basic.Fuzzy_Match:FuzzyMatch
+  args:
+    samples_jsonl: hocket-games/hocket-games-simple.jsonl
+
+hocket-games-hard:
+  id: hocket-games-hard.test.v0
+  metrics: [accuracy]
+  description: Determines the last note sung in a hard musical hocket game.
+
+hocket-games-hard.test.v0:
+  class: evals.elsuite.basic.Fuzzy_Match:FuzzyMatch
+  args:
+    samples_jsonl: hocket-games/hocket-games-hard.jsonl
+
+hocket-games-dynamic:
+  id: hocket-games-dynamic.test.v0
+  metrics: [accuracy]
+  description: Determines the last note sung in a dynamic musical hocket game.
+
+hocket-games-dynamic.test.v0:
+  class: evals.elsuite.basic.Fuzzy_Match:FuzzyMatch
+  args:
+    samples_jsonl: hocket-games/hocket-games-dynamic.jsonl
