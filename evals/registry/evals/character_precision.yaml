@@ -1,0 +1,8 @@
+character_precision:
+  id: character_precision.dev.v0
+  metrics: [accuracy]
+
+character_precision.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: character_precision/samples.jsonl
