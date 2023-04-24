@@ -3,6 +3,6 @@ passing-balls:
   metrics: [accuracy]
 
 passing-balls.dev.v0:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.Fuzzy_Match:FuzzyMatch
   args:
     samples_jsonl: passing-balls/passing-balls.jsonl
