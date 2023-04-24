@@ -1,0 +1,12 @@
+math-high-school-permutations:
+  id: math-high-school-permutations.test.v0
+  description: Test the model's ability to solve basic high school Permutations and Combinations questions.
+  metrics: [accuracy]
+
+math-high-school-permutations.test.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: math-high-school-permutations/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
+    
