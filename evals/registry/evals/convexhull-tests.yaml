@@ -1,0 +1,7 @@
+convexhull-tests:
+  id: convexhull-tests.dev.v0
+  metrics: [accuracy]
+convexhull-tests.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: convexhull-tests/samples.jsonl
