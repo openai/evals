@@ -1,0 +1,8 @@
+russian-nlp-tasks:
+  id: russian-nlp-tasks.dev.v0
+  metrics: [accuracy]
+
+russian-nlp-tasks.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: russian-nlp-tasks/samples.jsonl

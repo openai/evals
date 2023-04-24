@@ -25,3 +25,13 @@ test-includes.s1.simple-v0:
   class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: test_fuzzy_match/samples.jsonl
+
+test-includes-ignore-case:
+  id: test-includes-ignore-case.s1.simple-v0
+  description: Example eval that uses fuzzy matching to score completions.
+  metrics: [accuracy]
+test-includes-ignore-case.s1.simple-v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: test_fuzzy_match/samples.jsonl
+    ignore_case: true
