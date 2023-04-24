@@ -1,6 +1,6 @@
 formatting-known-numbers:
   id: formatting-known-numbers.dev.v0
-  description: Convert text to ASCII binary and then apply formatting. This is a test of multiple operations on a simple input.
+  description: Convert text to ASCII binary and then apply formatting. This is a test of formatting on a static known number.
   metrics:
     - accuracy
 formatting-known-numbers.dev.v0:
