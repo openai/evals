@@ -1,0 +1,9 @@
+fcc_amateur_extra:
+  id: fcc_amateur_extra.dev.v0
+  description: Multiple choice questions (with answers) about from the US FCC Amateur Radio License question pool.
+  metrics:
+  - accuracy
+fcc_amateur_extra.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: fcc_amateur_extra/samples.jsonl
