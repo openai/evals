@@ -1,0 +1,10 @@
+cpccs_2015:
+  id: cpccs_2015.dev.v0
+  metrics: [accuracy]
+
+cpccs_2015.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  choice_strings: 'ABCDE'
+  max_length: 1
+  args:
+    samples_jsonl: cpccs_2015/samples.jsonl
