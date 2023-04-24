@@ -1,5 +1,4 @@
 import os
-import random
 import threading
 
 import openai
@@ -8,7 +7,7 @@ import toml
 from tqdm import tqdm
 
 # Read the API key from config.toml
-with open("config.toml") as f:
+with open("../config.toml") as f:
     config = toml.load(f)
     openai.api_key = config["api"]["key"]
 

@@ -16,7 +16,7 @@ while True:
         print("Error: File not found. Please enter a valid API key config filename.")
 
 # Read the Excel file using pandas
-file_path = 'merged.xlsx'  # Replace this with the path to your Excel file
+file_path = '../merged.xlsx'  # Replace this with the path to your Excel file
 df = pd.read_excel(file_path)
 
 # Convert the DataFrame into a list of dictionaries
