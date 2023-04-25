@@ -1,0 +1,8 @@
+stroke-risk:
+  id: stroke-risk.dev.v0
+  metrics: [accuracy]
+
+stroke-risk.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stroke-risk/samples.jsonl
