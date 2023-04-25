@@ -3,79 +3,126 @@ import random
 import time
 
 from bs4 import BeautifulSoup
+from hangul_utils import join_jamos
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 from tqdm import tqdm
 
-# Ask user for scraping preferences
-category = input("Enter the category you want to scrape (proverb, phrase, idiom): ")
-output_dir = input("Enter the output directory: ")
-
-order_input = input("Enter the order for scraping (alphabetical or random): ")
-if order_input.lower() == "random":
-    random_order = True
-else:
-    random_order = False
-
-# Replace the path with the location where you've saved the ChromeDriver
 driver_path = 'C:/webdrivers/chromedriver.exe'
-options = webdriver.ChromeOptions()
+options = Options()
 options.add_argument('--headless')
-options.add_argument('--log-level=3')  # Suppress console messages
+options.add_argument('--log-level=3')
 
 driver = webdriver.Chrome(executable_path=driver_path, options=options)
 
-# Create a directory to save the output files
-os.makedirs(output_dir, exist_ok=True)
+while True:
+    category = input("Enter the category you want to scrape (proverb, phrase, idiom): ").strip().lower()
+    if category in ['proverb', 'phrase', 'idiom']:
+        break
+    else:
+        print("Invalid category. Please enter 'proverb', 'phrase', or 'idiom'.")
+
+while True:
+    output_dir = input("Enter the directory where you want to save the scraped data: ").strip()
+    try:
+        os.makedirs(output_dir, exist_ok=True)
+        break
+    except Exception as e:
+        print(f"Error creating directory: {e}")
+        print("Please try again.")
 
 consonants = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
 vowels = ['ㅏ', 'ㅑ', 'ㅓ', 'ㅕ', 'ㅗ', 'ㅛ', 'ㅜ', 'ㅠ', 'ㅡ', 'ㅣ']
 
+while True:
+    order = input("Enter the order you want to scrape (alphabetical, random): ").strip().lower()
+    if order in ['alphabetical', 'random']:
+        break
+    else:
+        print("Invalid order. Please enter 'alphabetical' or 'random'.")
+
 char_combinations = [(c, v) for c in consonants for v in vowels]
-if random_order:
+if order == 'random':
     random.shuffle(char_combinations)
 
-for consonant, vowel in tqdm(char_combinations, desc="Scraping"):
+# Wrap the main loop with tqdm to show the progress bar
+for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
+    combined_char = join_jamos(consonant + vowel)
+
+    # Load the main search page
+    url = f"https://ko.dict.naver.com/#/topic/search?category1={category}"
+    driver.get(url)
+
+    wait = WebDriverWait(driver, 3)
+    retry_attempts = 3
+
+    for _ in range(retry_attempts):
+        try:
+            consonant_radio = wait.until(EC.presence_of_element_located(
+                (By.XPATH, f"//label[contains(text(), '{consonant}')]//input[@type='radio']")))
+            driver.execute_script("arguments[0].click();", consonant_radio)
+
+            vowel_radio = wait.until(EC.presence_of_element_located(
+                (By.XPATH, f"//label[contains(text(), '{vowel}')]//input[@type='radio']")))
+            driver.execute_script("arguments[0].click();", vowel_radio)
+            break
+        except Exception as e:
+            print(f"Error while clicking radio buttons (attempt {_ + 1}): {type(e).__name__} - {str(e)}")
+    else:
+        print(f"Failed to click radio buttons after {retry_attempts} attempts. Skipping this combination.")
+        continue
+
+    # Give the page time to update the search results
+    time.sleep(3)
+
+    # Continue with the rest of your code
     page_num = 1
     while True:
-        url = f"https://ko.dict.naver.com/#/search?range=topic&query={consonant}{vowel}&category1={category}&page={page_num}"
+        # tqdm.write(f"Combined character: {combined_char} - Scraping Page {page_num}")
+        url = f"https://ko.dict.naver.com/#/topic/search?category1={category}&consonant={consonant}&vowel={vowel}&page={page_num}"
         driver.get(url)
-        time.sleep(5)  # Wait for 5 seconds before parsing the page
+        time.sleep(3)
         soup = BeautifulSoup(driver.page_source, 'html.parser')
 
-        # Find the HTML elements containing the idiomatic expressions
         expression_elements = soup.select('.origin a.link')
 
         if not expression_elements:
-            print(f"No expressions found for {consonant}{vowel} - Page {page_num}")
             break
 
-        output_file = os.path.join(output_dir, f"{consonant}_{vowel}_page_{page_num}.txt")
-        print(f"Output file path: {output_file}")
-        print(f"Writing to {output_file}")
+        expressions_found = False
+        output_data = ""
 
-        with open(output_file, 'w', encoding='utf-8') as f:
-            print(f"Creating file: {output_file}")
+        for element in expression_elements:
+            expression = element.text.strip()
 
-            for element in expression_elements:
-                expression = element.text.strip()
-                expression_url = 'https://ko.dict.naver.com' + element['href']
+            expression_url = 'https://ko.dict.naver.com' + element['href']
 
-                # Visit the expression page
-                driver.get(expression_url)
-                time.sleep(3)
+            driver.get(expression_url)
+            time.sleep(3)
 
-                # Parse the expression page
-                expression_soup = BeautifulSoup(driver.page_source, 'html.parser')
-                print(soup.prettify())
+            expression_soup = BeautifulSoup(driver.page_source, 'html.parser')
 
-                # Extract the meanings
-                meanings = expression_soup.select('.mean_list .mean_item .mean')
+            meanings = expression_soup.select('.mean_list .mean_item')
 
-                f.write(f"{expression}:\n")
-                for idx, meaning in enumerate(meanings, 1):
-                    f.write(f"{idx}. {meaning.text.strip()}\n")
-                f.write("\n")
-                print(f"Finished writing to file: {output_file}")
+            output_data += expression + '\n'
+            for meaning in meanings:
+                output_data += '\t' + meaning.text.strip() + '\n'
+
+            driver.back()
+            time.sleep(3)
+
+            expressions_found = True
+
+        if expressions_found:
+            output_file = os.path.join(output_dir, f"{combined_char}_page_{page_num}.txt")
+
+            with open(output_file, 'a', encoding='utf-8') as f:
+                f.write(output_data)
+        else:
+            break
 
         page_num += 1
 
