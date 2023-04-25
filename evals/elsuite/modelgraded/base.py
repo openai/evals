@@ -1,8 +1,13 @@
 import string
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from evals.elsuite.modelgraded.classify_utils import ANSWER_PROMPTS, choice_to_str, expand_args_dict
-from evals.elsuite.utils import format_prompt
+from evals.elsuite.modelgraded.classify_utils import (
+    ANSWER_PROMPTS,
+    choice_to_str,
+    format_classify,
+    get_choice,
+)
+from evals.elsuite.utils import PromptFn, format_prompt
 from evals.prompt.base import OpenAICreateChatPrompt, is_chat_prompt
 
 if TYPE_CHECKING:
@@ -21,9 +26,9 @@ class ModelGradedSpec:
     format_type: str = "in_message"
     choice_scores: Optional[Union[dict[str, Union[float, int]], str]] = None
     multicomp_n: Optional[int] = None
-    args: Optional[dict[str, dict[str, str]]] = None
     expand_args_dict: Optional[dict[str, dict[str, tuple[str]]]] = None
     completion_sample_templates: Optional[dict[str, str]] = None
+    match_fn: str = "starts_or_endswith"
 
     key: Optional[str] = None  # unused
     group: Optional[str] = None  # unused
@@ -55,11 +60,6 @@ class ModelGradedSpec:
         assert isinstance(
             self.input_outputs, dict
         ), f"input_outputs must be a dict, not {type(self.input_outputs)}"
-
-        # (optional) 'args' is a dict of dicts that specifies additional arguments for 'prompt'
-        # each value in 'args' essentially defines a separate modelgraded classification eval and has own metrics!
-        self.args = self.args or {}
-        self.expanded_args_dict = expand_args_dict(self.args)
 
         # (optional) 'completion_sample_templates'
         # each key must be one of 'input_outputs'.values(). If 'multicomp_n' > 1, this template is filled 'multicomp_n' times
@@ -93,53 +93,20 @@ class ModelGradedSpec:
             raise ValueError(f"append_type must be 'as_content' or 'as_message', not {append_type}")
         self.eval_type = eval_type
 
-    def format(self, **kwargs: dict[str, OpenAICreateChatPrompt]) -> OpenAICreateChatPrompt:
-        """Return an OpenAICreateChatPrompt that can be passed PromptFn for modelgraded eval.
+    def fill_args(self, **kwargs: dict[str, str]) -> OpenAICreateChatPrompt:
+        """Fill 'prompt' template with 'kwargs'."""
+        self.prompt = format_prompt(self.prompt, allow_missing=True, **kwargs)
+        return self.prompt
 
-        'in_message' returns: [
-            {
-                "role": "user",
-                "content": \"""
-                    User: {input}
-                    Assistant: {completion}
+    def format(self, **format_kwargs: dict[str, OpenAICreateChatPrompt]) -> OpenAICreateChatPrompt:
+        return format_classify(
+            prompt=self.prompt,
+            input_outputs=self.input_outputs,
+            format_type=self.format_type,
+            **format_kwargs,
+        )
 
-                    Was the assistant response helpful?
-                    \""".strip(),
-            }
-        ]
-
-        'out_message' returns: [
-            {"role": "user", "content": "{input}"},
-            {"role": "assistant", "content": "{completion}"},
-            {"role": "user", "content": "Was the last assistant response helpful?"},
-        ]
-        """
-        if self.format_type == "in_message":
-            return format_prompt(self.prompt, **kwargs)
-        elif self.format_type == "out_message":
-            assert len(self.input_outputs) == 1, "out_message only supports one input/output pair"
-            # extra input-output data, as it is treated specially
-            input_completions = {
-                k: (k, kwargs[k], v, kwargs[v]) for k, v in self.input_outputs.items()
-            }
-            kwargs = {
-                k: v
-                for k, v in kwargs.items()
-                if k not in self.input_outputs.values() and k not in self.input_outputs
-            }
-            convo = []
-            for input_key, input, completion_key, completion in input_completions.values():
-                del input_key, completion_key
-                assert isinstance(
-                    completion, str
-                ), f"completion must be str, not {type(completion)}"
-                if is_chat_prompt(input):
-                    convo += input
-                else:
-                    convo.append({"role": "user", "content": input})
-                convo.append({"role": "assistant", "content": completion})
-            return convo + format_prompt(self.prompt, **kwargs)
-        else:
-            raise ValueError(
-                f"format_type must be 'in_message' or 'out_message', not {self.format_type}"
-            )
+    def classify(self, prompt: OpenAICreateChatPrompt, **completion_kwargs: dict[str, Any]) -> str:
+        evaluate = PromptFn(prompt, **completion_kwargs)
+        evaluation, _ = evaluate(skip_format=True)
+        return get_choice(evaluation, self.eval_type, self.match_fn, self.choice_strings)

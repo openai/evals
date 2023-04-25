@@ -9,7 +9,6 @@ joke-animals-vs-fruits.dev.v0:
     samples_jsonl: test_multiio/battles/joke_animals_vs_fruits.jsonl
     eval_type: cot_classify
     modelgraded_spec: battle
-    eval_completion_fn: gpt-3.5-turbo
 
 rap-people-vs-people:
   id: rap-people-vs-people.dev.v0
@@ -20,7 +19,6 @@ rap-people-vs-people.dev.v0:
     samples_jsonl: test_multiio/battles/rap_people_vs_people.jsonl
     eval_type: cot_classify
     modelgraded_spec: battle
-    eval_completion_fn: gpt-3.5-turbo
 
 rap-animals-vs-fruits:
   id: rap-animals-vs-fruits.dev.v0
@@ -31,7 +29,6 @@ rap-animals-vs-fruits.dev.v0:
     samples_jsonl: test_multiio/battles/rap_animals_vs_fruits.jsonl
     eval_type: cot_classify
     modelgraded_spec: battle
-    eval_completion_fn: gpt-3.5-turbo
 
 rap-people-vs-fruits:
   id: rap-people-vs-fruits.dev.v0
@@ -42,4 +39,3 @@ rap-people-vs-fruits.dev.v0:
     samples_jsonl: test_multiio/battles/rap_people_vs_fruits.jsonl
     eval_type: cot_classify
     modelgraded_spec: battle
-    eval_completion_fn: gpt-3.5-turbo
