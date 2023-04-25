@@ -1,0 +1,18 @@
+symbolic_multiplication:
+  id: symbolic_multiplication.dev.v0
+  description: Complex number multiplication using $ instead of i for sqrt(-1).
+  metrics: [accuracy]
+symbolic_multiplication.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: symbolic_multiplication/samples_$.jsonl
+
+symbolic_multiplication_i:
+  id: symbolic_multiplication_i.dev.v0
+  description: Complex number multiplication using i for sqrt(-1).
+  metrics: [accuracy]
+symbolic_multiplication_i.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: symbolic_multiplication/samples_i.jsonl
+
