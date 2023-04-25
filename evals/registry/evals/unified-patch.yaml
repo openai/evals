@@ -1,0 +1,8 @@
+unified-patch:
+  id: unified-patch.dev.v0
+  metrics: [accuracy]
+
+unified-patch.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: unified_patch/samples.jsonl
