@@ -5,8 +5,17 @@
 
 version: 2
 updates:
-  - package-ecosystem: "" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "pip"
+    directory: "/"
     schedule:
-      interval: "weekly"
-
+      interval: "daily"
+    # Raise pull requests for version updates to pip
+    target-branch: "develop-dependabot"
+    # Labels on pull requests for version updates only
+    labels:
+      - "dependencies"
+      - "pip dependencies"
+      - "python"
+    assignees:
+      - "delano"
+      
