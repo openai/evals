@@ -1,0 +1,8 @@
+great-zero:
+  id: great-zero.s1.simple-v0
+  description: Test the model's ability to count numbers that are greater than zero.
+  metrics: [accuracy]
+great-zero.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: great_zero/great_zero.jsonl
