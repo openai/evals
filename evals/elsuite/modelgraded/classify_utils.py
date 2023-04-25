@@ -59,6 +59,27 @@ def get_choice(
     return INVALID_STR
 
 
+def append_answer_prompt(
+    prompt: OpenAICreateChatPrompt,
+    eval_type: str,
+    append_type: str = "as_content",
+    answer_prompt: Optional[OpenAICreateChatPrompt] = None,
+    choice_strings: Optional[Iterable[str]] = None,
+) -> OpenAICreateChatPrompt:
+    """Append answer prompt to prompt."""
+    answer_prompt = answer_prompt or ANSWER_PROMPTS[eval_type]
+    answer_prompt = format_prompt(answer_prompt, choices=choice_to_str(choice_strings))
+    if append_type == "as_content":
+        assert isinstance(answer_prompt, str), f"prompt must be str, not {type(answer_prompt)}"
+        prompt[-1]["content"] += "\n\n" + answer_prompt
+    elif append_type == "as_message":
+        assert is_chat_prompt(answer_prompt), f"prompt must be chat prompt, not {answer_prompt}"
+        prompt += answer_prompt
+    else:
+        raise ValueError(f"append_type must be 'as_content' or 'as_message', not {append_type}")
+    return prompt
+
+
 def concat_n_completions(completions: Iterable[str], template_i: str) -> str:
     """Concatenate n completions into a single text string."""
     completion = ""

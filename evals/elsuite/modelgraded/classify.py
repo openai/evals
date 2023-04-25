@@ -12,7 +12,7 @@ import evals
 import evals.record
 from evals import CompletionFn, OpenAIChatCompletionFn
 from evals.elsuite.modelgraded.base import ModelGradedSpec
-from evals.elsuite.modelgraded.classify_utils import CHOICE_KEY, INVALID_STR, concat_n_completions
+from evals.elsuite.modelgraded.classify_utils import CHOICE_KEY, concat_n_completions
 from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt
 from evals.registry import Registry
 
@@ -60,14 +60,12 @@ class ModelBasedClassify(evals.Eval):
         self.multicomp_temperature = multicomp_temperature
         self.samples_renamings = samples_renamings or {}
 
-        spec_kwargs = {"multicomp_n": self.multicomp_n}
         self.mg: ModelGradedSpec = self.registry.get_modelgraded_spec(
-            modelgraded_spec, **spec_kwargs
+            modelgraded_spec,
+            multicomp_n=self.multicomp_n,
+            args=modelgraded_spec_args,
+            **({"append_answer_prompt": True, "eval_type": eval_type} if eval_type else {}),
         )
-        if eval_type:
-            self.mg.append_answer_prompt(eval_type)
-        if modelgraded_spec_args:
-            self.mg.fill_args(**modelgraded_spec_args)
 
     def eval_sample(self, test_sample: dict, rng: Random) -> None:
         """Evaluate a single sample.
@@ -124,7 +122,7 @@ class ModelBasedClassify(evals.Eval):
         metrics = {}
         prompt = self.mg.format(**completions, **test_sample)
         try:
-            choice = self.mg.classify(
+            choice, _ = self.mg.classify(
                 prompt=prompt,
                 completion_fn=self.eval_completion_fn,
                 max_tokens=self.max_tokens,
@@ -161,12 +159,7 @@ class ModelBasedClassify(evals.Eval):
         chosen = [m[CHOICE_KEY] for m in all_sample_metrics if CHOICE_KEY in m]
         # if there is a best choice, compute the score
         if self.mg.choice_scores:
-            # assumption: each INVALID_STR contributes the lowest score
-            lowest_score = min(self.mg.choice_scores.values())
-            scores = [
-                self.mg.choice_scores[choice] if choice != INVALID_STR else lowest_score
-                for choice in chosen
-            ]
+            scores = [self.mg.score(choice) for choice in chosen]
             record_metrics[f"score/{CHOICE_KEY}"] = sum(scores) / len(all_sample_metrics)
         # compute the counts and ratios
         counts = dict(Counter(chosen))

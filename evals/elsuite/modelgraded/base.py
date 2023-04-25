@@ -2,8 +2,8 @@ import string
 from typing import TYPE_CHECKING, Any, Optional, Union
 
 from evals.elsuite.modelgraded.classify_utils import (
-    ANSWER_PROMPTS,
-    choice_to_str,
+    INVALID_STR,
+    append_answer_prompt,
     format_classify,
     get_choice,
 )
@@ -21,14 +21,16 @@ class ModelGradedSpec:
     prompt: Union[str, OpenAICreateChatPrompt]
     choice_strings: Union[list[str], str]
     input_outputs: dict[str, str]
+    eval_type: str
 
-    eval_type: Optional[str] = None
     format_type: str = "in_message"
     choice_scores: Optional[Union[dict[str, Union[float, int]], str]] = None
     multicomp_n: Optional[int] = None
-    expand_args_dict: Optional[dict[str, dict[str, tuple[str]]]] = None
     completion_sample_templates: Optional[dict[str, str]] = None
     match_fn: str = "starts_or_endswith"
+    append_answer_prompt: bool = False
+    append_type: str = "as_content"
+    args: Optional[dict[str, Any]] = None
 
     key: Optional[str] = None  # unused
     group: Optional[str] = None  # unused
@@ -50,6 +52,8 @@ class ModelGradedSpec:
         if self.choice_scores:
             if self.choice_scores == "from_strings":
                 self.choice_scores = {c: float(c) for c in self.choice_strings}
+            self.max_score = max(self.choice_scores.values())
+            self.min_score = min(self.choice_scores.values())
 
         if isinstance(self.prompt, str):
             self.prompt = [{"role": "user", "content": self.prompt}]
@@ -68,35 +72,21 @@ class ModelGradedSpec:
         assert all(
             k in self.input_outputs.values() for k in self.completion_sample_templates
         ), f"all {self.completion_sample_templates.keys()} must be in {self.input_outputs.values()}, "
-        if self.multicomp_n > 1:
+        if self.multicomp_n and self.multicomp_n > 1:
             assert (
                 self.completion_sample_templates
             ), "completion_sample_templates must be specified if multicomp_n > 1"
 
-    def append_answer_prompt(
-        self,
-        eval_type: str,
-        append_type: str = "as_content",
-        prompt: Optional[OpenAICreateChatPrompt] = None,
-    ):
-        """Append answer prompt to prompt. Can only be called once."""
-        assert self.eval_type is None, f"eval_type already set: {eval_type}"
-        prompt = prompt or ANSWER_PROMPTS[eval_type]
-        prompt = format_prompt(prompt, choices=choice_to_str(self.choice_strings))
-        if append_type == "as_content":
-            assert isinstance(prompt, str), f"prompt must be str, not {type(prompt)}"
-            self.prompt[-1]["content"] += "\n\n" + prompt
-        elif append_type == "as_message":
-            assert is_chat_prompt(prompt), f"prompt must be chat prompt, not {prompt}"
-            self.prompt += prompt
-        else:
-            raise ValueError(f"append_type must be 'as_content' or 'as_message', not {append_type}")
-        self.eval_type = eval_type
+        if self.append_answer_prompt:
+            self.prompt = append_answer_prompt(
+                prompt=self.prompt,
+                eval_type=self.eval_type,
+                choice_strings=self.choice_strings,
+                append_type=self.append_type,
+            )
 
-    def fill_args(self, **kwargs: dict[str, str]) -> OpenAICreateChatPrompt:
-        """Fill 'prompt' template with 'kwargs'."""
-        self.prompt = format_prompt(self.prompt, allow_missing=True, **kwargs)
-        return self.prompt
+        if self.args:
+            self.prompt = format_prompt(self.prompt, allow_missing=True, **self.args)
 
     def format(self, **format_kwargs: dict[str, OpenAICreateChatPrompt]) -> OpenAICreateChatPrompt:
         return format_classify(
@@ -109,4 +99,11 @@ class ModelGradedSpec:
     def classify(self, prompt: OpenAICreateChatPrompt, **completion_kwargs: dict[str, Any]) -> str:
         evaluate = PromptFn(prompt, **completion_kwargs)
         evaluation, _ = evaluate(skip_format=True)
-        return get_choice(evaluation, self.eval_type, self.match_fn, self.choice_strings)
+        choice = get_choice(evaluation, self.eval_type, self.match_fn, self.choice_strings)
+        return choice, evaluation
+
+    def score(self, choice: str):
+        # assumption: each INVALID_STR contributes the lowest score
+        if choice == INVALID_STR:
+            return self.min_score
+        return self.choice_scores[choice]
