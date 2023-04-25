@@ -1,8 +1,9 @@
-import itertools
+import logging
 import string
-from typing import Callable, Iterable
+from typing import Callable, Iterable, Optional, Union
 
-from evals.elsuite.utils import format_necessary
+from evals.elsuite.utils import format_necessary, format_prompt
+from evals.prompt.base import OpenAICreateChatPrompt, is_chat_prompt
 
 INVALID_STR = "__invalid__"
 CHOICE_KEY = "choice"
@@ -37,8 +38,12 @@ def choice_to_str(choice_strings: Iterable[str]) -> str:
     return " or ".join(f'"{choice}"' for choice in choice_strings)
 
 
-def get_choice(text: str, eval_type: str, match_fn: Callable, choice_strings: Iterable[str]) -> str:
+def get_choice(
+    text: str, eval_type: str, match_fn: Union[str, Callable], choice_strings: Iterable[str]
+) -> str:
     """Clean the answer string to a choice string to one of choice_strings. Return '__invalid__.' if no match."""
+    if isinstance(match_fn, str):
+        match_fn = MATCH_FNS[match_fn]
     lines = text.strip().split("\n")
     if eval_type.startswith("cot_classify"):
         lines = lines[::-1]  # reverse lines
@@ -50,6 +55,7 @@ def get_choice(text: str, eval_type: str, match_fn: Callable, choice_strings: It
         for choice in choice_strings:
             if match_fn(line, choice):
                 return choice
+    logging.warn(f"Choices {choice_strings} not parsable for {eval_type}: {text}")
     return INVALID_STR
 
 
@@ -68,23 +74,55 @@ def concat_n_completions(completions: Iterable[str], template_i: str) -> str:
     return completion.strip()
 
 
-def expand_args_dict(args_dict):
-    """Expand a dict of dicts, with namings.
+def format_classify(
+    prompt: OpenAICreateChatPrompt,
+    format_type: str = "in_message",
+    input_outputs: Optional[dict[str, str]] = None,
+    **format_kwargs: dict[str, OpenAICreateChatPrompt],
+) -> OpenAICreateChatPrompt:
+    """Return an OpenAICreateChatPrompt that can be passed PromptFn for modelgraded eval.
 
-    args_dict = {
-        "a": {"a1": 1, "a2": 2},
-        "b": {"b1": 3, "b2": 4},
-    }
-    expand_args_dict(args_dict) = {
-        "a=a1:b=b1": {"a": ("a1", 1), "b": ("b1", 3)},
-        "a=a1:b=b2": {"a": ("a1", 1), "b": ("b2", 4)},
-    ...}
+    'in_message' returns: [
+        {
+            "role": "user",
+            "content": \"""
+                User: {input}
+                Assistant: {completion}
+
+                Was the assistant response helpful?
+                \""".strip(),
+        }
+    ]
+
+    'out_message' returns: [
+        {"role": "user", "content": "{input}"},
+        {"role": "assistant", "content": "{completion}"},
+        {"role": "user", "content": "Was the last assistant response helpful?"},
+    ]
     """
-    if not args_dict:
-        return {}
-    args_dict = {k: list(v.items()) for k, v in args_dict.items()}
-    keys = list(args_dict.keys())
-    values = list(args_dict.values())
-    new_values = [dict(zip(keys, v)) for v in itertools.product(*values)]
-    new_names = [":".join([f"{k}={v[0]}" for k, v in sorted(d.items())]) for d in new_values]
-    return dict(zip(new_names, new_values))
+    input_outputs = input_outputs or {}
+    if format_type == "in_message":
+        return format_prompt(prompt, **format_kwargs)
+    elif format_type == "out_message":
+        assert len(input_outputs) == 1, "out_message only supports one input/output pair"
+        # extra input-output data, as it is treated specially
+        input_completions = {
+            k: (k, format_kwargs[k], v, format_kwargs[v]) for k, v in input_outputs.items()
+        }
+        format_kwargs = {
+            k: v
+            for k, v in format_kwargs.items()
+            if k not in input_outputs.values() and k not in input_outputs
+        }
+        convo = []
+        for input_key, input, completion_key, completion in input_completions.values():
+            del input_key, completion_key
+            assert isinstance(completion, str), f"completion must be str, not {type(completion)}"
+            if is_chat_prompt(input):
+                convo += input
+            else:
+                convo.append({"role": "user", "content": input})
+            convo.append({"role": "assistant", "content": completion})
+        return convo + format_prompt(prompt, **format_kwargs)
+    else:
+        raise ValueError(f"format_type must be 'in_message' or 'out_message', not {format_type}")
