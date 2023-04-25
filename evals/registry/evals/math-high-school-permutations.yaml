@@ -4,9 +4,7 @@ math-high-school-permutations:
   metrics: [accuracy]
 
 math-high-school-permutations.test.v0:
-  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: math-high-school-permutations/samples.jsonl
-    eval_type: cot_classify
-    modelgraded_spec: fact
     
