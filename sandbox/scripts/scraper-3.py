@@ -1,3 +1,4 @@
+import json
 import os
 import random
 import re
@@ -35,6 +36,21 @@ while True:
         print(f"Error creating directory: {e}")
         print("Please try again.")
 
+while True:
+    test_mode = input("Do you want to enable test mode? (yes, no): ").strip().lower()
+    if test_mode in ['yes', 'no']:
+        break
+    else:
+        print("Invalid input. Please enter 'yes' or 'no'.")
+
+if test_mode == 'yes':
+    while True:
+        test_sample_type = input("Select test sample type (random, specific): ").strip().lower()
+        if test_sample_type in ['random', 'specific']:
+            break
+        else:
+            print("Invalid input. Please enter 'random' or 'specific'.")
+
 consonants = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
 vowels = ['ㅏ', 'ㅑ', 'ㅓ', 'ㅕ', 'ㅗ', 'ㅛ', 'ㅜ', 'ㅠ', 'ㅡ', 'ㅣ']
 
@@ -45,11 +61,27 @@ while True:
     else:
         print("Invalid order. Please enter 'alphabetical' or 'random'.")
 
-char_combinations = [(c, v) for c in consonants for v in vowels]
+if test_mode == 'yes':
+    if test_sample_type == 'random':
+        char_combinations = [random.choice(char_combinations)]
+    elif test_sample_type == 'specific':
+        specific_consonant = input("Enter specific consonant (e.g., ㄱ, ㄴ, ㄷ): ").strip()
+        specific_vowel = input("Enter specific vowel (e.g., ㅏ, ㅑ, ㅓ): ").strip()
+        char_combinations = [(specific_consonant, specific_vowel)]
 if order == 'random':
     random.shuffle(char_combinations)
 
+if test_mode == 'yes':
+    while True:
+        try:
+            retry_attempts = int(input("Enter the number of retry attempts: "))
+            if retry_attempts > 0:
+                break
+        except ValueError:
+            print("Invalid input. Please enter a positive integer.")
+
 for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
+
     combined_char = join_jamos(consonant + vowel)
 
     url = f"https://ko.dict.naver.com/#/topic/search?category1={category}"
@@ -57,7 +89,6 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
     time.sleep(1)
 
     wait = WebDriverWait(driver, 1)
-    retry_attempts = 1
 
     for _ in range(retry_attempts):
         try:
@@ -78,6 +109,8 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
     time.sleep(1)
 
     page_num = 1
+    seen_expressions = set()
+
     while True:
         url = f"https://ko.dict.naver.com/#/topic/search?category1={category}&consonant={consonant}&vowel={vowel}&page={page_num}"
         driver.get(url)
@@ -89,10 +122,17 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
         if not expression_elements:
             break
 
-        output_data = ""
+        scraped_data = []
+
+        # Define the regex variables here, before the loop
+        chinese_char_re = re.compile(r'[\u4e00-\u9fff]+')
+        pronunciation_re = re.compile(r'\[ .+ \]')
 
         for element in expression_elements:
             expression = element.text.strip()
+            if expression in seen_expressions:
+                continue
+            seen_expressions.add(expression)
             expression_url = 'https://ko.dict.naver.com' + element['href']
 
             driver.get(expression_url)
@@ -117,20 +157,33 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
             for example_translate in expression_soup.select('div[class^="example _word_mean_ex example_translate"]'):
                 example_translate.decompose()
 
-            mean_section = expression_soup.select_one('div.section.section_mean.is-source._section_mean._data_index_1')
+            mean_section = expression_soup.select_one(
+                'div.section.section_mean.is-source._section_mean._data_index_1')
 
             if mean_section is None:
                 print(f"Meaning section not found for expression: {expression}")
                 continue
 
-            # Scrape texts inside the div with class="component_entry"
+            component_entries_data = []
             component_entries = expression_soup.select('div.component_entry')
             if component_entries:
                 for component_entry in component_entries:
                     component_entry_text = component_entry.text.strip()
                     component_entry_text = re.sub('\n{2,}', '\n', component_entry_text)
-                    output_data += '\t\t' + component_entry_text + '\n'
+                    component_entry_lines = component_entry_text.split('\n')[1:]  # Skip the first line (overlap)
 
+                    chinese_chars = chinese_char_re.search(component_entry_lines[0])
+                    pronunciation = None
+                    for line in component_entry_lines[1:]:
+                        pronunciation_match = pronunciation_re.search(line)
+                        if pronunciation_match:
+                            pronunciation = pronunciation_match
+                            break
+
+                    tqdm.write(f"component_entry_lines: {component_entry_lines}")  # Replace print() with tqdm.write()
+                    component_entries_data.append('\n'.join(component_entry_lines))
+
+            meanings_data = []
             meanings = mean_section.select('.mean_list .mean_item:not([class^="mean_addition specialDomain_"])')
             if not meanings:
                 print(f"No meanings found for expression: {expression}")
@@ -140,20 +193,36 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
                 meaning_text = meaning.text.strip()
                 meaning_text = re.sub('\n{2,}', '\n', meaning_text)
                 meaning_text = re.sub('\n.+example _word_mean_ex example_translate.+', '', meaning_text)
-                output_data += '\t' + meaning_text + '\n'
+                meaning_text = re.sub('(\d\.)\n', '\\1',
+                                      meaning_text)  # Remove line breaks after definition numbers
+                meanings_data.append(meaning_text)
 
             driver.back()
             time.sleep(1)
 
-            # Add vocabulary end marker
-            output_data += "\n"
+            inflected_form_re = re.compile(r'Inflected form\n(.+)')
+            derivative_re = re.compile(r'Derivative\n(.+)')
 
-        if output_data.strip():
-            output_data = output_data.strip()
-            output_file = os.path.join(output_dir, f"{combined_char}-{page_num}.txt")
+            inflected_forms = inflected_form_re.findall('\n'.join(component_entries_data))
+            derivatives = derivative_re.findall('\n'.join(component_entries_data))
 
-            with open(output_file, 'a', encoding='utf-8') as f:
-                f.write(output_data)
+            all_pronunciations = pronunciation_re.findall('\n'.join(component_entries_data))
+
+            expression_data = {
+                'expression': expression,
+                'chinese_chars': chinese_chars.group(0) if chinese_chars else None,
+                'pronunciations': [pronunciation.group(0).strip('[] ') if pronunciation else None],
+                'inflected_forms': inflected_forms if inflected_forms else [],
+                'derivatives': derivatives if derivatives else [],
+                'meanings': meanings_data,
+            }
+
+            scraped_data.append(expression_data)
+
+        if scraped_data:
+            output_file = os.path.join(output_dir, f"{combined_char}-{page_num}.json")
+            with open(output_file, 'w', encoding='utf-8') as f:
+                json.dump(scraped_data, f, ensure_ascii=False, indent=4)
 
         page_num += 1
 

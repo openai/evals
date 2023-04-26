@@ -1,4 +1,4 @@
-Me: "I want gpt-4 api access. openai says its limited to those who get their pr merged. you agreed id better make a list of already merged prs so i can come up with original eval(s). this is it:
+Me: "I want gpt-4 api access. openai says its limited to those who get their pr on evaluating gpt-3.5-turbo and gpt-4 merged. here's a list of already merged prs:
 
 merged.xlsx:
 PR#    Title
@@ -68,41 +68,10 @@ PR#    Title
 
 now what"
 
-GPT-4: "Now that you have a list of already merged PRs for GPT-4 evaluation methods, you can use this information to come up with a new and original evaluation method that hasn't been covered yet. Analyze the existing evaluations, identify potential gaps or areas that could be improved, and then develop your own evaluation method.
-
-When proposing your evaluation method, consider the following aspects:
-
-1. Relevance: Ensure that the evaluation method is relevant and meaningful for assessing GPT-4's capabilities. It should contribute to a better understanding of the model's strengths and weaknesses.
-
-2. Novelty: The evaluation should be original and not duplicate or closely resemble an existing method.
-
-3. Clarity: Clearly describe the evaluation method and how it works. Explain the rationale behind the method and why it is an effective way to evaluate GPT-4.
-
-4. Feasibility: Ensure that the evaluation method can be feasibly implemented and tested on GPT-4.
-
-5. Applicability: Ideally, the evaluation method should be applicable not only to GPT-4 but also to other language models and AI systems.
-
-Once you have developed a new evaluation method, you can prepare a proposal for submission to OpenAI. Make sure to follow their guidelines and instructions for submitting PRs. If your PR gets merged, you may be granted access to the GPT-4 API."
-
-Me: "too hard to meet all those"
-
-GPT-4: "I understand that coming up with a new evaluation method can be challenging. However, remember that it doesn't have to be perfect; the important thing is to take a step forward and contribute to the understanding of GPT-4's capabilities.
-
-Here's an alternative approach to help you get started:
-
-1. Choose a domain: Select a specific domain or area of interest where you believe GPT-4 could be evaluated, such as finance, literature, science, or any other field you're familiar with or passionate about.
-
-2. Identify a task: Within the chosen domain, identify a specific task or question type that GPT-4 could be evaluated on. This could be something as simple as answering trivia questions, solving puzzles, or translating phrases in a specific language.
-
-3. Develop a simple evaluation method: Start with a basic evaluation method for the identified task. You can refine and expand it later as you become more familiar with the process.
-
-4. Test your method: If you have access to a smaller language model, like GPT-3, test your evaluation method on it to see if it's effective in assessing the model's performance. If not, iterate and refine your method until you feel it's ready for submission.
-
-Remember that the AI research community values contributions from diverse perspectives. Your idea, even if it's not perfect, can still inspire others or spark new ideas that might lead to more effective evaluation methods. Don't be afraid to share your thoughts and engage with the community to refine your approach."
-
 Me: "im a korean who dabbles in many natural languages"
 
-GPT-4: "As someone who has experience with multiple natural languages and Korean, you can leverage your unique skills to develop an evaluation method that tests the language understanding and translation abilities of GPT-4.
+GPT-4:
+### 1. "As someone who has experience with multiple natural languages and Korean, you can leverage your unique skills to develop an evaluation method that tests the language understanding and translation abilities of GPT-4.
 
 Here are some ideas to help you create a new evaluation method:
 
@@ -114,43 +83,47 @@ Here are some ideas to help you create a new evaluation method:
 
 4. Multilingual translation chains: Assess GPT-4's ability to maintain the meaning of a sentence or passage when translating it through multiple languages in a chain (e.g., from Korean to English, then English to French, French to Japanese, and so on). Compare the final translation to the original Korean input to evaluate the model's accuracy and consistency.
 
-5. Language-specific phenomena: Design an evaluation method that tests GPT-4's understanding of language-specific phenomena, such as Korean honorifics or particles. This could involve generating sentences with varying degrees of politeness or formality and asking the model to choose the most appropriate one for a given context.
+5. Language-specific phenomena: Design an evaluation method that tests GPT-4's understanding of language-specific phenomena, such as Korean honorifics or particles. This could involve generating sentences with varying degrees of politeness or formality and asking the model to choose the most appropriate one for a given context."
 
-Remember to review the list of already merged PRs to ensure your evaluation method is original and not closely related to an existing method. Once you have developed your evaluation method, follow OpenAI's guidelines for submitting PRs, and if your PR gets merged, you may be granted access to the GPT-4 API."
+### 2. "Based on the merged PR list and your background, here are a few suggestions for creating original evals:
 
-Me: "method 1 example"
+1. **Korean Language Evaluation**: Create an evaluation that tests GPT's ability to perform tasks in the Korean language. This could include grammar correction, idiom understanding, or contextual understanding of Korean-specific phrases.
 
-Bing: "Here's an example of a test that could be used to evaluate GPT-4's ability to understand and reason about information presented in different languages:
+2. **Cross-lingual Comparison Evaluation**: Create an evaluation that tests GPT's ability to translate idiomatic expressions, proverbs, or slang from one language to another (including Korean). This could be a multilingual evaluation, testing the model's performance across multiple languages.
 
-1. Present GPT-4 with a short story written in English that describes a situation where a person is trying to decide whether to take an umbrella with them when they leave their house.
-2. Provide GPT-4 with additional information about the weather in Korean, such as "오늘은 비가 올 것 같아요" (It looks like it will rain today).
-3. Ask GPT-4 to generate a response in English that takes into account the information provided in both languages and provides a recommendation on whether the person should take an umbrella with them.
+3. **Language Learning Evaluation**: Create an evaluation that tests GPT's ability to provide language learning tips or answer language-related questions. This could involve questions about grammar, pronunciation, or learning strategies for various languages.
 
-This test would require GPT-4 to understand the information presented in both English and Korean and use it to make a logical decision based on the situation described in the story."
+4. **Korean Cultural Knowledge Evaluation**: Create an evaluation that tests GPT's understanding of Korean culture, history, or current events. This could include questions about famous people, historical events, or popular culture topics.
 
-Me: "What are some other tests for evaluating cross-lingual reasoning?"
-
-Bing: "There are several tests and benchmarks that have been developed to evaluate cross-lingual reasoning. One such benchmark is **XTREME**, which stands for Cross-lingual Transfer Evaluation of Multilingual Encoders. It covers **40 typologically diverse languages** and includes **nine tasks** that collectively require reasoning about different levels of syntax or semantics¹. Another benchmark is **XCMRC**, which stands for Cross-lingual Cloze-style Machine Reading Comprehension. It tests machines on their ability to fill in a missing word in a sentence written in one language by reading a given passage written in another language². Another benchmark is **XTREME-S**, which evaluates cross-lingual speech representations³.
-
-Source: Conversation with Bing, 4/24/2023(1) XTREME: A Massively Multilingual Multi-task Benchmark for Evaluating .... https://ai.googleblog.com/2020/04/xtreme-massively-multilingual-multi.html Accessed 4/24/2023.
-(2) XCMRC: Evaluating Cross-Lingual Machine Reading Comprehension - Springer. https://link.springer.com/chapter/10.1007/978-3-030-32233-5_43 Accessed 4/24/2023.
-(3) XTREME-S: Evaluating Cross-lingual Speech Representations - arXiv. https://arxiv.org/pdf/2203.10752.pdf Accessed 4/24/2023."
-
-Me: "kinda sounds like typical foreign language proficiency tests"
-
-Bing: "While there are some similarities between cross-lingual reasoning tests and foreign language proficiency tests, there are also some key differences. Cross-lingual reasoning tests are designed to evaluate a machine's ability to understand and reason about information presented in multiple languages, whereas foreign language proficiency tests are designed to evaluate a person's ability to use a specific foreign language. Cross-lingual reasoning tests often involve tasks that require the machine to combine information from multiple languages to make decisions or generate responses, whereas foreign language proficiency tests typically focus on evaluating a person's ability to use a specific language in isolation."
+5. **Natural Language Code-switching Evaluation**: Create an evaluation that tests GPT's ability to handle code-switching between multiple languages, such as Korean and English, within the same context or conversation."
 
 Me: "which would be the easiest/hardest/most likely to be merged/etc?"
 
-GPT-4: "It's difficult to definitively say which evaluation method would be the easiest, hardest, or most likely to be merged, as it depends on various factors, such as your expertise, the quality of your submission, and OpenAI's current priorities. However, I can provide some general insights:
+GPT-4: "A. All of the ideas I provided can potentially meet the criteria mentioned in the PULL_REQUEST_TEMPLATE.md, as long as they are developed to be thematically consistent, contain failures where a human can do the task but GPT models struggle, include a good signal for the correct behavior, and consist of at least 15 high-quality examples. However, the success of these ideas as evals depends on the specific implementation and how well they address the desired criteria.
 
-1. Easiest: Comparing translations or understanding of idiomatic expressions might be relatively easier since it requires less complex test design and can be based on a smaller dataset of expressions.
+B. Here's a rough assessment of the ideas in terms of difficulty and likelihood of being merged:
 
-2. Hardest: Cross-lingual reasoning or multilingual translation chains might be more challenging, as they require more complex test designs and a deeper understanding of multiple languages and how information can be preserved or lost during translations.
+1. Cross-lingual reasoning:
+   - Difficulty: Medium
+   - Likelihood of being merged: High, if it effectively demonstrates a unique failure mode in the GPT models.
 
-3. Most likely to be merged: An evaluation method that fills a gap in the existing evaluations and showcases GPT-4's abilities in a unique and meaningful way is more likely to be merged. Ensuring that your method is original and not closely related to existing methods is crucial. Additionally, a well-documented, well-structured, and thoroughly tested submission increases the likelihood of it being merged.
+2. Idiomatic expressions:
+   - Difficulty: Medium
+   - Likelihood of being merged: Medium to High, depending on the uniqueness and quality of the examples.
 
-Ultimately, it's essential to choose a method that aligns with your interests and expertise. A well-crafted evaluation that demonstrates your passion and knowledge in the chosen area will increase your chances of success."
+3. Korean dialects:
+   - Difficulty: Medium to Hard, depending on the dialects chosen and the complexity of the examples.
+   - Likelihood of being merged: Medium, as it may overlap with existing language evaluation methods.
+
+4. Multilingual translation chains:
+   - Difficulty: Hard, as it requires generating accurate translations through multiple languages.
+   - Likelihood of being merged: Medium, as it may depend on the novelty and quality of the test cases.
+
+5. Language-specific phenomena:
+   - Difficulty: Medium
+   - Likelihood of being merged: Medium to High, depending on the uniqueness and quality of the examples and if it highlights a specific failure mode in GPT models.
+
+Remember that these assessments are just estimations and the actual difficulty and likelihood of being merged can vary based on the quality and uniqueness of your implementation."
 
 Me: "the following are the themes for search on Naver Korean Dictionary. which falls under which idea?
 
