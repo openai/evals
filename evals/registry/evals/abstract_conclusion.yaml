@@ -1,0 +1,9 @@
+abstract_conclusion:
+  id: abstract_conclusion.test.v1
+  description: Test the model's ability to create the conclusion of an abstract based on the title, background, methods, and results of an abstract.
+  metrics:
+  - accuracy
+abstract_conclusion.test.v1:
+  args:
+    samples_jsonl: abstract_conclusion\abstract_conclusion.jsonl
+  class: evals.elsuite.translate:Translate
