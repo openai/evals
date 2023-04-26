@@ -1,0 +1,7 @@
+automata-and-complexity:
+  id: automata-and-complexity.dev.v0
+  metrics: [accuracy]
+automata-and-complexity.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: automata-and-complexity/samples.jsonl
