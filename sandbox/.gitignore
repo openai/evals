@@ -1,4 +1,4 @@
 *.toml
 .idea/
 .ipynb_checkpoints/
-/scripts/scraped_data/
+/data/

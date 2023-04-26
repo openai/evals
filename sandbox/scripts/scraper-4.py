@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 from hangul_utils import join_jamos
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -18,7 +19,8 @@ options = Options()
 options.add_argument('--headless')
 options.add_argument('--log-level=3')
 
-driver = webdriver.Chrome(executable_path=driver_path, options=options)
+service = Service(executable_path=driver_path)
+driver = webdriver.Chrome(service=service, options=options)
 
 while True:
     category = input("Enter the category you want to scrape (proverb, phrase, idiom): ").strip().lower()
@@ -38,6 +40,16 @@ while True:
 
 while True:
     test_mode = input("Do you want to enable test mode? (yes, no): ").strip().lower()
+    sample_size = 1
+    if test_mode == 'yes':
+        while True:
+            try:
+                sample_size = int(input("Enter the sample size: "))
+                if sample_size > 0:
+                    break
+            except ValueError:
+                print("Invalid input. Please enter a positive integer.")
+
     if test_mode in ['yes', 'no']:
         break
     else:
@@ -63,7 +75,9 @@ while True:
 
 if test_mode == 'yes':
     if test_sample_type == 'random':
-        char_combinations = [random.choice(char_combinations)]
+        char_combinations = [(consonant, vowel) for consonant in consonants for vowel in vowels]
+        random.shuffle(char_combinations)
+        char_combinations = char_combinations[:sample_size]
     elif test_sample_type == 'specific':
         specific_consonant = input("Enter specific consonant (e.g., ㄱ, ㄴ, ㄷ): ").strip()
         specific_vowel = input("Enter specific vowel (e.g., ㅏ, ㅑ, ㅓ): ").strip()
@@ -180,7 +194,7 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
                             pronunciation = pronunciation_match
                             break
 
-                    tqdm.write(f"component_entry_lines: {component_entry_lines}")  # Replace print() with tqdm.write()
+                    # tqdm.write(f"component_entry_lines: {component_entry_lines}")  # Replace print() with tqdm.write()
                     component_entries_data.append('\n'.join(component_entry_lines))
 
             meanings_data = []
