@@ -1,0 +1,8 @@
+flag-color-number:
+  id: flag-color-number.s1.simple-v0
+  description: Test the model's ability to count colors in flags 
+  metrics: [accuracy]
+flag-color-number.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: flag_color_number/samples.jsonl
