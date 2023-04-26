@@ -10,7 +10,7 @@ import openai
 
 import evals
 import evals.record
-from evals import CompletionFn, OpenAIChatCompletionFn
+from evals import CompletionFn
 from evals.elsuite.modelgraded.base import ModelGradedSpec
 from evals.elsuite.modelgraded.classify_utils import CHOICE_KEY, concat_n_completions
 from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt
@@ -38,11 +38,9 @@ class ModelBasedClassify(evals.Eval):
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
-        if len(self.completion_fns) == 1:
-            self.eval_completion_fn = OpenAIChatCompletionFn(model="gpt-3.5-turbo")
-        else:
-            # treat last completion_fn as eval_completion_fn
-            self.eval_completion_fn = self.completion_fns[-1]
+        # treat last completion_fn as eval_completion_fn
+        self.eval_completion_fn = self.completion_fns[-1]
+        if len(self.completion_fns) > 1:
             self.completion_fns = self.completion_fns[:-1]
         n_models = len(self.completion_fns)
         self.max_tokens = max_tokens
