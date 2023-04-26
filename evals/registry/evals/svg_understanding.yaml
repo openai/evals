@@ -1,0 +1,8 @@
+svg_understanding:
+  id: svg_understanding.v0
+  description: Test visual understanding of SVG files.
+  metrics: [accuracy]
+svg_understanding.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: svg_understanding/samples.jsonl
