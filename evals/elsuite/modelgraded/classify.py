@@ -178,6 +178,10 @@ class ModelBasedClassify(evals.Eval):
                 ), f"Missing label for metric '{metric}' in sample {test_sample.keys()}"
                 metrics[metric + "_metascore"] = choice == test_sample[metric]
 
+        metadata = test_sample.get("metadata")
+        if metadata is not None and isinstance(metadata, dict):
+            evals.record.record_extra(**metadata)
+
         evals.record.record_metrics(**metrics)
 
         return choice
