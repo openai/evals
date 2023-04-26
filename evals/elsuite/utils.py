@@ -33,20 +33,20 @@ def get_consensus(answers):
     return max(counts, key=counts.get)
 
 
-def normalize(s: str) -> str:
+def normalize(s: str, preserve_punct: str = "", multiline: bool = False) -> str:
     """Lower text and remove punctuation, articles and extra whitespace."""
-    s = s.split("\n")[0]
+    s = s.split("\n")[0] if not multiline else " ".join(s.split("\n"))
     s = s.lower()
-    exclude = set(string.punctuation)
+    exclude = set(string.punctuation) - set(preserve_punct)
     s = "".join(char for char in s if char not in exclude)
     s = re.sub(r"\b(a|an|the)\b", " ", s)
     s = " ".join(s.split())
     return s
 
 
-def fuzzy_match(s1: str, s2: str) -> bool:
-    s1 = normalize(s1)
-    s2 = normalize(s2)
+def fuzzy_match(s1: str, s2: str, **kwargs) -> bool:
+    s1 = normalize(s1, **kwargs)
+    s2 = normalize(s2, **kwargs)
 
     if s1 == "" or s2 == "":
         return s1 == s2
@@ -73,10 +73,10 @@ def get_letter_from_data(data: str) -> str:
     return char
 
 
-def f1_score(prediction: str, answers: list[str]) -> float:
-    def _f1_score(prediction: str, ground_truth: str):
-        prediction_tokens = normalize(prediction).split()
-        ground_truth_tokens = normalize(ground_truth).split()
+def f1_score(prediction: str, answers: list[str], **kwargs) -> float:
+    def _f1_score(prediction: str, ground_truth: str, **kwargs):
+        prediction_tokens = normalize(prediction, **kwargs).split()
+        ground_truth_tokens = normalize(ground_truth, **kwargs).split()
         common = Counter(prediction_tokens) & Counter(ground_truth_tokens)
         num_same = sum(common.values())
         if num_same == 0:
@@ -86,7 +86,7 @@ def f1_score(prediction: str, answers: list[str]) -> float:
         f1 = (2 * precision * recall) / (precision + recall)
         return f1
 
-    return max([_f1_score(prediction, answer) for answer in answers])
+    return max([_f1_score(prediction, answer, **kwargs) for answer in answers])
 
 
 def scrub_formatting_from_prompt(prompt):
