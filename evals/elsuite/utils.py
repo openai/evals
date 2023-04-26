@@ -101,17 +101,25 @@ def scrub_formatting_from_prompt(prompt):
     return scrubbed_prompt
 
 
-def format_necessary(template: str, **kwargs: dict[str, str]) -> str:
+def format_necessary(template: str, allow_missing: bool = False, **kwargs: dict[str, str]) -> str:
     """Format a template string with only necessary kwargs."""
     keys = [k[1] for k in string.Formatter().parse(template) if k[1]]
-    assert all(
-        k in kwargs for k in keys
-    ), f"Required: {keys}, got: {sorted(kwargs)}.\nTemplate:\n{template}"
-    cur_keys = {k: kwargs[k] for k in keys}
+    if allow_missing:
+        assert (
+            len([k for k in keys if k in kwargs]) > 0
+        ), f"Required: {keys}, got: {sorted(kwargs)}, no inputs are used.\nTemplate:\n{template}"
+        cur_keys = {k: kwargs.get(k, "{" + k + "}") for k in keys}
+    else:
+        assert all(
+            k in kwargs for k in keys
+        ), f"Required: {keys}, got: {sorted(kwargs)}.\nTemplate:\n{template}"
+        cur_keys = {k: kwargs[k] for k in keys}
     return template.format(**cur_keys)
 
 
-def format_prompt(prompt: OpenAICreatePrompt, **kwargs: dict[str, str]) -> OpenAICreatePrompt:
+def format_prompt(
+    prompt: OpenAICreatePrompt, allow_missing: bool = False, **kwargs: dict[str, str]
+) -> OpenAICreatePrompt:
     """Format a prompt with only necessary kwargs."""
     # if any input kwargs is chat prompt, convert to text prompt
     kwargs = {
@@ -123,12 +131,14 @@ def format_prompt(prompt: OpenAICreatePrompt, **kwargs: dict[str, str]) -> OpenA
         for msg in prompt:
             formatted_msg = copy.copy(msg)
             if "content" in formatted_msg:
-                formatted_msg["content"] = format_necessary(formatted_msg["content"], **kwargs)
+                formatted_msg["content"] = format_necessary(
+                    formatted_msg["content"], allow_missing=allow_missing, **kwargs
+                )
             new_prompt.append(formatted_msg)
         prompt = new_prompt
     else:
         # Prompt is a string
-        prompt = format_necessary(prompt, **kwargs)
+        prompt = format_necessary(prompt, allow_missing=allow_missing, **kwargs)
     return prompt
 
 

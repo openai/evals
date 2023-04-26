@@ -23,6 +23,9 @@ class FuzzyMatch(evals.Eval):
     def eval_sample(self, test_sample, rng):
         del rng
         prompt, correct_answers = test_sample["input"], test_sample["ideal"]
+        if not isinstance(correct_answers, list):
+            correct_answers = [correct_answers]
+
         result = self.completion_fn(
             prompt=prompt,
             temperature=0.0,  # Q: why are these hardcoded?
@@ -31,6 +34,7 @@ class FuzzyMatch(evals.Eval):
         sampled = result.get_completions()[0]
 
         matches = [utils.fuzzy_match(sampled, correct_answer) for correct_answer in correct_answers]
+
         evals.record.record_match(
             True in matches,
             expected=correct_answers,
