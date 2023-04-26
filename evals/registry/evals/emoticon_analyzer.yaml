@@ -1,0 +1,8 @@
+emoticon_analyzer:
+  id: emoticon_analyzer.s1.simple-v0
+  description: Test the model's ability to solve emoticon analyzer.
+  metrics: [accuracy]
+emoticon_analyzer.s1.simple-v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: emoticon_analyzer/fuzzy_match.jsonl
