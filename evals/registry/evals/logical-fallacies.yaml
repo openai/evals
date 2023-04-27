@@ -1,0 +1,10 @@
+logical-fallacies:
+  id: logical-fallacies.dev.v0
+  description: Test the model's ability to accurately identify logical fallacies in statements, describing them in a few-worded response.
+  metrics: [accuracy]
+logical-fallacies.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: logical-fallacies/samples.jsonl
+    eval_type: classify
+    modelgraded_spec: fact
