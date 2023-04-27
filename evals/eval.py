@@ -14,9 +14,9 @@ from tqdm import tqdm
 
 from evals.api import CompletionFn
 
+from .data import get_jsonl
 from .record import RecorderBase
 from .registry import Registry
-from .data import get_jsonl
 
 logger = logging.getLogger(__name__)
 
@@ -88,6 +88,7 @@ class Eval(abc.ABC):
         samples: List[Any],
         concurrency: int = 32,
         show_progress: bool = True,
+        **_kwargs: Any,
     ):
         work_items = _index_samples(samples)
         semaphore = asyncio.Semaphore(concurrency)
@@ -109,6 +110,7 @@ class Eval(abc.ABC):
         samples,
         show_progress=True,
         record_raw_sample=True,
+        **_kwargs: Any,
     ):
         """
         Evaluate all provided samples in parallel.
@@ -156,7 +158,7 @@ class Eval(abc.ABC):
     def get_samples(self):
         if self.samples_jsonl is None:
             raise ValueError(
-                    "To use `get_samples`, you must provide a `samples_jsonl` path."
-                    "Got `None`.")
+                "To use `get_samples`, you must provide a `samples_jsonl` path." "Got `None`."
+            )
 
         return get_jsonl(self.samples_jsonl)
