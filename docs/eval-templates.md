@@ -35,8 +35,7 @@ Refer to the [`classify.py:ModelBasedClassify`](../evals/elsuite/modelgraded/cla
   - `"classify"` expects that the model response will only contain the choice.
 
   There are two ways to specify `eval_type`. The recommended way is in the `evals/registry/evals` YAML file. If done this way, an instruction will automatically be appended to `prompt` to steer the model towards the expected format (see `ANSWER_PROMPTS` in [the code](../evals/elsuite/modelgraded/classify.py)). Alternatively, you may specify `eval_type` in the `evals/registry/modelgraded` YAML, but you will need to include an appropriate instruction directly in the `prompt`.
-- `args` (optional): If specified, multiple evaluation calls will be made where the evaluation prompt is modified for each call with a different set of arguments.
-- `completion_sample_templates` (optional): If specified, determines how the model's output (or outputs, if `multicomp_n > 1`) will be formatted within the completion.
+- `output_template` (optional): If specified, determines how the model's output (or outputs, if `n > 1`) will be formatted within the completion.
 
 ### Example model-graded evals
 
