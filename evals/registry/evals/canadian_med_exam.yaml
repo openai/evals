@@ -1,0 +1,8 @@
+canadian_med_exam:
+  id: canadian_med_exam.s1.simple-v0
+  description: Test the models ability to successfully answer multiple choice questions from the Royal College of Physicians and Surgeons of Canada subspecialty exams
+  metrics: [accuracy]
+canadian_med_exam.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: canadian_med_exam/canadian_med_exam.jsonl
