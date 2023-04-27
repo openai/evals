@@ -1,26 +1,19 @@
 """
 Generic eval that uses a prompt + classification.
 """
-import logging
 from collections import Counter
 from random import Random
-from typing import Optional, Union
-
-import openai
+from typing import Any, Optional, Union
 
 import evals
 import evals.record
 from evals import CompletionFn
-from evals.elsuite.modelgraded.base import ModelGradedSpec
-from evals.elsuite.modelgraded.classify_utils import CHOICE_KEY, concat_n_completions
+from evals.elsuite.modelgraded.classify_utils import classify, sample_and_concat_n_completions
 from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt
 from evals.registry import Registry
 
 
 class ModelBasedClassify(evals.Eval):
-    invalid_request_during_completion = 0
-    invalid_request_during_evaluation = 0
-
     def __init__(
         self,
         completion_fns: list[CompletionFn],
@@ -28,13 +21,12 @@ class ModelBasedClassify(evals.Eval):
         modelgraded_spec: str,
         registry: Registry,
         *args,
-        max_tokens: int = 1024,
+        modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
+        sample_kwargs: Optional[dict[str, Any]] = None,
+        eval_kwargs: Optional[dict[str, Any]] = None,
         multicomp_n: Union[int, str] = 1,
-        multicomp_temperature: float = 0.4,
-        samples_renamings: Optional[dict[str, str]] = None,
         eval_type: Optional[str] = None,
         metaeval: bool = False,
-        modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
@@ -43,10 +35,15 @@ class ModelBasedClassify(evals.Eval):
         if len(self.completion_fns) > 1:
             self.completion_fns = self.completion_fns[:-1]
         n_models = len(self.completion_fns)
-        self.max_tokens = max_tokens
+        self.sample_kwargs = {"max_tokens": 1024}
+        self.sample_kwargs.update(sample_kwargs or {})
+        self.eval_kwargs = {"max_tokens": 1024}
+        self.eval_kwargs.update(eval_kwargs or {})
         self.samples_jsonl = samples_jsonl
         self.metaeval = metaeval
         self.registry = registry
+        self.modelgraded_spec_args = modelgraded_spec_args or {}
+        self.eval_type = eval_type
         if multicomp_n == "from_models":
             assert n_models > 1
             self.multicomp_n = n_models
@@ -55,15 +52,8 @@ class ModelBasedClassify(evals.Eval):
             self.multicomp_n = multicomp_n
         if len(self.completion_fns) > 1:
             assert self.multicomp_n == n_models
-        self.multicomp_temperature = multicomp_temperature
-        self.samples_renamings = samples_renamings or {}
 
-        self.mg: ModelGradedSpec = self.registry.get_modelgraded_spec(
-            modelgraded_spec,
-            multicomp_n=self.multicomp_n,
-            args=modelgraded_spec_args,
-            **({"append_answer_prompt": True, "eval_type": eval_type} if eval_type else {}),
-        )
+        self.mg = self.registry.get_modelgraded_spec(modelgraded_spec)
 
     def eval_sample(self, test_sample: dict, rng: Random) -> None:
         """Evaluate a single sample.
@@ -71,72 +61,45 @@ class ModelBasedClassify(evals.Eval):
         Recorded metrics are always: one of the self.choice_strings, or "__invalid__".
         """
         # process test_sample
-        if self.samples_renamings:
-            test_sample = {self.samples_renamings.get(k, k): v for k, v in test_sample.items()}
-        if self.multicomp_n > 1:
-            test_sample["n"] = self.multicomp_n
         for k in self.mg.input_outputs:
             test_sample[k] = scrub_formatting_from_prompt(test_sample[k])
 
         # run policy completions
         completions = {}
-        try:
-            for k, v in self.mg.input_outputs.items():
-                if v in test_sample:  # test_sample already has completion, skip.
-                    continue
-                if self.multicomp_n > 1 and v in self.mg.completion_sample_templates:
-                    completion_i_s = []
-                    for i in range(self.multicomp_n):
-                        if len(self.completion_fns) > 1:
-                            # use a separate model for each completion
-                            completion_fn = self.completion_fns[i]
-                        else:
-                            # use the single model for all completions
-                            completion_fn = self.completion_fn
-                        get_input_completion = PromptFn(
-                            test_sample[k],
-                            completion_fn=completion_fn,
-                            max_tokens=self.max_tokens,
-                            temperature=self.multicomp_temperature,
-                        )
-                        completion_i, _ = get_input_completion()
-                        completion_i_s.append(completion_i)
-                    completion = concat_n_completions(
-                        completion_i_s, self.mg.completion_sample_templates[v]
-                    )
-                else:
-                    get_input_completion = PromptFn(
-                        test_sample[k],
-                        completion_fn=self.completion_fn,
-                        max_tokens=self.max_tokens,
-                    )
-                    completion, _ = get_input_completion()
-                completions[v] = completion
-        except openai.error.InvalidRequestError:
-            self.invalid_request_during_completion += 1
-            return
+        for k, v in self.mg.input_outputs.items():
+            if v in test_sample:  # test_sample already has completion, skip.
+                continue
+            if self.multicomp_n > 1:
+                completion = sample_and_concat_n_completions(
+                    self.completion_fns,
+                    prompt=test_sample[k],
+                    template_i=self.mg.output_template,
+                    sample_kwargs=self.sample_kwargs,
+                    n=self.multicomp_n,
+                )
+            else:
+                get_input_completion = PromptFn(
+                    test_sample[k], completion_fn=self.completion_fn, **self.sample_kwargs
+                )
+                completion, _ = get_input_completion()
+            completions[v] = completion
 
         # run modelgraded eval
         metrics = {}
-        prompt = self.mg.format(**completions, **test_sample)
-        try:
-            choice, _ = self.mg.classify(
-                prompt=prompt,
-                completion_fn=self.eval_completion_fn,
-                max_tokens=self.max_tokens,
-            )
-        except openai.error.InvalidRequestError:
-            logging.warn(f"Invalid request during evaluation: {prompt}")
-            self.invalid_request_during_evaluation += 1
-            return
-        metrics[CHOICE_KEY] = choice
+        choice, _, score = classify(
+            mg=self.mg,
+            completion_fn=self.eval_completion_fn,
+            completion_kwargs=self.eval_kwargs,
+            eval_type=self.eval_type,
+            n=self.multicomp_n,
+            format_kwargs={**completions, **test_sample, **self.modelgraded_spec_args},
+        )
+        metrics.update(dict(choice=choice, score=score))
 
         # run metaeval if requested
         if self.metaeval:
-            assert (
-                CHOICE_KEY in test_sample
-            ), f"Missing label for metric '{CHOICE_KEY}' in sample {test_sample.keys()}"
-            metrics[CHOICE_KEY + "_metascore"] = choice == test_sample[CHOICE_KEY]
+            assert "choice" in test_sample
+            metrics["metascore"] = choice == test_sample["choice"]
 
         evals.record.record_metrics(**metrics)
 
@@ -147,28 +110,22 @@ class ModelBasedClassify(evals.Eval):
 
         self.eval_all_samples(recorder, samples)
         record_metrics = {}
-        record_metrics["invalid_request_during_completion"] = self.invalid_request_during_completion
-        record_metrics["invalid_request_during_evaluation"] = self.invalid_request_during_evaluation
 
         all_sample_metrics = recorder.get_metrics()
         if not all_sample_metrics:
             return record_metrics
 
-        chosen = [m[CHOICE_KEY] for m in all_sample_metrics if CHOICE_KEY in m]
-        # if there is a best choice, compute the score
-        if self.mg.choice_scores:
-            scores = [self.mg.score(choice) for choice in chosen]
-            record_metrics[f"score/{CHOICE_KEY}"] = sum(scores) / len(all_sample_metrics)
-        # compute the counts and ratios
-        counts = dict(Counter(chosen))
-        missing_samples = len(all_sample_metrics) - len(chosen)
-        if missing_samples:
-            counts["__missing_samples__"] = missing_samples
-        record_metrics.update({f"counts/{CHOICE_KEY}/{k}": v for k, v in counts.items()})
-        if self.metaeval:
-            metascores = [
-                m[CHOICE_KEY + "_metascore"] for m in all_sample_metrics if CHOICE_KEY in m
-            ]
-            record_metrics[f"metascore/{CHOICE_KEY}"] = sum(metascores) / len(all_sample_metrics)
+        # record the counts
+        choices = [m["choice"] for m in all_sample_metrics]
+        counts = dict(Counter(choices))
+        record_metrics.update({f"counts/{k}": v for k, v in counts.items()})
+
+        # record the scores
+        scores = [m["score"] for m in all_sample_metrics if m["score"] is not None]
+        if scores:
+            record_metrics[f"score"] = sum(scores) / len(scores)
+        metascores = [m["metascore"] for m in all_sample_metrics if "metascore" in m]
+        if metascores:
+            record_metrics[f"metascore"] = sum(metascores) / len(metascores)
 
         return record_metrics
