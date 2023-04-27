@@ -82,8 +82,16 @@ if test_mode == 'yes':
         specific_consonant = input("Enter specific consonant (e.g., ㄱ, ㄴ, ㄷ): ").strip()
         specific_vowel = input("Enter specific vowel (e.g., ㅏ, ㅑ, ㅓ): ").strip()
         char_combinations = [(specific_consonant, specific_vowel)]
+char_combinations = [(consonant, vowel) for consonant in consonants for vowel in vowels]
+
 if order == 'random':
     random.shuffle(char_combinations)
+
+starting_consonant = input("Enter the starting consonant (e.g., ㄱ, ㄴ, ㄷ): ").strip()
+starting_vowel = input("Enter the starting vowel (e.g., ㅏ, ㅑ, ㅓ): ").strip()
+
+starting_index = char_combinations.index((starting_consonant, starting_vowel))
+char_combinations = char_combinations[starting_index:]
 
 if test_mode == 'yes':
     while True:
@@ -93,6 +101,7 @@ if test_mode == 'yes':
                 break
         except ValueError:
             print("Invalid input. Please enter a positive integer.")
+retry_attempts = 1  # Set a default value for retry_attempts
 
 for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
 
@@ -116,8 +125,12 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
             break
         except Exception as e:
             print(f"Error while clicking radio buttons (attempt {_ + 1}): {type(e).__name__} - {str(e)}")
+            # Inside the 'for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):' loop
+            # After the 'for _ in range(retry_attempts):' loop
+
     else:
-        print(f"Failed to click radio buttons after {retry_attempts} attempts. Skipping this combination.")
+        tqdm.write(
+            f"Failed to click radio buttons for consonant-vowel pair ({consonant}, {vowel}) after {retry_attempts} attempts. Skipping this combination.")
         continue
 
     time.sleep(1)

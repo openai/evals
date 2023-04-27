@@ -66,64 +66,71 @@ PR#    Title
 735    "Assessing GPTs' Ability to Compute Per-kWh Prices from Electric Utility Bills: Evaluation Method and Results"
 751    "Introducing Multi-Step Equations: A Hand-Made and Verified Evaluation Method for GPTs"
 
-now what"
-
-Me: "im a korean who dabbles in many natural languages"
+suggest eval ideas. im a korean who dabbles in many natural languages"
 
 GPT-4:
-### 1. "As someone who has experience with multiple natural languages and Korean, you can leverage your unique skills to develop an evaluation method that tests the language understanding and translation abilities of GPT-4.
+"Here are some eval ideas based on your background in Korean and natural languages:
 
-Here are some ideas to help you create a new evaluation method:
+1. **Korean Idioms and Proverbs Evaluation**: Create an evaluation method to assess GPTs' understanding and correct usage of Korean idioms and proverbs in various contexts.
 
-1. Cross-lingual reasoning: Design a test that requires GPT-4 to understand and reason about information presented in different languages, including Korean. For example, given a set of facts in multiple languages, the model should be able to answer questions or solve problems based on that information.
+2. **Korean Romanization Evaluation**: Test GPTs' ability to accurately convert Korean Hangul script into romanized text using standard romanization systems, such as the Revised Romanization of Korean.
 
-2. Idiomatic expressions: Evaluate GPT-4's ability to understand, translate, and explain idiomatic expressions from Korean and other languages. These expressions can be particularly challenging for AI systems, as they often require knowledge of cultural context and language-specific nuances.
+3. **Cross-Lingual Idiomatic Expressions Evaluation**: Create an evaluation method to assess GPTs' ability to understand and translate idiomatic expressions from one language to another (e.g., Korean to English, or vice versa) while preserving their intended meaning.
 
-3. Korean dialects: Test GPT-4's understanding of different Korean dialects and regional variations. Create a set of questions or prompts that require the model to recognize and respond appropriately to these variations.
+4. **Korean Particles Evaluation**: Evaluate GPTs' ability to use and understand the appropriate Korean particles (조사) in various grammatical contexts.
 
-4. Multilingual translation chains: Assess GPT-4's ability to maintain the meaning of a sentence or passage when translating it through multiple languages in a chain (e.g., from Korean to English, then English to French, French to Japanese, and so on). Compare the final translation to the original Korean input to evaluate the model's accuracy and consistency.
+5. **Korean Honorifics Evaluation**: Assess GPTs' understanding of Korean honorifics (존댓말) and their appropriate usage in different social contexts and with different levels of formality.
 
-5. Language-specific phenomena: Design an evaluation method that tests GPT-4's understanding of language-specific phenomena, such as Korean honorifics or particles. This could involve generating sentences with varying degrees of politeness or formality and asking the model to choose the most appropriate one for a given context."
+6. **Korean Text Summarization Evaluation**: Test GPTs' ability to summarize Korean texts in both Korean and other languages, preserving the main ideas and essential information.
 
-### 2. "Based on the merged PR list and your background, here are a few suggestions for creating original evals:
+7. **Korean Named Entity Recognition Evaluation**: Evaluate GPTs' ability to identify and classify named entities (e.g., person names, organization names, locations) in Korean texts.
 
-1. **Korean Language Evaluation**: Create an evaluation that tests GPT's ability to perform tasks in the Korean language. This could include grammar correction, idiom understanding, or contextual understanding of Korean-specific phrases.
+8. **Korean-English Code-Switching Evaluation**: Assess GPTs' ability to understand and generate text with natural and contextually appropriate Korean-English code-switching, which is common in multilingual communication.
 
-2. **Cross-lingual Comparison Evaluation**: Create an evaluation that tests GPT's ability to translate idiomatic expressions, proverbs, or slang from one language to another (including Korean). This could be a multilingual evaluation, testing the model's performance across multiple languages.
+9. **Korean Poetic Forms Evaluation**: Test GPTs' understanding and generation of traditional Korean poetic forms, such as sijo (시조) and gasa (가사), by assessing their ability to adhere to the specific structural and thematic rules of these forms.
 
-3. **Language Learning Evaluation**: Create an evaluation that tests GPT's ability to provide language learning tips or answer language-related questions. This could involve questions about grammar, pronunciation, or learning strategies for various languages.
+10. **Korean Dialects Evaluation**: Evaluate GPTs' ability to understand and generate text in various Korean dialects, such as the Gyeongsang (경상), Jeolla (전라), and Chungcheong (충청) dialects.
 
-4. **Korean Cultural Knowledge Evaluation**: Create an evaluation that tests GPT's understanding of Korean culture, history, or current events. This could include questions about famous people, historical events, or popular culture topics.
+Here are some eval ideas that could be interesting for you as someone who dabbles in many natural languages:
 
-5. **Natural Language Code-switching Evaluation**: Create an evaluation that tests GPT's ability to handle code-switching between multiple languages, such as Korean and English, within the same context or conversation."
+1. "Korean Idioms Interpretation Evaluation": Test GPT models' understanding of Korean idioms and their ability to provide accurate explanations in Korean or other languages.
 
-Me: "which would be the easiest/hardest/most likely to be merged/etc?"
+2. "Code-switching Evaluation for Multilingual GPT Models": Create an eval that tests GPT models' ability to understand and generate text with code-switching, where two or more languages are used in the same conversation or sentence.
 
-GPT-4: "A. All of the ideas I provided can potentially meet the criteria mentioned in the PULL_REQUEST_TEMPLATE.md, as long as they are developed to be thematically consistent, contain failures where a human can do the task but GPT models struggle, include a good signal for the correct behavior, and consist of at least 15 high-quality examples. However, the success of these ideas as evals depends on the specific implementation and how well they address the desired criteria.
+3. "Korean Text Summarization Evaluation": Evaluate the ability of GPT models to summarize Korean texts effectively, maintaining the key information and context while reducing the length.
 
-B. Here's a rough assessment of the ideas in terms of difficulty and likelihood of being merged:
+4. "Translation Ambiguity Evaluation": Test GPT models' ability to handle ambiguous translations between Korean and other languages, where one word or phrase could have multiple meanings in the target language.
 
-1. Cross-lingual reasoning:
-   - Difficulty: Medium
-   - Likelihood of being merged: High, if it effectively demonstrates a unique failure mode in the GPT models.
+5. "Korean Proverbs and Cultural Context Evaluation": Assess GPT models' understanding of Korean proverbs and their cultural context, and their ability to provide appropriate explanations or analogies in other languages.
 
-2. Idiomatic expressions:
-   - Difficulty: Medium
-   - Likelihood of being merged: Medium to High, depending on the uniqueness and quality of the examples.
+6. "Korean Slang and Neologisms Evaluation": Test GPT models' ability to understand, translate, and generate text containing Korean slang and neologisms, reflecting the dynamic nature of language.
 
-3. Korean dialects:
-   - Difficulty: Medium to Hard, depending on the dialects chosen and the complexity of the examples.
-   - Likelihood of being merged: Medium, as it may overlap with existing language evaluation methods.
+7. "Korean Poetry Generation Evaluation": Evaluate GPT models' ability to generate Korean poetry, adhering to specific poetic forms and styles while maintaining coherence and creativity.
 
-4. Multilingual translation chains:
-   - Difficulty: Hard, as it requires generating accurate translations through multiple languages.
-   - Likelihood of being merged: Medium, as it may depend on the novelty and quality of the test cases.
+These eval ideas focus on different aspects of Korean language understanding and the ability to work with multiple languages. You can choose one or multiple ideas to create a diverse set of evaluations that test GPT models' understanding of Korean and other languages you are familiar with."
 
-5. Language-specific phenomena:
-   - Difficulty: Medium
-   - Likelihood of being merged: Medium to High, depending on the uniqueness and quality of the examples and if it highlights a specific failure mode in GPT models.
+Me: "which would be the easiest/hardest/most/least likely to be merged/etc?"
 
-Remember that these assessments are just estimations and the actual difficulty and likelihood of being merged can vary based on the quality and uniqueness of your implementation."
+GPT-4: "It is difficult to precisely determine which eval idea would be the easiest, hardest, most likely, or least likely to be merged. However, I can provide some general insights based on the criteria for a good eval and potential challenges.
+
+**Easiest / Most likely to be merged:**
+- Korean Particles Evaluation: It focuses on a specific aspect of the Korean language that could expose the model's limitations. If designed well with a diverse set of examples, it has a good chance of being merged.
+
+**Hardest / Least likely to be merged:**
+- Old Korean to Modern Korean Evaluation: This task might be more difficult due to the complexity of translating old Korean texts to modern Korean. Moreover, creating high-quality examples and determining the right behavior might be challenging, reducing the likelihood of it being merged.
+
+**Important Considerations:**
+While selecting the easiest or hardest eval idea can be a factor, it is essential to focus on the eval's quality and relevance to expose potential limitations in GPT models. Ensure that the chosen eval idea aligns with the criteria for a good eval and addresses a relevant aspect of the Korean language or natural languages in general. This will increase the chances of the eval being merged and providing valuable insights.
+
+It's difficult to predict with certainty which eval ideas would be the easiest/hardest or most/least likely to be merged. However, I can provide some insights based on the ideas you suggested:
+
+Easiest / Most likely to be merged:
+1. Korean proverbs and idiomatic expressions: This evaluation would test GPT models' understanding of culturally specific phrases and expressions. It could be easier to create since you can gather a list of common proverbs and idiomatic expressions and test the models on their ability to explain, translate, or use them in context.
+
+Hardest / Least likely to be merged:
+1. Multilingual wordplay: This evaluation would involve creating puns, jokes, or other forms of wordplay that involve multiple languages. This could be difficult to create and evaluate, as it requires a deep understanding of multiple languages and their nuances. Additionally, it might be challenging to assess the models' performance, especially if the humor or wordplay is subtle or relies on specific cultural knowledge.
+
+When it comes to getting an eval merged, the key is to ensure that it meets all the criteria for a good eval, has a clear goal, and demonstrates the models' strengths and weaknesses in a meaningful and informative way. It's also important to check if there are similar evals already merged or in the process of being merged, as it might affect the chances of your submission being accepted."
 
 Me: "the following are the themes for search on Naver Korean Dictionary. which falls under which idea?
 
