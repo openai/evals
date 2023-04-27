@@ -1,0 +1,9 @@
+symmetric_group_inversion:
+  id: symmetric_group_inversion.dev.v0
+  description: Test the model's ability to invert permutations of size 4 and 5
+  metrics: [accuracy]
+symmetric_group_inversion.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: symmetric_group_inversion/samples.jsonl
+
