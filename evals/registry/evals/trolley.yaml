@@ -1,0 +1,10 @@
+trolley-match:
+  id: trolley-match.dev-v0
+  description: Checks for expected answers to positive/negative questions, without explanation. Should align with consensus from large public sample size.
+  disclaimer: This is an example disclaimer.
+  metrics: [accuracy]
+trolley-match.dev-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: trolley/samples.jsonl
+
