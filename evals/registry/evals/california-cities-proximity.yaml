@@ -1,0 +1,9 @@
+california-cities-proximity:
+  id: california-cities-proximity.dev.v0
+  description: Test the model's ability to tell whether two cities in California, US are 15 miles or less apart from each other.
+  metrics: [accuracy]
+
+california-cities-proximity.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: california-cities-proximity/samples.jsonl
