@@ -1,0 +1,9 @@
+protein-strings:
+  id: protein-strings.dev.v0
+  description: Test the model's ability to count frequence of amino acids in a protein string as a decimal fraction of protein string length
+  metrics: [accuracy]
+
+protein-strings.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: protein-strings/samples.jsonl
