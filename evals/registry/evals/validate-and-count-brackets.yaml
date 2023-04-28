@@ -1,0 +1,8 @@
+validate-and-count-brackets:
+  id: validate-and-count-brackets.dev.v0
+  metrics: [accuracy]
+
+validate-and-count-brackets.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: validate-and-count-brackets/samples.jsonl
