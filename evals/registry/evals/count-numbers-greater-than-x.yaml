@@ -1,0 +1,8 @@
+count-numbers-greater-than-x:
+  id: count-numbers-greater-than-x.v0
+  description: How many times does a number appear that is greater than X? Respond with your answer only.
+  metrics: [accuracy]
+count-numbers-greater-than-x.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: count_numbers_greater_than_x/samples.jsonl
