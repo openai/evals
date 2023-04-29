@@ -329,7 +329,7 @@ class Recorder(RecorderBase):
     def __init__(
         self,
         log_path: Optional[str],
-        run_spec: evals.base.RunSpec,
+        run_spec: RunSpec,
         snowflake_connection: Optional[SnowflakeConnection] = None,
     ) -> None:
         super().__init__(run_spec)
@@ -353,7 +353,8 @@ class Recorder(RecorderBase):
             command=query,
             params={
                 "run_id": run_spec.run_id,
-                "model_name": jsondumps(run_spec.model_names),
+                # TODO: model_name -> completion_fns
+                "model_name": jsondumps(dict(completions=run_spec.completion_fns)),
                 "eval_name": run_spec.eval_name,
                 "base_eval": run_spec.base_eval,
                 "split": run_spec.split,

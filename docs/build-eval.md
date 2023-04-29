@@ -2,7 +2,7 @@
 
 This document walks through the end-to-end process for building an eval, which is a dataset and a choice of eval class. The `examples` folder contains Jupyter notebooks that follow the steps below to build several academic evals, thus helping to illustrate the overall process.
 
-The steps in this process are building your dataset, registering a new eval with your dataset, and running your eval. Crucially, we assume that you are using an [existing eval template](eval-templates.md) out of the box (if that's not the case, see [this example of building a custom eval](custom-eval.md)). If you are interested in contributing your eval publically, we also include some criteria at the bottom for what we think makes an interesting eval.
+The steps in this process are building your dataset, registering a new eval with your dataset, and running your eval. Crucially, we assume that you are using an [existing eval template](eval-templates.md) out of the box (if that's not the case, see [this example of building a custom eval](custom-eval.md)). If you are interested in contributing your eval publicly, we also include some criteria at the bottom for what we think makes an interesting eval.
 
 We are looking for evals in the following categories:
 
@@ -20,6 +20,11 @@ If you have an eval that falls outside this category but still is a diverse exam
 
 Once you have an eval in mind that you wish to implement, you will need to convert your samples into the right JSON lines (JSONL) format. A JSONL file is just a JSON file with a unique JSON object per line.
 
+You can use the `openai` CLI (available with [OpenAI-Python](https://github.com/openai/openai-python)) to transform data from some common file types into JSONL:
+``` 
+openai tools fine_tunes.prepare_data -f data[.csv, .json, .txt, .xlsx or .tsv]
+```
+
 We include some examples of JSONL eval files in [registry/data/README.md](../evals/registry/data/README.md)
 
 Each JSON object will represent one data point in your eval. The keys you need in the JSON object depend on the eval template. All templates expect an `"input"` key which is the prompt, ideally specified in [chat format](https://platform.openai.com/docs/guides/chat/introduction) (though strings are also supported). We recommend chat format even if you are evaluating non chat models. If you are evaluating both chat and non chat models, we handle the conversion between chat formatted prompts and raw string prompts (see the conversion logic [here](../evals/prompt/base.py)).
@@ -28,7 +33,7 @@ For the basic evals `Match`, `Includes`, and `FuzzyMatch`, the other required ke
 
 We have implemented small subsets of the [CoQA](https://stanfordnlp.github.io/coqa/) dataset for various eval templates to illustrate how the data should be formatted. See [`coqa/match.jsonl`](../evals/registry/data/coqa/match.jsonl) for an example of data that is suitable for the `Match` basic eval template and [`coqa/samples.jsonl`](../evals/registry/data/coqa/samples.jsonl) for data that is suitable for `fact` and `closedqa` model-graded evals. Note that even though these two model-graded evals expect different keys, we can include the superset of keys in our data in order to support both evals.
 
-If the dataset file is on your local machine, put the `jsonl` file in `evals/registry/evals/data/<eval_name>/samples.jsonl`. If it is in Cloud Object Storage, we support path-style URLs for the major clouds (for your personal use only, we will not accept PRs with cloud URLs).
+If the dataset file is on your local machine, put the `jsonl` file in `evals/registry/data/<eval_name>/samples.jsonl`. If it is in Cloud Object Storage, we support path-style URLs for the major clouds (for your personal use only, we will not accept PRs with cloud URLs).
 
 ## Registering the eval
 
@@ -44,7 +49,7 @@ Register the eval by adding a file to `evals/registry/evals/<eval_name>.yaml` us
     samples_jsonl: <eval_name>/samples.jsonl
 ```
 
-Upon running the eval, the data will be searched for in `evals/registry/data`, e.g. if `test_match/samples.jsonl` is the provided filepath the data is expected to be in `evals/registry/data/test_match/samples.jsonl`. 
+Upon running the eval, the data will be searched for in `evals/registry/data`, e.g. if `test_match/samples.jsonl` is the provided filepath the data is expected to be in `evals/registry/data/test_match/samples.jsonl`.
 
 The naming convention for evals is in the form `<eval_name>.<split>.<version>`.
 - `<eval_name>` is the eval name, used to group evals whose scores are comparable.
@@ -55,17 +60,17 @@ In general, running the same eval name against the same model should always give
 
 ## Running the eval
 
-You can now run your eval on your data from the CLI with your choice of model:
+You can now run your eval on your data from the CLI with your choice of model or completion function:
 ```
 oaieval gpt-3.5-turbo <eval_name>
 ```
-Congratulations, you have built your eval! Keep iterating on it until you are confident in the results. Remember, if you change the data file, remove `/tmp/filecache` so that the eval is run with your updated data.
+Congratulations, you have built your eval! Keep iterating on it until you are confident in the results.
 
 ## For model-graded evals: a step-by-step workflow
 
 We expect that the existing model-graded evals such as `fact`, `closedqa`, and `battle` will fit many use cases. However, other use cases may benefit from more customization, e.g., a different evaluation prompt. For these, there will be a bit more work involved, but generally still no coding required!
 
-1. If you can't use an existing model-graded eval, create a new YAML in `evals/registry/modelgraded` to specify the [parameters](eval-templates.md#parameters-for-model-graded-evals) of your eval. See [`humor.yaml`](../evals/registry/modelgraded/humor.yaml) for an example.
+1. If you can't use an existing model-graded eval, create a new YAML or create a new entry to an existing YAML in `evals/registry/modelgraded` to specify the [parameters](eval-templates.md#parameters-for-model-graded-evals) of your eval. See [`humor.yaml`](../evals/registry/modelgraded/humor.yaml) for an example.
     - Note that, even if you are creating a new YAML, you may find it easiest to copy an existing YAML as a starting point. For example, model-graded evals which check a model completion against a rubric can copy `closedqa.yaml` and just edit the `args`.
 2. Next, you will create your dataset and register your eval, as described above. See [`joke_fruits_labeled.jsonl`](../evals/registry/data/test_metaeval/joke_fruits_labeled.jsonl) and [`joke-fruits`](../evals/registry/evals/test-modelgraded.yaml), for example.
     - Note that it is recommended to specify `eval_type` at this step, when you register your eval, rather than step 1.

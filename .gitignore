@@ -1,5 +1,6 @@
 __pycache__/
 evals.egg-info/
 *.code-workspace
+.DS_Store
 venv/
 .vscode/

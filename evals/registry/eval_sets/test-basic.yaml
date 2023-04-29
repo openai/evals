@@ -3,3 +3,4 @@ test-basic:
     - test-match
     - test-fuzzy-match
     - test-includes
+    - test-includes-ignore-case
