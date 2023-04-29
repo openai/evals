@@ -1,0 +1,9 @@
+chase:
+  id: chase.dev.v0
+  description: Testing the model's ability to answer general knowledge questions from UK ITV game "The Chase".
+  metrics: [accuracy]
+chase.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: chase/samples.jsonl
+    ignore_case: true

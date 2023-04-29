@@ -24,10 +24,14 @@ class Includes(evals.Eval):
 
     def eval_sample(self, sample: Any, *_):
         prompt = sample["input"]
+        expected = sample["ideal"]
         result = self.completion_fn(
             prompt=prompt,
+            temperature=0.0,
         )
         sampled = result.get_completions()[0]
+        print(expected,
+              result.get_completions()[0])
 
         includes_answer = any(
             [utils.get_answer(sampled, ref, self.ignore_case) for ref in sample["ideal"]]
