@@ -1,0 +1,8 @@
+sort_last_name:
+  id: sort_last_name.s1.simple-v0
+  description: Test the model's ability to sort a list of full names by last name.
+  metrics: [accuracy]
+sort_last_name.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: sort_last_name/sort_last_name.jsonl
