@@ -1,0 +1,8 @@
+ukrainian-rhyme:
+  id: ukrainian-rhyme.v0
+  description: Composite task that involves translation and rhyming.
+  metrics: [accuracy]
+ukrainian-rhyme.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: ukrainian_rhyme/samples.jsonl
