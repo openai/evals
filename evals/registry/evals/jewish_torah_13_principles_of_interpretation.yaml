@@ -1,0 +1,8 @@
+jewish_torah_13_principles_of_interpretation:
+  id: jewish_torah_13_principles_of_interpretation.v0
+  description: Composite task that involves Jewish hermeneutics for the Torah.
+  metrics: [accuracy]
+jewish_torah_13_principles_of_interpretation.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: jewish_torah_13_principles_of_interpretation/samples.jsonl
