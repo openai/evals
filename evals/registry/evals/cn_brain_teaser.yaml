@@ -1,0 +1,8 @@
+cn_brain_teaser:
+  id: cn_brain_teaser.test.v1
+  metrics:
+  - accuracy
+cn_brain_teaser.test.v1:
+  args:
+    samples_jsonl: /Users/yang.sun/research/soulmy/evals/evals/registry/data/cn_brain_teaser/cn_brain_teaser_samples.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
