@@ -1,0 +1,8 @@
+sort-rectanges-by-size:
+  id: sort-rectanges-by-size.v0
+  description: Sort rectangles by area given a list of dimensions
+  metrics: [accuracy]
+sort-rectanges-by-size.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: sort_rectanges_by_size/samples.jsonl
