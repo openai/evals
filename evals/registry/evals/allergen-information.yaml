@@ -4,6 +4,7 @@ allergen-information:
   metrics: [accuracy]
 
 allergen-information.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes.Includes
   args:
     samples_jsonl: allergen-information/samples.jsonl
+
