@@ -1,2 +1,0 @@
-Availability
-During the gradual rollout of GPT-4, we’re prioritizing API access to developers that contribute exceptional model evaluations to OpenAI Evals to learn how we can improve the model for everyone. We are processing requests for the 8K and 32K engines at different rates based on capacity, so you may receive access to them at different times. Researchers studying the societal impact of AI or AI alignment issues can also apply for subsidized access via our Researcher Access Program.
