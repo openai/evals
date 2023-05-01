@@ -1,0 +1,8 @@
+physics-match:
+  id: physics.match.dev.v0
+  description: Test the model's ability to understand physics and solve problems
+  metrics: [accuracy]
+physics.match.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: physics/samples.jsonl
