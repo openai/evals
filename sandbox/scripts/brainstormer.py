@@ -50,7 +50,7 @@ with tqdm(total=num_files * 100, desc="Processing", ncols=100) as progress_bar:
         output_filename = f"{output_file_base}-{output_file_number}.md"
         if not os.path.exists(output_filename):
             completion = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4",
                 messages=[
                     {"role": "system", "content": "You are an expert on evaluating GPT models, particularly GPT-4."},
                     {"role": "user", "content": prompt}

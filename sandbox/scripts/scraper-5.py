@@ -2,6 +2,7 @@ import json
 import os
 import random
 import re
+import time
 
 from bs4 import BeautifulSoup
 from hangul_utils import join_jamos
@@ -13,6 +14,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from tqdm import tqdm
 
+empty_pairs_file = 'empty_pairs.txt'
+
+if os.path.isfile(empty_pairs_file):
+    with open(empty_pairs_file, 'r', encoding='utf-8') as f:
+        empty_pairs = [tuple(line.strip().split(', ')) for line in f.readlines()]
+else:
+    empty_pairs = []
+
 driver_path = 'C:/webdrivers/chromedriver.exe'
 options = Options()
 options.add_argument('--headless')
@@ -23,7 +32,7 @@ driver = webdriver.Chrome(service=service, options=options)
 
 
 # Function to update the JSON file
-def update_json_file(file_path, expression, similar_words):
+def update_json_file(file_path, expression, same_words, similar_words):
     data = []
     if os.path.isfile(file_path):
         try:
@@ -39,10 +48,12 @@ def update_json_file(file_path, expression, similar_words):
     updated = False
     for expression_dict in data:
         if expression_dict['expression'] == expression:
+            if 'same_words' not in expression_dict:
+                expression_dict['same_words'] = []
             # Check if 'similar_words' key exists in expression_dict
             if 'similar_words' not in expression_dict:
                 expression_dict['similar_words'] = []
-
+            expression_dict['same_words'].extend(same_words)
             expression_dict['similar_words'].extend(similar_words)
             updated = True
             break
@@ -50,6 +61,7 @@ def update_json_file(file_path, expression, similar_words):
     if not updated:
         new_expression_data = {
             'expression': expression,
+            'same_words': same_words,
             'similar_words': similar_words
         }
         data.append(new_expression_data)
@@ -111,41 +123,69 @@ while True:
 
 if test_mode == 'yes':
     if test_sample_type == 'random':
-        char_combinations = [(consonant, vowel) for consonant in consonants for vowel in vowels]
+        char_combinations = [(consonant, vowel) for consonant in consonants for vowel in vowels if
+                             (consonant, vowel) not in empty_pairs]
         random.shuffle(char_combinations)
         char_combinations = char_combinations[:sample_size]
     elif test_sample_type == 'specific':
         specific_consonant = input("Enter specific consonant (e.g., ㄱ, ㄴ, ㄷ): ").strip()
         specific_vowel = input("Enter specific vowel (e.g., ㅏ, ㅑ, ㅓ): ").strip()
         char_combinations = [(specific_consonant, specific_vowel)]
-char_combinations = [(consonant, vowel) for consonant in consonants for vowel in vowels]
+else:
+    starting_consonant = input("Enter the starting consonant (e.g., ㄱ, ㄴ, ㄷ): ").strip()
+    starting_vowel = input("Enter the starting vowel (e.g., ㅏ, ㅑ, ㅓ): ").strip()
+
+    char_combinations = []
+    found_starting_pair = False
+
+    for consonant in consonants:
+        for vowel in vowels:
+            if not found_starting_pair:
+                if consonant == starting_consonant and vowel == starting_vowel:
+                    found_starting_pair = True
+            if found_starting_pair and (consonant, vowel) not in empty_pairs:
+                char_combinations.append((consonant, vowel))
 
 if order == 'random':
     random.shuffle(char_combinations)
 
-starting_consonant = input("Enter the starting consonant (e.g., ㄱ, ㄴ, ㄷ): ").strip()
-starting_vowel = input("Enter the starting vowel (e.g., ㅏ, ㅑ, ㅓ): ").strip()
+# Find the correct starting index
+starting_index = -1
+for idx, (consonant, vowel) in enumerate(char_combinations):
+    if consonant == starting_consonant and vowel == starting_vowel:
+        starting_index = idx
+        break
 
-starting_index = char_combinations.index((starting_consonant, starting_vowel))
-char_combinations = char_combinations[starting_index:]
+if starting_index >= 0:
+    char_combinations = char_combinations[starting_index:]
+else:
+    tqdm.write(f"Starting consonant-vowel pair ({starting_consonant}, {starting_vowel}) not found in the list.")
+    tqdm.write("Using the first consonant-vowel pair as the starting point.")
+    starting_index = 0
 
-if test_mode == 'yes':
-    while True:
-        try:
-            retry_attempts = int(input("Enter the number of retry attempts: "))
-            if retry_attempts > 0:
-                break
-        except ValueError:
-            print("Invalid input. Please enter a positive integer.")
-retry_attempts = 1  # Set a default value for retry_attempts
+starting_page = None
+while starting_page is None or starting_page <= 0:
+    try:
+        starting_page = int(input("Enter the starting page number: "))
+    except ValueError:
+        print("Invalid input. Please enter a positive integer.")
+
+while True:
+    try:
+        retry_attempts = int(input("Enter the number of retry attempts: "))
+        if retry_attempts > 0:
+            break
+    except ValueError:
+        print("Invalid input. Please enter a positive integer.")
 
 for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
+    page_num = starting_page
 
     combined_char = join_jamos(consonant + vowel)
 
     url = f"https://ko.dict.naver.com/#/topic/search?category1={category}"
     driver.get(url)
-    # time.sleep(1)
+    time.sleep(0.5)
 
     wait = WebDriverWait(driver, 1)
 
@@ -169,15 +209,14 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
             f"Failed to click radio buttons for consonant-vowel pair ({consonant}, {vowel}) after {retry_attempts} attempts. Skipping this combination.")
         continue
 
-    # time.sleep(1)
+    time.sleep(0.5)
 
-    page_num = 1
     seen_expressions = set()
 
     while True:
         url = f"https://ko.dict.naver.com/#/topic/search?category1={category}&consonant={consonant}&vowel={vowel}&page={page_num}"
         driver.get(url)
-        # time.sleep(1)
+        time.sleep(0.1)
         soup = BeautifulSoup(driver.page_source, 'html.parser')
 
         expression_elements = soup.select('.origin a.link')
@@ -199,21 +238,35 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
             expression_url = 'https://ko.dict.naver.com' + element['href']
 
             driver.get(expression_url)
-            # time.sleep(1)
+            time.sleep(1)  # necessary
 
             expression_soup = BeautifulSoup(driver.page_source, 'html.parser')
+
+            same_words_elements = expression_soup.select(
+                'em.tit.relateType_same.relatedType_same ~ div.cont a.item')
+
+            same_words = []
+
+            for elem in same_words_elements:
+                for sup in elem.find_all('sup'):
+                    sup.extract()
+                # tqdm.write(elem.text.strip())
+                same_words.append(elem.text.strip())
+
             similar_words_elements = expression_soup.select(
                 'em.tit.relateType_similar.relatedType_similar ~ div.cont a.item')
+
             similar_words = []
 
             for elem in similar_words_elements:
                 for sup in elem.find_all('sup'):
                     sup.extract()
+                # tqdm.write(elem.text.strip())
                 similar_words.append(elem.text.strip())
 
             # Update the JSON file with the new part (similar words)
             json_file_path = os.path.join(output_dir, f"{combined_char}-{page_num}.json")
-            update_json_file(json_file_path, expression, similar_words)
+            update_json_file(json_file_path, expression, same_words, similar_words)
 
             # synonym_elements = expression_soup.select('div.synonym strong.blind ~ em a.word')
             # synonyms = [elem.text.strip() for elem in synonym_elements]
@@ -240,7 +293,7 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
                 'div.section.section_mean.is-source._section_mean._data_index_1')
 
             if mean_section is None:
-                print(f"Meaning section not found for expression: {expression}")
+                print(f"\nMeaning section not found for expression: {expression}")
                 continue
 
             component_entries_data = []
@@ -305,5 +358,6 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
         #         json.dump(scraped_data, f, ensure_ascii=False, indent=4)
 
         page_num += 1
+    starting_page = 1
 
 driver.quit()
