@@ -1,0 +1,8 @@
+area-of-path:
+  id: area-of-path.dev.v0
+  metrics: [accuracy]
+
+area-of-path.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: area-of-path/samples.jsonl
