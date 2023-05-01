@@ -4,7 +4,7 @@ import textwrap
 import evals
 import evals.metrics
 
-class ElectricalArithmetic(evals.Eval):
+class SongTranslator(evals.Eval):
     def __init__(self, train_jsonl, test_jsonl, train_samples_per_prompt=2, **kwargs):
         super().__init__(**kwargs)
         self.train_jsonl = train_jsonl
@@ -23,7 +23,7 @@ class ElectricalArithmetic(evals.Eval):
         stuffing = rng.sample(self.train_samples, self.train_samples_per_prompt)
 
         prompt = [
-            {"role": "system", "content": "Solve the following math problems"},
+            {"role": "system", "content": "Translate the portion of lyrics of song to any language you like"},
         ]
 
         for i, sample in enumerate(stuffing + [test_sample]):

@@ -1,0 +1,9 @@
+song-translator:
+  id: song-translator.dev.match-v1
+  metrics: [accuracy]
+  description: Translate songs in other language with same rhyme/melody
+song-translator.dev.match-v1:
+  class: evals.elsuite.song-translator:SongTranslator
+  args:
+    train_jsonl: song_translator/train.jsonl
+    test_jsonl: song_translator/test.jsonl
