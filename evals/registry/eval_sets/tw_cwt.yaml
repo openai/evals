@@ -1,0 +1,6 @@
+tw_cwt:
+  evals:
+    - tw_cwt_level_1
+    - tw_cwt_level_2
+    - tw_cwt_level_3
+    - tw_cwt_level_4

@@ -1,0 +1,35 @@
+tw_cwt_level_1:
+  id: tw_cwt_level_1.dev.v0
+  description: Test the model's ability of Traditional Chinese using the CWT test in Taiwan at level 1.
+  metrics: [accuracy]
+tw_cwt_level_1.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: tw_cwt/level_1.jsonl
+
+tw_cwt_level_2:
+  id: tw_cwt_level_2.dev.v0
+  description: Test the model's ability of Traditional Chinese using the CWT test in Taiwan at level 2.
+  metrics: [accuracy]
+tw_cwt_level_2.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: tw_cwt/level_2.jsonl
+
+tw_cwt_level_3:
+  id: tw_cwt_level_3.dev.v0
+  description: Test the model's ability of Traditional Chinese using the CWT test in Taiwan at level 3.
+  metrics: [accuracy]
+tw_cwt_level_3.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: tw_cwt/level_3.jsonl
+
+tw_cwt_level_4:
+  id: tw_cwt_level_4.dev.v0
+  description: Test the model's ability of Traditional Chinese using the CWT test in Taiwan at level 4.
+  metrics: [accuracy]
+tw_cwt_level_4.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: tw_cwt/level_4.jsonl
