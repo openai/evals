@@ -5,15 +5,13 @@ import re
 import time
 
 from bs4 import BeautifulSoup
+from hangul_utils import join_jamos
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from tqdm import tqdm
-
-from hangul_utils import join_jamos
 
 empty_pairs_file = 'empty_pairs.txt'
 
@@ -28,12 +26,11 @@ options = Options()
 options.add_argument('--headless')
 options.add_argument('--log-level=3')
 
-service = Service(executable_path=driver_path)
-driver = webdriver.Chrome(service=service, options=options)
+driver = webdriver.Chrome(executable_path=driver_path, options=options)
 
 
 # Function to update the JSON file
-def update_json_file(file_path, expression, same_words, similar_words):
+def update_json_file(file_path, expression, same_words):
     data = []
     if os.path.isfile(file_path):
         try:
@@ -52,10 +49,10 @@ def update_json_file(file_path, expression, same_words, similar_words):
             if 'same_words' not in expression_dict:
                 expression_dict['same_words'] = []
             # Check if 'similar_words' key exists in expression_dict
-            if 'similar_words' not in expression_dict:
-                expression_dict['similar_words'] = []
+            # if 'similar_words' not in expression_dict:
+            #     expression_dict['similar_words'] = []
             expression_dict['same_words'].extend(same_words)
-            expression_dict['similar_words'].extend(similar_words)
+            # expression_dict['similar_words'].extend(similar_words)
             updated = True
             break
 
@@ -63,7 +60,7 @@ def update_json_file(file_path, expression, same_words, similar_words):
         new_expression_data = {
             'expression': expression,
             'same_words': same_words,
-            'similar_words': similar_words
+            # 'similar_words': similar_words
         }
         data.append(new_expression_data)
 
@@ -186,7 +183,7 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
 
     url = f"https://ko.dict.naver.com/#/topic/search?category1={category}"
     driver.get(url)
-    time.sleep(0.5)
+    time.sleep(1)
 
     wait = WebDriverWait(driver, 1)
 
@@ -231,6 +228,8 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
         chinese_char_re = re.compile(r'[\u4e00-\u9fff]+')
         pronunciation_re = re.compile(r'\[ .+ \]')
 
+        tqdm.write(f"{combined_char} {page_num}")
+
         for element in expression_elements:
             expression = element.text.strip()
             if expression in seen_expressions:
@@ -249,25 +248,25 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
             same_words = []
 
             for elem in same_words_elements:
-                for sup in elem.find_all('sup'):
-                    sup.extract()
+                # for sup in elem.find_all('sup'):
+                #     sup.extract()
                 # tqdm.write(elem.text.strip())
                 same_words.append(elem.text.strip())
 
-            similar_words_elements = expression_soup.select(
-                'em.tit.relateType_similar.relatedType_similar ~ div.cont a.item')
-
-            similar_words = []
-
-            for elem in similar_words_elements:
-                for sup in elem.find_all('sup'):
-                    sup.extract()
-                # tqdm.write(elem.text.strip())
-                similar_words.append(elem.text.strip())
+            # similar_words_elements = expression_soup.select(
+            #     'em.tit.relateType_similar.relatedType_similar ~ div.cont a.item')
+            #
+            # similar_words = []
+            #
+            # for elem in similar_words_elements:
+            #     for sup in elem.find_all('sup'):
+            #         sup.extract()
+            #     # tqdm.write(elem.text.strip())
+            #     similar_words.append(elem.text.strip())
 
             # Update the JSON file with the new part (similar words)
             json_file_path = os.path.join(output_dir, f"{combined_char}-{page_num}.json")
-            update_json_file(json_file_path, expression, same_words, similar_words)
+            update_json_file(json_file_path, expression, same_words)
 
             # synonym_elements = expression_soup.select('div.synonym strong.blind ~ em a.word')
             # synonyms = [elem.text.strip() for elem in synonym_elements]
@@ -348,7 +347,7 @@ for consonant, vowel in tqdm(char_combinations, ncols=80, dynamic_ncols=True):
                 'inflected_forms': inflected_forms if inflected_forms else [],
                 'derivatives': derivatives if derivatives else [],
                 'meanings': meanings_data,
-                'similar_words': similar_words,
+                # 'similar_words': similar_words,
             }
 
             scraped_data.append(expression_data)

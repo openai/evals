@@ -1,0 +1,8 @@
+chengyu:
+  id: chengyu.fuzzy_match
+  description: Test the model's ability to identify 고사성어 (Chinese-Korean idioms) when given definitions
+  metrics: [ accuracy ]
+chengyu.fuzzy_match:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: chengyu/population.jsonl
