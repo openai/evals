@@ -1,12 +1,13 @@
 import logging
 import string
-from typing import Callable, Iterable, Optional, Union
+from typing import Any, Callable, Iterable, Optional, Union
 
-from evals.elsuite.utils import format_necessary, format_prompt
+from evals import CompletionFn
+from evals.elsuite.modelgraded.base import ModelGradedSpec
+from evals.elsuite.utils import PromptFn, format_necessary, format_prompt
 from evals.prompt.base import OpenAICreateChatPrompt, is_chat_prompt
 
 INVALID_STR = "__invalid__"
-CHOICE_KEY = "choice"
 
 
 ANSWER_PROMPTS = {
@@ -31,6 +32,68 @@ MATCH_FNS = {
     "endswith": lambda x, y: x.endswith(y),
     "starts_or_endswith": lambda x, y: x.startswith(y) or x.endswith(y),
 }
+
+
+def get_choice_strings(choice_strings: Union[list[str], str], n: Optional[int] = None):
+    # 'choice_strings' is a list of strings that specifies the possible choices
+    if choice_strings == "from_n":
+        choice_strings = [str(i + 1) for i in range(n)]
+    elif choice_strings == "from_n_abc":
+        choice_strings = [string.ascii_lowercase[i % 26] for i in range(n)]
+    elif choice_strings == "from_n_ABC":
+        choice_strings = [string.ascii_uppercase[i % 26] for i in range(n)]
+    # make sure each choice doesn't contain any punctuation
+    for s in choice_strings:
+        assert not any(c in s for c in string.punctuation), f"{s} contains punctuation"
+    return choice_strings
+
+
+def classify(
+    mg: ModelGradedSpec,
+    completion_fn: CompletionFn,
+    completion_kwargs: Optional[dict[str, Any]] = None,
+    format_kwargs: Optional[dict[str, Any]] = None,
+    eval_type: Optional[str] = None,
+    n: Optional[int] = None,
+    match_fn: str = "starts_or_endswith",
+) -> str:
+    completion_kwargs = completion_kwargs or {}
+    format_kwargs = format_kwargs or {}
+
+    # get choice strings
+    choice_strings = get_choice_strings(mg.choice_strings, n=n)
+
+    # append answer prompt
+    prompt = mg.prompt
+    if isinstance(prompt, str):
+        prompt = [{"role": "user", "content": prompt}]
+    if eval_type:
+        prompt = append_answer_prompt(
+            prompt=prompt,
+            eval_type=eval_type,
+            choice_strings=choice_strings,
+        )
+
+    evaluate = PromptFn(mg.prompt, completion_fn=completion_fn, **completion_kwargs)
+    evaluation, _ = evaluate(n=n, **format_kwargs)
+    choice = get_choice(evaluation, mg.eval_type or eval_type, match_fn, choice_strings)
+    score = get_choice_score(choice, choice_strings, mg.choice_scores)
+    return choice, evaluation, score
+
+
+def get_choice_score(
+    choice: str,
+    choice_strings: Iterable[str],
+    choice_scores: Optional[Union[dict[str, float], str]] = None,
+) -> Optional[float]:
+    if choice_scores is None:
+        return None
+    if choice_scores == "from_strings":
+        choice_scores = {c: float(c) for c in choice_strings}
+    # assumption: each INVALID_STR contributes the lowest score
+    if choice == INVALID_STR:
+        return min(choice_scores.values())
+    return choice_scores[choice]
 
 
 def choice_to_str(choice_strings: Iterable[str]) -> str:
@@ -59,6 +122,50 @@ def get_choice(
     return INVALID_STR
 
 
+def append_answer_prompt(
+    prompt: OpenAICreateChatPrompt,
+    eval_type: str,
+    append_type: str = "as_content",
+    answer_prompt: Optional[OpenAICreateChatPrompt] = None,
+    choice_strings: Optional[Iterable[str]] = None,
+) -> OpenAICreateChatPrompt:
+    """Append answer prompt to prompt."""
+    answer_prompt = answer_prompt or ANSWER_PROMPTS[eval_type]
+    answer_prompt = format_prompt(answer_prompt, choices=choice_to_str(choice_strings))
+    if append_type == "as_content":
+        assert isinstance(answer_prompt, str), f"prompt must be str, not {type(answer_prompt)}"
+        prompt[-1]["content"] += "\n\n" + answer_prompt
+    elif append_type == "as_message":
+        assert is_chat_prompt(answer_prompt), f"prompt must be chat prompt, not {answer_prompt}"
+        prompt += answer_prompt
+    else:
+        raise ValueError(f"append_type must be 'as_content' or 'as_message', not {append_type}")
+    return prompt
+
+
+def sample_and_concat_n_completions(
+    completion_fns: list[CompletionFn],
+    prompt: OpenAICreateChatPrompt,
+    n: int,
+    template_i: str,
+    sample_kwargs: dict,
+):
+    assert template_i
+    completion_i_s = []
+    for i in range(n):
+        if len(completion_fns) > 1:
+            # use a separate model for each completion
+            assert len(completion_fns) == n
+            completion_fn = completion_fns[i]
+        else:
+            # use the single model for all completions
+            completion_fn = completion_fns[0]
+        get_input_completion = PromptFn(prompt, completion_fn=completion_fn, **sample_kwargs)
+        completion_i, _ = get_input_completion()
+        completion_i_s.append(completion_i)
+    return concat_n_completions(completion_i_s, template_i=template_i)
+
+
 def concat_n_completions(completions: Iterable[str], template_i: str) -> str:
     """Concatenate n completions into a single text string."""
     completion = ""
@@ -72,57 +179,3 @@ def concat_n_completions(completions: Iterable[str], template_i: str) -> str:
             n=len(completions),
         )
     return completion.strip()
-
-
-def format_classify(
-    prompt: OpenAICreateChatPrompt,
-    format_type: str = "in_message",
-    input_outputs: Optional[dict[str, str]] = None,
-    **format_kwargs: dict[str, OpenAICreateChatPrompt],
-) -> OpenAICreateChatPrompt:
-    """Return an OpenAICreateChatPrompt that can be passed PromptFn for modelgraded eval.
-
-    'in_message' returns: [
-        {
-            "role": "user",
-            "content": \"""
-                User: {input}
-                Assistant: {completion}
-
-                Was the assistant response helpful?
-                \""".strip(),
-        }
-    ]
-
-    'out_message' returns: [
-        {"role": "user", "content": "{input}"},
-        {"role": "assistant", "content": "{completion}"},
-        {"role": "user", "content": "Was the last assistant response helpful?"},
-    ]
-    """
-    input_outputs = input_outputs or {}
-    if format_type == "in_message":
-        return format_prompt(prompt, **format_kwargs)
-    elif format_type == "out_message":
-        assert len(input_outputs) == 1, "out_message only supports one input/output pair"
-        # extra input-output data, as it is treated specially
-        input_completions = {
-            k: (k, format_kwargs[k], v, format_kwargs[v]) for k, v in input_outputs.items()
-        }
-        format_kwargs = {
-            k: v
-            for k, v in format_kwargs.items()
-            if k not in input_outputs.values() and k not in input_outputs
-        }
-        convo = []
-        for input_key, input, completion_key, completion in input_completions.values():
-            del input_key, completion_key
-            assert isinstance(completion, str), f"completion must be str, not {type(completion)}"
-            if is_chat_prompt(input):
-                convo += input
-            else:
-                convo.append({"role": "user", "content": input})
-            convo.append({"role": "assistant", "content": completion})
-        return convo + format_prompt(prompt, **format_kwargs)
-    else:
-        raise ValueError(f"format_type must be 'in_message' or 'out_message', not {format_type}")
