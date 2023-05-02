@@ -86,7 +86,7 @@ class ModelBasedClassify(evals.Eval):
 
         # run modelgraded eval
         metrics = {}
-        choice, _, score = classify(
+        choice, info = classify(
             mg=self.mg,
             completion_fn=self.eval_completion_fn,
             completion_kwargs=self.eval_kwargs,
@@ -94,7 +94,7 @@ class ModelBasedClassify(evals.Eval):
             n=self.multicomp_n,
             format_kwargs={**completions, **test_sample, **self.modelgraded_spec_args},
         )
-        metrics.update(dict(choice=choice, score=score))
+        metrics.update(dict(choice=choice, score=info["score"]))
 
         # run metaeval if requested
         if self.metaeval:
