@@ -1,0 +1,9 @@
+email_parsing:
+  id: email_parsing.dev.v0
+  description: Test the model's ability to parse out information from emails
+  metrics: [accuracy]
+
+email_parsing.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: email_parsing/samples.jsonl
