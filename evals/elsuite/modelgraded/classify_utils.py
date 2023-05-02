@@ -74,11 +74,16 @@ def classify(
             choice_strings=choice_strings,
         )
 
-    evaluate = PromptFn(mg.prompt, completion_fn=completion_fn, **completion_kwargs)
-    evaluation, _ = evaluate(n=n, **format_kwargs)
+    evaluate = PromptFn(prompt, completion_fn=completion_fn, **completion_kwargs)
+    evaluation, prompt = evaluate(n=n, **format_kwargs)
     choice = get_choice(evaluation, mg.eval_type or eval_type, match_fn, choice_strings)
     score = get_choice_score(choice, choice_strings, mg.choice_scores)
-    return choice, evaluation, score
+    return choice, dict(
+        score=score,
+        sampled=[evaluation],
+        prompt=prompt,
+        invalid_choice=choice == INVALID_STR,
+    )
 
 
 def get_choice_score(
