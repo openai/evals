@@ -4,5 +4,5 @@ cn_brain_teaser:
   - accuracy
 cn_brain_teaser.test.v1:
   args:
-    samples_jsonl: /Users/yang.sun/research/soulmy/evals/evals/registry/data/cn_brain_teaser/cn_brain_teaser_samples.jsonl
+    samples_jsonl: evals/registry/data/cn_brain_teaser/cn_brain_teaser_samples.jsonl
   class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
