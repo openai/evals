@@ -479,3 +479,7 @@ def record_error(msg: str, error: Exception = None, **extra):
 
 def record_extra(data):
     return default_recorder().record_extra(data)
+
+
+def record_event(type, data=None, sample_id=None):
+    return default_recorder().record_event(type, data, sample_id)
