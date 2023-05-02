@@ -1,0 +1,8 @@
+integer-sequence-predictions:
+  id: integer-sequence-predictions.dev.v0
+  metrics: [accuracy]
+
+integer-sequence-predictions.dev.v0:
+  args:
+    samples_jsonl: integer-sequence-predictions/samples.jsonl
+  class: evals.elsuite.basic.match:Match
