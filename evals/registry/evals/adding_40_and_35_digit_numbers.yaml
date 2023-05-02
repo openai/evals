@@ -1,0 +1,9 @@
+adding_40_and_35_digit_numbers:
+  id: adding_40_and_35_digit_numbers.dev.v0
+  description: Tests the model's ability to add a 40 digit number + a 35 digit number, which GPT-4 is not currently capable of. This idea is taken from a 2023 TED Talk by Greg Brockman titled The inside story of ChatGPT's astonishing potential.
+  metrics: [accuracy]
+
+adding_40_and_35_digit_numbers.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: adding_40_and_35_digit_numbers/samples.jsonl
