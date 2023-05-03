@@ -15,7 +15,7 @@ from tqdm import tqdm
 verbose = False
 
 # Load the first set of JSON files
-folder_1 = "E:/data/stdict/JSON_20230208"
+folder_1 = "E:/data/korean/JSON_20230208"
 json_files_1 = [os.path.join(folder_1, file) for file in os.listdir(folder_1) if file.endswith(".json")]
 
 # Read progress file, if available
@@ -61,7 +61,7 @@ def search_chengyu_on_website(driver, chengyu, max_retries=3):
         # No need to quit the driver here, as it will be reused
 
 
-output_folder = "E:/data/temp"
+output_folder = "E:/data/chengyu"
 os.makedirs(output_folder, exist_ok=True)
 
 
