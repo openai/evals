@@ -1,9 +1,0 @@
-ch-kr-idioms:
-  id: ch-kr-idioms.match
-  description: Test the model's ability to identify 고사성어 (Chinese-Korean idioms) based on their definitions.
-  metrics: [ accuracy, f1_score ]
-
-ch-kr-idioms.match:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: ch-kr-idioms/population.jsonl

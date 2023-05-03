@@ -5,19 +5,20 @@ import pandas as pd
 from tqdm import tqdm
 
 xls_file_path = 'E:/data/taiwanese/dict_idioms_2020_20230329.xls'
-output_file_name = 'population'
 
 response = input("Do you want to use a random sample? (y/n)")
 if response.lower() == 'y':
-    output_file_name = 'sample'
     max_samples = int(input("Enter the desired sample size: "))
 else:
     max_samples = float('inf')
 
-output_file_path = f'C:/Users/kjs/Documents/GitHub/evals/evals/registry/data/chengyu/{output_file_name}.jsonl'
+output_file_path = f'C:/Users/kjs/Documents/GitHub/evals/evals/registry/data/chengyu/chinese.jsonl'
 
 # Read the XLS file using pandas
 data = pd.read_excel(xls_file_path, index_col=0)
+
+# Shuffle the data
+data = data.sample(frac=1)
 
 # Sample the data and write to the output file
 with open(output_file_path, 'w', encoding='utf-8') as output_file:

@@ -1,0 +1,12 @@
+chengyu:
+  id: chengyu.chinese_fuzzy_match
+  description: Test the model's ability to output chengyu (Chinese-origin idioms) when given definitions
+  metrics: [ accuracy ]
+chengyu.chinese_fuzzy_match:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: chengyu/chinese.jsonl
+chengyu.korean_fuzzy_match:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: chengyu/korean.jsonl
