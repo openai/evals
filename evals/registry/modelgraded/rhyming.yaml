@@ -1,0 +1,15 @@
+rhyming:
+  prompt: |-
+    You evaluating verse to see if it qualifies as blank verse or not.  For the purpose of this evaluation, blank verse will be verse with 5 or fewer end words that rhyme.  
+    [BEGIN DATA]
+    ************
+    [Submission]: {completion}
+    ************
+    [END DATA]
+
+    First, list all of the end words.  Next, count all of the end words that rhyme.  Determine which case applies.   Answer the question by selecting one of the following options:
+    (A) The verse has 5 or fewer rhyming end words
+    (B) The verse has 6 or more rhymind end words
+  choice_strings: AB
+  input_outputs:
+    input: completion
