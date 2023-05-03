@@ -1,29 +1,10 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
 repos:
-  - repo: https://github.com/psf/black
-    rev: 22.8.0
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
     hooks:
-      - id: black
-        args: [--line-length=100, --exclude=""]
-
-  # this is not technically always safe but usually is
-  # use comments `# isort: off` and `# isort: on` to disable/re-enable isort
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
-    hooks:
-      - id: isort
-        args: [--line-length=100, --profile=black]
-
-  # this is slightly dangerous because python imports have side effects
-  # and this tool removes unused imports, which may be providing
-  # necessary side effects for the code to run
-  - repo: https://github.com/PyCQA/autoflake
-    rev: v1.6.1
-    hooks:
-      - id: autoflake
-        args:
-          - "--in-place"
-          - "--expand-star-imports"
-          - "--remove-duplicate-keys"
-          - "--remove-unused-variables"
-          - "--remove-all-unused-imports"
-        exclude: "evals/__init__.py"
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
