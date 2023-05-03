@@ -1,0 +1,9 @@
+blank-verse:
+  id: blank-verse.dev.v0
+  description: Test the model's ability to create non rhyming blank verse
+  metrics: [accuracy]
+blank-verse.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: blank-verse/samples.jsonl
+    ignore_case: true
