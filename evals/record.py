@@ -100,12 +100,14 @@ class RecorderBase:
     def pause(self):
         sample_id = self.current_sample_id()
         with self._event_lock:
-            self._paused_ids.append(sample_id)
+            if sample_id not in self._paused_ids:
+                self._paused_ids.append(sample_id)
 
     def unpause(self):
         sample_id = self.current_sample_id()
         with self._event_lock:
-            self._paused_ids.remove(sample_id)
+            if sample_id in self._paused_ids:
+                self._paused_ids.remove(sample_id)
 
     def is_paused(self):
         sample_id = self.current_sample_id()
