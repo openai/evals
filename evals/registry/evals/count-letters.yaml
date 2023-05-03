@@ -1,0 +1,8 @@
+count-letters-match:
+  id: count-letters.match.dev.v0
+  description: Test the model's ability to count letters in a sentence
+  metrics: [accuracy]
+count-letters.match.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: count_letters/match.jsonl
