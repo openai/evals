@@ -1,0 +1,8 @@
+pocket_question:
+  id: pocket_question.dev.v0
+  metrics: [accuracy]
+
+pocket_question.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: pocket_question/samples.jsonl
