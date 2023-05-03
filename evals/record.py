@@ -83,6 +83,7 @@ class RecorderBase:
         self._written_events = 0
         self._flushes_started = 0
         self._event_lock = threading.Lock()
+        self._paused_ids: List[str] = []
         atexit.register(self.flush_events)
 
     @contextlib.contextmanager
@@ -95,6 +96,21 @@ class RecorderBase:
 
     def current_sample_id(self) -> Optional[str]:
         return self._sample_id.get()
+
+    def pause(self):
+        sample_id = self.current_sample_id()
+        with self._event_lock:
+            self._paused_ids.append(sample_id)
+
+    def unpause(self):
+        sample_id = self.current_sample_id()
+        with self._event_lock:
+            self._paused_ids.remove(sample_id)
+
+    def is_paused(self):
+        sample_id = self.current_sample_id()
+        with self._event_lock:
+            return sample_id in self._paused_ids
 
     def get_events(self, type: str) -> Sequence[Event]:
         with self._event_lock:
@@ -135,6 +151,8 @@ class RecorderBase:
         self._flush_events_internal(events_to_write)
 
     def record_event(self, type, data=None, sample_id=None):
+        if self.is_paused():
+            return
         if sample_id is None:
             sample_id = self.current_sample_id()
         if sample_id is None:
@@ -483,3 +501,11 @@ def record_extra(data):
 
 def record_event(type, data=None, sample_id=None):
     return default_recorder().record_event(type, data, sample_id)
+
+
+def pause():
+    return default_recorder().pause()
+
+
+def unpause():
+    return default_recorder().unpause()
