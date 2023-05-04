@@ -1,0 +1,10 @@
+nonlinear_concepts:
+  id: nonlinear_concepts.dev.v0
+  metrics: [accuracy]
+
+nonlinear_concepts.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: nonlinear_concepts/sample.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: nonlinear_concepts

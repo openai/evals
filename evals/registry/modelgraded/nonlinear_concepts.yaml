@@ -1,0 +1,24 @@
+nonlinear_concepts:
+  prompt: |-
+    You are comparing a submitted answer to an expert on non linear conceptos. Here is the data:
+    [BEGIN DATA]
+    ************
+    [Question]: {input}
+    ************
+    [Expert]: {ideal}
+    ************
+    [Submission]: {completion}
+    ************
+    [END DATA]
+    Compare the content and the meaning of the submitted answer with the expert answer. Ignore any differences in style.
+    The submitted answer may either be correct or incorrect. Determine which case applies. Answer the question by responding with one of the following:
+      "Correct": The submitted answer and the expert answer are semantically the same.
+      "Incorrect": The submitted answer and the expert answer are semantically different.
+  choice_strings:
+    - "Correct"
+    - "Incorrect"
+  choice_scores:
+    "Correct": 1.0
+    "Incorrect": 0.0
+  input_outputs:
+    input: completion
