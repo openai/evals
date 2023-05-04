@@ -1,10 +1,6 @@
-.gitignore
-setup_env
-*.pyc
-*.egg-info/
-*.egg-info/PKG-INFO
-*.egg-info/SOURCES.txt
-*.egg-info/dependency_links.txt
-*.egg-info/entry_points.txt
-*.egg-info/requires.txt
-*.egg-info/top_level.txt
+__pycache__/
+evals.egg-info/
+
+# MacOS folder metadata
+.DS_Store
+.vscode/
