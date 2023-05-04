@@ -1,0 +1,8 @@
+nlp:
+  id: nlp.v0
+  description: Test model's capability of extracting data from a messy HTML table.
+  metrics: [accuracy]
+nlp.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: nlp/samples.jsonl
