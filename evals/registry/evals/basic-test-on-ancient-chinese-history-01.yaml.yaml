@@ -1,0 +1,8 @@
+basic-test-on-ancient-chinese-history-01:
+  id: basic-test-on-ancient-chinese-history-01.dev.v0
+  metrics: [accuracy]
+
+basic-test-on-ancient-chinese-history-01.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: basic-test-on-ancient-chinese-history/basic-test-on-ancient-chinese-history-01.jsonl
