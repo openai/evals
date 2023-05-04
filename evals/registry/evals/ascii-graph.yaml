@@ -1,0 +1,8 @@
+ascii_graph:
+  id: ascii_graph.dev.v0
+  metrics: [accuracy]
+
+ascii_graph.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: ascii_graph/samples.jsonl
