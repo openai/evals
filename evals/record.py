@@ -109,8 +109,9 @@ class RecorderBase:
             if sample_id in self._paused_ids:
                 self._paused_ids.remove(sample_id)
 
-    def is_paused(self):
-        sample_id = self.current_sample_id()
+    def is_paused(self, sample_id: str = None):
+        if sample_id is None:
+            sample_id = self.current_sample_id()
         with self._event_lock:
             return sample_id in self._paused_ids
 
@@ -158,7 +159,7 @@ class RecorderBase:
         if sample_id is None:
             raise ValueError("No sample_id set! Either pass it in or use as_default_recorder!")
 
-        if self.is_paused():
+        if self.is_paused(sample_id):
             return
         with self._event_lock:
             event = Event(
