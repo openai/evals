@@ -2,9 +2,23 @@ nonlinear_concepts:
   id: nonlinear_concepts.dev.v0
   metrics: [accuracy]
 
-nonlinear_concepts.dev.v0:
+out_of_order.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl: nonlinear_concepts/sample.jsonl
+    samples_jsonl: nonlinear_concepts/out_of_order.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: nonlinear_concepts
+
+time_travel.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: nonlinear_concepts/time_travel.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: nonlinear_concepts
+
+foreshadow.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: nonlinear_concepts/foreshadow.jsonl
     eval_type: cot_classify
     modelgraded_spec: nonlinear_concepts
