@@ -4,7 +4,7 @@ import os
 import pandas as pd
 from tqdm import tqdm
 
-xls_file_path = 'E:/data/taiwanese/dict_idioms_2020_20230329.xls'
+xls_file_path = '/chinese/dict_idioms_2020_20230329.xls'
 
 response = input("Do you want to use a random sample? (y/n)")
 if response.lower() == 'y':
