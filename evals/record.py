@@ -153,13 +153,13 @@ class RecorderBase:
         self._flush_events_internal(events_to_write)
 
     def record_event(self, type, data=None, sample_id=None):
-        if self.is_paused():
-            return
         if sample_id is None:
             sample_id = self.current_sample_id()
         if sample_id is None:
             raise ValueError("No sample_id set! Either pass it in or use as_default_recorder!")
 
+        if self.is_paused():
+            return
         with self._event_lock:
             event = Event(
                 run_id=self.run_spec.run_id,
