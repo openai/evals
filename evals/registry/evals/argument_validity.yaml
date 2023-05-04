@@ -1,0 +1,9 @@
+argument_validity:
+  id: argument_validity.dev.v0
+  description: Test the model's ability of natural deduction on deciding validity of logic arguments.
+  metrics: [accuracy]
+argument_validity.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: argument_validity/samples.jsonl
+
