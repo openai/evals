@@ -1,0 +1,10 @@
+phishing_urls:
+  id: phishing_urls.dev.v0
+  metrics: [accuracy]
+  description: Test the model's ability to categorize a real phishing URL as a phishing URL.
+  disclaimer: This is a cherry-picked dataset of 201 URLs that GPT-4 failed on at least once, winnowed from a larger set of ~4,000 real phishing URLs. GPT-4 properly classified the remainder of the larger set.
+
+phishing_urls.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: phishing_urls/samples.jsonl
