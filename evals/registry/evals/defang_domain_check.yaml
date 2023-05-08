@@ -1,0 +1,8 @@
+defang_domain_check:
+  id: defang_domain_check.dev.v0
+  description: The evaluation aims to test the AI's ability to reason about URLs in the context of defanging them and replacing non-defanged URLs within text.
+  metrics: [accuracy]
+defang_domain_check.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: defang_domain_check/samples.jsonl
