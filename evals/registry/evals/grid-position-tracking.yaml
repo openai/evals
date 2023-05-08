@@ -1,0 +1,8 @@
+grid-position-tracking:
+  id: grid-position-tracking.dev.v0
+  metrics: [accuracy]
+
+grid-position-tracking.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: grid-position-tracking/samples.jsonl
