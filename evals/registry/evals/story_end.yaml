@@ -1,0 +1,8 @@
+story-end:
+  id: story-end-choice.test.v0
+  description: An evaluation on story ending prediction. The output can only be a number, 1 or 2, corresponding to the correct choice of the two possible endings.
+  metrics: [accuracy]
+story-end-choice.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: story_end/story_end.jsonl
