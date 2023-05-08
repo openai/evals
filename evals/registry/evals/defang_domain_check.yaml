@@ -6,3 +6,13 @@ defang_domain_check.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: defang_domain_check/samples.jsonl
+
+
+defang_check_bool:
+  id: defang_check_bool.dev.v0
+  description: Test the model's ability to know if its defanged or not
+  metrics: [accuracy]
+defang_check_bool.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: defang_domain_check/samples_bool.jsonl
