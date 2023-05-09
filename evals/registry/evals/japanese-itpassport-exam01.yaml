@@ -1,0 +1,8 @@
+japanese-itpassport-exam01:
+  id: japanese-itpassport-exam01.dev.v0
+  metrics: [accuracy]
+
+japanese-itpassport-exam01.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: japanese-itpassport-exam01/japanese-itpassport-exam01.jsonl
