@@ -11,6 +11,7 @@ dependencies = [
     "numpy",
     "snowflake-connector-python[pandas]",
     "pandas",
+    "datasets",
     "fire",
     "pydantic",
     "tqdm",
