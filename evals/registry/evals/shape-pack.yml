@@ -1,0 +1,8 @@
+shape-pack:
+  id: shape-pack.dev.v0
+  metrics: [accuracy]
+
+shape-pack.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: shape-pack/samples.jsonl
