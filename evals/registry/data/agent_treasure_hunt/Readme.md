@@ -1,7 +1,13 @@
 # Eval Summary
 We created this evaluation as a template for creating future evaluations that deal with agent-tool types of problems. To achieve this, we have introduced a new module (evals\completion_fns\agent.py), which provides base classes that we can use to quickly create customized completion functions. These functions will evaluate iterations of a series of responses from an LLM, where each step modifies some context to pursue a goal.
 
-For instance, we have created an example evaluation called "agent_treasure_hunt," which involves an agent searching for a treasure in a grid of cells. The agent can move in four directions: north, south, east, and west. Additionally, the agent can use a compass to determine the direction of the treasure. Once the agent reaches the cell with the treasure, they can dig to find the treasure.
+As an example:
+we have created an example evaluation called "agent_treasure_hunt," which involves an agent searching for a treasure in a grid of cells. The agent can move in four directions: north, south, east, and west. Additionally, the agent can use a compass to determine the direction of the treasure. Once the agent reaches the cell with the treasure, they can dig to find the treasure.
+
+To run this eval you must set the following environment variables:
+EVALS_THREAD_TIMEOUT = 600
+PYTHONPATH = PATH/TO/evals/registry/data/agent_treasure_hunt
+
 
 # Documentation Summary
 This document provides a summary of the new modules, classes, and methods provided for the base `Agent` classes and the `Treasure Hunt` game.

@@ -225,6 +225,7 @@ class AgentCompletionFn(CompletionFn):
         completion_fn_instance = self.registry.make_completion_fn(self.completion_fn)
         prompt = ChatCompletionPrompt(prompt).to_formatted_prompt()
 
+        # Create a copy of this completion function so that __call__ will work with threads.
         self_copy = copy.deepcopy(self)
         self_copy.setup_agent(prompt)
         

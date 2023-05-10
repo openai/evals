@@ -28,7 +28,7 @@ def main():
     
     # Set N_SAMPLES to 25
     
-    N_SAMPLES = 5
+    N_SAMPLES = 25
     
     # Create an array samples by randomly selecting 25 elements from A_T_str_arr
     samples = random.sample(A_T_str_arr,N_SAMPLES)
