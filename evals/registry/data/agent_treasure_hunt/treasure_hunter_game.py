@@ -19,7 +19,7 @@ class TreasureHunt:
 
         self.agent_position = agent_position
         self.treasure_position = treasure_position
-        self.state = 'exploration'
+        self.state = "exploration"
 
     def validate_position(self, position):
         """
@@ -61,17 +61,20 @@ class TreasureHunt:
         Returns:
             str: The direction of the treasure relative to the agent.
         """
-        if self.state == 'exploration':
-            dx, dy = self.treasure_position[0] - self.agent_position[0], self.treasure_position[1] - self.agent_position[1]
-            direction = ''
+        if self.state == "exploration":
+            dx, dy = (
+                self.treasure_position[0] - self.agent_position[0],
+                self.treasure_position[1] - self.agent_position[1],
+            )
+            direction = ""
             if dx > 0:
-                direction = 'east'
+                direction = "east"
             elif dx < 0:
-                direction = 'west'
+                direction = "west"
             if dy > 0:
-                direction = 'north'
+                direction = "north"
             elif dy < 0:
-                direction = 'south'
+                direction = "south"
             return direction
         else:
             return "Can't use the compass in the digging state."
@@ -88,30 +91,28 @@ class TreasureHunt:
         """
 
         x, y = self.agent_position
-        if direction == 'north':
+        if direction == "north":
             y = min(y + 1, 5)
-        elif direction == 'south':
+        elif direction == "south":
             y = max(y - 1, 0)
-        elif direction == 'east':
+        elif direction == "east":
             x = min(x + 1, 5)
-        elif direction == 'west':
+        elif direction == "west":
             x = max(x - 1, 0)
         else:
             return "Invalid direction. Use 'N, 'S', 'E', or 'W'."
-        
+
         self.agent_position = (x, y)
-        
+
         if self.cell_distance(self.agent_position, self.treasure_position) == 0:
-            self.state = 'digging'
+            self.state = "digging"
             return f"Moved {direction}. Treasure in this cell"
         else:
-            if self.state == 'digging':
-                self.state = 'exploration'
+            if self.state == "digging":
+                self.state = "exploration"
                 return f"Moved {direction}. You left the cell with treasure"
-            
-        return f"Moved {direction}."
-        
 
+        return f"Moved {direction}."
 
     def dig(self):
         """
@@ -120,11 +121,10 @@ class TreasureHunt:
         Returns:
             str: A message indicating the result of the dig.
         """
-        if self.state == 'digging':
+        if self.state == "digging":
             if self.agent_position == self.treasure_position:
-                self.state = 'game_over'
+                self.state = "game_over"
                 return "Congratulations! You found the treasure!"
             return "You dug but found nothing. Try a different spot."
         else:
             return "You can't dig in the exploration state."
-
