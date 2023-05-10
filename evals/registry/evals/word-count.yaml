@@ -1,0 +1,8 @@
+word-count:
+  id: word-count.s1.simple-v0
+  description: Test the model's ability to count the words in a text.
+  metrics: [accuracy]
+word-count.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: word_count/samples.jsonl
