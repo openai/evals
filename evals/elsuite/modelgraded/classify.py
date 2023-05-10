@@ -7,19 +7,14 @@ from typing import Any, Optional, Union
 
 import evals
 import evals.record
-from evals import CompletionFn
 from evals.elsuite.modelgraded.classify_utils import classify, sample_and_concat_n_completions
 from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt
-from evals.registry import Registry
 
 
 class ModelBasedClassify(evals.Eval):
     def __init__(
         self,
-        completion_fns: list[CompletionFn],
-        samples_jsonl: str,
         modelgraded_spec: str,
-        registry: Registry,
         *args,
         modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
         sample_kwargs: Optional[dict[str, Any]] = None,
@@ -29,7 +24,7 @@ class ModelBasedClassify(evals.Eval):
         metaeval: bool = False,
         **kwargs,
     ):
-        super().__init__(completion_fns, *args, **kwargs)
+        super().__init__(*args, **kwargs)
         # treat last completion_fn as eval_completion_fn
         self.eval_completion_fn = self.completion_fns[-1]
         if len(self.completion_fns) > 1:
@@ -39,9 +34,7 @@ class ModelBasedClassify(evals.Eval):
         self.sample_kwargs.update(sample_kwargs or {})
         self.eval_kwargs = {"max_tokens": 1024}
         self.eval_kwargs.update(eval_kwargs or {})
-        self.samples_jsonl = samples_jsonl
         self.metaeval = metaeval
-        self.registry = registry
         self.modelgraded_spec_args = modelgraded_spec_args or {}
         self.eval_type = eval_type
         if multicomp_n == "from_models":
@@ -86,7 +79,7 @@ class ModelBasedClassify(evals.Eval):
 
         # run modelgraded eval
         metrics = {}
-        choice, _, score = classify(
+        choice, info = classify(
             mg=self.mg,
             completion_fn=self.eval_completion_fn,
             completion_kwargs=self.eval_kwargs,
@@ -94,7 +87,7 @@ class ModelBasedClassify(evals.Eval):
             n=self.multicomp_n,
             format_kwargs={**completions, **test_sample, **self.modelgraded_spec_args},
         )
-        metrics.update(dict(choice=choice, score=score))
+        metrics.update(dict(choice=choice, score=info["score"]))
 
         # run metaeval if requested
         if self.metaeval:
