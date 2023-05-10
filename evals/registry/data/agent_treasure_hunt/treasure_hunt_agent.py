@@ -19,7 +19,8 @@ class TreasureHuntAgentContext(AgentContext):
         data['Current State'] = self.state
         data['Steps Taken'] = self.steps_taken
         data['Current Coordinate'] = f"X: {self.current_coord[0]} Y: {self.current_coord[1]}"
-        data['History'] = [f"Step: {c[0]} - X: {c[1]} Y: {c[2]} -> Action: {c[3]}" for c in self.coord_history]
+        if len(self.coord_history) > 0:
+            data['History'] = [f"Step: {c[0]} - X: {c[1]} Y: {c[2]} -> Action: {c[3]} -> Response: {c[4]}" for c in self.coord_history]
         data['Last Action Feedback'] = self.last_tool_response
         data['Available Next Actions'] = self.tool_directions
         
@@ -107,9 +108,14 @@ class ExplorationAgentState(AgentState):
         """
         self.last_action = command
         words = command.split()
+        if len(words) == 0:
+            return
+        
         if words[0] == 'COMPASS':
             self.chosen_tool = self.compass_tool
         elif words[0] == 'MOVE':
+            if len(words) < 2:
+                return 
             self.chosen_tool = self.move_tool
             direction = words[1]
             if direction == 'N':
@@ -174,6 +180,11 @@ class DiggingAgentState(AgentState):
     def check_transition_state(self):
         """Decide if we should transition to a different agent state based on the context.  
         """
+        if self.agent.agent_context.state == "exploration":
+            new_state = ExplorationAgentState(self.agent, self.game)
+            
+            self.agent.agent_state = new_state
+            self.agent.update_context()
 
 
 class TreasureHuntAgent(Agent):
@@ -190,7 +201,10 @@ class TreasureHuntAgent(Agent):
         #initialize the starting state
         self.agent_state = ExplorationAgentState(self,self.game)
         
+        self.last_step_for_history = None
+        
         self.update_context()
+
         
                
     def update_context(self):
@@ -203,18 +217,21 @@ class TreasureHuntAgent(Agent):
         self.agent_context.tool_directions = self.agent_state.get_tools_instructions()
         self.agent_context.last_tool_response = self.agent_state.tool_response
         
-    def do_next_action(self):
-                
-        self.agent_context.steps_taken += 1
+        if self.last_step_for_history != None:
+            self.last_step_for_history += (self.agent_state.tool_response,)
         
-        last_step_for_history = (self.agent_context.steps_taken,)
-        last_step_for_history += self.agent_context.current_coord
-        last_step_for_history += (self.agent_state.last_action,)
-
-        self.agent_context.coord_history.insert(0,last_step_for_history)
+            self.agent_context.coord_history.insert(0,self.last_step_for_history)
         
         if len(self.agent_context.coord_history) > 5:
             self.agent_context.coord_history.pop()
+            
+    def do_next_action(self):
+                
+        self.agent_context.steps_taken += 1
+        self.last_step_for_history = (self.agent_context.steps_taken,)
+        self.last_step_for_history += self.agent_context.current_coord
+        self.last_step_for_history += (self.agent_state.last_action,)
+
         return super().do_next_action()
     
     

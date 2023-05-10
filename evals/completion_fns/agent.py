@@ -1,9 +1,9 @@
 """
-Extending Completion Functions with Embeddings-based retrieval from a fetched dataset
+This module provides an interface to create an agent that can take actions based on a provided context. The agent's state and available tools change depending on the context. This module provides abstract classes for defining the agent and its tools and states.
 """
 from abc import ABC, abstractmethod
 from typing import Optional
-
+import copy
 from evals.api import CompletionFn, CompletionResult
 from evals.prompt.base import ChatCompletionPrompt
 from evals.record import record_sampling
@@ -196,21 +196,22 @@ class AgentCompletionFn(CompletionFn):
         registry_path: str = None,
         **kwargs
     ) -> None:
-        registry = Registry() if not registry else registry
+        
+        self.registry = Registry() if not registry else registry
+        
         if registry_path:
-            registry.add_registry_paths(registry_path)
+            self.registry.add_registry_paths(registry_path)
 
-        if completion_fn is None:
-            completion_fn = "gpt-3.5-turbo"
+        self.completion_fn = "gpt-3.5-turbo" if not completion_fn else completion_fn
 
-        # This model will use chain of thought to answer the question
         self.agent_template = agent_template
-        self.completion_fn_instance = registry.make_completion_fn(completion_fn)
+        
         
         self.agent : Agent = None
         self.agent_context : AgentContext = None
         self.max_agent_steps = max_agent_steps
         self.current_agent_step = 0
+        print("CompletionFnMade")
 
     def setup_agent(self,prompt):
         pass
@@ -220,37 +221,37 @@ class AgentCompletionFn(CompletionFn):
 
     def __call__(self, prompt, **kwargs) -> AgentCompletionResult:
         # Ensure it is in string format
+        
+        completion_fn_instance = self.registry.make_completion_fn(self.completion_fn)
         prompt = ChatCompletionPrompt(prompt).to_formatted_prompt()
 
-        self.setup_agent(prompt)
+        self_copy = copy.deepcopy(self)
+        self_copy.setup_agent(prompt)
         
         is_agent_done = False
-        while self.current_agent_step < self.max_agent_steps:
+        while self_copy.current_agent_step < self.max_agent_steps:
             
-            context = self.agent_context.get_context_string()
-            agent_prompt = [{"role": "system", "content": "you are a helpful gamer"},{"role": "user", "content": self.agent_template + context}]
+            context = self_copy.agent_context.get_context_string()
+            agent_prompt = [{"role": "system", "content": "you are a helpful gamer"},{"role": "user", "content": self_copy.agent_template + context}]
             
-            answer = self.completion_fn_instance(prompt=agent_prompt, **kwargs).get_completions()[0]
+            answer = completion_fn_instance(prompt=agent_prompt, **kwargs).get_completions()[0]
             record_sampling(prompt=agent_prompt, sampled=answer)
 
             action = answer.split("\n")[-1]
-            self.agent.agent_state.choose_next_tool(action)
+            self_copy.agent.agent_state.choose_next_tool(action)
             
-            self.agent.do_next_action()
-            self.current_agent_step += 1
+            self_copy.agent.do_next_action()
+            self_copy.current_agent_step += 1
             
-            is_agent_done = self.check_for_end_context()
+            is_agent_done = self_copy.check_for_end_context()
             if is_agent_done:
                 break
-            print(f"Is Agent Done: {is_agent_done}")
 
         if is_agent_done:
             completion_result_str = "Victory"
             
         else:
             completion_result_str = "Defeat"
-            
-        print("!~!=============================!~!\n" + completion_result_str + "\n!~!=============================!~!")
-        
+
         return AgentCompletionResult(completion_result_str)
     

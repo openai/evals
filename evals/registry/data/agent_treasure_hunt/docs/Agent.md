@@ -1,66 +1,79 @@
 oaieval treasure-hunt agent-treasure-hunt
-# Module
+# Agent Completion Function Module
 
-This module provides an abstract framework for agents and their tools. An agent can be in different states, each state with its own set of tools. The agent performs actions in its context, and the state of the agent can change based on the context.
-___
-## Table of contents
-- AgentContext
-- IAgentState
-- Tool
-- Agent
-- AgentState
-___
-## AgentContext
-### Description
+This module provides interfaces to create a completion function and an agent that can take actions based on a provided context. The agent's state and available tools change depending on the context. This module provides abstract classes for defining the agent and its tools and states. 
+## Interfaces
 
-An abstract class representing the context of an agent.
-### Methods 
-- `get_context_string()`: Retrieve the context string of the agent.
-___
-## IAgentState
-### Description
+This module defines several abstract classes to define the interfaces for agents, states, and tools.
+## `AgentContext`
 
-An abstract interface for agent state to break cyclic dependency between Agent and AgentState.
-### Methods 
-- `do_next_action()`: Perform the next action for the chosen tool. 
-- `get_tools_instructions() -> list[str]`: Get a list of the instructions for the available tools in this state. 
-- `choose_next_tool(command: str)`: Parse the provided command to choose the next tool. 
-- `use_tool(**kwargs) -> str`: Use a tool from the toolbox to perform an action on the context. 
-- `check_transition_state()`: Decide if we should transition to a different agent state based on the context.
-___
-## Tool
-### Description
+This abstract class represents the context of an agent. It defines a single abstract method:
+#### `get_context_string() -> str`
 
-An abstract base class for defining the interface for a tool.
-### Properties 
-- `agent_state`: The agent state in which the tool is used.
-### Methods 
-- `get_tool_instructions() -> str`: Returns a string explaining the tool's interface to the agent. 
-- `use(**kwargs) -> str`: Uses the tool to perform an action on the context.
-___
-## Agent
-### Description
+This method returns the string representation of the context.
+## `IAgentState`
 
-An abstract class representing an agent.
-### Properties 
-- `agent_context`: The agent's context. 
-- `agent_state`: The agent's state.
-### Methods 
-- `do_next_action(command: str)`: Perform the next action of the agent using the chosen tool and its arguments. 
-- `update_context()`: Update the AgentContext after an action has been taken.
-___
-## AgentState
-### Description
+This abstract class represents a state of the agent. It defines the following abstract methods:
+#### `do_next_action()`
 
-An abstract base class representing the state of an agent.
-### Properties 
-- `agent`: The agent the state belongs to. 
-- `chosen_tool`: The chosen tool for the agent's next action. 
-- `chosen_tool_kwargs`: The chosen tool's arguments. 
-- `tools`: List of available tools for this state.
-### Methods 
-- `get_tools_instructions() -> list[str]`: Returns a list of strings explaining the toolbox's interface to the agent. 
-- `do_next_action()`: Perform the next action of the agent using the chosen tool and its arguments. 
-- `choose_next_tool(command: str)`: Parse the provided command to choose the next tool. 
-- `use_tool(**kwargs) -> str`: Use a tool from the toolbox to perform an action on the context. 
-- `check_transition_state()`: Decide if we should transition to a different agent state based on the context.
+This method performs the next action for the chosen tool.
+#### `get_tools_instructions() -> list[str]`
+
+This method returns a list of instructions for the available tools in this state.
+#### `choose_next_tool(command:str)`
+
+This method parses the provided command to choose the next tool.
+#### `check_transition_state() -> _type_`
+
+This method decides if we should transition to a different agent state based on the context.
+## `Tool`
+
+This abstract class represents a tool in the agent's toolbox. It defines the following abstract methods:
+#### `get_tool_instructions() -> str`
+
+This method returns a string explaining the tool's interface to the agent.
+#### `use(**kwargs) -> str`
+
+This method uses the tool to perform an action on the context.
+## `Agent`
+
+This abstract class represents an agent. It defines the following method:
+#### `do_next_action()`
+
+This method performs the next action of the agent using the chosen tool and its arguments.
+#### `update_context()`
+
+This method updates the `AgentContext` after an action has been taken.
+## `AgentState`
+
+This base class represents the state of an agent. It defines the following abstract methods:
+#### `get_tools_instructions() -> list[str]`
+
+This method returns a list of strings explaining the toolbox's interface to the agent.
+#### `choose_next_tool(command:str)`
+
+This method parses the command provided by the agent to choose the next tool.
+#### `check_transition_state() -> _type_`
+
+This method decides if we should transition to a different agent state based on the context.
+## `AgentCompletionResult` Class
+
+This class is a subclass of `CompletionResult` that returns the response from the agent as a single item list. It has the following method:
+#### `get_completions() -> list[str]`
+
+This method returns a list with the response from the agent as a single item.
+## `AgentCompletionFn` Class
+
+This class is a subclass of `CompletionFn` and is used to create an agent that can take actions based on a provided context. It has the following methods:
+### `__init__(self, agent_template: str = DEFAULT_AGENT_TEMPLATE, completion_fn: str = None, max_agent_steps : int = 25, registry: Registry = None, registry_path: str = None, **kwargs) -> None:`
+
+This method initializes the `AgentCompletionFn` object with the given parameters.
+### `setup_agent(self,prompt)`
+
+This method sets up the agent for the given prompt.
+### `check_for_end_context() -> bool:`
+
+This method checks if the agent has reached the end of the context.
+### `__call__(self, prompt, **kwargs) -> AgentCompletionResult:`
+
+This method takes in a prompt and returns the response of the agent as an instance of `AgentCompletionResult`. It creates an instance of the chosen `CompletionFn` and uses it to generate the agent's response. It also keeps track of the current step in the agent's actions and checks if the agent

@@ -74,7 +74,7 @@ class TreasureHunt:
                 direction = 'south'
             return direction
         else:
-            return "You can't use the compass in the digging state."
+            return "Can't use the compass in the digging state."
 
     def move(self, direction):
         """
@@ -103,11 +103,11 @@ class TreasureHunt:
         
         if self.cell_distance(self.agent_position, self.treasure_position) == 0:
             self.state = 'digging'
-            return "You can tell the treasure is close by. You should dig in this cell."
+            return f"Moved {direction}. Treasure in this cell"
         else:
             if self.state == 'digging':
                 self.state = 'exploration'
-                return "You left the cell that contains the treasure."
+                return f"Moved {direction}. You left the cell with treasure"
             
         return f"Moved {direction}."
         
