@@ -1,0 +1,9 @@
+agent-treasure-hunt:
+  id: agent-treasure-hunt.dev.v0
+  description: Example eval that checks sampled text matches the expected output.
+  disclaimer: This is an example disclaimer.
+  metrics: [accuracy]
+agent-treasure-hunt.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: agent_treasure_hunt/samples.jsonl

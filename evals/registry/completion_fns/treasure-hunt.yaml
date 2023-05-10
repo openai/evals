@@ -1,0 +1,4 @@
+treasure-hunt:
+  class: treasure_hunt_completion_fn:TreasureHuntAgentCompletionFn
+  args:
+    completion_fn: gpt-3.5-turbo
