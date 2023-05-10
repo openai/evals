@@ -1,4 +1,4 @@
-# Eval Summary
+# Eval Summary 
 We created this evaluation as a template for creating future evaluations that deal with agent-tool types of problems. To achieve this, we have introduced a new module (evals\completion_fns\agent.py), which provides base classes that we can use to quickly create customized completion functions. These functions will evaluate iterations of a series of responses from an LLM, where each step modifies some context to pursue a goal.
 
 As an example:
