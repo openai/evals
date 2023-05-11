@@ -4,3 +4,8 @@ evals.egg-info/
 # MacOS folder metadata
 .DS_Store
 .vscode/
+
+# Ignore .env file containing credentials, API keys, and other secrets
+.env
+# Unignore the template .env file so that other developers can know which environment variables are needed
+!.env.example
