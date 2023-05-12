@@ -13,6 +13,9 @@ To get set up with evals, follow the [setup instructions below](README.md#Setup)
 - Familiarize yourself with the existing eval templates: [eval-templates.md](docs/eval-templates.md).
 
 #### Writing evals
+
+**Important: Please note that we are currenlty not accepting Evals with custom code, with the exception of modelgraded evals with custom code.**
+
 - Walk through the process for building an eval: [build-eval.md](docs/build-eval.md)
 - See an example of implementing custom eval logic: [custom-eval.md](docs/custom-eval.md).
 
