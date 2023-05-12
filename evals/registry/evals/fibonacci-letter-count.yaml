@@ -3,6 +3,6 @@ fibonacci-letter-count:
   metrics: [accuracy]
 
 fibonacci-letter-count.dev.v0:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: fibonacci-letter-count/samples.jsonl
