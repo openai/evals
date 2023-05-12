@@ -1,0 +1,8 @@
+alternate_numeral_systems:
+  id: alternate_numeral_systems.dev.v0
+  metrics: [accuracy]
+
+alternate_numeral_systems.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: alternate_numeral_systems/samples.jsonl
