@@ -1,6 +1,6 @@
 # Building an eval
 
-**Important: Please note that we are currenlty not accepting Evals with custom code, with the exception of modelgraded evals with custom code.**
+**Important: Please note that we are currently not accepting Evals with custom code!** While we ask you to not submit such evals at the moment, you can still submit modelgraded evals with custom modelgraded YAML files.
 
 This document walks through the end-to-end process for building an eval, which is a dataset and a choice of eval class. The `examples` folder contains Jupyter notebooks that follow the steps below to build several academic evals, thus helping to illustrate the overall process.
 
