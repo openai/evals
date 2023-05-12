@@ -1,7 +1,6 @@
-nonlinear_concepts:
-  id: nonlinear_concepts.dev.v0
+out_of_order:
+  id: out_of_order.dev.v0
   metrics: [accuracy]
-
 out_of_order.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
@@ -9,6 +8,9 @@ out_of_order.dev.v0:
     eval_type: cot_classify
     modelgraded_spec: nonlinear_concepts
 
+time_travel:
+  id: time_travel.dev.v0
+  metrics: [accuracy]
 time_travel.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
@@ -16,6 +18,9 @@ time_travel.dev.v0:
     eval_type: cot_classify
     modelgraded_spec: nonlinear_concepts
 
+foreshadow:
+  id: foreshadow.dev.v0
+  metrics: [accuracy]
 foreshadow.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
