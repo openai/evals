@@ -1,7 +1,5 @@
 from typing import Any
 
-import numpy as np
-
 import evals
 import evals.metrics
 from evals.api import CompletionFn
@@ -32,7 +30,6 @@ class Includes(evals.Eval):
         includes_answer = any(
             [utils.get_answer(sampled, ref, self.ignore_case) for ref in sample["ideal"]]
         )
-        evals.record.record_metrics(accuracy=float(includes_answer))
         evals.record.record_match(
             includes_answer, expected=sample["ideal"], picked=sampled, sampled=sampled
         )
@@ -41,7 +38,7 @@ class Includes(evals.Eval):
     def run(self, recorder):
         samples = self.get_samples()
         self.eval_all_samples(recorder, samples)
-        events = recorder.get_scores("accuracy")
+        events = recorder.get_events("match")
         return {
-            "accuracy": np.mean(events),
+            "accuracy": evals.metrics.get_accuracy(events),
         }
