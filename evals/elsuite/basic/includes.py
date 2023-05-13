@@ -33,6 +33,9 @@ class Includes(evals.Eval):
             [utils.get_answer(sampled, ref, self.ignore_case) for ref in sample["ideal"]]
         )
         evals.record.record_metrics(accuracy=float(includes_answer))
+        evals.record.record_match(
+            includes_answer, expected=sample["ideal"], picked=sampled, sampled=sampled
+        )
         return includes_answer
 
     def run(self, recorder):
