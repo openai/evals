@@ -1,0 +1,8 @@
+conceptual-metaphor-detection:
+  id: conceptual-metaphor-detection.dev.v0
+  description: Test the model's ability to detect whether a sentence contains a conceptual metaphor.
+  metrics: [accuracy]
+conceptual-metaphor-detection.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: conceptual_metaphor_detection/conceptual_metaphor_detection.jsonl
