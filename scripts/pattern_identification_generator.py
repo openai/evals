@@ -1,15 +1,11 @@
-"""
-    Usage: python scripts/task_identification_generator.py
-"""
-
 import json
 import random
-random.seed(42)
 
 SYMBOLS = list("abcdefghijklmnopqrstuvwxyz")
 DELIMETER = "->"
 INSTRUCTION = "Figure out the pattern in the below examples, and then answer with just \"foo\" or \"bar\"."
 TASK_NAME = "pattern_identification"
+random.seed(42)
 
 
 def generate_example():
@@ -17,33 +13,29 @@ def generate_example():
     target_symbol = random.choice(SYMBOLS)
     symbol_list = random.sample(SYMBOLS, num_symbols)
     target = "foo" if target_symbol in symbol_list else "bar"
-    return (target_symbol, symbol_list, target)
+    return target_symbol, symbol_list, target
 
 
 def generate_exemplars_str(num_exemplars: int = 8):
     exemplars = [generate_example() for _ in range(num_exemplars)]
-    exemplars_str = [f"({exemplar[0]}, {exemplar[1]}) {DELIMETER} {exemplar[2]}".replace("'", "") for exemplar in exemplars]
-    return "\n".join([INSTRUCTION] + exemplars_str)
+    return "\n".join([INSTRUCTION] + [f"({ex[0]}, {ex[1]}) {DELIMETER} {ex[2]}".replace("'", "") for ex in exemplars])
 
 
 def generate_eval_examples(num_eval_examples: int = 250):
-    eval_examples = [generate_example() for _ in range(num_eval_examples)]
-    eval_examples_str = [f"{generate_exemplars_str()}\n({example[0]}, {example[1]}) {DELIMETER}".replace("'", "") for example in eval_examples]
-    targets = [example[2] for example in eval_examples]
-    return eval_examples_str, targets
+    return [generate_example() for _ in range(num_eval_examples)]
 
 
 if __name__ == "__main__":
-    eval_examples_str, targets = generate_eval_examples()
+    eval_examples = generate_eval_examples()
     output_path = f"evals/registry/data/{TASK_NAME}/samples.v0.jsonl"
     with open(output_path, "w") as writer:
-        for eval_example_str, target in zip(eval_examples_str, targets):
+        for example in eval_examples:
             d = {
                 "input": [
                     {"role": "system", "content": "You are a helpful assistant."},
-                    {"role": "user", "content": eval_example_str},
-                    ],
-                "ideal": target,
+                    {"role": "user", "content": f"{generate_exemplars_str()}\n({example[0]}, {example[1]}) {DELIMETER}".replace("'", "")},
+                ],
+                "ideal": example[2],
             }
             writer.write(json.dumps(d) + "\n")
-    print(f"{len(eval_examples_str)} lines written to {output_path}.")
+    print(f"{len(eval_examples)} lines written to {output_path}.")
