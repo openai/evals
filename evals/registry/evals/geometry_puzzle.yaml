@@ -1,0 +1,8 @@
+geometry_puzzle:
+  id: geometry_puzzle.dev.v0
+  metrics: [accuracy]
+
+geometry_puzzle.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: geometry_puzzle/samples.jsonl
