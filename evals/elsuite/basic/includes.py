@@ -26,6 +26,10 @@ class Includes(evals.Eval):
             prompt=prompt,
         )
         sampled = result.get_completions()[0]
+        
+        ideal = sample["ideal"]
+        if not isinstance(ideal, list):
+            ideal = [ideal]
 
         includes_answer = any(
             [utils.get_answer(sampled, ref, self.ignore_case) for ref in sample["ideal"]]
