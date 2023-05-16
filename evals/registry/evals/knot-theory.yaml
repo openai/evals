@@ -1,0 +1,26 @@
+knot-theory-unknotting-problem:
+  id: knot-theory-unknotting-problem.dev.v0
+  metrics: [accuracy]
+
+knot-theory-unknotting-problem.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: knot-theory/knot-theory-unknotting-problems.jsonl
+
+knot-theory-code-conversion:
+  id: knot-theory-code-conversion.dev.v0
+  metrics: [accuracy]
+
+knot-theory-code-conversion.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: knot-theory/knot-theory-code-conversions.jsonl
+
+knot-theory-unknotting-number:
+  id: knot-theory-unknotting-number.dev.v0
+  metrics: [accuracy]
+
+knot-theory-unknotting-number.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: knot-theory/knot-theory-unknotting-numbers.jsonl

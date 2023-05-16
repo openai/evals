@@ -1,0 +1,9 @@
+computer-science-problems:
+  id: computer-science-problems.s1.simple-v0
+  description: Testing the models ability to answer multiple choice computer science questions correctly.
+  disclaimer: Dataset is based on most popular MCQ questions.
+  metrics: [accuracy]
+computer-science-problems.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: test_comp_sci/questions.jsonl
