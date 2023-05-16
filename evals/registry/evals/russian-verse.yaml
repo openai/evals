@@ -1,0 +1,10 @@
+russian-verse:
+  id: russian-verse.dev.v0
+  description: Most popular russian peoms, that almost every russian speaker remember
+  metrics: [accuracy]
+
+russian-verse.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: russian-verse/samples.jsonl
+
