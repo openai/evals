@@ -1,0 +1,9 @@
+complex-replace-characters:
+  id: complex-replace-characters.dev.v0
+  description: 
+  metrics: [accuracy]
+
+complex-replace-characters.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: complex_replace_characters/samples.jsonl
