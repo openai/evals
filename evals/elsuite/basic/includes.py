@@ -27,8 +27,19 @@ class Includes(evals.Eval):
         )
         sampled = result.get_completions()[0]
 
+        ideal = sample["ideal"]
+        if not isinstance(ideal, list):
+            ideal = [ideal]
+
+        assert isinstance(ideal, list) and all(
+            isinstance(i, str) for i in ideal
+        ), "ideal must be a list of strings"
+
         includes_answer = any(
-            [utils.get_answer(sampled, ref, self.ignore_case) for ref in sample["ideal"]]
+            [
+                utils.get_answer(sampled, ref, self.ignore_case) is not None
+                for ref in sample["ideal"]
+            ]
         )
         evals.record.record_match(
             includes_answer, expected=sample["ideal"], picked=sampled, sampled=sampled
