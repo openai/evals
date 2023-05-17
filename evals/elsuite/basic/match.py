@@ -2,13 +2,14 @@ from typing import Any
 
 import evals
 import evals.metrics
+from evals.api import CompletionFn
 from evals.prompt.base import is_chat_prompt
 
 
 class Match(evals.Eval):
     def __init__(
         self,
-        model_specs: evals.ModelSpecs,
+        completion_fns: list[CompletionFn],
         samples_jsonl: str,
         *args,
         max_tokens: int = 500,
@@ -16,7 +17,8 @@ class Match(evals.Eval):
         few_shot_jsonl: str = None,
         **kwargs,
     ):
-        super().__init__(model_specs, *args, **kwargs)
+        super().__init__(completion_fns, *args, **kwargs)
+        assert len(completion_fns) == 1, "Match only supports one completion fn"
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
         self.num_few_shot = num_few_shot
@@ -34,10 +36,20 @@ class Match(evals.Eval):
                 prompt += s["sample"]
             prompt += sample["input"][-1:]
 
-        return evals.check_sampled_text(self.model_spec, prompt, expected=sample["ideal"])
+        result = self.completion_fn(
+            prompt=prompt,
+            temperature=0.0,
+        )
+        sampled = result.get_completions()[0]
+
+        return evals.record_and_check_match(
+            prompt=prompt,
+            sampled=sampled,
+            expected=sample["ideal"],
+        )
 
     def run(self, recorder):
-        samples = evals.get_jsonl(self.samples_jsonl)
+        samples = self.get_samples()
         self.eval_all_samples(recorder, samples)
         events = recorder.get_events("match")
         return {
