@@ -1,0 +1,8 @@
+multi-step-equations:
+  id: multi-step-equations.dev.v0
+  metrics: [accuracy]
+
+multi-step-equations.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: multi-step-equations/samples.jsonl
