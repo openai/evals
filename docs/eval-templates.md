@@ -30,7 +30,7 @@ Refer to the [`classify.py:ModelBasedClassify`](../evals/elsuite/modelgraded/cla
 - `choice_strings`: The choices that we expect the model completion to contain given the evaluation prompt. For example, `"ABCDE"` or `["Yes", "No", "Unsure"]`. Any other choices returned by the model are parsed into `"__invalid__"`.
 - `choice_scores` (optional): A mapping of each choice to its score, which is logged as a metric. For example, if a response of `"Yes"` (resp. `"No"`) indicates that the model's original completion was good (resp. bad), we may assign this choice a score of 1 (resp. 0).
 - `eval_type` (optional): How we expect the model to format its response to the evaluation prompt. Currently the supported options are:
-  - `"cot_classify"` ("chain-of-thought then classify", i.e., reason then answer) expects that the parsable portion of the response (i.e., the portion containing the choice) will be at the end of the completion. We recommend this as the default as it typically provides most accurate model-graded evaluations.
+  - `"cot_classify"` ("chain-of-thought then classify", i.e., reason then answer) expects that the parsable portion of the response (i.e., the portion containing the choice) will be at the end of the completion. We recommend this as the default as it typically provides the most accurate model-graded evaluations.
   - `"classify_cot"` (answer then reason) expects that the model response will contain the choice first.
   - `"classify"` expects that the model response will only contain the choice.
 
@@ -48,12 +48,12 @@ To instantiate model-graded evals, create a YAML file in `evals/registry/modelgr
 - `"D"` if `a` $\neq$ `b`, i.e., there is a disagreement between the submitted answer and the expert answer.
 - `"E"` if `a` $\approx$ `b`, i.e., the answers differ, but these differences don't matter from the perspective of factuality.
 
-[`closedqa.yaml`](../evals/registry/modelgraded/closedqa.yaml): a question answering eval which, given a prompt containing a question and the necessary information to answer the question, checks whether the model's answer is:
+[`closedqa.yaml`](../evals/registry/modelgraded/closedqa.yaml): a question answering eval, which, given a prompt containing a question and the necessary information to answer the question, checks whether the model's answer is:
 - relevant, i.e., extracted from the information provided in the prompt,
 - concise, i.e., did not contain unnecessary details or information, and
 - correct, i.e., uses the extracted information to come to the right conclusion.
 
-Note that this eval is implemented more generally as a "criteria-checking" eval which specifies the evaluation prompt as checking a given criterion and feeding in the above desiderata one by one. We believe that many other evals can be implemented by specifying a "rubric" detailing the criteria of interest and following the same prompt and yes/no choices.
+Note that this eval is implemented more generally as a "criteria-checking" eval, which specifies the evaluation prompt as checking a given criterion and feeding in the above desiderata one by one. We believe that many other evals can be implemented by specifying a "rubric" detailing the criteria of interest and following the same prompt and yes/no choices.
 
 [`battle.yaml`](../evals/registry/modelgraded/battle.yaml): a head-to-head eval which compares two model completions for two potentially different prompts. `choice_scores` is used here to log how often the first completion is judged to be better than the second.
 

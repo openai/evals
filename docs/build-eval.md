@@ -29,7 +29,7 @@ openai tools fine_tunes.prepare_data -f data[.csv, .json, .txt, .xlsx or .tsv]
 
 We include some examples of JSONL eval files in [registry/data/README.md](../evals/registry/data/README.md)
 
-Each JSON object will represent one data point in your eval. The keys you need in the JSON object depend on the eval template. All templates expect an `"input"` key which is the prompt, ideally specified in [chat format](https://platform.openai.com/docs/guides/chat/introduction) (though strings are also supported). We recommend chat format even if you are evaluating non chat models. If you are evaluating both chat and non chat models, we handle the conversion between chat formatted prompts and raw string prompts (see the conversion logic [here](../evals/prompt/base.py)).
+Each JSON object will represent one data point in your eval. The keys you need in the JSON object depend on the eval template. All templates expect an `"input"` key, which is the prompt, ideally specified in [chat format](https://platform.openai.com/docs/guides/chat/introduction) (though strings are also supported). We recommend chat format even if you are evaluating non-chat models. If you are evaluating both chat and non-chat models, we handle the conversion between chat-formatted prompts and raw string prompts (see the conversion logic [here](../evals/prompt/base.py)).
 
 For the basic evals `Match`, `Includes`, and `FuzzyMatch`, the other required key is `"ideal"`, which is a string (or a list of strings) specifying the correct reference answer(s). For model-graded evals, the required keys vary based on the eval but is determined by the `{key}`s in the evaluation `prompt` that are not covered by the (optional) `args`.
 
@@ -51,12 +51,12 @@ Register the eval by adding a file to `evals/registry/evals/<eval_name>.yaml` us
     samples_jsonl: <eval_name>/samples.jsonl
 ```
 
-Upon running the eval, the data will be searched for in `evals/registry/data`, e.g. if `test_match/samples.jsonl` is the provided filepath the data is expected to be in `evals/registry/data/test_match/samples.jsonl`.
+Upon running the eval, the data will be searched for in `evals/registry/data`. For example, if `test_match/samples.jsonl` is the provided filepath, the data is expected to be in `evals/registry/data/test_match/samples.jsonl`.
 
 The naming convention for evals is in the form `<eval_name>.<split>.<version>`.
 - `<eval_name>` is the eval name, used to group evals whose scores are comparable.
 - `<split>` is the data split, used to further group evals that are under the same `<base_eval>`. E.g., "val", "test", or "dev" for testing.
-- `<version>` is the version of the eval, which can be any descriptive text you'd like to use (though it's best if it does not contain ".").
+- `<version>` is the version of the eval, which can be any descriptive text you'd like to use (though it's best if it does not contain `.`).
 
 In general, running the same eval name against the same model should always give similar results so that others can reproduce it. Therefore, when you change your eval, you should bump the version.
 
@@ -83,7 +83,7 @@ We expect that the existing model-graded evals such as `fact`, `closedqa`, and `
 
 Important: if you are contributing code, make sure to run `pip install pre-commit; pre-commit install` before committing and pushing to ensure that `black`, `isort`, and `autoflake` are run.
 
-We are interested in curating a diverse and interesting set of evals on which to improve our models going forward. Here are some criteria for what we consider a good eval.
+We are interested in curating a diverse and interesting set of evals on which to improve our models going forward. Here are some criteria for what we consider a good eval:
 - [ ] The eval should be thematically consistent. We'd like to see a number of prompts all revolving around the same use case, subject domain, failure mode, etc.
 - [ ] The eval should be challenging. If GPT-4 or GPT-3.5-Turbo do well on all of the prompts, this is not as interesting. Of course, the eval should also be possible given the models' limitations and constraints. Oftentimes, a good rule of thumb is whether a human (potentially a subject expert) could do well on the prompts.
 - [ ] The eval should be directionally clear. The data should include good signal around what is the right behavior. This means, for example, high-quality reference answers or an exhaustive rubric for evaluating answers.
