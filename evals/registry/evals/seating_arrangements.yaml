@@ -1,0 +1,7 @@
+seating_arrangements:
+  id: seating_arrangements.v0
+  metrics: [accuracy]
+seating_arrangements.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: seating_arrangements/samples.jsonl
