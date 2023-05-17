@@ -1,0 +1,8 @@
+caesar-cypher:
+  id: caesar-cypher.dev.v0
+  metrics: [accuracy]
+
+caesar-cypher.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: caesar_cypher/caesar_cypher.jsonl
