@@ -106,7 +106,7 @@ class Registry:
             raise ValueError(f"Could not find CompletionFn in the registry with ID {name}")
         if spec.args is None:
             spec.args = {}
-        
+
         spec.args["registry"] = self
         instance = make_object(spec.cls)(**spec.args or {})
         assert isinstance(instance, CompletionFn), f"{name} must be a CompletionFn"
@@ -204,7 +204,7 @@ class Registry:
         return BaseEvalSpec(id=alias)
 
     def _process_file(self, registry, path):
-        with open(path, "r") as f:
+        with open(path, "r", encoding="utf-8") as f:
             d = yaml.safe_load(f)
 
         if d is None:
