@@ -1,7 +1,7 @@
 invert_word_wise:
   id: invert_word_wise.dev.v0
   metrics: [accuracy]
-  description: Test the model's ability to answer baisc questions after inverting string word wise.
+  description: Logically, inverting strings twice just results in the original string again. The LLMs find it very difficult to deduce it, and somehow (at least up to GPT-3.5) mix things up.
 
 invert_word_wise.dev.v0:
   class: evals.elsuite.basic.match:Match
