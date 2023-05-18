@@ -3,6 +3,6 @@ nepali-song-singer:
   description: Test the model's ability to understand English transliteration of Nepali phrase and provide us the singer of that particular title. 
   metrics: [accuracy]
 nepali-song-singer.dev:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: nepali-song-singer/nepali-song-singer.jsonl
