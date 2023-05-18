@@ -2,35 +2,35 @@ from typing import Any, Type
 from mock import patch
 from pytest import mark, raises
 from evals.api import DummyCompletionFn
-from evals.elsuite.basic.fuzzy_match import FuzzyMatch
+from evals.elsuite.basic.match import Match
 from evals.record import DummyRecorder
 from evals.utils.test import TestCompletionFn
 
 
 @mark.parametrize(
-    "completion, ideal, expected_metrics",
+    "completion, ideal, expected_match",
     [
-        ("world", "world", dict(accuracy=1.0, f1_score=1.0)),
-        ("world", "foo", dict(accuracy=0, f1_score=0)),
-        ("world", ["some foo world", "dummy"], dict(accuracy=1.0, f1_score=0.5)),
+        ("world", ["world"], True),
     ],
 )
 def test_eval_sample(
     completion: str,
     ideal: list[str],
-    expected_metrics: dict[str, float],
+    expected_match: bool,
 ):
-    eval = FuzzyMatch(
+    eval = Match(
         completion_fns=[TestCompletionFn(completion)],
         samples_jsonl="",
     )
 
     recorder = DummyRecorder(None)
     with recorder.as_default_recorder("x"), patch.object(
-        recorder, "record_metrics", wraps=recorder.record_metrics
-    ) as record_metrics:
+        recorder, "record_match", wraps=recorder.record_match
+    ) as record_match:
         eval.eval_sample(dict(input="Hello", ideal=ideal), None)
-        record_metrics.assert_called_once_with(**expected_metrics)
+        record_match.assert_called_once_with(
+            expected_match, expected=ideal, picked=completion, sampled=completion, options=ideal
+        )
 
 
 @mark.parametrize(
@@ -43,7 +43,7 @@ def test_eval_sample(
     ],
 )
 def test_eval_sample_raises(sample: Any, expected_error: Type):
-    eval = FuzzyMatch(
+    eval = Match(
         completion_fns=[DummyCompletionFn()],
         samples_jsonl="",
     )
