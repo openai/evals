@@ -117,7 +117,6 @@ class Eval(abc.ABC):
         work_items = _index_samples(samples)
         threads = int(os.environ.get("EVALS_THREADS", "10"))
         show_progress = bool(os.environ.get("EVALS_SHOW_EVAL_PROGRESS", show_progress))
-        float(os.environ.get("EVALS_THREAD_TIMEOUT", "40"))
 
         def eval_sample(args):
             """

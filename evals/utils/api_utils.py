@@ -3,9 +3,12 @@ This file defines various helper functions for interacting with the OpenAI API.
 """
 import concurrent
 import logging
+import os
 
 import backoff
 import openai
+
+EVALS_THREAD_TIMEOUT = float(os.environ.get("EVALS_THREAD_TIMEOUT", "40"))
 
 
 @backoff.on_exception(
@@ -32,7 +35,7 @@ def openai_completion_create_retrying(*args, **kwargs):
     return result
 
 
-def request_with_timeout(func, *args, timeout=5, **kwargs):
+def request_with_timeout(func, *args, timeout=EVALS_THREAD_TIMEOUT, **kwargs):
     """
     Worker thread for making a single request within allotted time.
     """
