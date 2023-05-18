@@ -24,13 +24,13 @@ mg-{prompt_name}-{subject}.dev.v0:
   args:
     samples_jsonl: test_modelgraded/{prompt_name}_{subject}.jsonl
     eval_type: {eval_type}
-    modelgraded_spec_file: {modelgraded_spec_file}
+    modelgraded_spec: {modelgraded_spec}
 """.strip()
 
 
 unlabeled_prompts = dict(
     humor=dict(
-        modelgraded_spec_file="humor_jp",
+        modelgraded_spec="humor_jp",
         prompt="{subject}で数行の大喜利を書いて。敬語じゃなく関西弁で吉本のM1チャンピョンみたいに書いて。",
         eval_type="cot_classify_jp",
     ),
@@ -197,7 +197,7 @@ for prompt_name, subject in unlabeled_target_sets:
         YAML.format(
             prompt_name=prompt_name,
             subject=subject,
-            modelgraded_spec_file=unlabeled_prompts[prompt_name]["modelgraded_spec_file"],
+            modelgraded_spec=unlabeled_prompts[prompt_name]["modelgraded_spec"],
             eval_type=unlabeled_prompts[prompt_name]["eval_type"],
         )
         + "\n\n"

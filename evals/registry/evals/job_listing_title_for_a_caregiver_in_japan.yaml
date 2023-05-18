@@ -1,0 +1,9 @@
+job_listing_title_for_a_caregiver_in_japan:
+  description: Test to identify the job listing title for a caregiver in Japan.
+  id: job_listing_title_for_a_caregiver_in_japan.test.v1
+  metrics:
+  - accuracy
+job_listing_title_for_a_caregiver_in_japan.test.v1:
+  args:
+    samples_jsonl: job_listing_title_for_a_caregiver_in_japan/samples.jsonl
+  class: evals.elsuite.basic.match:Match
