@@ -1,0 +1,8 @@
+south-african-bands:
+  id: south-african-bands.dev.v0
+  description: Test the model's ability to understand that we are providing the name of a South African band, find the supplied band, and if the band has a lead vocalist provide the stage name or real name of the vocalist.
+  metrics: [accuracy]
+south-african-bands.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: south-african-bands/south-african-bands.jsonl
