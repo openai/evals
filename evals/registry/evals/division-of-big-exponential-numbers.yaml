@@ -1,0 +1,9 @@
+division-of-big-exponential-numbers:
+  id: division-of-big-exponential-numbers.dev.v0
+  description: Testing division of big exponential numbers and the ability to substitute.
+  metrics: [accuracy]
+
+division-of-big-exponential-numbers.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: division-of-big-exponential-numbers/samples.jsonl
