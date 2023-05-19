@@ -1,5 +1,3 @@
-{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "If food eats human, then what is the bike riding on?"}], "ideal": "human"}
-{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "If a song sings a bird, then what is a book reading?"}], "ideal": "human"}
-{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "If chinese food matches Beijing, then what does american food match?"}], "ideal": "washington"}
-{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "If 1 equals 2, 2 equals 4, then what is 4 equal to?"}], "ideal": "1 and 2"}
-{"input": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "If water drink dog, then what does basketball play?"}], "ideal": "human"}
+version https://git-lfs.github.com/spec/v1
+oid sha256:5b0b2f46536157730491b21ccaca67853e50e197deb981b2afc462cf2472223f
+size 2860
