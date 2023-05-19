@@ -38,7 +38,7 @@ class Includes(evals.Eval):
         includes_answer = any(
             [
                 utils.get_answer(sampled, ref, self.ignore_case) is not None
-                for ref in sample["ideal"]
+                for ref in ideal
             ]
         )
         evals.record.record_match(
