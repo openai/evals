@@ -1,5 +1,6 @@
 unique_combinations:
   id: unique_combinations.dev.v0
+  description: Given a set of values, find the unique combination that satisfies a constraint.
   metrics: [accuracy]
 
 unique_combinations.dev.v0:
