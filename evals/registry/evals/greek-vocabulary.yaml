@@ -1,0 +1,8 @@
+greek-vocabulary:
+  id: greek-vocabulary.dev.v0
+  metrics: [accuracy]
+
+greek-vocabulary.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: greek_vocabulary/samples.jsonl
