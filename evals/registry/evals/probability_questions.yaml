@@ -1,0 +1,8 @@
+probability-questions:
+  id: probability-questions.dev.v0
+  description: A collection of probability questions that ChatGPT fails.  Let's see if GPT-4 can do better.
+  metrics: [accuracy]
+probability-questions.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: probability_questions/probability_questions.jsonl
