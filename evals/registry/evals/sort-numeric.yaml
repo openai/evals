@@ -1,0 +1,8 @@
+sort-numbers:
+  id: sort-numbers.s1.simple-v0
+  description: Tests performance sorting different comma-separated values under different circumstances (integers/decimals, positives/negatives, as well as currency-formatted values).
+  metrics: [accuracy]
+sort-numbers.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: sort_numeric/samples.jsonl

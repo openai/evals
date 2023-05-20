@@ -1,0 +1,39 @@
+naughty_strings:
+  id: naughty_strings.test.v1
+  metrics: [accuracy]
+naughty_strings.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: naughty_strings/samples.jsonl
+    
+naughty_strings_fuzzy:
+  id: naughty_strings_fuzzy.test.v1
+  metrics: [f1_score]
+naughty_strings_fuzzy.test.v1:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  description: Eval that uses fuzzy matching.
+  args:
+    samples_jsonl: naughty_strings/samples.jsonl
+
+naughty_strings_graded:
+  id: naughty_strings_graded.test.v1
+  metrics: [accuracy]
+naughty_strings_graded.test.v1:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  description: Eval that scores the classification.
+  args:
+    samples_jsonl: naughty_strings/security.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: security
+
+naughty_strings_graded_meta:
+  id: naughty_strings_graded_meta.test.v1
+  metrics: [accuracy]
+naughty_strings_graded_meta.test.v1:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  description: Eval that scores the classification.
+  args:
+    samples_jsonl: naughty_strings/security.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: security
+    metaeval: true

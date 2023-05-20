@@ -1,0 +1,10 @@
+sarcasm:
+  id: sarcasm.test.v1
+  description: An evaluation on sarcasm detection. 
+  metrics: [accuracy]
+sarcasm.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: sarcasm/samples.jsonl
+    few_shot_jsonl: sarcasm/few_shot.jsonl
+    num_few_shot: 5
