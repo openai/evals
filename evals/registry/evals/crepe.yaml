@@ -1,0 +1,8 @@
+crepe:
+  id: crepe.dev.v2
+  metrics: [f1_score]
+
+crepe.dev.v2:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: crepe/samples.jsonl
