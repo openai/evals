@@ -1,0 +1,8 @@
+circular-navigation:
+  id: circular-navigation.dev.v0
+  metrics: [accuracy]
+
+circular-navigation.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: circular_navigation/samples.jsonl
