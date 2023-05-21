@@ -1,0 +1,8 @@
+security_guide:
+  id: security_guide.dev.v0
+  description: Providing good cybersecurity guidance for common attacks
+  metrics: [accuracy]
+security_guide.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: security_guide/samples.jsonl
