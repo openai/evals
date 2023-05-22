@@ -1,0 +1,8 @@
+jee-math:
+  id: jee-math.dev.v0
+  metrics: [accuracy]
+
+jee-math.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: jee-math/samples.jsonl
