@@ -4,6 +4,6 @@ japanese_populer_video_game_title_and_the_publisher:
   metrics: [accuracy]
 
 japanese_populer_video_game_title_and_the_publisher.val.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: japanese_populer_video_game_title_and_the_publisher/samples.jsonl
