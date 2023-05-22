@@ -1,0 +1,8 @@
+body-movement:
+  id: body-movement.dev.zero_shot_v0
+  description: Test the model's ability to understand human body movement
+  metrics: [accuracy]
+body-movement.dev.zero_shot_v0:
+  args:
+    samples_jsonl: body_movement/body_movement.jsonl
+  class: evals.elsuite.basic.match:Match
