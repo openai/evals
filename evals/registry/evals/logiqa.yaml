@@ -1,0 +1,7 @@
+logiqa:
+  id: logiqa.dev.v0
+  metrics: [accuracy]
+logiqa.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: logiqa/logiqa.jsonl
