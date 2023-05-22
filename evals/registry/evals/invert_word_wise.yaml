@@ -1,0 +1,10 @@
+invert_word_wise:
+  id: invert_word_wise.dev.v0
+  metrics: [accuracy]
+  description: Logically, inverting strings twice just results in the original string again. The LLMs find it very difficult to deduce it, and somehow (at least up to GPT-3.5) mix things up.
+
+invert_word_wise.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: invert_word_wise/invert.jsonl
+    
