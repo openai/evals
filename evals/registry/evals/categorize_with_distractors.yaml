@@ -1,0 +1,10 @@
+categorize-with-distractors:
+  id: categorize-with-distractors.dev.v0
+  description: Test the model's ability to select from a list of nouns (or proper nouns), only those belonging to a specific classification, where one of the nouns of said classification is preceded by one or more distractors from a different classification
+  metrics: [accuracy]
+categorize-with-distractors.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: categorize_with_distractors/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact

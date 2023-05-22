@@ -8,7 +8,7 @@ In cases where the desired model response has very little variation, such as ans
 
 For a model completion `a` and a reference list of correct answers `B`, the following evals implement:
 - [`basic/match.py:Match`](../evals/elsuite/basic/match.py): `any([b.startswith(a) for b in B])`
-- [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(a in b) for b in B])`
+- [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(b in a) for b in B])`
 - [`basic/fuzzy_match.py:FuzzyMatch`](../evals/elsuite/basic/fuzzy_match.py): `any([(a in b or b in a) for b in B])`
 
 Which eval template you use will depend on your use case. It is always recommended that you inspect the completions from your model, as this will help you determine how and whether to tweak your prompt (or your reference answers) and pick your eval template. Academic benchmarks oftentimes fit the mold of these basic evals, and we have implemented several end-to-end examples of academic evals as Jupyter notebooks in the `examples` folder.
@@ -35,8 +35,7 @@ Refer to the [`classify.py:ModelBasedClassify`](../evals/elsuite/modelgraded/cla
   - `"classify"` expects that the model response will only contain the choice.
 
   There are two ways to specify `eval_type`. The recommended way is in the `evals/registry/evals` YAML file. If done this way, an instruction will automatically be appended to `prompt` to steer the model towards the expected format (see `ANSWER_PROMPTS` in [the code](../evals/elsuite/modelgraded/classify.py)). Alternatively, you may specify `eval_type` in the `evals/registry/modelgraded` YAML, but you will need to include an appropriate instruction directly in the `prompt`.
-- `args` (optional): If specified, multiple evaluation calls will be made where the evaluation prompt is modified for each call with a different set of arguments.
-- `completion_sample_templates` (optional): If specified, determines how the model's output (or outputs, if `multicomp_n > 1`) will be formatted within the completion.
+- `output_template` (optional): If specified, determines how the model's output (or outputs, if `n > 1`) will be formatted within the completion.
 
 ### Example model-graded evals
 

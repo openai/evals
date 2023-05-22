@@ -1,0 +1,7 @@
+sexagenary_cycle_calculation:
+  id: sexagenary_cycle_calculation.dev.v0
+  metrics: [accuracy]
+sexagenary_cycle_calculation.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: sexagenary_cycle_calculation/samples.jsonl
