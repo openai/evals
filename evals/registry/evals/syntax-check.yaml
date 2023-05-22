@@ -1,0 +1,9 @@
+syntax-check:
+  id: syntax-check.dev.v1
+  description: Test the model's ability to determine programming language from a snippet.
+  metrics: [accuracy]
+
+syntax-check.dev.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: syntax-check/samples.jsonl
