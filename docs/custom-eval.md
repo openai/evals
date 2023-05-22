@@ -1,5 +1,7 @@
 # How to add a custom eval
 
+**Important: Please note that we are currently not accepting Evals with custom code!** While we ask you to not submit such evals at the moment, you can still submit modelgraded evals with custom modelgraded YAML files.
+
 This tutorial will walk you through a simple example of writing and adding a custom eval. The example eval will test the model's ability to do basic arithmetic. We will assume that you have followed the setup instructions in the [README](../README.md) and gone through the other docs for how to run and build evals.
 
 When writing your own evals, the primary files of interest are:
@@ -146,5 +148,3 @@ If you run with the `gpt-3.5-turbo` model, you should see an output similar to t
 ... [oaieval.py:172] accuracy: 1.0
 ... [record.py:309] Logged 6 rows of events to /tmp/evallogs/<run_id>_gpt-3.5-turbo_arithmetic.jsonl: insert_time=2.038ms
 ```
-
-If you notice evals has cached your data and you need to clear that cache, you can do so with `rm -rf /tmp/filecache`.

@@ -1,0 +1,7 @@
+day-of-week-from-date:
+  id: day-of-week-from-date.dev.v0
+  metrics: [accuracy]
+day-of-week-from-date.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: day-of-week-from-date/samples.jsonl
