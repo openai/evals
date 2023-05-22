@@ -1,0 +1,9 @@
+unique_combinations:
+  id: unique_combinations.dev.v0
+  description: Given a set of values, find the unique combination that satisfies a constraint.
+  metrics: [accuracy]
+
+unique_combinations.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: unique_combinations/samples.jsonl
