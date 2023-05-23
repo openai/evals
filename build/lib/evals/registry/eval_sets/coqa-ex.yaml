@@ -1,0 +1,6 @@
+coqa-ex:
+  evals:
+    - coqa-match
+    - coqa-fact
+    - coqa-closedqa
+    - coqa-closedqa-correct

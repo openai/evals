@@ -1,0 +1,9 @@
+logic-fact:
+  id: logic-fact.dev.v0
+  metrics: [accuracy]
+logic-fact.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: logic/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact

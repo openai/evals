@@ -1,0 +1,23 @@
+manga-translation-page:
+  id: manga-translation-page.dev.v0
+  metrics: [sacrebleu_score]
+manga-translation-page.dev.v0:
+  class: evals.elsuite.translate:Translate
+  args:
+    samples_jsonl: manga-translation/pages.jsonl
+
+manga-translation-panel:
+  id: manga-translation-panel.dev.v0
+  metrics: [sacrebleu_score]
+manga-translation-panel.dev.v0:
+  class: evals.elsuite.translate:Translate
+  args:
+    samples_jsonl: manga-translation/panels.jsonl
+
+manga-translation-bubble:
+  id: manga-translation-bubble.dev.v0
+  metrics: [sacrebleu_score]
+manga-translation-bubble.dev.v0:
+  class: evals.elsuite.translate:Translate
+  args:
+    samples_jsonl: manga-translation/bubbles.jsonl

@@ -1,0 +1,51 @@
+coqa-match:
+  id: coqa-match.dev.v0
+  metrics: [accuracy]
+coqa-match.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: coqa/match.jsonl
+
+coqa-fact:
+  id: coqa-fact.dev.v0
+  metrics: [accuracy]
+coqa-fact.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: coqa/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
+
+coqa-fact-expl:
+  id: coqa-fact-expl.dev.v0
+  metrics: [accuracy]
+coqa-fact-expl.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: coqa/samples.jsonl
+    eval_type: classify_cot
+    modelgraded_spec: fact
+
+coqa-closedqa:
+  id: coqa-closedqa.dev.v0
+  metrics: [accuracy]
+coqa-closedqa.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: coqa/samples.jsonl
+    modelgraded_spec: closedqa
+
+# (same as above, but only evaluate criteria=correct)
+coqa-closedqa-correct:
+  id: coqa-closedqa-correct.dev.v0
+  metrics: [accuracy]
+coqa-closedqa-correct.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: coqa/samples.jsonl
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria:
+        correct: "correctness: Is the answer correct?"
+
+
