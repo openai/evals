@@ -1,0 +1,8 @@
+counterfactual-reasoning-fuzzy-match:
+  id: counterfactual-reasoning-fuzzy-match.dev.simple-v0
+  description: Example eval that uses fuzzy matching to score completions.
+  metrics: [f1_score]
+counterfactual-reasoning-fuzzy-match.dev.simple-v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: counterfactual-reasoning/counterfactual_reasoning_samples.jsonl

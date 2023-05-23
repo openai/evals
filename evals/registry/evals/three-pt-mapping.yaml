@@ -1,0 +1,8 @@
+three-pt-mapping:
+  id: three-pt-mapping.dev.v0
+  description: Test the model's ability to calculate gene positions given a three-point cross using the laws of genetics
+  metrics: [accuracy]
+three-pt-mapping.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: three-pt-mapping/three_pt_mapping.jsonl

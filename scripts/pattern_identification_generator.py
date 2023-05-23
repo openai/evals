@@ -28,9 +28,7 @@ def generate_exemplars_str(num_exemplars: int = 8):
 
 def generate_eval_examples(num_eval_examples: int = 250):
     eval_examples = [generate_example() for _ in range(num_eval_examples)]
-    eval_examples_str = [
-        generate_exemplars_str() + f"\n({example[0]}, {example[1]}) {DELIMETER}".replace("'", "") for example in eval_examples
-    ]
+    eval_examples_str = [f"{generate_exemplars_str()}\n({example[0]}, {example[1]}) {DELIMETER}".replace("'", "") for example in eval_examples]
     targets = [example[2] for example in eval_examples]
     return eval_examples_str, targets
 

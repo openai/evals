@@ -1,0 +1,8 @@
+linear-equations:
+  id: linear-equations.dev.v0
+  metrics: [accuracy]
+
+linear-equations.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: linear_equations/samples.jsonl
