@@ -1,9 +1,0 @@
-identity:
-  id: identity.dev.v0
-  description: Tests identity directives
-  metrics: [accuracy]
-
-identity.dev.v0:
-  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
-  args:
-    samples_jsonl: identity/samples.jsonl
