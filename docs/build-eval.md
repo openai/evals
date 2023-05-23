@@ -43,6 +43,7 @@ Register the eval by adding a file to `evals/registry/evals/<eval_name>.yaml` us
 ```
 <eval_name>:
   id: <eval_name>.dev.v0
+  description: <description>
   metrics: [accuracy]
 
 <eval_name>.dev.v0:
