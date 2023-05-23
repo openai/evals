@@ -1,14 +1,7 @@
-syllables_long_words_5:
-  id: 5_syllables.dev.v1
+syllables_long_words:
+  id: syllables.dev.v1
   metrics: [accuracy]
-5_syllables.dev.v1:
+syllables.dev.v1:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: syllables_long_words/5_syllables.jsonl
-syllables_long_words_6:
-  id: 6_syllables.dev.v1
-  metrics: [accuracy]
-6_syllables.dev.v1:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: syllables_long_words/6_syllables.jsonl
+    samples_jsonl: syllables_long_words/long_word_samples.jsonl
