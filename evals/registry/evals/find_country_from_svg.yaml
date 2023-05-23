@@ -4,6 +4,6 @@ find_country_from_svg:
   metrics: [accuracy]
 
 find_country_from_svg.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: find_country_from_svg/samples.jsonl
