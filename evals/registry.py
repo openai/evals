@@ -63,6 +63,16 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
     return DICT_OF_N_CTX_BY_MODEL_NAME.get(model_name, None)
 
 
+CHAT_MODELS = {
+    "gpt-3.5-turbo",
+    "gpt-3.5-turbo-0301",
+    "gpt-4",
+    "gpt-4-0314",
+    "gpt-4-32k",
+    "gpt-4-32k-0314",
+}
+
+
 class Registry:
     def __init__(self, registry_paths: Sequence[Union[str, Path]] = DEFAULT_PATHS):
         self._registry_paths = [Path(p) if isinstance(p, str) else p for p in registry_paths]
@@ -85,15 +95,6 @@ class Registry:
             return DummyCompletionFn()
 
         n_ctx = n_ctx_from_model_name(name)
-
-        CHAT_MODELS = {
-            "gpt-3.5-turbo",
-            "gpt-3.5-turbo-0301",
-            "gpt-4",
-            "gpt-4-0314",
-            "gpt-4-32k",
-            "gpt-4-32k-0314",
-        }
 
         if name in CHAT_MODELS:
             return OpenAIChatCompletionFn(model=name, n_ctx=n_ctx)
