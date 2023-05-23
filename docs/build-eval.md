@@ -1,8 +1,10 @@
 # Building an eval
 
+**Important: Please note that we are currently not accepting Evals with custom code!** While we ask you to not submit such evals at the moment, you can still submit modelgraded evals with custom modelgraded YAML files.
+
 This document walks through the end-to-end process for building an eval, which is a dataset and a choice of eval class. The `examples` folder contains Jupyter notebooks that follow the steps below to build several academic evals, thus helping to illustrate the overall process.
 
-The steps in this process are building your dataset, registering a new eval with your dataset, and running your eval. Crucially, we assume that you are using an [existing eval template](eval-templates.md) out of the box (if that's not the case, see [this example of building a custom eval](custom-eval.md)). If you are interested in contributing your eval publically, we also include some criteria at the bottom for what we think makes an interesting eval.
+The steps in this process are building your dataset, registering a new eval with your dataset, and running your eval. Crucially, we assume that you are using an [existing eval template](eval-templates.md) out of the box (if that's not the case, see [this example of building a custom eval](custom-eval.md)). If you are interested in contributing your eval publicly, we also include some criteria at the bottom for what we think makes an interesting eval.
 
 We are looking for evals in the following categories:
 
@@ -20,6 +22,11 @@ If you have an eval that falls outside this category but still is a diverse exam
 
 Once you have an eval in mind that you wish to implement, you will need to convert your samples into the right JSON lines (JSONL) format. A JSONL file is just a JSON file with a unique JSON object per line.
 
+You can use the `openai` CLI (available with [OpenAI-Python](https://github.com/openai/openai-python)) to transform data from some common file types into JSONL:
+``` 
+openai tools fine_tunes.prepare_data -f data[.csv, .json, .txt, .xlsx or .tsv]
+```
+
 We include some examples of JSONL eval files in [registry/data/README.md](../evals/registry/data/README.md)
 
 Each JSON object will represent one data point in your eval. The keys you need in the JSON object depend on the eval template. All templates expect an `"input"` key which is the prompt, ideally specified in [chat format](https://platform.openai.com/docs/guides/chat/introduction) (though strings are also supported). We recommend chat format even if you are evaluating non chat models. If you are evaluating both chat and non chat models, we handle the conversion between chat formatted prompts and raw string prompts (see the conversion logic [here](../evals/prompt/base.py)).
@@ -28,7 +35,7 @@ For the basic evals `Match`, `Includes`, and `FuzzyMatch`, the other required ke
 
 We have implemented small subsets of the [CoQA](https://stanfordnlp.github.io/coqa/) dataset for various eval templates to illustrate how the data should be formatted. See [`coqa/match.jsonl`](../evals/registry/data/coqa/match.jsonl) for an example of data that is suitable for the `Match` basic eval template and [`coqa/samples.jsonl`](../evals/registry/data/coqa/samples.jsonl) for data that is suitable for `fact` and `closedqa` model-graded evals. Note that even though these two model-graded evals expect different keys, we can include the superset of keys in our data in order to support both evals.
 
-If the dataset file is on your local machine, put the `jsonl` file in `evals/registry/evals/data/<eval_name>/samples.jsonl`. If it is in Cloud Object Storage, we support path-style URLs for the major clouds (for your personal use only, we will not accept PRs with cloud URLs).
+If the dataset file is on your local machine, put the `jsonl` file in `evals/registry/data/<eval_name>/samples.jsonl`. If it is in Cloud Object Storage, we support path-style URLs for the major clouds (for your personal use only, we will not accept PRs with cloud URLs).
 
 ## Registering the eval
 
@@ -55,7 +62,7 @@ In general, running the same eval name against the same model should always give
 
 ## Running the eval
 
-You can now run your eval on your data from the CLI with your choice of model:
+You can now run your eval on your data from the CLI with your choice of model or completion function:
 ```
 oaieval gpt-3.5-turbo <eval_name>
 ```
