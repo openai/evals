@@ -1,0 +1,9 @@
+japanese-number-reading:
+  id: japanese-number-reading.dev.v0
+  description: Test the model's ability to translate japanese written number into arabic numerals.
+  metrics: [accuracy]
+
+japanese-number-reading.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: japanese_number_reading/japanese_number_reading.jsonl

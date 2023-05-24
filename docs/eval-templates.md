@@ -8,7 +8,7 @@ In cases where the desired model response has very little variation, such as ans
 
 For a model completion `a` and a reference list of correct answers `B`, the following evals implement:
 - [`basic/match.py:Match`](../evals/elsuite/basic/match.py): `any([b.startswith(a) for b in B])`
-- [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(a in b) for b in B])`
+- [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(b in a) for b in B])`
 - [`basic/fuzzy_match.py:FuzzyMatch`](../evals/elsuite/basic/fuzzy_match.py): `any([(a in b or b in a) for b in B])`
 
 Which eval template you use will depend on your use case. It is always recommended that you inspect the completions from your model, as this will help you determine how and whether to tweak your prompt (or your reference answers) and pick your eval template. Academic benchmarks oftentimes fit the mold of these basic evals, and we have implemented several end-to-end examples of academic evals as Jupyter notebooks in the `examples` folder.
