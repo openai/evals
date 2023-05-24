@@ -28,6 +28,13 @@ dependencies = [
     "setuptools_scm",
 ]
 
+[project.optional-dependencies]
+formatters = [
+    "black",
+    "isort",
+    "autoflake"
+]
+
 [project.scripts]
 oaieval = "evals.cli.oaieval:main"
 oaievalset = "evals.cli.oaievalset:main"

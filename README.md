@@ -60,6 +60,12 @@ pip install -e .
 
 Using `-e`, changes you make to your eval will be reflected immediately without having to reinstall.
 
+Optionally, you can install the formatters for pre-committing with:
+
+```sh
+pip install -e .[formatters]
+```
+
 ### Running evals
 
 If you don't want to contribute new evals, but simply want to run them locally, you can install the evals package via pip:
