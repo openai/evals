@@ -1,0 +1,8 @@
+constrained_set_reasoning:
+  id: constrained_set_reasoning.dev.v0
+  metrics: [accuracy]
+
+constrained_set_reasoning.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: constrained_set_reasoning/samples.jsonl
