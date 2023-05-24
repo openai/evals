@@ -1,0 +1,8 @@
+count-symbols:
+  id: count-symbols.dev.v0
+  metrics: [accuracy]
+
+count-symbols.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: count-symbols/samples.jsonl
