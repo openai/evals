@@ -127,7 +127,7 @@ class Registry:
         return make_object(spec.cls, **(spec.args if spec.args else {}))
 
     def _dereference(
-        self, name: str, d: dict[str, Any], object: str, type: Type[T], **kwargs: dict
+        self, name: str, d: RawRegistry, object: str, type: Type[T], **kwargs: dict
     ) -> T | None:
         if not name in d:
             logger.warning(
