@@ -34,3 +34,6 @@ dependencies = [
 [project.scripts]
 oaieval = "evals.cli.oaieval:main"
 oaievalset = "evals.cli.oaievalset:main"
+
+[tool.setuptools]
+packages = ["evals"]
