@@ -1,0 +1,10 @@
+logic-liar-paradox:
+  id: logic-liar-paradox.dev.v0
+  description: An array of Liar Paradox-based evals, examining the model's proficiency in navigating linguistic nuances and logical reasoning within self-referential statements.
+  metrics: [accuracy]
+logic-liar-paradox.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: logic-liar-paradox/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
