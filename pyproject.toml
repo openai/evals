@@ -27,7 +27,8 @@ dependencies = [
     "matplotlib",
     "pytest",
     "setuptools_scm",
-    "langchain"
+    "langchain",
+    "types-PyYAML",
 ]
 
 [project.scripts]
