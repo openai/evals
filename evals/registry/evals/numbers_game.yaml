@@ -5,4 +5,4 @@ numbers_game:
 numbers_game.sample.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: numbers_game/sample.jsonl
+          samples_jsonl: numbers_game/samples:.jsonl
