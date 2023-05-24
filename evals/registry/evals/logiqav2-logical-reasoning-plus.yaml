@@ -1,5 +1,6 @@
 logiqav2-logical-reasoning-plus:
   id: logiqav2-logical-reasoning-plus.dev.v0
+  description: logical reasoning instruction for the logiqav2 plus dataset
   metrics: [accuracy]
 logiqav2-logical-reasoning-plus.dev.v0:
   class: evals.elsuite.basic.match:Match
