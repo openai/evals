@@ -1,8 +1,10 @@
 # Building an eval
 
+**Important: Please note that we are currently not accepting Evals with custom code!** While we ask you to not submit such evals at the moment, you can still submit modelgraded evals with custom modelgraded YAML files.
+
 This document walks through the end-to-end process for building an eval, which is a dataset and a choice of eval class. The `examples` folder contains Jupyter notebooks that follow the steps below to build several academic evals, thus helping to illustrate the overall process.
 
-The steps in this process are building your dataset, registering a new eval with your dataset, and running your eval. Crucially, we assume that you are using an [existing eval template](eval-templates.md) out of the box (if that's not the case, see [this example of building a custom eval](custom-eval.md)). If you are interested in contributing your eval publically, we also include some criteria at the bottom for what we think makes an interesting eval.
+The steps in this process are building your dataset, registering a new eval with your dataset, and running your eval. Crucially, we assume that you are using an [existing eval template](eval-templates.md) out of the box (if that's not the case, see [this example of building a custom eval](custom-eval.md)). If you are interested in contributing your eval publicly, we also include some criteria at the bottom for what we think makes an interesting eval.
 
 We are looking for evals in the following categories:
 
@@ -19,6 +21,11 @@ If you have an eval that falls outside this category but still is a diverse exam
 ## Formatting your data
 
 Once you have an eval in mind that you wish to implement, you will need to convert your samples into the right JSON lines (JSONL) format. A JSONL file is just a JSON file with a unique JSON object per line.
+
+You can use the `openai` CLI (available with [OpenAI-Python](https://github.com/openai/openai-python)) to transform data from some common file types into JSONL:
+``` 
+openai tools fine_tunes.prepare_data -f data[.csv, .json, .txt, .xlsx or .tsv]
+```
 
 We include some examples of JSONL eval files in [registry/data/README.md](../evals/registry/data/README.md)
 
@@ -55,7 +62,7 @@ In general, running the same eval name against the same model should always give
 
 ## Running the eval
 
-You can now run your eval on your data from the CLI with your choice of model:
+You can now run your eval on your data from the CLI with your choice of model or completion function:
 ```
 oaieval gpt-3.5-turbo <eval_name>
 ```
