@@ -3,6 +3,6 @@ detect-hshd:
   metrics: [accuracy]
 
 detect-hshd.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
   args:
     samples_jsonl: detect-hshd/detect-hshd.jsonl
