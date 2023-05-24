@@ -3,7 +3,7 @@ binary_count:
   metrics: [accuracy]
 
 binary_count.dev.v0:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: binary_count/samples.jsonl
 
