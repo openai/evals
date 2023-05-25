@@ -5,7 +5,7 @@ import argparse
 import logging
 import shlex
 import sys
-from typing import Any, Mapping, Optional, Type, Union, cast
+from typing import Any, Mapping, Optional, Union, cast
 
 import openai
 
@@ -42,7 +42,11 @@ def get_parser() -> argparse.ArgumentParser:
         "--log_to_file", type=str, default=None, help="Log to a file instead of stdout"
     )
     parser.add_argument(
-        "--registry_path", type=str, default=None, action="append", help="Path to the registry"
+        "--registry_path",
+        type=str,
+        default=None,
+        action="append",
+        help="Path to the registry",
     )
     parser.add_argument("--debug", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--local-run", action=argparse.BooleanOptionalAction, default=True)
@@ -126,14 +130,16 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     else:
         recorder = evals.record.Recorder(record_path, run_spec=run_spec)
 
-    api_extra_options = {}
+    api_extra_options: dict[str, Any] = {}
     if not args.cache:
         api_extra_options["cache_level"] = 0
 
     run_url = f"{run_spec.run_id}"
     logger.info(_purple(f"Run started: {run_url}"))
 
-    def parse_extra_eval_params(param_str: Optional[str]) -> Mapping[str, Any]:
+    def parse_extra_eval_params(
+        param_str: Optional[str],
+    ) -> Mapping[str, Union[str, int, float]]:
         """Parse a string of the form "key1=value1,key2=value2" into a dict."""
         if not param_str:
             return {}
@@ -154,8 +160,8 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
 
     extra_eval_params = parse_extra_eval_params(args.extra_eval_params)
 
-    eval_class: Type[Eval] = registry.get_class(eval_spec)
-    eval = eval_class(
+    eval_class = registry.get_class(eval_spec)
+    eval: Eval = eval_class(
         completion_fns=completion_fn_instances,
         seed=args.seed,
         name=eval_name,
