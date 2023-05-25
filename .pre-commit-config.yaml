@@ -3,7 +3,7 @@ repos:
     rev: 'v1.3.0'
     hooks:
       - id: mypy
-        args: ["--config-file=mypy.ini", "--no-site-packages", "."]
+        args: ["--config-file=mypy.ini", "--no-site-packages"]
 
   - repo: https://github.com/psf/black
     rev: 22.8.0
