@@ -1,5 +1,6 @@
 logiqa-logical-reasoning-plus:
   id: logiqa-logical-reasoning-plus.dev.v0
+  description: logical reasoning instruction or the logiqa plus dataset
   metrics: [accuracy]
 logiqa-logical-reasoning-plus.dev.v0:
   class: evals.elsuite.basic.match:Match
