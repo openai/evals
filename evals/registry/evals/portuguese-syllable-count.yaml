@@ -1,5 +1,6 @@
 portuguese-syllable-count:
   id: portuguese-syllable-count.dev.v0
+  description: Evaluates how many syllabels a given word has.
   metrics:
     - accuracy
 
