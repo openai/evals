@@ -1,0 +1,8 @@
+emotional-intelligence:
+  id: emotional-intelligence.dev.v0
+  description: Test the AI's ability to understand and manage emotional situations, using modified items from the well-validated STEU and STEM (MacCann & Roberts, 2008).
+  metrics: [accuracy]
+emotional-intelligence.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: emotional-intelligence/samples.jsonl

@@ -18,10 +18,5 @@ closedqa:
     "Y": 1.0
     "N": 0.0
   choice_strings: 'YN'
-  args:
-    criteria:
-      relevance: "relevance: Is the submission referring to a real quote from the text?"
-      conciseness: "conciseness: Is the answer concise and to the point?"
-      correct: "correctness: Is the answer correct?"
   input_outputs:
     input: "completion"

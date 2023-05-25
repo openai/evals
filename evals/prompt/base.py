@@ -19,7 +19,7 @@ OpenAIChatMessage = Dict[str, str]  # A message is a dictionary with "role" and 
 OpenAICreateChatPrompt = List[OpenAIChatMessage]  # A chat log is a list of messages
 
 
-def chat_prompt_to_text_prompt(prompt: OpenAICreateChatPrompt) -> str:
+def chat_prompt_to_text_prompt(prompt: OpenAICreateChatPrompt, for_completion: bool = True) -> str:
     """
     Render a chat prompt as a text prompt. User and assistant messages are separated by newlines
     and prefixed with "User: " and "Assistant: ", respectively, unless there is only one message.
@@ -44,14 +44,15 @@ def chat_prompt_to_text_prompt(prompt: OpenAICreateChatPrompt) -> str:
         prefix = chat_to_prefixes.get(role, role.capitalize() + ": ")
         content = msg["content"]
         text += f"{prefix}{content}\n"
-    text += "Assistant: "
+    if for_completion:
+        text += "Assistant: "
     return text.lstrip()
 
 
-def text_prompt_to_chat_prompt(prompt: str) -> OpenAICreateChatPrompt:
+def text_prompt_to_chat_prompt(prompt: str, role: str = "system") -> OpenAICreateChatPrompt:
     assert isinstance(prompt, str), f"Expected a text prompt, got {prompt}"
     return [
-        {"role": "system", "content": prompt},
+        {"role": role, "content": prompt},
     ]
 
 
@@ -63,10 +64,9 @@ class Prompt(ABC):
     """
 
     @abstractmethod
-    def to_openai_create_prompt(self):
+    def to_formatted_prompt(self):
         """
-        Return the actual data to be passed as the `prompt` field to either `openai.ChatCompletion.create`,
-        if the model is a chat model, or `openai.Completion.create` otherwise.
+        Return the actual data to be passed as the `prompt` field to your model.
         See the above types to see what each API call is able to handle.
         """
 
@@ -81,12 +81,12 @@ class CompletionPrompt(Prompt):
     A `Prompt` object that wraps prompts to be compatible with non chat models, which use `openai.Completion.create`.
     """
 
-    raw_prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt]
+    raw_prompt: Union[str, OpenAICreateChatPrompt]
 
-    def _render_chat_prompt_as_text(self, prompt: OpenAICreateChatPrompt) -> OpenAICreatePrompt:
+    def _render_chat_prompt_as_text(self, prompt: OpenAICreateChatPrompt) -> str:
         return chat_prompt_to_text_prompt(prompt)
 
-    def to_openai_create_prompt(self) -> OpenAICreatePrompt:
+    def to_formatted_prompt(self) -> str:
         if is_chat_prompt(self.raw_prompt):
             return self._render_chat_prompt_as_text(self.raw_prompt)
         return self.raw_prompt
@@ -109,7 +109,7 @@ class ChatCompletionPrompt(Prompt):
         """
         return text_prompt_to_chat_prompt(prompt)
 
-    def to_openai_create_prompt(self) -> OpenAICreateChatPrompt:
+    def to_formatted_prompt(self) -> OpenAICreateChatPrompt:
         if is_chat_prompt(self.raw_prompt):
             return self.raw_prompt
         return self._render_text_as_chat_prompt(self.raw_prompt)

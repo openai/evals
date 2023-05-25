@@ -1,0 +1,11 @@
+rucola:
+  id: rucola.test.v0
+  description: .
+  metrics: [accuracy]
+
+rucola.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: rucola/samples.jsonl
+    few_shot_jsonl: rucola/few_shot.jsonl
+    num_few_shot: 4
