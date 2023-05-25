@@ -1,0 +1,9 @@
+color_theory_complementary:
+  id: color_theory_complementary.dev.v0
+  description: Test the model's ability to accurately recognize complementary colors in the color theory.
+  metrics: [accuracy]
+
+color_theory_complementary.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: color_theory/complementary.jsonl
