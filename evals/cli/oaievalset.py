@@ -5,7 +5,7 @@ import argparse
 import json
 import subprocess
 from pathlib import Path
-from typing import Optional
+from typing import Optional, cast
 
 from evals.registry import Registry
 
@@ -61,8 +61,15 @@ def get_parser() -> argparse.ArgumentParser:
     return parser
 
 
+class OaiEvalSetArguments(argparse.Namespace):
+    model: str
+    eval_set: str
+    resume: bool
+    exit_on_error: bool
+
+
 def run(
-    args: argparse.Namespace,
+    args: OaiEvalSetArguments,
     unknown_args: list[str],
     registry: Optional[Registry] = None,
     run_command: str = "oaieval",
@@ -72,7 +79,7 @@ def run(
     eval_set = registry.get_eval_set(args.eval_set) if args.eval_set else None
     if eval_set:  # TODO)) Log it
         for eval in registry.get_evals(eval_set.evals):
-            if not eval:
+            if not eval or not eval.key:
                 continue  # TODO)) Log it
 
             command = [run_command, args.model, eval.key] + unknown_args
@@ -107,7 +114,7 @@ def run(
 def main() -> None:
     parser = get_parser()
     args, unknown_args = parser.parse_known_args()
-    run(args, unknown_args)
+    run(cast(OaiEvalSetArguments, args), unknown_args)
 
 
 if __name__ == "__main__":
