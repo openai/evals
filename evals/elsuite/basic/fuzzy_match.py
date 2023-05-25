@@ -23,7 +23,6 @@ class FuzzyMatch(evals.Eval):
     def eval_sample(self, test_sample, rng):
         del rng
         prompt, correct_answers = test_sample["input"], test_sample["ideal"]
-
         if not isinstance(correct_answers, list):
             correct_answers = [correct_answers]
 
