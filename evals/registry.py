@@ -128,7 +128,7 @@ class Registry:
 
     def _dereference(
         self, name: str, d: RawRegistry, object: str, type: Type[T], **kwargs: dict
-    ) -> T | None:
+    ) -> Optional[T]:
         if not name in d:
             logger.warning(
                 (
@@ -138,7 +138,7 @@ class Registry:
             )
             return None
 
-        def get_alias() -> str | None:
+        def get_alias() -> Optional[str]:
             if isinstance(d[name], str):
                 return d[name]
             if isinstance(d[name], dict) and "id" in d[name]:
@@ -163,7 +163,7 @@ class Registry:
         except TypeError as e:
             raise TypeError(f"Error while processing {object} '{name}': {e}")
 
-    def get_modelgraded_spec(self, name: str, **kwargs: dict) -> ModelGradedSpec | None:
+    def get_modelgraded_spec(self, name: str, **kwargs: dict) -> Optional[ModelGradedSpec]:
         assert name in self._modelgraded_specs, (
             f"Modelgraded spec {name} not found. "
             f"Closest matches: {difflib.get_close_matches(name, self._modelgraded_specs.keys(), n=5)}"
@@ -172,16 +172,16 @@ class Registry:
             name, self._modelgraded_specs, "modelgraded spec", ModelGradedSpec, **kwargs
         )
 
-    def get_completion_fn(self, name: str) -> CompletionFnSpec | None:
+    def get_completion_fn(self, name: str) -> Optional[CompletionFnSpec]:
         return self._dereference(name, self._completion_fns, "completion_fn", CompletionFnSpec)
 
-    def get_eval(self, name: str) -> EvalSpec | None:
+    def get_eval(self, name: str) -> Optional[EvalSpec]:
         return self._dereference(name, self._evals, "eval", EvalSpec)
 
-    def get_eval_set(self, name: str) -> EvalSetSpec | None:
+    def get_eval_set(self, name: str) -> Optional[EvalSetSpec]:
         return self._dereference(name, self._eval_sets, "eval set", EvalSetSpec)
 
-    def get_evals(self, patterns: Sequence[str]) -> Iterator[EvalSpec | None]:
+    def get_evals(self, patterns: Sequence[str]) -> Iterator[Optional[EvalSpec]]:
         # valid patterns: hello, hello.dev*, hello.dev.*-v1
         def get_regexp(pattern: str) -> re.Pattern[str]:
             pattern = pattern.replace(".", "\\.")
@@ -194,14 +194,14 @@ class Registry:
             if any(map(lambda regexp: regexp.match(name), regexps)):
                 yield self.get_eval(name)
 
-    def get_base_evals(self) -> list[BaseEvalSpec | None]:
-        base_evals: list[BaseEvalSpec | None] = []
+    def get_base_evals(self) -> list[Optional[BaseEvalSpec]]:
+        base_evals: list[Optional[BaseEvalSpec]] = []
         for name, spec in self._evals.items():
             if name.count(".") == 0:
                 base_evals.append(self.get_base_eval(name))
         return base_evals
 
-    def get_base_eval(self, name: str) -> BaseEvalSpec | None:
+    def get_base_eval(self, name: str) -> Optional[BaseEvalSpec]:
         if not name in self._evals:
             return None
 
