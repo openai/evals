@@ -1,0 +1,9 @@
+japanese_city_name_pronunciation:
+  id: japanese_city_name_pronunciation.dev.v0
+  description: Test the model's ability to answer the correct pronunciation of Japanese cities in hiragana(phonetic characters of Japanese).
+  metrics: [accuracy]
+
+japanese_city_name_pronunciation.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: japanese_city_name_pronunciation/samples.jsonl
