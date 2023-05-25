@@ -1,0 +1,8 @@
+ph-calculation:
+  id: ph-calculation.dev.v0
+  description: Test the model's ability to apply basic mathematics to chemistry problems.
+  metrics: [accuracy]
+ph-calculation.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: ph_calculation/samples.jsonl

@@ -26,16 +26,6 @@ coqa-fact-expl.dev.v0:
     eval_type: classify_cot
     modelgraded_spec: fact
 
-coqa-closedqa:
-  id: coqa-closedqa.dev.v0
-  metrics: [accuracy]
-coqa-closedqa.dev.v0:
-  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
-  args:
-    samples_jsonl: coqa/samples.jsonl
-    modelgraded_spec: closedqa
-
-# (same as above, but only evaluate criteria=correct)
 coqa-closedqa-correct:
   id: coqa-closedqa-correct.dev.v0
   metrics: [accuracy]
@@ -45,7 +35,26 @@ coqa-closedqa-correct.dev.v0:
     samples_jsonl: coqa/samples.jsonl
     modelgraded_spec: closedqa
     modelgraded_spec_args:
-      criteria:
-        correct: "correctness: Is the answer correct?"
+      criteria: "correctness: Is the answer correct?"
 
+coqa-closedqa-relevance:
+  id: coqa-closedqa-relevance.dev.v0
+  metrics: [accuracy]
+coqa-closedqa-relevance.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: coqa/samples.jsonl
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria: "relevance: Is the submission referring to a real quote from the text?"
 
+coqa-closedqa-conciseness:
+  id: coqa-closedqa-conciseness.dev.v0
+  metrics: [accuracy]
+coqa-closedqa-conciseness.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: coqa/samples.jsonl
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria: "conciseness: Is the answer concise and to the point?"

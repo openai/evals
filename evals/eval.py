@@ -3,7 +3,6 @@ This file defines the base class for evals.
 """
 import abc
 import asyncio
-import concurrent.futures
 import logging
 import os
 import random
@@ -12,7 +11,9 @@ from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple
 
 from tqdm import tqdm
 
-from .base import ModelSpec, ModelSpecs
+from evals.api import CompletionFn
+
+from .data import get_jsonl
 from .record import RecorderBase
 from .registry import Registry
 
@@ -51,32 +52,29 @@ class Eval(abc.ABC):
 
     def __init__(
         self,
-        model_specs: ModelSpecs,
+        completion_fns: list[CompletionFn],
         seed: int = 20220722,
         name: str = "no_name_eval.default",
         registry: Optional[Registry] = None,
+        samples_jsonl: Optional[str] = None,
     ):
         splits = name.split(".")
         if len(splits) < 2:
             raise ValueError(f"Eval name must at least have <base_eval>.<split>. Got name {name}")
 
-        self.model_specs = model_specs
+        self.completion_fns = completion_fns
         self.seed = seed
         self.name = name
         self.registry = registry or Registry()
+        self.samples_jsonl = samples_jsonl
 
     def eval_sample(self, sample: Any, rng: random.Random):
         raise NotImplementedError()
 
-    @classmethod
-    def create_and_run(cls, model_specs: ModelSpecs, *args, **kwargs) -> Dict[str, float]:
-        logging.info(f"Running {cls.__name__} with {model_specs}, args: {args}, kwargs: {kwargs}")
-        return cls(model_specs).run(*args, **kwargs)
-
     @property
-    def model_spec(self) -> ModelSpec:
-        """Helper for more ergonomic access to a single model."""
-        return self.model_specs.completion
+    def completion_fn(self) -> CompletionFn:
+        """Helper for more ergonomic access to a single CompletionFn."""
+        return self.completion_fns[0]
 
     @abc.abstractmethod
     def run(self, recorder: RecorderBase) -> Dict[str, float]:
@@ -89,6 +87,7 @@ class Eval(abc.ABC):
         samples: List[Any],
         concurrency: int = 32,
         show_progress: bool = True,
+        **_kwargs: Any,
     ):
         work_items = _index_samples(samples)
         semaphore = asyncio.Semaphore(concurrency)
@@ -109,6 +108,8 @@ class Eval(abc.ABC):
         recorder: RecorderBase,
         samples,
         show_progress=True,
+        record_raw_sample=True,
+        **_kwargs: Any,
     ):
         """
         Evaluate all provided samples in parallel.
@@ -116,7 +117,6 @@ class Eval(abc.ABC):
         work_items = _index_samples(samples)
         threads = int(os.environ.get("EVALS_THREADS", "10"))
         show_progress = bool(os.environ.get("EVALS_SHOW_EVAL_PROGRESS", show_progress))
-        timeout = float(os.environ.get("EVALS_THREAD_TIMEOUT", "40"))
 
         def eval_sample(args):
             """
@@ -126,23 +126,9 @@ class Eval(abc.ABC):
             base_name, split = self.name.split(".")[0:2]
             sample_id = f"{base_name}.{split}.{idx}"
             with recorder.as_default_recorder(sample_id):
-                recorder.record_raw(sample)
                 seed = f"{sample_id}:{self.seed}".encode("utf-8")
                 rng = random.Random(seed)
                 return idx, self.eval_sample(sample, rng)
-
-        def worker_thread(args):
-            """
-            Worker thread for evaluating a single sample.
-            """
-            while True:
-                executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
-                future = executor.submit(eval_sample, args=args)
-                try:
-                    result = future.result(timeout=timeout)
-                    return result
-                except concurrent.futures.TimeoutError as e:
-                    executor.shutdown(wait=False)
 
         with ThreadPool(threads) as pool:
             if os.environ.get("EVALS_SEQUENTIAL", "0") in {"1", "true", "yes"}:
@@ -150,6 +136,14 @@ class Eval(abc.ABC):
                 iter = map(eval_sample, work_items)
             else:
                 logger.info(f"Running in threaded mode with {threads} threads!")
-                iter = pool.imap_unordered(worker_thread, work_items)
+                iter = pool.imap_unordered(eval_sample, work_items)
             idx_and_result = list(tqdm(iter, total=len(work_items), disable=not show_progress))
         return [r for _, r in sorted(idx_and_result)]
+
+    def get_samples(self):
+        if self.samples_jsonl is None:
+            raise ValueError(
+                "To use `get_samples`, you must provide a `samples_jsonl` path." "Got `None`."
+            )
+
+        return get_jsonl(self.samples_jsonl)
