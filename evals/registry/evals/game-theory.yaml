@@ -6,5 +6,5 @@ game-theory:
 game-theory.dev.v0:
   class: evals.elsuite.basic.includes:Includes
   args:
-    samples_jsonl: game_theory/samples.json
+    samples_jsonl: game_theory/samples.jsonl
     ignore_case: true
