@@ -6,8 +6,7 @@ best:
 
     Responses:
     {completion}
-  completion_sample_templates:
-    completion: "{i}. {output}\n"
   choice_strings: from_n
   input_outputs:
     input: completion
+  output_template: "{i}. {output}\n"
