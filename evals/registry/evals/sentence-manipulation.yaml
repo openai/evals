@@ -1,5 +1,6 @@
 sentence-manipulation:
   id: sentence-manipulation.test.v1
+  description: "Ability to rearrange a sentence by word character sum"
   metrics:
     - accuracy
 sentence-manipulation.test.v1:
