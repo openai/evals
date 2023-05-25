@@ -1,0 +1,8 @@
+japanese-national-medical-exam01:
+  id: japanese-national-medical-exam01.dev.v0
+  metrics: [accuracy]
+
+japanese-national-medical-exam01.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: japanese-national-medical-exam01/japanese-national-medical-exam01.jsonl
