@@ -1,5 +1,6 @@
 invalid-json:
   id: invalid-json.test.v1
+  description: Ability to detect valid and invalid JSON
   metrics:
   - accuracy
 invalid-json.test.v1:
