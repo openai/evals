@@ -1,0 +1,8 @@
+ordered-history-events:
+  id: ordered-history-events.dev.v0
+  metrics: [accuracy]
+
+ordered-history-events.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: ordered-history-events/samples.jsonl

@@ -1,0 +1,8 @@
+tetris:
+  id: tetris.dev.v0
+  description: Tests the models ability of spacial awareness by rotating tetris cubes. Tests all 7 classic tetris blocks and performs clockwise and counterclockwise rotations from different starting points.
+  metrics: [accuracy]
+tetris.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: tetris/tetris.jsonl

@@ -1,0 +1,8 @@
+russian_medical:
+  id: russian_medical.dev.v0
+  metrics: [accuracy]
+
+russian_medical.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: russian_medical/samples.jsonl

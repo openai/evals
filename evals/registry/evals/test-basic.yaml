@@ -4,9 +4,7 @@ test-match:
   disclaimer: This is an example disclaimer.
   metrics: [accuracy]
 test-match.s1.simple-v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: test_match/samples.jsonl
+  class: evals.elsuite.test.match:TestMatch
 
 test-fuzzy-match:
   id: test-fuzzy-match.s1.simple-v0
@@ -25,3 +23,13 @@ test-includes.s1.simple-v0:
   class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: test_fuzzy_match/samples.jsonl
+
+test-includes-ignore-case:
+  id: test-includes-ignore-case.s1.simple-v0
+  description: Example eval that uses fuzzy matching to score completions.
+  metrics: [accuracy]
+test-includes-ignore-case.s1.simple-v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: test_fuzzy_match/samples.jsonl
+    ignore_case: true

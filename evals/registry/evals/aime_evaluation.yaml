@@ -1,0 +1,9 @@
+aime_evaluation:
+  id: aime_evaluation.dev.v0
+  description: Test the model's ability to solve math problems from the AIME competition.
+  metrics: [accuracy]
+
+aime_evaluation.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: aime_evaluation/samples.jsonl
