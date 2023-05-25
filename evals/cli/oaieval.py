@@ -50,7 +50,23 @@ def get_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def run(args: argparse.Namespace, registry: Optional[Registry] = None) -> str:
+class OaiEvalArguments(argparse.Namespace):
+    completion_fn: str
+    eval: str
+    extra_eval_params: str
+    max_samples: Optional[int]
+    cache: bool
+    visible: Optional[bool]
+    seed: int
+    user: str
+    record_path: Optional[str]
+    log_to_file: Optional[str]
+    registry_path: Optional[str]
+    debug: bool
+    local_run: bool
+    dry_run: bool
+    dry_run_logging: bool
+
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
 
