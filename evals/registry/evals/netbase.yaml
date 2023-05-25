@@ -1,9 +1,14 @@
 netbase:
-  id: netbase.dev.v0
+  id: netbase.dev.v1
   description: Test the model's common world knowledge. Netbase (netbase.pannous.com) is a collection of almost a billion facts about the world from sources such as Freebase, Wikidata, DBPedia, OpenStreetMap...
   metrics: [accuracy]
 
-netbase.dev.v0:
-  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+netbase.dev.v1:
+#  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+#  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  class: evals.elsuite.basic.approximate:Approximate
   args:
     samples_jsonl: netbase/samples.jsonl
+    tolerance: 0.1 # ±10%
+    common_prompt: "You are a helpful assistant. If you don't know the answer, give a best guess."
+                    " Answer the following question with a single approximate number and no additional text."

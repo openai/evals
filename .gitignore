@@ -4,3 +4,4 @@ evals.egg-info/
 # MacOS folder metadata
 .DS_Store
 .vscode/
+test_netbase.sh
