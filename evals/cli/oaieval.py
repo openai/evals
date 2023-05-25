@@ -5,7 +5,7 @@ import argparse
 import logging
 import shlex
 import sys
-from typing import Any, Mapping, Optional
+from typing import Any, Mapping, Optional, Union
 
 import openai
 
@@ -18,7 +18,7 @@ from evals.registry import Registry
 logger = logging.getLogger(__name__)
 
 
-def _purple(str):
+def _purple(str: str) -> str:
     return f"\033[1;35m{str}\033[0m"
 
 
@@ -50,7 +50,7 @@ def get_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def run(args, registry: Optional[Registry] = None):
+def run(args: argparse.Namespace, registry: Optional[Registry] = None) -> str:
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
 
@@ -83,6 +83,9 @@ def run(args, registry: Optional[Registry] = None):
     }
 
     eval_name = eval_spec.key
+    if eval_name is None:
+        raise Exception("you must provide a eval name")
+
     run_spec = evals.base.RunSpec(
         completion_fns=completion_fns,
         eval_name=eval_name,
@@ -95,6 +98,8 @@ def run(args, registry: Optional[Registry] = None):
         record_path = f"/tmp/evallogs/{run_spec.run_id}_{args.completion_fn}_{args.eval}.jsonl"
     else:
         record_path = args.record_path
+
+    recorder: evals.record.RecorderBase
     if args.dry_run:
         recorder = evals.record.DummyRecorder(run_spec=run_spec, log=args.dry_run_logging)
     elif args.local_run:
@@ -114,7 +119,7 @@ def run(args, registry: Optional[Registry] = None):
         if not param_str:
             return {}
 
-        def to_number(x):
+        def to_number(x: str) -> Union[int, float, str]:
             try:
                 return int(x)
             except:
@@ -150,7 +155,7 @@ def run(args, registry: Optional[Registry] = None):
     return run_spec.run_id
 
 
-def main():
+def main() -> None:
     parser = get_parser()
     args = parser.parse_args(sys.argv[1:])
     logging.basicConfig(
@@ -159,8 +164,10 @@ def main():
         filename=args.log_to_file if args.log_to_file else None,
     )
     logging.getLogger("openai").setLevel(logging.WARN)
-    if hasattr(openai.error, "set_display_cause"):
-        openai.error.set_display_cause()
+
+    # TODO)) why do we need this?
+    if hasattr(openai.error, "set_display_cause"):  # type: ignore
+        openai.error.set_display_cause()  # type: ignore
     run(args)
 
 
