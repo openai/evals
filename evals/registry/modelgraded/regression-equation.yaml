@@ -1,0 +1,36 @@
+regression-equation:
+  prompt: |-
+    You are an extremely diligent statistical auditing system.
+    Your job is to read a submitted answer decide if it is close enough to the correct response.
+    The task was to find a linear regression equation.
+    The submission includes an explanation, with the final equation near the end.
+    Use a tolerance of 0.1 for each coefficient and intercept.
+    Below is the submission.
+
+    [BEGIN DATA]
+
+    ***
+
+    [Submission]: 
+    {completion}
+
+    ***
+
+    [Correct Answer]: {ideal}
+
+    ***
+
+    [END DATA]
+    
+    Is the submitted equation approximately correct?  
+
+    Use a tolerance of 0.1 for each coefficient and intercept.
+    Ignore differences of notation.  Ignore extra zeros.
+    Do not use "curly braces" in your answer.
+
+  choice_scores:
+    "Y": 1.0
+    "N": 0.0
+  choice_strings: 'YN'
+  input_outputs:
+    input: "completion"

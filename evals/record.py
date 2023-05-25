@@ -83,6 +83,7 @@ class RecorderBase:
         self._written_events = 0
         self._flushes_started = 0
         self._event_lock = threading.Lock()
+        self._paused_ids: List[str] = []
         atexit.register(self.flush_events)
 
     @contextlib.contextmanager
@@ -95,6 +96,24 @@ class RecorderBase:
 
     def current_sample_id(self) -> Optional[str]:
         return self._sample_id.get()
+
+    def pause(self):
+        sample_id = self.current_sample_id()
+        with self._event_lock:
+            if sample_id not in self._paused_ids:
+                self._paused_ids.append(sample_id)
+
+    def unpause(self):
+        sample_id = self.current_sample_id()
+        with self._event_lock:
+            if sample_id in self._paused_ids:
+                self._paused_ids.remove(sample_id)
+
+    def is_paused(self, sample_id: str = None):
+        if sample_id is None:
+            sample_id = self.current_sample_id()
+        with self._event_lock:
+            return sample_id in self._paused_ids
 
     def get_events(self, type: str) -> Sequence[Event]:
         with self._event_lock:
@@ -140,6 +159,8 @@ class RecorderBase:
         if sample_id is None:
             raise ValueError("No sample_id set! Either pass it in or use as_default_recorder!")
 
+        if self.is_paused(sample_id):
+            return
         with self._event_lock:
             event = Event(
                 run_id=self.run_spec.run_id,
@@ -292,8 +313,8 @@ class LocalRecorder(RecorderBase):
         super().__init__(run_spec)
         self.event_file_path = log_path
         if log_path is not None:
-            with bf.BlobFile(log_path, "w") as f:
-                f.write(jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n")
+            with bf.BlobFile(log_path, "wb") as f:
+                f.write((jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n").encode("utf-8"))
 
     def _flush_events_internal(self, events_to_write: Sequence[Event]):
         start = time.time()
@@ -303,8 +324,8 @@ class LocalRecorder(RecorderBase):
             logger.error(f"Failed to serialize events: {events_to_write}")
             raise e
 
-        with bf.BlobFile(self.event_file_path, "a") as f:
-            f.writelines(lines)
+        with bf.BlobFile(self.event_file_path, "ab") as f:
+            f.write(b"".join([l.encode("utf-8") for l in lines]))
 
         logger.info(
             f"Logged {len(lines)} rows of events to {self.event_file_path}: insert_time={t(time.time()-start)}"
@@ -314,8 +335,8 @@ class LocalRecorder(RecorderBase):
         self._flushes_done += 1
 
     def record_final_report(self, final_report: Any):
-        with bf.BlobFile(self.event_file_path, "a") as f:
-            f.write(jsondumps({"final_report": final_report}) + "\n")
+        with bf.BlobFile(self.event_file_path, "ab") as f:
+            f.write((jsondumps({"final_report": final_report}) + "\n").encode("utf-8"))
 
         logging.info(f"Final report: {final_report}. Logged to {self.event_file_path}")
 
@@ -329,7 +350,7 @@ class Recorder(RecorderBase):
     def __init__(
         self,
         log_path: Optional[str],
-        run_spec: evals.base.RunSpec,
+        run_spec: RunSpec,
         snowflake_connection: Optional[SnowflakeConnection] = None,
     ) -> None:
         super().__init__(run_spec)
@@ -341,8 +362,8 @@ class Recorder(RecorderBase):
         self._conn = snowflake_connection
 
         if log_path is not None:
-            with bf.BlobFile(log_path, "w") as f:
-                f.write(jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n")
+            with bf.BlobFile(log_path, "wb") as f:
+                f.write((jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n").encode("utf-8"))
 
         query = """
             INSERT ALL INTO runs (run_id, model_name, eval_name, base_eval, split, run_config, settings, created_by, created_at)
@@ -353,7 +374,8 @@ class Recorder(RecorderBase):
             command=query,
             params={
                 "run_id": run_spec.run_id,
-                "model_name": jsondumps(run_spec.model_names),
+                # TODO: model_name -> completion_fns
+                "model_name": jsondumps(dict(completions=run_spec.completion_fns)),
                 "eval_name": run_spec.eval_name,
                 "base_eval": run_spec.base_eval,
                 "split": run_spec.split,
@@ -407,15 +429,15 @@ class Recorder(RecorderBase):
                 )
                 idx_l = idx_r
 
-            with bf.BlobFile(self.event_file_path, "a") as f:
-                f.writelines(lines)
+            with bf.BlobFile(self.event_file_path, "ab") as f:
+                f.write(b"".join([l.encode("utf-8") for l in lines]))
             self._last_flush_time = time.time()
             self._flushes_done += 1
 
     def record_final_report(self, final_report: Any):
         with self._writing_lock:
-            with bf.BlobFile(self.event_file_path, "a") as f:
-                f.write(jsondumps({"final_report": final_report}) + "\n")
+            with bf.BlobFile(self.event_file_path, "ab") as f:
+                f.write((jsondumps({"final_report": final_report}) + "\n").encode("utf-8"))
             query = """
                 UPDATE runs
                 SET final_report = PARSE_JSON(%(final_report)s)
@@ -478,3 +500,15 @@ def record_error(msg: str, error: Exception = None, **extra):
 
 def record_extra(data):
     return default_recorder().record_extra(data)
+
+
+def record_event(type, data=None, sample_id=None):
+    return default_recorder().record_event(type, data, sample_id)
+
+
+def pause():
+    return default_recorder().pause()
+
+
+def unpause():
+    return default_recorder().unpause()

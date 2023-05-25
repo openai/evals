@@ -3,14 +3,17 @@ test:
     - test-match
     - test-fuzzy-match
     - test-includes
+    - test-includes-ignore-case
     - coqa-match
     - coqa-fact
     - coqa-fact-expl
-    - coqa-closedqa
+    - coqa-closedqa-correct
+    - coqa-closedqa-relevance
+    - coqa-closedqa-conciseness
     - logic-fact
-    - joke-animals
-    - joke-animals-likert
     - joke-fruits
+    - joke-fruits-v2
+    - joke-fruits-likert
     - joke-fruits-meta
     - joke-fruits-expl-meta
     - diversity
