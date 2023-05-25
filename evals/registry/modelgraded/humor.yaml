@@ -14,6 +14,21 @@ humor:
   input_outputs:
     input: completion
 
+humor_out_message:
+  prompt: |-
+    Was the assistant's (your) last response above to the user funny?
+  choice_scores:
+    "Yes": 1.0
+    "No": 0.0
+    "Unsure": 0.5
+  choice_strings:
+    - "Yes"
+    - "No"
+    - "Unsure"
+  format_type: out_message
+  input_outputs:
+    input: completion
+
 humor_likert:
   prompt: |-
     Is the following funny?

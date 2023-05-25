@@ -1,0 +1,9 @@
+compare-countries-area:
+  id: compare-countries-area.dev.v0
+  description: Test the model's ability to determine which country has the largest area.
+  metrics: [accuracy]
+
+compare-countries-area.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: compare-countries-area/samples.jsonl

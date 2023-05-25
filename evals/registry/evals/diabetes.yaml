@@ -1,0 +1,8 @@
+diabetes:
+  id: diabetes.dev.v0
+  metrics: [accuracy]
+
+diabetes.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: diabetes/samples.jsonl

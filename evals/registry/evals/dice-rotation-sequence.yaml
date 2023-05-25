@@ -1,0 +1,10 @@
+dice-rotation-sequence:
+  id: dice-rotation-sequence.dev.v0
+  description: Test the model's ability to follow simple rotations of a 6-sided die, and determine the number on the front face after a series of rotations.
+  metrics: [accuracy]
+
+dice-rotation-sequence.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: dice-rotation-sequence/samples.jsonl
+
