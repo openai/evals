@@ -1,5 +1,6 @@
 matrix_mult_rows:
   id: matrix_mult_rows.dev.v0
+  description: Test the model's mathematical ability to infer what is needed to multiply two matrices.
   metrics: [accuracy]
 
 matrix_mult_rows.dev.v0:
