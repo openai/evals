@@ -1,8 +1,8 @@
 french_riggle:
-  id: french_riddle.v0
+  id: french_riddle.dev.v0
   description: Composite task that involves understanding of the overall context, general coherence between each steps and words associations that make up a new word in French. 
   metrics: [accuracy]
-french_riddle.v0:
+french_riddle.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: french_riddle/samples.jsonl
