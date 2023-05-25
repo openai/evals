@@ -1,0 +1,9 @@
+invoices:
+  id: invoices.dev.v0
+  description: Test the model's ability to parse real-world data, with an emphasis on numerical data
+  metrics: [accuracy]
+invoices.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: invoices/match.jsonl
+

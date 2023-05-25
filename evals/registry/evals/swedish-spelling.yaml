@@ -1,0 +1,9 @@
+swedish-spelling:
+  id: swedish-spelling.dev.v0
+  description: Test the model's ability to identify misspelled Swedish words.
+  metrics: [accuracy]
+
+swedish-spelling.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: swedish-spelling/samples.jsonl
