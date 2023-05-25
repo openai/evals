@@ -5,7 +5,7 @@ import argparse
 import logging
 import shlex
 import sys
-from typing import Any, Mapping, Optional, Union
+from typing import Any, Mapping, Optional, Type, Union, cast
 
 import openai
 
@@ -13,6 +13,7 @@ import evals
 import evals.api
 import evals.base
 import evals.record
+from evals.eval import Eval
 from evals.registry import Registry
 
 logger = logging.getLogger(__name__)
@@ -67,6 +68,8 @@ class OaiEvalArguments(argparse.Namespace):
     dry_run: bool
     dry_run_logging: bool
 
+
+def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
 
@@ -77,7 +80,7 @@ class OaiEvalArguments(argparse.Namespace):
 
     registry = registry or Registry()
     if args.registry_path:
-        registry.add_registry_paths(args.registry_path)
+        registry.add_registry_paths([args.registry_path])
 
     eval_spec = registry.get_eval(args.eval)
     assert (
@@ -151,7 +154,7 @@ class OaiEvalArguments(argparse.Namespace):
 
     extra_eval_params = parse_extra_eval_params(args.extra_eval_params)
 
-    eval_class = registry.get_class(eval_spec)
+    eval_class: Type[Eval] = registry.get_class(eval_spec)
     eval = eval_class(
         completion_fns=completion_fn_instances,
         seed=args.seed,
@@ -173,7 +176,7 @@ class OaiEvalArguments(argparse.Namespace):
 
 def main() -> None:
     parser = get_parser()
-    args = parser.parse_args(sys.argv[1:])
+    args = cast(OaiEvalArguments, parser.parse_args(sys.argv[1:]))
     logging.basicConfig(
         format="[%(asctime)s] [%(filename)s:%(lineno)d] %(message)s",
         level=logging.INFO,
