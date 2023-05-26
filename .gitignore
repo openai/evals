@@ -1,8 +1,0 @@
-__pycache__/
-evals.egg-info/
-.gitignore
-setup_env
-
-# MacOS folder metadata
-.DS_Store
-.vscode/
