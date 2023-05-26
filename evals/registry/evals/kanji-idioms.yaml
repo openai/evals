@@ -1,0 +1,9 @@
+kanji-idioms:
+  id: kanji-idioms.test.v0
+  description: Test the model's ability to recognize kanji idioms.
+  metrics: [accuracy]
+
+kanji-idioms.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: kanji-idioms/samples.jsonl
