@@ -1,0 +1,9 @@
+superficial-patterns:
+  id: superficial-patterns.dev.v0
+  metrics: [accuracy]
+superficial-patterns.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: superficialpatterns/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact

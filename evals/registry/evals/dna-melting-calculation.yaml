@@ -1,0 +1,8 @@
+dna-melting-calculation:
+  id: dna-melting-calculation.dev.v0
+  description: Test the model's ability to solve DNA melting temperature problems.
+  metrics: [accuracy]
+dna-melting-calculation.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: dna_melting_calculation/samples.jsonl
