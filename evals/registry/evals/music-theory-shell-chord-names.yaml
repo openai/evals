@@ -1,0 +1,8 @@
+music-theory-shell-chord-names:
+  id: music-theory-shell-chord-names.dev.v0
+  description: Test the model's ability to identify four notes to a chord
+  metrics: [accuracy]
+music-theory-shell-chord-names.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: music_theory/music_theory_shell_chord_names.jsonl

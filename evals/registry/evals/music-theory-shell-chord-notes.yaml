@@ -1,0 +1,8 @@
+music-theory-shell-chord-notes:
+  id: music-theory-shell-chord-notes.dev.v0
+  description: Test the model's ability to spell out the notes in a shell chord
+  metrics: [accuracy]
+music-theory-shell-chord-notes.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: music_theory/music_theory_shell_chord_notes.jsonl
