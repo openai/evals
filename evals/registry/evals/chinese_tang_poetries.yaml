@@ -1,0 +1,8 @@
+chinese_tang_poetries:
+  id: chinese_tang_poetries.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate the mobel's ability of identifying the accurate author of Chinese Tang Poetries.
+chinese_tang_poetries.dev.match-v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_tang_poetries/sample.jsonl
