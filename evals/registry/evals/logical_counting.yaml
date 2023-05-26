@@ -1,0 +1,8 @@
+logical_counting:
+  id: logical_counting.dev.v0
+  metrics: [accuracy]
+
+logical_counting.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: logical_counting/samples.jsonl
