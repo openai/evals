@@ -61,12 +61,14 @@ def get_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def run(args, unknown_args, registry: Optional[Registry] = None) -> None:
+def run(
+    args, unknown_args, registry: Optional[Registry] = None, run_command: str = "oaieval"
+) -> None:
     registry = registry or Registry()
     commands: list[Task] = []
     eval_set = registry.get_eval_set(args.eval_set)
     for eval in registry.get_evals(eval_set.evals):
-        command = ["oaieval", args.model, eval.key] + unknown_args
+        command = [run_command, args.model, eval.key] + unknown_args
         if command in commands:
             continue
         commands.append(command)
