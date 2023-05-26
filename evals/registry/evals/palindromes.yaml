@@ -1,0 +1,7 @@
+palindromes:
+  id: palindromes.val.v0
+  metrics: [accuracy]
+palindromes.val.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: palindromes/samples.jsonl
