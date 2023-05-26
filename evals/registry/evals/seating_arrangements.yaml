@@ -1,5 +1,5 @@
 seating_arrangements:
-  id: seating_arrangements.v0
+  id: seating_arrangements.dev.v0
   description: Test the model's spatial reasoning ability using seating arrangement questions with limited solution sets.
   metrics: [accuracy]
 seating_arrangements.dev.v0:
