@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f3db532ea11f068ec5f88f7f824c18d07a7ae894aa52d55fc2152f5b1db2d892
-size 339
+arithmetical_puzzles:
+  id: arithmetical_puzzles.dev.v0
+  description: Test the model's ability to solve complex arithmetical puzzles stated in natural language.
+  metrics: [accuracy]
+
+
+arithmetical_puzzles.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: arithmetical_puzzles/arithmetical_puzzles.jsonl
