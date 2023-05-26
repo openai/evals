@@ -1,0 +1,8 @@
+logic_bat_ball_problem:
+  id: logic_bat_ball_problem.dev.v0
+  metrics: [accuracy]
+
+logic_bat_ball_problem.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: logic_bat_ball_problem/samples.jsonl
