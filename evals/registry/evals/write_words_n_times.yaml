@@ -1,0 +1,8 @@
+write_words_n_times:
+  id: write_words_n_times.dev.v0
+  metrics: [accuracy]
+
+write_words_n_times.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: write_words_n_times/samples.jsonl
