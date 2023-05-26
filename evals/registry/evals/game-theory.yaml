@@ -1,6 +1,6 @@
 game-theory:
   id: game-theory.dev.v0
-  description: Reason about strategies in normal-form games such as Paper-Rock-Scissors
+  description: Practical reasoning about normal-form games such as Paper-Rock-Scissors
   metrics: [accuracy]
 
 game-theory.dev.v0:
