@@ -1,0 +1,8 @@
+count_words:
+  id: count_words.dev.v0
+  metrics: [accuracy]
+
+count_words.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: count_words/count_words.jsonl
