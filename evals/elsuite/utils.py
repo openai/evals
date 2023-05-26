@@ -22,7 +22,7 @@ def get_answer(text, answer_prompt, ignore_case=False):
 
     if idx == -1:
         return None
-    return text[idx + len(answer_prompt) :]
+    return text[idx:idx + len(answer_prompt)]
 
 
 def get_consensus(answers):
@@ -35,7 +35,6 @@ def get_consensus(answers):
 
 def normalize(s: str) -> str:
     """Lower text and remove punctuation, articles and extra whitespace."""
-    s = s.split("\n")[0]
     s = s.lower()
     exclude = set(string.punctuation)
     s = "".join(char for char in s if char not in exclude)
@@ -167,7 +166,8 @@ class PromptFn:
     def __call__(self, **kwargs):
         # if any input kwargs is chat prompt, convert to text prompt
         kwargs = {
-            k: chat_prompt_to_text_prompt(v) if is_chat_prompt(v) else v for k, v in kwargs.items()
+            k: chat_prompt_to_text_prompt(v, for_completion=False) if is_chat_prompt(v) else v
+            for k, v in kwargs.items()
         }
         if is_chat_prompt(self.prompt):
             prompt = []

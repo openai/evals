@@ -1,0 +1,23 @@
+linear-regression:
+  id: linear-regression.dev.v0
+  description: Tests the model's ability to run linear regressions on small datasets
+  metrics: [ accuracy ]
+linear-regression.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: linear-regression/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: regression-equation
+
+
+linear-regression-meta:
+  id: linear-regression-meta.dev.v0
+  description: Tests the model's ability evaluate submissions against the correct answer
+  metrics: [ accuracy ]
+linear-regression-meta.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: linear-regression/labeled-samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: regression-equation
+    metaeval: true
