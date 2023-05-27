@@ -6,4 +6,4 @@ adultery_state_laws:
 adultery_state_laws.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: adultery-state-laws/adultery.jsonl
+    samples_jsonl: adultery-state-laws/samples.jsonl
