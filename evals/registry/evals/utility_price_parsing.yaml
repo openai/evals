@@ -1,0 +1,8 @@
+utility_price_parsing:
+  id: utility_price_parsing.dev.v0
+  metrics: [accuracy]
+
+utility_price_parsing.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: utility_price_parsing/samples.jsonl
