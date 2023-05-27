@@ -1,0 +1,755 @@
+replicate_triplicate_length_5:
+  id: replicate_triplicate_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 5 string .
+  metrics: [accuracy]
+replicate_triplicate_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_length_5.jsonl
+
+replicate_triplicate_length_20:
+  id: replicate_triplicate_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 20 string .
+  metrics: [accuracy]
+replicate_triplicate_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_length_20.jsonl
+
+replicate_triplicate_length_35:
+  id: replicate_triplicate_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 35 string .
+  metrics: [accuracy]
+replicate_triplicate_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_length_35.jsonl
+
+replicate_triplicate_length_50:
+  id: replicate_triplicate_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 50 string .
+  metrics: [accuracy]
+replicate_triplicate_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_length_50.jsonl
+
+replicate_triplicate_length_65:
+  id: replicate_triplicate_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 65 string .
+  metrics: [accuracy]
+replicate_triplicate_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_length_65.jsonl
+
+replicate_triplicate_length_80:
+  id: replicate_triplicate_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 80 string .
+  metrics: [accuracy]
+replicate_triplicate_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_length_80.jsonl
+
+replicate_triplicate_length_95:
+  id: replicate_triplicate_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 95 string .
+  metrics: [accuracy]
+replicate_triplicate_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_length_95.jsonl
+
+replicate_triplicate_alnum_length_5:
+  id: replicate_triplicate_alnum_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 5 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_alnum_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_alnum_length_5.jsonl
+
+replicate_triplicate_alnum_length_20:
+  id: replicate_triplicate_alnum_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 20 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_alnum_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_alnum_length_20.jsonl
+
+replicate_triplicate_alnum_length_35:
+  id: replicate_triplicate_alnum_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 35 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_alnum_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_alnum_length_35.jsonl
+
+replicate_triplicate_alnum_length_50:
+  id: replicate_triplicate_alnum_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 50 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_alnum_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_alnum_length_50.jsonl
+
+replicate_triplicate_alnum_length_65:
+  id: replicate_triplicate_alnum_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 65 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_alnum_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_alnum_length_65.jsonl
+
+replicate_triplicate_alnum_length_80:
+  id: replicate_triplicate_alnum_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 80 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_alnum_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_alnum_length_80.jsonl
+
+replicate_triplicate_alnum_length_95:
+  id: replicate_triplicate_alnum_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 95 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_alnum_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_alnum_length_95.jsonl
+
+replicate_triplicate_with_spaces_length_5:
+  id: replicate_triplicate_with_spaces_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 5 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_length_5.jsonl
+
+replicate_triplicate_with_spaces_length_20:
+  id: replicate_triplicate_with_spaces_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 20 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_length_20.jsonl
+
+replicate_triplicate_with_spaces_length_35:
+  id: replicate_triplicate_with_spaces_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 35 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_length_35.jsonl
+
+replicate_triplicate_with_spaces_length_50:
+  id: replicate_triplicate_with_spaces_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 50 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_length_50.jsonl
+
+replicate_triplicate_with_spaces_length_65:
+  id: replicate_triplicate_with_spaces_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 65 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_length_65.jsonl
+
+replicate_triplicate_with_spaces_length_80:
+  id: replicate_triplicate_with_spaces_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 80 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_length_80.jsonl
+
+replicate_triplicate_with_spaces_length_95:
+  id: replicate_triplicate_with_spaces_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 95 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_length_95.jsonl
+
+replicate_triplicate_with_spaces_alnum_length_5:
+  id: replicate_triplicate_with_spaces_alnum_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 5 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_alnum_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_alnum_length_5.jsonl
+
+replicate_triplicate_with_spaces_alnum_length_20:
+  id: replicate_triplicate_with_spaces_alnum_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 20 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_alnum_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_alnum_length_20.jsonl
+
+replicate_triplicate_with_spaces_alnum_length_35:
+  id: replicate_triplicate_with_spaces_alnum_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 35 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_alnum_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_alnum_length_35.jsonl
+
+replicate_triplicate_with_spaces_alnum_length_50:
+  id: replicate_triplicate_with_spaces_alnum_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 50 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_alnum_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_alnum_length_50.jsonl
+
+replicate_triplicate_with_spaces_alnum_length_65:
+  id: replicate_triplicate_with_spaces_alnum_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 65 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_alnum_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_alnum_length_65.jsonl
+
+replicate_triplicate_with_spaces_alnum_length_80:
+  id: replicate_triplicate_with_spaces_alnum_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 80 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_alnum_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_alnum_length_80.jsonl
+
+replicate_triplicate_with_spaces_alnum_length_95:
+  id: replicate_triplicate_with_spaces_alnum_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (triplicate characters) in a length 95 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_triplicate_with_spaces_alnum_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_triplicate_with_spaces_alnum_length_95.jsonl
+
+replicate_quadruplicate_length_5:
+  id: replicate_quadruplicate_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 5 string .
+  metrics: [accuracy]
+replicate_quadruplicate_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_length_5.jsonl
+
+replicate_quadruplicate_length_20:
+  id: replicate_quadruplicate_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 20 string .
+  metrics: [accuracy]
+replicate_quadruplicate_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_length_20.jsonl
+
+replicate_quadruplicate_length_35:
+  id: replicate_quadruplicate_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 35 string .
+  metrics: [accuracy]
+replicate_quadruplicate_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_length_35.jsonl
+
+replicate_quadruplicate_length_50:
+  id: replicate_quadruplicate_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 50 string .
+  metrics: [accuracy]
+replicate_quadruplicate_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_length_50.jsonl
+
+replicate_quadruplicate_length_65:
+  id: replicate_quadruplicate_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 65 string .
+  metrics: [accuracy]
+replicate_quadruplicate_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_length_65.jsonl
+
+replicate_quadruplicate_length_80:
+  id: replicate_quadruplicate_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 80 string .
+  metrics: [accuracy]
+replicate_quadruplicate_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_length_80.jsonl
+
+replicate_quadruplicate_length_95:
+  id: replicate_quadruplicate_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 95 string .
+  metrics: [accuracy]
+replicate_quadruplicate_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_length_95.jsonl
+
+replicate_quadruplicate_alnum_length_5:
+  id: replicate_quadruplicate_alnum_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 5 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_alnum_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_alnum_length_5.jsonl
+
+replicate_quadruplicate_alnum_length_20:
+  id: replicate_quadruplicate_alnum_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 20 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_alnum_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_alnum_length_20.jsonl
+
+replicate_quadruplicate_alnum_length_35:
+  id: replicate_quadruplicate_alnum_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 35 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_alnum_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_alnum_length_35.jsonl
+
+replicate_quadruplicate_alnum_length_50:
+  id: replicate_quadruplicate_alnum_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 50 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_alnum_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_alnum_length_50.jsonl
+
+replicate_quadruplicate_alnum_length_65:
+  id: replicate_quadruplicate_alnum_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 65 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_alnum_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_alnum_length_65.jsonl
+
+replicate_quadruplicate_alnum_length_80:
+  id: replicate_quadruplicate_alnum_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 80 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_alnum_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_alnum_length_80.jsonl
+
+replicate_quadruplicate_alnum_length_95:
+  id: replicate_quadruplicate_alnum_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 95 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_alnum_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_alnum_length_95.jsonl
+
+replicate_quadruplicate_with_spaces_length_5:
+  id: replicate_quadruplicate_with_spaces_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 5 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_length_5.jsonl
+
+replicate_quadruplicate_with_spaces_length_20:
+  id: replicate_quadruplicate_with_spaces_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 20 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_length_20.jsonl
+
+replicate_quadruplicate_with_spaces_length_35:
+  id: replicate_quadruplicate_with_spaces_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 35 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_length_35.jsonl
+
+replicate_quadruplicate_with_spaces_length_50:
+  id: replicate_quadruplicate_with_spaces_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 50 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_length_50.jsonl
+
+replicate_quadruplicate_with_spaces_length_65:
+  id: replicate_quadruplicate_with_spaces_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 65 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_length_65.jsonl
+
+replicate_quadruplicate_with_spaces_length_80:
+  id: replicate_quadruplicate_with_spaces_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 80 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_length_80.jsonl
+
+replicate_quadruplicate_with_spaces_length_95:
+  id: replicate_quadruplicate_with_spaces_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 95 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_length_95.jsonl
+
+replicate_quadruplicate_with_spaces_alnum_length_5:
+  id: replicate_quadruplicate_with_spaces_alnum_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 5 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_alnum_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_alnum_length_5.jsonl
+
+replicate_quadruplicate_with_spaces_alnum_length_20:
+  id: replicate_quadruplicate_with_spaces_alnum_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 20 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_alnum_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_alnum_length_20.jsonl
+
+replicate_quadruplicate_with_spaces_alnum_length_35:
+  id: replicate_quadruplicate_with_spaces_alnum_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 35 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_alnum_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_alnum_length_35.jsonl
+
+replicate_quadruplicate_with_spaces_alnum_length_50:
+  id: replicate_quadruplicate_with_spaces_alnum_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 50 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_alnum_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_alnum_length_50.jsonl
+
+replicate_quadruplicate_with_spaces_alnum_length_65:
+  id: replicate_quadruplicate_with_spaces_alnum_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 65 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_alnum_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_alnum_length_65.jsonl
+
+replicate_quadruplicate_with_spaces_alnum_length_80:
+  id: replicate_quadruplicate_with_spaces_alnum_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 80 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_alnum_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_alnum_length_80.jsonl
+
+replicate_quadruplicate_with_spaces_alnum_length_95:
+  id: replicate_quadruplicate_with_spaces_alnum_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (quadruplicate characters) in a length 95 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quadruplicate_with_spaces_alnum_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quadruplicate_with_spaces_alnum_length_95.jsonl
+
+replicate_quintuplicate_length_5:
+  id: replicate_quintuplicate_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 5 string .
+  metrics: [accuracy]
+replicate_quintuplicate_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_length_5.jsonl
+
+replicate_quintuplicate_length_20:
+  id: replicate_quintuplicate_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 20 string .
+  metrics: [accuracy]
+replicate_quintuplicate_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_length_20.jsonl
+
+replicate_quintuplicate_length_35:
+  id: replicate_quintuplicate_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 35 string .
+  metrics: [accuracy]
+replicate_quintuplicate_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_length_35.jsonl
+
+replicate_quintuplicate_length_50:
+  id: replicate_quintuplicate_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 50 string .
+  metrics: [accuracy]
+replicate_quintuplicate_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_length_50.jsonl
+
+replicate_quintuplicate_length_65:
+  id: replicate_quintuplicate_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 65 string .
+  metrics: [accuracy]
+replicate_quintuplicate_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_length_65.jsonl
+
+replicate_quintuplicate_length_80:
+  id: replicate_quintuplicate_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 80 string .
+  metrics: [accuracy]
+replicate_quintuplicate_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_length_80.jsonl
+
+replicate_quintuplicate_length_95:
+  id: replicate_quintuplicate_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 95 string .
+  metrics: [accuracy]
+replicate_quintuplicate_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_length_95.jsonl
+
+replicate_quintuplicate_alnum_length_5:
+  id: replicate_quintuplicate_alnum_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 5 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_alnum_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_alnum_length_5.jsonl
+
+replicate_quintuplicate_alnum_length_20:
+  id: replicate_quintuplicate_alnum_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 20 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_alnum_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_alnum_length_20.jsonl
+
+replicate_quintuplicate_alnum_length_35:
+  id: replicate_quintuplicate_alnum_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 35 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_alnum_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_alnum_length_35.jsonl
+
+replicate_quintuplicate_alnum_length_50:
+  id: replicate_quintuplicate_alnum_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 50 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_alnum_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_alnum_length_50.jsonl
+
+replicate_quintuplicate_alnum_length_65:
+  id: replicate_quintuplicate_alnum_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 65 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_alnum_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_alnum_length_65.jsonl
+
+replicate_quintuplicate_alnum_length_80:
+  id: replicate_quintuplicate_alnum_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 80 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_alnum_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_alnum_length_80.jsonl
+
+replicate_quintuplicate_alnum_length_95:
+  id: replicate_quintuplicate_alnum_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 95 string  (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_alnum_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_alnum_length_95.jsonl
+
+replicate_quintuplicate_with_spaces_length_5:
+  id: replicate_quintuplicate_with_spaces_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 5 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_length_5.jsonl
+
+replicate_quintuplicate_with_spaces_length_20:
+  id: replicate_quintuplicate_with_spaces_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 20 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_length_20.jsonl
+
+replicate_quintuplicate_with_spaces_length_35:
+  id: replicate_quintuplicate_with_spaces_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 35 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_length_35.jsonl
+
+replicate_quintuplicate_with_spaces_length_50:
+  id: replicate_quintuplicate_with_spaces_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 50 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_length_50.jsonl
+
+replicate_quintuplicate_with_spaces_length_65:
+  id: replicate_quintuplicate_with_spaces_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 65 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_length_65.jsonl
+
+replicate_quintuplicate_with_spaces_length_80:
+  id: replicate_quintuplicate_with_spaces_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 80 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_length_80.jsonl
+
+replicate_quintuplicate_with_spaces_length_95:
+  id: replicate_quintuplicate_with_spaces_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 95 string  with interleaved spaces in input and output to ensure that every character is a separate token.
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_length_95.jsonl
+
+replicate_quintuplicate_with_spaces_alnum_length_5:
+  id: replicate_quintuplicate_with_spaces_alnum_length_5.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 5 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_alnum_length_5.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_alnum_length_5.jsonl
+
+replicate_quintuplicate_with_spaces_alnum_length_20:
+  id: replicate_quintuplicate_with_spaces_alnum_length_20.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 20 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_alnum_length_20.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_alnum_length_20.jsonl
+
+replicate_quintuplicate_with_spaces_alnum_length_35:
+  id: replicate_quintuplicate_with_spaces_alnum_length_35.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 35 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_alnum_length_35.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_alnum_length_35.jsonl
+
+replicate_quintuplicate_with_spaces_alnum_length_50:
+  id: replicate_quintuplicate_with_spaces_alnum_length_50.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 50 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_alnum_length_50.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_alnum_length_50.jsonl
+
+replicate_quintuplicate_with_spaces_alnum_length_65:
+  id: replicate_quintuplicate_with_spaces_alnum_length_65.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 65 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_alnum_length_65.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_alnum_length_65.jsonl
+
+replicate_quintuplicate_with_spaces_alnum_length_80:
+  id: replicate_quintuplicate_with_spaces_alnum_length_80.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 80 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_alnum_length_80.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_alnum_length_80.jsonl
+
+replicate_quintuplicate_with_spaces_alnum_length_95:
+  id: replicate_quintuplicate_with_spaces_alnum_length_95.dev.v0
+  description: Check's the model's ability to perform the same task (quintuplicate characters) in a length 95 string  with interleaved spaces in input and output to ensure that every character is a separate token (alphanumeric only).
+  metrics: [accuracy]
+replicate_quintuplicate_with_spaces_alnum_length_95.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: replicate/samples_quintuplicate_with_spaces_alnum_length_95.jsonl
