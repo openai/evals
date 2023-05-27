@@ -1,0 +1,14 @@
+rhyming:
+  prompt: |-
+    You are evaluating verse to see if it rhymes.
+    [BEGIN DATA]
+    ************
+    [Submission]: {completion}
+    ************
+    [END DATA]
+
+    (A) The verse has 3 or fewer rhymes
+    (B) The verse has 4 or more rhymes
+  choice_strings: AB
+  input_outputs:
+    input: completion
