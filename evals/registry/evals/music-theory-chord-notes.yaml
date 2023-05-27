@@ -1,6 +1,6 @@
 music-theory-chord-notes:
   id: music-theory-chord-notes.dev.v0
-  description: Test the model's ability to spell out the notes in a jazz chord
+  description: Test the model's ability to spell out the notes in a given chord name
   metrics: [accuracy]
 music-theory-chord-notes.dev.v0:
   class: evals.elsuite.basic.match:Match

@@ -1,6 +1,6 @@
 music-theory-chord-names:
   id: music-theory-chord-names.dev.v0
-  description: Test the model's ability to identify four notes to a chord
+  description: Test the model's ability to identify chords from the given four notes
   metrics: [accuracy]
 music-theory-chord-names.dev.v0:
   class: evals.elsuite.basic.match:Match
