@@ -5,4 +5,4 @@ gol:
 gol.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: gol/samples.jsonl
+    samples_jsonl: GOL/samples.jsonl
