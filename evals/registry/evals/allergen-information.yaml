@@ -4,7 +4,9 @@ allergen-information:
   metrics: [accuracy]
 
 allergen-information.dev.v0:
-  class: evals.elsuite.basic.includes.Includes
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: allergen-information/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact    
 
