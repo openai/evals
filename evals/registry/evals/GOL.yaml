@@ -1,17 +1,8 @@
-GOL:
-  id: GOL.dev.v6
-  description: Test the model's ability to determine the next state in a simple game of life board
-  metrics: [accuracy]
-GOL.dev.v6:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: GOL/samples-mini.jsonl
-
-GOL-full:
-  id: GOL-full.dev.v0
+gol:
+  id: gol.dev.v0
   description: Robust test. Evaluate model's ability to determine the next state in a simple game of life board
   metrics: [accuracy]
-GOL-full.dev.v0:
+gol.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: GOL/samples.jsonl
+    samples_jsonl: gol/samples.jsonl
