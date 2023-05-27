@@ -1,5 +1,5 @@
 reverse-sort-words-eng:
-  id: reverse-sort-words-eng.s1.simple-v0
+  id: reverse-sort-words-eng-simple.dev.v0
   description: Tests performance to sort different comma-separated english words in reverse alphabetical order. Inlcudes duplicate words.
   metrics: [accuracy]
 reverse-sort-words-eng.s1.simple-v0:
