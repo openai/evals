@@ -1,0 +1,9 @@
+spanish-lexicon:
+  id: spanish-lexicon.dev.v0
+  description: Test the model's ability to recognize Spanish words included in the dictionary of the Spanish language.
+  metrics: [accuracy]
+
+spanish-lexicon.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: spanish-lexicon/samples.jsonl
