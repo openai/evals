@@ -1,0 +1,9 @@
+japanese-itpassport-exam01:
+  id: japanese-itpassport-exam01.dev.v0
+  description: source from ITパスポート試験 令和5年度分(IT Passport Examination for FY2023) in https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/questions.html
+  metrics: [accuracy]
+
+japanese-itpassport-exam01.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: japanese-itpassport-exam01/japanese-itpassport-exam01.jsonl

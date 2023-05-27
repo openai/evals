@@ -1,0 +1,8 @@
+vigenere:
+  id: vigenere.s1.simple-v0
+  description: Test the model's ability to perform the simple Vigenere character operation.
+  metrics: [accuracy]
+vigenere.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: vigenere/samples.jsonl
