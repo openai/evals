@@ -1,0 +1,9 @@
+french-lexicon:
+  id: french-lexicon.dev.v0
+  description: Test the model's ability to distinguish between existing French words.
+  metrics: [accuracy]
+
+french-lexicon.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: french-lexicon/samples.jsonl
