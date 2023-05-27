@@ -1,0 +1,7 @@
+determinant:
+  id: determinant.test.v1
+  metrics: [accuracy]
+determinant.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: determinant/samples.jsonl

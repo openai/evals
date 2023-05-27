@@ -1,0 +1,8 @@
+hebrew-rhyme:
+  id: hebrew-rhyme.v0
+  description: Composite task that involves translation and rhyming.
+  metrics: [accuracy]
+hebrew-rhyme.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: hebrew_rhyme/samples.jsonl

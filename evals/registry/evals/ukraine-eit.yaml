@@ -1,0 +1,7 @@
+ukraine-eit:
+  id: ukraine-eit.val.v0
+  metrics: [accuracy]
+ukraine-eit.val.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: ukraine_eit/samples.jsonl
