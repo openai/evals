@@ -1,0 +1,8 @@
+hindi_shuddha:
+  id: hindi_shuddha.dev.v0
+  metrics: [accuracy]
+
+hindi_shuddha.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: hindi_shuddha/samples.jsonl
