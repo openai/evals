@@ -18,14 +18,15 @@ class MistakesGenerator:
     '''
 
     def generate(self, location):
-        n_variants = 4
+        total_replies = 4   # the right answer, plus "n_variants" wrong answers
+        n_variants = total_replies - 1
 
         if len(location) < 2:
             mistakes = [[True]]
         else:
             mistakes = []
 
-            # Strive to create as many alternatives as possible (up to 4);
+            # Strive to create as many alternatives as possible (up to n_variants);
             # introduce multiple errors on each alternative, otherwise
             # a clever person (or AI) can deduce the correct answer
             # without doing the work. Example:
