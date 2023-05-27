@@ -1,0 +1,8 @@
+cellular-automata:
+  id: cellular-automata.dev.v0
+  description: Test the model's ability to predict future states of cellular automata.
+  metrics: [accuracy]
+cellular-automata.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: cellular_automata/samples.jsonl
