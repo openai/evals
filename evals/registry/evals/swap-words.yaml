@@ -1,0 +1,8 @@
+swap-words:
+  id: swap-words.dev.v0
+  metrics: [accuracy]
+
+swap-words.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: swap-words/samples.jsonl

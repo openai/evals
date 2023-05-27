@@ -1,11 +1,13 @@
-import itertools
+import logging
 import string
-from typing import Callable, Iterable
+from typing import Any, Callable, Iterable, Optional, Union
 
-from evals.elsuite.utils import format_necessary
+from evals import CompletionFn
+from evals.elsuite.modelgraded.base import ModelGradedSpec
+from evals.elsuite.utils import PromptFn, format_necessary, format_prompt
+from evals.prompt.base import OpenAICreateChatPrompt, is_chat_prompt
 
 INVALID_STR = "__invalid__"
-CHOICE_KEY = "choice"
 
 
 ANSWER_PROMPTS = {
@@ -32,13 +34,84 @@ MATCH_FNS = {
 }
 
 
+def get_choice_strings(choice_strings: Union[list[str], str], n: Optional[int] = None):
+    # 'choice_strings' is a list of strings that specifies the possible choices
+    if choice_strings == "from_n":
+        choice_strings = [str(i + 1) for i in range(n)]
+    elif choice_strings == "from_n_abc":
+        choice_strings = [string.ascii_lowercase[i % 26] for i in range(n)]
+    elif choice_strings == "from_n_ABC":
+        choice_strings = [string.ascii_uppercase[i % 26] for i in range(n)]
+    # make sure each choice doesn't contain any punctuation
+    for s in choice_strings:
+        assert not any(c in s for c in string.punctuation), f"{s} contains punctuation"
+    return choice_strings
+
+
+def classify(
+    mg: ModelGradedSpec,
+    completion_fn: CompletionFn,
+    completion_kwargs: Optional[dict[str, Any]] = None,
+    format_kwargs: Optional[dict[str, Any]] = None,
+    eval_type: Optional[str] = None,
+    n: Optional[int] = None,
+    match_fn: str = "starts_or_endswith",
+) -> str:
+    completion_kwargs = completion_kwargs or {}
+    format_kwargs = format_kwargs or {}
+
+    # get choice strings
+    choice_strings = get_choice_strings(mg.choice_strings, n=n)
+
+    # append answer prompt
+    prompt = mg.prompt
+    if isinstance(prompt, str):
+        prompt = [{"role": "user", "content": prompt}]
+    if eval_type:
+        prompt = append_answer_prompt(
+            prompt=prompt,
+            eval_type=eval_type,
+            choice_strings=choice_strings,
+        )
+
+    evaluate = PromptFn(prompt, completion_fn=completion_fn, **completion_kwargs)
+    evaluation, prompt = evaluate(n=n, **format_kwargs)
+    choice = get_choice(evaluation, mg.eval_type or eval_type, match_fn, choice_strings)
+    score = get_choice_score(choice, choice_strings, mg.choice_scores)
+    return choice, dict(
+        score=score,
+        sampled=[evaluation],
+        prompt=prompt,
+        invalid_choice=choice == INVALID_STR,
+    )
+
+
+def get_choice_score(
+    choice: str,
+    choice_strings: Iterable[str],
+    choice_scores: Optional[Union[dict[str, float], str]] = None,
+) -> Optional[float]:
+    if choice_scores is None:
+        return None
+    if choice_scores == "from_strings":
+        choice_scores = {c: float(c) for c in choice_strings}
+    # assumption: each INVALID_STR contributes the lowest score
+    if choice == INVALID_STR:
+        return min(choice_scores.values())
+    return choice_scores[choice]
+
+
 def choice_to_str(choice_strings: Iterable[str]) -> str:
     """Return a string of choices, e.g. '"Yes" or "No" or "Maybe"'."""
     return " or ".join(f'"{choice}"' for choice in choice_strings)
 
 
-def get_choice(text: str, eval_type: str, match_fn: Callable, choice_strings: Iterable[str]) -> str:
+def get_choice(
+    text: str, eval_type: str, match_fn: Union[str, Callable], choice_strings: Iterable[str]
+) -> str:
     """Clean the answer string to a choice string to one of choice_strings. Return '__invalid__.' if no match."""
+    if isinstance(match_fn, str):
+        match_fn = MATCH_FNS[match_fn]
     lines = text.strip().split("\n")
     if eval_type.startswith("cot_classify"):
         lines = lines[::-1]  # reverse lines
@@ -50,7 +123,52 @@ def get_choice(text: str, eval_type: str, match_fn: Callable, choice_strings: It
         for choice in choice_strings:
             if match_fn(line, choice):
                 return choice
+    logging.warn(f"Choices {choice_strings} not parsable for {eval_type}: {text}")
     return INVALID_STR
+
+
+def append_answer_prompt(
+    prompt: OpenAICreateChatPrompt,
+    eval_type: str,
+    append_type: str = "as_content",
+    answer_prompt: Optional[OpenAICreateChatPrompt] = None,
+    choice_strings: Optional[Iterable[str]] = None,
+) -> OpenAICreateChatPrompt:
+    """Append answer prompt to prompt."""
+    answer_prompt = answer_prompt or ANSWER_PROMPTS[eval_type]
+    answer_prompt = format_prompt(answer_prompt, choices=choice_to_str(choice_strings))
+    if append_type == "as_content":
+        assert isinstance(answer_prompt, str), f"prompt must be str, not {type(answer_prompt)}"
+        prompt[-1]["content"] += "\n\n" + answer_prompt
+    elif append_type == "as_message":
+        assert is_chat_prompt(answer_prompt), f"prompt must be chat prompt, not {answer_prompt}"
+        prompt += answer_prompt
+    else:
+        raise ValueError(f"append_type must be 'as_content' or 'as_message', not {append_type}")
+    return prompt
+
+
+def sample_and_concat_n_completions(
+    completion_fns: list[CompletionFn],
+    prompt: OpenAICreateChatPrompt,
+    n: int,
+    template_i: str,
+    sample_kwargs: dict,
+):
+    assert template_i
+    completion_i_s = []
+    for i in range(n):
+        if len(completion_fns) > 1:
+            # use a separate model for each completion
+            assert len(completion_fns) == n
+            completion_fn = completion_fns[i]
+        else:
+            # use the single model for all completions
+            completion_fn = completion_fns[0]
+        get_input_completion = PromptFn(prompt, completion_fn=completion_fn, **sample_kwargs)
+        completion_i, _ = get_input_completion()
+        completion_i_s.append(completion_i)
+    return concat_n_completions(completion_i_s, template_i=template_i)
 
 
 def concat_n_completions(completions: Iterable[str], template_i: str) -> str:
@@ -66,25 +184,3 @@ def concat_n_completions(completions: Iterable[str], template_i: str) -> str:
             n=len(completions),
         )
     return completion.strip()
-
-
-def expand_args_dict(args_dict):
-    """Expand a dict of dicts, with namings.
-
-    args_dict = {
-        "a": {"a1": 1, "a2": 2},
-        "b": {"b1": 3, "b2": 4},
-    }
-    expand_args_dict(args_dict) = {
-        "a=a1:b=b1": {"a": ("a1", 1), "b": ("b1", 3)},
-        "a=a1:b=b2": {"a": ("a1", 1), "b": ("b2", 4)},
-    ...}
-    """
-    if not args_dict:
-        return {}
-    args_dict = {k: list(v.items()) for k, v in args_dict.items()}
-    keys = list(args_dict.keys())
-    values = list(args_dict.values())
-    new_values = [dict(zip(keys, v)) for v in itertools.product(*values)]
-    new_names = [":".join([f"{k}={v[0]}" for k, v in sorted(d.items())]) for d in new_values]
-    return dict(zip(new_names, new_values))

@@ -79,10 +79,11 @@ diversity.dev.v0:
     eval_type: cot_classify
     modelgraded_spec: diversity
     multicomp_n: 4
-    multicomp_temperature: 0.4
+    sample_kwargs:
+      temperature: 0.4
 
 # a simple modelgraded eval checking which of N completions to the sample prompt is the best response
-# command: `oaleval gpt-3.5-turbo,gpt-4 best`
+# command: `oaieval gpt-3.5-turbo,gpt-4,gpt-3.5-turbo best`
 best:
   id: best.dev.v0
   metrics: [accuracy]
@@ -93,4 +94,3 @@ best.dev.v0:
     eval_type: cot_classify
     modelgraded_spec: best
     multicomp_n: from_models
-    multicomp_temperature: 0.0
