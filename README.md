@@ -13,6 +13,9 @@ To get set up with evals, follow the [setup instructions below](README.md#Setup)
 - Familiarize yourself with the existing eval templates: [eval-templates.md](docs/eval-templates.md).
 
 #### Writing evals
+
+**Important: Please note that we are currently not accepting Evals with custom code!** While we ask you to not submit such evals at the moment, you can still submit modelgraded evals with custom modelgraded YAML files.
+
 - Walk through the process for building an eval: [build-eval.md](docs/build-eval.md)
 - See an example of implementing custom eval logic: [custom-eval.md](docs/custom-eval.md).
 
@@ -31,7 +34,7 @@ ____________________
 
 To run evals, you will need to set up and specify your OpenAI API key. You can generate one at <https://platform.openai.com/account/api-keys>. After you obtain an API key, specify it using the `OPENAI_API_KEY` environment variable. **Please be aware of the [costs](https://openai.com/pricing) associated with using the API when running evals.**
 
-**Minimal Required Version: Python 3.9**
+**Minimum Required Version: Python 3.9**
 
 ### Downloading evals
 
