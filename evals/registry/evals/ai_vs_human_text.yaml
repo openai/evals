@@ -1,9 +1,9 @@
-id: ai_vs_human_text.s1.v0
-description: Evaluation of AI's ability to distinguish between human-written and AI-generated text.
-disclaimer: This is a challenging task that even state-of-the-art AI models might find difficult.
-metrics: [accuracy]
+ai_vs_human_text:
+  id: ai_vs_human_text.dev.v0
+  description: Evaluation of AI's ability to distinguish between human-written and AI-generated text.
+  metrics: [accuracy]
 
-ai_vs_human_text.s1.v0:
+ai_vs_human_text.dev.v0:
   class: evals.elsuite.basic.match:Match
   args: 
     samples_jsonl: ai_vs_human_text/samples.jsonl
