@@ -1,0 +1,11 @@
+calendar:
+  id: calendar.dev.v0
+  description: Test the model's ability to understand dates and times and perform simple calendar operations
+  metrics: [accuracy]
+calendar.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: calendar/samples.jsonl
+    #modelgraded_spec: closedqa
+    #modelgraded_spec_args:
+    #  criteria: "correctness: were the proposed times indeed within working times and available for both Bob and Alice? Did they optimize for other requests such as minimizing travel?"
