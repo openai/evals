@@ -1,5 +1,6 @@
 code_combination:
   id: code_combination.dev.v0
+  description: Test the model's ability to ingest code snippets (python/Javascript/C#) over multiple prompts and return the ingested code compelete and unchanged.
   metrics: [accuracy]
 
 code_combination.dev.v0:
