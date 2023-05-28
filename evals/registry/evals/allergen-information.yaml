@@ -7,6 +7,7 @@ allergen-information.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: allergen-information/samples.jsonl
-    eval_type: cot_classify
+    # We are looking for the allergen information, less for the explanation, therefore this eval_type (with no explanation)
+    eval_type: classify
     modelgraded_spec: fact    
 
