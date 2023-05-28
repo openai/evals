@@ -22,7 +22,7 @@ def get_answer(text, answer_prompt, ignore_case=False):
 
     if idx == -1:
         return None
-    return text[idx + len(answer_prompt) :]
+    return text[idx:idx + len(answer_prompt)]
 
 
 def get_consensus(answers):
@@ -35,7 +35,6 @@ def get_consensus(answers):
 
 def normalize(s: str) -> str:
     """Lower text and remove punctuation, articles and extra whitespace."""
-    s = s.split("\n")[0]
     s = s.lower()
     exclude = set(string.punctuation)
     s = "".join(char for char in s if char not in exclude)
@@ -101,17 +100,25 @@ def scrub_formatting_from_prompt(prompt):
     return scrubbed_prompt
 
 
-def format_necessary(template: str, **kwargs: dict[str, str]) -> str:
+def format_necessary(template: str, allow_missing: bool = False, **kwargs: dict[str, str]) -> str:
     """Format a template string with only necessary kwargs."""
     keys = [k[1] for k in string.Formatter().parse(template) if k[1]]
-    assert all(
-        k in kwargs for k in keys
-    ), f"Required: {keys}, got: {sorted(kwargs)}.\nTemplate:\n{template}"
-    cur_keys = {k: kwargs[k] for k in keys}
+    if allow_missing:
+        assert (
+            len([k for k in keys if k in kwargs]) > 0
+        ), f"Required: {keys}, got: {sorted(kwargs)}, no inputs are used.\nTemplate:\n{template}"
+        cur_keys = {k: kwargs.get(k, "{" + k + "}") for k in keys}
+    else:
+        assert all(
+            k in kwargs for k in keys
+        ), f"Required: {keys}, got: {sorted(kwargs)}.\nTemplate:\n{template}"
+        cur_keys = {k: kwargs[k] for k in keys}
     return template.format(**cur_keys)
 
 
-def format_prompt(prompt: OpenAICreatePrompt, **kwargs: dict[str, str]) -> OpenAICreatePrompt:
+def format_prompt(
+    prompt: OpenAICreatePrompt, allow_missing: bool = False, **kwargs: dict[str, str]
+) -> OpenAICreatePrompt:
     """Format a prompt with only necessary kwargs."""
     # if any input kwargs is chat prompt, convert to text prompt
     kwargs = {
@@ -123,12 +130,14 @@ def format_prompt(prompt: OpenAICreatePrompt, **kwargs: dict[str, str]) -> OpenA
         for msg in prompt:
             formatted_msg = copy.copy(msg)
             if "content" in formatted_msg:
-                formatted_msg["content"] = format_necessary(formatted_msg["content"], **kwargs)
+                formatted_msg["content"] = format_necessary(
+                    formatted_msg["content"], allow_missing=allow_missing, **kwargs
+                )
             new_prompt.append(formatted_msg)
         prompt = new_prompt
     else:
         # Prompt is a string
-        prompt = format_necessary(prompt, **kwargs)
+        prompt = format_necessary(prompt, allow_missing=allow_missing, **kwargs)
     return prompt
 
 
@@ -157,7 +166,8 @@ class PromptFn:
     def __call__(self, **kwargs):
         # if any input kwargs is chat prompt, convert to text prompt
         kwargs = {
-            k: chat_prompt_to_text_prompt(v) if is_chat_prompt(v) else v for k, v in kwargs.items()
+            k: chat_prompt_to_text_prompt(v, for_completion=False) if is_chat_prompt(v) else v
+            for k, v in kwargs.items()
         }
         if is_chat_prompt(self.prompt):
             prompt = []

@@ -1,0 +1,8 @@
+pararule-plus-multi-step-deductive-reasoning:
+  id: pararule-plus-multi-step-deductive-reasoning.dev.v0
+  description: multi-step deductive reasoning instruction for the PARARULE-Plus dataset
+  metrics: [accuracy]
+pararule-plus-multi-step-deductive-reasoning.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: pararule-plus-multi-step-deductive-reasoning/pararule-plus-multi-step-deductive-reasoning.jsonl

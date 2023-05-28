@@ -9,4 +9,4 @@ spider-sql.dev.v0:
   args:
     samples_jsonl: sql/spider_sql.jsonl
     eval_type: cot_classify
-    modelgraded_spec_file: sql
+    modelgraded_spec: sql
