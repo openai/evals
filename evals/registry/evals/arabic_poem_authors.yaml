@@ -1,0 +1,9 @@
+arabic_poem_authors:
+  id: arabic_poem_authors.dev.v0
+  metrics: [accuracy]
+
+arabic_poem_authors.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: arabic_poem_authors/samples.jsonl
+
