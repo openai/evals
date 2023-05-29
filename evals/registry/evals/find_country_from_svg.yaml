@@ -1,0 +1,9 @@
+find_country_from_svg:
+  id: find_country_from_svg.dev.v0
+  description: Test the model's ability to distinguish a country based on its svg shape (from wikimedia svg file).
+  metrics: [accuracy]
+
+find_country_from_svg.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: find_country_from_svg/samples.jsonl
