@@ -30,21 +30,3 @@ delimited-data-error-detection:
   input_outputs:
     input: "input[0].content"
     ideal: "ideal"
-
-delimited-data-error-detection-explanation:
-  prompt: |-
-    How would you rate the quality of the model's explanation for the detected error?
-  choice_strings:
-    - "Excellent explanation"
-    - "Good explanation"
-    - "Satisfactory explanation"
-    - "Poor explanation"
-    - "No explanation"
-  choice_scores:
-    "Excellent explanation": 1.0
-    "Good explanation": 0.75
-    "Satisfactory explanation": 0.5
-    "Poor explanation": 0.25
-    "No explanation": 0
-  input_outputs:
-    input: "ideal"
