@@ -1,0 +1,23 @@
+iso-to-lunar-calendar:
+  id: iso-to-lunar-calendar.dev.v0
+  description: |-
+    Test the model's ability to convert dates from ISO 8601 format into the Chinese lunar calendar.
+
+    All dates are in the future as of 2023-05-04.
+  metrics: [accuracy]
+iso-to-lunar-calendar.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: lunar_calendar/iso_to_lunar_calendar.jsonl
+
+lunar-calendar-to-iso:
+  id: lunar-calendar-to-iso.dev.v0
+  description: |-
+    Test the model's ability to convert dates from the Chinese lunar calendar into ISO 8601 format, with a target Gregorian-calendar year given as a hint (the lunar calendar operates on a 60-year cycle, so this eliminates any ambiguity).
+
+    All dates are in the future as of 2023-05-04.
+  metrics: [accuracy]
+lunar-calendar-to-iso.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: lunar_calendar/lunar_calendar_to_iso.jsonl

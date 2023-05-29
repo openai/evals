@@ -1,45 +1,14 @@
 """
 This file defines various helper functions for interacting with the OpenAI API.
 """
+import concurrent
 import logging
+import os
 
 import backoff
 import openai
 
-
-def generate_dummy_chat_completion():
-    return {
-        "id": "dummy-id",
-        "object": "chat.completion",
-        "created": 12345,
-        "model": "dummy-chat",
-        "usage": {"prompt_tokens": 56, "completion_tokens": 6, "total_tokens": 62},
-        "choices": [
-            {
-                "message": {"role": "assistant", "content": "This is a dummy response."},
-                "finish_reason": "stop",
-                "index": 0,
-            }
-        ],
-    }
-
-
-def generate_dummy_completion():
-    return {
-        "id": "dummy-id",
-        "object": "text_completion",
-        "created": 12345,
-        "model": "dummy-completion",
-        "choices": [
-            {
-                "text": "This is a dummy response.",
-                "index": 0,
-                "logprobs": None,
-                "finish_reason": "stop",
-            }
-        ],
-        "usage": {"prompt_tokens": 5, "completion_tokens": 6, "total_tokens": 11},
-    }
+EVALS_THREAD_TIMEOUT = float(os.environ.get("EVALS_THREAD_TIMEOUT", "40"))
 
 
 @backoff.on_exception(
@@ -59,14 +28,25 @@ def openai_completion_create_retrying(*args, **kwargs):
     Helper function for creating a completion.
     `args` and `kwargs` match what is accepted by `openai.Completion.create`.
     """
-    if kwargs["model"] == "dummy-completion":
-        return generate_dummy_completion()
-
     result = openai.Completion.create(*args, **kwargs)
     if "error" in result:
         logging.warning(result)
         raise openai.error.APIError(result["error"])
     return result
+
+
+def request_with_timeout(func, *args, timeout=EVALS_THREAD_TIMEOUT, **kwargs):
+    """
+    Worker thread for making a single request within allotted time.
+    """
+    while True:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(func, *args, **kwargs)
+            try:
+                result = future.result(timeout=timeout)
+                return result
+            except concurrent.futures.TimeoutError as e:
+                continue
 
 
 @backoff.on_exception(
@@ -86,10 +66,7 @@ def openai_chat_completion_create_retrying(*args, **kwargs):
     Helper function for creating a chat completion.
     `args` and `kwargs` match what is accepted by `openai.ChatCompletion.create`.
     """
-    if kwargs["model"] == "dummy-chat":
-        return generate_dummy_chat_completion()
-
-    result = openai.ChatCompletion.create(*args, **kwargs)
+    result = request_with_timeout(openai.ChatCompletion.create, *args, **kwargs)
     if "error" in result:
         logging.warning(result)
         raise openai.error.APIError(result["error"])

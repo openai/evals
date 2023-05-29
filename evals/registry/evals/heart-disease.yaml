@@ -1,0 +1,8 @@
+heart-disease:
+  id: heart-disease.v0
+  description: Test model's capability of predicting the presence of heart disease.
+  metrics: [accuracy]
+heart-disease.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: heart-disease/samples.jsonl

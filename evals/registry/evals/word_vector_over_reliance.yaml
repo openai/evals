@@ -1,0 +1,9 @@
+word_vector_over_reliance:
+  id: word_vector_over_reliance.dev.simple-v0
+  description: Example eval that checks sampled text matches the expected output.
+  disclaimer: This is an example disclaimer.
+  metrics: [accuracy]
+word_vector_over_reliance.dev.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: word_vector_over_reliance/word_vector_over_reliance_samples.jsonl
