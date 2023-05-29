@@ -11,22 +11,22 @@ delimited-data-error-detection:
     - "Extra delimiter error"
     - "Quoting error"
     - "Field mismatch error"
+    - "No error detected"
     - "Concatenation error"
     - "Encoding error"
-    - "Semantic error"
     - "Data validation error"
-    - "No error detected"
+    - "Semantic error"
   choice_scores: 
     "Syntax error": 1.0
     "Missing delimiter error": 1.0
     "Extra delimiter error": 1.0
-    "Quoting error": 1.0
-    "Field mismatch error": 1.0
-    "Concatenation error": 1.0
-    "Encoding error": 1.0
-    "Semantic error": 1.0
-    "Data validation error": 1.0
-    "No error detected": 1.0
+    "Quoting error": 2.0
+    "Field mismatch error": 2.0
+    "No error detected": 2.0
+    "Concatenation error": 3.0
+    "Encoding error": 3.0
+    "Data validation error": 4.0
+    "Semantic error": 5.0
   input_outputs:
     input: "input[0].content"
     ideal: "ideal"
