@@ -3,41 +3,31 @@ This file defines the base class for evals.
 """
 import abc
 import asyncio
+import concurrent.futures
 import logging
 import os
 import random
-from multiprocessing.pool import ThreadPool
 from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple
-
 from tqdm import tqdm
-
 from evals.api import CompletionFn
-
 from .data import get_jsonl
 from .record import RecorderBase
 from .registry import Registry
 
 logger = logging.getLogger(__name__)
 
-
 SHUFFLE_SEED = 123
-_MAX_SAMPLES = None
 
 
-def _index_samples(samples: List[Any]) -> List[Tuple[Any, int]]:
-    """Shuffle `samples` and pair each sample with its index."""
+def _index_samples(samples: List[Any], max_samples: Optional[int] = None) -> List[Tuple[Any, int]]:
     indices = list(range(len(samples)))
-    random.Random(SHUFFLE_SEED).shuffle(indices)
-    if _MAX_SAMPLES is not None:
-        indices = indices[:_MAX_SAMPLES]
+    random.seed(SHUFFLE_SEED)
+    random.shuffle(indices)
+    if max_samples is not None:
+        indices = indices[:max_samples]
     logger.info(f"Evaluating {len(indices)} samples")
     work_items = [(samples[i], i) for i in indices]
     return work_items
-
-
-def set_max_samples(max_samples: int):
-    global _MAX_SAMPLES
-    _MAX_SAMPLES = max_samples
 
 
 class Eval(abc.ABC):
@@ -52,7 +42,7 @@ class Eval(abc.ABC):
 
     def __init__(
         self,
-        completion_fns: list[CompletionFn],
+        completion_fns: List[CompletionFn],
         seed: int = 20220722,
         name: str = "no_name_eval.default",
         registry: Optional[Registry] = None,
@@ -87,7 +77,7 @@ class Eval(abc.ABC):
         samples: List[Any],
         concurrency: int = 32,
         show_progress: bool = True,
-        **_kwargs: Any,
+        **kwargs: Any,
     ):
         work_items = _index_samples(samples)
         semaphore = asyncio.Semaphore(concurrency)
@@ -106,16 +96,13 @@ class Eval(abc.ABC):
     def eval_all_samples(
         self,
         recorder: RecorderBase,
-        samples,
-        show_progress=True,
-        record_raw_sample=True,
-        **_kwargs: Any,
-    ):
-        """
-        Evaluate all provided samples in parallel.
-        """
-        work_items = _index_samples(samples)
-        threads = int(os.environ.get("EVALS_THREADS", "10"))
+        samples: List[Any],
+        show_progress: bool = True,
+        record_raw_sample: bool = True,
+        max_samples: Optional[int] = None,
+        threads: int = 10,
+    ) -> List[Any]:
+        work_items = _index_samples(samples, max_samples=max_samples)
         show_progress = bool(os.environ.get("EVALS_SHOW_EVAL_PROGRESS", show_progress))
 
         def eval_sample(args):
@@ -130,20 +117,18 @@ class Eval(abc.ABC):
                 rng = random.Random(seed)
                 return idx, self.eval_sample(sample, rng)
 
-        with ThreadPool(threads) as pool:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=threads) as executor:
             if os.environ.get("EVALS_SEQUENTIAL", "0") in {"1", "true", "yes"}:
-                logger.info(f"Running in sequential mode!")
+                logger.info("Running in sequential mode!")
                 iter = map(eval_sample, work_items)
             else:
                 logger.info(f"Running in threaded mode with {threads} threads!")
-                iter = pool.imap_unordered(eval_sample, work_items)
+                iter = executor.map(eval_sample, work_items)
             idx_and_result = list(tqdm(iter, total=len(work_items), disable=not show_progress))
         return [r for _, r in sorted(idx_and_result)]
 
-    def get_samples(self):
+    def get_samples(self) -> List[Any]:
         if self.samples_jsonl is None:
-            raise ValueError(
-                "To use `get_samples`, you must provide a `samples_jsonl` path." "Got `None`."
-            )
+            raise ValueError("To use `get_samples`, you must provide a `samples_jsonl` path. Got `None`.")
 
         return get_jsonl(self.samples_jsonl)
