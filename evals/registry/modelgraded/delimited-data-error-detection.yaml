@@ -1,0 +1,50 @@
+delimited-data-error-detection:
+  prompt: |-
+    Analyze the following line from a delimited dataset for any possible errors:
+
+    {input}
+
+    What type of error, if any, does this line from the delimited data file have? Provide a brief explanation for your judgement.
+  choice_strings: 
+    - "Syntax error"
+    - "Missing delimiter error"
+    - "Extra delimiter error"
+    - "Quoting error"
+    - "Field mismatch error"
+    - "Concatenation error"
+    - "Encoding error"
+    - "Semantic error"
+    - "Data validation error"
+    - "No error detected"
+  choice_scores: 
+    "Syntax error": 1.0
+    "Missing delimiter error": 1.0
+    "Extra delimiter error": 1.0
+    "Quoting error": 1.0
+    "Field mismatch error": 1.0
+    "Concatenation error": 1.0
+    "Encoding error": 1.0
+    "Semantic error": 1.0
+    "Data validation error": 1.0
+    "No error detected": 1.0
+  input_outputs:
+    input: "input[0].content"
+    ideal: "ideal"
+
+delimited-data-error-detection-explanation:
+  prompt: |-
+    How would you rate the quality of the model's explanation for the detected error?
+  choice_strings:
+    - "Excellent explanation"
+    - "Good explanation"
+    - "Satisfactory explanation"
+    - "Poor explanation"
+    - "No explanation"
+  choice_scores:
+    "Excellent explanation": 1.0
+    "Good explanation": 0.75
+    "Satisfactory explanation": 0.5
+    "Poor explanation": 0.25
+    "No explanation": 0
+  input_outputs:
+    input: "ideal"

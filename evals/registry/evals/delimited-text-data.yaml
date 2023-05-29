@@ -1,0 +1,10 @@
+delimited-text-data:
+  id: delimited-text-data.dev.v0
+  description: Tests the model's ability to detect and explain errors in deliminted text data, focusing on CSV, TSV, SSV, and PSV formats.
+  metrics: [accuracy]
+delimited-text-data.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: delimited-text-data/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: delimited-data-error-detection
