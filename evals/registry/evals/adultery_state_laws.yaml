@@ -1,0 +1,9 @@
+adultery_state_laws:
+  id: adultery_state_laws.dev.v0
+  metrics: [accuracy]
+  description: "This evaluation checks the model's ability to accurately answer true or false questions about adultery laws in various states."
+
+adultery_state_laws.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: adultery-state-laws/samples.jsonl
