@@ -1,0 +1,8 @@
+internal_representations:
+  id: internal_representations.dev.v0
+  metrics: [accuracy]
+
+internal_representations.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: internal_representations/samples.jsonl
