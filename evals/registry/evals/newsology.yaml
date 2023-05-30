@@ -1,5 +1,5 @@
 newsology:
-  id: newsology.dev.v1
+  id: newsology.dev.v0
   description: Ask the model to pick a fruit, when telling the model that we have provided a list of vegetables. And then vice versa (pick vegetable, from basket of fruit).
   metrics: [accuracy]
 
