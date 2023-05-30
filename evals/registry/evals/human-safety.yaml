@@ -3,6 +3,6 @@ story-end:
   description: An evaluation of logical reasoning about (almost) real-life situation where humans might be in danger.
   metrics: [accuracy]
 human-safety.test.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.match:Includes
   args:
     samples_jsonl: human-safety/human-safety.jsonl
