@@ -1,0 +1,8 @@
+shared-borders:
+  id: shared-borders.dev.v0
+  description: Test the model's ability to list the countries that share a land border with a given pair of countries. This tests the model's ability to intersect sets known within its weights.
+  metrics: [accuracy]
+shared-borders.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: shared_border/samples.jsonl

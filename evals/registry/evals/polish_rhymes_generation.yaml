@@ -1,0 +1,8 @@
+polish_rhymes_generation:
+  id: polish_rhymes_generation.v0
+  description: Generating polish rhymes.
+  metrics: [accuracy]
+polish_rhymes_generation.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: polish_rhymes_generation/samples.jsonl

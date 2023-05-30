@@ -29,7 +29,7 @@ class FuzzyMatch(evals.Eval):
         result = self.completion_fn(
             prompt=prompt,
             temperature=0.0,  # Q: why are these hardcoded?
-            max_tokens=16,
+            max_tokens=100,
         )
         sampled = result.get_completions()[0]
 
