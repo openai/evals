@@ -1,4 +1,4 @@
-diversity:
+onomatopoeia:
   prompt: |-
     I am giving an exam on onomatopoeia. I will give you the question text and the correct answers to the exam and you can compare them with the answers submitted.
     [BEGIN DATA]
@@ -10,7 +10,7 @@ diversity:
     [Criterion]: {criteria}
     ***
     [END DATA]
-    Is the answer correct? Compare the answer with the correct answer and output "Yes" or "No" if the answer is correct or not. Do not use quotes or punctuation.
+    Is the answer correct? Please output "yes" or "no" if the answer is correct or not, or if the answer is not compared to the correct answer. Please be concise and do not output extra sentences. Do not use quotation marks or punctuation. Finally, repeat the answer only once more, on a new line.
   
   eval_type: cot_classify
   choice_scores:
