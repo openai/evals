@@ -1,0 +1,23 @@
+diversity:
+  prompt: |-
+    I am giving an exam on onomatopoeia. I will give you the question text and the correct answers to the exam and you can compare them with the answers submitted.
+    [BEGIN DATA]
+    ***
+    [Task]: {input}
+    ***
+    [Submission]: {completion}
+    ***
+    [Criterion]: {criteria}
+    ***
+    [END DATA]
+    Is the answer correct? Compare the answer with the correct answer and output "Yes" or "No" if the answer is correct or not. Do not use quotes or punctuation.
+  
+  eval_type: cot_classify
+  choice_scores:
+    "Yes": 1.0
+    "No": 0.0
+  choice_strings:
+    - "Yes"
+    - "No"
+  input_outputs:
+    input: completion

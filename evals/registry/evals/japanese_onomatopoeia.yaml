@@ -3,6 +3,9 @@ japanese_onomatopoeia:
   metrics: [accuracy]
 
 japanese_onomatopoeia.dev.v0:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: japanese_onomatopoeia/samples.jsonl
+    modelgraded_spec: onomatopoeia
+    modelgraded_spec_args:
+      criteria: "correctness: Is the answer correct?"
