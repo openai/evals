@@ -5,7 +5,7 @@ japanese_onomatopoeia:
 japanese_onomatopoeia.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl: japanese_onomatopoeia/samples.jsonl
+    samples_jsonl: Japanese_onomatopoeia/samples.jsonl
     modelgraded_spec: onomatopoeia
     modelgraded_spec_args:
       criteria: "correctness: Is the answer correct?"
