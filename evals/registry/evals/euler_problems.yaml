@@ -7,4 +7,4 @@ euler_problems.dev.v0:
   args:
     samples_jsonl: euler_problems/euler_problems.jsonl
     eval_type: cot_classify
-    modelgraded_spec_file: fact
+    modelgraded_spec: fact
