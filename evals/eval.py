@@ -3,7 +3,6 @@ This file defines the base class for evals.
 """
 import abc
 import asyncio
-import concurrent.futures
 import logging
 import os
 import random
@@ -14,9 +13,9 @@ from tqdm import tqdm
 
 from evals.api import CompletionFn
 
+from .data import get_jsonl
 from .record import RecorderBase
 from .registry import Registry
-from .data import get_jsonl
 
 logger = logging.getLogger(__name__)
 
@@ -88,6 +87,7 @@ class Eval(abc.ABC):
         samples: List[Any],
         concurrency: int = 32,
         show_progress: bool = True,
+        **_kwargs: Any,
     ):
         work_items = _index_samples(samples)
         semaphore = asyncio.Semaphore(concurrency)
@@ -109,6 +109,7 @@ class Eval(abc.ABC):
         samples,
         show_progress=True,
         record_raw_sample=True,
+        **_kwargs: Any,
     ):
         """
         Evaluate all provided samples in parallel.
@@ -116,7 +117,6 @@ class Eval(abc.ABC):
         work_items = _index_samples(samples)
         threads = int(os.environ.get("EVALS_THREADS", "10"))
         show_progress = bool(os.environ.get("EVALS_SHOW_EVAL_PROGRESS", show_progress))
-        timeout = float(os.environ.get("EVALS_THREAD_TIMEOUT", "40"))
 
         def eval_sample(args):
             """
@@ -130,33 +130,20 @@ class Eval(abc.ABC):
                 rng = random.Random(seed)
                 return idx, self.eval_sample(sample, rng)
 
-        def worker_thread(args):
-            """
-            Worker thread for evaluating a single sample.
-            """
-            while True:
-                executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
-                future = executor.submit(eval_sample, args=args)
-                try:
-                    result = future.result(timeout=timeout)
-                    return result
-                except concurrent.futures.TimeoutError as e:
-                    executor.shutdown(wait=False)
-
         with ThreadPool(threads) as pool:
             if os.environ.get("EVALS_SEQUENTIAL", "0") in {"1", "true", "yes"}:
                 logger.info(f"Running in sequential mode!")
                 iter = map(eval_sample, work_items)
             else:
                 logger.info(f"Running in threaded mode with {threads} threads!")
-                iter = pool.imap_unordered(worker_thread, work_items)
+                iter = pool.imap_unordered(eval_sample, work_items)
             idx_and_result = list(tqdm(iter, total=len(work_items), disable=not show_progress))
         return [r for _, r in sorted(idx_and_result)]
 
     def get_samples(self):
         if self.samples_jsonl is None:
             raise ValueError(
-                    "To use `get_samples`, you must provide a `samples_jsonl` path."
-                    "Got `None`.")
+                "To use `get_samples`, you must provide a `samples_jsonl` path." "Got `None`."
+            )
 
         return get_jsonl(self.samples_jsonl)

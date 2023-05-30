@@ -1,0 +1,10 @@
+portuguese-syllable-count:
+  id: portuguese-syllable-count.dev.v0
+  description: Evaluates how many syllabels a given word has.
+  metrics:
+    - accuracy
+
+portuguese-syllable-count.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: portuguese-syllable-count/samples.jsonl

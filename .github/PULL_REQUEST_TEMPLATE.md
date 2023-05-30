@@ -8,6 +8,8 @@ In order for a PR to be merged, it must fail on GPT-4. We are aware that right n
 
 We plan to roll out a way for users submitting evals to see the eval performance on GPT-4 soon. Stay tuned! Until then, you will not be able to see the eval performance on GPT-4. **Starting April 10, the minimum eval count is 15 samples, we hope this makes it easier to create and contribute evals.**
 
+Also, pelase note that we're using **Git LFS** for storing the JSON files, so please make sure that you move the JSON file to Git LFS before submitting a PR. Details on how to use Git LFS are available [here](https://git-lfs.com).
+
 ## Eval details 📑
 ### Eval name
 [Insert Eval name here]
@@ -68,7 +70,8 @@ We know that you might be excited to contribute to OpenAI's mission, help improv
 
 ### Submit eval
 
-- [ ] I have filled out all required fields in the evals PR form
+- [ ] I have filled out all required fields of this form
+- [ ] I have used **Git LFS** for the Eval JSON data
 - [ ] (Ignore if not submitting code) I have run `pip install pre-commit; pre-commit install` and have verified that `black`, `isort`, and `autoflake` are running when I commit and push
 
 Failure to fill out all required fields will result in the PR being closed.

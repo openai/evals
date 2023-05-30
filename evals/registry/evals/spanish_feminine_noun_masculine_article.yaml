@@ -1,0 +1,8 @@
+spanish_feminine_noun_masculine_article:
+  id: spanish_feminine_noun_masculine_article.dev.v0
+  metrics: [accuracy]
+  description: In Spanish there are are a number of nouns like "agua" which are feminine but use the masculine article, "El agua" is correct and "La agua" is incorrect
+spanish_feminine_noun_masculine_article.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: spanish_feminine_noun_masculine_article/samples.jsonl
