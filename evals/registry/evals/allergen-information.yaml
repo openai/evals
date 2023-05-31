@@ -1,0 +1,11 @@
+allergen-information:
+  id: allergen-information.dev.v0
+  description: Test the model's ability to identify the allergen information of different food products in the israeli market.
+  metrics: [accuracy]
+
+allergen-information.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: allergen-information/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact    
