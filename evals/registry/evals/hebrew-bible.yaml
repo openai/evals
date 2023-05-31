@@ -3,8 +3,8 @@ hebrew-bible:
   description: Simple questions on the bible, similar to preliminary questions in the international yearly bible contest in Israel.
   metrics: [accuracy]
 hebrew-bible.dev.v0:
-  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl:  hebrew_bible/samples.jsonl
-    eval_type: cot_classify
-    modelgraded_spec: fact    
+    few_shot_jsonl: hebrew_bible/fewshot.jsonl
+    num_few_shot: 5
+    samples_jsonl: hebrew_bible/samples.jsonl
+  class: evals.elsuite.basic.match:Includes
