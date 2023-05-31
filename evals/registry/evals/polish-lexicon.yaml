@@ -1,0 +1,9 @@
+polish-lexicon:
+  id: polish-lexicon.dev.v0
+  description: Test the model's ability to distinguish between existing and hallucinated Polish words.
+  metrics: [accuracy]
+
+polish-lexicon.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: polish-lexicon/samples.jsonl
