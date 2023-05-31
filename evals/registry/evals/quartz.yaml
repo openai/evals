@@ -1,0 +1,10 @@
+quartz:
+  id: quartz.test.v1
+  metrics:
+  - accuracy
+quartz.test.v1:
+  args:
+    few_shot_jsonl: quartz/few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: quartz/samples.jsonl
+  class: evals.elsuite.basic.match:Match
