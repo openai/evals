@@ -1,0 +1,8 @@
+rhetorical-devices:
+  id: rhetorical-devices.dev.v0
+  description: Evaluate model's understanding of rhetorical device usage in sentences
+  metrics: [accuracy]
+rhetorical-devices.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: rhetorical_devices/samples.jsonl

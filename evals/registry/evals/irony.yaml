@@ -1,0 +1,9 @@
+irony:
+  id: irony.dev.v0
+  description: Tests the ability to identify one of three types of irony, situational, verbal, or dramatic.
+  metrics: [accuracy]
+
+irony.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: irony/samples.jsonl
