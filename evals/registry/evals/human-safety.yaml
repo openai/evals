@@ -1,8 +1,8 @@
-story-end:
+human-safety:
   id: human-safety.test.v0
   description: An evaluation of logical reasoning about (almost) real-life situation where humans might be in danger.
   metrics: [accuracy]
 human-safety.test.v0:
-  class: evals.elsuite.basic.match:Includes
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: human-safety/human-safety.jsonl
