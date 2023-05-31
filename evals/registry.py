@@ -82,7 +82,12 @@ class Registry:
 
     @cached_property
     def api_model_ids(self):
-        return [m["id"] for m in openai.Model.list()["data"]]
+        try:
+            return [m["id"] for m in openai.Model.list()["data"]]
+        except openai.error.OpenAIError:
+            # Errors can happen when running eval with completion function that uses custom
+            # API endpoints and authentication mechanisms.
+            return []
 
     def make_completion_fn(self, name: str) -> CompletionFn:
         """
