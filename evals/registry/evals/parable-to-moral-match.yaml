@@ -1,0 +1,15 @@
+parable-to-moral-match-en:
+  id: parable-to-moral-match-en.dev.v0
+  metrics: [accuracy]
+parable-to-moral-match-en.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: parable-to-moral-match/parable-to-moral-match-en.jsonl
+
+parable-to-moral-match-zh:
+  id: parable-to-moral-match-zh.dev.v0
+  metrics: [accuracy]
+parable-to-moral-match-zh.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: parable-to-moral-match/parable-to-moral-match-zh.jsonl
