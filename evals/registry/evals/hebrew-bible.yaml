@@ -4,7 +4,8 @@ hebrew-bible:
   metrics: [accuracy]
 hebrew-bible.dev.v0:
   args:
-    few_shot_jsonl: hebrew_bible/fewshot.jsonl
-    num_few_shot: 5
+    # few_shot_jsonl: hebrew_bible/fewshot.jsonl
+    # num_few_shot: 5
     samples_jsonl: hebrew_bible/samples.jsonl
-  class: evals.elsuite.basic.match:Includes
+  class: evals.elsuite.basic.match:Match
+  # class: evals.elsuite.basic.includes:Includes
