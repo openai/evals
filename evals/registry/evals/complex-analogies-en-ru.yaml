@@ -1,0 +1,8 @@
+complex-analogies-en-ru:
+  id: complex-analogies-en-ru.dev.v0
+  metrics: [accuracy]
+
+complex-analogies-en-ru.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: complex-analogies-en-ru/samples.jsonl
