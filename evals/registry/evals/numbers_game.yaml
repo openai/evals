@@ -1,0 +1,9 @@
+numbers_game:
+  id: numbers_game.dev.v0
+  description: Test the model's ability to solve permutation questions
+  metrics: [accuracy]
+
+numbers_game.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: numbers_game/samples.jsonl

@@ -1,0 +1,8 @@
+accounting_audit:
+  id: accounting_audit.dev.v0
+  metrics: [accuracy]
+
+accounting_audit.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: accounting_audit/samples.jsonl

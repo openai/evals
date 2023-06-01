@@ -83,6 +83,7 @@ class RecorderBase:
         self._written_events = 0
         self._flushes_started = 0
         self._event_lock = threading.Lock()
+        self._paused_ids: List[str] = []
         atexit.register(self.flush_events)
 
     @contextlib.contextmanager
@@ -95,6 +96,24 @@ class RecorderBase:
 
     def current_sample_id(self) -> Optional[str]:
         return self._sample_id.get()
+
+    def pause(self):
+        sample_id = self.current_sample_id()
+        with self._event_lock:
+            if sample_id not in self._paused_ids:
+                self._paused_ids.append(sample_id)
+
+    def unpause(self):
+        sample_id = self.current_sample_id()
+        with self._event_lock:
+            if sample_id in self._paused_ids:
+                self._paused_ids.remove(sample_id)
+
+    def is_paused(self, sample_id: str = None):
+        if sample_id is None:
+            sample_id = self.current_sample_id()
+        with self._event_lock:
+            return sample_id in self._paused_ids
 
     def get_events(self, type: str) -> Sequence[Event]:
         with self._event_lock:
@@ -140,6 +159,8 @@ class RecorderBase:
         if sample_id is None:
             raise ValueError("No sample_id set! Either pass it in or use as_default_recorder!")
 
+        if self.is_paused(sample_id):
+            return
         with self._event_lock:
             event = Event(
                 run_id=self.run_spec.run_id,
@@ -479,3 +500,15 @@ def record_error(msg: str, error: Exception = None, **extra):
 
 def record_extra(data):
     return default_recorder().record_extra(data)
+
+
+def record_event(type, data=None, sample_id=None):
+    return default_recorder().record_event(type, data, sample_id)
+
+
+def pause():
+    return default_recorder().pause()
+
+
+def unpause():
+    return default_recorder().unpause()

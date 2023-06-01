@@ -1,0 +1,8 @@
+ascii-wordart:
+  id: ascii-wordart.dev.v0
+  description: Check the model's ability to identify ASCII art that represents words.
+  metrics: [accuracy]
+ascii-wordart.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: ascii_wordart/ascii_wordart.jsonl

@@ -12,17 +12,13 @@ class FuzzyMatch(evals.Eval):
         completion_fns: list[CompletionFn],
         samples_jsonl: str,
         *args,
-        max_tokens: int = 16,  # was 500 before, but not used, whereas 16 was hardcoded in eval_sample(...)
-        preserve_punct: str = None,  # whitelist punctionation to be preserved through utils.normalize(...)
-        multiline: bool = None,  # Q: utils.normalize(...) will only compare the first line of content by default, is that well known?
+        max_tokens: int = 500,
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
         assert len(completion_fns) == 1, "FuzzyMatch only supports one completion fn"
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
-        self.preserve_punct = preserve_punct
-        self.multiline = multiline
 
     def eval_sample(self, sample, rng):
         del rng
@@ -33,15 +29,11 @@ class FuzzyMatch(evals.Eval):
         result = self.completion_fn(
             prompt=prompt,
             temperature=0.0,  # Q: why are these hardcoded?
-            max_tokens=self.max_tokens,
+            max_tokens=100,
         )
         sampled = result.get_completions()[0]
 
-        normalize_kwargs = {"preserve_punct": self.preserve_punct, "multiline": self.multiline}
-        matches = [
-            utils.fuzzy_match(sampled, correct_answer, **normalize_kwargs)
-            for correct_answer in correct_answers
-        ]
+        matches = [utils.fuzzy_match(sampled, correct_answer) for correct_answer in correct_answers]
 
         evals.record.record_match(
             True in matches,
@@ -50,7 +42,7 @@ class FuzzyMatch(evals.Eval):
         )
         evals.record.record_metrics(
             accuracy=float(True in matches),
-            f1_score=utils.f1_score(sampled, correct_answers, **normalize_kwargs),
+            f1_score=utils.f1_score(sampled, correct_answers),
         )
 
     def run(self, recorder: RecorderBase):
