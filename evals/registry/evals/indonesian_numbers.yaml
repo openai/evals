@@ -1,0 +1,8 @@
+indonesian_numbers:
+  id: indonesian_numbers.dev.v0
+  metrics: [accuracy]
+
+indonesian_numbers.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: indonesian_numbers/indonesian_numbers.jsonl
