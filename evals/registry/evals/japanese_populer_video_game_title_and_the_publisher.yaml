@@ -1,0 +1,9 @@
+japanese_populer_video_game_title_and_the_publisher:
+  id: japanese_populer_video_game_title_and_the_publisher.val.v0
+  description: Test the model's ability to identify game publisher published popular japanese video games.
+  metrics: [accuracy]
+
+japanese_populer_video_game_title_and_the_publisher.val.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: japanese_populer_video_game_title_and_the_publisher/samples.jsonl

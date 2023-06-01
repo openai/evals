@@ -1,0 +1,8 @@
+formal-logic:
+  id: formal-logic.dev.v0
+  description: Test the model's ability to evaluate expressions in formal logic.
+  metrics: [accuracy]
+formal-logic.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: formal_logic/formal_logic_expressions.jsonl

@@ -1,0 +1,8 @@
+hebrew-same-noun-gender:
+  id: hebrew-same-noun-gender.v0
+  description: Do these hebrew nouns have the same grammatical gender?
+  metrics: [accuracy]
+hebrew-same-noun-gender.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: hebrew_same_noun_gender/samples.jsonl

@@ -1,0 +1,7 @@
+food:
+  id: food.test.v1
+  metrics: [accuracy]
+food.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: food/samples.jsonl
