@@ -1,0 +1,9 @@
+geometry_puzzle:
+  id: geometry_puzzle.dev.v0
+  description: Assesses the model's performance in solving spatial and geometrical puzzles that require imagination, logic, and pattern recognition.
+  metrics: [accuracy]
+
+geometry_puzzle.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: geometry_puzzle/samples.jsonl

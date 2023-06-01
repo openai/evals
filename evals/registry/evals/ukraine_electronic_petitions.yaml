@@ -1,0 +1,9 @@
+ukraine_electronic_petitions:
+  id: ukraine_electronic_petitions.val.v0
+  metrics: [accuracy]
+ukraine_electronic_petitions.val.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: ukraine_electronic_petitions/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact

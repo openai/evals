@@ -1,6 +1,6 @@
 [project]
 name = "evals"
-version = "0.1.1"
+version = "1.0.3.post1"
 requires-python = ">=3.9"
 dependencies = [
     "mypy",
@@ -11,6 +11,7 @@ dependencies = [
     "numpy",
     "snowflake-connector-python[pandas]",
     "pandas",
+    "datasets",
     "fire",
     "pydantic",
     "tqdm",
@@ -24,6 +25,7 @@ dependencies = [
     "pyyaml",
     "sacrebleu",
     "matplotlib",
+    "setuptools_scm",
 ]
 
 [project.scripts]
