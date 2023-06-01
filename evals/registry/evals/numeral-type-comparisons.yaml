@@ -1,0 +1,7 @@
+numeral-type-comparisons:
+  id: numeral-type-comparisons.dev.v0
+  metrics: [accuracy]
+numeral-type-comparisons.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: numeral-type-comparisons/samples.jsonl
