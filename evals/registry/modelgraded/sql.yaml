@@ -1,6 +1,6 @@
 sql:
   prompt: |-
-  You are comparing a submitted answer to an expert answer on a given SQL coding question. Here is the data:
+    You are comparing a submitted answer to an expert answer on a given SQL coding question. Here is the data:
     [BEGIN DATA]
     ************
     [Question]: {input}
