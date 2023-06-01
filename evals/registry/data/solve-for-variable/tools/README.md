@@ -21,9 +21,8 @@ Each question is similar to the following:
       2: z = n * u
 ```
 
-The AI is supposed to figure out what to do, and reply with "1"
-(with the aid of a system message encouraging this simple response,
-as opposed to a longer explanation).
+The AI is supposed to figure out what to do, and include a "{1}"
+in its response (with the aid of a system message).
 
 The multiple-choice answers are numerically validated: for all involved
 variables, in a range from -5 to +5 in steps of 0.5 (plus a small offset,
