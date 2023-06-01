@@ -1,0 +1,8 @@
+finnish-rhyme:
+  id: finnish-rhyme.dev.v0
+  description: Composite task that involves translation and rhyming.
+  metrics: [accuracy]
+finnish-rhyme.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: finnish-rhyme/samples.jsonl
