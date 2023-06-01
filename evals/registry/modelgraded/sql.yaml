@@ -1,0 +1,25 @@
+sql:
+  prompt: |-
+    You are comparing a submitted answer to an expert answer on a given SQL coding question. Here is the data:
+    [BEGIN DATA]
+    ************
+    [Question]: {input}
+    ************
+    [Expert]: {ideal}
+    ************
+    [Submission]: {completion}
+    ************
+    [END DATA]
+
+    Compare the content and correctness of the submitted SQL with the expert answer. Ignore any differences in whitespace, style, or output column names.
+    The submitted answer may either be correct or incorrect. Determine which case applies. Answer the question by responding with one of the following:
+      "Correct": The submitted SQL and the expert answer are semantically the same, i.e. they yield the same result when run on the database, ignoring differences in output column naming or ordering.
+      "Incorrect": The submitted SQL and the expert answer are semantically different, i.e. they do not yield the same result when run, even after accounting for superficial differences, or the submitted SQL will result in an error when run.
+  choice_strings:
+    - "Correct"
+    - "Incorrect"
+  choice_scores:
+    "Correct": 1.0
+    "Incorrect": 0.0
+  input_outputs:
+    input: completion

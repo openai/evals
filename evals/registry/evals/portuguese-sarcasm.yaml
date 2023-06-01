@@ -1,0 +1,9 @@
+portuguese-sarcasm:
+  id: portuguese-sarcasm.dev.v0
+  description: An evaluation on sarcasm detection in Portuguese sentences
+  metrics: [accuracy]
+
+portuguese-sarcasm.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: portuguese-sarcasm/samples.jsonl
