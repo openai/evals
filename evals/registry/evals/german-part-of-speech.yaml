@@ -1,0 +1,8 @@
+german-part-of-speech:
+  id: german-part-of-speech.dev.v0
+  description: Test the model's knowledge what part of speech a given word can have in German, using data from de.wiktionary.org (as of 2023-05-20)
+  metrics: [accuracy]
+german-part-of-speech.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: german-part-of-speech/samples.jsonl
