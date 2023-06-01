@@ -7,4 +7,5 @@ ru_rhyming_phrases.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: ru_rhyming_phrases/samples.jsonl
-    modelgraded_spec_file: closedqa
+    modelgraded_spec: closedqa
+    
