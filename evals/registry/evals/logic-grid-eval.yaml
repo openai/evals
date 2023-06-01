@@ -1,77 +1,17 @@
-logic-grid-3x4:
-  id: logic-grid-3x4.v0
-  description: Test the model's ability to solve grid-based logic puzzles with 3 categories and 4 values per category.
-  disclaimer: The logic to solve these takes a lot of tokens - keep expenses in mind.
+logic-grid:
+  id: logic-grid.dev.v0
+  description: -
+    Test the model's ability to solve grid-based logic puzzles.
+    This eval contains 90 puzzles in combinations of 3 to 4 categories and 4 to 7 unique values per category.
+    The exact cardinality combinations of categories to unique values is as follows;
+    15 puzzles each for sizes 3x4, 3x5, 4x4, 4x5, 4x6, and 4x7.
+  disclaimer: -
+    The logic to solve these takes a lot of tokens - keep expenses in mind.
+    A precursory analysis shows significant variability in the length of answer content,
+    for both correct and incorrect answers. Hence, 'max_tokens' may require adjustment.
   metrics: [accuracy]
-logic-grid-3x4.v0:
+logic-grid.dev.v0:
   class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
   args:
-    samples_jsonl: logic-grid/logic-grid-3x4.jsonl
-    max_tokens: 2048
-    preserve_punct: (",)
-    multiline: true
-
-logic-grid-3x5:
-  id: logic-grid-3x5.v0
-  description: Test the model's ability to solve grid-based logic puzzles with 3 categories and 5 values per category.
-  disclaimer: The logic to solve these takes a lot of tokens - keep expenses in mind.
-  metrics: [accuracy]
-logic-grid-3x5.v0:
-  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
-  args:
-    samples_jsonl: logic-grid/logic-grid-3x5.jsonl
-    max_tokens: 2048
-    preserve_punct: (",)
-    multiline: true
-
-logic-grid-4x4:
-  id: logic-grid-4x4.v0
-  description: Test the model's ability to solve grid-based logic puzzles with 4 categories and 4 values per category.
-  disclaimer: The logic to solve these takes a lot of tokens - keep expenses in mind.
-  metrics: [accuracy]
-logic-grid-4x4.v0:
-  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
-  args:
-    samples_jsonl: logic-grid/logic-grid-4x4.jsonl
+    samples_jsonl: logic-grid/logic-grid.jsonl
     max_tokens: 3072
-    preserve_punct: (",)
-    multiline: true
-
-logic-grid-4x5:
-  id: logic-grid-4x5.v0
-  description: Test the model's ability to solve grid-based logic puzzles with 4 categories and 5 values per category.
-  disclaimer: The logic to solve these takes a lot of tokens - keep expenses in mind.
-  metrics: [accuracy]
-logic-grid-4x5.v0:
-  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
-  args:
-    samples_jsonl: logic-grid/logic-grid-4x5.jsonl
-    max_tokens: 3072
-    preserve_punct: (",)
-    multiline: true
-
-logic-grid-4x6:
-  id: logic-grid-4x6.v0
-  description: Test the model's ability to solve grid-based logic puzzles with 4 categories and 6 values per category.
-  disclaimer: The logic to solve these takes a lot of tokens - keep expenses in mind.
-  metrics: [accuracy]
-logic-grid-4x6.v0:
-  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
-  args:
-    samples_jsonl: logic-grid/logic-grid-4x6.jsonl
-    max_tokens: 3072
-    preserve_punct: (",)
-    multiline: true
-
-logic-grid-4x7:
-  id: logic-grid-4x7.v0
-  description: Test the model's ability to solve grid-based logic puzzles with 4 categories and 7 values per category.
-  disclaimer: The logic to solve these takes a lot of tokens - keep expenses in mind.
-  metrics: [accuracy]
-logic-grid-4x7.v0:
-  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
-  args:
-    samples_jsonl: logic-grid/logic-grid-4x7.jsonl
-    max_tokens: 3072
-    preserve_punct: (",)
-    multiline: true

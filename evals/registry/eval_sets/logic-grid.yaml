@@ -1,8 +1,0 @@
-logic-grid:
-  evals:
-    - logic-grid-3x4
-    - logic-grid-3x5
-    - logic-grid-4x4
-    - logic-grid-4x5
-    - logic-grid-4x6
-    - logic-grid-4x7
