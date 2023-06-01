@@ -20,9 +20,9 @@ class FuzzyMatch(evals.Eval):
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
 
-    def eval_sample(self, sample, rng):
+    def eval_sample(self, test_sample, rng):
         del rng
-        prompt, correct_answers = sample["input"], sample["ideal"]
+        prompt, correct_answers = test_sample["input"], test_sample["ideal"]
         if not isinstance(correct_answers, list):
             correct_answers = [correct_answers]
 
