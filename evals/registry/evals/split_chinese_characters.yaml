@@ -1,0 +1,8 @@
+split_chinese_characters:
+  id: split_chinese_characters.dev.v0
+  metrics: [accuracy]
+
+split_chinese_characters.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: split_chinese_characters/samples.jsonl
