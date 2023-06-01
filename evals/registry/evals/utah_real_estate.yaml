@@ -1,0 +1,8 @@
+utah_real_estateh:
+  id: utah_real_estate.dev.v0
+  metrics: [accuracy]
+
+utah_real_estate.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: utah_real_estate/samples.jsonl
