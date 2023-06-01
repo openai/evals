@@ -6,5 +6,5 @@ iambic-pentameter.dev.v0:
   args:
     samples_jsonl: iambic-pentameter/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec_file: iambic_pentameter
+    modelgraded_spec: iambic_pentameter
     metaeval: true
