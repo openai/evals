@@ -4,6 +4,7 @@ ru_rhyming_phrases:
   metrics: [accuracy]
 
 ru_rhyming_phrases.dev.v0:
-  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: ru_rhyming_phrases/samples.jsonl
+    modelgraded_spec_file: closedqa
