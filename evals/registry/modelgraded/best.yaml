@@ -1,0 +1,12 @@
+best:
+  prompt: |-
+    Which of the following {n} texts is best response to the following instruction?
+
+    Instruction: {input}
+
+    Responses:
+    {completion}
+  choice_strings: from_n
+  input_outputs:
+    input: completion
+  output_template: "{i}. {output}\n"

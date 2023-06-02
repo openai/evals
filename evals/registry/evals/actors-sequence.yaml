@@ -1,0 +1,8 @@
+actors-sequence:
+  id: actors-sequence.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate multiple actor output, sequence following, tokenization, logic ability
+actors-sequence.dev.match-v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: actors-sequence/samples.jsonl

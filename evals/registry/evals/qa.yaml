@@ -1,0 +1,8 @@
+qa:
+  id: qa.dev.v0
+  description: Tests the model's ability to correctly answer a question when the answer of the question is relocated in a great deal of context.
+  metrics: [accuracy]
+qa.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: qa/q_and_a.jsonl

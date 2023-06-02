@@ -1,0 +1,14 @@
+cot/text-davinci-003:
+  class: evals.completion_fns.cot:ChainOfThoughtCompletionFn
+  args:
+    cot_completion_fn: text-davinci-003
+
+cot/gpt-3.5-turbo:
+  class: evals.completion_fns.cot:ChainOfThoughtCompletionFn
+  args:
+    cot_completion_fn: gpt-3.5-turbo
+
+cot/flan-t5-xl:
+  class: evals.completion_fns.cot:ChainOfThoughtCompletionFn
+  args:
+    cot_completion_fn: langchain/llm/flan-t5-xl

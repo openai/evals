@@ -1,0 +1,9 @@
+list_comparison_missing_name:
+  id: list_comparison_missing_name.dev.v0
+  description: Test the model's ability to determine which name is present in list 1 but not in list 2. List 1 is formatted 'First Last' while list two is formatted 'Last First'. Lists are between 20-35 names long.
+  metrics: [accuracy]
+list_comparison_missing_name.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: list_comparison_missing_name/samples.jsonl
+

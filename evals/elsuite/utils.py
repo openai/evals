@@ -1,26 +1,28 @@
 import copy
-import os
 import re
 import string
 from collections import Counter, defaultdict
+from typing import Optional, Union
 
-import yaml
-
-from evals.api import sample_freeform
-from evals.prompt.base import chat_prompt_to_text_prompt, is_chat_prompt
-
-
-def load_modelgraded_specs(spec_file: str) -> str:
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    yaml_path = os.path.join(current_dir, "../registry/modelgraded", f"{spec_file}.yaml")
-    return yaml.load(open(yaml_path, "r"), Loader=yaml.FullLoader)
+from evals import CompletionFn
+from evals.prompt.base import (
+    OpenAICreateChatPrompt,
+    OpenAICreatePrompt,
+    Prompt,
+    chat_prompt_to_text_prompt,
+    is_chat_prompt,
+)
 
 
-def get_answer(text, answer_prompt):
-    idx = text.rfind(answer_prompt)
+def get_answer(text, answer_prompt, ignore_case=False):
+    if ignore_case:
+        idx = text.lower().rfind(answer_prompt.lower())
+    else:
+        idx = text.rfind(answer_prompt)
+
     if idx == -1:
         return None
-    return text[idx + len(answer_prompt) :]
+    return text[idx:idx + len(answer_prompt)]
 
 
 def get_consensus(answers):
@@ -33,7 +35,6 @@ def get_consensus(answers):
 
 def normalize(s: str) -> str:
     """Lower text and remove punctuation, articles and extra whitespace."""
-    s = s.split("\n")[0]
     s = s.lower()
     exclude = set(string.punctuation)
     s = "".join(char for char in s if char not in exclude)
@@ -99,28 +100,74 @@ def scrub_formatting_from_prompt(prompt):
     return scrubbed_prompt
 
 
-def format_necessary(template: str, **kwargs: dict[str, str]) -> str:
+def format_necessary(template: str, allow_missing: bool = False, **kwargs: dict[str, str]) -> str:
     """Format a template string with only necessary kwargs."""
     keys = [k[1] for k in string.Formatter().parse(template) if k[1]]
-    assert all(k in kwargs for k in keys), f"Required: {keys}, got: {sorted(kwargs)}"
-    cur_keys = {k: kwargs[k] for k in keys}
+    if allow_missing:
+        assert (
+            len([k for k in keys if k in kwargs]) > 0
+        ), f"Required: {keys}, got: {sorted(kwargs)}, no inputs are used.\nTemplate:\n{template}"
+        cur_keys = {k: kwargs.get(k, "{" + k + "}") for k in keys}
+    else:
+        assert all(
+            k in kwargs for k in keys
+        ), f"Required: {keys}, got: {sorted(kwargs)}.\nTemplate:\n{template}"
+        cur_keys = {k: kwargs[k] for k in keys}
     return template.format(**cur_keys)
 
 
-class PromptFn:
-    """Wrap calls to model with prompt"""
+def format_prompt(
+    prompt: OpenAICreatePrompt, allow_missing: bool = False, **kwargs: dict[str, str]
+) -> OpenAICreatePrompt:
+    """Format a prompt with only necessary kwargs."""
+    # if any input kwargs is chat prompt, convert to text prompt
+    kwargs = {
+        k: chat_prompt_to_text_prompt(v, for_completion=False) if is_chat_prompt(v) else v
+        for k, v in kwargs.items()
+    }
+    if is_chat_prompt(prompt):
+        new_prompt = []
+        for msg in prompt:
+            formatted_msg = copy.copy(msg)
+            if "content" in formatted_msg:
+                formatted_msg["content"] = format_necessary(
+                    formatted_msg["content"], allow_missing=allow_missing, **kwargs
+                )
+            new_prompt.append(formatted_msg)
+        prompt = new_prompt
+    else:
+        # Prompt is a string
+        prompt = format_necessary(prompt, allow_missing=allow_missing, **kwargs)
+    return prompt
 
-    def __init__(self, prompt, model_spec, max_tokens, temperature=0, completion_kwargs=None):
+
+class PromptFn:
+    """
+    Wrap calls to a completion_fn with a prompt template with applicable keyword args.
+    This will pass many args relevant to OpenAI Completion API, may be ignored by other completion_fn.
+    """
+
+    def __init__(
+        self,
+        prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
+        completion_fn: CompletionFn,
+        max_tokens: int,
+        temperature: int = 0,
+        n_samples: Optional[int] = None,
+        completion_kwargs: Optional[dict] = {},
+    ):
         self.prompt = prompt
         self.max_tokens = max_tokens
-        self.model_spec = model_spec
+        self.completion_fn = completion_fn
         self.temperature = temperature
-        self.completion_kwargs = completion_kwargs or {}
+        self.completion_kwargs = completion_kwargs
+        self.n_samples = n_samples
 
     def __call__(self, **kwargs):
         # if any input kwargs is chat prompt, convert to text prompt
         kwargs = {
-            k: chat_prompt_to_text_prompt(v) if is_chat_prompt(v) else v for k, v in kwargs.items()
+            k: chat_prompt_to_text_prompt(v, for_completion=False) if is_chat_prompt(v) else v
+            for k, v in kwargs.items()
         }
         if is_chat_prompt(self.prompt):
             prompt = []
@@ -133,14 +180,15 @@ class PromptFn:
             # Prompt is a string
             prompt = format_necessary(self.prompt, **kwargs)
 
-        completion = sample_freeform(
-            self.model_spec,
-            prompt,
+        result = self.completion_fn(
+            prompt=prompt,
             max_tokens=self.max_tokens,
             temperature=self.temperature,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0,
+            n=(1 if self.n_samples is None else self.n_samples),
             **self.completion_kwargs,
         )
-        return completion, prompt
+        sampled = result.get_completions()[0]
+        return sampled, prompt
