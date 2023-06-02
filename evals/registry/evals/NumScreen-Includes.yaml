@@ -1,0 +1,8 @@
+NumScreen-Includes:
+  id: NumScreen-Includes.dev.v0
+  metrics: [accuracy]
+
+NumScreen-Includes.dev.v0:
+  class: evals.elsuite.basic.includes_r:Includes_R
+  args:
+    samples_jsonl: NumScreen/NumScreen-Includes.jsonl
