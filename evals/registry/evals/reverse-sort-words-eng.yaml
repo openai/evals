@@ -1,0 +1,8 @@
+reverse-sort-words-eng:
+  id: reverse-sort-words-eng-simple.dev.v0
+  description: Tests performance to sort different comma-separated english words in reverse alphabetical order. Inlcudes duplicate words.
+  metrics: [accuracy]
+reverse-sort-words-eng-simple.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: reverse-sort-words-eng/samples.jsonl
