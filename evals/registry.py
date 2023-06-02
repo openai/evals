@@ -84,9 +84,10 @@ class Registry:
     def api_model_ids(self):
         try:
             return [m["id"] for m in openai.Model.list()["data"]]
-        except openai.error.OpenAIError:
+        except openai.error.OpenAIError as err:
             # Errors can happen when running eval with completion function that uses custom
             # API endpoints and authentication mechanisms.
+            logger.warning(f"Could not fetch API model IDs from OpenAI API: {err}")
             return []
 
     def make_completion_fn(self, name: str) -> CompletionFn:
