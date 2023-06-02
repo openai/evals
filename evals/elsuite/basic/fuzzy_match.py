@@ -12,7 +12,7 @@ class FuzzyMatch(evals.Eval):
         completion_fns: list[CompletionFn],
         samples_jsonl: str,
         *args,
-        max_tokens: int = 500,
+        max_tokens: int = 100,
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
@@ -29,7 +29,7 @@ class FuzzyMatch(evals.Eval):
         result = self.completion_fn(
             prompt=prompt,
             temperature=0.0,  # Q: why are these hardcoded?
-            max_tokens=100,
+            max_tokens=self.max_tokens,
         )
         sampled = result.get_completions()[0]
 
