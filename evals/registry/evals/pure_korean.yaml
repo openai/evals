@@ -1,0 +1,9 @@
+pure_korean:
+  id: pure_korean.dev.v0
+  description: Evaluates GPT can identify pure Korean words.
+  metrics: [accuracy]
+
+pure_korean.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: pure_korean/samples.jsonl
