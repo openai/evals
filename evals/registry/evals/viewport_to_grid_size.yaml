@@ -1,6 +1,6 @@
 viewport_to_grid_size:  
   id: viewport_to_grid_size.dev.v1
-  description: You have all the info you need, how big are we?.
+  description: Evaluates a models ability to determine the size of an obscured grid using information only from initial constraints and a visible viewport.
   metrics: [accuracy]
 
 viewport_to_grid_size.dev.v1:
