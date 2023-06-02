@@ -1,0 +1,8 @@
+russian-english-homonym-context-resolution:
+  id: russian-english-homonym-context-resolution.dev.v0
+  metrics: [accuracy]
+
+russian-english-homonym-context-resolution.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: russian-english-homonym-context-resolution/samples.jsonl
