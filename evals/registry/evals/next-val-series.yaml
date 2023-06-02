@@ -1,0 +1,8 @@
+next-val-series:
+  id: next-val-series.dev.simple-v0
+  description: Test the model's ability to predict the next value in a series.
+  metrics: [accuracy]
+next-val-series.dev.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: next-val-series/next-val-series.jsonl
