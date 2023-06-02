@@ -1,0 +1,12 @@
+# Register the eval by adding a file to evals/registry/evals/<eval_name>.yaml
+population_span_extraction:
+  id: population_span_extraction.dev.v0
+  metrics: [accuracy]
+
+population_span_extraction.dev.v0:
+  # Assuming that the response can contain "significant variation" --> modelbased classify
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: population_span_extraction/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
