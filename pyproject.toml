@@ -26,6 +26,7 @@ dependencies = [
     "sacrebleu",
     "matplotlib",
     "setuptools_scm",
+    "langchain"
 ]
 
 [project.scripts]
