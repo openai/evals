@@ -38,6 +38,7 @@ Air is represented by the ▯ character. It has no effect on the movement of the
 The ball will always come to rest in an air space. It will not take the place of any other object.
 Friction and air resistance are not present in this simulator.
 
+Try reasoning through the movement of the ball step by step.
 Provide your answer by reproducing the full, final state of the simulation using the character key provided.
 """
 
