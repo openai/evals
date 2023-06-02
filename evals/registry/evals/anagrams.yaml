@@ -1,0 +1,10 @@
+anagrams:
+  id: anagrams.test.v1
+  metrics:
+  - accuracy
+anagrams.test.v1:
+  args:
+    few_shot_jsonl: anagrams/fewshot.jsonl
+    num_few_shot: 5
+    samples_jsonl: anagrams/samples.jsonl
+  class: evals.elsuite.basic.match:Match

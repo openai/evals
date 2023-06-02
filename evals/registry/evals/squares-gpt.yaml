@@ -1,0 +1,10 @@
+squares-gpt:
+  id: squares-gpt.dev.v0
+  metrics: [accuracy]
+  description: Test the model's ability to solve basic geometric reasoning questions.
+
+squares-gpt.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: squares-gpt/square-samples.jsonl
+    

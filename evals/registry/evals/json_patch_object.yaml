@@ -1,0 +1,9 @@
+json_patch_object:
+  id: json_patch_object.dev.v0
+  description: Test the model's ability to create minimal, correct JSON Patches for nested objects.
+  metrics: [accuracy]
+
+json_patch_object.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: json_patch_object/samples.jsonl

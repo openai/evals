@@ -1,0 +1,9 @@
+unwanted-rhyming:
+  id: unwanted-rhyming.dev.v0
+  metrics: [accuracy]
+unwanted-rhyming.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: unwanted-rhyming/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: rhyming

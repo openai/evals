@@ -1,0 +1,8 @@
+mendelian_inheritance:
+  id: mendelian_inheritance.dev.v0
+  metrics: [accuracy]
+
+mendelian_inheritance.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: mendelian_inheritance/samples.jsonl

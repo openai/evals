@@ -1,0 +1,9 @@
+simple_physics_engine:
+  id: simple_physics_engine.dev.v0
+  description: Test the model's ability to reason about and simulate a simplified physics model in a 2d environment.
+  metrics: [accuracy]
+
+simple_physics_engine.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: simple_physics_engine/samples.jsonl
