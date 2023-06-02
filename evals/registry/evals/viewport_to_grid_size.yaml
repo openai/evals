@@ -1,0 +1,9 @@
+viewport_to_grid_size:  
+  id: viewport_to_grid_size.dev.v1
+  description: You have all the info you need, how big are we?.
+  metrics: [accuracy]
+
+viewport_to_grid_size.dev.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: viewport_to_grid_size/samples.jsonl
