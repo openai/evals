@@ -1,0 +1,9 @@
+nutrition:
+  id: nutrition.dev.v0
+  description: Test the model's nutritional accuracy, providing parsable and accurate responses using metric notation when asked about specific values.
+  metrics: [accuracy]
+nutrition.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: nutrition/facts.jsonl
+

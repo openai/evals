@@ -1,0 +1,8 @@
+directions:
+  id: directions.dev.v0
+  description: Eval that tests the models ability to keep state of direction after a series of turns
+  metrics: [accuracy]
+directions.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: directions/samples.jsonl

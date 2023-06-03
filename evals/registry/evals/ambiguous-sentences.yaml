@@ -1,0 +1,8 @@
+ambiguous-sentences:
+  id: ambiguous-sentences.dev.v0
+  description: test pair of sentences that differ in only one or two words and that contain an ambiguity that is resolved in opposite ways in the two sentences and requires the use of world knowledge and reasoning for its resolution.
+  metrics: [accuracy]
+ambiguous-sentences.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: ambiguous-sentences/samples.jsonl

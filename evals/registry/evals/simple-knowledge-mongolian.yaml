@@ -1,0 +1,8 @@
+simple-knowledge-mongolian:
+  id: simple-knowledge-mongolian.dev.v0
+  description: Test the model's ability to understand simple world knowledge in mongolian language cyrillic and latin variants
+  metrics: [accuracy]
+simple-knowledge-mongolian.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: simple-knowledge-mongolian/samples.v0.jsonl

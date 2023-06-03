@@ -1,0 +1,9 @@
+wkt_understanding:
+  id: wkt_understanding.dev.v0
+  description: Test understanding of Multipolygon WKT (Well-Known Text) representation of vector geometry objects (https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry). 
+  metrics: [accuracy]
+  
+wkt_understanding.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: wkt_understanding/samples.jsonl

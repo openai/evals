@@ -1,0 +1,8 @@
+crontab:
+  id: crontab.dev.v0
+  metrics: [accuracy]
+
+crontab.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: crontab/samples.jsonl

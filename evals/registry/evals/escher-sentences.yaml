@@ -1,0 +1,8 @@
+escher-sentences:
+  id: escher-sentences.dev.v0
+  metrics: [accuracy]
+
+escher-sentences.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: escher_sentences/samples.jsonl

@@ -1,4 +1,9 @@
 __pycache__/
 evals.egg-info/
-.ipynb_checkpoints
+
+# MacOS folder metadata
+.DS_Store
 .vscode/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints

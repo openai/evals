@@ -3,12 +3,11 @@
 import json
 import os
 import string
-from typing import Any
 
 REGISTRY_PATH = os.path.join(os.path.dirname(__file__), "../evals/registry")
 
 
-def format(template: str, **kwargs: dict[str, str]) -> str:
+def format(template: str, **kwargs: str) -> str:
     """Format a template string with kwargs."""
     keys = [k[1] for k in string.Formatter().parse(template) if k[1]]
     assert all(k in kwargs for k in keys), f"Required: {keys}, got: {sorted(kwargs)}"
@@ -25,7 +24,7 @@ YAML = """
   args:
     samples_jsonl: test_multiio/battles/{prompt_name}_{subject1}_vs_{subject2}.jsonl
     eval_type: cot_classify
-    modelgraded_spec_file: battle
+    modelgraded_spec: battle
 """.strip()
 
 

@@ -1,0 +1,9 @@
+vintage_phone_keyboard_decode:
+  id: vintage_phone_keyboard_decode.dev.v0
+  metrics: [accuracy]
+  description: An array of correspondence between letters and numbers on the mobile phone keyboard evals, examining the model the ability to distinguish and analyze the relationship within groups in multiple groups composed of English letters and numbers.
+
+vintage_phone_keyboard_decode.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: vintage_phone_keyboard_decode/samples.jsonl
