@@ -1,0 +1,8 @@
+european-date-format-challenge:
+  id: european-date-format-challenge.dev.v0
+  description: This performance evaluation examines the model's ability to reasonably assume that a date in a text follows the DD/MM/YYYY format when a subsequent date in the text is invalid for the MM/DD/YYYY format (e.g., 27/2/2024).
+  metrics: [accuracy]
+european-date-format-challenge.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: european_date_format_challenge/samples.jsonl
