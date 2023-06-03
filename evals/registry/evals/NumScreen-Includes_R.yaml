@@ -5,4 +5,4 @@ NumScreen-Includes_r:
 NumScreen-Includes_r.dev.v0:
   class: evals.elsuite.basic.includes_r:Includes_R
   args:
-    samples_jsonl: NumScreen/NumScreen-Includes_r.jsonl
+    samples_jsonl: NumScreen/Includes_r.jsonl
