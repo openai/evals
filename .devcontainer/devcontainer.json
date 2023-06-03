@@ -9,7 +9,7 @@
                 "mutantdino.resourcemonitor",
                 "snowflake.snowflake-vsc",
                 "Alpha4.jsonl",
-                "ms-toolsai.jupyter@2023.3.1000771902"
+                "ms-toolsai.jupyter@2023.4.1011241018"
             ],
             "settings": {
                 "[python]": {
