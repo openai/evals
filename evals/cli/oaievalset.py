@@ -3,6 +3,7 @@ This file defines the `oaievalset` CLI for running eval sets.
 """
 import argparse
 import json
+import logging
 import subprocess
 from pathlib import Path
 from typing import Optional, cast
@@ -10,6 +11,7 @@ from typing import Optional, cast
 from evals.registry import Registry
 
 Task = list[str]
+logger = logging.getLogger(__name__)
 
 
 class Progress:
@@ -77,15 +79,18 @@ def run(
     registry = registry or Registry()
     commands: list[Task] = []
     eval_set = registry.get_eval_set(args.eval_set) if args.eval_set else None
-    if eval_set:  # TODO)) Log it
-        for eval in registry.get_evals(eval_set.evals):
+    if eval_set:
+        for index, eval in enumerate(registry.get_evals(eval_set.evals)):
             if not eval or not eval.key:
-                continue  # TODO)) Log it
+                logger.debug("The eval #%d in eval_set is not valid", index)
 
             command = [run_command, args.model, eval.key] + unknown_args
             if command in commands:
                 continue
             commands.append(command)
+    else:
+        logger.warning("No eval set found for %s", args.eval_set)
+
     num_evals = len(commands)
 
     progress = Progress(f"/tmp/oaievalset/{args.model}.{args.eval_set}.progress.txt")
