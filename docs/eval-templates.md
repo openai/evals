@@ -7,7 +7,7 @@ In using Evals, we have discovered several "templates" that accommodate many dif
 In cases where the desired model response has very little variation, such as answering multiple choice questions or simple questions with a straightforward answer, we have found the following templates to be useful.
 
 For a model completion `a` and a reference list of correct answers `B`, the following evals implement:
-- [`basic/match.py:Match`](../evals/elsuite/basic/match.py): `any([b.startswith(a) for b in B])`
+- [`basic/match.py:Match`](../evals/elsuite/basic/match.py): `any([a.startswith(b) for b in B])`
 - [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(b in a) for b in B])`
 - [`basic/fuzzy_match.py:FuzzyMatch`](../evals/elsuite/basic/fuzzy_match.py): `any([(a in b or b in a) for b in B])`
 
