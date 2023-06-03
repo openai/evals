@@ -1,5 +1,5 @@
 points-on-line:
-   id: points-on-line.s1.simple-v0
+   id: points-on-line.dev.v0
    description: Tests the model's ability to calculate three points (start, center, end) on a line.
    metrics: [accuracy]
 points-on-line.s1.simple-v0:
