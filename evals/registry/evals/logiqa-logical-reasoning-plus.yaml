@@ -1,0 +1,26 @@
+logiqa-logical-reasoning-plus:
+  id: logiqa-logical-reasoning-plus.dev.v0
+  description: logical reasoning instruction or the logiqa plus dataset
+  metrics: [accuracy]
+logiqa-logical-reasoning-plus.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: logiqa-logical-reasoning-plus/logiqa-logical-reasoning-plus.jsonl
+    
+logiqav2-logical-reasoning-plus:
+  id: logiqav2-logical-reasoning-plus.dev.v0
+  description: logical reasoning instruction for the logiqav2 plus dataset
+  metrics: [accuracy]
+logiqav2-logical-reasoning-plus.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: logiqa-logical-reasoning-plus/logiqav2-logical-reasoning-plus.jsonl
+    
+reclor-logical-reasoning-plus:
+  id: reclor-logical-reasoning-plus.dev.v0
+  description: logical reasoning instruction for the reclor plus dataset
+  metrics: [accuracy]
+reclor-logical-reasoning-plus.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: logiqa-logical-reasoning-plus/reclor-logical-reasoning-plus.jsonl

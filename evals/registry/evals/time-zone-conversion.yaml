@@ -1,0 +1,8 @@
+test-time-zone-conversion:
+  id: test-time-zone-conversion.dev.v0
+  description: Test the models ability to convert between different times zones, including the 2 week period between daylight savings time change in Europe and US.
+  metrics: [accuracy]
+test-time-zone-conversion.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: test_time_zone_conversion/samples.v0.jsonl

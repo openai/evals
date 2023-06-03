@@ -7,7 +7,7 @@ import string
 REGISTRY_PATH = os.path.join(os.path.dirname(__file__), "../evals/registry")
 
 
-def format(template: str, **kwargs: dict[str, str]) -> str:
+def format(template: str, **kwargs: str) -> str:
     """Format a template string with kwargs."""
     keys = [k[1] for k in string.Formatter().parse(template) if k[1]]
     assert all(k in kwargs for k in keys), f"Required: {keys}, got: {sorted(kwargs)}"
@@ -206,8 +206,8 @@ for prompt_name, subject in unlabeled_target_sets:
 
 
 yaml_file = f"{REGISTRY_PATH}/evals/test-modelgraded-generated.yaml"
-with open(yaml_file, "w") as f:
-    f.write(yaml_str)
+with open(yaml_file, "w") as yf:
+    yf.write(yaml_str)
 print(f"wrote {yaml_file}")
 for e in evals:
     print(e)

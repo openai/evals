@@ -1,0 +1,9 @@
+newsology:
+  id: newsology.dev.v0
+  description: Ask the model to pick a fruit, when telling the model that we have provided a list of vegetables. And then vice versa (pick vegetable, from basket of fruit).
+  metrics: [accuracy]
+
+newsology.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: newsology/samples.jsonl

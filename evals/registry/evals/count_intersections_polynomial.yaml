@@ -1,0 +1,9 @@
+count_intersections_polynomial:
+  id: count_intersections_polynomial.dev.v0
+  description: Test the models ability to count the intersections between the x-axis and a polynomial of third degree, with simple inputs that humans would be able to do in their head.
+  metrics: [accuracy]
+
+count_intersections_polynomial.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: count_intersections_polynomial/samples.jsonl

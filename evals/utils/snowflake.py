@@ -26,11 +26,11 @@ class SnowflakeConnection:
     def __init__(
         self,
         autocommit=True,
-        account=None,
-        user=None,
-        password=None,
-        database=None,
-        warehouse=None,
+        account: Optional[str] = None,
+        user: Optional[str] = None,
+        password: Optional[str] = None,
+        database: Optional[str] = None,
+        warehouse: Optional[str] = None,
         paramstyle="pyformat",
     ):
         self.account = _first_not_none(account, os.environ.get("SNOWFLAKE_ACCOUNT"))
