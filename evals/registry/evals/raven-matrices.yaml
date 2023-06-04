@@ -4,7 +4,7 @@ raven-matrices-symbolic-center-single:
   metrics: [accuracy]
 
 raven-matrices-symbolic-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic/center_single.jsonl
 
@@ -15,7 +15,7 @@ raven-matrices-symbolic-distribute-four:
   metrics: [accuracy]
 
 raven-matrices-symbolic-distribute-four.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic/distribute_four.jsonl
 
@@ -26,7 +26,7 @@ raven-matrices-symbolic-distribute-nine:
   metrics: [accuracy]
 
 raven-matrices-symbolic-distribute-nine.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic/distribute_nine.jsonl
 
@@ -37,7 +37,7 @@ raven-matrices-symbolic-in-center-single-out-center-single:
   metrics: [accuracy]
 
 raven-matrices-symbolic-in-center-single-out-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic/in_center_single_out_center_single.jsonl
 
@@ -48,7 +48,7 @@ raven-matrices-symbolic-in-distribute-four-out-center-single:
   metrics: [accuracy]
 
 raven-matrices-symbolic-in-distribute-four-out-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic/in_distribute_four_out_center_single.jsonl
 
@@ -59,7 +59,7 @@ raven-matrices-symbolic-left-center-single-right-center-single:
   metrics: [accuracy]
 
 raven-matrices-symbolic-left-center-single-right-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic/left_center_single_right_center_single.jsonl
 
@@ -70,7 +70,7 @@ raven-matrices-symbolic-up-center-single-down-center-single:
   metrics: [accuracy]
 
 raven-matrices-symbolic-up-center-single-down-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic/up_center_single_down_center_single.jsonl
 
@@ -83,7 +83,7 @@ raven-matrices-symbolic-open-center-single:
   metrics: [accuracy]
 
 raven-matrices-symbolic-open-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic-open/center_single.jsonl
 
@@ -94,7 +94,7 @@ raven-matrices-symbolic-open-distribute-four:
   metrics: [accuracy]
 
 raven-matrices-symbolic-open-distribute-four.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic-open/distribute_four.jsonl
 
@@ -105,7 +105,7 @@ raven-matrices-symbolic-open-distribute-nine:
   metrics: [accuracy]
 
 raven-matrices-symbolic-open-distribute-nine.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic-open/distribute_nine.jsonl
 
@@ -116,7 +116,7 @@ raven-matrices-symbolic-open-in-center-single-out-center-single:
   metrics: [accuracy]
 
 raven-matrices-symbolic-open-in-center-single-out-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic-open/in_center_single_out_center_single.jsonl
 
@@ -127,7 +127,7 @@ raven-matrices-symbolic-open-in-distribute-four-out-center-single:
   metrics: [accuracy]
 
 raven-matrices-symbolic-open-in-distribute-four-out-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic-open/in_distribute_four_out_center_single.jsonl
 
@@ -138,7 +138,7 @@ raven-matrices-symbolic-open-left-center-single-right-center-single:
   metrics: [accuracy]
 
 raven-matrices-symbolic-open-left-center-single-right-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic-open/left_center_single_right_center_single.jsonl
 
@@ -149,7 +149,7 @@ raven-matrices-symbolic-open-up-center-single-down-center-single:
   metrics: [accuracy]
 
 raven-matrices-symbolic-open-up-center-single-down-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/symbolic-open/up_center_single_down_center_single.jsonl
 
@@ -161,7 +161,7 @@ raven-matrices-text-center-single:
   metrics: [accuracy]
 
 raven-matrices-text-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text/center_single.jsonl
 
@@ -172,7 +172,7 @@ raven-matrices-text-distribute-four:
   metrics: [accuracy]
 
 raven-matrices-text-distribute-four.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text/distribute_four.jsonl
 
@@ -183,7 +183,7 @@ raven-matrices-text-distribute-nine:
   metrics: [accuracy]
 
 raven-matrices-text-distribute-nine.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text/distribute_nine.jsonl
 
@@ -194,7 +194,7 @@ raven-matrices-text-in-center-single-out-center-single:
   metrics: [accuracy]
 
 raven-matrices-text-in-center-single-out-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text/in_center_single_out_center_single.jsonl
 
@@ -205,7 +205,7 @@ raven-matrices-text-in-distribute-four-out-center-single:
   metrics: [accuracy]
 
 raven-matrices-text-in-distribute-four-out-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text/in_distribute_four_out_center_single.jsonl
 
@@ -216,7 +216,7 @@ raven-matrices-text-left-center-single-right-center-single:
   metrics: [accuracy]
 
 raven-matrices-text-left-center-single-right-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text/left_center_single_right_center_single.jsonl
 
@@ -227,7 +227,7 @@ raven-matrices-text-up-center-single-down-center-single:
   metrics: [accuracy]
 
 raven-matrices-text-up-center-single-down-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text/up_center_single_down_center_single.jsonl
 
@@ -240,7 +240,7 @@ raven-matrices-text-open-center-single:
   metrics: [accuracy]
 
 raven-matrices-text-open-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text-open/center_single.jsonl
 
@@ -251,7 +251,7 @@ raven-matrices-text-open-distribute-four:
   metrics: [accuracy]
 
 raven-matrices-text-open-distribute-four.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text-open/distribute_four.jsonl
 
@@ -262,7 +262,7 @@ raven-matrices-text-open-distribute-nine:
   metrics: [accuracy]
 
 raven-matrices-text-open-distribute-nine.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text-open/distribute_nine.jsonl
 
@@ -273,7 +273,7 @@ raven-matrices-text-open-in-center-single-out-center-single:
   metrics: [accuracy]
 
 raven-matrices-text-open-in-center-single-out-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text-open/in_center_single_out_center_single.jsonl
 
@@ -284,7 +284,7 @@ raven-matrices-text-open-in-distribute-four-out-center-single:
   metrics: [accuracy]
 
 raven-matrices-text-open-in-distribute-four-out-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text-open/in_distribute_four_out_center_single.jsonl
 
@@ -295,7 +295,7 @@ raven-matrices-text-open-left-center-single-right-center-single:
   metrics: [accuracy]
 
 raven-matrices-text-open-left-center-single-right-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text-open/left_center_single_right_center_single.jsonl
 
@@ -306,7 +306,7 @@ raven-matrices-text-open-up-center-single-down-center-single:
   metrics: [accuracy]
 
 raven-matrices-text-open-up-center-single-down-center-single.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: raven-matrices/text-open/up_center_single_down_center_single.jsonl
 
