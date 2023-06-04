@@ -1,7 +1,7 @@
 ai_vs_human_text:
   id: ai_vs_human_text.dev.v0
-  description: Evaluation of AI's ability to distinguish between human-written and AI-generated text.
   metrics: [accuracy]
+  description: Evaluation of AI's ability to distinguish between human-written and AI-generated text.
 
 ai_vs_human_text.dev.v0:
   class: evals.elsuite.basic.match:Match
