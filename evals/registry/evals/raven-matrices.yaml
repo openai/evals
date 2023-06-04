@@ -14,7 +14,7 @@ raven-matrices-symbolic-distribute-four:
   description: Evaluate the abstract reasoning abilities of the model on a symbolic version of the Raven test. Matrices composed of four object.
   metrics: [accuracy]
 
-raven-matrices-symbolc-distribute-four.dev.v0:
+raven-matrices-symbolic-distribute-four.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: raven-matrices/symbolic/distribute_four.jsonl
@@ -39,7 +39,7 @@ raven-matrices-symbolic-in-center-single-out-center-single:
 raven-matrices-symbolic-in-center-single-out-center-single.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: raven-matrices/symbolic/distribute_nine.jsonl
+    samples_jsonl: raven-matrices/symbolic/in_center_single_out_center_single.jsonl
 
 
 raven-matrices-symbolic-in-distribute-four-out-center-single:
@@ -93,7 +93,7 @@ raven-matrices-symbolic-open-distribute-four:
   description: Evaluate the abstract reasoning abilities of the model on a symbolic version of the Raven test with no multiple choices provided. Matrices composed of four object.
   metrics: [accuracy]
 
-raven-matrices-symbolc-distribute-four.dev.v0:
+raven-matrices-symbolic-open-distribute-four.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: raven-matrices/symbolic-open/distribute_four.jsonl
@@ -118,7 +118,7 @@ raven-matrices-symbolic-open-in-center-single-out-center-single:
 raven-matrices-symbolic-open-in-center-single-out-center-single.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: raven-matrices/symbolic-open/distribute_nine.jsonl
+    samples_jsonl: raven-matrices/symbolic-open/in_center_single_out_center_single.jsonl
 
 
 raven-matrices-symbolic-open-in-distribute-four-out-center-single:
@@ -171,7 +171,7 @@ raven-matrices-text-distribute-four:
   description: Evaluate the abstract reasoning abilities of the model on a text version of the Raven test. Matrices composed of four object.
   metrics: [accuracy]
 
-raven-matrices-symbolc-distribute-four.dev.v0:
+raven-matrices-text-distribute-four.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: raven-matrices/text/distribute_four.jsonl
@@ -196,7 +196,7 @@ raven-matrices-text-in-center-single-out-center-single:
 raven-matrices-text-in-center-single-out-center-single.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: raven-matrices/text/distribute_nine.jsonl
+    samples_jsonl: raven-matrices/text/in_center_single_out_center_single.jsonl
 
 
 raven-matrices-text-in-distribute-four-out-center-single:
@@ -250,7 +250,7 @@ raven-matrices-text-open-distribute-four:
   description: Evaluate the abstract reasoning abilities of the model on a text version of the Raven test with no multiple choices provided. Matrices composed of four object.
   metrics: [accuracy]
 
-raven-matrices-symbolc-distribute-four.dev.v0:
+raven-matrices-text-open-distribute-four.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: raven-matrices/text-open/distribute_four.jsonl
@@ -275,7 +275,7 @@ raven-matrices-text-open-in-center-single-out-center-single:
 raven-matrices-text-open-in-center-single-out-center-single.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: raven-matrices/text-open/distribute_nine.jsonl
+    samples_jsonl: raven-matrices/text-open/in_center_single_out_center_single.jsonl
 
 
 raven-matrices-text-open-in-distribute-four-out-center-single:
