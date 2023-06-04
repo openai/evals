@@ -1,9 +1,9 @@
-ai_vs_human_text:
-  id: ai_vs_human_text.dev.v0
+GPT-model-text-detection:
+  id: GPT-model-text-detection.dev.v0
   metrics: [accuracy]
   description: Evaluation of AI's ability to distinguish between human-written and AI-generated text.
 
-ai_vs_human_text.dev.v0:
+GPT-model-text-detection.dev.v0:
   class: evals.elsuite.basic.match:Match
   args: 
-    samples_jsonl: ai_vs_human_text/samples.jsonl
+    samples_jsonl: GPT-model-text-detection/samples.jsonl
