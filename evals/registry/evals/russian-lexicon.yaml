@@ -1,0 +1,9 @@
+russian-lexicon:
+  id: russian-lexicon.dev.v0
+  description: Test the model's ability to distinguish between existing Russian words.
+  metrics: [accuracy]
+
+russian-lexicon.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: russian-lexicon/samples.jsonl
