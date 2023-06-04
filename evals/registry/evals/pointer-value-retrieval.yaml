@@ -4,7 +4,7 @@ pointer-value-retrieval-easy-few-examples:
   metrics: [accuracy]
 
 pointer-value-retrieval-easy-few-examples.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: pointer-value-retrieval/easy_few_examples.jsonl
 
@@ -15,7 +15,7 @@ pointer-value-retrieval-easy-many-examples:
   metrics: [accuracy]
 
 pointer-value-retrieval-easy-many-examples.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: pointer-value-retrieval/easy_many_examples.jsonl
 
@@ -27,7 +27,7 @@ pointer-value-retrieval-medium-few-examples:
   metrics: [accuracy]
 
 pointer-value-retrieval-medium-few-examples.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: pointer-value-retrieval/medium_few_examples.jsonl
 
@@ -38,7 +38,7 @@ pointer-value-retrieval-medium-many-examples:
   metrics: [accuracy]
 
 pointer-value-retrieval-medium-many-examples.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: pointer-value-retrieval/medium_many_examples.jsonl
 
@@ -50,7 +50,7 @@ pointer-value-retrieval-hard-few-examples:
   metrics: [accuracy]
 
 pointer-value-retrieval-hard-few-examples.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: pointer-value-retrieval/hard_few_examples.jsonl
 
@@ -61,6 +61,6 @@ pointer-value-retrieval-hard-many-examples:
   metrics: [accuracy]
 
 pointer-value-retrieval-hard-many-examples.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: pointer-value-retrieval/hard_many_examples.jsonl
