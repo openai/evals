@@ -28,6 +28,9 @@ class JsonValidator(evals.Eval):
         self.samples_jsonl = samples_jsonl
 
     def eval_sample(self, sample: Any, *_):
+        assert isinstance(sample, dict), "sample must be a dict"
+        assert "input" in sample, "sample must have an 'input' key"
+
         prompt = sample["input"]
         result = self.completion_fn(
             prompt=prompt,

@@ -1,36 +1,42 @@
-from typing import Any, Type
+from typing import Any, Type, Union
 from mock import patch
 from pytest import mark, raises
 from evals.api import DummyCompletionFn
-from evals.elsuite.basic.fuzzy_match import FuzzyMatch
+from evals.elsuite.basic.includes import Includes
 from evals.record import DummyRecorder
 from evals.utils.test import TestCompletionFn
 
 
 @mark.parametrize(
-    "completion, ideal, expected_metrics",
+    "completion, ideal, expected_match, ignore_case",
     [
-        ("world", "world", dict(accuracy=1.0, f1_score=1.0)),
-        ("world", "foo", dict(accuracy=0, f1_score=0)),
-        ("world", ["some foo world", "dummy"], dict(accuracy=1.0, f1_score=0.5)),
+        ("world", "world", True, False),
+        ("world", "wOrLd", True, True),
+        ("world", ["world"], True, False),
+        ("world", ["foo", "bar"], False, False),
+        ("world", ["worldfoo", "worldbar"], False, False),
     ],
 )
 def test_eval_sample(
     completion: str,
-    ideal: list[str],
-    expected_metrics: dict[str, float],
+    ideal: Union[str, list[str]],
+    expected_match: bool,
+    ignore_case: bool,
 ):
-    eval = FuzzyMatch(
+    eval = Includes(
         completion_fns=[TestCompletionFn(completion)],
         samples_jsonl="",
+        ignore_case=ignore_case,
     )
 
     recorder = DummyRecorder(None)
     with recorder.as_default_recorder("x"), patch.object(
-        recorder, "record_metrics", wraps=recorder.record_metrics
-    ) as record_metrics:
+        recorder, "record_match", wraps=recorder.record_match
+    ) as record_match:
         eval.eval_sample(dict(input="Hello", ideal=ideal), None)
-        record_metrics.assert_called_once_with(**expected_metrics)
+        record_match.assert_called_once_with(
+            expected_match, expected=ideal, picked=completion, sampled=completion
+        )
 
 
 @mark.parametrize(
@@ -43,7 +49,7 @@ def test_eval_sample(
     ],
 )
 def test_eval_sample_raises(sample: Any, expected_error: Type):
-    eval = FuzzyMatch(
+    eval = Includes(
         completion_fns=[DummyCompletionFn()],
         samples_jsonl="",
     )
