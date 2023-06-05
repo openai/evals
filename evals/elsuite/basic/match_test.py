@@ -10,6 +10,7 @@ from evals.utils.test import TestCompletionFn
 @mark.parametrize(
     "completion, ideal, expected_match",
     [
+        ("world", "world", True),
         ("world", ["world"], True),
     ],
 )
@@ -38,7 +39,7 @@ def test_eval_sample(
     [
         (None, AssertionError),
         ("", AssertionError),
-        (dict(ideal="world"), AssertionError),
+        (dict(ideal=42), AssertionError),
         (dict(input="world"), AssertionError),
     ],
 )
