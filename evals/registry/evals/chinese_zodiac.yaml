@@ -1,0 +1,8 @@
+chinese_zodiac:
+  id: chinese_zodiac.dev.v0
+  metrics: [accuracy]
+
+chinese_zodiac.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_zodiac/samples.jsonl
