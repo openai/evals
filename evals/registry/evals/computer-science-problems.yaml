@@ -6,4 +6,4 @@ computer-science-problems:
 computer-science-problems.s1.simple-v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: test_comp_sci/questions.jsonl
+    samples_jsonl: computer-science-problems/questions.jsonl

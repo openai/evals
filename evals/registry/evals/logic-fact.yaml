@@ -4,6 +4,6 @@ logic-fact:
 logic-fact.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl: logic/samples.jsonl
+    samples_jsonl: logic-fact/samples.jsonl
     eval_type: cot_classify
     modelgraded_spec: fact

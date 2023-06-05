@@ -7,6 +7,6 @@ spider-sql:
 spider-sql.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl: sql/spider_sql.jsonl
+    samples_jsonl: spider-sql/spider_sql.jsonl
     eval_type: cot_classify
     modelgraded_spec: sql
