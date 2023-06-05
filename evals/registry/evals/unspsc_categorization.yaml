@@ -1,9 +1,0 @@
-unspsc_categorization:
-  id: unspsc_categorization.dev.v0
-  description: Given a description of product or service, determine the commodity code and title according to the United Nations Standard Products and Services Code (UNSPSC) taxonomy.
-  metrics: [accuracy]
-
-unspsc_categorization.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: unspsc_categorization/samples.jsonl
