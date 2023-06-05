@@ -84,7 +84,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
 
     registry = registry or Registry()
     if args.registry_path:
-        registry.add_registry_paths([args.registry_path])
+        registry.add_registry_paths(args.registry_path)
 
     eval_spec = registry.get_eval(args.eval)
     assert (
