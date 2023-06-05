@@ -1,0 +1,9 @@
+belarusian-russian-translation:
+  id: belarusian-russian-translation.dev.v0
+  description: Test the model's ability to recover Belarusian sentences by translating into Russian and back.
+  metrics: [accuracy]
+
+belarusian-russian-translation.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: belarusian_russian_translation/samples.jsonl
