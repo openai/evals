@@ -1,5 +1,5 @@
 dutch-rhyme:
-  id: dutch-rhyme.v0
+  id: dutch-rhyme.dev.v0
   description: Task that involves identifying whether two words in the Dutch language rhyme.
   metrics: [accuracy]
 dutch-rhyme.v0:
