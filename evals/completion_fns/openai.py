@@ -1,3 +1,4 @@
+from abc import ABC
 from typing import Any, Optional, Union
 from evals.api import CompletionFn, CompletionResult
 from evals.base import CompletionFnSpec
@@ -16,13 +17,10 @@ from evals.utils.api_utils import (
 )
 
 
-class OpenAIBaseCompletionResult(CompletionResult):
+class OpenAIBaseCompletionResult(ABC, CompletionResult):
     def __init__(self, raw_data: Any, prompt: Any):
         self.raw_data = raw_data
         self.prompt = prompt
-
-    def get_completions(self) -> list[str]:
-        raise NotImplementedError
 
 
 class OpenAIChatCompletionResult(OpenAIBaseCompletionResult):
