@@ -1,0 +1,9 @@
+passing-balls:
+  id: passing-balls.dev.v0
+  description: Tests the model's ability to correctly determine the last player holding a ball after a sequence of passes.
+  metrics: [accuracy]
+
+passing-balls.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: passing-balls/passing-balls.jsonl

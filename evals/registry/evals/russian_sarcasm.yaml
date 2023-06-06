@@ -1,0 +1,8 @@
+russian_sarcasm:
+  id: russian_sarcasm.dev.v0
+  description: An evaluation on Russian sarcasm detection.
+  metrics: [accuracy]
+russian_sarcasm.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: russian_sarcasm/samples.jsonl

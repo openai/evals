@@ -1,0 +1,8 @@
+pointer-value-retrieval:
+  evals:
+    - pointer-value-retrieval-easy-few-examples
+    - pointer-value-retrieval-easy-many-examples
+    - pointer-value-retrieval-medium-few-examples
+    - pointer-value-retrieval-medium-many-examples
+    - pointer-value-retrieval-hard-few-examples
+    - pointer-value-retrieval-hard-many-examples

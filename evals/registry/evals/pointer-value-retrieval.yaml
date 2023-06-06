@@ -1,0 +1,66 @@
+pointer-value-retrieval-easy-few-examples:
+  id: pointer-value-retrieval-easy-few-examples.dev.v0
+  description: Easy pointer-value retrieval task from few examples, pointer is seperated from values. 
+  metrics: [accuracy]
+
+pointer-value-retrieval-easy-few-examples.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: pointer-value-retrieval/easy_few_examples.jsonl
+
+
+pointer-value-retrieval-easy-many-examples:
+  id: pointer-value-retrieval-easy-many-examples.dev.v0
+  description: Easy pointer-value retrieval task from many examples, pointer is separated from values.
+  metrics: [accuracy]
+
+pointer-value-retrieval-easy-many-examples.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: pointer-value-retrieval/easy_many_examples.jsonl
+
+
+
+pointer-value-retrieval-medium-few-examples:
+  id: pointer-value-retrieval-medium-few-examples.dev.v0
+  description: Medium difficulty pointer-value retrieval task from few examples, pointer targets multiple values.
+  metrics: [accuracy]
+
+pointer-value-retrieval-medium-few-examples.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: pointer-value-retrieval/medium_few_examples.jsonl
+
+
+pointer-value-retrieval-medium-many-examples:
+  id: pointer-value-retrieval-medium-many-examples.dev.v0
+  description: Medium difficulty pointer-value retrieval task from many examples, pointer targets multiple values.
+  metrics: [accuracy]
+
+pointer-value-retrieval-medium-many-examples.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: pointer-value-retrieval/medium_many_examples.jsonl
+
+
+
+pointer-value-retrieval-hard-few-examples:
+  id: pointer-value-retrieval-hard-few-examples.dev.v0
+  description: Hard pointer-value retrieval task from few examples, pointer hidden among values.
+  metrics: [accuracy]
+
+pointer-value-retrieval-hard-few-examples.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: pointer-value-retrieval/hard_few_examples.jsonl
+
+
+pointer-value-retrieval-hard-many-examples:
+  id: pointer-value-retrieval-hard-many-examples.dev.v0
+  description: Hard pointer-value retrieval task from many examples, pointer hidden among values.
+  metrics: [accuracy]
+
+pointer-value-retrieval-hard-many-examples.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: pointer-value-retrieval/hard_many_examples.jsonl
