@@ -1,0 +1,8 @@
+mapping_to_matricies:
+  id: mapping_to_matricies.dev.v0
+  metrics: [accuracy]
+
+mapping_to_matricies.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: mapping_to_matricies/samples.jsonl
