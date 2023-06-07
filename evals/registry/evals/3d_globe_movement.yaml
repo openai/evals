@@ -1,0 +1,9 @@
+3d_globe_movement:
+  id: 3d_globe_movement.dev.v0
+  description: Test the model's ability to keep track of position and orientation in a 3D environment, using the globe of planet earth as the test environment.
+  metrics: [accuracy]
+
+3d_globe_movement.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: 3d_globe_movement/samples.jsonl
