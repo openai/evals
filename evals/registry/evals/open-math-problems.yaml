@@ -1,10 +1,10 @@
 open-math-problems:
   id: open-math-problems.s1.simple-v0
-  description: tet
-  disclaimer: test
+  description: Tests whether or not the AI language model can properly understand open (i.e., unresolved) mathematics problems by only drawing conclusions based on the available facts and findings.
+  disclaimer: Grading the evaluations was itself a challenging task (and perhaps one that was improved in GPT-4.0), as the fact-checking grader itself would oftentimes report a submission as correct (i.e., a subset or superset of the ideal answer) by simply repeating and re-stating some of the obviously false statements given by the language model, despite the mismatches with the expert answer.
   metrics: [accuracy]
 open-math-problems.s1.simple-v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: open_math_problems/open_math_problems.jsonl
-    modelgraded_spec_file: open-math-problem
+    modelgraded_spec: open-math-problem
