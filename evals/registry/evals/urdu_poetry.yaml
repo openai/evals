@@ -1,0 +1,8 @@
+urdu_poetry:
+  id: urdu_poetry.dev.v0
+  description: Test the model's ability to to convert urdu poetry to english without changing the context of topic
+  metrics: [accuracy]
+three-pt-mapping.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: urdu_poetry/urdu_poetry.jsonl
