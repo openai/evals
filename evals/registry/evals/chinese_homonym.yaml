@@ -1,0 +1,9 @@
+chinese_homonym:
+  id: chinese_homonym.dev.v0
+  description: Check the model's ability to recognize Chinese homonyms, which are words that have the same pronunciation (Hànyǔ Pīnyīn) but different meanings.
+  metrics: [accuracy]
+
+chinese_homonym.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_homonym/samples.jsonl

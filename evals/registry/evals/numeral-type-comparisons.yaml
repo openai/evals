@@ -1,0 +1,8 @@
+numeral-type-comparisons:
+  id: numeral-type-comparisons.dev.v0
+  description: Evaluate the LLM's ability to compare similar or identical numerals across formats in arithmetic and linguistic contexts
+  metrics: [accuracy]
+numeral-type-comparisons.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: numeral-type-comparisons/samples.jsonl

@@ -38,11 +38,14 @@ To run evals, you will need to set up and specify your OpenAI API key. You can g
 
 ### Downloading evals
 
-Our Evals registry is stored using [Git-LFS](https://git-lfs.com/). Once you have downloaded and installed LFS, you can fetch the evals with:
+Our Evals registry is stored using [Git-LFS](https://git-lfs.com/). Once you have downloaded and installed LFS, you can fetch the evals (from within your local copy of the evals repo) with:
 ```sh
+cd evals
 git lfs fetch --all
 git lfs pull
 ```
+
+This will populate all the pointer files under `evals/registry/data`.
 
 You may just want to fetch data for a select eval. You can achieve this via:
 ```sh
@@ -59,6 +62,12 @@ pip install -e .
 ```
 
 Using `-e`, changes you make to your eval will be reflected immediately without having to reinstall.
+
+Optionally, you can install the formatters for pre-committing with:
+
+```sh
+pip install -e .[formatters]
+```
 
 ### Running evals
 

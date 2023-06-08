@@ -1,0 +1,9 @@
+belarusian-syllable-count:
+  id: belarusian-syllable-count.dev.v0
+  description: Test the model's ability to count syllables in Belarusian words.
+  metrics: [accuracy]
+
+belarusian-syllable-count.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: belarusian_syllable_count/samples.jsonl

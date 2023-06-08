@@ -1,0 +1,9 @@
+logic-riddles:
+  id: logic-riddles.dev.v0
+  metrics: [accuracy]
+logic-riddles.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: logic-riddles/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact

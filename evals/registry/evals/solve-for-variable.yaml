@@ -1,0 +1,9 @@
+solve-for-variable:
+  id: solve-for-variable.dev.v0
+  description: Multiple-choice questions about solving a mathematical equation for a variable.
+  metrics: [accuracy]
+
+solve-for-variable.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: solve-for-variable/samples.jsonl

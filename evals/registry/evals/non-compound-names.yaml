@@ -1,0 +1,25 @@
+non-compound-names:
+  id: non-compound-names.dev.v0
+  metrics: [accuracy]
+
+non-compound-names.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: non-compound-names/samples.jsonl
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria:
+        correct: "correctness: A compound word is a word that is made up of two or more words, such as \"handbag\", \"Wealthsimple\", \"PureGain\" or \"airplane\". When evaluating if a list of words contains a compound word, you must work through each word one at a time to tell if it is a compound word. To evaluate if a word (for example, \"Wealthsimple\") is a compound word, look at it and see if you can identify a full word at the start of the word. In this case, we can identify \"Wealth\". Then look and see if starting at the end of that word, you can identify another word. Here we can identify \"simple\". We have reached the end of the word and split it entirely into multiple words, so it is a compound word. If you can take the word, such as \"Wealthsimple\", and split it up into two words, such as \"Wealth\" and \"simple\", then it is a compound word. Because the word \"ChicSphere\" can be split into two words, \"Chic\" and \"Sphere\", it is a compound word. The compound words you see may be very uncommon, so make sure to decompose them. Don't just say \"none of these are compound words\", explain your reasoning for each one. If there is a capital letter in the middle of the word, explain that the letters before the capital are not a word, or that the letters after the capital are not a word. Give a full explanation, for example for \"WaveLorhd\" you would say \"Lorhd\" is not a word, or for \"ArbxLand\" you would say \"Arbx\" is not a word. Most words with capitals in the middle are compound words. To be correct, the answer should not contain any compound words. Is the answer correct?"
+
+non-compound-names-meta:
+  id: non-compound-names-meta.dev.v0
+  metrics: [accuracy]
+non-compound-names-meta.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: non-compound-names/samples_meta.jsonl
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria:
+        correct: "correctness: A compound word is a word that is made up of two or more words, such as \"handbag\", \"Wealthsimple\", \"PureGain\" or \"airplane\". When evaluating if a list of words contains a compound word, you must work through each word one at a time to tell if it is a compound word. To evaluate if a word (for example, \"Wealthsimple\") is a compound word, look at it and see if you can identify a full word at the start of the word. In this case, we can identify \"Wealth\". Then look and see if starting at the end of that word, you can identify another word. Here we can identify \"simple\". We have reached the end of the word and split it entirely into multiple words, so it is a compound word. If you can take the word, such as \"Wealthsimple\", and split it up into two words, such as \"Wealth\" and \"simple\", then it is a compound word. Because the word \"ChicSphere\" can be split into two words, \"Chic\" and \"Sphere\", it is a compound word. The compound words you see may be very uncommon, so make sure to decompose them. Don't just say \"none of these are compound words\", explain your reasoning for each one. If there is a capital letter in the middle of the word, explain that the letters before the capital are not a word, or that the letters after the capital are not a word. Give a full explanation, for example for \"WaveLorhd\" you would say \"Lorhd\" is not a word, or for \"ArbxLand\" you would say \"Arbx\" is not a word. Most words with capitals in the middle are compound words. To be correct, the answer should not contain any compound words. Is the answer correct?"
+    metaeval: true

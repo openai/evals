@@ -1,0 +1,8 @@
+monthly_metric_comparison:
+  id: monthly_metric_comparison.dev.v0
+  description: This eval tests the models ability to compare monthly metric.
+  metrics: [accuracy]
+monthly_metric_comparison.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: monthly_metric_comparison/samples.jsonl
