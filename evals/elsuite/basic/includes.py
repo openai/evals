@@ -21,6 +21,10 @@ class Includes(evals.Eval):
         self.ignore_case = ignore_case
 
     def eval_sample(self, sample: Any, *_):
+        assert isinstance(sample, dict), "sample must be a dict"
+        assert "input" in sample, "sample must have an 'input' key"
+        assert "ideal" in sample, "sample must have an 'ideal' key"
+
         prompt = sample["input"]
         result = self.completion_fn(
             prompt=prompt,

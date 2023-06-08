@@ -1,0 +1,9 @@
+comprehensive-graph-reasoning:
+  id: comprehensive-graph-reasoning.dev.v0
+  description: Test the model's ability to identify the number of rings and clusters, and the shortest path between two random nodes in undirected, weighted graphs.
+  metrics: [accuracy]
+
+comprehensive-graph-reasoning.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: comprehensive-graph-reasoning/samples.jsonl

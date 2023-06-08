@@ -12,7 +12,7 @@ import os
 import re
 from functools import cached_property
 from pathlib import Path
-from typing import Any, Iterator, Optional, Sequence, Type, Union
+from typing import Any, Iterator, Optional, Sequence, Type, TypeVar, Union
 
 import openai
 import yaml
@@ -73,16 +73,26 @@ CHAT_MODELS = {
 }
 
 
+T = TypeVar("T")
+RawRegistry = dict[str, Any]
+
+
 class Registry:
     def __init__(self, registry_paths: Sequence[Union[str, Path]] = DEFAULT_PATHS):
         self._registry_paths = [Path(p) if isinstance(p, str) else p for p in registry_paths]
 
-    def add_registry_paths(self, paths: list[Union[str, Path]]):
+    def add_registry_paths(self, paths: list[Union[str, Path]]) -> None:
         self._registry_paths.extend([Path(p) if isinstance(p, str) else p for p in paths])
 
     @cached_property
-    def api_model_ids(self):
-        return [m["id"] for m in openai.Model.list()["data"]]
+    def api_model_ids(self) -> list[str]:
+        try:
+            return [m["id"] for m in openai.Model.list()["data"]]
+        except openai.error.OpenAIError as err:
+            # Errors can happen when running eval with completion function that uses custom
+            # API endpoints and authentication mechanisms.
+            logger.warning(f"Could not fetch API model IDs from OpenAI API: {err}")
+            return []
 
     def make_completion_fn(self, name: str) -> CompletionFn:
         """
@@ -113,10 +123,12 @@ class Registry:
         assert isinstance(instance, CompletionFn), f"{name} must be a CompletionFn"
         return instance
 
-    def get_class(self, spec: dict) -> Any:
+    def get_class(self, spec: EvalSpec) -> Any:
         return make_object(spec.cls, **(spec.args if spec.args else {}))
 
-    def _dereference(self, name: str, d: dict, object: str, type: Type, **kwargs: dict) -> dict:
+    def _dereference(
+        self, name: str, d: RawRegistry, object: str, type: Type[T], **kwargs: dict
+    ) -> Optional[T]:
         if not name in d:
             logger.warning(
                 (
@@ -126,7 +138,7 @@ class Registry:
             )
             return None
 
-        def get_alias():
+        def get_alias() -> Optional[str]:
             if isinstance(d[name], str):
                 return d[name]
             if isinstance(d[name], dict) and "id" in d[name]:
@@ -151,7 +163,7 @@ class Registry:
         except TypeError as e:
             raise TypeError(f"Error while processing {object} '{name}': {e}")
 
-    def get_modelgraded_spec(self, name: str, **kwargs: dict) -> dict[str, Any]:
+    def get_modelgraded_spec(self, name: str, **kwargs: dict) -> Optional[ModelGradedSpec]:
         assert name in self._modelgraded_specs, (
             f"Modelgraded spec {name} not found. "
             f"Closest matches: {difflib.get_close_matches(name, self._modelgraded_specs.keys(), n=5)}"
@@ -160,18 +172,18 @@ class Registry:
             name, self._modelgraded_specs, "modelgraded spec", ModelGradedSpec, **kwargs
         )
 
-    def get_completion_fn(self, name: str) -> CompletionFnSpec:
+    def get_completion_fn(self, name: str) -> Optional[CompletionFnSpec]:
         return self._dereference(name, self._completion_fns, "completion_fn", CompletionFnSpec)
 
-    def get_eval(self, name: str) -> EvalSpec:
+    def get_eval(self, name: str) -> Optional[EvalSpec]:
         return self._dereference(name, self._evals, "eval", EvalSpec)
 
-    def get_eval_set(self, name: str) -> EvalSetSpec:
+    def get_eval_set(self, name: str) -> Optional[EvalSetSpec]:
         return self._dereference(name, self._eval_sets, "eval set", EvalSetSpec)
 
-    def get_evals(self, patterns: Sequence[str]) -> Iterator[EvalSpec]:
+    def get_evals(self, patterns: Sequence[str]) -> Iterator[Optional[EvalSpec]]:
         # valid patterns: hello, hello.dev*, hello.dev.*-v1
-        def get_regexp(pattern):
+        def get_regexp(pattern: str) -> re.Pattern[str]:
             pattern = pattern.replace(".", "\\.")
             pattern = pattern.replace("*", ".*")
             return re.compile(f"^{pattern}$")
@@ -182,14 +194,14 @@ class Registry:
             if any(map(lambda regexp: regexp.match(name), regexps)):
                 yield self.get_eval(name)
 
-    def get_base_evals(self) -> list[BaseEvalSpec]:
-        base_evals = []
+    def get_base_evals(self) -> list[Optional[BaseEvalSpec]]:
+        base_evals: list[Optional[BaseEvalSpec]] = []
         for name, spec in self._evals.items():
             if name.count(".") == 0:
                 base_evals.append(self.get_base_eval(name))
         return base_evals
 
-    def get_base_eval(self, name: str) -> BaseEvalSpec:
+    def get_base_eval(self, name: str) -> Optional[BaseEvalSpec]:
         if not name in self._evals:
             return None
 
@@ -204,11 +216,11 @@ class Registry:
         alias = spec_or_alias
         return BaseEvalSpec(id=alias)
 
-    def _process_file(self, registry, path):
+    def _process_file(self, registry: RawRegistry, path: Path) -> None:
         with open(path, "r", encoding="utf-8") as f:
             d = yaml.safe_load(f)
 
-        if d is None:
+        if d is None or not isinstance(d, dict):
             # no entries in the file
             return
 
@@ -235,17 +247,17 @@ class Registry:
                     del spec["class"]
             registry[name] = spec
 
-    def _process_directory(self, registry, path):
+    def _process_directory(self, registry: RawRegistry, path: Path) -> None:
         files = Path(path).glob("*.yaml")
         for file in files:
             self._process_file(registry, file)
 
-    def _load_registry(self, paths):
+    def _load_registry(self, paths: Sequence[Path]) -> RawRegistry:
         """Load registry from a list of paths.
 
         Each path or yaml specifies a dictionary of name -> spec.
         """
-        registry = {}
+        registry: RawRegistry = {}
         for path in paths:
             logging.info(f"Loading registry from {path}")
             if os.path.exists(path):
@@ -256,19 +268,19 @@ class Registry:
         return registry
 
     @functools.cached_property
-    def _completion_fns(self):
+    def _completion_fns(self) -> RawRegistry:
         return self._load_registry([p / "completion_fns" for p in self._registry_paths])
 
     @functools.cached_property
-    def _eval_sets(self):
+    def _eval_sets(self) -> RawRegistry:
         return self._load_registry([p / "eval_sets" for p in self._registry_paths])
 
     @functools.cached_property
-    def _evals(self):
+    def _evals(self) -> RawRegistry:
         return self._load_registry([p / "evals" for p in self._registry_paths])
 
     @functools.cached_property
-    def _modelgraded_specs(self):
+    def _modelgraded_specs(self) -> RawRegistry:
         return self._load_registry([p / "modelgraded" for p in self._registry_paths])
 
 
