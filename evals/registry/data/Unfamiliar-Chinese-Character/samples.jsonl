@@ -1,15 +1,3 @@
-{"prompt":"left-right structure, with 军 on the left and 皮 on the right. What is this character?","completion":" 皲, pronounced [jūn], which means 'the skin cracks due to coldness or dryness'."}
-{"prompt":"top-down structure, with 艹 on the top and 九 on the bottom. What is this character?","completion":" 艽, which has two pronunciations. One is [qíu], meaning 'a cushion plant in the distant wilderness or animal nest'. The other is [jiāo], referring to a perennial herbaceous plant."}
-{"prompt":"surrounding structure, with 门 on the outside and 真 on the inside. What is this character?","completion":" 阗, pronounced as [tián], which means 'to be filled or to have a loud sound'."}
-{"prompt":"left-right structure, with 木 on the left and 乞 on the right. What is this character?","completion":" 杚, pronounced [gū], which means 'flatten something'."}
-{"prompt":"left-right structure, with 米 on the left and 更 on the right. What is this character?","completion":" 粳, pronounced as [jīng], which refers to a type of short-grain, glutinous rice."}
-{"prompt":"left-right structure, with 女 on the left and 束 on the right. What is this character?","completion":" 娕, pronounced as [chuò], which means 'cautious，kind-hearted'."}
-{"prompt":"left-right structure, with 马 on the left and 且 on the right. What is this character?","completion":" 驵, pronounced as [zǎng], which means 'good and strong horse'."}
-{"prompt":"left-right structure, with 片 on the left and 召 on the right. What is this character?","completion":" 牊, pronounced as [cháo], which refers to a type of bed."}
-{"prompt":"left-right structure, with 耳 on the left and 吉 on the right. What is this character?","completion":" 聐, pronounced as [yà], which means 'Unable to understand due to dementia'."}
-{"prompt":"left-right structure, with 月 on the left and 丸 on the right. What is this character?","completion":" 肒, pronounced as [huàn], which means 'Scratching the skin causes sores'."}
-{"prompt":"left-right structure, with 王 on the left and 卯 on the right. What is this character?","completion":" 珋, pronounced as [liǔ], which refers to a type of colored glaze."}
-{"prompt":"left-right structure, with 因 on the left and 欠 on the right. What is this character?","completion":" 欭, pronounced as [yì], which means 'Exclamation，Sigh'."}
-{"prompt":"left-right structure, with 金 on the left and 牛 on the right. What is this character?","completion":" 鈝, pronounced as [yín], which refers to a Buddhist mantra character."}
-{"prompt":"left-right structure, with 日 on the left and 公 on the right. What is this character?","completion":" 昖, pronounced as [yán], which means 'Astrological term'."}
-{"prompt":"left-right structure, with 车 on the left and 奏 on the right. What is this character?","completion":" 辏, pronounced as [còu], which means 'The spokes of the wheel converge at the center, which can be extended to mean to gather or converge'."}
+version https://git-lfs.github.com/spec/v1
+oid sha256:69090ec1cfada230efd37dc0d5ce57b84d60f1ea570b84ecf75fcfb245b5bfc5
+size 3004
