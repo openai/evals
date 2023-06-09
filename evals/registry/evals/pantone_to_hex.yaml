@@ -3,6 +3,6 @@ pantone_to_hex:
   metrics: [accuracy]
   
 pantone_to_hex.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: pantone_to_hex/samples.jsonl
