@@ -1,0 +1,9 @@
+korean_dialects:
+  id: korean_dialects.dev.v0
+  description: Test the model's ability to determine which South Korean dialect a sentence belongs to.
+  metrics: [accuracy]
+
+korean_dialects.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: korean_dialects/samples.jsonl
