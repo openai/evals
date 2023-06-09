@@ -7,5 +7,3 @@ soc_codes.dev.v0:
   args:
     samples_jsonl: soc_codes/samples.jsonl
     eval_type: classify
-    modelgraded_spec: soc_codes
-    metaeval: true
