@@ -1,0 +1,11 @@
+soc_codes:
+  id: soc_codes.dev.v0
+  metrics: [accuracy]
+
+soc_codes.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: soc_codes/samples.jsonl
+    eval_type: classify
+    modelgraded_spec: soc_codes
+    metaeval: true
