@@ -1,0 +1,10 @@
+elasticsearch_version_history:
+  id: elasticsearch_version_history.dev.v0
+  description: This evaluation aims to test the model's ability to accurately recall the Elasticsearch version history, before the cut-off date of September 2021, including the release dates of different versions without hallucinations as given by the ground truth https://www.elastic.co/downloads/past-releases/#elasticsearch 
+  metrics: [accuracy]
+
+elasticsearch_version_history.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+      samples_jsonl: elasticsearch_version_history/samples.jsonl
+
