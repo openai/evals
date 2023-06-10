@@ -3,6 +3,8 @@ Unfamiliar-Chinese-Character:
   metrics: [accuracy]
 
 Unfamiliar-Chinese-Character.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: Unfamiliar-Chinese-Character/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: hanziucc
