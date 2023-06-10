@@ -1,5 +1,6 @@
 soc_codes:
   id: soc_codes.dev.v0
+  description: Eval that checks the models ability to classify a job title into a SOC code.
   metrics: [accuracy]
 
 soc_codes.dev.v0:
@@ -7,3 +8,4 @@ soc_codes.dev.v0:
   args:
     samples_jsonl: soc_codes/samples.jsonl
     eval_type: classify
+    modelgraded_spec: fact
