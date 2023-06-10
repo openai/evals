@@ -1,0 +1,9 @@
+medication_dose:
+  id: medication_dose.dev.v0
+  description: Test to model's ability to accurately identify medication doses that are outside the standard dose range.
+  metrics: [accuracy]
+
+medication_dose.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: medication_dose/samples.jsonl

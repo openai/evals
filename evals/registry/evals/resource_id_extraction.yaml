@@ -1,0 +1,9 @@
+resource_id_extraction:
+  id: resource_id_extraction.dev.v0
+  description: Evaluates correctness for identifying UI Elements based on description and extracting resourceIds from Android XML dumps.
+  metrics: [accuracy]
+
+resource_id_extraction.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: resource_id_extraction/samples.jsonl

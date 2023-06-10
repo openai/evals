@@ -71,10 +71,20 @@ def open_by_file_pattern(filename: str, mode: str = "r", **kwargs: Any) -> Any:
         raise RuntimeError(f"Failed to open: {filename}") from e
 
 
+def _decode_json(line, path, line_number):
+    try:
+        return json.loads(line)
+    except json.JSONDecodeError as e:
+        custom_error_message = f"Error parsing JSON on line {line_number}: {e.msg} at {path}:{line_number}:{e.colno}"
+        logger.error(custom_error_message)
+        raise ValueError(custom_error_message) from None
+
 def _get_jsonl_file(path):
     logger.info(f"Fetching {path}")
+    data = []
     with open_by_file_pattern(path, mode="r") as f:
-        return list(map(json.loads, f.readlines()))
+        return [_decode_json(line, path, i + 1) for i, line in enumerate(f)]
+
 
 
 def _get_json_file(path):

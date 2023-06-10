@@ -1,0 +1,10 @@
+arithmetical_puzzles:
+  id: arithmetical_puzzles.dev.v0
+  description: Test the model's ability to solve complex arithmetical puzzles stated in natural language.
+  metrics: [accuracy]
+
+
+arithmetical_puzzles.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: arithmetical_puzzles/arithmetical_puzzles.jsonl

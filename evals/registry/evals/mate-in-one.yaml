@@ -1,0 +1,9 @@
+mate-in-one:
+  id: mate-in-one.dev.v0
+  description: Find the checkmating move for various board positions
+  metrics: [accuracy]
+
+mate-in-one.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: mate-in-one/samples.jsonl
