@@ -1,0 +1,9 @@
+irish-lexicon:
+  id: irish-lexicon.dev.v0
+  description: Test the model's ability to distinguish between existing and hallucinated Irish words.
+  metrics: [accuracy]
+
+irish-lexicon.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: irish-lexicon/samples.jsonl

@@ -1,0 +1,10 @@
+game-theory:
+  id: game-theory.dev.v0
+  description: Practical reasoning about normal-form games such as Paper-Rock-Scissors
+  metrics: [accuracy]
+
+game-theory.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: game_theory/samples.jsonl
+    ignore_case: true

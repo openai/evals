@@ -1,0 +1,8 @@
+cricket_situations:
+  id: cricket_situations.dev.v0
+  description: Tests the models ability to apply rules of the sport cricket to different situations
+  metrics: [accuracy]
+cricket_situations.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: cricket_situations/samples.jsonl

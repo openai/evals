@@ -1,0 +1,9 @@
+italian-new-words:
+  id: italian-new-words.dev.v0
+  description: Test the model's ability to distinguish Italian words that have recently entered the language.
+  metrics: [accuracy]
+
+italian-new-words.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: italian-new-words/samples.jsonl

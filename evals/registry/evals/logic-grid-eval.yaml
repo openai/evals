@@ -1,0 +1,17 @@
+logic-grid:
+  id: logic-grid.dev.v0
+  description: |
+    Test the model's ability to solve grid-based logic puzzles.
+    This eval contains 90 puzzles in combinations of 3 to 4 categories and 4 to 7 unique values per category.
+    The exact cardinality combinations of categories to unique values is as follows;
+    15 puzzles each for sizes 3x4, 3x5, 4x4, 4x5, 4x6, and 4x7.
+  disclaimer: |
+    The logic to solve these takes a lot of tokens - keep expenses in mind.
+    A precursory analysis shows significant variability in the length of answer content,
+    for both correct and incorrect answers. Hence, 'max_tokens' may require adjustment.
+  metrics: [accuracy]
+logic-grid.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: logic-grid/logic-grid.jsonl
+    max_tokens: 3072

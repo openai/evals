@@ -1,0 +1,8 @@
+stats-tests:
+  id: stats-tests.dev.v0
+  metrics: [accuracy]
+
+stats-tests.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: stats-tests/samples.jsonl
