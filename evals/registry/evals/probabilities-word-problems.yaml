@@ -5,6 +5,6 @@ probabilities-word-problems:
   - accuracy
 
 probabilities-word-problems.test.v1:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: probabilities-word-problems/samples.jsonl
