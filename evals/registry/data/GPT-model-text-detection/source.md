@@ -5,6 +5,7 @@ This file gives information about the menthodology used to put together the prom
   - [Section 1: Prompts presented to GPT model 'text-davinci-003' and their outputs](#section-1-prompts-presented-to-gpt-model-text-davinci-003-and-their-outputs)
   - [Section 2: Extracts from real books, across diverse genres](#section-2-extracts-from-real-books-across-diverse-genres)
   - [Section 3: Prompts presented to GPT model 'gpt-3.5-turbo-0301' and their outputs](#section-3-prompts-presented-to-gpt-model-gpt-35-turbo-0301-and-their-outputs)
+  - [Section 4: Prompts presented to GPT model 'text-davinci-002' and their outputs](#section-4-prompts-presented-to-gpt-model-text-davinci-002-and-their-outputs)
 
 ---
 
@@ -339,5 +340,275 @@ their lives through courage, understanding and compassion. When tragedy strikes,
 **Output 1:** "The Cat in the Hat" by Dr. Seuss is a whimsical children's story about two siblings, Sally and her brother, who are left home alone and bored on a rainy day. Suddenly, a mischievous cat wearing a tall, red-and-white striped hat appears and devises a plan to entertain the siblings. However, his plan soon turns chaotic as he unleashes Thing 1 and Thing 2, who wreak havoc in the house. The children struggle to clean up the mess before their mother comes home, and the Cat in the Hat helps them put everything back in order just in time. Along with fun rhymes and colorful illustrations, the story teaches children about responsibility and the importance of cleaning up after themselves.
 
 **Output 2:** "The Cat in the Hat" by Dr. Seuss is a children's book about a mischievous cat who creates chaos in a house while the children, Sally and her brother, are left alone. The cat's playful antics include balancing items and getting the house in a mess with Thing One and Thing Two. However, before their mother returns, the cat tidies everything up and disappears, leaving the children uncertain if it was all just a dream or not. The book is a classic and teaches children about the importance of responsibility, accountability, and the consequences of their actions.
+
+------
+
+## Section 4: Prompts presented to GPT model 'text-davinci-002' and their outputs
+
+[Back to Top](#data-information)
+
+---
+
+**Prompt:** Give me the executive summary of Mody Dick for my school essay
+
+**Output 1:** Dick’s novel is set in a future, totalitarian society where the government controls all aspects of life. The main character, Andrew, has been drafted into the military and is stationed on a remote island. He and the other soldiers are forced to undergo mind-control treatments that erase their memories and make them into mindless drones. Andrew manages to escape and finds sanctuary in a group of rebels who fight against the government. The novel explores the effects of mind control and totalitarianism on the individual and on society as a whole.
+
+**Output 2:** The novel Mody Dick by Herman Melville is an epic tale of a seafaring captain's journey to seek revenge on a giant white sperm whale. The story is full of adventure, mystery, and suspense, and is considered to be one of the greatest American novels ever written.
+
+**Output 3:** Mody Dick is an epic novel written by Herman Melville in 1851. The novel tells the story of Ishmael, a sailor aboard the whaling ship Pequod, and his voyage to find the legendary white whale, Moby Dick. The novel is noted for its rich characters, detailed descriptions of the whaling industry, and the psychological themes explored by Melville.
+
+---
+
+**Prompt:** Give me the executive summary of 'Charlotte's Web' by E.B. White for my school essay.
+
+**Output 1:** 'Charlotte's Web' is a children's book written by E.B. White and published in 1952. The story is about a young pig named Wilbur who is saved from slaughter by a spider named Charlotte. Charlotte weaves words into her web that make Wilbur famous, and he lives out his life at the farm.
+
+**Output 2:** When Charlotte's spiderweb saves Wilbur the pig from being slaughtered, the two become friends and Charlotte teaches Wilbur the ways of the world. As Wilbur becomes older, he learns that he is to be slaughtered as well, but thanks to Charlotte's intercession, he is saved and sent to live out his days at the Zuckerman Farm.
+
+**Output 3:** Wilbur is a pig who is born in a barnyard and soon becomes friends with a spider named Charlotte. Charlotte is very clever and helps Wilbur avoid being eaten by the farmer. She also saves Wilbur's life by writing messages in her webs that warn people away from eating him. As time goes by, Wilbur becomes very famous and loved by many people. He also learns a lot from Charlotte.
+
+---
+
+**Prompt:** Give me the executive summary of 'Where the Wild Things Are' by Maurice Sendak for my school essay.
+
+**Output 1:** In 'Where the Wild Things Are,' Max is sent to his room without supper for being naughty. He imagines a world where he can be the king of the wild things, and soon enough he is transported there. In this fantastical place, Max is able to let out his anger and have fun with the other wild things. Eventually, he misses his home and family, and decides to return. Upon his return, Max is remorseful for his previous misbehavior and is forgiven. This story teaches the lesson that it is okay to express one's emotions, even if they may seem wild.
+
+**Output 2:** In the story, a young boy named Max is sent to his room without dinner for misbehaving. He imagines a world of wild animals where he is the king of the jungle. His imagination takes him on an incredible journey where he has thrilling adventures and becomes the king of the Wild Things. After a while, Max grows tired of being king and longs to return home to his mom. He is reminded that he needs to obey his parents and returns home to find that his supper is waiting for him. The story is an exploration of the power of imagination, as well as the lengths a child will go to in order to escape from the realities of life. It also teaches the importance of obedience and respect for one's parents.
+
+**Output 3:** In 'Where the Wild Things Are,' Max is sent to his room without dinner for misbehaving. In his bedroom, he imagines a world of monsters who crown him as their king. He enjoys his time ruling over the Wild Things, but eventually misses his home and family. He returns home, and is forgiven by his mother. The story explores the power of imagination, as well as the conflict between independence and loneliness. It is a classic children's story with a simple, relatable plot.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Giving Tree' by Shel Silverstein for my school essay.
+
+**Output 1:** 'The Giving Tree' is a children's book written by Shel Silverstein. It tells the story of a boy who grows up with a tree that gives him everything he needs. As the boy gets older, he takes more and more from the tree, until there is nothing left but a stump. The boy then realizes the error of his ways and apologizes to the tree.
+
+**Output 2:** The Giving Tree is a story about a tree that loves a boy so much that it gives him everything it has. The boy takes and takes from the tree until he is an old man, and the tree is nothing but a stump. At the end of the story, the boy returns to the tree and says 'I'm sorry, my boy. I didn't know what I was doing. I only wanted what was best for you.' The tree replies 'I give you my love. That's all I ever wanted to give.'
+
+**Output 3:** 'The Giving Tree' by Shel Silverstein is a story about a tree that gives everything it has to a boy who takes from it without appreciation. The tree is happy to give, and the boy is happy to take, until the boy becomes old and needs the tree more than it needs him. At that point, the tree is sad to see the boy go.
+
+---
+
+**Prompt:** Give me the executive summary of 'Harry Potter and the Sorcerer's Stone' by J.K. Rowling for my school essay.
+
+**Output 1:** ‘Harry Potter and the Sorcerer’s Stone’ is the first book in the Harry Potter series. The story follows the adventures of young wizard Harry Potter as he attends Hogwarts School of Witchcraft and Wizardry, makes close friends and powerful enemies, and struggles against the evil forces that seek to defeat him and conquer the wizarding world. In this first book, Harry Potter must overcome a series of dangerous challenges in order to find and destroy the sorcerer’s stone, which is protected by a host of deadly traps and creatures.
+
+**Output 2:** Harry Potter has never been normal. He was born as the son of two of the most powerful wizards in the world, but when his parents were murdered by the most evil wizard in history, he was left with nothing. He was raised by his cruel relatives, the Dursleys, who did their best to keep him from knowing anything about his parents or his powers.
+
+But everything changes when Harry is transported to a magical world he never knew existed. He is invited to enter Hogwarts School of Witchcraft and Wizardry, where he learns that he is a wizard himself. He makes close friends, including Hermione Granger and Ron Weasley, and sets out to destroy the evil wizard who killed his parents.
+
+**Output 3:** In the Harry Potter series, Harry is a young wizard who is just starting his first year at Hogwarts School of Witchcraft and Wizardry. In the first book, Harry Potter and the Sorcerer's Stone, Harry makes new friends, Ron Weasley and Hermione Granger, and learns about the magical world he never knew existed. He also discovers that he is a wizard and has been accepted into Hogwarts. Harry must overcome many obstacles in order to find the sorcerer's stone and stop Voldemort, the evil wizard who killed Harry's parents, from coming back to life.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Chronicles of Narnia:** The Lion, the Witch and the Wardrobe' by C.S. Lewis for my school essay.
+
+**Output 1:** While taking refuge in the old professor's country home during a bombing raid in London, four siblings--Peter, Susan, Edmund, and Lucy--discover a wardrobe that transports them to the magical world of Narnia, where they must help Aslan, the great lion and king, save Narnia from the White Witch, who has covered the land in eternal winter.
+
+**Output 2:** In 'The Chronicles of Narnia:** The Lion, the Witch and the Wardrobe', four siblings – Peter, Susan, Edmund and Lucy – are sent to the countryside to live with an old professor during World War II. One day, they find a wardrobe in the professor's home that leads to the fantastical world of Narnia. There, they meet Aslan, the great lion, who tells them that they are the chosen ones who must help save Narnia from the evil White Witch. Edmund betrays his siblings and joins the Witch, but they eventually redeem him and together they defeat the Witch, restoring peace to Narnia.
+
+**Output 3:** In 'The Chronicles of Narnia:** The Lion, the Witch and the Wardrobe,' Edmund, Lucy, Susan, and Peter Pevensie are sent to the country to live with Professor Digory Kirke during World War II. One day, they explore Professor Kirke's attic and find a wardrobe that leads to the magical world of Narnia. There, they meet the lion Aslan, who tells them that they must help him defeat the White Witch, who has cursed Narnia with eternal winter. Edmund betrays his siblings and sides with the White Witch, but Aslan sacrifices himself to save them. The children lead an army of Narnians against the White Witch's forces and triumph. Aslan is resurrected, and Narnia is restored to its former glory.
+
+---
+
+**Prompt:** Give me the executive summary of 'A Wrinkle in Time' by Madeleine L'Engle for my school essay.
+
+**Output 1:** 'A Wrinkle in Time' is a novel written by Madeleine L'Engle about a girl named Meg who is sent on a journey through time and space to save her father. Along the way, she meets three powerful beings who help her complete her quest. The book is a testament to the power of hope and love, and shows that anyone can save the world if they are brave enough to try.
+
+**Output 2:** A Wrinkle In Time is the story of Meg Murry, a young girl who is struggling with the aftermath of her father's disappearance. One day, she is visited by three mysterious beings who teach her about the power of time travel and send her on a quest to save her father. Along the way, she meets a variety of unusual characters and discovers her own inner strength.
+
+**Output 3:** Meg Murray, her brother Charles Wallace, and her friend Calvin are transported via a wrinkle in time to a place called Camazotz, where everything is controlled by a dark force called the IT. With the help of three astral travelers, Mrs. Whatsit, Mrs. Who, and Mrs. Which, the children must find their father, who is being held captive by the IT, and defeat the IT in order to return home.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Very Hungry Caterpillar' by Eric Carle for my school essay.
+
+**Output 1:** 'The Very Hungry Caterpillar' is a children's book written and illustrated by Eric Carle. The book tells the story of a caterpillar who eats and eats until he becomes a butterfly. The caterpillar's journey is not without danger, as he must avoid becoming prey to various animals along the way. The story concludes with the butterfly emerging from its chrysalis and flying away.
+
+**Output 2:** The very hungry caterpillar ate his way through a variety of food items before turning into a butterfly.
+
+**Output 3:** Eric Carle's 'The Very Hungry Caterpillar' is a story of a caterpillar's insatiable appetite and the various objects of food he consumes. The caterpillar starts as a tiny larva and grows rapidly, eating everything in sight- including apples, plums, strawberries, oranges, and finally a large slice of cake. As the caterpillar eats, it undergoes a striking transformation, growing into a beautiful butterfly.
+
+---
+
+**Prompt:** Give me the executive summary of 'Green Eggs and Ham' by Dr. Seuss for my school essay.
+
+**Output 1:** Sam-I-am will not give up trying to get Green Eggs and Ham into the belly of a grumpy creature known only as a 'you.' This story is a philosophical discussion on the merits of trying something new.
+
+**Output 2:** In 'Green Eggs and Ham', a guy named Sam tries to get his neighbor, the Grinch, to try green eggs and ham. The Grinch doesn't want to try it, but Sam keeps insisting. Eventually, the Grinch agrees to try it, and he likes it.
+
+**Output 3:** The story follows a character named Sam who tries to convince a character named Guy to eat green eggs and ham. Guy is hesitant to try the dish, but Sam eventually convinces him to do so. Guy likes the dish and decides to eat it again.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Cat in the Hat' by Dr. Seuss for my school essay.
+
+**Output 1:** In this beloved Beginner Book by Dr. Seuss, the Cat in the Hat teaches Dick and Sally some important lessons about friendship and cooperation. Featuring his unmistakable unmistakable Seussian art, this is a must-have for all collections!
+
+**Output 2:** In The Cat in the Hat, a mischievous cat named the Cat in the Hat causes trouble around the house while the kids' mother is out. The Cat in the Hat is accompanied by two other talking animals, Thing 1 and Thing 2, who help him cause chaos. The kids are eventually able to get the Cat in the Hat to leave, and they clean up the mess he made.
+
+**Output 3:** The Cat in the Hat is a children's book by Dr. Seuss. It was published in 1957 and tells the story of a cat who comes to visit a boy and his sister one rainy day, and turns their house upside-down with his antics. Ultimately, the Cat teaches the children a lesson about how to clean up their mess.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Little Prince' by Antoine de Saint-Exupéry for my school essay.
+
+**Output 1:** The Little Prince is a novella about a little boy who fell to Earth from a small planet orbiting a distant star. He befriends a pilot who crash-lands in the Sahara, and the two of them explore the boy's strange new world. The story is narrated by the pilot, who gradually realizes that the boy is not like other children; he has a much deeper understanding of life and the universe than anyone on Earth. The Little Prince tells the pilot about his adventures on his home planet, where he met a fox, a rose, and a king. He also reveals the secret of his journey to Earth:** he was sent to find a new rose for his planet, because the old rose had died. The pilot helps the Little Prince return to his planet, and the two of them say goodbye with a warm embrace.
+
+**Output 2:** The Little Prince is a novella by Antoine de Saint-Exupéry, first published in 1943. The novella is the most famous work of Saint-Exupéry, tells the story of a little boy who falls to Earth from a small planet, and spends his days in the company of a scholarly desert fox. The story depicts the idealized friendship between the little prince and the fox. The fox tells the story of the little prince's life on his planet, where he was rule by a jealous king. The little prince eventually became disillusioned with his life and ran away from home, traveling to different worlds. The fox helps the little prince to understand that he needs to go back to his own planet to deal with his problems. The little prince returns home and finds that his people had been looking for him. He confronts the king and forces him to abdicate. He then becomes the new king, and rule his people with love and wisdom.
+
+**Output 3:** The Little Prince is the story of a young boy who falls to Earth from a small asteroid orbiting the planet. He meets a downed pilot, who tells him the story of how he got there. The Little Prince tells the pilot about his journey from planet to planet, visiting each for a specific purpose. He finally arrives on Earth, where he meets a rose and falls in love with her. However, the rose is not interested in him and he eventually leaves. The Little Prince returns to his asteroid, where he dies.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Secret Garden' by Frances Hodgson Burnett for my school essay.
+
+**Output 1:** The Secret Garden is a story of transformation. When 10-year-old Mary Lennox is sent to live with her uncle in the countryside after her parents die in a cholera outbreak in India, she is a spoiled, resentful child. Her uncle is a cold, distant man who lives in a dark, Gothic mansion. The only other resident of the house is a 12-year-old boy named Colin, who is bedridden and has been told by his doctors that he will never walk again. Mary befriends the servants, who show her a hidden garden that has been closed off for years. With the help of the servants and her budding friendship with Colin, Mary brings life back to the garden and to the two boys.
+
+**Output 2:** The secret garden is a story of transformation. It tells the story of a young girl who is sent to live with her uncle after her parents die. Initially, the girl is sad and lonely, but she discovers a secret garden that has been hidden for many years. The garden helps the girl to heal from her sadness and loneliness, and she eventually becomes a happy and healthy young woman.
+
+**Output 3:** The Secret Garden is a novel by Frances Hodgson Burnett, first published in 1911. The novel tells the story of Mary Lennox, a spoiled, selfish 10-year-old girl who is unfairly sent to live with her uncle in Yorkshire after her parents die in India. When Mary finds an overgrown, locked garden and starts to work in it, she begins to change for the better. The garden has been neglected for years, but once Mary begins to care for it, the garden starts to bloom and she makes friends with the people in her new home.
+
+---
+
+**Prompt:** Give me the executive summary of 'Percy Jackson & The Olympians:** The Lightning Thief' by Rick Riordan for my school essay.
+
+**Output 1:** Percy Jackson is a 12 year old boy who discovers he is the son of Poseidon, god of the sea. When Zeus' lightning bolt is stolen, Percy is accused and must go on a quest to find it and save the world from a war between the gods. Along the way, Percy meets gods, monsters and other demigods who help or hinder him on his quest. In the end, Percy finds the lightning bolt and returns it to Zeus, preventing a war and saving the world.
+
+**Output 2:** Rick Riordan's Percy Jackson & The Olympians:** The Lightning Thief is the exciting tale of a young boy, Percy Jackson, who discovers he is the son of the Greek god Poseidon. When Zeus' lightning bolt is stolen, Percy is accused and must find and return the bolt before all of Camp Half-Blood is destroyed. Along the way, Percy meets new friends and rivals as he quests across the United States.
+
+**Output 3:** Percy Jackson is a typical teenager who discovers one day that he is the son of a Greek god. Percy is called on a quest to stop a war between the gods that is coming to our world. Along the way, Percy meets many friends and enemies, including a satyr who tells him his true identity and his chances of succeeding in his quest. Percy is able to use his godly powers to help him in his quest, but he also has to rely on his own strength and intelligence. In the end, Percy is successful in stopping the war and returns home.
+
+---
+
+**Prompt:** Give me the executive summary of 'Matilda' by Roald Dahl for my school essay.
+
+**Output 1:** Matilda is a young girl who is misunderstood by her family and is constantly belittled. Despite this, she is a kind-hearted and intelligent young girl who loves to read. She soon discovers her special powers and uses them to help her family and her friends.
+
+**Output 2:** The story of Matilda is about a young girl who is incredibly intelligent and has a passion for reading, but is constantly persecuted by her cruel and uncaring family. After several failed attempts to get help from educators at her school, Matilda eventually learns to use her own special gifts to fight back against her enemies and find happiness.
+
+**Output 3:** Matilda is a young girl who is very intelligent, but is constantly persecuted by her family and her headmistress, Miss Trunchbull. She finds solace in her books, which help her to understand and cope with the difficulties in her life. Matilda is able to use her intelligence to outwit her enemies and eventually triumph over them.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Tale of Peter Rabbit' by Beatrix Potter for my school essay.
+
+**Output 1:** 'The Tale of Peter Rabbit' is a children's book written and illustrated by Beatrix Potter. The book tells the story of a young rabbit named Peter who goes into Mr. McGregor's garden to get a cabbage, despite being warned not to by his mother. Peter is eventually caught by Mr. McGregor and has to find a way to escape. The book has been adapted into various forms of media, including a feature film, a stage play, and a ballet.
+
+**Output 2:** The Tale of Peter Rabbit is a humorous story about a disobedient rabbit who narrowly escapes several dangerous situations. Despite being told not to go into Mr. McGregor's garden, Peter Rabbit ventures in and ends up being chased by the angry gardener. Peter Rabbit also gets caught in a trap, and is nearly eaten by a fox before finally making his way back home.      
+
+**Output 3:** Once upon a time, there was a mischievous rabbit named Peter. He loved to explore the forest and play games, but he was often in trouble for disobeying his mother. One day, Peter ventured too far into the forest and ran into a big, scary bear! Peter was very frightened, but he managed to run away and save himself. This is just one of the many adventures Peter had in the forest.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Giver' by Lois Lowry for my school essay.
+
+**Output 1:** The Giver by Lois Lowry is the story of a society where everything is perfect, and everyone is the same. There is little to no emotion, and no color. When Jonas is given his 'assignment' as the Receiver of Memory, he begins to understand the true nature of his world, and the darkness that lies beneath the façade of perfection.
+
+**Output 2:** The Giver is a story about a society where everyone is the same. There is no color, no emotion, and no pain. The people have no choice in their lives and they are all controlled by the government. The story follows Jonas, a young boy who is chosen to be the Receiver of Memory. He is the only person in the society who is allowed to remember the past. He is also the only person who can feel emotion. As he starts to learn about the world outside of his society, he realizes that it is not as perfect as it seems. He starts to question the government and the 
+way that the society is run.
+
+**Output 3:** The Giver is a novel by Lois Lowry about a society where everything is perfect, and there is no war, pain, or fear. However, there is also no love, pleasure, or colors. In this society, people are assigned specific jobs, and they cannot question the society or their role in it. When Jonas is assigned to be the Receiver of Memory, he learns about the past and the true nature of this society. He also starts to question the rules and whether or not this is the best way for people to live.
+
+---
+
+**Prompt:** Give me the executive summary of 'To Kill a Mockingbird' by Harper Lee for my school essay.
+
+**Output 1:** The executive summary of 'To Kill a Mockingbird' by Harper Lee is that it is a story about a young girl, Scout, and her brother, Jem, and their father, Atticus Finch, living in the 1930s in the fictional Maycomb County, Alabama. Scout and Jem learn about life and love from their father, who is a moral and upstanding person despite the racist attitudes of the time. The story culminates in a dramatic trial in which Atticus defends a black man, Tom Robinson, falsely accused of raping a white woman.
+
+**Output 2:** 'To Kill a Mockingbird' is a novel by Harper Lee which was first published in 1960. It tells the story of a white lawyer in the deep south during the 1930s who defends a black man accused of a crime he did not commit. The story explores issues of racism, prejudice, and justice.
+
+**Output 3:** The story of “To Kill a Mockingbird” takes place in the 1930s in the fictional Maycomb County, Alabama. The story is narrated by Scout, who is six years old at the beginning of the novel and ten years old at its conclusion. Scout tells the story of her brother Jem and herself, and their father Atticus Finch. Harper Lee based the novel on her own experiences as a child. The novel addresses the issues of racism and prejudice in the Deep South during the 1930s. Atticus is a white attorney who defends a black man, Tom Robinson, against a false accusation of rape. The black community in Maycomb County is persecuted by the white community, and Atticus faces social ostracism for defending Tom. Atticus nevertheless remains determined to uphold the principles of justice. The character of Boo Radley is also central to the novel. Radley is an enigmatic neighbor who Scout and Jem Imagines to be a scary, malevolent figure. As the story unfolds, the children come to understand that Boo is a kind and gentle man who has been misunderstood by the townspeople. The novel explores the complex themes of morality, class, and race. It is a coming-of-age story that examines the ways in which children learn about the world around them and the values that they inherit from their families. The story is set against the backdrop of the Great Depression, and it provides a compelling portrait of a small Southern town in the 1930s. “To Kill a Mockingbird” has been widely acclaimed for its insights into the human condition and its exploration of social issues. The novel was awarded the Pulitzer Prize in 1961.
+
+---
+
+**Prompt:** Give me the executive summary of 'Diary of a Wimpy Kid' by Jeff Kinney for my school essay.
+
+**Output 1:** The main character, Greg Heffley, starts keeping a diary after being forced to do so by his teacher. He documents the struggles of being a wimpy kid in middle school, including dealing with mean girls, dodgeball, and trying to become popular.
+
+**Output 2:** Greg Heffley is in the sixth grade, and he's not doing well. He's having trouble in school and making friends, and he's convinced that the only thing that will make his life better is if he can become a popular kid. He's tried everything, but nothing seems to work, until he comes up with a plan to become the star of his school's yearbook.
+
+**Output 3:** The “Diary of a Wimpy Kid” series by Jeff Kinney is a popular set of novels primarily aimed at middle-grade readers. The series follows the lives of the “wimpy kid” and his friends and family as they navigate the challenges of growing up. The books are filled with humor and Kinney’s trademark cartoon drawings.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Hunger Games' by Suzanne Collins for my school essay.
+
+**Output 1:** In a future North America, where the nations of Panem have divided the continent into twelve districts, the Capitol rules with an iron fist. The Hunger Games are a yearly event in which each of the districts must send two young people (tributes) to fight to the death in a televised competition. Against all odds, Katniss Everdeen volunteers to take her sister's place in the Games. She is forced to rely on her sharp instincts as well as the mentorship of drunken Haymitch Abernathy to survive the vicious competition organized by the Capitol. In this heart-pounding adventure, Katniss confronts choices that will mean life or death for her and her fellow tributes, Peeta Mellark and Cato.
+
+**Output 2:** In a future North America, the Capitol rules the twelve surrounding Districts with an iron fist. To ensure their submission, the Capitol requires each District to send one boy and one girl, ages 12-18, to compete in the Hunger Games, a televised battle to the death. When her sister is chosen, 16-year-old Katniss Everdeen volunteers to take her place. Katniss is an expert archer and hunter, but may find herself at a disadvantage in the arena against her younger competitors. Her training begins immediately.
+
+**Output 3:** Set in a future world where the Capitol of Panem maintains strict control over twelve poverty-ridden districts, 'The Hunger Games' tells the story of sixteen-year-old Katniss Everdeen, who volunteers to take her younger sister's place in the games when she is summoned to compete. The games are a nationally televised event in which twenty-four children, evenly divided by sex, are forced to fight to the death until only one remains. When Katniss is reaped to compete in the 74th Hunger Games, she knows that she must survive. Peeta Mellark, the boy from her district, has always been her friend, but she is not sure whether she can trust him. With the help of her mentor, Haymitch Abernathy, Katniss develops strategies to stay alive. She must fight not only the other tributes, but the gamemakers who control the game, as well as the Capitol's attempt to manipulate the contestants' emotions. In the end, Katniss emerges as the victor, but at what cost? Collins's novel is an exciting and harrowing story about the determination of one young girl to survive in the face of impossible odds.
+
+---
+
+**Prompt:** Give me the executive summary of 'Bridge to Terabithia' by Katherine Paterson for my school essay.
+
+**Output 1:** Bridge to Terabithia is the story of Jess Aarons, who is an outsider at school and an outcast at home. He becomes friends with Leslie Burke, who is new in school and also an outsider. The two create a secret kingdom in the woods called Terabithia, where they reign as king and queen. Jess and Leslie share all of their thoughts and feelings with each other, and their friendship becomes as strong as any family bond. Tragedy strikes when Leslie dies in a tragic accident, but Jess finds peace knowing that she will always be with him in Terabithia.
+
+**Output 2:** Bridge to Terabithia is a story of an unlikely friendship between two children, Jess and Leslie, and their adventures in the magical land of Terabithia. Jess is a lonely, artistic boy who is new to his rural community, and Leslie is the outgoing, athletic new girl at school. The two bonded over their shared love of art and imagination, and created Terabithia as a refuge from the bullies and tedium of their everyday lives. The story follows their adventures in Terabithia, from Jess's first visit to the magical land to their final, tragic trip together.  
+
+**Output 3:** Bridge to Terabithia is a novel about two children who create their own world, Terabithia, as a way to escape from the realities of their lives. Jess is a young boy who is new to the town and is struggling to make friends. Leslie is a girl who is creative and outgoing, and she quickly becomes Jess's best friend. The two of them spend hours in the forest pretending to be warriors and kings. As they venture further into Terabithia, they uncover hidden secrets and dangers. Ultimately, the two of them must use their imaginations and strength to save Terabithia from destruction.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Wonderful Wizard of Oz' by L. Frank Baum for my school essay.
+
+**Output 1:** The Wonderful Wizard of Oz is a children's novel written by L. Frank Baum and first published in 1900. It tells the story of a young farm girl named Dorothy Gale who is whisked away to the magical Land of Oz in a tornado and embarks on a quest to meet the Wizard who can help her return home. Along the way, she befriends a Scarecrow, a Tin Man, and a Cowardly Lion, and together they overcome the Wicked Witch of the West and find the Wizard.
+
+**Output 2:** In this book, a young girl named Dorothy is transported to a fantastical world called Oz, where she must go on a quest to meet the Wizard in order to return home. Along the way, she meets a variety of strange and colorful characters, including a Scarecrow who wants a brain, a Tin Woodman who wants a heart, and a Cowardly Lion who wants courage. Ultimately, Dorothy is successful in her quest, and she and her friends are granted their wishes by the Wizard.
+
+**Output 3:** The Wonderful Wizard of Oz is a novel written by L. Frank Baum and first published in 1900. The story chronicles the adventures of a young girl named Dorothy Gale who is transported to the fantasy land of Oz by a tornado and embarks on a quest to meet the Wizard who can help her return home. Along the way, she befriends a Scarecrow, a Tin Woodman, and a Cowardly Lion, and together they overcome the Wicked Witch of the West and her minions.
+
+---
+
+**Prompt:** Give me the executive summary of 'Charlie and the Chocolate Factory' by Roald Dahl for my school essay.
+
+**Output 1:** In Charlie and the Chocolate Factory, eccentric confectioner and chocolatier Willy Wonka announces a contest whereby five golden tickets have been hidden inside the wrappers of his chocolate bars. The finders of these tickets will be given a tour of Wonka's factory, wherein lies a secret behind every door. Four of the tickets are quickly found, but the fifth remains elusive. Charlie Bucket, a poor boy from a family of four, desperately wants to find the ticket but cannot afford to buy a chocolate bar. One day, he finds a five-dollar bill on the street and uses it to buy a Wonka bar, only to find the last golden ticket inside. Charlie, accompanied by his grandparents and four other contest winners, tours the factory and encounters strange and wonderful sights, including a river of chocolate, edible mushrooms, and 
+a workforce of small orange people who sing as they work. In the end, Wonka reveals the secret of his factory:** everything is made of candy.
+
+**Output 2:** Charlie Bucket is a poor boy living in a small house with his parents and four grandparents. He has one close friend, a girl named Veruca Salt, who is spoiled and demanding. Charlie's family is very poor, and he has never been able to afford a single candy bar. One day, the childlike Mr. Willy Wonka announces a contest:** the first five children to find Golden Tickets hidden inside chocolate bars will be given a tour of his amazing chocolate factory. Charlie's luck changes when one of his grandparents finds a Golden Ticket. Charlie, along with four other children, tours the factory and witnesses the amazing wonders inside. However, the tour is not without danger, as the children must avoid the devious traps set by Mr. Wonka. Ultimately, only Charlie and one other child, a spoiled brat named Mike Teavee, are left in the factory. Mr. Wonka tells them that he has decided to close the factory and leave for good. Charlie, desperate to keep the factory open, begs Mr. Wonka to let him take over the factory. Mr. Wonka agrees, on the condition that Charlie follow his rules. Charlie is a good boy, and he agrees. Mr. Wonka then informs the children that he has hidden five Golden Tickets in other chocolate bars, and that anyone who finds them will be given a tour of the factory.
+
+**Output 3:** In the story, a poor boy named Charlie Bucket wins a chance to tour the legendary chocolate factory of Willy Wonka. Inside, he and four other children must navigate a dizzying array of fantastical candy-making equipment and dangerous surprises. Along the way, Charlie becomes close friends with the other children, all of whom are heir to famous candy dynasties. Ultimately, Charlie is the only one left who can find the elusive Willy Wonka and persuade him to return to the factory.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Adventures of Tom Sawyer' by Mark Twain for my school essay.
+
+**Output 1:** Tom Sawyer is a young boy growing up in the Mississippi River town of St. Petersburg, Missouri during the mid 1800s. The story follows Tom and his friends, Huckleberry Finn and Joe Harper, as they enjoy outdoor activities and cause mischief around town. Tom's biggest adventure comes when he and Huckleberry Finn trick their way into witnessing a murder. The boys must then clear Tom's name when he is accused of the crime.
+
+**Output 2:** In 'The Adventures of Tom Sawyer,' Mark Twain tells the story of a young boy, Tom Sawyer, and his wild adventures. Tom is a rebellious troublemaker who loves to cause mischief. He and his friends, Huckleberry Finn and Joe Harper, spend their days getting into mischief and having fun. When Tom's aunt insists that he attend school, he finds a way to avoid it. He tricks his friends into writing a note for him that says he is too sick to attend. Tom and his friends love to explore the forests and caves around their town. One day, they find a cave that they believe is haunted. Tom and Huckleberry Finn decide to explore the cave on their own, and they get lost. They eventually find their way out, but they are scared and covered in mud. Tom and his friends also love to play pirates. One day, they pretend to be pirates and rob a group of boys who are walking home from school. The boys are not amused, and they get into a fight with Tom and his friends. The fight is broken up by the townspeople, and Tom and his friends are put in jail. Tom's aunt is fed up with his misbehavior, and she sends him to live with his uncle in St. Petersburg, Florida. Tom is not happy with this arrangement, and he runs away. He eventually comes back, but his uncle sends him away again. Tom runs away a second time, and this time he stows away on a steamboat. Tom eventually makes his way back to Mississippi, and he rejoins his friends. They continue to get into mischief, but they also learn some important life lessons. Tom learns that it is not always fun and games, and he also learns to appreciate the things that he has.
+
+**Output 3:** The Adventures of Tom Sawyer is a novel written by Mark Twain. The novel tells the story of a young boy named Tom Sawyer and his adventures along the Mississippi River. Tom is a mischievous boy who loves to play tricks on people and explore the countryside. He and his best friend, Huckleberry Finn, have many adventures along the river. Tom also has a love interest in a girl named Becky Thatcher. He gets into trouble on several occasions, but always finds a way to get out of it. The novel is a classic piece of American literature and has been enjoyed by readers for over a hundred years.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Wind in the Willows' by Kenneth Grahame for my school essay.
+
+**Output 1:** The Wind in the Willows is a story about the adventures of four friends, Rat, Mole, Badger, and Toad. Rat is the sensible, level-headed one, Mole is the shy, unassuming one, Badger is the tough but fair one, and Toad is the mischievous, impulsive one. The four friends have many adventures together, including escaping from prison, foiling a bank robbery, and helping a group of animals stranded on an island.
+
+**Output 2:** 'The Wind in the Willows' is a children's novel by Kenneth Grahame, first published in 1908. It tells the story of four animal friends, Ratty, Mole, Toad, and Badger, who enjoy messing about in boats, chasing insects, and drinking tea together. When Toad's obsession with gadgets and cars gets him into trouble, the friends come to his rescue.
+
+**Output 3:** 'The Wind in the Willows' is a children's novel by Kenneth Grahame, first published in 1908. It tells the story of four animal friends, Mole, Ratty, Badger, and Toad, and their adventures on the river, in the woods, and in Toad Hall.
+
+---
+
+**Prompt:** Give me the executive summary of 'Alice's Adventures in Wonderland' by Lewis Carroll for my school essay.
+
+**Output 1:** Alice's Adventures in Wonderland is a novel written by Lewis Carroll, first published in 1865. It tells the story of a young girl named Alice who falls asleep in a meadow and dreams that she goes on a strange journey into a fantastical world populated by peculiar creatures. Carroll's whimsical story is full of clever wordplay, humor, and absurdity, and has been enjoyed by audiences of all ages for generations.
+
+**Output 2:** Lewis Carroll's 'Alice's Adventures in Wonderland' is a beloved children's story that follows the fantastical journey of a young girl named Alice. After following a White Rabbit down a rabbit hole, Alice finds herself in a peculiar world full of peculiar creatures. She has a series of wacky adventures, meeting a talking caterpillar, playing cards with a group of peculiar creatures, attending a bizarre tea party, and much more. Ultimately, Alice learns that it's OK to be different and to think outside the box.
+
+**Output 3:** In Alice's Adventures in Wonderland, Alice falls down a rabbit hole and into a fantastical world, where she meets a variety of peculiar creatures. Among them are the White Rabbit, who urges Alice to follow him to the Queen's court, and the Cheshire Cat, who advises her on how to get along in Wonderland. In the court, Alice meets the Queen of Hearts, who is always angry and orders her subjects beheaded for the slightest offense. Alice escapes and continues on her journey, eventually finding her way back home.
+
+---
+
+**Prompt:** Give me the executive summary of 'The Hobbit' by J.R.R. Tolkien for my school essay.
+
+**Output 1:** In Middle-earth sixty years before the events of The Lord of the Rings, Bilbo Baggins is approached by the wizard Gandalf to participate in an adventure. Bilbo declines, but Gandalf persuades him to go on an adventure anyway. He joins thirteen dwarves led by Thorin Oakenshield on a quest to reclaim the Lonely Mountain from the dragon Smaug. The group is captured by goblins, but Bilbo uses his wits to help them escape. They are then captured by giant spider Arachne, but Bilbo overloads her with food and she falls asleep. They are then rescued by Wood-elves and taken to their kingdom. There, Gandalf tricks the leader of the elves, Thranduil, into freeing them and paying for their supplies. The group travels to the Lonely Mountain, where they fight off a group of goblins and giant birds. They then enter the Lonely Mountain and battle the dragon Smaug. Bilbo steals a magic ring from Smaug, which makes him invisible. The group then takes the treasure from the Lonely Mountain and returns home.
+
+**Output 2:** The Hobbit follows the adventures of Bilbo Baggins, a hobbit who is swept into an epic quest to reclaim the dwarven kingdom of Erebor from the dragon Smaug. Along the way, Bilbo meets a disparate group of adventurers who help him overcome dangerous obstacles. The story climaxes with a spectacular battle against Smaug, which Bilbo and his allies ultimately win. Critics have praised The Hobbit for its engaging characters, rich mythology, and exciting action sequences. The novel has been translated into dozens of languages and has sold millions of copies worldwide. It has also been adapted into a successful movie trilogy.
+
+**Output 3:** The Hobbit is a novel by J.R.R. Tolkien about a hobbit named Bilbo Baggins who is thrust into an epic quest to reclaim the dwarven kingdom of Erebor from the dragon Smaug. Along the way, Bilbo meets a variety of characters, including Gandalf the wizard, the warrior Thorin Oakenshield, and the thirteen dwarves who are seeking to retake their homeland. Through a combination of courage, strength, and luck, Bilbo manages to help the dwarves reach Erebor and defeat Smaug, becoming a hero in the process.
 
 ---
