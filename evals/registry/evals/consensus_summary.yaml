@@ -4,6 +4,8 @@ consensus_summary:
   metrics: [accuracy]
 
 consensus_summary.dev.v0:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: consensus_summary/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
