@@ -1,0 +1,8 @@
+zapier_nla:
+  id: zapier_nla.dev.v0
+  metrics: [accuracy]
+
+zapier_nla.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: zapier_nla/samples.jsonl
