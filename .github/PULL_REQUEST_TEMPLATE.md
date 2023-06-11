@@ -61,7 +61,7 @@ By contributing to Evals, you are agreeing to make your evaluation logic and dat
 
 ### Email address validation
 
-If your submission is accepted, we will be granting GPT-4 access to a limited number of contributors. Access will be given to the email address associated with the merged pull request.
+If your submission is accepted, we will be granting GPT-4 access to a limited number of contributors. Access will be given to the email address associated with the commits on the merged pull request.
 
 - [ ] I acknowledge that GPT-4 access will only be granted, if applicable, to the email address used for my merged pull request.
 

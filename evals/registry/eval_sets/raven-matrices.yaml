@@ -1,0 +1,31 @@
+raven-matrices:
+  evals:
+    - raven-matrices-symbolic-center-single
+    - raven-matrices-symbolic-distribute-four
+    - raven-matrices-symbolic-distribute-nine
+    - raven-matrices-symbolic-in-center-single-out-center-single
+    - raven-matrices-symbolic-in-distribute-four-out-center-single
+    - raven-matrices-symbolic-left-center-single-right-center-single
+    - raven-matrices-symbolic-up-center-single-down-center-single
+    - raven-matrices-symbolic-open-center-single
+    - raven-matrices-symbolic-open-distribute-four
+    - raven-matrices-symbolic-open-distribute-nine
+    - raven-matrices-symbolic-open-in-center-single-out-center-single
+    - raven-matrices-symbolic-open-in-distribute-four-out-center-single
+    - raven-matrices-symbolic-open-left-center-single-right-center-single
+    - raven-matrices-symbolic-open-up-center-single-down-center-single
+    - raven-matrices-text-center-single
+    - raven-matrices-text-distribute-four
+    - raven-matrices-text-distribute-nine
+    - raven-matrices-text-in-center-single-out-center-single
+    - raven-matrices-text-in-distribute-four-out-center-single
+    - raven-matrices-text-left-center-single-right-center-single
+    - raven-matrices-text-up-center-single-down-center-single
+    - raven-matrices-text-open-center-single
+    - raven-matrices-text-open-distribute-four
+    - raven-matrices-text-open-distribute-nine
+    - raven-matrices-text-open-in-center-single-out-center-single
+    - raven-matrices-text-open-in-distribute-four-out-center-single
+    - raven-matrices-text-open-left-center-single-right-center-single
+    - raven-matrices-text-open-up-center-single-down-center-single
+

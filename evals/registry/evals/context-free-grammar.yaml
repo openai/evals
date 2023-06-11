@@ -1,0 +1,9 @@
+context-free-grammar:
+  id: context-free-grammar.dev.v0
+  description: Checking whether a string can be produced by a CFG
+  metrics: [accuracy]
+
+context-free-grammar.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: context-free-grammar/samples.jsonl

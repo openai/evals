@@ -1,0 +1,9 @@
+logic_and_probability:
+  id: logic_and_probability.dev.v0
+  description: Eval that checks ability to do logical physics and statistics questions.
+  metrics: [accuracy]
+
+logic_and_probability.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: logic_and_probability/logic_and_probability.jsonl
