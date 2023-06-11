@@ -4,6 +4,6 @@ chinese-remainder-theorem:
   metrics: [accuracy]
   
 chinese-remainder-theorem.dev.v0:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: chinese-remainder-theorem/samples.jsonl
