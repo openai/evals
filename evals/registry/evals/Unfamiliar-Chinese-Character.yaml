@@ -7,4 +7,4 @@ Unfamiliar-Chinese-Character.dev.v0:
   args:
     samples_jsonl: Unfamiliar-Chinese-Character/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: hanziucc
+    modelgraded_spec: fact
