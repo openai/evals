@@ -1,0 +1,9 @@
+belarusian-synonyms:
+  id: belarusian-synonyms.dev.v0
+  description: Test the model's ability to classify if the Belarusian words are synonyms or not. 
+  metrics: [accuracy]
+
+belarusian-synonyms.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: belarusian_synonyms/samples.jsonl

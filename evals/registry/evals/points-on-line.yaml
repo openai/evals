@@ -1,0 +1,8 @@
+points-on-line:
+  id: points-on-line.dev.v0
+  description: Tests the model's ability to calculate three points (start, center, end) on a line.
+  metrics: [accuracy]
+points-on-line.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: points_on_line/points_on_line.jsonl
