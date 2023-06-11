@@ -1,9 +1,3 @@
-string-last-occurrence:
-  id: string-last-occurrence.dev.v0
-  description: Test the model's ability to find where is the last occurrence of a character in complex strings
-  metrics: [accuracy]
-
-string-last-occurrence.dev.v0:
-  class: evals.elsuite.basic.includes:Includes
-  args:
-    samples_jsonl: string-last-occurrence/samples.jsonl
+version https://git-lfs.github.com/spec/v1
+oid sha256:ee2fba5b6f75f2d3e73a6586085b1e1c0cf347d0eb0968844adfc0aa805805d5
+size 343
