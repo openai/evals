@@ -1,0 +1,9 @@
+swedish_sat:
+  id: swedish_sat.dev.v0
+  description: Test the model's ability to answer questions from the Swedish högskoleprovet, kind of like the SATs in the US. The 30 questions are from the spring test 2023 verbal part, test number 3.
+  metrics: [accuracy]
+
+swedish_sat.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: swedish_sat/samples.jsonl

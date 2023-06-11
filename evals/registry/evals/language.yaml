@@ -1,0 +1,16 @@
+hellaswag:
+  id: hellaswag.val.ab-v1
+  metrics: [accuracy]
+hellaswag.val.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://hellaswag?split=validation
+    instructions: "Choose the most plausible continuation for the story."
+
+lambada:
+  id: lambada.oaitest.v1
+  metrics: [accuracy]
+lambada.oaitest.v1:
+  class: evals.elsuite.lambada:Lambada
+  args:
+    subset: en

@@ -1,0 +1,10 @@
+guess-the-singer:
+  description: Test the model's ability to predict singer by the first 10 words of
+    the song
+  id: guess-the-singer.dev.v0
+  metrics:
+  - accuracy
+guess-the-singer.dev.v0:
+  args:
+    samples_jsonl: guess_the_singer/samples.jsonl
+  class: evals.elsuite.basic.match:Match

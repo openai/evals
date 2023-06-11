@@ -1,0 +1,8 @@
+beam-analysis:
+  id: beam.analysis.dev.v0
+  description: Test the model's ability to solve beam analysis questions
+  metrics: [accuracy]
+beam.analysis.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: beam_analysis/beam-analysis.jsonl

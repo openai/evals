@@ -1,0 +1,8 @@
+emoji-riddle:
+  id: emoji-riddle.s1.simple-v0
+  description: Test the model's ability to solve emoji riddles.
+  metrics: [accuracy]
+emoji-riddle.s1.simple-v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: emoji_riddle/fuzzy_match.jsonl

@@ -1,0 +1,7 @@
+date-calculator:
+  id: date-calculator.test.v1
+  metrics: [accuracy]
+date-calculator.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: date-calculator/samples.jsonl
