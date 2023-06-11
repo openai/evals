@@ -5,7 +5,7 @@ This file gives information about the menthodology used to put together the prom
   - [Section 1: Prompts presented to GPT model 'text-davinci-003' and their outputs](#section-1-prompts-presented-to-gpt-model-text-davinci-003-and-their-outputs)
   - [Section 2: Extracts from real books, across diverse genres](#section-2-extracts-from-real-books-across-diverse-genres)
   - [Section 3: Prompts presented to GPT model 'gpt-3.5-turbo-0301' and their outputs](#section-3-prompts-presented-to-gpt-model-gpt-35-turbo-0301-and-their-outputs)
-  - [Section 4: Prompts presented to GPT model 'text-davinci-002' and their outputs](#section-4-prompts-presented-to-gpt-model-text-davinci-002-and-their-outputs)
+  - [Section 4: Prompts presented to GPT model 'text-davinci-001' and their outputs](#section-4-prompts-presented-to-gpt-model-text-davinci-001-and-their-outputs)
 
 ---
 
@@ -343,7 +343,7 @@ their lives through courage, understanding and compassion. When tragedy strikes,
 
 ------
 
-## Section 4: Prompts presented to GPT model 'text-davinci-002' and their outputs
+## Section 4: Prompts presented to GPT model 'text-davinci-001' and their outputs
 
 [Back to Top](#data-information)
 
