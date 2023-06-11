@@ -4,6 +4,6 @@ ascii-digit-recognition:
   description: Evaluate ASCII digit recognition ability
 
 ascii-digit-recognition.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: ascii-digit-recognition/samples.jsonl
