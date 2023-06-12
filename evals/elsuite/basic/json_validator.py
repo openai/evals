@@ -45,4 +45,5 @@ class JsonValidator(evals.Eval):
         events = recorder.get_events("match")
         return {
             "accuracy": evals.metrics.get_accuracy(events),
+            "boostrap_std": evals.metrics.get_bootstrap_accuracy_std(events),
         }
