@@ -1,0 +1,10 @@
+Act as a German language part-of-speech classifier. You will be prompted with a single German word. Return an unsorted comma-separated list for all the parts of speech the word could possibly be, in any context. Take care to consider if the word is any kind of inflection. If so, include the part of speech for the main word.
+Answer with the comma-separated list only. Use single spaces after the commas. End the list with a dot. Do not include any explanations. Only include parts of speech from the following list, ignoring possible other parts of speech:
+adjective, adverb, article, conjunction, interjection, noun, particle, preposition, pronoun, verb
+**Example prompt 1**: alle
+**Example output 1**: adverb, noun, pronoun.
+**Example prompt 2**: künftig
+**Example output 2**: adjective, adverb.
+**Example prompt 3**: Sommelier
+**Example output 3**: noun.
+**Prompt**:

@@ -1,0 +1,9 @@
+music_theory_scale_modes:
+  id: music_theory_scale_modes.dev.v0
+  description: Test the model's ability to identify which western music scale a series of 8 notes belongs to
+  metrics: [accuracy]
+
+music_theory_scale_modes.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: music_theory_scale_modes/samples.jsonl

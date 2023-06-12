@@ -1,0 +1,9 @@
+nfl-point-combinations:
+  id: nfl-point-combinations.dev.v0
+  description: Test the model's ability to calculate all the possible ways to for an NFL team to achieve a final score.
+  metrics: [accuracy]
+
+nfl-point-combinations.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: nfl-point-combinations/samples.jsonl

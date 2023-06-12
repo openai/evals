@@ -1,0 +1,35 @@
+integer-sequence-predictions:
+  id: integer-sequence-predictions.dev.v0
+  metrics: [accuracy]
+
+integer-sequence-predictions.dev.v0:
+  args:
+    samples_jsonl: integer-sequence-predictions/samples.jsonl
+  class: evals.elsuite.basic.match:Match
+
+integer-sequence-predictions-notable:
+  id: integer-sequence-predictions-notable.dev.v0
+  metrics: [accuracy]
+
+integer-sequence-predictions-notable.dev.v0:
+  args:
+    samples_jsonl: integer-sequence-predictions/notable-sequences.jsonl
+  class: evals.elsuite.basic.match:Match
+  
+integer-sequence-predictions-obscure:
+  id: integer-sequence-predictions-obscure.dev.v0
+  metrics: [accuracy]
+
+integer-sequence-predictions-obscure.dev.v0:
+  args:
+    samples_jsonl: integer-sequence-predictions/obscure-sequences.jsonl
+  class: evals.elsuite.basic.match:Match
+  
+integer-sequence-predictions-misc:
+  id: integer-sequence-predictions-misc.dev.v0
+  metrics: [accuracy]
+
+integer-sequence-predictions-misc.dev.v0:
+  args:
+    samples_jsonl: integer-sequence-predictions/misc-and-recent-sequences.jsonl
+  class: evals.elsuite.basic.match:Match

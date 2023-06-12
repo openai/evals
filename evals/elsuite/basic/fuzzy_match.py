@@ -12,7 +12,7 @@ class FuzzyMatch(evals.Eval):
         completion_fns: list[CompletionFn],
         samples_jsonl: str,
         *args,
-        max_tokens: int = 500,
+        max_tokens: int = 100,
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
@@ -22,15 +22,24 @@ class FuzzyMatch(evals.Eval):
 
     def eval_sample(self, test_sample, rng):
         del rng
+
+        assert isinstance(test_sample, dict), "sample must be a dict"
+        assert "input" in test_sample, "sample must have an 'input' key"
+        assert "ideal" in test_sample, "sample must have an 'ideal' key"
+
         prompt, correct_answers = test_sample["input"], test_sample["ideal"]
+        if not isinstance(correct_answers, list):
+            correct_answers = [correct_answers]
+
         result = self.completion_fn(
             prompt=prompt,
             temperature=0.0,  # Q: why are these hardcoded?
-            max_tokens=16,
+            max_tokens=self.max_tokens,
         )
         sampled = result.get_completions()[0]
 
         matches = [utils.fuzzy_match(sampled, correct_answer) for correct_answer in correct_answers]
+
         evals.record.record_match(
             True in matches,
             expected=correct_answers,

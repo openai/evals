@@ -1,0 +1,8 @@
+rubiks-colors:
+  id: rubiks-colors.dev.v0
+  description: Test the model's ability to determine colors on the face of a Rubik's cube following a scramble.
+  metrics: [accuracy]
+rubiks-colors.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: rubiks-colors/samples.jsonl

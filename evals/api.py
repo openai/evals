@@ -30,7 +30,7 @@ class CompletionFn(Protocol):
         ARGS
         ====
         `prompt`: Either a `Prompt` object or a raw prompt that will get wrapped in
-            the approriate `Prompt` class.
+            the appropriate `Prompt` class.
         `kwargs`: Other arguments passed to the API.
 
         RETURNS
