@@ -4,6 +4,6 @@ logical_reasoning_letter_series_test:
   metrics: [accuracy]
 
 logical_reasoning_letter_series_test.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: logical_reasoning_letter_series_test/samples.jsonl
