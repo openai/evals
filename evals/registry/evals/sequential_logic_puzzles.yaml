@@ -3,6 +3,6 @@ sequential_logic_puzzles:
   metrics: [accuracy]
   
 sequential_logic_puzzles.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: sequential_logic_puzzles/samples.jsonl
