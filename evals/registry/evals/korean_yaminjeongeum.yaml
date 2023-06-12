@@ -1,0 +1,8 @@
+korean_yaminjeongeum:
+  id: korean_yaminjeongeum.dev.v0
+  description: Yamin-Jeongeum is a leetspeak for Korean. Test your ability to translate it to proper Korean.
+  metrics: [accuracy]
+korean_yaminjeongeum.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: korean_yaminjeongeum/samples.jsonl

@@ -1,0 +1,8 @@
+chinese_song_ci:
+  id: chinese_song_ci.dev.v0
+  metrics: [accuracy]
+
+chinese_song_ci.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_song_ci/samples.jsonl

@@ -1,0 +1,8 @@
+financial-derivatives:
+  id: financial-derivatives.dev.v0
+  description: Testing the models ability to answer derivative questions correctly.
+  metrics: [accuracy]
+financial-derivatives.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: financial-derivatives/questions.jsonl

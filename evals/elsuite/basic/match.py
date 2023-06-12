@@ -28,6 +28,13 @@ class Match(evals.Eval):
             self.few_shot = evals.get_jsonl(self.few_shot_jsonl)
 
     def eval_sample(self, sample: Any, *_):
+        assert isinstance(sample, dict), "sample must be a dict"
+        assert "input" in sample, "sample must have an 'input' key"
+        assert "ideal" in sample, "sample must have an 'ideal' key"
+        assert isinstance(sample["ideal"], str) or isinstance(
+            sample["ideal"], list
+        ), "sample['ideal'] must be a string or list of strings"
+
         prompt = sample["input"]
         if self.num_few_shot > 0:
             assert is_chat_prompt(sample["input"]), "few shot requires chat prompt"
@@ -54,4 +61,5 @@ class Match(evals.Eval):
         events = recorder.get_events("match")
         return {
             "accuracy": evals.metrics.get_accuracy(events),
+            "boostrap_std": evals.metrics.get_bootstrap_accuracy_std(events),
         }

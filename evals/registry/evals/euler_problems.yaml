@@ -1,0 +1,10 @@
+euler_problems:
+  id: euler_problems.dev.v0
+  description: Test the model's ability to tackle Euler problems and find a result. Named after Leonhard Euler, a Swiss mathematician in the 1700's, Euler problems are complex challenging mathematical and/or logical problems to solve. Some may require complex thought process to reach a solution while others may need computational resource for which an elegant and efficient approach must be used.
+  metrics: [accuracy]
+euler_problems.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: euler_problems/euler_problems.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact

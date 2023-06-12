@@ -1,0 +1,9 @@
+asl-classifiers:
+  id: asl-classifiers.dev.v0
+  description: Test the model's ability to understand the usage of ASL classifiers.
+  metrics: [accuracy]
+
+asl-classifiers.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: asl-classifiers/samples.jsonl

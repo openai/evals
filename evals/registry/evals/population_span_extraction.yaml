@@ -1,0 +1,11 @@
+population_span_extraction:
+  id: population_span_extraction.dev.v0
+  description: The model is shown abstracts of clinical drug trials and tasked with extracting the text spans that specify the population demographic of the shown abstract. The population demographic can be but is not necessarily specified in multiple seperate spans.
+  metrics: [accuracy]
+
+population_span_extraction.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: population_span_extraction/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
