@@ -31,7 +31,9 @@ class Match(evals.Eval):
         assert isinstance(sample, dict), "sample must be a dict"
         assert "input" in sample, "sample must have an 'input' key"
         assert "ideal" in sample, "sample must have an 'ideal' key"
-        assert isinstance(sample["ideal"], str) or isinstance(sample["ideal"], list), "sample['ideal'] must be a string or list of strings"
+        assert isinstance(sample["ideal"], str) or isinstance(
+            sample["ideal"], list
+        ), "sample['ideal'] must be a string or list of strings"
 
         prompt = sample["input"]
         if self.num_few_shot > 0:
@@ -59,4 +61,5 @@ class Match(evals.Eval):
         events = recorder.get_events("match")
         return {
             "accuracy": evals.metrics.get_accuracy(events),
+            "boostrap_std": evals.metrics.get_bootstrap_accuracy_std(events),
         }
