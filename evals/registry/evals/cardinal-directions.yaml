@@ -1,0 +1,8 @@
+cardinal-directions:
+  id: cardinal-directions.dev.v0
+  metrics: [accuracy]
+
+cardinal-directions.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: cardinal-directions/samples.jsonl

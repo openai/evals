@@ -5,7 +5,11 @@ import string
 # Define the registry path
 REGISTRY_PATH = os.path.join(os.path.dirname(__file__), "../evals/registry")
 
+<<<<<<< HEAD
 # Define a function to format a template string with kwargs
+=======
+
+>>>>>>> 2059e06b56e500fcd5cef460cadbcfa8e1877a56
 def format(template: str, **kwargs: str) -> str:
     """Format a template string with kwargs."""
     keys = [k[1] for k in string.Formatter().parse(template) if k[1]]
@@ -206,8 +210,13 @@ for prompt_name, subject in unlabeled_target_sets:
     )
     evals += [f"mg-{prompt_name}-{subject}: {file_name}"]
 
+<<<<<<< HEAD
 # Write the YAML file
 yaml_file = os.path.join(REGISTRY_PATH, "evals/test-modelgraded-generated.yaml")
+=======
+
+yaml_file = f"{REGISTRY_PATH}/evals/test-modelgraded-generated.yaml"
+>>>>>>> 2059e06b56e500fcd5cef460cadbcfa8e1877a56
 with open(yaml_file, "w") as yf:
     yf.write(yaml_str)
 print(f"wrote {yaml_file}")

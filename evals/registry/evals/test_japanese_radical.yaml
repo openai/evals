@@ -1,0 +1,8 @@
+test_japanese_radical:
+  id: test_japanese_radical.dev.v0
+  description: In Japan, the radical changes depending on the type of kanji. Test your reading of various radicals.
+  metrics: [accuracy]
+test_japanese_radical.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: test_japanese_radical/samples.jsonl

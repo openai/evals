@@ -1,0 +1,9 @@
+korean-consonant-vowel-combination:
+  id: korean-consonant-vowel-combination.dev.v0
+  description: Evaluating the model's ability to accurately combine Korean consonants and vowels to form Hangul character.
+  metrics: [accuracy]
+
+korean-consonant-vowel-combination.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: korean-consonant-vowel-combination/samples.jsonl

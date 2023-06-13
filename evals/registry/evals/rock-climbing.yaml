@@ -1,0 +1,7 @@
+rock-climbing:
+  id: rock-climbing.dev.v0
+  metrics: [accuracy]
+rock-climbing.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: rock-climbing/samples.jsonl

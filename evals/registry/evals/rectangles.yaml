@@ -1,0 +1,8 @@
+rectangles:
+  id: rectangles.dev.v0
+  metrics: [accuracy]
+
+rectangles.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: rectangles/samples.jsonl

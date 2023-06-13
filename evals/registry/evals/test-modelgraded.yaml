@@ -83,7 +83,7 @@ diversity.dev.v0:
       temperature: 0.4
 
 # a simple modelgraded eval checking which of N completions to the sample prompt is the best response
-# command: `oaleval gpt-3.5-turbo,gpt-4,gpt-3.5-turbo best`
+# command: `oaieval gpt-3.5-turbo,gpt-4,gpt-3.5-turbo best`
 best:
   id: best.dev.v0
   metrics: [accuracy]

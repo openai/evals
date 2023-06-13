@@ -9,7 +9,10 @@ import json
 import random
 from typing import Literal
 
+<<<<<<< HEAD
 # Ensure consistent results across runs
+=======
+>>>>>>> 2059e06b56e500fcd5cef460cadbcfa8e1877a56
 random.seed(42)
 
 SYMBOLS = list("abcdefghijklmnopqrstuvwxyz")
@@ -19,7 +22,11 @@ INSTRUCTION = (
 )
 TASK_NAME = "pattern_identification"
 
+<<<<<<< HEAD
 # This function generates an example symbol set and its corresponding label
+=======
+
+>>>>>>> 2059e06b56e500fcd5cef460cadbcfa8e1877a56
 def generate_example() -> tuple[str, list[str], Literal["foo", "bar"]]:
     num_symbols = int(len(SYMBOLS) / 2)
     target_symbol = random.choice(SYMBOLS)
@@ -27,7 +34,11 @@ def generate_example() -> tuple[str, list[str], Literal["foo", "bar"]]:
     target: Literal["foo", "bar"] = "foo" if target_symbol in symbol_list else "bar"
     return (target_symbol, symbol_list, target)
 
+<<<<<<< HEAD
 # This function generates a string of multiple examples, used to give a user multiple attempts to identify the pattern
+=======
+
+>>>>>>> 2059e06b56e500fcd5cef460cadbcfa8e1877a56
 def generate_exemplars_str(num_exemplars: int = 8) -> str:
     exemplars = [generate_example() for _ in range(num_exemplars)]
     exemplars_str = [
@@ -36,7 +47,11 @@ def generate_exemplars_str(num_exemplars: int = 8) -> str:
     ]
     return "\n".join([INSTRUCTION] + exemplars_str)
 
+<<<<<<< HEAD
 # This function generates a set of evaluation examples and their corresponding labels
+=======
+
+>>>>>>> 2059e06b56e500fcd5cef460cadbcfa8e1877a56
 def generate_eval_examples(
     num_eval_examples: int = 250,
 ) -> tuple[list[str], list[Literal["foo", "bar"]]]:

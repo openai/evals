@@ -1,0 +1,10 @@
+event-categories:
+  id: event-categories.dev.v0
+  description: Categorize Windows Event Logs as Information, Warning, or Error
+  metrics: [accuracy]
+event-categories.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: event_categories/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
