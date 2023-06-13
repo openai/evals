@@ -1,5 +1,6 @@
 utah_real_estateh:
   id: utah_real_estate.dev.v0
+  description: tests the model's ability to read and understand Utah's real estate law. 
   metrics: [accuracy]
 
 utah_real_estate.dev.v0:
