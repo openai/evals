@@ -328,7 +328,7 @@ Your Solution:
         "input": [
             {"role": "user", "content": task_description},
         ],
-        "ideal": (f"[{moves[0]}]" if first_move_only else f'{", ".join(moves)}')
+        "ideal": (f"[{moves[0]}]" if first_move_only else f'{moves}')
         if moves
         else "No valid path",
     }
