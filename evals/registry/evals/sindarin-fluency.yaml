@@ -1,0 +1,8 @@
+sindarin-fluency:
+  id: sindarin-fluency.dev.v0
+  description: Tests the model's ability to accurately translate Sindarin to English.
+  metrics: [accuracy]
+sindarin-fluency.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: sindarin_fluency/sindarin_nouns.jsonl
