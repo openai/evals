@@ -1,0 +1,7 @@
+maciavalism:
+  id: macia.dev.v0
+  metrics: [accuracy]
+macia.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: macia/macia.jsonl

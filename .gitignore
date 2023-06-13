@@ -1,6 +1,8 @@
 __pycache__/
 evals.egg-info/
+output/
+.idea/
 
 # MacOS folder metadata
 .DS_Store
-.vscode/
+.vscode/w
