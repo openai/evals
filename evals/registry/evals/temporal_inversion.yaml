@@ -1,0 +1,10 @@
+elasticsearch_version_history:
+  id: temporal_inversion.dev.v0
+  description: The Temporal Inversion Eval shows that chronological reasoning failures go far beyond just retrieving the right numbers from a table. It would, for example, give a date from 2 days ago and say that the next future version was released 2 days before today or give a date 6 days in the future and say it will be 8 days ago, which makes no sense.
+  metrics: [accuracy]
+
+temporal_inversion.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+      samples_jsonl: temporal_inversion/samples.jsonl
+
