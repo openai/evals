@@ -72,7 +72,7 @@ Generally, most `run` methods will follow the same pattern shown here: loading t
         This method does the following:
         1. Generate a prompt that contains the task statement, a few examples, and the test question.
         2. Generate a completion from the model.
-        2. Check if the generated answer is correct.
+        3. Check if the generated answer is correct.
         """
         stuffing = rng.sample(self.train_samples, self.train_samples_per_prompt)
 
