@@ -1,0 +1,9 @@
+missing-operators:
+  id: missing-operators.s1.simple-v0
+  description: Example eval that checks sampled text matches the expected output.
+  disclaimer: This is an example disclaimer.
+  metrics: [accuracy]
+missing-operators.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: missing_operators/samples.jsonl

@@ -1,0 +1,9 @@
+loss-logic-fact:
+  id: loss-logic-fact.dev.v0
+  metrics: [accuracy]
+loss-logic-fact.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: loss_logic/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact

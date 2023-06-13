@@ -1,0 +1,10 @@
+security_guide:
+  id: security_guide.dev.v0
+  description: Providing good cybersecurity guidance for common attacks
+  metrics: [accuracy]
+security_guide.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: security_guide/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact

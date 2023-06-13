@@ -1,0 +1,9 @@
+turkish_characters:
+  id: turkish_characters.dev.v0
+  description: Eval that checks ability to identify non-english characters in a Turkish text.
+  metrics: [accuracy]
+
+turkish_characters.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: turkish_characters/samples.jsonl

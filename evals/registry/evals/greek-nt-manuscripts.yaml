@@ -1,0 +1,8 @@
+greek-nt-manuscripts:
+  id: greek-nt-manuscripts.v0
+  description: Test model's capability of providing Gregory-Aland coding, symbolic sigla, and common designated century for the most important Greek Uncial manuscripts of the New Testament
+  metrics: [accuracy]
+greek-nt-manuscripts.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: greek_nt_manuscripts/codes-sigla-centuries.jsonl
