@@ -44,6 +44,12 @@ def get_confusion_matrix(
         result[i, j] += 1
     return result
 
+def get_weighted_mean(values: Sequence[float], weights: Sequence[float]) -> float:
+    assert len(values) == len(weights)
+    assert all(w >= 0 for w in weights)
+    assert sum(weights) > 0
+
+    return sum(v * w for v, w in zip(values, weights)) / sum(weights)
 
 def compute_matthew_corr(confusion_matrix):
     assert confusion_matrix.shape == (2, 3), f"Got shape: {confusion_matrix.shape}"

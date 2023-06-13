@@ -14,3 +14,11 @@ lambada.oaitest.v1:
   class: evals.elsuite.lambada:Lambada
   args:
     subset: en
+
+mmlu:
+  id: mmlu.val.ab-v1
+  metrics: [accuracy]
+mmlu.val.ab-v1:
+  class: evals.elsuite.mmlu:MMLU
+  args:
+    split: validation
