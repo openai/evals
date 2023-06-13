@@ -1,0 +1,20 @@
+abstract-causal-reasoning-text:
+  id: abstract-causal-reasoning-text.dev.v0
+  description: Evaluate the abstract causal reasoning abilities of the model on a text version of the ACRE (Abstract Causal REasoning beyond covariation) dataset.
+  metrics: [accuracy]
+
+abstract-causal-reasoning-text.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: abstract-causal-reasoning/text_samples.jsonl
+
+  
+abstract-causal-reasoning-symbolic:
+  id: abstract-causal-reasoning-symbolic.dev.v0
+  description: Evaluate the abstract causal reasoning abilities of the model on a symbolic version of the ACRE (Abstract Causal REasoning beyond covariation) dataset.
+  metrics: [accuracy]
+
+abstract-causal-reasoning-symbolic.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: abstract-causal-reasoning/symbolic_samples.jsonl

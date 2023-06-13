@@ -1,0 +1,9 @@
+rare-and-loanwords-dutch-lexicon:
+  id: rare-and-loanwords-dutch-lexicon.dev.v0
+  description: Test the model's ability to distinguish between existing Dutch words, including rare words and loanwords.
+  metrics: [accuracy]
+
+rare-and-loanwords-dutch-lexicon.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: rare-and-loanwords-dutch-lexicon/samples.jsonl

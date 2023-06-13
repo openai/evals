@@ -1,0 +1,9 @@
+historical-kana-orthography-reading:
+  id: historical-kana-orthography-reading.dev.v0
+  description: Test the model's ability to reading historical kana orthography.
+  metrics: [accuracy]
+
+historical-kana-orthography-reading.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: historical-kana-orthography-reading/samples.jsonl

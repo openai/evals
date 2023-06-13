@@ -3,6 +3,9 @@ evals.egg-info/
 output/
 .idea/
 
+.venv/
+venv/
+
 # MacOS folder metadata
 .DS_Store
 .vscode/w
