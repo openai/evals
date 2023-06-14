@@ -1,0 +1,9 @@
+chinese_idioms:
+  id: chinese_idioms.dev.v0
+  description: Check the model's ability to recognize Chinese idioms, which are words have different meanings with its original meaning.
+  metrics: [accuracy]
+
+chinese_idioms.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_idioms/samples.jsonl
