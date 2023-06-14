@@ -4,6 +4,6 @@ math-derivatives:
   metrics: [accuracy]
 
 math-derivatives.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: math-derivatives/questions.jsonl
