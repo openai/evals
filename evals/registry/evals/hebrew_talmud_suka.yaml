@@ -1,0 +1,8 @@
+hebrew_talmud_suka:
+  id: hebrew_talmud_suka.dev.v0
+  description: Simple questions on the "suka" part of the jewish "talmud babli", similar simple tests in jewish schools at 5 grade.
+  metrics: [accuracy]
+hebrew_talmud_suka.dev.v0:
+  args:
+    samples_jsonl: hebrew_talmud_suka/samples.jsonl
+  class: evals.elsuite.basic.includes:Includes
