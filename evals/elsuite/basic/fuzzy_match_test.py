@@ -1,12 +1,27 @@
+from typing import Any, Type
 from mock import patch
+from pytest import mark, raises
 from evals.api import DummyCompletionFn
 from evals.elsuite.basic.fuzzy_match import FuzzyMatch
 from evals.record import DummyRecorder
+from evals.utils.test import TestCompletionFn
 
 
-def test_eval_sample_str():
+@mark.parametrize(
+    "completion, ideal, expected_metrics",
+    [
+        ("world", "world", dict(accuracy=1.0, f1_score=1.0)),
+        ("world", "foo", dict(accuracy=0, f1_score=0)),
+        ("world", ["some foo world", "dummy"], dict(accuracy=1.0, f1_score=0.5)),
+    ],
+)
+def test_eval_sample(
+    completion: str,
+    ideal: list[str],
+    expected_metrics: dict[str, float],
+):
     eval = FuzzyMatch(
-        completion_fns=[DummyCompletionFn()],
+        completion_fns=[TestCompletionFn(completion)],
         samples_jsonl="",
     )
 
@@ -14,19 +29,24 @@ def test_eval_sample_str():
     with recorder.as_default_recorder("x"), patch.object(
         recorder, "record_metrics", wraps=recorder.record_metrics
     ) as record_metrics:
-        eval.eval_sample(dict(input="Hello", ideal="world"), None)
-        record_metrics.assert_called_once_with(accuracy=0.0, f1_score=0.0)
+        eval.eval_sample(dict(input="Hello", ideal=ideal), None)
+        record_metrics.assert_called_once_with(**expected_metrics)
 
 
-def test_eval_sample_list():
+@mark.parametrize(
+    "sample, expected_error",
+    [
+        (None, AssertionError),
+        ("", AssertionError),
+        (dict(ideal="world"), AssertionError),
+        (dict(input="world"), AssertionError),
+    ],
+)
+def test_eval_sample_raises(sample: Any, expected_error: Type):
     eval = FuzzyMatch(
         completion_fns=[DummyCompletionFn()],
         samples_jsonl="",
     )
 
-    recorder = DummyRecorder(None)
-    with recorder.as_default_recorder("x"), patch.object(
-        recorder, "record_metrics", wraps=recorder.record_metrics
-    ) as record_metrics:
-        eval.eval_sample(dict(input="Hello", ideal=["world", "dummy"]), None)
-        record_metrics.assert_called_once_with(accuracy=1.0, f1_score=0.4)
+    with raises(expected_error):
+        eval.eval_sample(sample, None)

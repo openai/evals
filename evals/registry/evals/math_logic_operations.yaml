@@ -1,0 +1,9 @@
+math_logic_operations:
+  id: math_logic_operations.dev.v0-1
+  description: Evaluates the model's ability to perform mathematical operations given a redefinition of standard operation rules.
+  metrics: [accuracy]
+
+math_logic_operations.dev.v0-1:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: math_logic_operations/samples.jsonl

@@ -21,6 +21,10 @@ class Includes(evals.Eval):
         self.ignore_case = ignore_case
 
     def eval_sample(self, sample: Any, *_):
+        assert isinstance(sample, dict), "sample must be a dict"
+        assert "input" in sample, "sample must have an 'input' key"
+        assert "ideal" in sample, "sample must have an 'ideal' key"
+
         prompt = sample["input"]
         result = self.completion_fn(
             prompt=prompt,
@@ -36,10 +40,7 @@ class Includes(evals.Eval):
         ), "ideal must be a list of strings"
 
         includes_answer = any(
-            [
-                utils.get_answer(sampled, ref, self.ignore_case) is not None
-                for ref in ideal
-            ]
+            [utils.get_answer(sampled, ref, self.ignore_case) is not None for ref in ideal]
         )
         evals.record.record_match(
             includes_answer, expected=sample["ideal"], picked=sampled, sampled=sampled
@@ -52,4 +53,5 @@ class Includes(evals.Eval):
         events = recorder.get_events("match")
         return {
             "accuracy": evals.metrics.get_accuracy(events),
+            "boostrap_std": evals.metrics.get_bootstrap_accuracy_std(events),
         }
