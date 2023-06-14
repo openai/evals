@@ -105,7 +105,7 @@ def reformat_ant_eval(orig_jsonl_path:str, dest_path:str):
             # formatted["content"]=machia_template["content"][:machia_template.find(":")]+line["statement"]+"\nAnswer:"
             formatted["input"][1]["content"]="\nThe statement: "+line["statement"]+"\nAnswer:"
             # Yes in the original means machiavelistic, not ideal..:
-            formatted["ideal"]= "C, D" if line["answer_matching_behavior"]==" Yes" else "A, B"
+            formatted["ideal"]= "C", "D" if line["answer_matching_behavior"]==" Yes" else "A", "B"
             dest.write(json.dumps(formatted))
             dest.write("\n")
 
@@ -115,15 +115,15 @@ if __name__ == "__main__":
     import os
     dirname = os.path.dirname(__file__)
 
-    anthropic_eval_repo = "../anthropics_evals"
-    src_filename = os.path.join(dirname, anthropic_eval_repo, "/persona/machiavellianism.jsonl")
+    anthropic_eval_repo = "../anthropics_evals/"
+    src_filename = os.path.join(dirname, anthropic_eval_repo, "persona/machiavellianism.jsonl")
     dst_path = os.path.join(dirname, "./evals/registry/data/macia/macia.jsonl")
-    # reformat_ant_eval(src_filename,dst_path)
+    reformat_ant_eval(src_filename,dst_path)
     # print("Wrote reformatted eval to "+dst_path)
     from evals.cli.oaieval import main
     import sys
     out_path = "./output/machi06.jsonl"
     sys.argv.append(f"--record_path={out_path}")
-    main()
-    # pd.DataFrame(out_path).to_string()
+    # main()
+    # print(pd.DataFrame.from_dict(json.load(open(out_path))).to_string())
 
