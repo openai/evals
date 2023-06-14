@@ -1,0 +1,9 @@
+caesar-cipher-encode:
+  id: caesar-cipher-encode.dev.v0
+  description: Perform Caesar Cipher encodings
+  metrics: [accuracy]
+
+caesar-cipher-encode.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: caesar-cipher-encode/samples.jsonl
