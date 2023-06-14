@@ -1,5 +1,27 @@
 zapier_nla:
   id: zapier_nla.dev.v0
+  description: | # TODO: add stop words: "Observation:"
+    Test the mode's ability to predict the proper Zapier Action for a given user request, thoughts, actions and observations. 
+    The test cases are made based on the LangChain ZapierToolKit prompts.
+    Example input (system): 
+      Answer the following questions as best you can. You have access to the following tools: 
+      Gmail: Find Email: {Zapier NLA Description...} This tool is specifically used for: Gmail: Find Email, and has params: ['Search_String'] 
+      Use the following format:
+      Question: the input question you must answer
+      Thought: you should always think about what to do
+      Action: the action to take, should be one of [Gmail: Find Email, ]
+      Action Input: the input to the action
+      Observation: the result of the action... 
+      (this Thought/Action/Action Input/Observation can repeat N times)
+      Thought: I now know the final answer
+      Final Answer: the final answer to the original input question
+      Begin!
+    
+      Question: read the most recent important email
+      Thought:
+    Expected answer (ideal):
+      Action: Gmail: Find Email
+
   metrics: [accuracy]
 
 zapier_nla.dev.v0:
