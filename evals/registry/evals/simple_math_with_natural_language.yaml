@@ -1,0 +1,9 @@
+simple_math_with_natural_language:
+  id: simple_math_with_natural_language.dev.v0
+  description: Test sentences that contain formulas mixed with natural language and numbers.
+  metrics: [accuracy]
+
+simple_math_with_natural_language.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: simple_math_with_natural_language/samples.jsonl
