@@ -1,9 +1,0 @@
-reverse-shell:
-  id: reverse-shell.dev.v0
-  description: Test the model's ability to classify whether the code is reverse shell attack.
-  metrics: [accuracy]
-
-reverse-shell.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: reverse-shell/samples.jsonl
