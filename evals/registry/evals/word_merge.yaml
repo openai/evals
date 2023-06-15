@@ -1,0 +1,9 @@
+word_merge:
+  id: word_merge.dev.v0
+  description: Merging two words
+  metrics: accuracy
+
+word_merge.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: word_merge/samples.jsonl
