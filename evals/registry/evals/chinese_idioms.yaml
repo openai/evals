@@ -4,6 +4,8 @@ chinese_idioms:
   metrics: [accuracy]
 
 chinese_idioms.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: chinese_idioms/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
