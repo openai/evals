@@ -6,7 +6,7 @@ backgammon-can-hit:
 backgammon-can-hit.dev.v0:
   args:
     samples_jsonl: backgammon/backgammon-can-hit.jsonl
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
 
 backgammon-illegal-move:
   id: backgammon-illegal-move.dev.v0
@@ -16,4 +16,4 @@ backgammon-illegal-move:
 backgammon-illegal-move.dev.v0:
   args:
     samples_jsonl: backgammon/backgammon-illegal-move.jsonl
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
