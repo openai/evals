@@ -68,6 +68,7 @@ class Eval(abc.ABC):
         self.registry = registry or Registry()
         self.samples_jsonl = samples_jsonl
 
+    @abc.abstractmethod
     def eval_sample(self, sample: Any, rng: random.Random):
         raise NotImplementedError()
 

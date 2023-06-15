@@ -1,0 +1,8 @@
+japanese-decimal-units:
+  id: japanese-decimal-units.dev.v0
+  description: Japan has its own decimal unit. Test it.
+  metrics: [accuracy]
+japanese-decimal-units.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: japanese-decimal-units/samples.jsonl
