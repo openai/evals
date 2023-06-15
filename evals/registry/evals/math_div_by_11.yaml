@@ -1,0 +1,9 @@
+math_div_by_11:
+  id: math_div_by_11.dev.v0
+  description: Evaluates the model's ability to perform mathematical operations related to the number 11.
+  metrics: [accuracy]
+
+math_div_by_11.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: math_div_by_11/samples.jsonl
