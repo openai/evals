@@ -1,0 +1,27 @@
+anthro-match:
+  id: anthro-match.dev.v0
+  metrics: [accuracy]
+anthro-match.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: anthro/match.jsonl
+
+anthro-fact:
+  id: anthro-fact.dev.v0
+  metrics: [accuracy]
+anthro-fact.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: anthro/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
+
+anthro-fact-expl:
+  id: anthro-fact-expl.dev.v0
+  metrics: [accuracy]
+anthro-fact-expl.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: anthro/samples.jsonl
+    eval_type: classify_cot
+    modelgraded_spec: fact
