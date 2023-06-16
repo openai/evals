@@ -1,0 +1,9 @@
+convert_chinese_upper_case_num_to_num:
+  id: convert_chinese_upper_case_num_to_num.dev.v0
+  description: Check the model's ability to convert Chinese upper case number to numeric number.
+  metrics: [accuracy]
+
+convert_chinese_upper_case_num_to_num.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: convert-bwt-num-and-chinese-num/c_upper_to_n_samples_few_shot.jsonl
