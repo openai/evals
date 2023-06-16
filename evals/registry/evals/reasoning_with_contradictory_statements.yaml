@@ -1,0 +1,8 @@
+reasoning_with_contradictory_statements:
+  id: reasoning_with_contradictory_statements.dev.v0
+  metrics: [accuracy]
+
+reasoning_with_contradictory_statements.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: reasoning_with_contradictory_statements/samples.jsonl
