@@ -29,14 +29,14 @@ DEFAULT_PATHS = [Path(__file__).parents[0].resolve() / "registry", Path.home() /
 
 
 def n_ctx_from_model_name(model_name: str) -> Optional[int]:
-    """Returns n_ctx for a given API model name. Model list last updated 2023-03-14."""
+    """Returns n_ctx for a given API model name. Model list last updated 2023-06-16."""
     # note that for most models, the max tokens is n_ctx + 1
-    DICT_OF_N_CTX_BY_MODEL_NAME_PREFIX: dict[str, int] = {
-        "gpt-3.5-turbo-": 4096,
-        "gpt-4-": 8192,
-        "gpt-4-32k-": 32768,
-    }
-    DICT_OF_N_CTX_BY_MODEL_NAME: dict[str, int] = {
+    PREFIX_AND_N_CTX: list[tuple[str, int]] = [
+        ("gpt-3.5-turbo-", 4096),
+        ("gpt-4-32k-", 32768),
+        ("gpt-4-", 8192),
+    ]
+    MODEL_NAME_TO_N_CTX: dict[str, int] = {
         "ada": 2048,
         "text-ada-001": 2048,
         "babbage": 2048,
@@ -49,28 +49,32 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
         "text-davinci-002": 4096,
         "text-davinci-003": 4096,
         "gpt-3.5-turbo": 4096,
-        "gpt-3.5-turbo-0301": 4096,
         "gpt-4": 8192,
-        "gpt-4-0314": 8192,
         "gpt-4-32k": 32768,
-        "gpt-4-32k-0314": 32768,
     }
-    # first, look for a prefix match
-    for model_prefix, n_ctx in DICT_OF_N_CTX_BY_MODEL_NAME_PREFIX.items():
+
+    # first, look for an exact match
+    if model_name in MODEL_NAME_TO_N_CTX:
+        return MODEL_NAME_TO_N_CTX[model_name]
+
+    # otherwise, look for a prefix match
+    for model_prefix, n_ctx in PREFIX_AND_N_CTX:
         if model_name.startswith(model_prefix):
             return n_ctx
-    # otherwise, look for an exact match and return None if not found
-    return DICT_OF_N_CTX_BY_MODEL_NAME.get(model_name, None)
+
+    # not found
+    return None
 
 
-CHAT_MODELS = {
-    "gpt-3.5-turbo",
-    "gpt-3.5-turbo-0301",
-    "gpt-4",
-    "gpt-4-0314",
-    "gpt-4-32k",
-    "gpt-4-32k-0314",
-}
+def is_chat_model(model_name: str) -> bool:
+    CHAT_MODEL_NAMES = {"gpt-3.5-turbo", "gpt-4", "gpt-4-32k"}
+    if model_name in CHAT_MODEL_NAMES:
+        return True
+
+    for model_prefix in {"gpt-3.5-turbo-", "gpt-4-", "gpt-4-32k-"}:
+        if model_name.startswith(model_prefix):
+            return True
+    return False
 
 
 T = TypeVar("T")
@@ -106,7 +110,7 @@ class Registry:
 
         n_ctx = n_ctx_from_model_name(name)
 
-        if name in CHAT_MODELS:
+        if is_chat_model(name):
             return OpenAIChatCompletionFn(model=name, n_ctx=n_ctx)
         elif name in self.api_model_ids:
             return OpenAICompletionFn(model=name, n_ctx=n_ctx)
