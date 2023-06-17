@@ -1,0 +1,11 @@
+ivnews_story_recomm:
+  id: ivnews_story_recomm.dev.v0
+  description: Extract individual news stories from a news transcript using the model's capabilities.
+  metrics: [accuracy]
+
+ivnews_story_recomm.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: ivnews_story_recomm/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
