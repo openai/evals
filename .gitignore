@@ -7,3 +7,5 @@ venv/
 # MacOS folder metadata
 .DS_Store
 .vscode/
+
+.env.local
