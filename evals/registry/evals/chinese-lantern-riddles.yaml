@@ -4,6 +4,6 @@ chinese-lantern-riddles:
   metrics: [accuracy]
 
 chinese-lantern-riddles.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
   args:
     samples_jsonl: chinese-lantern-riddles/samples.jsonl
