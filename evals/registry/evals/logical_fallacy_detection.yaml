@@ -1,0 +1,64 @@
+# A group of evals that test GPT models on logical fallacy detection task. 
+# Data taken from here: https://github.com/causalNLP/logical-fallacy/tree/main/data 
+# (edu_test mainly, only examples for few-shot prompting from edu_train). 
+# Fallacies names and definitions taken also from: https://arxiv.org/abs/2301.09992
+
+logical_fallacy_detection_definitions_0_shot:
+  id: logical_fallacy_detection_definitions_0_shot.test.v1
+  metrics: [accuracy]
+logical_fallacy_detection_definitions_0_shot.test.v1:
+  class: evals.elsuite.basic.includes:Includes
+  description: Logical fallacy detection task evaluation with the definitions of fallacies
+  in the prompt and no examples provided (zero-shot prompting).
+  args:
+      samples_jsonl: logical_fallacy_detection/definitions_0_shot.jsonl
+
+logical_fallacy_detection_definitions_1_shot:
+  id: logical_fallacy_detection_definitions_1_shot.test.v1
+  metrics: [accuracy]
+logical_fallacy_detection_definitions_1_shot.test.v1:
+  class: evals.elsuite.basic.includes:Includes
+  description: Logical fallacy detection task evaluation with the definitions of fallacies
+  in the prompt and one example provided (one-shot prompting).
+  args:
+    samples_jsonl: logical_fallacy_detection/definitions_1_shot.jsonl
+
+logical_fallacy_detection_definitions_3_shot:
+  id: logical_fallacy_detection_definitions_3_shot.test.v1
+  metrics: [accuracy]
+logical_fallacy_detection_definitions_3_shot.test.v1:
+  class: evals.elsuite.basic.includes:Includes
+  description: Logical fallacy detection task evaluation with the definitions of fallacies
+  in the prompt and three examples provided (three-shot prompting).
+  args:
+    samples_jsonl: logical_fallacy_detection/definitions_3_shot.jsonl
+
+logical_fallacy_detection_list_0_shot:
+  id: logical_fallacy_detection_list_0_shot.test.v1
+  metrics: [accuracy]
+logical_fallacy_detection_list_0_shot.test.v1:
+  class: evals.elsuite.basic.includes:Includes
+  description: Logical fallacy detection task evaluation with the list of fallacies
+  in the prompt and no examples provided (zero-shot prompting).
+  args:
+    samples_jsonl: logical_fallacy_detection/list_0_shot.jsonl
+
+logical_fallacy_detection_list_1_shot:
+  id: logical_fallacy_detection_list_1_shot.test.v1
+  metrics: [accuracy]
+logical_fallacy_detection_list_1_shot.test.v1:
+  class: evals.elsuite.basic.includes:Includes
+  description: Logical fallacy detection task evaluation with the list of fallacies
+  in the prompt and one example provided (one-shot prompting).
+  args:
+    samples_jsonl: logical_fallacy_detection/list_1_shot.jsonl
+
+logical_fallacy_detection_list_3_shot:
+  id: logical_fallacy_detection_list_3_shot.test.v1
+  metrics: [accuracy]
+logical_fallacy_detection_list_3_shot.test.v1:
+  class: evals.elsuite.basic.includes:Includes
+  description: Logical fallacy detection task evaluation with the list of fallacies
+  in the prompt and three examples provided (three-shot prompting).
+  args:
+    samples_jsonl: logical_fallacy_detection/list_3_shot.jsonl
