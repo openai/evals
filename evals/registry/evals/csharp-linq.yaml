@@ -1,0 +1,8 @@
+csharp-linq:
+  id: csharp-linq.s1.simple-v0
+  description: Evaluate models knowledge of LINQ operators and deferred execution in C#
+  metrics: [accuracy]
+csharp-linq.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: csharp-linq/questions.jsonl
