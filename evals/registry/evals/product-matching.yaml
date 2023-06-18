@@ -1,0 +1,46 @@
+match_product-matching_fewshot:
+  description: Evaluate LLM performance on the task of Product Matching (pair-wise
+    binary classification). Examples are a subsample of the WDC Products 80cc20rnd000un
+    validation set. This is the few-shot version with 10 negative and 10 positive
+    demonstrations from the paper 'Using ChatGPT for Entity Matching' by Ralph Peeters
+    and Christian Bizer.
+  id: match_product-matching_fewshot.dev.v1
+  metrics:
+  - f_score
+  - precision
+  - recall
+  - accuracy
+match_product-matching_fewshot.dev.v1:
+  args:
+    samples_jsonl: product-matching/fewshot/samples.jsonl
+  class: evals.elsuite.basic.match:Match
+match_product-matching_rules:
+  description: Evaluate LLM performance on the task of Product Matching (pair-wise
+    binary classification). Examples are a subsample of the WDC Products 80cc20rnd000un
+    validation set. This is the zeroshot with rules version from the paper 'Using
+    ChatGPT for Entity Matching' by Ralph Peeters and Christian Bizer.
+  id: match_product-matching_rules.dev.v1
+  metrics:
+  - f_score
+  - precision
+  - recall
+  - accuracy
+match_product-matching_rules.dev.v1:
+  args:
+    samples_jsonl: product-matching/rules/samples.jsonl
+  class: evals.elsuite.basic.match:Match
+match_product-matching_zeroshot:
+  description: Evaluate LLM performance on the task of Product Matching (pair-wise
+    binary classification). Examples are a subsample of the WDC Products 80cc20rnd000un
+    validation set. This is the zeroshot version from the paper 'Using ChatGPT for
+    Entity Matching' by Ralph Peeters and Christian Bizer.
+  id: match_product-matching_zeroshot.dev.v1
+  metrics:
+  - f_score
+  - precision
+  - recall
+  - accuracy
+match_product-matching_zeroshot.dev.v1:
+  args:
+    samples_jsonl: product-matching/zeroshot/samples.jsonl
+  class: evals.elsuite.basic.match:Match

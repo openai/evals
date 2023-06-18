@@ -1,0 +1,9 @@
+2d_movement:
+  id: 2d_movement.dev.v0
+  description: Test the model's ability to keep track of position and orientation in a 2D environment.
+  metrics: [accuracy]
+
+2d_movement.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: 2d_movement/samples.jsonl

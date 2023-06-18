@@ -1,0 +1,8 @@
+formal-grammar-to-regex:
+  id: formal-grammar-to-regex.dev.v0
+  metrics: [accuracy]
+
+formal-grammar-to-regex.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: formal-grammar-to-regex/formal-grammar-to-regex.jsonl

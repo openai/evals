@@ -1,0 +1,9 @@
+shopping_discount_comparison:
+  id: shopping_discount_comparison.dev.v0
+  description: Test the model's ability to compare discounts and select the best one
+  metrics: [accuracy]
+
+shopping_discount_comparison.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: shopping_discount_comparison/samples.jsonl

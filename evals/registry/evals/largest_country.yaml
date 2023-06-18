@@ -1,0 +1,9 @@
+largest_country:
+  id: largest_country.dev.v0
+  description: Determining the largest country by the area from the list
+  metrics: [accuracy]
+
+largest_country.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: largest_country/samples.jsonl
