@@ -1,7 +1,20 @@
 # A group of evals that test GPT models on logical fallacy detection task. 
-# Data taken from here: https://github.com/causalNLP/logical-fallacy/tree/main/data 
-# (edu_test mainly, only examples for few-shot prompting from edu_train). 
-# Fallacies names and definitions taken also from: https://arxiv.org/abs/2301.09992
+# Each eval uses one of six different prompts divided into two primary types: 
+# one with a list of names of fallacies, and the other with the definitions of these fallacies. 
+# Each type is further divided into 3 subtypes based on the number of examples (shots) provided:
+# 0-shot (no examples), 1-shot (one example), and 3-shot (three examples).
+
+# The underlying dataset for this task comes from the paper:
+# "Logical Fallacy Detection" (2022) by Zhijing Jin et al.
+# (https://arxiv.org/abs/2202.13758)
+# and can be found here: https://github.com/causalNLP/logical-fallacy/tree/main/data
+# I've used edu_test for the task evaluation.
+# Only examples used for few-shot prompting were taken from edu_train.
+
+# The definitions and some of the names of fallacies are sourced from the paper:
+# "Multitask Instruction-based Prompting for Fallacy Recognition" by Tariq Alhindi et al.
+# (https://arxiv.org/abs/2301.09992)
+
 
 logical_fallacy_detection_definitions_0_shot:
   id: logical_fallacy_detection_definitions_0_shot.test.v1
