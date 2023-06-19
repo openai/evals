@@ -1,0 +1,7 @@
+quality:
+  id: quality.test.v1
+  metrics: [accuracy]
+quality.test.v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    samples_jsonl: quality/samples.jsonl

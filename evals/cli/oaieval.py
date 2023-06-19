@@ -165,6 +165,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         completion_fns=completion_fn_instances,
         seed=args.seed,
         name=eval_name,
+        dataset = "evals/registry/data/quality/samples.jsonl",
         registry=registry,
         **extra_eval_params,
     )
