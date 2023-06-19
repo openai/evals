@@ -1,9 +1,0 @@
-korean-abbreviated-slang:
-  id: korean-abbreviated-slang.dev.v0
-  description: Evaluates GPT can identify common slang Korean words that are abbreviations of phrases.
-  metrics: [accuracy]
-
-korean-abbreviated-slang.dev.v0:
-  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
-  args:
-    samples_jsonl: korean-abbreviated-slang/samples.jsonl
