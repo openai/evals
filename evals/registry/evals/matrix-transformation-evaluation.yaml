@@ -1,0 +1,9 @@
+matrix-transformation-evaluation:
+  id: matrix-transformation-evaluation.dev.v0
+  description: <description>
+  metrics: [accuracy]
+
+matrix-transformation-evaluation.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: matrix_transformation_evaluation/samples.jsonl
