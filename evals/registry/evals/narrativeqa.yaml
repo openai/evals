@@ -1,0 +1,11 @@
+narrativeqa:
+  id: narrativeqa.dev.v0
+  metrics: [accuracy]
+narrativeqa.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: narrativeqa/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: narrativeqa
+    modelgraded_spec_args:
+        criteria: "correctness: Is the answer correct?"
