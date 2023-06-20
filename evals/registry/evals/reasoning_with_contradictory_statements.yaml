@@ -3,6 +3,6 @@ reasoning_with_contradictory_statements:
   metrics: [accuracy]
 
 reasoning_with_contradictory_statements.dev.v0:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: reasoning_with_contradictory_statements/samples.jsonl
