@@ -8,58 +8,7 @@ from typing import Any, Optional, Union
 import evals
 import evals.record
 from evals.elsuite.modelgraded.classify_utils import classify, sample_and_concat_n_completions
-from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt
-
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.docstore.document import Document
-from langchain.vectorstores import FAISS
-
-
-
-def text_to_docs(text):
-    """Converts a string or list of strings to a list of Documents
-    with metadata."""
-    if isinstance(text, str):
-        # Take a single string as one page
-        text = [text]
-    page_docs = [Document(page_content=page) for page in text]
-
-    # Add page numbers as metadata
-    for i, doc in enumerate(page_docs):
-        doc.metadata["page"] = i + 1
-
-    # Split pages into chunks
-    doc_chunks = []
-
-    for doc in page_docs:
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=2000,
-            separators=["\n\n", "\n", ".", "!", "?", ",", " ", ""],
-            chunk_overlap=0,
-        )
-        chunks = text_splitter.split_text(doc.page_content)
-        for i, chunk in enumerate(chunks):
-            doc = Document(
-                page_content=chunk, metadata={"page": doc.metadata["page"], "chunk": i}
-            )
-            # Add sources a metadata
-            doc.metadata["source"] = f"{doc.metadata['page']}-{doc.metadata['chunk']}"
-            doc_chunks.append(doc)
-    print("Length of doc_chunks: ", len(doc_chunks))
-    return doc_chunks
-
-
-def process_text():
-    text = test_sample['context']
-    docs = text_to_docs(text)
-    embeddings = OpenAIEmbeddings()
-    db = FAISS.from_documents(docs, embeddings)
-    return db
-
-def retrieve_context_from_db(query, db, k=3):
-    documents = db.similarity_search(query=test_query, k=3)
-    return ''.join([doc.page_content for doc in documents])
+from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt, text_to_docs, process_text, retrieve_context_from_db
 
 
 class ModelBasedClassify(evals.Eval):
@@ -108,12 +57,19 @@ class ModelBasedClassify(evals.Eval):
         """
         # process test_sample
         
-        db = process_text(test_sample['context'])
+        #this could be improved by a lot
+        try:
+            db = process_text(test_sample['context'])
+            context = retrieve_context_from_db(test_sample["question"], db)
+            prompt = "\nUsing the provided context, Please answer a question at the end.Context:"+ "\n\n" + context + "\n\n"+"The question to answer:" + "\n\n" + test_sample['question'] + "\n" 
+        except Exception as err:
+            print("Issue retrieving context and forming the propmt", err)
 
-        print("THE TEXT LENGTH ------------", len(text))
+
+            
         for k in self.mg.input_outputs:
             test_sample[k] = scrub_formatting_from_prompt(test_sample[k])
-            context = retrieve_context_from_db(test_sample[k], db)
+            
             #print("Test sample ", k, " ", test_sample[k])
         # run policy completions
         completions = {}
@@ -129,7 +85,7 @@ class ModelBasedClassify(evals.Eval):
                     n=self.multicomp_n,
                 )
             else:
-                prompt = "\nUsing the provided context, Please answer a question at the end.Context:"+ "\n\n" + context + "\n\n"+"The question to answer:" + "\n\n" + test_sample[k] + "\n" 
+
                 get_input_completion = PromptFn(
                     prompt, completion_fn=self.completion_fn, **self.sample_kwargs
                 )
