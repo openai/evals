@@ -1,0 +1,13 @@
+abstract2title:
+  id: abstract2title.test.v1
+  metrics: [accuracy]
+
+abstract2title.test.v1:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    few_shot_jsonl: abstract2title/few_shot.jsonl
+    num_few_shot: 1
+    samples_jsonl: abstract2title/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
+  
