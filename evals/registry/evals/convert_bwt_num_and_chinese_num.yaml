@@ -16,7 +16,7 @@ convert_num_to_chinese_lower_case_num:
 convert_num_to_chinese_lower_case_num.dev.v0:
   class: evals.elsuite.basic.includes:Includes
   args:
-    samples_jsonl: convert-bwt-num-and-chinese-num/n_to_c_lower_samples_cot.jsonl
+    samples_jsonl: convert-bwt-num-and-chinese-num/n_to_c_lower_samples_few_shot.jsonl
 
 convert_chinese_upper_case_num_to_num:
   id: convert_chinese_upper_case_num_to_num.dev.v0
