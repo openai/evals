@@ -1,0 +1,9 @@
+korean-phonetics:
+  id: korean-phonetics.dev.v0
+  description: Evaluates GPT can identify Korean words and their phonetic transcriptions.
+  metrics: [accuracy]
+
+korean-phonetics.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: korean-phonetics/samples.jsonl
