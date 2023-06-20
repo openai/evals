@@ -1,0 +1,9 @@
+chinese_hard_translations:
+  id: chinese_hard_translations.dev.v0
+  metrics: [sacrebleu_score]
+  description: Evaluate the model's ability of understanding hard-to-understand Chinese sentences.
+
+chinese_hard_translations.dev.v0:
+  class: evals.elsuite.translate:Translate
+  args:
+    samples_jsonl: chinese_hard_translations/samples.jsonl
