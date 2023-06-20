@@ -4,7 +4,5 @@ recurrence-relation:
   - accuracy
 recurrence-relation.test.v1:
   args:
-    # few_shot_jsonl: recurrence-relation/fewshot.jsonl
-    # num_few_shot: 14
     samples_jsonl: recurrence-relation/samples.jsonl
   class: evals.elsuite.basic.includes:Includes
