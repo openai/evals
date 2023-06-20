@@ -8,7 +8,8 @@ from typing import Any, Optional, Union
 import evals
 import evals.record
 from evals.elsuite.modelgraded.classify_utils import classify, sample_and_concat_n_completions
-from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt, text_to_docs, process_text, retrieve_context_from_db
+from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt
+from evals.utils.embeddings import process_text, retrieve_context_from_db
 
 
 class ModelBasedClassify(evals.Eval):

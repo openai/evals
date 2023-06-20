@@ -8,10 +8,7 @@ from evals.api import CompletionFn
 from evals.formatting import make_abc
 from evals.record import RecorderBase
 from datasets import load_dataset
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.docstore.document import Document
-from langchain.vectorstores import FAISS
+from evals.utils.embeddings import process_text, retrieve_context_from_db
 
 class Sample(BaseModel):
     article: str
@@ -25,37 +22,6 @@ def get_dataset(url: str) -> list[Sample]:
         data = [json.loads(line) for line in f]
     return [Sample(article = d['context'], question=d['question'], answers=d['answers'], label=d['label']) for d in data]
 
-def text_to_docs(text):
-    """Converts a string or list of strings to a list of Documents
-    with metadata."""
-    if isinstance(text, str):
-        # Take a single string as one page
-        text = [text]
-    page_docs = [Document(page_content=page) for page in text]
-
-    # Add page numbers as metadata
-    for i, doc in enumerate(page_docs):
-        doc.metadata["page"] = i + 1
-
-    # Split pages into chunks
-    doc_chunks = []
-
-    for doc in page_docs:
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=2000,
-            separators=["\n\n", "\n", ".", "!", "?", ",", " ", ""],
-            chunk_overlap=0,
-        )
-        chunks = text_splitter.split_text(doc.page_content)
-        for i, chunk in enumerate(chunks):
-            doc = Document(
-                page_content=chunk, metadata={"page": doc.metadata["page"], "chunk": i}
-            )
-            # Add sources a metadata
-            doc.metadata["source"] = f"{doc.metadata['page']}-{doc.metadata['chunk']}"
-            doc_chunks.append(doc)
-    print("Length of doc_chunks: ", len(doc_chunks))
-    return doc_chunks
 
 class MultipleChoice(evals.Eval):
     def __init__(
@@ -80,11 +46,8 @@ class MultipleChoice(evals.Eval):
             rng=rng,
         )
         try:
-            docs = text_to_docs(sample.article)
-            embeddings = OpenAIEmbeddings()
-            db = FAISS.from_documents(docs, embeddings)
-            documents = db.similarity_search(query=sample.question, k=3)
-            context = ''.join([doc.page_content for doc in documents])
+            db = process_text(sample.article)
+            context = retrieve_context_from_db(sample.question, db)
             prompt = self.instructions + "\nUsing the provided context, Please answer with the letter of the correct answer.Context:"+ context + "\n\n"+"The questions" + "\n\n" + sample.question + "\n" + options
             print(prompt)
             result = self.completion_fn(
