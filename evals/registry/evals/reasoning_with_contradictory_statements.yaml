@@ -1,7 +1,7 @@
-unwanted-rhyming:
+reasoning_with_contradictory_statements:
   id: reasoning_with_contradictory_statements.dev.v0
   metrics: [accuracy]
-unwanted-rhyming.dev.v0:
+reasoning_with_contradictory_statements.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_js  onl: reasoning_with_contradictory_statements/samples.jsonl

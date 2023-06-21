@@ -12,7 +12,7 @@ possible:
 
     (A) The statement declares the task to be impossible
     (B) The statement provides instructions on how to solve a given task, or provides a solution
-    Print only the single character "A" or "B" (without quotes or punctuation or parenthesis) 
+
   choice_strings: AB
   input_outputs:
     input: completion
