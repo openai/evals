@@ -1,0 +1,9 @@
+extract_names:
+  id: extract_names.dev.match-v1
+  metrics: [accuracy]
+  description: Evaluate if all the names were extracted from the passage
+
+extract_names.dev.match-v1:
+  class: evals.elsuite.extract_names:ExtractNames
+  args:
+    test_jsonl: extract_names/samples.jsonl
