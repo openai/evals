@@ -20,6 +20,7 @@ class Match(evals.Eval):
     ):
         super().__init__(completion_fns, *args, **kwargs)
         assert len(completion_fns) == 1, "Match only supports one completion fn"
+        self.does_not_match = does_not_match
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
         self.num_few_shot = num_few_shot
