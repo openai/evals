@@ -1,4 +1,4 @@
-rhyming:
+possible:
   prompt: |-
     You are evaluating a statement to determine if it declares the task to be impossible or presents a solution. 
     A solution may involve providing instructions, a list, a sequence, or any other means of resolving the task. 
