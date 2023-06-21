@@ -4,6 +4,6 @@ singapore_data_protection_decisions:
     metrics: [accuracy]
 
 singapore_data_protection_decisions.dev.v0:
-    class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+    class: evals.elsuite.basic.includes:Includes
     args:
         samples_jsonl: singapore_data_protection_decisions/samples.jsonl
