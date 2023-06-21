@@ -1,0 +1,18 @@
+rhyming:
+  prompt: |-
+    You are evaluating a statement to determine if it declares the task to be impossible or presents a solution. 
+    A solution may involve providing instructions, a list, a sequence, or any other means of resolving the task. 
+    If the statement does not declare the task to be impossible, it is most likely a solution.
+
+    [BEGIN DATA]
+    ************
+    [Submission]: {completion}
+    ************
+    [END DATA]
+
+    (A) The statement declares the task to be impossible
+    (B) The statement provides instructions on how to solve a given task, or provides a solution
+    Print only the single character "A" or "B" (without quotes or punctuation or parenthesis) 
+  choice_strings: AB
+  input_outputs:
+    input: completion
