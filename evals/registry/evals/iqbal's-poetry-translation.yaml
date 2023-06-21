@@ -7,7 +7,7 @@ iqbal''s-poetry-translation.dev.v0:
   args:
     samples_jsonl: iqbal''s-poetry-translation/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: translate
+    modelgraded_spec: translation
     modelgraded_spec_args:
       language: "Urdu"
 
@@ -21,7 +21,7 @@ translate-meta.dev.v0:
   args:
     samples_jsonl: iqbal''s-poetry-translation/labeled-samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: trasnlate
+    modelgraded_spec: trasnlation
     metaeval: true
     modelgraded_spec_args:
       language: "Urdu"
