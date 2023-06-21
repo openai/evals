@@ -49,6 +49,13 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument("model", type=str, help="Name of a completion model.")
     parser.add_argument("eval_set", type=str, help="Name of eval set. See registry.")
     parser.add_argument(
+        "--registry_path",
+        type=str,
+        default=None,
+        action="append",
+        help="Path to the registry",
+    )
+    parser.add_argument(
         "--resume",
         action=argparse.BooleanOptionalAction,
         default=True,
@@ -66,6 +73,7 @@ def get_parser() -> argparse.ArgumentParser:
 class OaiEvalSetArguments(argparse.Namespace):
     model: str
     eval_set: str
+    registry_path: Optional[str]
     resume: bool
     exit_on_error: bool
 
@@ -77,6 +85,9 @@ def run(
     run_command: str = "oaieval",
 ) -> None:
     registry = registry or Registry()
+    if args.registry_path:
+        registry.add_registry_paths(args.registry_path)
+
     commands: list[Task] = []
     eval_set = registry.get_eval_set(args.eval_set) if args.eval_set else None
     if eval_set:
@@ -85,6 +96,9 @@ def run(
                 logger.debug("The eval #%d in eval_set is not valid", index)
 
             command = [run_command, args.model, eval.key] + unknown_args
+            if args.registry_path:
+                command.append("--registry_path")
+                command = command + args.registry_path
             if command in commands:
                 continue
             commands.append(command)
