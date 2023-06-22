@@ -1,0 +1,9 @@
+gregorian-to-hebrew-date:
+  id: gregorian-to-hebrew-date.dev.v0
+  description: The simple task of converting Gregorian dates to Hebrew dates (written in English).
+  metrics: 
+  - accuracy
+gregorian-to-hebrew-date.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: gregorian-to-hebrew-date/samples.jsonl
