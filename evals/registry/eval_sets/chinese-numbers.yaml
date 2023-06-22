@@ -1,0 +1,6 @@
+chinese-numbers:
+  evals:
+    - convert_chinese_lower_case_num_to_num
+    - convert_chinese_upper_case_num_to_num
+    - convert_num_to_chinese_upper_case_num
+    - convert_num_to_chinese_lower_case_num

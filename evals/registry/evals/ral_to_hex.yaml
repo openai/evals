@@ -1,0 +1,8 @@
+ral_to_hex:
+  id: ral_to_hex.dev.v0
+  metrics: [accuracy]
+
+ral_to_hex.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: ral_to_hex/samples.jsonl
