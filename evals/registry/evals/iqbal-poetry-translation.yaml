@@ -1,11 +1,11 @@
-iqbal''s-poetry-translation:
-  id: iqbal''s-poetry-translation.dev.v0
+iqbal-poetry-translation:
+  id: iqbal-poetry-translation.dev.v0
   description: Test the model's ability to correctly translate Iqbal's poetry into English. Translating poetry is a tricky task, and almost every translation tool fails at this.
   metrics: [accuracy]
-iqbal''s-poetry-translation.dev.v0:
+iqbal-poetry-translation.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl: iqbal''s-poetry-translation/samples.jsonl
+    samples_jsonl: iqbal-poetry-translation/samples.jsonl
     eval_type: cot_classify
     modelgraded_spec: translation
     modelgraded_spec_args:
@@ -13,15 +13,15 @@ iqbal''s-poetry-translation.dev.v0:
 
 # a meta-evaluation of the above modelgraded eval
 # this example uses a labeled dataset with "completion" and "choice"
-translate-meta:
-  id: translate-meta.dev.v0
+translation-meta:
+  id: translation-meta.dev.v0
   metrics: [accuracy]
-translate-meta.dev.v0:
+translation-meta.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl: iqbal''s-poetry-translation/labeled-samples.jsonl
+    samples_jsonl: iqbal-poetry-translation/labeled-samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: trasnlation
+    modelgraded_spec: translation
     metaeval: true
     modelgraded_spec_args:
       language: "Urdu"
