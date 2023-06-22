@@ -1,0 +1,8 @@
+benjaminmoore_to_hex:
+  id: benjaminmoore_to_hex.dev.v0
+  metrics: [accuracy]
+  
+benjaminmoore_to_hex.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: benjaminmoore_to_hex/samples.jsonl
