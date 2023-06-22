@@ -1,0 +1,8 @@
+recurrence-relation:
+  id: recurrence-relation.test.v1
+  metrics:
+  - accuracy
+recurrence-relation.test.v1:
+  args:
+    samples_jsonl: recurrence-relation/samples.jsonl
+  class: evals.elsuite.basic.includes:Includes
