@@ -1,0 +1,23 @@
+coq-editing:
+  id: coq-editing.dev.v0
+  description: Test the model's ability to correctly diagnose Coq error messages, and interpret and edit Coq code.
+  metrics: [accuracy]
+coq-editing.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: coq-editing/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: closedqa
+
+# a meta-evaluation of the above modelgraded eval
+# this example uses a labeled dataset with "completion" and "choice"
+coq-editing-meta:
+  id: coq-editing-meta.dev.v0
+  metrics: [accuracy]
+coq-editing-meta.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: coq-editing/labeled-samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: closedqa
+    metaeval: true
