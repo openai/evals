@@ -1,0 +1,9 @@
+belarusian-orthography:
+  id: belarusian-orthography.dev.v0
+  description: Test the model's ability to switch between classical and modern orthographies of Belarusian.
+  metrics: [accuracy]
+
+belarusian-orthography.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: belarusian_orthography/samples.jsonl
