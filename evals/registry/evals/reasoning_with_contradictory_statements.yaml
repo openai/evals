@@ -4,6 +4,6 @@ reasoning_with_contradictory_statements:
 reasoning_with_contradictory_statements.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_js  onl: reasoning_with_contradictory_statements/samples.jsonl
+    samples_js: reasoning_with_contradictory_statements/samples.jsonl
     eval_type: cot_classify
     modelgraded_spec: possible
