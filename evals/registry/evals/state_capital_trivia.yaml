@@ -1,0 +1,9 @@
+state_capital_trivia:
+  id: state_capital_trivia.dev.v0
+  description: Trivia questions about US states and their capital
+  metrics: [accuracy]
+
+state_capital_trivia.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: state_capital_trivia/samples.jsonl
