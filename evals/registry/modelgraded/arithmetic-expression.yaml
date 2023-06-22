@@ -11,6 +11,10 @@ arithmetic-expression:
 
     ***
 
+    [Input]: {input}
+
+    ***
+
     [Submission]: 
     {completion}
 
