@@ -1,0 +1,13 @@
+abstract2title:
+  id: abstract2title.test.v1
+  metrics: [accuracy]
+  description: Test the model's ability to generate proper title using the abstract section of the literature.
+
+abstract2title.test.v1:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: abstract2title/samples.jsonl
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria: "conciseness: Does the title properly describe the provided content?"
+  
