@@ -1,0 +1,9 @@
+urdu-transliteration:
+  id: urdu-transliteration.dev.v0
+  description: Test the model's ability to transliterate English (Roman Urdu) to Urdu.
+  metrics: [accuracy]
+
+urdu-transliteration.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: urdu-transliteration/samples.jsonl
