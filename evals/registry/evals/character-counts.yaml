@@ -1,0 +1,9 @@
+<eval_name>:
+  id: character-counts.dev.v0
+  description: Test the model's ability to accurately count characters for a given string of text.
+  metrics: [accuracy]
+
+<eval_name>.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: character-counts/samples.jsonl
