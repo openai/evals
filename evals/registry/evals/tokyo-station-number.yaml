@@ -1,0 +1,9 @@
+tokyo-station-number:
+  id: tokyo-station-number.dev.v0
+  description: Station numbering for Tokyo Metro and Tokyu Railways.
+  metrics: [accuracy]
+
+tokyo-station-number.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: tokyo-station-number/samples.jsonl
