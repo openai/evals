@@ -1,10 +1,13 @@
 possible:
   prompt: |-
-    You are evaluating a statement to determine if it declares the task to be impossible or presents a solution. 
-    A solution may involve providing instructions, a list, a sequence, or any other means of resolving the task. 
-    If the statement does not declare the task to be impossible, it is most likely a solution.
+    You are analyzing a statement for a task. 
+    You want to figure out if the statement declares the task as impossible or provides a solution. 
+    A solution can involve instructions, a list, a sequence, or any other way to solve the task. 
+    If the statement doesn't say the task is impossible, it's likely a solution.
 
     [BEGIN DATA]
+    ************
+    [Task]: {input}
     ************
     [Submission]: {completion}
     ************
