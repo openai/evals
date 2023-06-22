@@ -1,0 +1,9 @@
+double-and-triple-negatives:
+  id: double-and-triple-negatives.dev.v0
+  description: The model is asked to answer simple questions, but must reason whether to actually answer the question or not due to the presence of double or triple negatives. What makes this a useful eval? Double and triple negatives occur very commonly and GPT-4 has poor performance on them. But most humans find reasoning about double and triple negatives challenging but possible. Improving GPT-4's capability here will have broad application from Boolean reasoning to rewriting prose to make it more understandable.
+  metrics: [accuracy]
+
+double-and-triple-negatives.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: double-and-triple-negatives/samples.jsonl
