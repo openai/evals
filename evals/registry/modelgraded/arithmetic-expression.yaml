@@ -8,22 +8,12 @@ arithmetic-expression:
     Below is the submission.
 
     [BEGIN DATA]
-
     ***
-
     [Input]: {input}
-
     ***
-
     [Submission]: 
     {completion}
-
     ***
-
-    [Correct Answer]: {ideal}
-
-    ***
-
     [END DATA]
     
     Does the submitted arithmetic expression use all four numbers exactly once and evaluate to the correct result?
