@@ -1,0 +1,9 @@
+singapore_data_protection_decisions:
+    id: singapore_data_protection_decisions.dev.v0
+    description: "This evaluation checks the model's ability to act as a legal researcher, accurately extracting relevant paragraphs given a document and a query, set in the context of decisions made by Singapore's Personal Data Protection Commission."
+    metrics: [accuracy]
+
+singapore_data_protection_decisions.dev.v0:
+    class: evals.elsuite.basic.includes:Includes
+    args:
+        samples_jsonl: singapore_data_protection_decisions/samples.jsonl
