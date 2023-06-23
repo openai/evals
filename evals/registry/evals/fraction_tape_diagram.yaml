@@ -1,8 +1,9 @@
 fraction_tape_diagram:
   id: fraction_tape_diagram.dev.v0
+  description: Provides a set of relatively simple fraction equations that require the solution to be done in tape diagram. Each eval contains a simple fraction equation and the correct tape diagram with the simplest fraction.
   metrics: [accuracy]
 
 fraction_tape_diagram.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: fraction_tape_diagram/samples.jsonl
