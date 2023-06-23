@@ -1,0 +1,11 @@
+consensus_summary:
+  id: consensus_summary.dev.v0
+  description: Utilize the model's ability to produce a Consensus in response to a scientific inquiry.
+  metrics: [accuracy]
+
+consensus_summary.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: consensus_summary/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact

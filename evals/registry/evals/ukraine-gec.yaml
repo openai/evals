@@ -1,0 +1,198 @@
+ukraine-gec-fluency-style:
+  description: Fluency eval. Test the model's ability to detect and correct style
+    errors.
+  id: ukraine-gec-fluency-style.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-fluency-style.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_fluency_style.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-fluency-calque:
+  description: Fluency eval. Test the model's ability to detect and correct word-for-word
+    translation from other languages errors.
+  id: ukraine-gec-fluency-calque.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-fluency-calque.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_fluency_calque.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-fluency-poorflow:
+  description: Fluency eval. Test the model's ability to detect and correct unnatural
+    sentence flow errors.
+  id: ukraine-gec-fluency-poorflow.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-fluency-poorflow.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_fluency_poorflow.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-fluency-repetition:
+  description: Fluency eval. Test the model's ability to detect and correct repetition
+    of words errors.
+  id: ukraine-gec-fluency-repetition.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-fluency-repetition.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_fluency_repetition.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-fluency-other:
+  description: Fluency eval. Test the model's ability to detect and correct other
+    fluency errors errors.
+  id: ukraine-gec-fluency-other.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-fluency-other.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_fluency_other.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-aspect:
+  description: Grammar eval. Test the model's ability to detect and correct incorrect
+    usage of verb aspect errors.
+  id: ukraine-gec-grammar-aspect.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-aspect.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_aspect.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-case:
+  description: Grammar eval. Test the model's ability to detect and correct incorrect
+    usage of case of any notional part of speech errors.
+  id: ukraine-gec-grammar-case.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-case.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_case.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-comparison:
+  description: Grammar eval. Test the model's ability to detect and correct incorrect
+    formation of comparison degrees of adjectives and adverbs errors.
+  id: ukraine-gec-grammar-comparison.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-comparison.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_comparison.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-conjunction:
+  description: Grammar eval. Test the model's ability to detect and correct incorrect
+    usage of conjunctions errors.
+  id: ukraine-gec-grammar-conjunction.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-conjunction.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_conjunction.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-gender:
+  description: Grammar eval. Test the model's ability to detect and correct incorrect
+    usage of gender of any notional part of speech errors.
+  id: ukraine-gec-grammar-gender.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-gender.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_gender.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-number:
+  description: Grammar eval. Test the model's ability to detect and correct incorrect
+    usage of number of any notional part of speech errors.
+  id: ukraine-gec-grammar-number.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-number.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_number.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-partvoice:
+  description: Grammar eval. Test the model's ability to detect and correct incorrect
+    usage of participle voice errors.
+  id: ukraine-gec-grammar-partvoice.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-partvoice.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_partvoice.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-prep:
+  description: Grammar eval. Test the model's ability to detect and correct incorrect
+    preposition usage errors.
+  id: ukraine-gec-grammar-prep.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-prep.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_prep.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-tense:
+  description: Grammar eval. Test the model's ability to detect and correct incorrect
+    usage of verb tense errors.
+  id: ukraine-gec-grammar-tense.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-tense.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_tense.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-ungrammaticalstructure:
+  description: Grammar eval. Test the model's ability to detect and correct digression
+    from syntactic norms errors.
+  id: ukraine-gec-grammar-ungrammaticalstructure.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-ungrammaticalstructure.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_ungrammaticalstructure.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-verbaform:
+  description: Grammar eval. Test the model's ability to detect and correct incorrect
+    usage of an analytical verb form errors.
+  id: ukraine-gec-grammar-verbaform.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-verbaform.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_verbaform.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-verbvoice:
+  description: Grammar eval. Test the model's ability to detect and correct incorrect
+    usage of verb voice errors.
+  id: ukraine-gec-grammar-verbvoice.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-verbvoice.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_verbvoice.jsonl
+  class: evals.elsuite.basic.match:Match
+
+ukraine-gec-grammar-other:
+  description: Grammar eval. Test the model's ability to detect and correct other
+    grammatical errors errors.
+  id: ukraine-gec-grammar-other.dev.v0
+  metrics:
+  - accuracy
+ukraine-gec-grammar-other.dev.v0:
+  args:
+    samples_jsonl: ukraine_gec/ukraine_gec_grammar_other.jsonl
+  class: evals.elsuite.basic.match:Match
+

@@ -11,6 +11,7 @@ dependencies = [
     "numpy",
     "snowflake-connector-python[pandas]",
     "pandas",
+    "datasets",
     "fire",
     "pydantic",
     "tqdm",
@@ -24,9 +25,22 @@ dependencies = [
     "pyyaml",
     "sacrebleu",
     "matplotlib",
+    "pytest",
     "setuptools_scm",
+    "langchain",
+    "types-PyYAML",
+]
+
+[project.optional-dependencies]
+formatters = [
+    "black",
+    "isort",
+    "autoflake"
 ]
 
 [project.scripts]
 oaieval = "evals.cli.oaieval:main"
 oaievalset = "evals.cli.oaievalset:main"
+
+[tool.setuptools]
+packages = ["evals"]

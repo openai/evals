@@ -7,13 +7,13 @@ In using Evals, we have discovered several "templates" that accommodate many dif
 In cases where the desired model response has very little variation, such as answering multiple choice questions or simple questions with a straightforward answer, we have found the following templates to be useful.
 
 For a model completion `a` and a reference list of correct answers `B`, the following evals implement:
-- [`basic/match.py:Match`](../evals/elsuite/basic/match.py): `any([b.startswith(a) for b in B])`
-- [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(a in b) for b in B])`
+- [`basic/match.py:Match`](../evals/elsuite/basic/match.py): `any([a.startswith(b) for b in B])`
+- [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(b in a) for b in B])`
 - [`basic/fuzzy_match.py:FuzzyMatch`](../evals/elsuite/basic/fuzzy_match.py): `any([(a in b or b in a) for b in B])`
 
 Which eval template you use will depend on your use case. It is always recommended that you inspect the completions from your model, as this will help you determine how and whether to tweak your prompt (or your reference answers) and pick your eval template. Academic benchmarks oftentimes fit the mold of these basic evals, and we have implemented several end-to-end examples of academic evals as Jupyter notebooks in the `examples` folder.
 
-Sometimes, [custom eval logic](custom-eval.md) will better suit your needs. One example of this is the [machine translation](../evals/elsuite/translate.py) [eval example](../examples/lafand-mt.ipynb), in which there is a unique and clearly defined metric that we wish to use in our eval. You should use your best judgment when deciding between custom eval logic, using a basic eval template, or using model-graded evals as described next.
+Sometimes, [custom eval logic](custom-eval.md) will better suit your needs. One example of this is the [machine translation](../evals/elsuite/translate.py) eval [example](../examples/lafand-mt.ipynb), in which there is a unique and clearly defined metric that we wish to use in our eval. You should use your best judgment when deciding between custom eval logic, using a basic eval template, or using model-graded evals as described next.
 
 ## The model-graded eval template
 
@@ -30,13 +30,12 @@ Refer to the [`classify.py:ModelBasedClassify`](../evals/elsuite/modelgraded/cla
 - `choice_strings`: The choices that we expect the model completion to contain given the evaluation prompt. For example, `"ABCDE"` or `["Yes", "No", "Unsure"]`. Any other choices returned by the model are parsed into `"__invalid__"`.
 - `choice_scores` (optional): A mapping of each choice to its score, which is logged as a metric. For example, if a response of `"Yes"` (resp. `"No"`) indicates that the model's original completion was good (resp. bad), we may assign this choice a score of 1 (resp. 0).
 - `eval_type` (optional): How we expect the model to format its response to the evaluation prompt. Currently the supported options are:
-  - `"cot_classify"` ("chain-of-thought then classify", i.e., reason then answer) expects that the parsable portion of the response (i.e., the portion containing the choice) will be at the end of the completion. We recommend this as the default as it typically provides most accurate model-graded evaluations.
+  - `"cot_classify"` ("chain-of-thought then classify", i.e., reason then answer) expects that the parsable portion of the response (i.e., the portion containing the choice) will be at the end of the completion. We recommend this as the default as it typically provides the most accurate model-graded evaluations.
   - `"classify_cot"` (answer then reason) expects that the model response will contain the choice first.
   - `"classify"` expects that the model response will only contain the choice.
 
   There are two ways to specify `eval_type`. The recommended way is in the `evals/registry/evals` YAML file. If done this way, an instruction will automatically be appended to `prompt` to steer the model towards the expected format (see `ANSWER_PROMPTS` in [the code](../evals/elsuite/modelgraded/classify.py)). Alternatively, you may specify `eval_type` in the `evals/registry/modelgraded` YAML, but you will need to include an appropriate instruction directly in the `prompt`.
-- `args` (optional): If specified, multiple evaluation calls will be made where the evaluation prompt is modified for each call with a different set of arguments.
-- `completion_sample_templates` (optional): If specified, determines how the model's output (or outputs, if `multicomp_n > 1`) will be formatted within the completion.
+- `output_template` (optional): If specified, determines how the model's output (or outputs, if `n > 1`) will be formatted within the completion.
 
 ### Example model-graded evals
 
@@ -49,12 +48,12 @@ To instantiate model-graded evals, create a YAML file in `evals/registry/modelgr
 - `"D"` if `a` $\neq$ `b`, i.e., there is a disagreement between the submitted answer and the expert answer.
 - `"E"` if `a` $\approx$ `b`, i.e., the answers differ, but these differences don't matter from the perspective of factuality.
 
-[`closedqa.yaml`](../evals/registry/modelgraded/closedqa.yaml): a question answering eval which, given a prompt containing a question and the necessary information to answer the question, checks whether the model's answer is:
+[`closedqa.yaml`](../evals/registry/modelgraded/closedqa.yaml): a question answering eval, which, given a prompt containing a question and the necessary information to answer the question, checks whether the model's answer is:
 - relevant, i.e., extracted from the information provided in the prompt,
 - concise, i.e., did not contain unnecessary details or information, and
 - correct, i.e., uses the extracted information to come to the right conclusion.
 
-Note that this eval is implemented more generally as a "criteria-checking" eval which specifies the evaluation prompt as checking a given criterion and feeding in the above desiderata one by one. We believe that many other evals can be implemented by specifying a "rubric" detailing the criteria of interest and following the same prompt and yes/no choices.
+Note that this eval is implemented more generally as a "criteria-checking" eval, which specifies the evaluation prompt as checking a given criterion and feeding in the above desiderata one by one. We believe that many other evals can be implemented by specifying a "rubric" detailing the criteria of interest and following the same prompt and yes/no choices.
 
 [`battle.yaml`](../evals/registry/modelgraded/battle.yaml): a head-to-head eval which compares two model completions for two potentially different prompts. `choice_scores` is used here to log how often the first completion is judged to be better than the second.
 

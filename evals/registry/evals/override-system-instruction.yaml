@@ -1,0 +1,8 @@
+override-system-instruction:
+  id: override-system-instruction.dev.v0
+  metrics: [accuracy]
+
+override-system-instruction.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: override-system-instruction/samples.jsonl

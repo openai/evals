@@ -1,0 +1,8 @@
+resistor-ohm-calculator:
+  id: resistor-ohm-calculator.dev.simple-v0
+  description: Test the model's ability to calculate resistance (in ohms) of a resistor, given color of each band
+  metrics: [accuracy]
+resistor-ohm-calculator.dev.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: resistor_ohm_calculator/samples.jsonl

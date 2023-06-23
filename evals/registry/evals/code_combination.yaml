@@ -1,0 +1,9 @@
+code_combination:
+  id: code_combination.dev.v0
+  description: Test the model's ability to ingest code snippets (python/Javascript/C#) over multiple prompts and return the ingested code as one complete and unchanged snippet.
+  metrics: [accuracy]
+
+code_combination.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: code_combination/samples.jsonl
