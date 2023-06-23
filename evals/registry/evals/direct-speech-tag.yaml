@@ -1,0 +1,8 @@
+direct-speech-tag:
+  id: direct-speech-tag.dev.v0
+  metrics: [accuracy]
+
+direct-speech-tag.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: direct-speech-tag/samples.jsonl

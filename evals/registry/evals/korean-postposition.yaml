@@ -1,0 +1,9 @@
+korean-postposition:
+  id: korean-postposition.dev.v0
+  description: Evaluates GPT can identify correct postposition in a Korean sentence.
+  metrics: [accuracy]
+
+korean-postposition.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: korean-postposition/samples.jsonl

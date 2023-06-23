@@ -1,0 +1,9 @@
+russian-verse:
+  id: russian-verse.dev.v0
+  description: The most popular Russian poems that nearly every Russian speaker can recall
+  metrics: [accuracy]
+
+russian-verse.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: russian-verse/samples.jsonl

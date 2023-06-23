@@ -1,0 +1,23 @@
+music-theory-triads-identification:
+  id: music-theory-triads-identification.dev.v0
+  description: Test the model's ability to identify triadic structures using the jazz shorthand notation
+  metrics: [accuracy]
+
+music-theory-triads-identification.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: music-theory/triads-samples.jsonl
+    few_shot_jsonl: music-theory/triads-few-shot.jsonl
+    num_few_shot: 7
+  
+music-theory-tetrads-identification:
+  id: music-theory-tetrads-identification.dev.v0
+  description: Test the model's ability to identify tetradic structures using the jazz shorthand notation
+  metrics: [accuracy]
+
+music-theory-tetrads-identification.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: music-theory/tetrads-samples.jsonl
+    few_shot_jsonl: music-theory/tetrads-few-shot.jsonl
+    num_few_shot: 15

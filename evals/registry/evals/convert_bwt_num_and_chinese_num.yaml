@@ -1,0 +1,39 @@
+convert_chinese_lower_case_num_to_num:
+  id: convert_chinese_lower_case_num_to_num.dev.v0
+  description: Check the model's ability to convert Chinese lower case number to numeric number.
+  metrics: [accuracy]
+
+convert_chinese_lower_case_num_to_num.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: convert-bwt-num-and-chinese-num/c_lower_to_n_samples_few_shot.jsonl
+
+convert_num_to_chinese_lower_case_num:
+  id: convert_num_to_chinese_lower_case_num.dev.v0
+  description: Check the model's ability to convert numeric number to Chinese lower case number.
+  metrics: [accuracy]
+
+convert_num_to_chinese_lower_case_num.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: convert-bwt-num-and-chinese-num/n_to_c_lower_samples_few_shot.jsonl
+
+convert_chinese_upper_case_num_to_num:
+  id: convert_chinese_upper_case_num_to_num.dev.v0
+  description: Check the model's ability to convert Chinese upper case number to numeric number.
+  metrics: [accuracy]
+
+convert_chinese_upper_case_num_to_num.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: convert-bwt-num-and-chinese-num/c_upper_to_n_samples_few_shot.jsonl
+
+convert_num_to_chinese_upper_case_num:
+  id: convert_num_to_chinese_upper_case_num.dev.v0
+  description: Check the model's ability to convert numeric number to Chinese upper case number.
+  metrics: [accuracy]
+
+convert_num_to_chinese_upper_case_num.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: convert-bwt-num-and-chinese-num/n_to_c_upper_samples_few_shot.jsonl

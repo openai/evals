@@ -1,0 +1,10 @@
+cissp-study-questions:
+  id: cissp-study-questions.test.v1
+  metrics:
+  - accuracy
+cissp-study-questions.test.v1:
+  args:
+    few_shot_jsonl: cissp-study-questions/few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: cissp-study-questions/samples.jsonl
+  class: evals.elsuite.basic.match:Match

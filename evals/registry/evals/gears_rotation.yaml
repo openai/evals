@@ -1,0 +1,8 @@
+gears_rotation:
+  id: gears_rotation.dev.v0
+  description: Test the model's ability to determine the rotation of a gear given a disposition of multiple gears and the rotation of one of them.
+  metrics: [accuracy]
+gears_rotation.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: gears_rotation/samples.jsonl

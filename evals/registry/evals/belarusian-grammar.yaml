@@ -1,0 +1,9 @@
+belarusian-grammar:
+  id: belarusian-grammar.dev.v0
+  description: Test the model's ability to distinguish between grammatically well-formed and ungrammatical Belarusian sentences.
+  metrics: [accuracy]
+
+belarusian-grammar.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: belarusian_grammar/samples.jsonl

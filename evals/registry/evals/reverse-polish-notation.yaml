@@ -1,0 +1,9 @@
+reverse-polish-notation:
+  id: reverse-polish-notation.dev.v0
+  description: Test the model's ability to parse expression and create reverse polish notation.
+  metrics: [accuracy]
+
+reverse-polish-notation.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: reverse-polish-notation/questions.jsonl
