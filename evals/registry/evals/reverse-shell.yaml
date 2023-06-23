@@ -4,6 +4,6 @@ reverse-shell:
   metrics: [accuracy]
 
 reverse-shell.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: reverse-shell/samples.jsonl
