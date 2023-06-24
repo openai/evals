@@ -1,0 +1,8 @@
+japanese_approval:
+  id: japanese_approval.dev.v0
+  metrics: [accuracy]
+
+japanese_approval.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: japanese_approval/samples.jsonl
