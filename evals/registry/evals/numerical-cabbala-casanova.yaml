@@ -1,15 +1,7 @@
-numerical-cabbala-casanova-pyramid:
-  id: numerical-cabbala-casanova-pyramid.dev.v0
+numerical-cabbala-casanova:
+  id: numerical-cabbala-casanova.dev.v0
   metrics: [accuracy]
-numerical-cabbala-casanova-pyramid.dev.v0:
-  class: evals.elsuite.basic.includes:Includes
-  args:
-    samples_jsonl: numerical-cabbala-casanova/samples.jsonl
-
-numerical-cabbala-casanova-steps:
-  id: numerical-cabbala-casanova-steps.dev.v0
-  metrics: [accuracy]
-numerical-cabbala-casanova-steps.dev.v0:
+numerical-cabbala-casanova.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: numerical-cabbala-casanova/samples.jsonl
