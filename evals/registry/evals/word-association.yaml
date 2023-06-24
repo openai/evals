@@ -3,6 +3,6 @@ word-association:
   metric: [accuracy]
 
 word-association.test.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: word_association/samples.jsonl
