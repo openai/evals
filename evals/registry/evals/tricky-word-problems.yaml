@@ -4,6 +4,6 @@ tricky-word-problems:
   metrics: [accuracy]
 
 tricky-word-problems.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: tricky-word-problems/samples.jsonl
