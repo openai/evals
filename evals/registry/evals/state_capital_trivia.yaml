@@ -4,6 +4,6 @@ state_capital_trivia:
   metrics: [accuracy]
 
 state_capital_trivia.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: state_capital_trivia/samples.jsonl
