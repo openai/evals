@@ -1,0 +1,9 @@
+korean_foreign_words:
+  id: korean_foreign_words.dev.v0
+  description: Choose correctly spelled foreign words in Korean.
+  metrics: [accuracy]
+
+korean_foreign_words.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: korean_foreign_words/samples.jsonl
