@@ -1,5 +1,6 @@
 import nltk
 from .corpus import Corpus
+from .filters import parts_of_speech_filter, frequency_filter, subword_filter
 
 
 class CorpusPipeline:
