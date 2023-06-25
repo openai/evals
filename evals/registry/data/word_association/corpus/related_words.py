@@ -9,25 +9,22 @@ Classes:
 """
 import requests
 from abc import ABC, abstractmethod
-from typing import Generator, Optional, List, Tuple, Dict, Union
+from typing import Generator, Optional, List, Tuple, Dict, Union, Any
 
 
 class RelatedWords(ABC):
     """An abstract base class for getting related words.
 
-    To implement this class for a specific API, you must define
-    a _get_related_words() method.
+    To implement this class for a specific API, you must define a _get_related_words() method.
     """
-
     def __init__(self, word: str, **kwargs: Optional[Union[str, int]]) -> None:
         self.word = word
         self.kwargs = kwargs
-        self.words = self._get_related_words()
-        self.words_dict = self.words.copy()
-        self.words = [word["word"] for word in self.words]
+        self.words_dict = self._get_related_words()
+        self.words = [word["word"] for word in self.words_dict]
 
     @abstractmethod
-    def _get_related_words(self) -> List[Dict[str, str]]:
+    def _get_related_words(self) -> List[Dict[str, Any]]:
         """
         Abstract method to get related words.
 
@@ -89,9 +86,25 @@ class DataMuseRelatedWords(RelatedWords):
 
     Args:
         word (str): The word to find related words for.
-        constraint (str): Constraint for related words, e.g., 'rel_syn' for synonyms. Default: 'rel_syn'.
-        **kwargs: Additional parameters for the API. Valid parameters are:
+        constraint (str): Constraint for related words, rel_[code] Default: 'rel_syn'.
+            [code] | Description | Example
+            jja | Popular nouns modified by the given adjective, per Google Books Ngrams | gradual → increase
+            jjb | Popular adjectives used to modify the given noun, per Google Books Ngrams | beach → sandy
+            syn | Synonyms (words contained within the same WordNet synset) | ocean → sea
+            trg | "Triggers" (words that are statistically associated with the query word) | cow → milking
+            ant | Antonyms (per WordNet) | late → early
+            spc | "Kind of" (direct hypernyms, per WordNet) | gondola → boat
+            gen | "More general than" (direct hyponyms, per WordNet) | boat → gondola
+            com | "Comprises" (direct holonyms, per WordNet) | car → accelerator
+            par | "Part of" (direct meronyms, per WordNet) | trunk → tree
+            bga | Frequent followers (w′ such that P(w′|w) ≥ 0.001, per Google Books Ngrams) | wreak → havoc
+            bgb | Frequent predecessors (w′ such that P(w|w′) ≥ 0.001, per Google Books Ngrams) | havoc → wreak
+            rhy | Rhymes ("perfect" rhymes, per RhymeZone) | spade → aid
+            nry | Approximate rhymes (per RhymeZone) | forest → chorus
+            hom | Homophones (sound-alike words) | course → coarse
+            cns | Consonant match | sample → simple
 
+        **kwargs: Additional parameters for the API. Valid parameters are:
             - ml: Means like constraint
             - sl: Sounds like constraint
             - sp: Spelled like constraint

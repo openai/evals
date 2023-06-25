@@ -5,7 +5,7 @@ work with NLTK-supported corpora.
 """
 import nltk
 from abc import ABC, abstractmethod
-from typing import List, Tuple, Iterator
+from typing import List, Tuple, Iterator, Dict
 
 
 class Corpus(ABC):
@@ -22,7 +22,7 @@ class Corpus(ABC):
         """Get the words of the corpus."""
         raise NotImplementedError
 
-    def get_frequency_distribution(self) -> dict[str, int]:
+    def get_frequency_distribution(self) -> Dict[str, int]:
         """Get a frequency distribution of words."""
         raise NotImplementedError
 
