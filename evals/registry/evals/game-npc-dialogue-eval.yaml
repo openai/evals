@@ -1,0 +1,27 @@
+task:
+  type: Basic
+  dialogue: true
+  config:
+    max_tokens: 100
+    no_repeat_ngram_size: 3
+    temperature: 0.7
+data:
+  source_file: game-npc-dialogue.json
+  format: JSON
+  fields:
+    - name: npc_type
+      type: String
+    - name: game_genre
+      type: String
+    - name: dialogue
+      type: Array
+      fields:
+        - name: prompt
+          type: String
+        - name: correct_response
+          type: String
+grading:
+  type: modelgraded
+  target_score: 2.0
+  prompt_fn: dialogue.prompt
+  grade_fn: dialogue.correct_response
