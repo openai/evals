@@ -25,6 +25,11 @@ class RelatedWords(ABC):
         """
         raise NotImplementedError
 
+    def sub_word_filter(self) -> None:
+        words_to_remove = [related_word for related_word in self.related_words if self.word in related_word]
+        for related_word in words_to_remove:
+            del self.related_words[related_word]
+
 
 class DataMuseRelatedWords(RelatedWords):
     """
