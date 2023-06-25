@@ -1,6 +1,8 @@
 import requests
+import nltk
 from abc import ABC, abstractmethod
 from typing import Generator, Optional
+from collections.abc import Callable
 
 
 class RelatedWords(ABC):
@@ -14,7 +16,9 @@ class RelatedWords(ABC):
     def __init__(self, word: str, **kwargs: Optional[str | int]) -> None:
         self.word = word
         self.kwargs = kwargs
-        self.related_words = self._get_related_words()
+        self.words = self._get_related_words()
+        self.words_dict = self.words.copy()
+        self.words = [word["word"] for word in self.words]
 
     @abstractmethod
     def _get_related_words(self) -> dict[str, str]:
@@ -26,31 +30,24 @@ class RelatedWords(ABC):
         """
         raise NotImplementedError
 
-    def sub_word_filter(self) -> None:
-        words_to_remove = [related_word['word'] for related_word in self.related_words if
-                           self.word in related_word['word']]
-        self.related_words = [word_dict for word_dict in self.related_words if word_dict['word'] not in words_to_remove]
-
-    def max_words_filter(self, max_num_words: int = 1) -> None:
-        words_to_remove = [related_word["word"] for related_word in self.related_words
-                           if related_word["word"].count(" ") > max_num_words - 1]
-        self.related_words = [word_dict for word_dict in self.related_words if word_dict['word'] not in words_to_remove]
+    def get_pos_tagged_words(self) -> list[tuple[str, str]]:
+        raise NotImplementedError
 
     def __repr__(self) -> str:
-        return f"DataMuseRelatedWords(word={self.word}, kwargs={self.kwargs})"
+        return f"{type(self)}(word={self.word}, kwargs={self.kwargs})"
 
     def __len__(self) -> int:
-        return len(self.related_words)
+        return len(self.words)
 
     def __getitem__(self, index: int) -> str:
-        return self.related_words[index]['word']
+        return self.words[index]
 
     def __contains__(self, item: str) -> bool:
-        return any(word_dict["word"] == item for word_dict in self.related_words)
+        return item in self.words
 
     def __iter__(self) -> Generator[str, None, None]:
-        for word_dict in self.related_words:
-            yield word_dict['word']
+        for word in self.words:
+            yield word
 
 
 class DataMuseRelatedWords(RelatedWords):
@@ -74,7 +71,8 @@ class DataMuseRelatedWords(RelatedWords):
             - lc: The word that appears to the left of the target word
             - rc: The word that appears to the right of the target word
             - max: Maximum number of results to return
-            - md: Metadata flags (e.g., d for definitions, p for parts of speech, f for word frequency)
+            - md: Metadata flags # Warning if you override this kwarg and don't include
+                (p for parts of speech or f for word frequency, calls to those filters will fail)
 
     Returns:
         A dictionary of related words.
@@ -88,8 +86,16 @@ class DataMuseRelatedWords(RelatedWords):
         self.constraint = constraint
         super().__init__(word, **kwargs)
 
+    def get_pos_tagged_words(self) -> list[tuple[str, str]]:
+        tagged_words = []
+        for word in self.words:
+            word_meta_data = self.get_metadata(word)
+            tag_pair = word, word_meta_data["tags"][0]
+            tagged_words.append(tag_pair)
+        return tagged_words
+
     def get_metadata(self, word: str) -> dict[str, str | int | list[str]]:
-        for word_dict in self.related_words:
+        for word_dict in self.words_dict:
             if word_dict['word'] == word:
                 return word_dict
         raise ValueError(f"No metadata found for word: {word}")
@@ -101,13 +107,15 @@ class DataMuseRelatedWords(RelatedWords):
         Returns:
             A dictionary mapping words to their related words.
         """
-        response = requests.get(f"https://api.datamuse.com/words?{self.constraint}={self.word}", params=self.kwargs)
+        params = {"md": "frspd"}
+        params.update(self.kwargs)
+        response = requests.get(f"https://api.datamuse.com/words?{self.constraint}={self.word}", params=params)
         return response.json()
 
 
 if __name__ == "__main__":
-    dm = DataMuseRelatedWords("duck", ml="animal", max=5)
-    print(dm.related_words)
+    dm = DataMuseRelatedWords("duck", max=5)
+    print(dm.words)
     print('fauna' in dm)
     print(dm.get_metadata("fauna"))
     for word in dm:

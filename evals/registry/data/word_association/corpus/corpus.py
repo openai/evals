@@ -14,7 +14,7 @@ class Corpus(ABC):
     def get_frequency_distribution(self) -> dict[str, int]:
         raise NotImplementedError
 
-    def get_pos_tagged_corpus(self) -> list[tuple[str, str]]:
+    def get_pos_tagged_words(self) -> list[tuple[str, str]]:
         raise NotImplementedError
 
     def __len__(self) -> int:
@@ -52,7 +52,7 @@ class NltkCorpus(Corpus):
     def get_frequency_distribution(self) -> nltk.FreqDist:
         return nltk.FreqDist(self.words)
 
-    def get_pos_tagged_corpus(self) -> list[tuple[str, str]]:
+    def get_pos_tagged_words(self) -> list[tuple[str, str]]:
         nltk.download("averaged_perceptron_tagger")
         return nltk.pos_tag(self.words)
 

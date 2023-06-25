@@ -29,12 +29,17 @@ if __name__ == "__main__":
     freq_filter_corpus = NltkCorpus("brown")
     processor = CorpusProcessor(corpus)
     processor.frequency_filter(thresholds=(50, 10000), filter_corpus=freq_filter_corpus)
-    processor.length_filter(length_bounds=(5, 5))
+    processor.char_length_filter(length_bounds=(5, 5))
     processor.parts_of_speech_filter(["NN", "VB"])
+
     corpus = processor.corpus
     for word in corpus:
-        # Refactor by creating RelatedWordsProcessor
         related_words = DataMuseRelatedWords(word)
-        related_words.sub_word_filter()
-        related_words.max_words_filter(1)
-        print(word, list(related_words))
+        related_processor = CorpusProcessor(related_words)
+        # related_processor.char_length_filter(length_bounds=(5, 5))
+        related_processor.parts_of_speech_filter(["n", "v"])
+        related_processor.str_max_word_count_filter(1)
+        related_processor.sub_word_filter(word)
+        related_processor.frequency_filter(thresholds=(50, 10000), filter_corpus=freq_filter_corpus)
+        words = related_processor.corpus.words
+        print(word, words)
