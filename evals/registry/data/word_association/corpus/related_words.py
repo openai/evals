@@ -30,6 +30,22 @@ class RelatedWords(ABC):
         for related_word in words_to_remove:
             del self.related_words[related_word]
 
+    def __repr__(self) -> str:
+        return f"DataMuseRelatedWords(word={self.word}, kwargs={self.kwargs})"
+
+    def __len__(self) -> int:
+        return len(self.related_words)
+
+    def __getitem__(self, index: int) -> str:
+        return self.related_words[index]['word']
+
+    def __contains__(self, item: str) -> bool:
+        return any(word_dict["word"] == item for word_dict in self.related_words)
+
+    def __iter__(self) -> Generator[str, None, None]:
+        for word_dict in self.related_words:
+            yield word_dict['word']
+
 
 class DataMuseRelatedWords(RelatedWords):
     """
@@ -84,21 +100,7 @@ class DataMuseRelatedWords(RelatedWords):
         response = requests.get(self.base_api_url, params=self.kwargs)
         return response.json()
 
-    def __repr__(self) -> str:
-        return f"DataMuseRelatedWords(word={self.word}, kwargs={self.kwargs})"
 
-    def __len__(self) -> int:
-        return len(self.related_words)
-
-    def __getitem__(self, index: int) -> str:
-        return self.related_words[index]['word']
-
-    def __contains__(self, item: str) -> bool:
-        return any(word_dict["word"] == item for word_dict in self.related_words)
-
-    def __iter__(self) -> Generator[str, None, None]:
-        for word_dict in self.related_words:
-            yield word_dict['word']
 
 
 if __name__ == "__main__":

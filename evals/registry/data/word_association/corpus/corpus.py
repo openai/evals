@@ -11,9 +11,11 @@ class Corpus(ABC):
     def _get_corpus(self) -> list[str]:
         raise NotImplementedError
 
-    def apply_filters(self, filters: list[callable]) -> list[str]:
-        for filtr in filters:
-            self.words = filtr(self.words)
+    def get_frequency_distribution(self) -> dict[str, int]:
+        raise NotImplementedError
+
+    def get_pos_tagged_corpus(self) -> list[tuple[str, str]]:
+        raise NotImplementedError
 
     def __len__(self) -> int:
         return len(self.words)
@@ -53,6 +55,7 @@ class NltkCorpus(Corpus):
     def get_pos_tagged_corpus(self) -> list[tuple[str, str]]:
         nltk.download("averaged_perceptron_tagger")
         return nltk.pos_tag(self.words)
+
 
 
 
