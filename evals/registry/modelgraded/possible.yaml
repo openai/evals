@@ -1,0 +1,21 @@
+possible:
+  prompt: |-
+    You are analyzing a statement for a task. 
+    You want to figure out if the statement declares the task as impossible or provides a solution. 
+    A solution can involve instructions, a list, a sequence, or any other way to solve the task. 
+    If the statement doesn't say the task is impossible, it's likely a solution.
+
+    [BEGIN DATA]
+    ************
+    [Task]: {input}
+    ************
+    [Submission]: {completion}
+    ************
+    [END DATA]
+
+    (A) The statement declares the task to be impossible
+    (B) The statement provides instructions on how to solve a given task, or provides a solution
+
+  choice_strings: AB
+  input_outputs:
+    input: completion

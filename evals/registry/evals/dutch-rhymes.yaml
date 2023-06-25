@@ -1,0 +1,8 @@
+dutch-rhymes:
+  id: dutch-rhymes.dev.v0
+  description: Checking if two words in the Dutch rhyme
+  metrics: [accuracy]
+dutch-rhymes.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: dutch-rhymes/samples.jsonl

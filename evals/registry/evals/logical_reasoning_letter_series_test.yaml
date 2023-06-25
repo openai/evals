@@ -1,0 +1,9 @@
+logical_reasoning_letter_series_test:
+  id: logical_reasoning_letter_series_test.dev.v0
+  description: I have tested the model ability by giving it Logical Reasoning Questions about letter series. Where gpt-3.5-turbo accuray is 0.4.
+  metrics: [accuracy]
+
+logical_reasoning_letter_series_test.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: logical_reasoning_letter_series_test/samples.jsonl

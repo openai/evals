@@ -1,0 +1,9 @@
+belarusian-rhyme:
+  id: belarusian-rhyme.dev.v0
+  description: Test the model's ability to find rhyming words in Belarusian.
+  metrics: [accuracy]
+
+belarusian-rhyme.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: belarusian_rhyme/samples.jsonl
