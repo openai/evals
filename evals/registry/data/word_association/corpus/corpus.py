@@ -57,10 +57,6 @@ class NltkCorpus(Corpus):
         return nltk.pos_tag(self.words)
 
 
-
-
-
-
 if __name__ == "__main__":
     corpus = NltkCorpus("words")
     print(corpus)
@@ -72,4 +68,3 @@ if __name__ == "__main__":
     print(corpus[0])
     del corpus[0]
     print(len(corpus))
-

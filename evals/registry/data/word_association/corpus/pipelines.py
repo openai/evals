@@ -1,4 +1,4 @@
-from .corpus import Corpus
+from corpus import Corpus
 from collections.abc import Callable
 
 
@@ -7,7 +7,7 @@ class CorpusPipeline:
         self.corpus = corpus
         self.operations = []
 
-    def add_operation(self, operation: Callable[[Corpus], Corpus]) -> "CorpusPipeline":
+    def add_operation(self, operation: Callable[Corpus, ...]) -> "CorpusPipeline":
         self.operations.append(operation)
         # for method chaining
         return self

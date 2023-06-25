@@ -11,8 +11,9 @@ class RelatedWords(ABC):
     a _get_related_words() method.
     """
 
-    def __init__(self, word: str) -> None:
+    def __init__(self, word: str, **kwargs: Optional[str | int]) -> None:
         self.word = word
+        self.kwargs = kwargs
         self.related_words = self._get_related_words()
 
     @abstractmethod
@@ -26,9 +27,14 @@ class RelatedWords(ABC):
         raise NotImplementedError
 
     def sub_word_filter(self) -> None:
-        words_to_remove = [related_word for related_word in self.related_words if self.word in related_word]
-        for related_word in words_to_remove:
-            del self.related_words[related_word]
+        words_to_remove = [related_word['word'] for related_word in self.related_words if
+                           self.word in related_word['word']]
+        self.related_words = [word_dict for word_dict in self.related_words if word_dict['word'] not in words_to_remove]
+
+    def max_words_filter(self, max_num_words: int = 1) -> None:
+        words_to_remove = [related_word["word"] for related_word in self.related_words
+                           if related_word["word"].count(" ") > max_num_words - 1]
+        self.related_words = [word_dict for word_dict in self.related_words if word_dict['word'] not in words_to_remove]
 
     def __repr__(self) -> str:
         return f"DataMuseRelatedWords(word={self.word}, kwargs={self.kwargs})"
@@ -78,11 +84,9 @@ class DataMuseRelatedWords(RelatedWords):
         print(dm.related_words)
     """
 
-    def __init__(self, word: str, **kwargs: Optional[str | int]) -> None:
-        self.word = word
-        self.base_api_url = "https://api.datamuse.com/words"
-        self.kwargs = kwargs
-        super().__init__(self.word)
+    def __init__(self, word: str, constraint: str = "rel_syn", **kwargs: Optional[str | int]) -> None:
+        self.constraint = constraint
+        super().__init__(word, **kwargs)
 
     def get_metadata(self, word: str) -> dict[str, str | int | list[str]]:
         for word_dict in self.related_words:
@@ -97,10 +101,8 @@ class DataMuseRelatedWords(RelatedWords):
         Returns:
             A dictionary mapping words to their related words.
         """
-        response = requests.get(self.base_api_url, params=self.kwargs)
+        response = requests.get(f"https://api.datamuse.com/words?{self.constraint}={self.word}", params=self.kwargs)
         return response.json()
-
-
 
 
 if __name__ == "__main__":
