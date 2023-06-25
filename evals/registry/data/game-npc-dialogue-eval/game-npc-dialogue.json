@@ -4,12 +4,8 @@
         "game_genre": "sci-fi",
         "dialogue": [
             {
-                "question": "Hello, robot. What's your function?",
-                "answer": "Greetings, human. I am programmed for maintenance and repair tasks."
-            },
-            {
-                "question": "Can you fix my spaceship?",
-                "answer": "Affirmative. I can assist with basic spaceship repair."
+                "prompt": "Hello, robot. I have a red wire and a blue wire, which one should I cut to defuse the bomb?",
+                "correct_response": "Cut the red wire, according to the manual."
             }
         ]
     },
@@ -18,26 +14,8 @@
         "game_genre": "fantasy",
         "dialogue": [
             {
-                "question": "Greetings, elf. Can you tell me about your forest?",
-                "answer": "Ah, a stranger interested in our ways. The forest is our home and provider."
-            },
-            {
-                "question": "Can I enter the forest?",
-                "answer": "Only with our permission. You must prove you mean no harm to the forest and its creatures."
-            }
-        ]
-    },
-    {
-        "npc_type": "guard",
-        "game_genre": "medieval",
-        "dialogue": [
-            {
-                "question": "Hello, guard. What are you guarding?",
-                "answer": "I'm guarding the castle's gates. It's my duty to ensure that no enemies can enter."
-            },
-            {
-                "question": "Can I enter the castle?",
-                "answer": "Only if you have an invitation from the king. Otherwise, I can't let you in."
+                "prompt": "Greetings, elf. I have a Phoenix Feather and a Dragon Scale. Which one should I use to strengthen my magic shield?",
+                "correct_response": "The Dragon Scale is known for its ability to enhance defensive magic."
             }
         ]
     },
@@ -46,13 +24,120 @@
         "game_genre": "sci-fi",
         "dialogue": [
             {
-                "question": "Greetings, alien. What brings you to Earth?",
-                "answer": "We come in peace, seeking to learn more about your planet and its inhabitants."
-            },
+                "prompt": "Hello, alien. I need to travel quickly to Alpha Centauri. Should I take the wormhole or the warp gate?",
+                "correct_response": "The warp gate would be quicker, but you need a high level pass."
+            }
+        ]
+    },
+    {
+        "npc_type": "wizard",
+        "game_genre": "fantasy",
+        "dialogue": [
             {
-                "question": "Are you planning to stay here?",
-                "answer": "Our plans are not yet decided. We are currently exploring and gathering information."
+                "prompt": "Wizard, which spell should I use to dispel the shadow barrier?",
+                "correct_response": "Use the 'Dawn's Light' spell to dispel any shadow-based magic."
+            }
+        ]
+    },
+    {
+        "npc_type": "soldier",
+        "game_genre": "sci-fi",
+        "dialogue": [
+            {
+                "prompt": "Soldier, which type of ammo should I use to penetrate the alien armor?",
+                "correct_response": "The plasma rounds have shown effectiveness against the alien armor."
+            }
+        ]
+    },
+    {
+        "npc_type": "blacksmith",
+        "game_genre": "fantasy",
+        "dialogue": [
+            {
+                "prompt": "Blacksmith, should I use the Mythril or the Adamantium to forge a new sword?",
+                "correct_response": "Adamantium will yield a stronger blade, but it's much harder to work with."
+            }
+        ]
+    },
+    {
+        "npc_type": "scientist",
+        "game_genre": "sci-fi",
+        "dialogue": [
+            {
+                "prompt": "Scientist, what is the antidote for the venom of a Zeta-5 scorpion?",
+                "correct_response": "The antidote for a Zeta-5 scorpion's venom is made from the leaves of the Andromeda plant."
+            }
+        ]
+    },
+    {
+        "npc_type": "herbalist",
+        "game_genre": "fantasy",
+        "dialogue": [
+            {
+                "prompt": "Herbalist, what herb do I need to cure the Direwolf's bite?",
+                "correct_response": "The rare Bluebell root is known to cure a Direwolf's bite."
+            }
+        ]
+    },
+    {
+        "npc_type": "engineer",
+        "game_genre": "sci-fi",
+        "dialogue": [
+            {
+                "prompt": "Engineer, what component do I need to fix the ship's hyperdrive?",
+                "correct_response": "You'll need a Zeta-3 coupler to fix the ship's hyperdrive."
+            }
+        ]
+    },
+    {
+        "npc_type": "mage",
+        "game_genre": "fantasy",
+        "dialogue": [
+            {
+                "prompt": "Mage, what magical component do I need to complete the divination ritual?",
+                "correct_response": "The eye of a gorgon is necessary to complete the divination ritual."
+            }
+        ]
+    },
+    {
+        "npc_type": "medic",
+        "game_genre": "sci-fi",
+        "dialogue": [
+            {
+                "prompt": "Medic, what medicine do I need to heal radiation sickness?",
+                "correct_response": "You'll need RadAway to heal radiation sickness."
+            }
+        ]
+    },
+    {
+        "npc_type": "alchemist",
+        "game_genre": "fantasy",
+        "dialogue": [
+            {
+                "prompt": "Alchemist, what ingredients do I need to brew the Elixir of Life?",
+                "correct_response": "You'll need a phoenix feather, unicorn tears, and the root of the world tree to brew the Elixir of Life."
+            }
+        ]
+    },
+    {
+        "npc_type": "pilot",
+        "game_genre": "sci-fi",
+        "dialogue": [
+            {
+                "prompt": "Pilot, what is the safest route through the asteroid belt?",
+                "correct_response": "The safest route is through the Alpha-7 corridor, but it requires precise navigation."
+            }
+        ]
+    },
+    {
+        "npc_type": "mystic",
+        "game_genre": "fantasy",
+        "dialogue": [
+            {
+                "prompt": "Mystic, how can I break the curse on the enchanted forest?",
+                "correct_response": "You'll need to find the original spellcaster, only they can undo their magic."
             }
         ]
     }
+
 ]
