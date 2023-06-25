@@ -4,6 +4,6 @@ base64-decode:
   disclaimer: The eval might be off for longer strings.
   metrics: [accuracy]
 base64-decode-simple.dev.v0:
-  class: evals.elsuite.basic.includes:Includes
+  class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: base64_decode/base64_decode.jsonl
