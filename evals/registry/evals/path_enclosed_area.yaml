@@ -1,0 +1,9 @@
+path_enclosed_area:
+  id: path_enclosed_area.dev.v0
+  description: Geometric calculation of the total area enclosed by a given path on a flat plane
+  metrics: [accuracy]
+
+path_enclosed_area.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: path_enclosed_area/samples.jsonl

@@ -1,0 +1,21 @@
+ukraine-gec:
+  evals:
+  - ukraine-gec-fluency-style
+  - ukraine-gec-fluency-calque
+  - ukraine-gec-fluency-poorflow
+  - ukraine-gec-fluency-repetition
+  - ukraine-gec-fluency-other
+  - ukraine-gec-grammar-aspect
+  - ukraine-gec-grammar-case
+  - ukraine-gec-grammar-comparison
+  - ukraine-gec-grammar-conjunction
+  - ukraine-gec-grammar-gender
+  - ukraine-gec-grammar-number
+  - ukraine-gec-grammar-partvoice
+  - ukraine-gec-grammar-prep
+  - ukraine-gec-grammar-tense
+  - ukraine-gec-grammar-ungrammaticalstructure
+  - ukraine-gec-grammar-verbaform
+  - ukraine-gec-grammar-verbvoice
+  - ukraine-gec-grammar-other
+

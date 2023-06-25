@@ -1,0 +1,10 @@
+iambic-pentameter:
+  id: iambic-pentameter.dev.v0
+  metrics: [accuracy]
+iambic-pentameter.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: iambic-pentameter/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: iambic_pentameter
+    metaeval: true

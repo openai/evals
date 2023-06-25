@@ -1,0 +1,8 @@
+taxes:
+  id: taxes.dev.v0
+  metrics: [accuracy]
+
+taxes.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: taxes/samples.jsonl

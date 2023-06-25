@@ -1,0 +1,8 @@
+number_series_test:
+  id: number_series_test.dev.v0
+  metrics: [accuracy]
+
+number_series_test.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: number_series_test/samples.jsonl

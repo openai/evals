@@ -3,12 +3,15 @@ This file defines the `oaievalset` CLI for running eval sets.
 """
 import argparse
 import json
+import logging
 import subprocess
 from pathlib import Path
+from typing import Optional, cast
 
 from evals.registry import Registry
 
 Task = list[str]
+logger = logging.getLogger(__name__)
 
 
 class Progress:
@@ -41,10 +44,17 @@ def highlight(str: str) -> str:
     return f"\033[1;32m>>> {str}\033[0m"
 
 
-def main() -> None:
+def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run eval sets through the API")
     parser.add_argument("model", type=str, help="Name of a completion model.")
     parser.add_argument("eval_set", type=str, help="Name of eval set. See registry.")
+    parser.add_argument(
+        "--registry_path",
+        type=str,
+        default=None,
+        action="append",
+        help="Path to the registry",
+    )
     parser.add_argument(
         "--resume",
         action=argparse.BooleanOptionalAction,
@@ -57,16 +67,44 @@ def main() -> None:
         default=True,
         help="Exit if any oaieval command fails.",
     )
-    args, unknown_args = parser.parse_known_args()
+    return parser
 
-    registry = Registry()
+
+class OaiEvalSetArguments(argparse.Namespace):
+    model: str
+    eval_set: str
+    registry_path: Optional[str]
+    resume: bool
+    exit_on_error: bool
+
+
+def run(
+    args: OaiEvalSetArguments,
+    unknown_args: list[str],
+    registry: Optional[Registry] = None,
+    run_command: str = "oaieval",
+) -> None:
+    registry = registry or Registry()
+    if args.registry_path:
+        registry.add_registry_paths(args.registry_path)
+
     commands: list[Task] = []
-    eval_set = registry.get_eval_set(args.eval_set)
-    for eval in registry.get_evals(eval_set.evals):
-        command = ["oaieval", args.model, eval.key] + unknown_args
-        if command in commands:
-            continue
-        commands.append(command)
+    eval_set = registry.get_eval_set(args.eval_set) if args.eval_set else None
+    if eval_set:
+        for index, eval in enumerate(registry.get_evals(eval_set.evals)):
+            if not eval or not eval.key:
+                logger.debug("The eval #%d in eval_set is not valid", index)
+
+            command = [run_command, args.model, eval.key] + unknown_args
+            if args.registry_path:
+                command.append("--registry_path")
+                command = command + args.registry_path
+            if command in commands:
+                continue
+            commands.append(command)
+    else:
+        logger.warning("No eval set found for %s", args.eval_set)
+
     num_evals = len(commands)
 
     progress = Progress(f"/tmp/oaievalset/{args.model}.{args.eval_set}.progress.txt")
@@ -90,6 +128,12 @@ def main() -> None:
         progress.add(command)
 
     print(highlight("All done!"))
+
+
+def main() -> None:
+    parser = get_parser()
+    args, unknown_args = parser.parse_known_args()
+    run(cast(OaiEvalSetArguments, args), unknown_args)
 
 
 if __name__ == "__main__":

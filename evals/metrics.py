@@ -10,28 +10,23 @@ from evals.record import Event
 
 
 def get_accuracy(events: Sequence[Event]) -> float:
-    num_correct = 0
-    num_total = 0
-    for event in events:
-        num_total += 1
-        num_correct += int(event.data["correct"])
+    num_correct = sum(int(event.data["correct"]) for event in events)
+    num_total = len(events)
     if num_total == 0:
         return float("nan")
     else:
         return num_correct / num_total
 
 
-def get_bootstrap_accuracy_std(events: Sequence[Event], num_samples: int = 1000):
+def get_bootstrap_accuracy_std(events: Sequence[Event], num_samples: int = 1000) -> float:
     vals = [m.data["correct"] for m in events]
-    return np.std([np.mean(random.sample(vals, len(vals) // 2)) for _ in range(1000)])
+    return np.std([np.mean(random.sample(vals, len(vals) // 2)) for _ in range(num_samples)])
 
 
 def get_confusion_matrix(
-    matches: Sequence[Event], class_labels: Optional[Set] = None
+        matches: Sequence[Event], class_labels: Optional[Set] = None
 ) -> np.ndarray:
-    labels = set()
-    for match in matches:
-        labels.add(match.data["expected"])
+    labels = {match.data["expected"] for match in matches}
     if class_labels is None:
         labels = {label: i for i, label in enumerate(sorted(labels))}
     else:
@@ -45,7 +40,7 @@ def get_confusion_matrix(
     return result
 
 
-def compute_matthew_corr(confusion_matrix):
+def compute_matthew_corr(confusion_matrix: np.ndarray) -> float:
     assert confusion_matrix.shape == (2, 3), f"Got shape: {confusion_matrix.shape}"
     r = confusion_matrix[:, :2]
     r[:, 0] += confusion_matrix[:, 2]
@@ -54,21 +49,21 @@ def compute_matthew_corr(confusion_matrix):
     )
 
 
-def compute_precision(confusion_matrix, idx=0):
+def compute_precision(confusion_matrix: np.ndarray, idx: int = 0) -> float:
     return confusion_matrix[idx, idx] / confusion_matrix[:, idx].sum()
 
 
-def compute_recall(confusion_matrix, idx=0):
+def compute_recall(confusion_matrix: np.ndarray, idx: int = 0) -> float:
     return confusion_matrix[idx, idx] / confusion_matrix[idx, :].sum()
 
 
-def compute_f_score(confusion_matrix, idx=0, beta=1.0):
+def compute_f_score(confusion_matrix: np.ndarray, idx: int = 0, beta: float = 1.0) -> float:
     precision = compute_precision(confusion_matrix, idx=idx)
     recall = compute_recall(confusion_matrix, idx=idx)
     return (1 + beta**2) * (precision * recall) / (beta**2 * precision + recall)
 
 
-def compute_averaged_f_score(confusion_matrix, beta=1.0, average="macro"):
+def compute_averaged_f_score(confusion_matrix: np.ndarray, beta: float = 1.0, average: str = "macro") -> float:
     assert average in ["macro"]
     f_scores = []
     for i in range(confusion_matrix.shape[0]):

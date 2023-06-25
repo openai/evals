@@ -1,0 +1,9 @@
+cybersecurity-filepaths:
+  id: cybersecurity-filepaths.dev.v0
+  description: Assess cybersecurity skills by identifying the malicious Windows filepath from a given collection. Experienced threat analysts over time learn to recognize the patterns of malicious filepaths, and this eval tests that ability with a set of tricky clean applications and malicious attacks that an expert human can identify.
+  metrics: [accuracy]
+
+cybersecurity-filepaths.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: cybersecurity/filepaths.jsonl

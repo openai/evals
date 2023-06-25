@@ -1,0 +1,9 @@
+simple-visual-understanding:
+  id: simple-visual-understanding.dev.v0
+  description: Test the model's ability to understand simple visual scenarios as well as some simple 2D navigation
+  metrics: [accuracy]
+simple-visual-understanding.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: simple-visual-understanding/simple-visual-understanding.jsonl
+    

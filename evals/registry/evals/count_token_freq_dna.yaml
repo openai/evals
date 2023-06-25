@@ -1,0 +1,10 @@
+count_token_freq_dna:
+  id: count_token_freq_dna.dev.v0
+  description: Test the model's ability to count the occurrence of a specific nucleotide (A, T, G, or C) within provided DNA sequences.
+  metrics:
+  - accuracy
+
+count_token_freq_dna.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: count_token_freq_dna/samples.jsonl
