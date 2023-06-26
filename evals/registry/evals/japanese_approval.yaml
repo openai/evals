@@ -1,5 +1,6 @@
 japanese_approval:
   id: japanese_approval.dev.v0
+  description: Tests for proper translation of Japanese "はい" and "いいえ" depending on the context.
   metrics: [accuracy]
 
 japanese_approval.dev.v0:
