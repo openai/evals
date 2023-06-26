@@ -1,8 +1,26 @@
-word-association:
-  id: word-association.test.v0
+word-association-related-words-3:
+  id: word-association-related-words-3.test.v1
+  description: Evaluate a model's ability to determine a secret word based on a list of 3 related words.
   metric: [accuracy]
-
-word-association.test.v0:
+word-association-related-words-3.test.v1:
   class: evals.elsuite.basic.includes:Includes
   args:
-    samples_jsonl: word_association/samples.jsonl
+    samples_jsonl: word_association/related_words_3.jsonl
+
+word-association-related-words-5:
+  id: word-association-related-words-5.test.v1
+  description: Evaluate a model's ability to determine a secret word based on a list of 5 related words.
+  metric: [accuracy]
+word-association-related-words-5.test.v1:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: word_association/related_words_5.jsonl
+
+word-association-related-words-7:
+  id: word-association-related-words-7.test.v1
+  description: Evaluate a model's ability to determine a secret word based on a list of 7 related words.
+  metric: [accuracy]
+word-association-related-words-7.test.v1:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: word_association/related_words_7.jsonl
