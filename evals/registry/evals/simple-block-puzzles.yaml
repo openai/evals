@@ -1,0 +1,9 @@
+simple-block-puzzles:
+  id: simple-block-puzzles.dev.v0
+  description: Test the model's spatial reasoning abilities by asking it to combine two blocks to recreate a shape.
+  metrics: [accuracy]
+
+simple-block-puzzles.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: simple-block-puzzles/block-puzzles.v1.jsonl

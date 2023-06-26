@@ -1,0 +1,8 @@
+marxist_philosophy_exam:
+  id: marxist_philosophy_exam_simple.dev.v0
+  description: Test the model's ability to solve Chinese Marxist Philosophy Exam.
+  metrics: [accuracy]
+marxist_philosophy_exam_simple.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: marxist_philosophy_exam/fuzzy_match.jsonl
