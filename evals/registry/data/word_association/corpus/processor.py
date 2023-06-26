@@ -10,7 +10,7 @@ Classes:
 from corpus import Corpus, NltkCorpus
 from related_words import RelatedWords
 from collections import namedtuple
-from typing import List, Union
+from typing import List, Union, Iterator
 
 Thresholds = namedtuple('Thresholds', ['lower', 'upper'])
 LengthBounds = namedtuple('LengthBounds', ['lower', 'upper'])
@@ -22,11 +22,11 @@ class WordCollectionProcessor:
     This class provides various filtering methods to narrow down the collection based on specific criteria.
 
     Args:
-        corpus (Corpus | RelatedWords): The corpus or list of related words to be processed.
+        words (Corpus | RelatedWords): The corpus or list of related words to be processed.
     """
 
-    def __init__(self, corpus: Union[Corpus, RelatedWords]) -> None:
-        self.corpus = corpus
+    def __init__(self, words: Union[Corpus, RelatedWords]) -> None:
+        self.words = words
 
     def parts_of_speech_filter(self, parts_of_speech: List[str]) -> None:
         """
@@ -37,8 +37,8 @@ class WordCollectionProcessor:
             parts_of_speech (list[str]): A list of allowed parts of speech (e.g., "NN", "VBG").
         """
         # Refactor to have default to nltk tagging if NotImplemented
-        tagged_words = self.corpus.get_pos_tagged_words()
-        self.corpus.words = [word for word, pos in tagged_words if pos in parts_of_speech]
+        tagged_words = self.words.get_pos_tagged_words()
+        self.words.words = [word for word, pos in tagged_words if pos in parts_of_speech]
 
     def frequency_filter(self, thresholds: Thresholds = Thresholds(0, float('inf')),
                          filter_corpus: Corpus = None) -> None:
@@ -54,7 +54,7 @@ class WordCollectionProcessor:
             filter_corpus = NltkCorpus("brown")
         frequency_dist = filter_corpus.get_frequency_distribution()
         lower_bound, upper_bound = thresholds
-        self.corpus.words = [word for word in self.corpus if lower_bound <= frequency_dist[word] <= upper_bound]
+        self.words.words = [word for word in self.words if lower_bound <= frequency_dist[word] <= upper_bound]
 
     def char_length_filter(self, length_bounds: LengthBounds) -> None:
         """
@@ -64,7 +64,7 @@ class WordCollectionProcessor:
             length_bounds (LengthBounds): A tuple of lower and upper bounds for the word length filter.
         """
         lower_bound, upper_bound = length_bounds
-        self.corpus.words = [word for word in self.corpus if lower_bound <= len(word) <= upper_bound]
+        self.words.words = [word for word in self.words if lower_bound <= len(word) <= upper_bound]
 
     def sub_word_filter(self, subword: str) -> None:
         """
@@ -73,7 +73,7 @@ class WordCollectionProcessor:
         Args:
             subword (str): The substring to exclude from the words in the collection.
         """
-        self.corpus.words = [word for word in self.corpus if subword not in word]
+        self.words.words = [word for word in self.words if subword not in word]
 
     def str_max_word_count_filter(self, max_num_words: int = 1) -> None:
         """
@@ -82,6 +82,18 @@ class WordCollectionProcessor:
         Args:
             max_num_words (int): The maximum number of words allowed per element. Default: 1.
         """
-        words_to_remove = [word for word in self.corpus
+        words_to_remove = [word for word in self.words
                            if word.count(" ") > max_num_words - 1]
-        self.corpus.words = [word for word in self.corpus if word not in words_to_remove]
+        self.words.words = [word for word in self.words if word not in words_to_remove]
+
+    def __iter__(self) -> Iterator[str]:
+        """Retrieve an iterator over the words."""
+        return iter(self.words)
+
+    def __len__(self) -> int:
+        """Retrieve the number of words in the collection."""
+        return len(self.words)
+
+    def __getitem__(self, index: int) -> str:
+        """Get word from corpus at given index."""
+        return self.words[index]
