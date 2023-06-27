@@ -3,6 +3,6 @@ japanese_mahjong_discard_tile:
   description: Test the model's ability to correctly understand the common rule of discarding tile strategy in Japanese Mahjong.
   metrics: [accuracy]
 japanese_mahjong_discard_tile.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: japanese_mahjong_discard_tile/samples.jsonl
