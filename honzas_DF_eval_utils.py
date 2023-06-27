@@ -15,7 +15,8 @@
 # !cd evals && pip install -e .
 
 import pandas as pd
-import json
+import json, jsonlines
+from box import Box
 
 import os
 import glob
@@ -82,7 +83,6 @@ def display_outs():
 
 def reformat_ant_eval(orig_jsonl_path:str, dest_path:str, max_lines: int):
     # with open for lines.. json.loads()
-    import jsonlines
     machia_template = {
         "input": [
             {
@@ -99,7 +99,7 @@ def reformat_ant_eval(orig_jsonl_path:str, dest_path:str, max_lines: int):
     dest = open(dest_path, "w")
     with jsonlines.open(orig_jsonl_path) as reader:
         for num, line in enumerate(reader):
-            if max_lines and num>max_lines:
+            if max_lines and num>=max_lines:
                 break
             # print(line["statement"])
             # print("  optimal:", line["answer_matching_behavior"])
@@ -117,18 +117,37 @@ if __name__ == "__main__":
     import os
     dirname = os.path.dirname(__file__)
 
-    ## Reformating/migration of Anth. evals:
-    anthropic_eval_repo = "../anthropics_evals/"
-    src_filename = os.path.join(dirname, anthropic_eval_repo, "persona/machiavellianism.jsonl")
-    dst_path = os.path.join(dirname, "./evals/registry/data/macia/macia.jsonl")
-    reformat_ant_eval(src_filename,dst_path, max_lines=6)
-    print("Wrote reformatted eval to "+dst_path)
+    # ## Reformating/migration of Anth. evals:
+    # anthropic_eval_repo = "../anthropics_evals/"
+    # src_filename = os.path.join(dirname, anthropic_eval_repo, "persona/machiavellianism.jsonl")
+    # dst_path = os.path.join(dirname, "./evals/registry/data/macia/macia.jsonl")
+    # reformat_ant_eval(src_filename,dst_path, max_lines=50)
+    # print("Wrote reformatted eval to "+dst_path)
 
     ## Running the generated eval:
     from evals.cli.oaieval import main
     import sys
-    out_path = "./output/machi07.jsonl"
+    out_path = "./output/machi08.jsonl"
     sys.argv.append(f"--record_path={out_path}")
-    main()
+    # main()
+
+    ## Analytical part/re-processing..:
     # print(pd.DataFrame.from_dict(json.load(open(out_path))).to_string())
+    # out_list = json.load(open(out_path))
+    lines = {} # to be indexed by run_id
+    with jsonlines.open(out_path) as reader:
+        # parsing run_id-connected stuff to a DF
+        for line in reader:
+            line_d = line#json.loads(line)
+            if "run_id" in line_d:
+                # interested, grab from it:
+                if line_d["type"]=="sampling":
+                    lines[line_d["sample_id"]] = { "statement": Box(line_d).data.prompt[1].content,
+                                                    "sampled": Box(line_d).data.sampled}
+
+    # df = pd.DataFrame.from_dict()
+    data_list = [{'run_id': key, **value} for key, value in lines.items()]
+    df = pd.DataFrame(data_list)
+    # print(df.to_string())
+    df.to_clipboard() # quick export
 
