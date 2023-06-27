@@ -1,9 +1,0 @@
-chinese_guess_lantern_riddles:
-  id: chinese_guess_lantern_riddles.dev.v0
-  description: Test the model's capability to deeply understand Chinese characters, Chinese language and Chinese culture.
-  metrics: [accuracy]
-
-chinese_guess_lantern_riddles.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: chinese_guess_lantern_riddles/samples.jsonl

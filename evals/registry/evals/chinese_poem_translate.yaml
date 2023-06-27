@@ -1,0 +1,9 @@
+chinese_poem_translate:
+  id: chinese_poem_translate.dev.v0
+  description: Test the model's capability to translate Chinese poetry into English.
+  metrics: [accuracy]
+
+chinese_poem_translate.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_poem_translate/samples.jsonl
