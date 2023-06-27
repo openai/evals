@@ -1,0 +1,69 @@
+match_product-information-extraction_explicit:
+  id: match_product-information-extraction_explicit.dev.v0
+  metrics:
+    - f_score
+    - precision
+    - recall
+    - accuracy
+  description: Evaluate LLM performance on the task of Product Information Extraction. Examples are a subsample of the MAVE dataset.
+    This is the Explicit zero-shot prompt from the paper 'Product Information Extraction using ChatGPT'
+    by Alexander Brinkmann, Roee Shraga, Reng Chiz Der and Christian Bizer. Github "https://github.com/wbsg-uni-mannheim/pie_chatgpt"
+
+match_product-information-extraction_explicit.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: product-information-extraction/zeroshot/explicit_samples.jsonl
+
+
+
+match_product-information-extraction_generated-knowledge:
+  id: match_product-information-extraction_generated-knowledge.dev.v0
+  metrics:
+    - f_score
+    - precision
+    - recall
+    - accuracy
+  description: Evaluate LLM performance on the task of Product Information Extraction. Examples are a subsample of the MAVE dataset.
+    This is the Generated-Knowledge zero-shot prompt from the paper 'Product Information Extraction using ChatGPT'
+    by Alexander Brinkmann, Roee Shraga, Reng Chiz Der and Christian Bizer. Github "https://github.com/wbsg-uni-mannheim/pie_chatgpt"
+
+match_product-information-extraction_generated-knowledge.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: product-information-extraction/zeroshot/generated_knowledge_samples.jsonl
+
+
+
+match_product-information-extraction_generated-knowledge_one-shot:
+  id: match_product-information-extraction_generated-knowledge_one-shot.dev.v0
+  metrics:
+    - f_score
+    - precision
+    - recall
+    - accuracy
+  description: Evaluate LLM performance on the task of Product Information Extraction. Examples are a subsample of the MAVE dataset.
+    This is the Generated-Knowledge one-shot prompt from the paper 'Product Information Extraction using ChatGPT'
+    by Alexander Brinkmann, Roee Shraga, Reng Chiz Der and Christian Bizer. Github "https://github.com/wbsg-uni-mannheim/pie_chatgpt"
+
+match_product-information-extraction_generated-knowledge_one-shot.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: product-information-extraction/fewshot/generated_knowledge_one_shot_samples.jsonl
+
+
+
+match_product-information-extraction_generated-knowledge_three-shot:
+  id: match_product-information-extraction_generated-knowledge_three-shot.dev.v0
+  metrics:
+    - f_score
+    - precision
+    - recall
+    - accuracy
+  description: Evaluate LLM performance on the task of Product Information Extraction. Examples are a subsample of the MAVE dataset.
+    This is the Generated-Knowledge three-shot prompt from the paper 'Product Information Extraction using ChatGPT'
+    by Alexander Brinkmann, Roee Shraga, Reng Chiz Der and Christian Bizer. Github "https://github.com/wbsg-uni-mannheim/pie_chatgpt"
+
+match_product-information-extraction_generated-knowledge_three-shot.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: product-information-extraction/fewshot/generated_knowledge_three_shot_samples.jsonl
