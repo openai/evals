@@ -1,0 +1,9 @@
+portuguese-kinship-riddles:
+  id: portuguese-kinship-riddles.dev.v0
+  description: An evaluation of the ability to solve logical reasoning problems involving kinship relationships.
+  metrics: [accuracy]
+
+portuguese-kinship-riddles.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: portuguese-kinship-riddles/samples.jsonl

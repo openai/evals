@@ -1,0 +1,9 @@
+blackfoot-numerals-modern:
+  id: blackfoot-numerals-modern.dev.v0
+  description: Test the model's ability to convert Blackfoot numerals from the modern roman-based orthography to numbers.
+  metrics: [Includes]
+
+blackfoot-numerals-modern.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: blackfoot-numerals-modern/samples.jsonl

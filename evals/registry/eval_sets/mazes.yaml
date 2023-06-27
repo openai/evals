@@ -1,0 +1,10 @@
+mazes:
+  evals:
+    - mazes-singlemove-3x3
+    - mazes-singlemove-4x4
+    - mazes-singlemove-10x10
+    - mazes-3x3
+    - mazes-4x4
+    - mazes-10x10
+
+

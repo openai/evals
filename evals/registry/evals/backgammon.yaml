@@ -1,0 +1,19 @@
+backgammon-can-hit:
+  id: backgammon-can-hit.dev.v0
+  description: Evaluate if a checker can be hit given the a board state and a dice roll.
+  metrics: [accuracy]
+
+backgammon-can-hit.dev.v0:
+  args:
+    samples_jsonl: backgammon/backgammon-can-hit.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+backgammon-illegal-move:
+  id: backgammon-illegal-move.dev.v0
+  description: Evaluate if the the given move is illegal given a board state, a dice roll and a suggested play.
+  metrics: [accuracy]
+
+backgammon-illegal-move.dev.v0:
+  args:
+    samples_jsonl: backgammon/backgammon-illegal-move.jsonl
+  class: evals.elsuite.basic.includes:Includes

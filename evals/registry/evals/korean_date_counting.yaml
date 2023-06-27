@@ -1,0 +1,10 @@
+korean_date_counting:
+  id: korean_date_counting.dev.v0
+  description: Test the model's understanding of Korean date counting. 
+  metrics: [accuracy]
+
+korean_date_counting.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: korean_date_counting/samples.jsonl
+

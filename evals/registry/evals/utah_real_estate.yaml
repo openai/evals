@@ -1,0 +1,9 @@
+utah_real_estateh:
+  id: utah_real_estate.dev.v0
+  description: tests the model's ability to read and understand Utah's real estate law. 
+  metrics: [accuracy]
+
+utah_real_estate.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: utah_real_estate/samples.jsonl
