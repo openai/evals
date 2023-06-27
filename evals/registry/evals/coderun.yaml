@@ -1,0 +1,9 @@
+coderun:
+  id: coderun.dev.v0
+  description: Assesses the model's performance in solving spatial and geometrical puzzles that require imagination, logic, and pattern recognition.
+  metrics: [accuracy]
+
+coderun.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: coderun/samples.jsonl
