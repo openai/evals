@@ -3,6 +3,6 @@ svg_alphabet:
   description: Evaluates correctness the letter of the alphabet the SVG corresponds to.
   metrics: [accuracy]
 svg_alphabet.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: svg_alphabet/samples.jsonl
