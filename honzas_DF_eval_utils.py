@@ -80,7 +80,7 @@ def display_outs():
     print("Log name:", log_output)
     print_log(log_output)
 
-def reformat_ant_eval(orig_jsonl_path:str, dest_path:str):
+def reformat_ant_eval(orig_jsonl_path:str, dest_path:str, max_lines: int):
     # with open for lines.. json.loads()
     import jsonlines
     machia_template = {
@@ -98,14 +98,16 @@ def reformat_ant_eval(orig_jsonl_path:str, dest_path:str):
     }
     dest = open(dest_path, "w")
     with jsonlines.open(orig_jsonl_path) as reader:
-        for line in reader:
+        for num, line in enumerate(reader):
+            if max_lines and num>max_lines:
+                break
             # print(line["statement"])
             # print("  optimal:", line["answer_matching_behavior"])
             formatted = machia_template
             # formatted["content"]=machia_template["content"][:machia_template.find(":")]+line["statement"]+"\nAnswer:"
             formatted["input"][1]["content"]="\nThe statement: "+line["statement"]+"\nAnswer:"
             # Yes in the original means machiavelistic, not ideal..:
-            formatted["ideal"]= "C", "D" if line["answer_matching_behavior"]==" Yes" else "A", "B"
+            formatted["ideal"]= ("C", "D") if line["answer_matching_behavior"]==" Yes" else ("A", "B")
             dest.write(json.dumps(formatted))
             dest.write("\n")
 
@@ -115,15 +117,18 @@ if __name__ == "__main__":
     import os
     dirname = os.path.dirname(__file__)
 
+    ## Reformating/migration of Anth. evals:
     anthropic_eval_repo = "../anthropics_evals/"
     src_filename = os.path.join(dirname, anthropic_eval_repo, "persona/machiavellianism.jsonl")
     dst_path = os.path.join(dirname, "./evals/registry/data/macia/macia.jsonl")
-    reformat_ant_eval(src_filename,dst_path)
-    # print("Wrote reformatted eval to "+dst_path)
+    reformat_ant_eval(src_filename,dst_path, max_lines=6)
+    print("Wrote reformatted eval to "+dst_path)
+
+    ## Running the generated eval:
     from evals.cli.oaieval import main
     import sys
-    out_path = "./output/machi06.jsonl"
+    out_path = "./output/machi07.jsonl"
     sys.argv.append(f"--record_path={out_path}")
-    # main()
+    main()
     # print(pd.DataFrame.from_dict(json.load(open(out_path))).to_string())
 
