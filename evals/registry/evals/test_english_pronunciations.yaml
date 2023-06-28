@@ -1,0 +1,8 @@
+test_english_pronunciations:
+  id: test_english_pronunciations.dev.v0
+  description: We evaluated the ability of GPT to distinguish between words that have the same pronunciation in standard British English.
+  metrics: [accuracy]
+test_english_pronunciations.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: test_english_pronunciations/samples.jsonl
