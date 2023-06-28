@@ -1,0 +1,8 @@
+hebrew-homophones:
+  id: hebrew-homophones.dev.v0
+  description:
+  metrics: [accuracy]
+hebrew-homophones.dev.v0:
+  args:
+    samples_jsonl: hebrew_homophones/samples.jsonl
+  class: evals.elsuite.basic.match:Match
