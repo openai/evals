@@ -1,0 +1,9 @@
+state-name-analysis:
+  id: state-name-analysis.dev.v0
+  metrics: [accuracy]
+  description: Test the model's ability to solve basic textual analysis questions on text not directly in the prompt.
+
+state-name-analysis.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: state-name-analysis/samples.jsonl
