@@ -1,0 +1,9 @@
+norwegian-rhymes:
+  id: norwegian-rhymes.dev.v0
+  description: Test the knowledge of Norwegian Bokmål phonetics with dictionary words that appear to rhyme but do not, or words that appear to not rhyme, but do.
+  metrics: [accuracy]
+
+norwegian-rhymes.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: norwegian-rhymes/samples.jsonl
