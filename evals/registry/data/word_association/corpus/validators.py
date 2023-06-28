@@ -66,9 +66,9 @@ class EmbeddingsValidator(QualityValidator):
         for pair in embedding_pairs:
             similarity = round(similarity_function(pair.vectors[0].vector, pair.vectors[1].vector), 3)
             similar = similarity > self.target_score
-            results.append(SimilarityTuple(pair.related_words_pair, similar))
-            print(f"{pair.related_words_pair.word},{pair.related_words_pair.related_words},{similar},{similarity}")
-            # logger.info(f"{pair.related_words_pair} is similar: {similar} score:({similarity})")
+            similarity_tuple = SimilarityTuple(pair.related_words_pair, similar)
+            results.append(similarity_tuple)
+            logger.info(f"{pair.related_words_pair}: {similar} score:({similarity})")
         return results
 
     @staticmethod
