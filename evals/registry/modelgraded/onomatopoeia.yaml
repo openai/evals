@@ -18,7 +18,12 @@ onomatopoeia:
     (D) 意味が部分的に正解しているが、例文は不正解。
     (E) 意味は一致していないが、例文は正解している。
     (F) 意味が一致していないし、例文も不正解。
-  choice_strings: ABCDEF
+  choice_strings:
+    - "A"
+    - "B"
+    - "C"
+    - "D"
+    - "E"
   choice_scores:
     "A": 1.0
     "B": 0.8
