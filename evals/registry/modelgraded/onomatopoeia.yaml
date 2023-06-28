@@ -24,6 +24,7 @@ onomatopoeia:
     - "C"
     - "D"
     - "E"
+    - "F"
   choice_scores:
     "A": 1.0
     "B": 0.8
