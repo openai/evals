@@ -1,0 +1,9 @@
+nepali-numerals:
+  id: nepali-numerals.dev.v0
+  description: Test the model's ability to convert Nepali numerals to numbers.
+  metrics: [accuracy]
+
+nepali-numerals.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: nepali_numerals/samples.jsonl
