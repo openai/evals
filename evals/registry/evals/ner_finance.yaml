@@ -1,0 +1,9 @@
+ner_finance:
+  id: ner_finance.dev.v0
+  description: Named entity recognition over financial documents.
+  metrics:
+  - accuracy
+ner_finance.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: ner_finance/samples.jsonl
