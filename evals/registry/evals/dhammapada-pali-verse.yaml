@@ -1,0 +1,9 @@
+dhammapada-pali-verse:
+  id: dhammapada-pali-verse.dev.v0
+  description: Test the model's ability to produce the first Pali word of each verse in the Dhammapada.
+  metrics: [accuracy]
+
+dhammapada-pali-verse.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: dhammapada-pali-verse/samples.jsonl
