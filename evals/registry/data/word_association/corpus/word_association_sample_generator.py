@@ -1,10 +1,11 @@
 import json
+import random
 from logger_config import logger
 from typing import List, Optional, Callable, Any
 from corpus import NltkCorpus, Corpus
 from processor import WordCollectionProcessor
 from related_words import DataMuseRelatedWords
-from validators import RelatedStrings, SimilarityTuple, EmbeddingsValidator
+from validators import RelatedWordsPair, SimilarityTuple, EmbeddingsValidator
 
 
 class EvalTemplate:
@@ -27,10 +28,11 @@ class EvalTemplate:
                 f.write(json.dumps(sample) + "\n")
 
 
-def generate_word_association_system_message(word: str, related_words: List[str],
+def generate_word_association_system_message(word_association_pair: RelatedWordsPair,
                                              parts_of_speech_choices: Optional[List[str]] = None) -> str:
+    related_words = word_association_pair.related_words.split(', ')
     num_words = len(related_words)
-    word_length = len(word)
+    word_length = len(word_association_pair.word)
 
     message_parts = [
         "We are going to play a game of word association. I want you to guess the secret word.",
@@ -47,6 +49,25 @@ def generate_word_association_system_message(word: str, related_words: List[str]
 
     system_message = ' '.join(message_parts)
     return system_message
+
+
+def generate_additional_choices(word_association_pair: RelatedWordsPair, corpus: Corpus) -> List[str]:
+    # Create a new list without the target word and related words
+    correct_answer = word_association_pair.word
+    new_corpus = [word for word in corpus if word != correct_answer
+                  and word not in word_association_pair.related_words]
+
+    choices = random.sample(new_corpus, 4)
+    choices.append(correct_answer)
+    random.shuffle(choices)
+    return choices
+
+
+def generate_word_association_user_message(word_association_pair: RelatedWordsPair, corpus: Corpus) -> str:
+    choices = generate_additional_choices(word_association_pair, corpus)
+    user_message = f"Here is a list of the related words: [{word_association_pair.related_words}]. Here is a list of " \
+                   f"your options: {choices}. What is the secret word?"
+    return user_message
 
 
 def taboo_clue_guesser_system_message() -> None:
@@ -68,9 +89,9 @@ def main(corpus: Corpus, related_words_length: int, max_samples: int = -1,
          export_file: Optional[str] = None, *filters: Callable[[Any], Any]) -> None:
     eval_factory = EvalTemplate()
 
-    word_association_pairs: List[RelatedStrings] = []
+    word_association_pairs: List[RelatedWordsPair] = []
     # Get related words for each word in the filtered corpus
-
+    corpus = sorted(set(corpus))
     for word in corpus:
         related_words = DataMuseRelatedWords(word)
 
@@ -91,7 +112,7 @@ def main(corpus: Corpus, related_words_length: int, max_samples: int = -1,
         if len(related_words) >= related_words_length:
             related_words = related_words[:related_words_length]
             logger.info(f"Word: {word}, Related Words: {related_words}")
-            word_association_pairs.append(RelatedStrings(word, "|".join(related_words)))
+            word_association_pairs.append(RelatedWordsPair(word, ", ".join(related_words)))
             # generate the system message for each word association
         else:
             logger.info(f"Word: {word}, Related Words: {related_words}, Skipped - Not Enough Related Words")
@@ -99,14 +120,14 @@ def main(corpus: Corpus, related_words_length: int, max_samples: int = -1,
     validator = EmbeddingsValidator(0.75)
     similarities: List[SimilarityTuple] = validator.validate(word_association_pairs)
 
-    valid_samples: List[RelatedStrings] = [word_association_pair for word_association_pair, similarity
-                                           in similarities if similarity]
+    valid_samples: List[RelatedWordsPair] = [word_association_pair for word_association_pair, similarity
+                                             in similarities if similarity]
     logger.info(f"Total Sample: {len(word_association_pairs)} Valid Samples: {len(valid_samples)}")
-    for word, related_words in valid_samples:
-        system_message = generate_word_association_system_message(word, related_words.split("|"),
+    for word_association_pair in valid_samples:
+        system_message = generate_word_association_system_message(word_association_pair,
                                                                   parts_of_speech_choices=["noun", "verb"])
-        eval_factory.create_sample(system_message, f"Here is a list of"
-                                                   f" the related words: {related_words}", f"[{word}]")
+        user_message = generate_word_association_user_message(word_association_pair, corpus)
+        eval_factory.create_sample(system_message, user_message, word_association_pair.word)
         # If the maximum number of samples have been created, break the loop
         if max_samples != -1 and len(eval_factory.samples) >= max_samples:
             break
@@ -132,4 +153,4 @@ if __name__ == "__main__":
     filtered_corpus = processor.words
 
     # Generate the evals
-    main(filtered_corpus, related_words_length=5)
+    main(filtered_corpus, related_words_length=6)

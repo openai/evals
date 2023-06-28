@@ -86,7 +86,7 @@ class DataMuseRelatedWords(RelatedWords):
 
     Args:
         word (str): The word to find related words for.
-        constraint (str): Constraint for related words, rel_[code] Default: 'rel_trg'.
+        constraint (str): Constraint for related words, rel_[code] Default: 'rel_syn'.
             [code] | Description | Example
             jja | Popular nouns modified by the given adjective, per Google Books Ngrams | gradual → increase
             jjb | Popular adjectives used to modify the given noun, per Google Books Ngrams | beach → sandy
@@ -119,7 +119,7 @@ class DataMuseRelatedWords(RelatedWords):
                 (p for parts of speech or f for word frequency, calls to those filters will fail)
     """
 
-    def __init__(self, word: str, constraint: str = "rel_trg", **kwargs: Optional[Union[str, int]]) -> None:
+    def __init__(self, word: str, constraint: str = "rel_syn", **kwargs: Optional[Union[str, int]]) -> None:
         self.constraint = constraint
         super().__init__(word, **kwargs)
 

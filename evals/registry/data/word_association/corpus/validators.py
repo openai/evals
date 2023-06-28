@@ -15,18 +15,18 @@ class Embedding(NamedTuple):
     vector: List[float]
 
 
-class RelatedStrings(NamedTuple):
-    string: str
-    related_string: str | List[str]
+class RelatedWordsPair(NamedTuple):
+    word: str
+    related_words: str
 
 
 class EmbeddingPair(NamedTuple):
-    related_strings: RelatedStrings
+    related_words_pair: RelatedWordsPair
     vectors: Tuple[Embedding]
 
 
 class SimilarityTuple(NamedTuple):
-    related_strings: RelatedStrings
+    related_words_pair: RelatedWordsPair
     similar: bool
 
 
@@ -36,21 +36,21 @@ class QualityValidator(ABC):
         self.target_score = target_score
 
     @abstractmethod
-    def validate(self, related_strings: RelatedStrings) -> List[SimilarityTuple]:
+    def validate(self, related_words_pair: RelatedWordsPair) -> List[SimilarityTuple]:
         raise NotImplementedError
 
 
 class EmbeddingsValidator(QualityValidator):
 
-    def validate(self, related_strings: List[RelatedStrings],
+    def validate(self, related_words_pair: List[RelatedWordsPair],
                  similarity_function: Callable[[List[float], List[float]], float] = None) -> List[SimilarityTuple]:
 
-        logger.info(f"Validating {len(related_strings)} related strings.")
+        logger.info(f"Validating {len(related_words_pair)} related strings.")
         if similarity_function is None:
             similarity_function = self.calculate_cosine_similarity
 
         # flatten all strings
-        all_strings = [string for pair in related_strings for string in (pair.string, pair.related_string)]
+        all_strings = [string for pair in related_words_pair for string in (pair.word, pair.related_words)]
         logger.debug(f"{all_strings} flattened.")
         # get embeddings
         embeddings = self.get_embeddings(all_strings)
@@ -58,7 +58,7 @@ class EmbeddingsValidator(QualityValidator):
         # form EmbeddingPairs
         embedding_pairs = [
             EmbeddingPair(related_string, (embeddings[i], embeddings[i + 1]))
-            for i, related_string in enumerate(related_strings)
+            for i, related_string in enumerate(related_words_pair)
         ]
 
         results = []
@@ -66,9 +66,9 @@ class EmbeddingsValidator(QualityValidator):
         for pair in embedding_pairs:
             similarity = round(similarity_function(pair.vectors[0].vector, pair.vectors[1].vector), 3)
             similar = similarity > self.target_score
-            results.append(SimilarityTuple(pair.related_strings, similar))
-            print(f"{pair.related_strings.string},{pair.related_strings.related_string},{similar},{similarity}")
-            # logger.info(f"{pair.related_strings} is similar: {similar} score:({similarity})")
+            results.append(SimilarityTuple(pair.related_words_pair, similar))
+            print(f"{pair.related_words_pair.word},{pair.related_words_pair.related_words},{similar},{similarity}")
+            # logger.info(f"{pair.related_words_pair} is similar: {similar} score:({similarity})")
         return results
 
     @staticmethod
@@ -83,7 +83,7 @@ class EmbeddingsValidator(QualityValidator):
         raise NotImplementedError
 
     @staticmethod
-    def get_embeddings(emb_input: Union[RelatedStrings, str, List[str], List[List[int]]]) -> List[Embedding]:
+    def get_embeddings(emb_input: Union[RelatedWordsPair, str, List[str], List[List[int]]]) -> List[Embedding]:
         response = openai.Embedding.create(model="text-embedding-ada-002", input=emb_input)
         response_data = response["data"]
         emb_list = [data["embedding"] for data in response_data]
@@ -93,10 +93,10 @@ class EmbeddingsValidator(QualityValidator):
 
 class GPTValidator(QualityValidator):
 
-    def validate(self, related_strings: RelatedStrings) -> List[SimilarityTuple]:
+    def validate(self, related_words_pair: RelatedWordsPair) -> List[SimilarityTuple]:
         raise NotImplementedError
 
-    def get_chat_completion(self, related_strings: RelatedStrings) -> List[SimilarityTuple]:
+    def get_chat_completion(self, related_words_pair: RelatedWordsPair) -> List[SimilarityTuple]:
         raise NotImplementedError
 
 
@@ -105,12 +105,6 @@ if __name__ == "__main__":
     embeddings = validator.get_embeddings(["test", "testing", "tested"])
     for embedding in embeddings:
         print(embedding.string, embedding.vector[0:5])
-    similarity: SimilarityTuple = validator.validate([RelatedStrings("test", "testing"),
-                                                      RelatedStrings("test", "tested")])
+    similarity: SimilarityTuple = validator.validate([RelatedWordsPair("test", "testing"),
+                                                      RelatedWordsPair("test", "tested")])
     print(similarity)
-    # embedding = validator.get_embedding("world")
-    # embedding2 = validator.get_embedding("globe, earth, man, planet")
-    # similarity = validator.calculate_cosine_similarity(embedding, embedding2)
-    # print(similarity)
-    # validated = validator.validate("world", "globe, earth, man, planet")
-    # print(validated)
