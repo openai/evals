@@ -1,0 +1,9 @@
+code_progress:
+  id: code_progress.dev.v0
+  description: Test the model's ability to assess whether a code block is an in-progress solution to a problem, or a completed solution. If in progress, assess whether it's on the right track.
+  metrics: [accuracy]
+
+code_progress.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: code_progress/samples.jsonl
