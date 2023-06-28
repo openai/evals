@@ -50,7 +50,7 @@ class WordCollectionProcessor:
             filter_corpus (Corpus): The corpus to use as the basis for frequency calculation.
                                     Default: Brown corpus from NLTK.
         """
-        if not filter_corpus:
+        if filter_corpus is None:
             filter_corpus = NltkCorpus("brown")
         frequency_dist = filter_corpus.get_frequency_distribution()
         lower_bound, upper_bound = thresholds

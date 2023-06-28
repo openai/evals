@@ -1,8 +1,10 @@
 import json
+from logger_config import logger
 from typing import List, Optional, Callable, Any
 from corpus import NltkCorpus, Corpus
 from processor import WordCollectionProcessor
 from related_words import DataMuseRelatedWords
+from validators import RelatedStrings, SimilarityTuple, EmbeddingsValidator
 
 
 class EvalTemplate:
@@ -66,7 +68,9 @@ def main(corpus: Corpus, related_words_length: int, max_samples: int = -1,
          export_file: Optional[str] = None, *filters: Callable[[Any], Any]) -> None:
     eval_factory = EvalTemplate()
 
+    word_association_pairs: List[RelatedStrings] = []
     # Get related words for each word in the filtered corpus
+
     for word in corpus:
         related_words = DataMuseRelatedWords(word)
 
@@ -86,20 +90,28 @@ def main(corpus: Corpus, related_words_length: int, max_samples: int = -1,
         related_words = related_processor.words.words
         if len(related_words) >= related_words_length:
             related_words = related_words[:related_words_length]
-            print(f"Word: {word}, Related Words: {related_words}")
+            logger.info(f"Word: {word}, Related Words: {related_words}")
+            word_association_pairs.append(RelatedStrings(word, "|".join(related_words)))
             # generate the system message for each word association
-            system_message = generate_word_association_system_message(word, related_words,
-                                                                      parts_of_speech_choices=["noun", "verb"])
-            eval_factory.create_sample(system_message, f"Here is a list of"
-                                                       f" the related words: {related_words}", f"[{word}]")
         else:
-            print(f"Word: {word}, Related Words: {related_words}, Skipped - Not Enough Related Words")
+            logger.info(f"Word: {word}, Related Words: {related_words}, Skipped - Not Enough Related Words")
 
+    validator = EmbeddingsValidator(0.75)
+    similarities: List[SimilarityTuple] = validator.validate(word_association_pairs)
+
+    valid_samples: List[RelatedStrings] = [word_association_pair for word_association_pair, similarity
+                                           in similarities if similarity]
+    logger.info(f"Total Sample: {len(word_association_pairs)} Valid Samples: {len(valid_samples)}")
+    for word, related_words in valid_samples:
+        system_message = generate_word_association_system_message(word, related_words.split("|"),
+                                                                  parts_of_speech_choices=["noun", "verb"])
+        eval_factory.create_sample(system_message, f"Here is a list of"
+                                                   f" the related words: {related_words}", f"[{word}]")
         # If the maximum number of samples have been created, break the loop
         if max_samples != -1 and len(eval_factory.samples) >= max_samples:
             break
 
-    if not export_file:
+    if export_file is None:
         export_file = f"related_words_{related_words_length}.jsonl"
     eval_factory.export_to_jsonl(filename=export_file)
 
@@ -120,4 +132,4 @@ if __name__ == "__main__":
     filtered_corpus = processor.words
 
     # Generate the evals
-    main(filtered_corpus, related_words_length=7)
+    main(filtered_corpus, related_words_length=5)
