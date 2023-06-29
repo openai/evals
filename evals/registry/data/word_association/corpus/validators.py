@@ -29,27 +29,32 @@ ANSWER_PROMPT_TEMPLATE = """\nYour final output should be in the following forma
 
 
 class Embedding(NamedTuple):
+    """A named tuple representing a string and its corresponding embedding."""
     string: str
     vector: List[float]
 
 
 class RelatedWordsPair(NamedTuple):
+    """A named tuple containing a word and its related words."""
     word: str
     related_words: str
 
 
 class EmbeddingPair(NamedTuple):
+    """A named tuple representing a pair of related words and their embeddings."""
     related_words_pair: RelatedWordsPair
     vectors: Tuple[Embedding]
 
 
 class SimilarityTuple(NamedTuple):
+    """A named tuple representing the result of a similarity analysis."""
     related_words_pair: RelatedWordsPair
     similar: bool
     similarity_score: float
 
 
 class QualityValidator(ABC):
+    """Abstract base class for implementing quality validators."""
     def __init__(self, target_score: int) -> None:
         self.target_score = target_score
 
@@ -61,11 +66,26 @@ class QualityValidator(ABC):
 
 
 class EmbeddingsValidator(QualityValidator):
+    """
+    An implementation of QualityValidator that validates the similarity of embeddings for pairs of related words.
+    """
     def validate(
         self,
         related_words_pairs: List[RelatedWordsPair],
         similarity_function: Callable[[List[float], List[float]], float] = None,
     ) -> List[SimilarityTuple]:
+        """
+        Validates a list of related words pairs by comparing their embeddings.
+
+        Args:
+            related_words_pairs: a list of related word pairs to validate.
+            similarity_function: a function that calculates similarity between two embeddings.
+                                 Defaults to cosine similarity.
+
+        Returns:
+            A list of SimilarityTuple each containing a RelatedWordsPair, a boolean indicating if they're similar,
+            and the similarity score.
+        """
         logger.info(f"Validating {len(related_words_pairs)} related strings.")
         if similarity_function is None:
             similarity_function = self.calculate_cosine_similarity
@@ -100,6 +120,16 @@ class EmbeddingsValidator(QualityValidator):
 
     @staticmethod
     def calculate_cosine_similarity(vec1: List[float], vec2: List[float]) -> float:
+        """
+        Calculates cosine similarity between two vectors.
+
+        Args:
+            vec1: First vector.
+            vec2: Second vector.
+
+        Returns:
+            The cosine similarity between the two vectors.
+        """
         vec1_norm = np.linalg.norm(vec1)
         vec2_norm = np.linalg.norm(vec2)
         similarity = np.dot(vec1, vec2) / (vec1_norm * vec2_norm)
@@ -108,6 +138,16 @@ class EmbeddingsValidator(QualityValidator):
 
     @staticmethod
     def calculate_euclidean_distance(vec1: List[float], vec2: List[float]) -> float:
+        """
+        Calculates Euclidean distance between two vectors.
+
+        Args:
+            vec1: First vector.
+            vec2: Second vector.
+
+        Returns:
+            The Euclidean distance between the two vectors.
+        """
         vec1 = np.array(vec1)
         vec2 = np.array(vec2)
         difference = vec1 - vec2
@@ -119,6 +159,16 @@ class EmbeddingsValidator(QualityValidator):
     def get_embeddings(
         emb_input: Union[RelatedWordsPair, str, List[str], List[List[int]]]
     ) -> List[Embedding]:
+        """
+        Batches the process of getting embeddings from the API.
+
+        Args:
+            emb_input: an input which can be a single string, a list of strings or a list of lists of tokens.
+
+        Returns:
+            A list of Embedding namedtuples where each Embedding
+            represents the input string and its corresponding vector.
+        """
         response = openai.Embedding.create(
             model="text-embedding-ada-002", input=emb_input
         )
@@ -133,9 +183,18 @@ class EmbeddingsValidator(QualityValidator):
 
 
 class GPTValidator(QualityValidator):
+    """Uses the GPT model to validate the similarities between pairs of related words."""
     def __init__(
         self, target_score: int, criteria: Dict[str, str] = None, model: str = "gpt-4"
     ) -> None:
+        """
+        Constructor for GPTValidator.
+
+        Args:
+            target_score: The minimum score threshold for two words to be considered similar.
+            criteria: A dictionary containing any specific criteria to be used in the validation process.
+            model: The identifier of the GPT model to use for the validation.
+        """
         self._model = model
         self.criteria = criteria
         super().__init__(target_score)
@@ -143,6 +202,16 @@ class GPTValidator(QualityValidator):
     def validate(
         self, related_words_pairs: List[RelatedWordsPair]
     ) -> List[SimilarityTuple]:
+        """
+        Validates a list of related word pairs by comparing the outputs of the GPT model.
+
+        Args:
+            related_words_pairs: A list of pairs of related words to validate.
+
+        Returns:
+            A list of tuples containing the original word pair, a boolean indicating whether they are similar
+            according to the GPT model, and the similarity score.
+        """
         similarity_tuples = []
         for related_words_pair in related_words_pairs:
             response = self.get_chat_completion(related_words_pair)
@@ -154,6 +223,17 @@ class GPTValidator(QualityValidator):
 
     def get_chat_completion(self, related_words_pair: RelatedWordsPair,
                             correlation_prompt: str = None, answer_prompt: str = None) -> List[SimilarityTuple]:
+        """
+        Uses the GPT model to generate a completion based on a given prompt.
+
+        Args:
+            related_words_pair: The pair of related words to generate a completion for.
+            correlation_prompt: An optional specific prompt for the correlation task.
+            answer_prompt: An optional specific prompt for the answer format. If not provided, a default is used.
+
+        Returns:
+            The content of the message from the GPT model's response.
+        """
         if correlation_prompt is None:
             correlation_prompt = CORRELATION_PROMPT_TEMPLATE.format(word=related_words_pair.word,
                                                                     related_words=related_words_pair.related_words)
@@ -171,6 +251,15 @@ class GPTValidator(QualityValidator):
 
     @staticmethod
     def extract_score(response_content: str) -> float:
+        """
+        Extracts the similarity score from the content of a GPT model's response.
+
+        Args:
+            response_content: The content of a GPT model's response.
+
+        Returns:
+            The similarity score as a float. If no score could be extracted, returns 0.0.
+        """
         try:
             match = re.search(r"Final Answer: \[(.+?)]", response_content).group(1)
             score = float(match)
@@ -181,6 +270,12 @@ class GPTValidator(QualityValidator):
         return score
 
     def set_model(self, model: str) -> None:
+        """
+        Changes the GPT model used for validation.
+
+        Args:
+            model: The identifier of the GPT model to use for the validation.
+        """
         # Add logic to reject incorrect models
         self._model = model
 
