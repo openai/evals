@@ -1,0 +1,11 @@
+diy-repair:
+  id: diy-repair.dev.v0
+  description: Test OpenAI ability over appliance repair manual
+  metrics: [accuracy]
+
+ 
+
+diy-repair.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: diy-repair/samples.jsonl
