@@ -35,6 +35,23 @@ class IncludesEvalTemplate:
                 f.write(json.dumps(sample) + "\n")
 
 
+def generate_additional_choices(
+    word_association_pair: RelatedWordsPair, corpus: Corpus, num_choices: int = 5
+) -> List[str]:
+    # Create a new list without the target word and related words
+    correct_answer = word_association_pair.word
+    new_corpus = [
+        word
+        for word in corpus
+        if word != correct_answer and word not in word_association_pair.related_words
+    ]
+
+    choices = random.sample(new_corpus, num_choices - 1)
+    choices.append(correct_answer)
+    random.shuffle(choices)
+    return choices
+
+
 def generate_word_association_system_message(
     word_association_pair: RelatedWordsPair,
     parts_of_speech_choices: Optional[List[str]] = None,
@@ -63,23 +80,6 @@ def generate_word_association_system_message(
     system_message = " ".join(message_parts)
     logger.debug(f"System message: {system_message}")
     return system_message
-
-
-def generate_additional_choices(
-    word_association_pair: RelatedWordsPair, corpus: Corpus, num_choices: int = 5
-) -> List[str]:
-    # Create a new list without the target word and related words
-    correct_answer = word_association_pair.word
-    new_corpus = [
-        word
-        for word in corpus
-        if word != correct_answer and word not in word_association_pair.related_words
-    ]
-
-    choices = random.sample(new_corpus, num_choices - 1)
-    choices.append(correct_answer)
-    random.shuffle(choices)
-    return choices
 
 
 def generate_word_association_user_message(
