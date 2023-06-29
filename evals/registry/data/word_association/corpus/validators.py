@@ -108,7 +108,12 @@ class EmbeddingsValidator(QualityValidator):
 
     @staticmethod
     def calculate_euclidean_distance(vec1: List[float], vec2: List[float]) -> float:
-        raise NotImplementedError
+        vec1 = np.array(vec1)
+        vec2 = np.array(vec2)
+        difference = vec1 - vec2
+        distance = np.linalg.norm(difference)
+        logger.debug(f"vec1: {vec1}, vec2: {vec2}, distance: {distance}")
+        return distance
 
     @staticmethod
     def get_embeddings(
