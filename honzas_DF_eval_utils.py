@@ -142,8 +142,9 @@ if __name__ == "__main__":
             if "run_id" in line_d:
                 # interested, grab from it:
                 if line_d["type"]=="sampling":
-                    lines[line_d["sample_id"]] = { "statement": Box(line_d).data.prompt[1].content,
-                                                    "sampled": Box(line_d).data.sampled}
+                    lines[line_d["sample_id"]] = { "statement": Box(line_d).data.prompt[1].content}
+                if line_d["type"] == "match":
+                    lines[line_d["sample_id"]].update(Box(line_d).data)
 
     # df = pd.DataFrame.from_dict()
     data_list = [{'run_id': key, **value} for key, value in lines.items()]
