@@ -6,6 +6,7 @@ implement the functionality for specific APIs. Currently, this module supports t
 Classes:
     RelatedWords: Abstract base class for getting related words.
     DataMuseRelatedWords: A class to get related words using the DataMuse API.
+    GPTRelatedWords: A class to get related words using ChatGPT Completions API. (Not yet implemented)
 """
 import requests
 from abc import ABC, abstractmethod
@@ -17,6 +18,7 @@ class RelatedWords(ABC):
 
     To implement this class for a specific API, you must define a _get_related_words() method.
     """
+
     def __init__(self, word: str, **kwargs: Optional[Union[str, int]]) -> None:
         self.word = word
         self.kwargs = kwargs
@@ -35,9 +37,9 @@ class RelatedWords(ABC):
 
     def get_pos_tagged_words(self) -> List[Tuple[str, str]]:
         """
-            Method to get part-of-speech tagged words.
+        Method to get part-of-speech tagged words.
 
-            The method should be implemented in a derived class.
+        The method should be implemented in a derived class.
         """
         raise NotImplementedError
 
@@ -119,7 +121,12 @@ class DataMuseRelatedWords(RelatedWords):
                 (p for parts of speech or f for word frequency, calls to those filters will fail)
     """
 
-    def __init__(self, word: str, constraint: str = "rel_syn", **kwargs: Optional[Union[str, int]]) -> None:
+    def __init__(
+        self,
+        word: str,
+        constraint: str = "rel_syn",
+        **kwargs: Optional[Union[str, int]],
+    ) -> None:
         self.constraint = constraint
         super().__init__(word, **kwargs)
 
@@ -151,7 +158,7 @@ class DataMuseRelatedWords(RelatedWords):
             ValueError: If no metadata is found for the specified word.
         """
         for word_dict in self.words_dict:
-            if word_dict['word'] == word:
+            if word_dict["word"] == word:
                 return word_dict
         raise ValueError(f"No metadata found for word: {word}")
 
@@ -164,14 +171,23 @@ class DataMuseRelatedWords(RelatedWords):
         """
         params = {"md": "frspd"}
         params.update(self.kwargs)
-        response = requests.get(f"https://api.datamuse.com/words?{self.constraint}={self.word}", params=params)
+        response = requests.get(
+            f"https://api.datamuse.com/words?{self.constraint}={self.word}",
+            params=params,
+        )
         return response.json()
+
+
+class GPTGeneratedRelatedWords(RelatedWords):
+    """A class to get related words using ChatGPT Completions API. (Not yet implemented)"""
+    def _get_related_words(self) -> List[Dict[str, Any]]:
+        raise NotImplementedError
 
 
 if __name__ == "__main__":
     dm = DataMuseRelatedWords("duck", max=5)
     print(dm.words)
-    print('fauna' in dm)
+    print("fauna" in dm)
     print(dm.get_metadata("fauna"))
     for word in dm:
         print(word)
