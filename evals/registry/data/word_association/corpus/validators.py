@@ -22,8 +22,7 @@ CORRELATION_PROMPT_TEMPLATE = """Task: Estimate the degree of correlation betwee
 
 Strings to Correlate:
 string_one: {word}
-string_two: {related_words}
-"""
+string_two: {related_words}"""
 
 ANSWER_PROMPT_TEMPLATE = """\nYour final output should be in the following format(NOTE: Include the square brackets):
 \nReasoning: <your reasoning>\nFinal Answer: [<float, rounded to the 100th place>]"""
@@ -47,6 +46,7 @@ class EmbeddingPair(NamedTuple):
 class SimilarityTuple(NamedTuple):
     related_words_pair: RelatedWordsPair
     similar: bool
+    similarity_score: float
 
 
 class QualityValidator(ABC):
@@ -89,13 +89,13 @@ class EmbeddingsValidator(QualityValidator):
         results = []
         # for each EmbeddingPair, compare their embeddings and form SimilarityTuple
         for pair in embedding_pairs:
-            similarity = round(
+            similarity_score = round(
                 similarity_function(pair.vectors[0].vector, pair.vectors[1].vector), 3
             )
-            similar = similarity > self.target_score
-            similarity_tuple = SimilarityTuple(pair.related_words_pair, similar)
+            similar = similarity_score > self.target_score
+            similarity_tuple = SimilarityTuple(pair.related_words_pair, similar, similarity_score)
             results.append(similarity_tuple)
-            logger.info(f"{pair.related_words_pair}: {similar} score:({similarity})")
+            logger.info(f"{pair.related_words_pair}: {similar} score:({similarity_score})")
         return results
 
     @staticmethod
@@ -138,7 +138,14 @@ class GPTValidator(QualityValidator):
     def validate(
         self, related_words_pairs: List[RelatedWordsPair]
     ) -> List[SimilarityTuple]:
-        raise NotImplementedError
+        similarity_tuples = []
+        for related_words_pair in related_words_pairs:
+            response = self.get_chat_completion(related_words_pair)
+            similarity_score = self.extract_score(response)
+            similarity = similarity_score > self.target_score
+            similarity_tuple = SimilarityTuple(related_words_pair, similarity, similarity_score)
+            similarity_tuples.append(similarity_tuple)
+        return similarity_tuples
 
     def get_chat_completion(self, related_words_pair: RelatedWordsPair,
                             correlation_prompt: str = None, answer_prompt: str = None) -> List[SimilarityTuple]:
@@ -174,17 +181,16 @@ class GPTValidator(QualityValidator):
 
 
 if __name__ == "__main__":
+    # Demonstration of Both Validators
+    related_words_pairs = [RelatedWordsPair("floor", "balcony|ceiling|staircase|attic|arched"),
+                           RelatedWordsPair("check", "digit|valves|valve|digits|dams"),
+                           RelatedWordsPair("sleep", "nrem|apnea|wakefulness|bruxism|deprivation")]
+
     validator = EmbeddingsValidator(0.75)
-    embeddings = validator.get_embeddings(["test", "testing", "tested"])
-    for embedding in embeddings:
-        print(embedding.string, embedding.vector[0:5])
-    similarity: SimilarityTuple = validator.validate(
-        [RelatedWordsPair("test", "testing"), RelatedWordsPair("test", "tested")]
-    )
-    print(similarity)
+    similarity_tuples: SimilarityTuple = validator.validate(related_words_pairs)
+    print(similarity_tuples)
+
     gpt_validator = GPTValidator(0.75, model="gpt-4")
-    completion = gpt_validator.get_chat_completion(
-        RelatedWordsPair("sleep", "nrem|apnea|wakefulness|bruxism|deprivation"))
-    score = gpt_validator.extract_score(completion)
-    print(score)
+    similarity_tuples: SimilarityTuple = gpt_validator.validate(related_words_pairs)
+    print(similarity_tuples)
 
