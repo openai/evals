@@ -1,0 +1,10 @@
+singlestore-vectorsearch:
+  id: singlestore-vectorsearch.dev.v0
+  metrics: [accuracy]
+  description: Accurately generate the SQL query with the correct syntax for performing vector search in SingleStore DB.
+singlestore-vectorsearch.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: singlestore-vectorsearch/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: singlestore
