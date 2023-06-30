@@ -36,7 +36,7 @@ class IncludesEvalTemplate:
 
 
 def generate_additional_choices(
-    word_association_pair: RelatedWordsPair, corpus: Corpus, num_choices: int = 5
+    word_association_pair: RelatedWordsPair, corpus: Corpus, num_choices: int = 5, shuffle_choices: bool = False
 ) -> List[str]:
     # Create a new list without the target word and related words
     correct_answer = word_association_pair.word
@@ -46,9 +46,24 @@ def generate_additional_choices(
         if word != correct_answer and word not in word_association_pair.related_words
     ]
 
-    choices = random.sample(new_corpus, num_choices - 1)
+    validator = EmbeddingsValidator(0.75)
+    correct_answer_embedding = validator.get_embeddings(correct_answer)[0]
+    related_words_embeddings = validator.get_embeddings(word_association_pair.related_words)[0]
+    correct_answer_score = validator.calculate_cosine_similarity(correct_answer_embedding.vector,
+                                                                 related_words_embeddings.vector)
+    choices = []
+    while len(choices) < num_choices:
+        choice = random.sample(new_corpus, 1)[0]
+        choice_embedding = validator.get_embeddings(choice)[0]
+        similarity = validator.calculate_cosine_similarity(choice_embedding.vector,
+                                                           related_words_embeddings.vector)
+        if similarity < correct_answer_score:
+            choices.append(choice)
+        if not new_corpus:
+            raise ValueError("Not enough valid words in corpus to generate choices.")
     choices.append(correct_answer)
-    random.shuffle(choices)
+    if shuffle_choices:
+        random.shuffle(choices)
     return choices
 
 
@@ -156,7 +171,7 @@ def main(
 
     valid_samples: List[RelatedWordsPair] = [
         word_association_pair
-        for word_association_pair, similarity in similarities
+        for word_association_pair, similarity, similarity_score in similarities
         if similarity
     ]
     logger.info(
@@ -195,4 +210,4 @@ if __name__ == "__main__":
     filtered_corpus = processor.words
 
     # Generate the evals
-    main(filtered_corpus, related_words_length=5)
+    main(filtered_corpus, related_words_length=5, max_samples=-1)

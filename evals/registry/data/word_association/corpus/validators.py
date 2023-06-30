@@ -282,9 +282,8 @@ class GPTValidator(QualityValidator):
 
 if __name__ == "__main__":
     # Demonstration of Both Validators
-    related_words_pairs = [RelatedWordsPair("floor", "balcony|ceiling|staircase|attic|arched"),
-                           RelatedWordsPair("check", "digit|valves|valve|digits|dams"),
-                           RelatedWordsPair("sleep", "nrem|apnea|wakefulness|bruxism|deprivation")]
+    related_words_pairs = [RelatedWordsPair("stage", "point, level, present"),
+                           RelatedWordsPair("board", "point, level, present")]
 
     validator = EmbeddingsValidator(0.75)
     similarity_tuples: SimilarityTuple = validator.validate(related_words_pairs)
