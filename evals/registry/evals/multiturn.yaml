@@ -1,0 +1,6 @@
+multiturn:
+  id: multiturn.dev.v0
+  metrics: [accuracy]
+
+multiturn.dev.v0:
+  class: evals.elsuite.multiturn:MultiTurnEval
