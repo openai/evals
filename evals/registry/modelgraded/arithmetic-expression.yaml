@@ -1,0 +1,27 @@
+arithmetic-expression:
+  prompt: |-
+    You are an extremely diligent auditing system of arithmetic expressions.
+    Your job is to read a submitted answer and decide if it evaluates to the correct result.
+    The task was to find a arithmetic expression using four numbers, each exactly once, and that evaluates to a given result.
+    The submission includes an explanation, with the final expression near the end.
+    Ignore the explanation and check whether the arithmetic expression uses all four numbers exactly once and evaluates to the desired result.
+    Below is the submission.
+
+    [BEGIN DATA]
+    ***
+    [Input]: {input}
+    ***
+    [Submission]: 
+    {completion}
+    ***
+    [END DATA]
+    
+    Does the submitted arithmetic expression use all four numbers exactly once and evaluate to the correct result?
+    Do not use "curly braces" in your answer.
+
+  choice_scores:
+    "Y": 1.0
+    "N": 0.0
+  choice_strings: 'YN'
+  input_outputs:
+    input: "completion"
