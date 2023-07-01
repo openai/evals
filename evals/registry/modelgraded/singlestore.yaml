@@ -1,0 +1,25 @@
+singlestore:
+  prompt: |-
+    You are comparing a submitted answer to an expert answer on a given SingleStore's Vector Search - SQL question. Here is the data:
+    [BEGIN DATA]
+    ************
+    [Question]: {input}
+    ************
+    [Expert]: {ideal}
+    ************
+    [Submission]: {completion}
+    ************
+    [END DATA]
+
+    Analyze the submitted SingleStore's Vector Search - SQL in comparison to the expert response for accuracy and content. Disregard any variations in spacing, format, or the names of the output columns. 
+    The provided answer could be either right or wrong. Determine which scenario is accurate. Respond to the question by selecting from one of the options below:
+      "Correct": The SingleStore's Vector Search - SQL given and the expert's answer are fundamentally the same, that is, they produce identical results when executed on the database, notwithstanding differences in the naming or sequencing of the output columns.
+      "Incorrect": The provided SingleStore's Vector Search - SQL and the expert's answer are fundamentally different, meaning they don't yield the same results upon execution, even when considering minor differences, or the SingleStore's Vector Search - SQL given will cause an error when executed.
+  choice_strings:
+    - "Correct"
+    - "Incorrect"
+  choice_scores:
+    "Correct": 1.0
+    "Incorrect": 0.0
+  input_outputs:
+    input: completion
