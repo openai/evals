@@ -22,7 +22,7 @@ if __name__ == "__main__":
     # print("Wrote reformatted eval to "+dst_path)
 
     ## Or reformatting our own funk:
-    dst_path = os.path.join(dirname, "./evals/registry/data/macia/macia_our_brno_generated_test.jsonl")
+    dst_path = os.path.join(dirname, "./evals/registry/data/macia/macia_our_brno_generated.jsonl")
     # brno_gen_machi=DataFrame("".splitlines())
 
     write_list_to_jsonl(generate_machi_fast(), dst_path)
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     import sys
     out_path = "./output/machi_brno_03.jsonl"
     sys.argv.append(f"--record_path={out_path}")
-    # main()
+    main()
 
 
     ### quick way to export:
