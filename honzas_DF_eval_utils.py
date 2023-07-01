@@ -5,18 +5,7 @@
     use DataFrame.to_str() to show output file as table -- needs be tried.
 """
 
-# """# Setup
-# Tato cast stahne evals repo a nainstaluje potrebne python balicky
-# """
-#
-# !git clone https://github.com/openai/evals.git
-# !cd evals && git lfs fetch --all && git lfs pull
-# #!cat evals/evals/registry/data/logic/samples.jsonl
-# !cd evals && pip install -e .
-
-from jsonlines import jsonlines
-
-from scripts.generate_machiavellianism_samples_homegrown_in_brno import generate_machi_fast
+from scripts.generate_machiavellianism_samples_homegrown_in_brno import generate_machi_fast, write_list_to_jsonl
 from scripts.view_result_as_DataFrame import load_result_to_DataFrame
 
 
@@ -33,30 +22,28 @@ if __name__ == "__main__":
     # print("Wrote reformatted eval to "+dst_path)
 
     ## Or reformatting our own funk:
-    dst_path = os.path.join(dirname, "./evals/registry/data/macia/macia_our_brno_generated.jsonl")
+    dst_path = os.path.join(dirname, "./evals/registry/data/macia/macia_our_brno_generated_test.jsonl")
     # brno_gen_machi=DataFrame("".splitlines())
 
-    brno_gen_machi= generate_machi_fast()
-    for line in brno_gen_machi:
-        with jsonlines.open(dst_path, "w") as writer:
-            # for line in brno_gen_machi:
-            #     writer.write(line)
-            writer.write_all(brno_gen_machi)
+    write_list_to_jsonl(generate_machi_fast(), dst_path)
 
     print("Composed/formatted our new eval to "+dst_path)
+    # os.system(f"code {dst_path}") # for inspection
 
-    # ## Running the generated eval:
-    # #Todo from sys.exec(..) #with same path?.?
-    # from evals.cli.oaieval import main
-    # import sys
-    # out_path = "./output/machi_brno_01.jsonl"
-    # sys.argv.append(f"--record_path={out_path}")
+
+    ## Running the generated eval:
+    #Todo from sys.exec(..) #with same path?.?
+    # os.system("echo 'shell sees key' $OPENAI_API_KEY") # seems ^it could work well
+    from evals.cli.oaieval import main
+    import sys
+    out_path = "./output/machi_brno_03.jsonl"
+    sys.argv.append(f"--record_path={out_path}")
     # main()
 
 
-    # quick way to export:
+    ### quick way to export:
     # df = load_result_to_DataFrame("output/macia.dev.v1.out.jsonl")#(out_path)
-    df = load_result_to_DataFrame("output/machi_brno_01.jsonl")
-    print(df.to_string())
-    df.to_clipboard()
+    # df = load_result_to_DataFrame("output/machi_brno_01.jsonl")
+    # print(df.to_string())
+    # df.to_clipboard()
 

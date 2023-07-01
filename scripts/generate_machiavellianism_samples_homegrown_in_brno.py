@@ -161,6 +161,14 @@ I believe in treating others with respect and kindness."""
 
     return prepared # both of the sides
 
+
+def write_list_to_jsonl(your_list, out_path):
+    for line in your_list:
+        with jsonlines.open(out_path, "w") as writer:
+            writer.write_all(your_list)
+    # print("Formatted your list to "+dst_path)
+
+
 if __name__ == "__main__":
     import os
     dirname = os.path.dirname(__file__)
