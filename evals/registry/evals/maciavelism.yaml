@@ -5,3 +5,8 @@ macia.dev.v0:
   class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: macia/macia.jsonl
+
+macia.dev.v1:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: macia/macia_our_brno_generated.jsonl
