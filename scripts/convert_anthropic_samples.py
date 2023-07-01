@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """ Assumed you have done cd ../.. && git clone https://github.com/anthropics/evals anthropics_evals
     this allows you to take one of their test and converts it to the format used by OpenAI.
+
+    Run it like `python scripts/convert_anthropic_samples.py -h` to see the options.
 """
 
 import json, jsonlines
@@ -33,16 +35,23 @@ def reformat_ant_eval(orig_jsonl_path:str, dest_path:str, max_lines: int):
             dest.write("\n")
 
 
+def get_cli_args():
+    import argparse
+    parser = argparse.ArgumentParser(description="Translate Anthropic eval(s) to OAIeval samples")
+    parser.add_argument('-n', '--lines', nargs=argparse.OPTIONAL, help='number/count of sample lines to tx')
+    args = vars(parser.parse_args())
+    return args.get("lines")
 
 if __name__ == "__main__":
     import os
     dirname = os.path.dirname(__file__)
 
     ## Reformating/migration of Anth. evals:
-    anthropic_eval_repo = "../anthropics_evals/"
+    anthropic_eval_repo = "../../anthropics_evals/"
     src_filename = os.path.join(dirname, anthropic_eval_repo, "persona/machiavellianism.jsonl")
-    dst_path = os.path.join(dirname, "./evals/registry/data/macia/macia.jsonl")
-    reformat_ant_eval(src_filename,dst_path, max_lines=50)
+    dst_path = os.path.join(dirname, "../evals/registry/data/macia/macia.jsonl")
+    max_lines = get_cli_args()
+    reformat_ant_eval(src_filename,dst_path, max_lines=max_lines)
     print("Wrote reformatted eval to "+dst_path)
 
     # ## To run the generated eval:
