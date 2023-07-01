@@ -23,10 +23,7 @@ if __name__ == "__main__":
 
     ## Or reformatting our own funk:
     dst_path = os.path.join(dirname, "./evals/registry/data/macia/macia_our_brno_generated.jsonl")
-    # brno_gen_machi=DataFrame("".splitlines())
-
     write_list_to_jsonl(generate_machi_fast(), dst_path)
-
     print("Composed/formatted our new eval to "+dst_path)
     # os.system(f"code {dst_path}") # for inspection
 
@@ -36,7 +33,7 @@ if __name__ == "__main__":
     # os.system("echo 'shell sees key' $OPENAI_API_KEY") # seems ^it could work well
     from evals.cli.oaieval import main
     import sys
-    out_path = "./output/machi_brno_03.jsonl"
+    out_path = "./output/machi_brno_04.jsonl"
     sys.argv.append(f"--record_path={out_path}")
     main()
 
