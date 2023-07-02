@@ -1,0 +1,8 @@
+count-characters:
+  id: count-characters.s1.simple-v0
+  description: Test the model's ability to count characters in strings of different lengths.
+  metrics: [accuracy]
+count-characters.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: count_characters/count_characters.jsonl
