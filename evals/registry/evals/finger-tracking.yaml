@@ -4,6 +4,6 @@ finger-tracking:
   metrics: [accuracy]
 
 finger-tracking.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: finger-tracking/samples.jsonl
