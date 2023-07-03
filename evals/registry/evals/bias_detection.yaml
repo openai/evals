@@ -1,6 +1,6 @@
 bias_detection:
   id: bias_detection.dev.v0
-  description: Test the model's ability to classify sentences in news as "fact", "opinion", "claim", "argument", "data", "quote", "narrative", "sensationalism", "context", or "speculation".
+  description: Test the model's ability to classify sentences in news as "fact", "opinion", "claim", "argument", "data", "quote", "narrative", "sensationalism", or "speculation".
   metrics: [accuracy]
 
 bias_detection.dev.v0:
