@@ -12,7 +12,7 @@ import os
 import re
 from functools import cached_property
 from pathlib import Path
-from typing import Any, Iterator, Optional, Sequence, Type, TypeVar, Union
+from typing import Any, Iterator, List, Optional, Sequence, Type, TypeVar, Union
 
 import openai
 import yaml
@@ -87,6 +87,9 @@ class Registry:
 
     def add_registry_paths(self, paths: list[Union[str, Path]]) -> None:
         self._registry_paths.extend([Path(p) if isinstance(p, str) else p for p in paths])
+
+    def get_registry_paths(self) -> List[Path]:
+        return self._registry_paths
 
     @cached_property
     def api_model_ids(self) -> list[str]:
