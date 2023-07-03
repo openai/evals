@@ -4,6 +4,6 @@ bias_detection:
   metrics: [accuracy]
 
 bias_detection.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: bias_detection/samples.jsonl
