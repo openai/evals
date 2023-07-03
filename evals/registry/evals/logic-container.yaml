@@ -1,0 +1,9 @@
+logic-container:
+  id: logic-container.dev.v0
+  metrics: [accuracy]
+logic-container.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: logic-container/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
