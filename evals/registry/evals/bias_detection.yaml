@@ -7,3 +7,4 @@ bias_detection.dev.v0:
   class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: bias_detection/samples.jsonl
+    ignore_case: true
