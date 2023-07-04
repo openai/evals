@@ -1,0 +1,9 @@
+confusing_korean:
+  id: confusing_korean.dev.v0
+  description: Evaluates the model's ability to correctly use confusing Korean.
+  metrics: [accuracy]
+
+confusing_korean.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: confusing_korean/samples.jsonl
