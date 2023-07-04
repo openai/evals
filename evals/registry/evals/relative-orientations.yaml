@@ -1,0 +1,9 @@
+
+relative-orientations:
+  id: relative-orientations.dev.v0
+  metrics: [accuracy]
+
+relative-orientations.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: relative_orientations/samples.jsonl
