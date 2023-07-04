@@ -1,3 +1,5 @@
+# Registry entry for the exact-string eval: determines the model's ability to
+# Form coherent sentences with specific restrictions 
 exact_sentence:
   id: exact_sentence.dev.v0
   description: Test the model's ability to construct a sentence with exactly 2 "7"s, 3 "a"s, 4 "f"s, ensure it is coherent and ends with an exclamation point.

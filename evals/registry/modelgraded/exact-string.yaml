@@ -1,3 +1,5 @@
+# The evaluation prompt below attempts to guide the LLM into a reasonable response.
+# The output is either Y or N, which the model is scored on based on static, hand-verified samples.
 exact-string:
   prompt: |-
     You are an expert in semantic analysis. Your task is to evaluate a sentence based on the following criteria:
