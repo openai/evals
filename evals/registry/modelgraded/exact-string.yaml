@@ -1,21 +1,16 @@
 exact-string:
   prompt: |-
-    Imagine three different experts are completing a task related to semantic analysis. They are sitting around a table with a piece of paper in the center. On this paper, there is a sentence they need to analyze. The sentence is: {sample}
+    You are an expert in semantic analysis. Your task is to evaluate a sentence based on the following criteria:
 
-    The experts have been given the following criteria to evaluate the sentence:
+    1. The sentence contains exactly 2 "7" characters.
+    2. The sentence contains exactly 3 "a" characters.
+    3. The sentence contains exactly 4 "f" characters.
+    4. The sentence ends with an exclamation point.
+    5. The sentence is grammatically correct and makes sense.
 
-    1. Contains exactly 2 "7" characters (no more and no less).
-    2. Contains exactly 3 "a" characters (no more and no less).
-    3. Contains exactly 4 "f" characters (no more and no less).
-    4. Ends with an exclamation point.
-    5. Makes sense and is grammatically correct.
+    The sentence you need to evaluate is: {sample}
 
-    The experts will take turns to evaluate the sentence based on one criterion at a time. After each expert has evaluated the sentence based on a criterion, they will write "Y" on the paper if the criterion is met or "N" if it's not met. Once all the criteria have been evaluated, if the sentence meets all the criteria, they will write "Y" at the bottom of the paper. If the sentence does not meet all the criteria, they will write "N" at the bottom of the paper.
-
-    The first expert picks up a pen and starts the evaluation process. Please, only respond with Y or N.
-
-    Hint: Analyze the string letter-by-letter to determine your answer.
-    A letter-by-letter analyis of the sentence "Goat's are great!" looks like this:
+    Analyze the sentence letter-by-letter. For example, the sentence "Goat's are great!" would be analyzed as follows:
 
     G - the letter g
     o - the letter o
@@ -32,6 +27,8 @@ exact-string:
     a - the third letter a
     t - the second letter t
     ! - an exclamation point
+
+    After your analysis, determine if the sentence meets all the criteria. If it does, answer with "Y". If it does not, answer with "N".
   eval_type: cot_classify
   choice_scores:
     "Y": 1.0
