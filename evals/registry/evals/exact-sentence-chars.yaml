@@ -1,0 +1,10 @@
+exact_sentence:
+  id: exact_sentence.dev.v0
+  description: Test the model's ability to construct a sentence with exactly 2 "7"s, 3 "a"s, 4 "f"s, ensure it is coherent and ends with an exclamation point.
+  metrics: [accuracy]
+exact_sentence.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: exact_sentence_chars/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: exact-string
