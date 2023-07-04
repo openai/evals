@@ -1,0 +1,7 @@
+chinese_shi_jing:
+  id: chinese_shi_jing.test.v1
+  metrics: [accuracy]
+chinese_shi_jing.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_shi_jing/samples.jsonl
