@@ -1,0 +1,7 @@
+thirty_six_stratagems:
+  id: thirty_six_stratagems.test.v1
+  metrics: [accuracy]
+thirty_six_stratagems.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: thirty_six_stratagems/samples.jsonl
