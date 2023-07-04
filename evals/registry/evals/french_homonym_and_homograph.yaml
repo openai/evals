@@ -1,0 +1,8 @@
+french_homonym_and_homograph:
+  id: french_homonym_and_homograph.dev.v0
+  description: We evaluated the ability of GPT to distinguish, in the French language, between homonyms (homophones) - words that are spelled differently but have the same pronunciation - and homographs (heterophones) - words that are spelled the same but have different pronunciations.
+  metrics: [accuracy]
+french_homonym_and_homograph.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: french_homonym_and_homograph/samples.jsonl
