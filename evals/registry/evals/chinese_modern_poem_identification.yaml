@@ -1,0 +1,7 @@
+chinese_modern_poem_identification:
+  id: chinese_modern_poem_identification.test.v1
+  metrics: [accuracy]
+chinese_modern_poem_identification.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_modern_poem_identification/samples.jsonl

@@ -1,0 +1,9 @@
+viewport_to_grid_size:  
+  id: viewport_to_grid_size.dev.v3
+  description: Evaluates a models ability to determine the size of an obscured grid using information only from initial constraints and a visible viewport.
+  metrics: [accuracy]
+
+viewport_to_grid_size.dev.v3:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: viewport_to_grid_size/samples.jsonl

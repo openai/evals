@@ -1,0 +1,9 @@
+math-derivatives:
+  id: math-derivatives.dev.v0
+  description: Test the model's ability to calculate math functions derivatives.
+  metrics: [accuracy]
+
+math-derivatives.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: math-derivatives/questions.jsonl
