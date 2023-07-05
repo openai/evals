@@ -3,6 +3,6 @@ simple-charting:
   description: Test the model's ability to generate the appropriate chart type for a given dataset.
   metrics: [accuracy]
 simple-charting.dev.v0:
-  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: simple-charting/samples.jsonl
