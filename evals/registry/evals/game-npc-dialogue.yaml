@@ -1,0 +1,16 @@
+game-npc-dialogue:
+    id: game-npc-dialogue.dev.v0
+    description: Test the model's ability to understand game NPC dialogues.
+    metrics: [accuracy]
+game-npc-dialogue.dev.v0:
+    class: evals.elsuite.basic.match:Match
+    args:
+        samples_jsonl: game-npc-dialogue/samples.jsonl
+
+game-npc-dialogue-meta:
+    id: game-npc-dialogue-meta.dev.v0
+    metrics: [accuracy]
+game-npc-dialogue-meta.dev.v0:
+    class: evals.elsuite.basic.match:Match
+    args:
+        samples_jsonl: game-npc-dialogue/labeled-samples.jsonl
