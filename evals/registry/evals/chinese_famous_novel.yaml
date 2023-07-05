@@ -1,0 +1,9 @@
+chinese_famous_novel:
+  id: chinese_famous_novel.dev.v0
+  description: Given a Chinese famous novel, return the author of it.
+  metrics: [accuracy]
+
+chinese_famous_novel.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_famous_novel/samples.jsonl
