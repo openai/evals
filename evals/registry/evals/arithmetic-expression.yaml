@@ -1,0 +1,22 @@
+arithmetic-expression:
+  id: arithmetic-expression.dev.v0
+  description: Tests the model's ability to generate arithmetic expressions that evaluate to a given number.
+  metrics: [ accuracy ]
+arithmetic-expression.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: arithmetic-expression/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: arithmetic-expression
+
+arithmetic-expression-meta:
+  id: arithmetic-expression-meta.dev.v0
+  description: Tests the model's ability to evaluate submissions against the correct answer
+  metrics: [ accuracy ]
+arithmetic-expression-meta.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: arithmetic-expression/labeled-samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: arithmetic-expression
+    metaeval: true

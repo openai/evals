@@ -1,0 +1,8 @@
+test_japanese_english_numerals:
+  id: test_japanese_english_numerals.dev.v0
+  description: We evaluated the ability of GPT to distinguish between Japanese numerical representations and English translations.
+  metrics: [accuracy]
+test_japanese_english_numerals.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: test_japanese_english_numerals/samples.jsonl

@@ -1,0 +1,9 @@
+base64-decode:
+  id: base64-decode-simple.dev.v0
+  description: Test the model's ability to decode Base64 encoded text.
+  disclaimer: The eval might be off for longer strings.
+  metrics: [accuracy]
+base64-decode-simple.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: base64_decode/base64_decode.jsonl
