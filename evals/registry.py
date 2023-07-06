@@ -51,6 +51,7 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
         "gpt-3.5-turbo": 4096,
         "gpt-4": 8192,
         "gpt-4-32k": 32768,
+        "gpt-4-base": 8192,
     }
 
     # first, look for an exact match
@@ -67,6 +68,9 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
 
 
 def is_chat_model(model_name: str) -> bool:
+    if model_name in {"gpt-4-base"}:
+        return False
+
     CHAT_MODEL_NAMES = {"gpt-3.5-turbo", "gpt-4", "gpt-4-32k"}
     if model_name in CHAT_MODEL_NAMES:
         return True
