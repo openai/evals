@@ -1,0 +1,9 @@
+chinese_ancient_poetry:
+  id: chinese_ancient_poetry.dev.v0
+  description: Evaluate the model's capability to understand the question and answer the correct poem. It also helps evaluate the hallucination of the model if the model provides unexisted poems.
+  metrics: [accuracy]
+  
+chinese_ancient_poetry.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: chinese_ancient_poetry/samples.jsonl
