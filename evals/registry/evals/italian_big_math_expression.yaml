@@ -4,6 +4,6 @@ italian_big_math_expression:
   metrics: [accuracy]
 
 italian_big_math_expression.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: italian_big_math_expression/samples.jsonl
