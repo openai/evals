@@ -7,4 +7,4 @@ logic-container.dev.v0:
   args:
     samples_jsonl: logic-container/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: fact
+    modelgraded_spec: possible
