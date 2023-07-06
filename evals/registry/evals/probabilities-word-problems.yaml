@@ -1,0 +1,10 @@
+probabilities-word-problems:
+  id: probabilities-word-problems.test.v1
+  description: Test the model's ability to calculate probabilities given word problems.
+  metrics:
+  - accuracy
+
+probabilities-word-problems.test.v1:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: probabilities-word-problems/samples.jsonl

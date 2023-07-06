@@ -1,0 +1,8 @@
+hebrew-plurals:
+  id: hebrew-plurals.dev.v0
+  description: Return the plural form for all the singular words in the sentences.
+  metrics: [accuracy]
+hebrew-plurals.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: hebrew_plurals/samples.jsonl
