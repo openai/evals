@@ -1,6 +1,6 @@
 chinese_ancient_poetry:
   id: chinese_ancient_poetry.dev.v0
-  description: Evaluate the model's capability to understand the question and answer the correct poem. It also helps evaluate the hallucination of the model if the model provides unexisted poems.
+  description: Evaluate the model's capability to answer the title and author of the given poems.
   metrics: [accuracy]
   
 chinese_ancient_poetry.dev.v0:
