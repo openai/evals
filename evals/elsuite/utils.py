@@ -22,7 +22,7 @@ def get_answer(text, answer_prompt, ignore_case=False):
 
     if idx == -1:
         return None
-    return text[idx:idx + len(answer_prompt)]
+    return text[idx : idx + len(answer_prompt)]
 
 
 def get_consensus(answers):

@@ -1,9 +1,9 @@
 import importlib
 from typing import Optional
-from evals.api import CompletionFn, CompletionResult
 
 from langchain.llms import BaseLLM
 
+from evals.api import CompletionFn, CompletionResult
 from evals.prompt.base import CompletionPrompt
 from evals.record import record_sampling
 

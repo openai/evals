@@ -1,6 +1,8 @@
 from typing import Any, Type
+
 from mock import patch
 from pytest import mark, raises
+
 from evals.api import DummyCompletionFn
 from evals.elsuite.basic.fuzzy_match import FuzzyMatch
 from evals.record import DummyRecorder

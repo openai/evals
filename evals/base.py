@@ -12,11 +12,13 @@ if TYPE_CHECKING:
 else:
     from pydantic.dataclasses import dataclass
 
+
 @dataclass
 class CompletionFnSpec:
     """
     Specification for a CompletionFn.
     """
+
     cls: str
     args: Optional[Dict[str, Any]] = None
     key: Optional[str] = None

@@ -1,7 +1,7 @@
 from typing import Any, Optional, Union
+
 from evals.api import CompletionFn, CompletionResult
 from evals.base import CompletionFnSpec
-
 from evals.prompt.base import (
     ChatCompletionPrompt,
     CompletionPrompt,

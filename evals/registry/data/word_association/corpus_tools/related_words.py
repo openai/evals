@@ -8,9 +8,10 @@ Classes:
     DataMuseRelatedWords: A class to get related words using the DataMuse API.
     GPTRelatedWords: A class to get related words using ChatGPT Completions API. (Not yet implemented)
 """
-import requests
 from abc import ABC, abstractmethod
-from typing import Generator, Optional, List, Tuple, Dict, Union, Any
+from typing import Any, Dict, Generator, List, Optional, Tuple, Union
+
+import requests
 
 
 class RelatedWords(ABC):
@@ -180,6 +181,7 @@ class DataMuseRelatedWords(RelatedWords):
 
 class GPTGeneratedRelatedWords(RelatedWords):
     """A class to get related words using ChatGPT Completions API. (Not yet implemented)"""
+
     def _get_related_words(self) -> List[Dict[str, Any]]:
         raise NotImplementedError
 

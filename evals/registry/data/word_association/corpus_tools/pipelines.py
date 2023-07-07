@@ -1,5 +1,6 @@
-from corpus import Corpus
 from collections.abc import Callable
+
+from corpus import Corpus
 
 
 class CorpusPipeline:
