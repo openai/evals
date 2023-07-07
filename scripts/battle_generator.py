@@ -9,8 +9,8 @@ REGISTRY_PATH = os.path.join(os.path.dirname(__file__), "../evals/registry")
 
 def format(template: str, **kwargs: str) -> str:
     """Format a template string with kwargs."""
-    keys = [k[1] for k in string.Formatter().parse(template) if k[1]]
-    assert all(k in kwargs for k in keys), f"Required: {keys}, got: {sorted(kwargs)}"
+    keys = set(k[1] for k in string.Formatter().parse(template) if k[1])
+    assert keys.issubset(kwargs.keys()), f"Required: {keys}, got: {sorted(kwargs)}"
     cur_keys = {k: kwargs[k] for k in keys}
     return template.format(**cur_keys)
 
