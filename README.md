@@ -32,11 +32,6 @@ ____________________
 
 ## Setup
 
-First Run `pre-commit install` to install pre-commit into your git hooks. pre-commit will now run on every commit. Every time you clone a project using pre-commit running `pre-commit install` should always be the first thing you do.
-
-If you want to manually run all pre-commit hooks on a repository, run `pre-commit run --all-files`. To run individual hooks use `pre-commit run <hook_id>`.
-
-
 To run evals, you will need to set up and specify your OpenAI API key. You can generate one at <https://platform.openai.com/account/api-keys>. After you obtain an API key, specify it using the `OPENAI_API_KEY` environment variable. **Please be aware of the [costs](https://openai.com/pricing) associated with using the API when running evals.**
 
 **Minimum Required Version: Python 3.9**
@@ -73,6 +68,10 @@ Optionally, you can install the formatters for pre-committing with:
 ```sh
 pip install -e .[formatters]
 ```
+
+Then run `pre-commit install` to install pre-commit into your git hooks. pre-commit will now run on every commit.
+
+If you want to manually run all pre-commit hooks on a repository, run `pre-commit run --all-files`. To run individual hooks use `pre-commit run <hook_id>`.
 
 ### Running evals
 
