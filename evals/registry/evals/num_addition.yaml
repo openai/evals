@@ -1,0 +1,1000 @@
+num_addition_3-d_add_3-d:
+  id: num_addition_3-d_add_3-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_3-d_add_3-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/3-d_add_3-d_samples.jsonl
+
+num_addition_3-d_add_4-d:
+  id: num_addition_3-d_add_4-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_3-d_add_4-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/3-d_add_4-d_samples.jsonl
+
+num_addition_3-d_add_5-d:
+  id: num_addition_3-d_add_5-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_3-d_add_5-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/3-d_add_5-d_samples.jsonl
+
+num_addition_3-d_add_6-d:
+  id: num_addition_3-d_add_6-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_3-d_add_6-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/3-d_add_6-d_samples.jsonl
+
+num_addition_3-d_add_7-d:
+  id: num_addition_3-d_add_7-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_3-d_add_7-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/3-d_add_7-d_samples.jsonl
+
+num_addition_3-d_add_8-d:
+  id: num_addition_3-d_add_8-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_3-d_add_8-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/3-d_add_8-d_samples.jsonl
+
+num_addition_3-d_add_9-d:
+  id: num_addition_3-d_add_9-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_3-d_add_9-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/3-d_add_9-d_samples.jsonl
+
+num_addition_3-d_add_10-d:
+  id: num_addition_3-d_add_10-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_3-d_add_10-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/3-d_add_10-d_samples.jsonl
+
+num_addition_3-d_add_11-d:
+  id: num_addition_3-d_add_11-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_3-d_add_11-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/3-d_add_11-d_samples.jsonl
+
+num_addition_3-d_add_12-d:
+  id: num_addition_3-d_add_12-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_3-d_add_12-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/3-d_add_12-d_samples.jsonl
+
+num_addition_4-d_add_3-d:
+  id: num_addition_4-d_add_3-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_4-d_add_3-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/4-d_add_3-d_samples.jsonl
+
+num_addition_4-d_add_4-d:
+  id: num_addition_4-d_add_4-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_4-d_add_4-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/4-d_add_4-d_samples.jsonl
+
+num_addition_4-d_add_5-d:
+  id: num_addition_4-d_add_5-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_4-d_add_5-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/4-d_add_5-d_samples.jsonl
+
+num_addition_4-d_add_6-d:
+  id: num_addition_4-d_add_6-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_4-d_add_6-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/4-d_add_6-d_samples.jsonl
+
+num_addition_4-d_add_7-d:
+  id: num_addition_4-d_add_7-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_4-d_add_7-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/4-d_add_7-d_samples.jsonl
+
+num_addition_4-d_add_8-d:
+  id: num_addition_4-d_add_8-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_4-d_add_8-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/4-d_add_8-d_samples.jsonl
+
+num_addition_4-d_add_9-d:
+  id: num_addition_4-d_add_9-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_4-d_add_9-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/4-d_add_9-d_samples.jsonl
+
+num_addition_4-d_add_10-d:
+  id: num_addition_4-d_add_10-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_4-d_add_10-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/4-d_add_10-d_samples.jsonl
+
+num_addition_4-d_add_11-d:
+  id: num_addition_4-d_add_11-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_4-d_add_11-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/4-d_add_11-d_samples.jsonl
+
+num_addition_4-d_add_12-d:
+  id: num_addition_4-d_add_12-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_4-d_add_12-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/4-d_add_12-d_samples.jsonl
+
+num_addition_5-d_add_3-d:
+  id: num_addition_5-d_add_3-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_5-d_add_3-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/5-d_add_3-d_samples.jsonl
+
+num_addition_5-d_add_4-d:
+  id: num_addition_5-d_add_4-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_5-d_add_4-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/5-d_add_4-d_samples.jsonl
+
+num_addition_5-d_add_5-d:
+  id: num_addition_5-d_add_5-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_5-d_add_5-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/5-d_add_5-d_samples.jsonl
+
+num_addition_5-d_add_6-d:
+  id: num_addition_5-d_add_6-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_5-d_add_6-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/5-d_add_6-d_samples.jsonl
+
+num_addition_5-d_add_7-d:
+  id: num_addition_5-d_add_7-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_5-d_add_7-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/5-d_add_7-d_samples.jsonl
+
+num_addition_5-d_add_8-d:
+  id: num_addition_5-d_add_8-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_5-d_add_8-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/5-d_add_8-d_samples.jsonl
+
+num_addition_5-d_add_9-d:
+  id: num_addition_5-d_add_9-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_5-d_add_9-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/5-d_add_9-d_samples.jsonl
+
+num_addition_5-d_add_10-d:
+  id: num_addition_5-d_add_10-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_5-d_add_10-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/5-d_add_10-d_samples.jsonl
+
+num_addition_5-d_add_11-d:
+  id: num_addition_5-d_add_11-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_5-d_add_11-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/5-d_add_11-d_samples.jsonl
+
+num_addition_5-d_add_12-d:
+  id: num_addition_5-d_add_12-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_5-d_add_12-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/5-d_add_12-d_samples.jsonl
+
+num_addition_6-d_add_3-d:
+  id: num_addition_6-d_add_3-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_6-d_add_3-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/6-d_add_3-d_samples.jsonl
+
+num_addition_6-d_add_4-d:
+  id: num_addition_6-d_add_4-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_6-d_add_4-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/6-d_add_4-d_samples.jsonl
+
+num_addition_6-d_add_5-d:
+  id: num_addition_6-d_add_5-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_6-d_add_5-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/6-d_add_5-d_samples.jsonl
+
+num_addition_6-d_add_6-d:
+  id: num_addition_6-d_add_6-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_6-d_add_6-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/6-d_add_6-d_samples.jsonl
+
+num_addition_6-d_add_7-d:
+  id: num_addition_6-d_add_7-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_6-d_add_7-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/6-d_add_7-d_samples.jsonl
+
+num_addition_6-d_add_8-d:
+  id: num_addition_6-d_add_8-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_6-d_add_8-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/6-d_add_8-d_samples.jsonl
+
+num_addition_6-d_add_9-d:
+  id: num_addition_6-d_add_9-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_6-d_add_9-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/6-d_add_9-d_samples.jsonl
+
+num_addition_6-d_add_10-d:
+  id: num_addition_6-d_add_10-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_6-d_add_10-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/6-d_add_10-d_samples.jsonl
+
+num_addition_6-d_add_11-d:
+  id: num_addition_6-d_add_11-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_6-d_add_11-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/6-d_add_11-d_samples.jsonl
+
+num_addition_6-d_add_12-d:
+  id: num_addition_6-d_add_12-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_6-d_add_12-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/6-d_add_12-d_samples.jsonl
+
+num_addition_7-d_add_3-d:
+  id: num_addition_7-d_add_3-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_7-d_add_3-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/7-d_add_3-d_samples.jsonl
+
+num_addition_7-d_add_4-d:
+  id: num_addition_7-d_add_4-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_7-d_add_4-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/7-d_add_4-d_samples.jsonl
+
+num_addition_7-d_add_5-d:
+  id: num_addition_7-d_add_5-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_7-d_add_5-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/7-d_add_5-d_samples.jsonl
+
+num_addition_7-d_add_6-d:
+  id: num_addition_7-d_add_6-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_7-d_add_6-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/7-d_add_6-d_samples.jsonl
+
+num_addition_7-d_add_7-d:
+  id: num_addition_7-d_add_7-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_7-d_add_7-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/7-d_add_7-d_samples.jsonl
+
+num_addition_7-d_add_8-d:
+  id: num_addition_7-d_add_8-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_7-d_add_8-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/7-d_add_8-d_samples.jsonl
+
+num_addition_7-d_add_9-d:
+  id: num_addition_7-d_add_9-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_7-d_add_9-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/7-d_add_9-d_samples.jsonl
+
+num_addition_7-d_add_10-d:
+  id: num_addition_7-d_add_10-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_7-d_add_10-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/7-d_add_10-d_samples.jsonl
+
+num_addition_7-d_add_11-d:
+  id: num_addition_7-d_add_11-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_7-d_add_11-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/7-d_add_11-d_samples.jsonl
+
+num_addition_7-d_add_12-d:
+  id: num_addition_7-d_add_12-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_7-d_add_12-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/7-d_add_12-d_samples.jsonl
+
+num_addition_8-d_add_3-d:
+  id: num_addition_8-d_add_3-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_8-d_add_3-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/8-d_add_3-d_samples.jsonl
+
+num_addition_8-d_add_4-d:
+  id: num_addition_8-d_add_4-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_8-d_add_4-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/8-d_add_4-d_samples.jsonl
+
+num_addition_8-d_add_5-d:
+  id: num_addition_8-d_add_5-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_8-d_add_5-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/8-d_add_5-d_samples.jsonl
+
+num_addition_8-d_add_6-d:
+  id: num_addition_8-d_add_6-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_8-d_add_6-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/8-d_add_6-d_samples.jsonl
+
+num_addition_8-d_add_7-d:
+  id: num_addition_8-d_add_7-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_8-d_add_7-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/8-d_add_7-d_samples.jsonl
+
+num_addition_8-d_add_8-d:
+  id: num_addition_8-d_add_8-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_8-d_add_8-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/8-d_add_8-d_samples.jsonl
+
+num_addition_8-d_add_9-d:
+  id: num_addition_8-d_add_9-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_8-d_add_9-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/8-d_add_9-d_samples.jsonl
+
+num_addition_8-d_add_10-d:
+  id: num_addition_8-d_add_10-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_8-d_add_10-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/8-d_add_10-d_samples.jsonl
+
+num_addition_8-d_add_11-d:
+  id: num_addition_8-d_add_11-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_8-d_add_11-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/8-d_add_11-d_samples.jsonl
+
+num_addition_8-d_add_12-d:
+  id: num_addition_8-d_add_12-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_8-d_add_12-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/8-d_add_12-d_samples.jsonl
+
+num_addition_9-d_add_3-d:
+  id: num_addition_9-d_add_3-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_9-d_add_3-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/9-d_add_3-d_samples.jsonl
+
+num_addition_9-d_add_4-d:
+  id: num_addition_9-d_add_4-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_9-d_add_4-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/9-d_add_4-d_samples.jsonl
+
+num_addition_9-d_add_5-d:
+  id: num_addition_9-d_add_5-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_9-d_add_5-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/9-d_add_5-d_samples.jsonl
+
+num_addition_9-d_add_6-d:
+  id: num_addition_9-d_add_6-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_9-d_add_6-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/9-d_add_6-d_samples.jsonl
+
+num_addition_9-d_add_7-d:
+  id: num_addition_9-d_add_7-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_9-d_add_7-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/9-d_add_7-d_samples.jsonl
+
+num_addition_9-d_add_8-d:
+  id: num_addition_9-d_add_8-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_9-d_add_8-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/9-d_add_8-d_samples.jsonl
+
+num_addition_9-d_add_9-d:
+  id: num_addition_9-d_add_9-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_9-d_add_9-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/9-d_add_9-d_samples.jsonl
+
+num_addition_9-d_add_10-d:
+  id: num_addition_9-d_add_10-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_9-d_add_10-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/9-d_add_10-d_samples.jsonl
+
+num_addition_9-d_add_11-d:
+  id: num_addition_9-d_add_11-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_9-d_add_11-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/9-d_add_11-d_samples.jsonl
+
+num_addition_9-d_add_12-d:
+  id: num_addition_9-d_add_12-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_9-d_add_12-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/9-d_add_12-d_samples.jsonl
+
+num_addition_10-d_add_3-d:
+  id: num_addition_10-d_add_3-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_10-d_add_3-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/10-d_add_3-d_samples.jsonl
+
+num_addition_10-d_add_4-d:
+  id: num_addition_10-d_add_4-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_10-d_add_4-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/10-d_add_4-d_samples.jsonl
+
+num_addition_10-d_add_5-d:
+  id: num_addition_10-d_add_5-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_10-d_add_5-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/10-d_add_5-d_samples.jsonl
+
+num_addition_10-d_add_6-d:
+  id: num_addition_10-d_add_6-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_10-d_add_6-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/10-d_add_6-d_samples.jsonl
+
+num_addition_10-d_add_7-d:
+  id: num_addition_10-d_add_7-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_10-d_add_7-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/10-d_add_7-d_samples.jsonl
+
+num_addition_10-d_add_8-d:
+  id: num_addition_10-d_add_8-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_10-d_add_8-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/10-d_add_8-d_samples.jsonl
+
+num_addition_10-d_add_9-d:
+  id: num_addition_10-d_add_9-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_10-d_add_9-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/10-d_add_9-d_samples.jsonl
+
+num_addition_10-d_add_10-d:
+  id: num_addition_10-d_add_10-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_10-d_add_10-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/10-d_add_10-d_samples.jsonl
+
+num_addition_10-d_add_11-d:
+  id: num_addition_10-d_add_11-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_10-d_add_11-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/10-d_add_11-d_samples.jsonl
+
+num_addition_10-d_add_12-d:
+  id: num_addition_10-d_add_12-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_10-d_add_12-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/10-d_add_12-d_samples.jsonl
+
+num_addition_11-d_add_3-d:
+  id: num_addition_11-d_add_3-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_11-d_add_3-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/11-d_add_3-d_samples.jsonl
+
+num_addition_11-d_add_4-d:
+  id: num_addition_11-d_add_4-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_11-d_add_4-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/11-d_add_4-d_samples.jsonl
+
+num_addition_11-d_add_5-d:
+  id: num_addition_11-d_add_5-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_11-d_add_5-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/11-d_add_5-d_samples.jsonl
+
+num_addition_11-d_add_6-d:
+  id: num_addition_11-d_add_6-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_11-d_add_6-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/11-d_add_6-d_samples.jsonl
+
+num_addition_11-d_add_7-d:
+  id: num_addition_11-d_add_7-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_11-d_add_7-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/11-d_add_7-d_samples.jsonl
+
+num_addition_11-d_add_8-d:
+  id: num_addition_11-d_add_8-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_11-d_add_8-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/11-d_add_8-d_samples.jsonl
+
+num_addition_11-d_add_9-d:
+  id: num_addition_11-d_add_9-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_11-d_add_9-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/11-d_add_9-d_samples.jsonl
+
+num_addition_11-d_add_10-d:
+  id: num_addition_11-d_add_10-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_11-d_add_10-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/11-d_add_10-d_samples.jsonl
+
+num_addition_11-d_add_11-d:
+  id: num_addition_11-d_add_11-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_11-d_add_11-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/11-d_add_11-d_samples.jsonl
+
+num_addition_11-d_add_12-d:
+  id: num_addition_11-d_add_12-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_11-d_add_12-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/11-d_add_12-d_samples.jsonl
+
+num_addition_12-d_add_3-d:
+  id: num_addition_12-d_add_3-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_12-d_add_3-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/12-d_add_3-d_samples.jsonl
+
+num_addition_12-d_add_4-d:
+  id: num_addition_12-d_add_4-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_12-d_add_4-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/12-d_add_4-d_samples.jsonl
+
+num_addition_12-d_add_5-d:
+  id: num_addition_12-d_add_5-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_12-d_add_5-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/12-d_add_5-d_samples.jsonl
+
+num_addition_12-d_add_6-d:
+  id: num_addition_12-d_add_6-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_12-d_add_6-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/12-d_add_6-d_samples.jsonl
+
+num_addition_12-d_add_7-d:
+  id: num_addition_12-d_add_7-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_12-d_add_7-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/12-d_add_7-d_samples.jsonl
+
+num_addition_12-d_add_8-d:
+  id: num_addition_12-d_add_8-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_12-d_add_8-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/12-d_add_8-d_samples.jsonl
+
+num_addition_12-d_add_9-d:
+  id: num_addition_12-d_add_9-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_12-d_add_9-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/12-d_add_9-d_samples.jsonl
+
+num_addition_12-d_add_10-d:
+  id: num_addition_12-d_add_10-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_12-d_add_10-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/12-d_add_10-d_samples.jsonl
+
+num_addition_12-d_add_11-d:
+  id: num_addition_12-d_add_11-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_12-d_add_11-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/12-d_add_11-d_samples.jsonl
+
+num_addition_12-d_add_12-d:
+  id: num_addition_12-d_add_12-d.dev.v0
+  description: Check the model's ability to add numbers.
+  metrics: [accuracy]
+
+num_addition_12-d_add_12-d.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: num_addition/12-d_add_12-d_samples.jsonl
+
