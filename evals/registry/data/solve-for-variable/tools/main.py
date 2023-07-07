@@ -65,7 +65,7 @@ def main():
 
     try:
         n_questions = int(argv[1])
-    except:
+    except (IndexError, ValueError):
         print(f'Usage: {argv[0]} num-questions')
         print(f'  f.i. {argv[0]} 100')
         print()

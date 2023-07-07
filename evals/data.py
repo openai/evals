@@ -81,7 +81,6 @@ def _decode_json(line, path, line_number):
 
 def _get_jsonl_file(path):
     logger.info(f"Fetching {path}")
-    data = []
     with open_by_file_pattern(path, mode="r") as f:
         return [_decode_json(line, path, i + 1) for i, line in enumerate(f)]
 

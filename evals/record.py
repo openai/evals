@@ -325,7 +325,7 @@ class LocalRecorder(RecorderBase):
             raise e
 
         with bf.BlobFile(self.event_file_path, "ab") as f:
-            f.write(b"".join([l.encode("utf-8") for l in lines]))
+            f.write(b"".join([line.encode("utf-8") for line in lines]))
 
         logger.info(
             f"Logged {len(lines)} rows of events to {self.event_file_path}: insert_time={t(time.time()-start)}"
@@ -430,7 +430,7 @@ class Recorder(RecorderBase):
                 idx_l = idx_r
 
             with bf.BlobFile(self.event_file_path, "ab") as f:
-                f.write(b"".join([l.encode("utf-8") for l in lines]))
+                f.write(b"".join([line.encode("utf-8") for line in lines]))
             self._last_flush_time = time.time()
             self._flushes_done += 1
 

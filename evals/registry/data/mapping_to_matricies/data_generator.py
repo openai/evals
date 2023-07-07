@@ -13,7 +13,7 @@ def generate_one_sample_json_string(binary_array_str, dimensions_str, answer_str
     return base_string
 
 def write_lines_to_file(min_array_len, max_array_len, filename, max_lines = 50):
-    num_lines = 0;
+    num_lines = 0
     # Open the file for writing
     with open(filename, 'w') as file:
         # Loop through all possible array lengths

@@ -1,6 +1,3 @@
-import importlib
-from typing import Optional
-
 from openai import Completion
 from evals.api import CompletionResult
 
