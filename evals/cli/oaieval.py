@@ -15,13 +15,12 @@ import evals.base
 import evals.record
 from evals.eval import Eval
 from evals.registry import Registry
+from evals.record import HttpRecorder  # Import the new recorder
 
 logger = logging.getLogger(__name__)
 
-
 def _purple(str: str) -> str:
     return f"\033[1;35m{str}\033[0m"
-
 
 def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run evals through the API")
@@ -49,11 +48,12 @@ def get_parser() -> argparse.ArgumentParser:
         help="Path to the registry",
     )
     parser.add_argument("--debug", action=argparse.BooleanOptionalAction, default=False)
-    parser.add_argument("--local-run", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--local-run", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--http-run", action=argparse.BooleanOptionalAction, default=True)  # New flag
+    parser.add_argument("--url", type=str, default=None)  # New argument
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
     return parser
-
 
 class OaiEvalArguments(argparse.Namespace):
     completion_fn: str
@@ -69,9 +69,10 @@ class OaiEvalArguments(argparse.Namespace):
     registry_path: Optional[str]
     debug: bool
     local_run: bool
+    http_run: bool  # New attribute
+    url: Optional[str]  # New attribute
     dry_run: bool
     dry_run_logging: bool
-
 
 def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     if args.debug:
@@ -127,6 +128,10 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         recorder = evals.record.DummyRecorder(run_spec=run_spec, log=args.dry_run_logging)
     elif args.local_run:
         recorder = evals.record.LocalRecorder(record_path, run_spec=run_spec)
+    elif args.http_run:  # Check the new flag
+        if args.url is None:
+            raise ValueError("URL must be specified when using http-run mode")
+        recorder = evals.record.HttpRecorder(args.url, run_spec=run_spec)  # Use new HttpRecorder
     else:
         recorder = evals.record.Recorder(record_path, run_spec=run_spec)
 
@@ -171,14 +176,13 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     result = eval.run(recorder)
     recorder.record_final_report(result)
 
-    if not (args.dry_run or args.local_run):
+    if not (args.dry_run or args.local_run or args.http_run):
         logger.info(_purple(f"Run completed: {run_url}"))
 
     logger.info("Final report:")
     for key, value in result.items():
         logger.info(f"{key}: {value}")
     return run_spec.run_id
-
 
 def main() -> None:
     parser = get_parser()
@@ -190,11 +194,10 @@ def main() -> None:
     )
     logging.getLogger("openai").setLevel(logging.WARN)
 
-    # TODO)) why do we need this?
     if hasattr(openai.error, "set_display_cause"):  # type: ignore
         openai.error.set_display_cause()  # type: ignore
     run(args)
 
-
 if __name__ == "__main__":
     main()
+

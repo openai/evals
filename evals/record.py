@@ -15,6 +15,7 @@ import time
 from contextvars import ContextVar
 from datetime import datetime, timezone
 from typing import Any, List, Optional, Sequence
+import requests
 
 import blobfile as bf
 
@@ -339,6 +340,47 @@ class LocalRecorder(RecorderBase):
             f.write((jsondumps({"final_report": final_report}) + "\n").encode("utf-8"))
 
         logging.info(f"Final report: {final_report}. Logged to {self.event_file_path}")
+
+class HttpRecorder(RecorderBase):
+    def __init__(self, url: str, run_spec: RunSpec):
+        super().__init__(run_spec)
+        self.url = url
+        logger.info(f"HttpRecorder initialized with URL {self.url}")
+
+    def _flush_events_internal(self, events_to_write: Sequence[Event]):
+        for event in events_to_write:
+            self._send_event(event)
+
+    def _send_event(self, event: Event):
+        # Convert the event to a dictionary
+        event_dict = dataclasses.asdict(event)
+        logger.debug(f"Sending event: {event_dict}")
+        
+        # Send the event to the specified URL
+        # Note: This won't work in the current environment because it doesn't have internet access
+        response = requests.post(self.url, json=event_dict)
+
+        # Raise an exception if the request failed
+        if not response.ok:
+            logger.error(f"Failed to send event: {response.text}")
+        else:
+            logger.debug(f"Event sent successfully")
+    def record_final_report(self, final_report: Any):
+        # Convert the final report to a dictionary and prepare it as an event
+        report_event = Event(
+            run_id=self.run_spec.run_id,
+            event_id=len(self._events),
+            sample_id=None,  # or you could use a specific id for final reports
+            type="final_report",
+            data=final_report,
+            created_by=self.run_spec.created_by,
+            created_at=str(datetime.now(timezone.utc)),
+        )
+
+        # Send the final report event
+        self._send_event(report_event)
+
+        logging.info(f"Final report: {final_report}. Sent to {self.url}")
 
 
 class Recorder(RecorderBase):
