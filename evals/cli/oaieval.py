@@ -48,8 +48,8 @@ def get_parser() -> argparse.ArgumentParser:
         help="Path to the registry",
     )
     parser.add_argument("--debug", action=argparse.BooleanOptionalAction, default=False)
-    parser.add_argument("--local-run", action=argparse.BooleanOptionalAction, default=False)
-    parser.add_argument("--http-run", action=argparse.BooleanOptionalAction, default=True)  # New flag
+    parser.add_argument("--local-run", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--http-run", action=argparse.BooleanOptionalAction, default=False)  # New flag
     parser.add_argument("--url", type=str, default=None)  # New argument
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
@@ -123,17 +123,31 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     else:
         record_path = args.record_path
 
-    recorder: evals.record.RecorderBase
-    if args.dry_run:
-        recorder = evals.record.DummyRecorder(run_spec=run_spec, log=args.dry_run_logging)
+    if args.http_run:
+        args.local_run = False
     elif args.local_run:
-        recorder = evals.record.LocalRecorder(record_path, run_spec=run_spec)
-    elif args.http_run:  # Check the new flag
+        args.http_run = False
+
+    recorder: evals.record.RecorderBase
+    recorder_kwargs = []
+    if args.dry_run:
+        recorder_class = evals.record.DummyRecorder
+        recorder_args = {"run_spec": run_spec, "log": args.dry_run_logging}
+    elif args.local_run:
+        recorder_class = evals.record.LocalRecorder
+        recorder_args = {"run_spec": run_spec}
+        recorder_kwargs = [record_path]
+    elif args.http_run:
         if args.url is None:
             raise ValueError("URL must be specified when using http-run mode")
-        recorder = evals.record.HttpRecorder(args.url, run_spec=run_spec)  # Use new HttpRecorder
+        recorder_class = evals.record.HttpRecorder
+        recorder_args = {"url": args.url, "run_spec": run_spec}
     else:
-        recorder = evals.record.Recorder(record_path, run_spec=run_spec)
+        recorder_class = evals.record.Recorder
+        recorder_args = {"run_spec": run_spec}
+        recorder_kwargs = [record_path] 
+
+    recorder = recorder_class(*recorder_kwargs, **recorder_args)
 
     api_extra_options: dict[str, Any] = {}
     if not args.cache:
@@ -145,7 +159,6 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     def parse_extra_eval_params(
         param_str: Optional[str],
     ) -> Mapping[str, Union[str, int, float]]:
-        """Parse a string of the form "key1=value1,key2=value2" into a dict."""
         if not param_str:
             return {}
 
@@ -175,9 +188,6 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     )
     result = eval.run(recorder)
     recorder.record_final_report(result)
-
-    if not (args.dry_run or args.local_run or args.http_run):
-        logger.info(_purple(f"Run completed: {run_url}"))
 
     logger.info("Final report:")
     for key, value in result.items():
