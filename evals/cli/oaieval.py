@@ -15,7 +15,6 @@ import evals.base
 import evals.record
 from evals.eval import Eval
 from evals.registry import Registry
-from evals.record import HttpRecorder  # Import the new recorder
 
 logger = logging.getLogger(__name__)
 
@@ -49,8 +48,8 @@ def get_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--debug", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--local-run", action=argparse.BooleanOptionalAction, default=True)
-    parser.add_argument("--http-run", action=argparse.BooleanOptionalAction, default=False)  # New flag
-    parser.add_argument("--url", type=str, default=None)  # New argument
+    parser.add_argument("--http-run", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--url", type=str, default=None)
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
     return parser
@@ -69,8 +68,8 @@ class OaiEvalArguments(argparse.Namespace):
     registry_path: Optional[str]
     debug: bool
     local_run: bool
-    http_run: bool  # New attribute
-    url: Optional[str]  # New attribute
+    http_run: bool
+    url: Optional[str]
     dry_run: bool
     dry_run_logging: bool
 

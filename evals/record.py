@@ -357,7 +357,6 @@ class HttpRecorder(RecorderBase):
         logger.debug(f"Sending event: {event_dict}")
         
         # Send the event to the specified URL
-        # Note: This won't work in the current environment because it doesn't have internet access
         response = requests.post(self.url, json=event_dict)
 
         # Raise an exception if the request failed
