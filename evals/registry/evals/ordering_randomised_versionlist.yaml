@@ -1,0 +1,10 @@
+ordering_randomised_versionlist:
+  id: ordering_randomised_versionlist.dev.v0
+  description: This evaluation aims to test prompt engineered failure cases to order a randomised version history list, but causes chronological ordering failures such as 7.5.2 -> 7.4.2 -> 7.5.1 -> 7.4.1 (incorrectly inserted 7.4.2 in between 7.5.2 and 7.5.1 in the Explainable AI chain of thoughts) and 7.5.2 -> 7.5.1 -> 7.5.0 -> 7.4.1 (incorrectly skipped over 7.4.2 in the Explainable AI chain of thoughts).
+  metrics: [accuracy]
+
+ordering_randomised_versionlist.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+      samples_jsonl: ordering_randomised_versionlist/samples.jsonl
+

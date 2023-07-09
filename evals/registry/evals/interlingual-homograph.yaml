@@ -1,0 +1,9 @@
+interlingual-homograph:
+  id: interlingual-homograph.dev.v0
+  description: Evaluation of a model's ability to determine whether the given word is an interlingual homograph or not.
+  metrics: [accuracy]
+
+interlingual-homograph.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: interlingual-homograph/samples.jsonl

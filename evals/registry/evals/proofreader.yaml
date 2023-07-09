@@ -1,0 +1,9 @@
+proofreader:
+  id: proofreader.dev.v0
+  description: Test the model ability to check text correctness without fact checking.
+  metrics: [accuracy]
+
+proofreader.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: proofreader/samples.jsonl

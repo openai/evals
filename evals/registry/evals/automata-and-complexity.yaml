@@ -1,0 +1,8 @@
+automata-and-complexity:
+  id: automata-and-complexity.dev.v0
+  description: Test the model's ability to answer true/false questions relating to theoretical computer science concepts.
+  metrics: [accuracy]
+automata-and-complexity.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: automata-and-complexity/samples.jsonl

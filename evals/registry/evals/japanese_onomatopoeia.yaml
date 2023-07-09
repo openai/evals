@@ -1,0 +1,10 @@
+japanese_onomatopoeia:
+  id: japanese_onomatopoeia.dev.v0
+  metrics: [accuracy]
+
+japanese_onomatopoeia.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: Japanese_onomatopoeia/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: onomatopoeia

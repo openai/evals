@@ -1,0 +1,9 @@
+chinese_ancient_masterpieces_dynasty:
+  id: chinese_ancient_masterpieces_dynasty.dev.v0
+  description: Identify the dynasty of Chinese ancient masterpieces
+  metrics: [accuracy]
+
+chinese_ancient_masterpieces_dynasty.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: chinese_ancient_masterpieces_dynasty/samples.jsonl

@@ -1,0 +1,8 @@
+brazilian_laws:
+  id: brazilian_laws.test.v1
+  metrics: [accuracy]
+brazilian_laws.test.v1:
+  class: evals.elsuite.basic.includes:Includes
+  description: Example eval that uses fuzzy matching to score completions.
+  args:
+    samples_jsonl: brazilian_laws/samples.jsonl

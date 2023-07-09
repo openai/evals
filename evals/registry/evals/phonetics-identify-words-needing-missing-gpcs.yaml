@@ -1,0 +1,9 @@
+phonetics-identify-words-needing-missing-gpcs:
+  id: phonetics-identify-words-needing-missing-gpcs.s1.simple-v0
+  description: Identify if an input string matches the list of allowed Grapheme-Phoneme Correspondences
+  metrics: [accuracy]
+phonetics-identify-words-needing-missing-gpcs.s1.simple-v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: phonetics-identify-words-needing-missing-gpcs/samples.jsonl
+   
