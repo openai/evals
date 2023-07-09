@@ -1,10 +1,16 @@
 import importlib
+from typing import Optional
 
 from langchain.chat_models.base import BaseChatModel
 from langchain.llms import BaseLLM
-from langchain.schema.messages import (AIMessage, BaseMessage, ChatMessage,
-                                       FunctionMessage, HumanMessage,
-                                       SystemMessage)
+from langchain.schema.messages import (
+    AIMessage,
+    BaseMessage,
+    ChatMessage,
+    FunctionMessage,
+    HumanMessage,
+    SystemMessage,
+)
 
 from evals.api import CompletionFn, CompletionResult
 from evals.prompt.base import CompletionPrompt, is_chat_prompt
@@ -20,7 +26,7 @@ class LangChainLLMCompletionResult(CompletionResult):
 
 
 class LangChainLLMCompletionFn(CompletionFn):
-    def __init__(self, llm: str, llm_kwargs=None, **kwargs) -> None:
+    def __init__(self, llm: str, llm_kwargs: Optional[dict] = None, **kwargs) -> None:
         # Import and resolve self.llm to an instance of llm argument here,
         # assuming it's always a subclass of BaseLLM
         if llm_kwargs is None:
@@ -60,7 +66,7 @@ def _convert_dict_to_langchain_message(_dict) -> BaseMessage:
 
 
 class LangChainChatModelCompletionFn(CompletionFn):
-    def __init__(self, llm: str, llm_kwargs=None, **kwargs) -> None:
+    def __init__(self, llm: str, llm_kwargs: Optional[dict] = None, **kwargs) -> None:
         # Import and resolve self.llm to an instance of llm argument here,
         # assuming it's always a subclass of BaseLLM
         if llm_kwargs is None:
@@ -75,9 +81,7 @@ class LangChainChatModelCompletionFn(CompletionFn):
 
     def __call__(self, prompt, **kwargs) -> LangChainLLMCompletionResult:
         if is_chat_prompt(prompt):
-            messages = [
-                _convert_dict_to_langchain_message(message) for message in prompt
-            ]
+            messages = [_convert_dict_to_langchain_message(message) for message in prompt]
         else:
             messages = [HumanMessage(content=prompt)]
         response = self.llm(messages).content
