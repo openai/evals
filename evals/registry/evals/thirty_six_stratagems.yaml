@@ -1,0 +1,8 @@
+thirty_six_stratagems:
+  id: thirty_six_stratagems.test.v1
+  description: Test the accuracy of the model to understand the 36 stratagems of Sun Tzu's Art of War
+  metrics: [accuracy]
+thirty_six_stratagems.test.v1:
+  class:  evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: thirty_six_stratagems/samples.jsonl
