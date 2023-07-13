@@ -1,0 +1,9 @@
+finger-tracking:
+  id: finger-tracking.dev.v0
+  description: Eval that checks ability to track a ring moving across fingers.
+  metrics: [accuracy]
+
+finger-tracking.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: finger-tracking/samples.jsonl
