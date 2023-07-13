@@ -1,0 +1,4 @@
+css-selectors:
+  evals:
+    - css-selectors-verbal
+    - css-selectors-explain
