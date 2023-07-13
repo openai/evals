@@ -1,0 +1,10 @@
+seo-keywords:
+  id: seo-keywords.dev.v0
+  description: Test the model's ability to generate SEO keywords.
+  metrics: [accuracy]
+seo-keywords.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: seo_keywords/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: seo_keywords
