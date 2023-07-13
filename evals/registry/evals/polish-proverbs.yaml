@@ -1,0 +1,9 @@
+polish-proverbs:
+  description: Test the model's ability to complete proverbs in Polish language
+  id: polish-proverbs.dev.v0
+  metrics:
+  - accuracy
+polish-proverbs.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: polish-proverbs/samples.jsonl
