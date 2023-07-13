@@ -1,0 +1,9 @@
+chinese-remainder-theorem:
+  id: chinese-remainder-theorem.dev.v0
+  description: Test the model's ability to solve systems of congruences with the Chinese remainder theorem.
+  metrics: [accuracy]
+  
+chinese-remainder-theorem.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: chinese-remainder-theorem/samples.jsonl
