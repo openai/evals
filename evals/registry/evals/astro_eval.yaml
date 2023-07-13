@@ -1,0 +1,9 @@
+astro_eval:
+  id: astro_eval.dev.v0
+  description: This evaluation tries to predict planetary routes according to their repetitive trajectories in a specific time and location
+  metrics: [accuracy]
+
+astro_eval.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: astro_eval/samples.jsonl
