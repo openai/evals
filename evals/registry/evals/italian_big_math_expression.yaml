@@ -1,0 +1,9 @@
+italian_big_math_expression:
+  id: italian_big_math_expression.dev.v0
+  description: This test aims to assess the model's ability to solve written mathematical expressions in Italian involving large numbers and provide the answers in written form.
+  metrics: [accuracy]
+
+italian_big_math_expression.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: italian_big_math_expression/samples.jsonl
