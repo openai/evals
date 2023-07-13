@@ -5,4 +5,4 @@ find-thirukkural:
 find-thirukkural.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-      samples_jsonl: find-thirukkural/samples.jsonl
+    samples_jsonl: find-thirukkural/samples.jsonl
