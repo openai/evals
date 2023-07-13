@@ -1,0 +1,9 @@
+latin-grammar:
+  id: latin-grammar.dev.v0
+  description: Test the model's ability to distinguish between grammatically well-formed and ungrammatical Latin sentences.
+  metrics: [accuracy]
+
+latin-grammar.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: latin_grammar/samples.jsonl
