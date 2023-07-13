@@ -1,0 +1,9 @@
+Chinese_character_riddles:
+  id: Chinese_character_riddles.dev.v0
+  description: Test the model's capability to deeply understand Chinese characters, Chinese language and Chinese culture.
+  metrics: [accuracy]
+
+Chinese_character_riddles.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: Chinese_character_riddles/samples.jsonl
