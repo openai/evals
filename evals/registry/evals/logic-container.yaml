@@ -1,0 +1,10 @@
+logic-container:
+  id: logic-container.dev.v0
+  description: Eval that checks ability to do logical problems involving jars with water and balances.
+  metrics: [accuracy]
+logic-container.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: logic-container/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: possible
