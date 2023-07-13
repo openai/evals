@@ -1,0 +1,8 @@
+irish-plural-nouns:
+  id: irish-plural-nouns.dev.v0
+  description: Test the model's ability on Irish plural nouns in both the genitive and nominative case.
+  metrics: [accuracy]
+irish-plural-nouns.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: irish_plural_nouns/samples.jsonl  
