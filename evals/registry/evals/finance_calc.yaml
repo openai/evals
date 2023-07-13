@@ -1,0 +1,8 @@
+finance_calc:
+  id: finance_calc.dev.v0
+  description: Testing the models ability to calculate and understand interest and inflation.
+  metrics: [accuracy]
+finance_calc.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: finance_calc/samples.jsonl

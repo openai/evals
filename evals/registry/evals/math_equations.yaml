@@ -1,0 +1,9 @@
+math_equations:
+  id: math_equations.dev.v0
+  description: Test model's ability to explain and solve math equations described in words.
+  metrics: [accuracy]
+
+math_equations.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: math_equations/math_equations.jsonl
