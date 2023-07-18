@@ -266,6 +266,7 @@ class Registry:
 
         for registry_path in registry_paths:
             for name, path, spec in self._load_resources(registry_path, resource_type):
+                assert name not in registry, f"duplicate entry: {name} from {path}"
                 self._validate_reserved_keywords(spec, name, path)
 
                 spec["key"] = name
