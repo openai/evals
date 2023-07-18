@@ -12,11 +12,13 @@ if TYPE_CHECKING:
 else:
     from pydantic.dataclasses import dataclass
 
+
 @dataclass
 class CompletionFnSpec:
     """
     Specification for a CompletionFn.
     """
+
     cls: str
     args: Optional[Dict[str, Any]] = None
     key: Optional[str] = None
@@ -51,6 +53,7 @@ class EvalSpec:
     """
 
     cls: str
+    registry_path: str
     args: Optional[Dict[str, Any]] = None
     key: Optional[str] = None
     group: Optional[str] = None
