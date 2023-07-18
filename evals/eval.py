@@ -150,10 +150,11 @@ class Eval(abc.ABC):
                 "To use `get_samples`, you must provide a `samples_jsonl` path." "Got `None`."
             )
 
-        samples_path = (
-            Path(self.samples_jsonl)
-            if os.path.isfile(self.samples_jsonl)
-            else self.eval_registry_path / "data" / self.samples_jsonl
-        )
-
+        samples_path = self._get_samples_path()
         return get_jsonl(samples_path.as_posix())
+
+    def _get_samples_path(self) -> Path:
+        if os.path.isfile(self.samples_jsonl):
+            return Path(self.samples_jsonl)
+        else:
+            return self.eval_registry_path / "data" / self.samples_jsonl
