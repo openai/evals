@@ -147,18 +147,4 @@ class Eval(abc.ABC):
                 "To use `get_samples`, you must provide a `samples_jsonl` path." "Got `None`."
             )
 
-        samples_jsonl_path = None
-
-        for registry_path in self.registry.get_registry_paths():
-            candidate_samples_jsonl_path = registry_path / "data" / self.samples_jsonl
-
-            if candidate_samples_jsonl_path.is_file():
-                samples_jsonl_path = candidate_samples_jsonl_path
-                break
-
-        if samples_jsonl_path is None:
-            raise ValueError(
-                f"The provided `samples_jsonl` path '{self.samples_jsonl}' was not found in any registry paths."
-            )
-
-        return get_jsonl(samples_jsonl_path.as_posix())
+        return get_jsonl(self.samples_jsonl)
