@@ -11,6 +11,7 @@ import os
 import urllib
 from collections.abc import Iterator
 from functools import partial
+from pathlib import Path
 from typing import Any, Sequence, Union
 
 import blobfile as bf
@@ -75,16 +76,17 @@ def _decode_json(line, path, line_number):
     try:
         return json.loads(line)
     except json.JSONDecodeError as e:
-        custom_error_message = f"Error parsing JSON on line {line_number}: {e.msg} at {path}:{line_number}:{e.colno}"
+        custom_error_message = (
+            f"Error parsing JSON on line {line_number}: {e.msg} at {path}:{line_number}:{e.colno}"
+        )
         logger.error(custom_error_message)
         raise ValueError(custom_error_message) from None
 
+
 def _get_jsonl_file(path):
     logger.info(f"Fetching {path}")
-    data = []
     with open_by_file_pattern(path, mode="r") as f:
         return [_decode_json(line, path, i + 1) for i, line in enumerate(f)]
-
 
 
 def _get_json_file(path):
@@ -167,6 +169,8 @@ def _to_py_types(o: Any) -> Any:
         return {k: _to_py_types(v) for k, v in o.items()}
     if isinstance(o, list):
         return [_to_py_types(v) for v in o]
+    if isinstance(o, Path):
+        return o.as_posix()
 
     if dataclasses.is_dataclass(o):
         return _to_py_types(dataclasses.asdict(o))
