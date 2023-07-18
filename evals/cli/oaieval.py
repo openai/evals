@@ -5,7 +5,6 @@ import argparse
 import logging
 import shlex
 import sys
-from pathlib import Path
 from typing import Any, Mapping, Optional, Union, cast
 
 import openai
@@ -166,7 +165,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         completion_fns=completion_fn_instances,
         seed=args.seed,
         name=eval_name,
-        eval_registry_path=Path(eval_spec.registry_path),
+        eval_registry_path=eval_spec.registry_path,
         registry=registry,
         **extra_eval_params,
     )
