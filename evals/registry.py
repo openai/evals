@@ -271,7 +271,7 @@ class Registry:
 
                 spec["key"] = name
                 spec["group"] = str(os.path.basename(path).split(".")[0])
-                spec["registry_path"] = registry_path.as_posix()
+                spec["registry_path"] = registry_path
 
                 if "class" in spec:
                     spec["cls"] = spec["class"]
