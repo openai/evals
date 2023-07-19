@@ -75,7 +75,7 @@ We know that you might be excited to contribute to OpenAI's mission, help improv
 
 - [ ] I have filled out all required fields of this form
 - [ ] I have used **Git LFS** for the Eval JSON data
-- [ ] (Ignore if not submitting code) I have run `pip install pre-commit; pre-commit install` and have verified that `black`, `isort`, and `autoflake` are running when I commit and push
+- [ ] (Ignore if not submitting code) I have run `pip install pre-commit; pre-commit install` and have verified that `mypy`, `black`, `isort`, and `autoflake` are running when I commit and push
 
 Failure to fill out all required fields will result in the PR being closed.
 
