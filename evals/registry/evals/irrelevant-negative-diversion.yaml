@@ -1,0 +1,9 @@
+irrelevant-negative-diversion:
+  id: irrelevant-negative-diversion.dev.v0
+  description: Tests the model's reasoning ability in face of a negative diversion (e.g. "However, ...") with irrelevant information.
+  metrics: [accuracy]
+
+irrelevant-negative-diversion.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: irrelevant-negative-diversion/irrelevant-negative-diversion.jsonl
