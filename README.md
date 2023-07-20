@@ -1,4 +1,4 @@
-# Evals
+# OpenAI Evals
 
 Evals is a framework for evaluating LLMs (large language models) or systems built using LLMs as components. It also includes an open-source registry of challenging evals.
 
