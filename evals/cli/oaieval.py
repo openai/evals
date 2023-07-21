@@ -51,7 +51,7 @@ def get_parser() -> argparse.ArgumentParser:
         "--local-run",
         action=argparse.BooleanOptionalAction,
         default=True,
-        help="Enable local mode for running evaluations. In this mode, the evaluation results are stored locally in a JSON file. This mode is enabled by default. If you prefer to send the results to a HTTP endpoint or a Snowflake database, use the '--http-run' or '--no-local-run' flags respectively."
+        help="Enable local mode for running evaluations. In this mode, the evaluation results are stored locally in a JSON file. This mode is enabled by default."
     )
 
     parser.add_argument(
