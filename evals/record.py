@@ -351,19 +351,32 @@ class HttpRecorder(RecorderBase):
         for event in events_to_write:
             self._send_event(event)
 
-    def _send_event(self, event: Event):
+    def _send_event(self, event: Event, max_retries: int = 7):
         # Convert the event to a dictionary
         event_dict = dataclasses.asdict(event)
-        logger.debug(f"Sending event: {event_dict}")
-        
-        # Send the event to the specified URL
-        response = requests.post(self.url, json=event_dict)
 
-        # Raise an exception if the request failed
-        if not response.ok:
-            logger.error(f"Failed to send event: {response.text}")
-        else:
-            logger.debug(f"Event sent successfully")
+        for retry in range(max_retries):
+            logger.debug(f"Sending event: {event_dict}")
+
+            try:
+                # Send the event to the specified URL
+                response = requests.post(self.url, json=event_dict)
+
+                # If the request succeeded, return
+                if response.ok:
+                    logger.debug(f"Event sent successfully")
+                    return
+
+                # If the request failed, log a warning
+                logger.warning(f"Failed to send event, attempt {retry + 1}: {response.text}")
+            except Exception as e:
+                logger.warning(f"Failed to send event, attempt {retry + 1}: {str(e)}")
+
+        # If we've exhausted all retries, log an error and raise an exception
+        error_message = f"Failed to send event {event.event_id} after {max_retries} attempts."
+        logger.error(error_message)
+        raise RuntimeError(error_message)
+
     def record_final_report(self, final_report: Any):
         # Convert the final report to a dictionary and prepare it as an event
         report_event = Event(

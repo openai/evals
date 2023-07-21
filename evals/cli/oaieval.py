@@ -47,9 +47,27 @@ def get_parser() -> argparse.ArgumentParser:
         help="Path to the registry",
     )
     parser.add_argument("--debug", action=argparse.BooleanOptionalAction, default=False)
-    parser.add_argument("--local-run", action=argparse.BooleanOptionalAction, default=True)
-    parser.add_argument("--http-run", action=argparse.BooleanOptionalAction, default=False)
-    parser.add_argument("--url", type=str, default=None)
+    parser.add_argument(
+        "--local-run",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Enable local mode for running evaluations. In this mode, the evaluation results are stored locally in a JSON file. This mode is enabled by default. If you prefer to send the results to a HTTP endpoint or a Snowflake database, use the '--http-run' or '--no-local-run' flags respectively."
+    )
+
+    parser.add_argument(
+        "--http-run",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Enable HTTP mode for running evaluations. In this mode, the evaluation results are sent to a specified URL rather than being stored locally or in Snowflake. This mode should be used in conjunction with the '--http-run-url' argument to specify the URL for sending results."
+    )
+
+    parser.add_argument(
+        "--http-run-url", 
+        type=str, 
+        default=None,
+        help="URL to send the evaluation results when in HTTP mode. This option should be used in conjunction with the '--http-run' flag."
+    )
+
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
     return parser
@@ -69,7 +87,7 @@ class OaiEvalArguments(argparse.Namespace):
     debug: bool
     local_run: bool
     http_run: bool
-    url: Optional[str]
+    http_run_url: Optional[str]
     dry_run: bool
     dry_run_logging: bool
 
@@ -137,10 +155,11 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         recorder_args = {"run_spec": run_spec}
         recorder_kwargs = [record_path]
     elif args.http_run:
-        if args.url is None:
+        if args.http_run_url is None:
             raise ValueError("URL must be specified when using http-run mode")
         recorder_class = evals.record.HttpRecorder
-        recorder_args = {"url": args.url, "run_spec": run_spec}
+        recorder_args = {"url": args.http_run_url, "run_spec": run_spec}
+
     else:
         recorder_class = evals.record.Recorder
         recorder_args = {"run_spec": run_spec}
