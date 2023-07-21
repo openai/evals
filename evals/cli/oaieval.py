@@ -58,7 +58,7 @@ def get_parser() -> argparse.ArgumentParser:
         "--http-run",
         action=argparse.BooleanOptionalAction,
         default=False,
-        help="Enable HTTP mode for running evaluations. In this mode, the evaluation results are sent to a specified URL rather than being stored locally or in Snowflake. This mode should be used in conjunction with the '--http-run-url' argument to specify the URL for sending results."
+        help="Enable HTTP mode for running evaluations. In this mode, the evaluation results are sent to a specified URL rather than being stored locally or in Snowflake. This mode should be used in conjunction with the '--http-run-url' and '--http-batch-size' arguments."
     )
 
     parser.add_argument(
@@ -67,6 +67,15 @@ def get_parser() -> argparse.ArgumentParser:
         default=None,
         help="URL to send the evaluation results when in HTTP mode. This option should be used in conjunction with the '--http-run' flag."
     )
+
+    parser.add_argument(
+        "--http-batch-size", 
+        type=int, 
+        default=1,
+        help="Number of events to send in each HTTP request when in HTTP mode. Default is 1, i.e., send events individually. Set to a larger number to send events in batches. This option should be used in conjunction with the '--http-run' flag."
+    )
+
+
 
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
@@ -88,6 +97,7 @@ class OaiEvalArguments(argparse.Namespace):
     local_run: bool
     http_run: bool
     http_run_url: Optional[str]
+    http_batch_size: int  # new argument
     dry_run: bool
     dry_run_logging: bool
 
