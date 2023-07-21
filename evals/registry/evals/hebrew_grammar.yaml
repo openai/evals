@@ -1,0 +1,9 @@
+hebrew_grammar:
+  id: hebrew_grammar.dev.v0
+  description: Hebrew grammar examples based on the "Hebrew Academy"
+  metrics: [accuracy]
+
+hebrew_grammar.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: hebrew_grammar/samples.jsonl
