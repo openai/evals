@@ -373,7 +373,7 @@ class HttpRecorder(RecorderBase):
                 logger.warning(f"Failed to send event, attempt {retry + 1}: {str(e)}")
 
         # If we've exhausted all retries, log an error and raise an exception
-        error_message = f"Failed to send event {event.event_id} after {max_retries} attempts."
+        error_message = f"Error: Unable to send event {event.event_id} after {max_retries} attempts. Please check your connection and the specified URL."
         logger.error(error_message)
         raise RuntimeError(error_message)
 
