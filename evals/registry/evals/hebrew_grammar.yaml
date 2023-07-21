@@ -1,6 +1,6 @@
 hebrew_grammar:
   id: hebrew_grammar.dev.v0
-  description: Hebrew grammar examples based on the "Hebrew Academy"
+  description: Hebrew grammar corrections for questions in Hebrew
   metrics: [accuracy]
 
 hebrew_grammar.dev.v0:
