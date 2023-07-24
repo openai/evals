@@ -1,0 +1,6 @@
+hard_russian_computer_science_tasks.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: hard_russian_computer_science_tasks/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
