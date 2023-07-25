@@ -71,7 +71,7 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--http-batch-size", 
         type=int, 
-        default=1,
+        default=100,
         help="Number of events to send in each HTTP request when in HTTP mode. Default is 1, i.e., send events individually. Set to a larger number to send events in batches. This option should be used in conjunction with the '--http-run' flag."
     )
 
@@ -168,7 +168,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         if args.http_run_url is None:
             raise ValueError("URL must be specified when using http-run mode")
         recorder_class = evals.record.HttpRecorder
-        recorder_args = {"url": args.http_run_url, "run_spec": run_spec}
+        recorder_args = {"url": args.http_run_url, "run_spec": run_spec, "batch_size": args.http_batch_size}
 
     else:
         recorder_class = evals.record.Recorder
@@ -187,6 +187,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     def parse_extra_eval_params(
         param_str: Optional[str],
     ) -> Mapping[str, Union[str, int, float]]:
+        """Parse a string of the form "key1=value1,key2=value2" into a dict."""
         if not param_str:
             return {}
 

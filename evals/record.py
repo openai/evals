@@ -342,43 +342,42 @@ class LocalRecorder(RecorderBase):
         logging.info(f"Final report: {final_report}. Logged to {self.event_file_path}")
 
 class HttpRecorder(RecorderBase):
-    def __init__(self, url: str, run_spec: RunSpec, http_batch_size: int = 1):
+    def __init__(self, url: str, run_spec: RunSpec, batch_size: int = 100):
         super().__init__(run_spec)
         self.url = url
-        self.http_batch_size = http_batch_size
+        self.batch_size = batch_size
         logger.info(f"HttpRecorder initialized with URL {self.url}")
 
     def _flush_events_internal(self, events_to_write: Sequence[Event]):
-        batch_size = self.http_batch_size
+        batch_size = self.batch_size
         for i in range(0, len(events_to_write), batch_size):
             batch = list(events_to_write[i : i + batch_size])
             self._send_event(batch)
 
-    def _send_event(self, events: List[Event], max_retries: int = 7):
+    def _send_event(self, events: List[Event]):
         # Convert the events to dictionaries
         events_dict = [dataclasses.asdict(event) for event in events]
 
-        for retry in range(max_retries):
-            logger.debug(f"Sending events: {events_dict}")
+        logger.debug(f"Sending events: {events_dict}")
 
-            try:
-                # Send the events to the specified URL
-                response = requests.post(self.url, json=events_dict)
+        try:
+            # Send the events to the specified URL
+            response = requests.post(self.url, json=events_dict)
 
-                # If the request succeeded, return
-                if response.ok:
-                    logger.debug(f"Events sent successfully")
-                    return
-
+            # If the request succeeded, return
+            if response.ok:
+                logger.debug(f"Events sent successfully")
+            else:
                 # If the request failed, log a warning
-                logger.warning(f"Failed to send events, attempt {retry + 1}: {response.text}")
-            except Exception as e:
-                logger.warning(f"Failed to send events, attempt {retry + 1}: {str(e)}")
+                logger.warning(f"Failed to send events: {response.text}")
 
-        # If we've exhausted all retries, log an error and raise an exception
-        error_message = f"Failed to send events after {max_retries} attempts."
-        logger.error(error_message)
-        raise RuntimeError(error_message)
+        except Exception as e:
+            logger.warning(f"Failed to send events: {str(e)}")
+
+            # If the request failed, log an error and raise an exception
+            error_message = "Failed to send events."
+            logger.error(error_message)
+            raise RuntimeError(error_message)
 
     def record_final_report(self, final_report: Any):
         # Convert the final report to a dictionary and prepare it as an event
