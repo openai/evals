@@ -1,0 +1,9 @@
+chinese_ancient_poetry:
+  id: chinese_ancient_poetry.dev.v0
+  description: Evaluate the model's capability to answer the title and author of the given poems.
+  metrics: [accuracy]
+  
+chinese_ancient_poetry.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: chinese_ancient_poetry/samples.jsonl

@@ -1,0 +1,9 @@
+persian-kinship-riddles:
+  id: persian-kinship-riddles.dev.v0
+  description: An evaluation set to assess the logical reasoning abilities for solving kinship riddles in Persian language 
+  metrics: [accuracy]
+
+persian-kinship-riddles.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: persian-kinship-riddles/samples.jsonl

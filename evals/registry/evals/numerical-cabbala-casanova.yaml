@@ -1,0 +1,10 @@
+numerical-cabbala-casanova:
+  id: numerical-cabbala-casanova.dev.v0
+  metrics: [accuracy]
+numerical-cabbala-casanova.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: numerical-cabbala-casanova/samples.jsonl
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria: "correctness: \nIgnore the example in the task, analyse \"Step 3.\" of the submission.\nThe submission is correct if:\n- each substep of \"Step 3.\" is mathematically correct\n- the result of the last substep of \"Step 3.\" matches the word count of the desired answer\nCheck the correctness of each substep of \"Step 3.\".\nReport word-for-word the desired answer provided by the user. Print the word count of the desired answer next to it.\nThen report the result of the last compuation in \"Step 3.\" to check whether it matches the word count of the desired answer.\nIs the submission correct?"

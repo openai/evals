@@ -1,0 +1,9 @@
+corr2cause:
+  id: corr2cause.dev.v0
+  description: Test the model's ability to infer causation from correlation. Based on arXiv:2306.05836 and https://github.com/causalNLP/corr2cause.
+  metrics: [accuracy]
+
+corr2cause.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: corr2cause/corr2cause.jsonl

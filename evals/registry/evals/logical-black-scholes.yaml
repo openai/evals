@@ -1,0 +1,9 @@
+logical-black-scholes:
+  id: logical-black-scholes.test.v1
+  description: Test the model's ability to determine an individual variables' effect on the output of the black-scholes model.
+  metrics: [accuracy]
+
+logical-black-scholes.test.v1:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: logical-black-scholes/samples.jsonl
