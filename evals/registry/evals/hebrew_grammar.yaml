@@ -4,6 +4,6 @@ hebrew_grammar:
   metrics: [accuracy]
 
 hebrew_grammar.dev.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
   args:
     samples_jsonl: hebrew_grammar/samples.jsonl
