@@ -18,8 +18,10 @@ from evals.registry import Registry
 
 logger = logging.getLogger(__name__)
 
+
 def _purple(str: str) -> str:
     return f"\033[1;35m{str}\033[0m"
+
 
 def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run evals through the API")
@@ -51,35 +53,34 @@ def get_parser() -> argparse.ArgumentParser:
         "--local-run",
         action=argparse.BooleanOptionalAction,
         default=True,
-        help="Enable local mode for running evaluations. In this mode, the evaluation results are stored locally in a JSON file. This mode is enabled by default."
+        help="Enable local mode for running evaluations. In this mode, the evaluation results are stored locally in a JSON file. This mode is enabled by default.",
     )
 
     parser.add_argument(
         "--http-run",
         action=argparse.BooleanOptionalAction,
         default=False,
-        help="Enable HTTP mode for running evaluations. In this mode, the evaluation results are sent to a specified URL rather than being stored locally or in Snowflake. This mode should be used in conjunction with the '--http-run-url' and '--http-batch-size' arguments."
+        help="Enable HTTP mode for running evaluations. In this mode, the evaluation results are sent to a specified URL rather than being stored locally or in Snowflake. This mode should be used in conjunction with the '--http-run-url' and '--http-batch-size' arguments.",
     )
 
     parser.add_argument(
-        "--http-run-url", 
-        type=str, 
+        "--http-run-url",
+        type=str,
         default=None,
-        help="URL to send the evaluation results when in HTTP mode. This option should be used in conjunction with the '--http-run' flag."
+        help="URL to send the evaluation results when in HTTP mode. This option should be used in conjunction with the '--http-run' flag.",
     )
 
     parser.add_argument(
-        "--http-batch-size", 
-        type=int, 
+        "--http-batch-size",
+        type=int,
         default=100,
-        help="Number of events to send in each HTTP request when in HTTP mode. Default is 1, i.e., send events individually. Set to a larger number to send events in batches. This option should be used in conjunction with the '--http-run' flag."
+        help="Number of events to send in each HTTP request when in HTTP mode. Default is 1, i.e., send events individually. Set to a larger number to send events in batches. This option should be used in conjunction with the '--http-run' flag.",
     )
-
-
 
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
     return parser
+
 
 class OaiEvalArguments(argparse.Namespace):
     completion_fn: str
@@ -100,6 +101,7 @@ class OaiEvalArguments(argparse.Namespace):
     http_batch_size: int  # new argument
     dry_run: bool
     dry_run_logging: bool
+
 
 def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     if args.debug:
@@ -168,12 +170,16 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         if args.http_run_url is None:
             raise ValueError("URL must be specified when using http-run mode")
         recorder_class = evals.record.HttpRecorder
-        recorder_args = {"url": args.http_run_url, "run_spec": run_spec, "batch_size": args.http_batch_size}
+        recorder_args = {
+            "url": args.http_run_url,
+            "run_spec": run_spec,
+            "batch_size": args.http_batch_size,
+        }
 
     else:
         recorder_class = evals.record.Recorder
         recorder_args = {"run_spec": run_spec}
-        recorder_kwargs = [record_path] 
+        recorder_kwargs = [record_path]
 
     recorder = recorder_class(*recorder_kwargs, **recorder_args)
 
@@ -223,6 +229,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         logger.info(f"{key}: {value}")
     return run_spec.run_id
 
+
 def main() -> None:
     parser = get_parser()
     args = cast(OaiEvalArguments, parser.parse_args(sys.argv[1:]))
@@ -237,6 +244,6 @@ def main() -> None:
         openai.error.set_display_cause()  # type: ignore
     run(args)
 
+
 if __name__ == "__main__":
     main()
-

@@ -15,9 +15,9 @@ import time
 from contextvars import ContextVar
 from datetime import datetime, timezone
 from typing import Any, List, Optional, Sequence
-import requests
 
 import blobfile as bf
+import requests
 
 import evals
 from evals.base import RunSpec
@@ -340,6 +340,7 @@ class LocalRecorder(RecorderBase):
             f.write((jsondumps({"final_report": final_report}) + "\n").encode("utf-8"))
 
         logging.info(f"Final report: {final_report}. Logged to {self.event_file_path}")
+
 
 class HttpRecorder(RecorderBase):
     def __init__(self, url: str, run_spec: RunSpec, batch_size: int = 100):
