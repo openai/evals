@@ -1,5 +1,5 @@
-match_product-ie_generated-knowledge_zero-shot_flash-memory-cards:
-  id: match_product-ie_generated-knowledge_zero-shot_flash-memory-cards.dev.v0
+product_information_extraction_zero_shot:
+  id: product_information_extraction_zero_shot.dev.v0
   metrics:
     - f_score
     - precision
@@ -9,15 +9,14 @@ match_product-ie_generated-knowledge_zero-shot_flash-memory-cards:
     This is the Generated-Knowledge one-shot prompt from the paper 'Product Information Extraction using ChatGPT'
     by Alexander Brinkmann, Roee Shraga, Reng Chiz Der and Christian Bizer. Github "https://github.com/wbsg-uni-mannheim/pie_chatgpt"
 
-match_product-ie_generated-knowledge_zero-shot_flash-memory-cards.dev.v0:
+product_information_extraction_zero_shot.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: product-ie/zeroshot/generated_knowledge_flash_memory_cards_samples.jsonl
+    samples_jsonl: product-ie/zeroshot/product_ie_zero_shot_samples.jsonl
 
 
-
-match_product-ie_generated-knowledge_zero-shot_laptops:
-  id: match_product-ie_generated-knowledge_zero-shot_laptops.dev.v0
+product_information_extraction_one_shot:
+  id: product_information_extraction_one_shot.dev.v0
   metrics:
     - f_score
     - precision
@@ -27,43 +26,7 @@ match_product-ie_generated-knowledge_zero-shot_laptops:
     This is the Generated-Knowledge one-shot prompt from the paper 'Product Information Extraction using ChatGPT'
     by Alexander Brinkmann, Roee Shraga, Reng Chiz Der and Christian Bizer. Github "https://github.com/wbsg-uni-mannheim/pie_chatgpt"
 
-match_product-ie_generated-knowledge_zero-shot_laptops.dev.v0:
+product_information_extraction_one_shot.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
-    samples_jsonl: product-ie/zeroshot/generated_knowledge_laptops_samples.jsonl
-
-
-
-match_product-ie_generated-knowledge_one-shot_flash-memory-cards:
-  id: match_product-ie_generated-knowledge_one-shot_flash-memory-cards.dev.v0
-  metrics:
-    - f_score
-    - precision
-    - recall
-    - accuracy
-  description: Evaluate LLM performance on the task of Product Information Extraction. Examples are a subsample of the MAVE dataset.
-    This is the Generated-Knowledge one-shot prompt from the paper 'Product Information Extraction using ChatGPT'
-    by Alexander Brinkmann, Roee Shraga, Reng Chiz Der and Christian Bizer. Github "https://github.com/wbsg-uni-mannheim/pie_chatgpt"
-
-match_product-ie_generated-knowledge_one-shot_flash-memory-cards.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: product-ie/fewshot/generated_knowledge_one_shot_flash_memory_cards_samples.jsonl
-
-
-
-match_product-ie_generated-knowledge_one-shot_laptops:
-  id: match_product-ie_generated-knowledge_one-shot_laptops.dev.v0
-  metrics:
-    - f_score
-    - precision
-    - recall
-    - accuracy
-  description: Evaluate LLM performance on the task of Product Information Extraction. Examples are a subsample of the MAVE dataset.
-    This is the Generated-Knowledge one-shot prompt from the paper 'Product Information Extraction using ChatGPT'
-    by Alexander Brinkmann, Roee Shraga, Reng Chiz Der and Christian Bizer. Github "https://github.com/wbsg-uni-mannheim/pie_chatgpt"
-
-match_product-ie_generated-knowledge_one-shot_laptops.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: product-ie/fewshot/generated_knowledge_one_shot_laptops_samples.jsonl
+    samples_jsonl: product-ie/fewshot/product_ie_one_shot_samples.jsonl
