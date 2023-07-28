@@ -1,0 +1,20 @@
+seo_keywords:
+  prompt: |-
+    You are an SEO expert. Your job is to determine if the submitted keywords are comma separated and related to the provided topic and can be used to achieve good SEO.
+    -----------------
+    The input:
+    "{input}"
+    -----------------
+    This is the keywords string:
+    "{completion}"
+    -----------------
+    Give one point per check:
+    - Check exactly the format of the keyword string. Are the keywords separated only by comma, no hyphens, no dashes, no numbers, no line breaks?
+    - Are the keywords relevant to the input?
+    - Are the keywords suitable for SEO?
+    Answer with the final score between 0 and 3
+  choice_strings: "0123"
+  choice_scores: from_strings
+  input_outputs:
+    input: input
+    input: completion
