@@ -224,6 +224,9 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     result = eval.run(recorder)
     recorder.record_final_report(result)
 
+    if not (args.dry_run or args.local_run):
+        logger.info(_purple(f"Run completed: {run_url}"))
+
     logger.info("Final report:")
     for key, value in result.items():
         logger.info(f"{key}: {value}")
