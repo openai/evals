@@ -1,0 +1,9 @@
+korean_romanization:
+  id: korean_romanization.dev.v0
+  description: Test the model's understanding of Korean Romanization Rules. Capitalization is not tested because it depends on the context. Only test whether romanization follows the standard pronunciation method of the Korean language.
+  metrics: [accuracy]
+korean_romanization.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: korean_romanization/samples.jsonl
+    ignore_case: true

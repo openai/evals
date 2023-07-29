@@ -1,0 +1,8 @@
+japanese_romantic_context:
+  id: japanese_romantic_context.dev.v0
+  metrics: [accuracy]
+
+japanese_romantic_context.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: japanese_romantic_context/samples.jsonl

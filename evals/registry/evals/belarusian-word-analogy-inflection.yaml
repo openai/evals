@@ -1,0 +1,9 @@
+belarusian-word-analogy-inflection:
+  id: belarusian-word-analogy-inflection.dev.v0
+  description: Test the model's ability to solve word analogy problems in the domain of Belarusian inflectional morphology.
+  metrics: [accuracy]
+
+belarusian-word-analogy-inflection.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: belarusian_word_analogy_inflection/samples.jsonl
