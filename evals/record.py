@@ -343,17 +343,30 @@ class LocalRecorder(RecorderBase):
 
 
 class HttpRecorder(RecorderBase):
-    def __init__(self, url: str, run_spec: RunSpec, batch_size: int = 100):
+    def __init__(
+        self, url: str, run_spec: RunSpec, local_fallback_path: str, batch_size: int = 100
+    ):
         super().__init__(run_spec)
         self.url = url
         self.batch_size = batch_size
+        self.failed_requests = 0  # Add this line to track failed requests
+        self.local_fallback_path = local_fallback_path
+        self.local_fallback_recorder = LocalRecorder(local_fallback_path, run_spec)
         logger.info(f"HttpRecorder initialized with URL {self.url}")
 
     def _flush_events_internal(self, events_to_write: Sequence[Event]):
         batch_size = self.batch_size
         for i in range(0, len(events_to_write), batch_size):
             batch = list(events_to_write[i : i + batch_size])
-            self._send_event(batch)
+            try:
+                self._send_event(batch)
+            except RuntimeError as e:
+                logger.error(f"Falling back to LocalRecorder due to error: {str(e)}")
+                self.local_fallback_recorder._flush_events_internal(batch)
+                raise RuntimeError(
+                    "An error occurred when sending events."
+                    "Your events have been saved locally using the Local recorder."
+                )
 
     def _send_event(self, events: List[Event]):
         # Convert the events to dictionaries
@@ -365,20 +378,29 @@ class HttpRecorder(RecorderBase):
             # Send the events to the specified URL
             response = requests.post(self.url, json=events_dict)
 
-            # If the request succeeded, return
+            # If the request succeeded, log a success message
             if response.ok:
                 logger.debug(f"Events sent successfully")
+
+            # If the request failed, log a warning and increment failed_requests
             else:
-                # If the request failed, log a warning
                 logger.warning(f"Failed to send events: {response.text}")
+                self.failed_requests += len(
+                    events
+                )  # Increase the count by the number of events in the failed request
 
         except Exception as e:
             logger.warning(f"Failed to send events: {str(e)}")
+            self.failed_requests += len(
+                events
+            )  # Increase the count by the number of events in the failed request
 
-            # If the request failed, log an error and raise an exception
-            error_message = "Failed to send events."
-            logger.error(error_message)
-            raise RuntimeError(error_message)
+            # Check if the proportion of failed requests exceeds the threshold
+            fail_threshold = 0.05  # Set the threshold to 5%
+            if self.failed_requests / len(self._events) > fail_threshold:
+                raise RuntimeError(
+                    "The proportion of failed events has exceeded the threshold of 5%, failing the run."
+                )
 
     def record_final_report(self, final_report: Any):
         # Convert the final report to a dictionary and prepare it as an event
@@ -393,9 +415,13 @@ class HttpRecorder(RecorderBase):
         )
 
         # Send the final report event
-        self._send_event([report_event])
-
-        logging.info(f"Final report: {final_report}. Sent to {self.url}")
+        try:
+            self._send_event([report_event])
+            logging.info(f"Final report: {final_report}.")
+            logging.info(f"Data logged to: {self.url}")
+        except RuntimeError as e:
+            logger.error(f"Falling back to LocalRecorder due to error: {str(e)}")
+            self.local_fallback_recorder.record_final_report(final_report)
 
 
 class Recorder(RecorderBase):

@@ -174,6 +174,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
             "url": args.http_run_url,
             "run_spec": run_spec,
             "batch_size": args.http_batch_size,
+            "local_fallback_path": record_path,
         }
 
     else:
