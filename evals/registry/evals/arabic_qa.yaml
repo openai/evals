@@ -1,0 +1,7 @@
+arabic_exams_qa:
+  id: arabic-exams-qa.test.ab-v1
+  metrics: [accuracy]
+arabic-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: local:///nfs/users/ext_samta.kamboj/softwares/evals/datasets/exams_qa_test.jsonl

@@ -2,6 +2,7 @@ from typing import Optional
 from urllib.parse import parse_qs, urlparse
 from pydantic import BaseModel
 import evals
+import json
 import evals.metrics
 from evals.api import CompletionFn
 from evals.formatting import make_abc
@@ -40,6 +41,20 @@ def get_dataset(url: str) -> list[Sample]:
                 )
                 for sample in dataset
             ]
+    elif parsed.scheme == "local":
+        # data_path = f"{parsed.netloc}{parsed.path}"
+        data_path = parsed.path
+        dataset = load_dataset("json", data_files={"test": data_path})
+        return [
+                Sample(
+                    question=sample["question"],
+                    answers=sample["choices"]["text"],
+                    label={"A": 0, "B": 1, "C": 2, "D": 3}[sample["answerKey"]],
+                )
+                for sample in dataset["test"]
+            ]
+
+
 
     raise ValueError(f"Unknown question dataset {url}")
 

@@ -19,6 +19,13 @@ langchain/llm/flan-t5-xl:
     llm_kwargs:
       repo_id: google/flan-t5-xl
 
+langchain/llm/flan-t5-small:
+  class: evals.completion_fns.langchain_llm:LangChainLLMCompletionFn
+  args:
+    llm: HuggingFaceHub
+    llm_kwargs:
+      repo_id: google/flan-t5-small
+
 langchain/chat_model/gpt-3.5-turbo:
   class: evals.completion_fns.langchain_llm:LangChainChatModelCompletionFn
   args:
