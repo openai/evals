@@ -344,11 +344,17 @@ class LocalRecorder(RecorderBase):
 
 class HttpRecorder(RecorderBase):
     def __init__(
-        self, url: str, run_spec: RunSpec, local_fallback_path: str, batch_size: int = 100
+        self,
+        url: str,
+        run_spec: RunSpec,
+        local_fallback_path: str,
+        fail_percent_threshold: int = 5,
+        batch_size: int = 100,
     ):
         super().__init__(run_spec)
         self.url = url
         self.batch_size = batch_size
+        self.fail_percent_threshold = fail_percent_threshold / 100
         self.failed_requests = 0  # Add this line to track failed requests
         self.local_fallback_path = local_fallback_path
         self.local_fallback_recorder = LocalRecorder(local_fallback_path, run_spec)
@@ -364,8 +370,7 @@ class HttpRecorder(RecorderBase):
                 logger.error(f"Falling back to LocalRecorder due to error: {str(e)}")
                 self.local_fallback_recorder._flush_events_internal(batch)
                 raise RuntimeError(
-                    "An error occurred when sending events."
-                    "Your events have been saved locally using the Local recorder."
+                    "An error occurred when sending events. Your events have been saved locally using the Local recorder."
                 )
 
     def _send_event(self, events: List[Event]):
@@ -396,10 +401,17 @@ class HttpRecorder(RecorderBase):
             )  # Increase the count by the number of events in the failed request
 
             # Check if the proportion of failed requests exceeds the threshold
-            fail_threshold = 0.05  # Set the threshold to 5%
+            fail_threshold = self.fail_percent_threshold
+            # Make a string for human comprehention
+            fail_threshold_str = str(fail_threshold * 100) + "%"
+
             if self.failed_requests / len(self._events) > fail_threshold:
                 raise RuntimeError(
-                    "The proportion of failed events has exceeded the threshold of 5%, failing the run."
+                    "The proportion of failed events has exceeded the threshold of: "
+                    + fail_threshold_str
+                    + "."
+                    + " Falling back to LocalRecorder. "
+                    "You can modify this via the cli flag --http-fail-percent-threshold"
                 )
 
     def record_final_report(self, final_report: Any):

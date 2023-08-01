@@ -76,6 +76,12 @@ def get_parser() -> argparse.ArgumentParser:
         default=100,
         help="Number of events to send in each HTTP request when in HTTP mode. Default is 1, i.e., send events individually. Set to a larger number to send events in batches. This option should be used in conjunction with the '--http-run' flag.",
     )
+    parser.add_argument(
+        "--http-fail-percent-threshold",
+        type=int,
+        default=5,
+        help="The acceptable percentage threshold of HTTP requests that can fail. Default is 5, meaning 5% of total HTTP requests can fail without causing any issues. If the failure rate goes beyond this threshold, suitable action should be taken or the process will be deemed as failing, but still stored locally.",
+    )
 
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
@@ -98,7 +104,8 @@ class OaiEvalArguments(argparse.Namespace):
     local_run: bool
     http_run: bool
     http_run_url: Optional[str]
-    http_batch_size: int  # new argument
+    http_batch_size: int
+    http_fail_percent_threshold: int
     dry_run: bool
     dry_run_logging: bool
 
@@ -174,6 +181,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
             "url": args.http_run_url,
             "run_spec": run_spec,
             "batch_size": args.http_batch_size,
+            "fail_percent_threshold": args.http_fail_percent_threshold,
             "local_fallback_path": record_path,
         }
 
