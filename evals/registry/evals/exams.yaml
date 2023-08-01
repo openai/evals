@@ -1,0 +1,127 @@
+arabic-exams-qa:
+  id: arabic-exams-qa.test.ab-v1
+  metrics: [accuracy]
+arabic-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Arabic
+
+albanian-exams-qa:
+  id: albanian-exams-qa.test.ab-v1
+  metrics: [accuracy]
+albanian-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Albanian
+
+bulgarian-exams-qa:
+  id: bulgarian-exams-qa.test.ab-v1
+  metrics: [accuracy]
+bulgarian-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Bulgarian
+
+croatian-exams-qa:
+  id: croatian-exams-qa.test.ab-v1
+  metrics: [accuracy]
+croatian-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Croatian
+
+french-exams-qa:
+  id: french-exams-qa.test.ab-v1
+  metrics: [accuracy]
+french-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#French
+
+german-exams-qa:
+  id: german-exams-qa.test.ab-v1
+  metrics: [accuracy]
+german-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#German
+
+hungarian-exams-qa:
+  id: hungarian-exams-qa.test.ab-v1
+  metrics: [accuracy]
+hungarian-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Hungarian
+
+italian-exams-qa:
+  id: italian-exams-qa.test.ab-v1
+  metrics: [accuracy]
+italian-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Italian
+
+lithuanian-exams-qa:
+  id: lithuanian-exams-qa.test.ab-v1
+  metrics: [accuracy]
+lithuanian-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Lithuanian
+
+macedonian-exams-qa:
+  id: macedonian-exams-qa.test.ab-v1
+  metrics: [accuracy]
+macedonian-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Macedonian
+
+polish-exams-qa:
+  id: polish-exams-qa.test.ab-v1
+  metrics: [accuracy]
+polish-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Polish
+
+portuguese-exams-qa:
+  id: portuguese-exams-qa.test.ab-v1
+  metrics: [accuracy]
+portuguese-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Portuguese
+
+serbian-exams-qa:
+  id: serbian-exams-qa.test.ab-v1
+  metrics: [accuracy]
+serbian-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Serbian
+
+spanish-exams-qa:
+  id: spanish-exams-qa.test.ab-v1
+  metrics: [accuracy]
+spanish-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Spanish
+
+turkish-exams-qa:
+  id: turkish-exams-qa.test.ab-v1
+  metrics: [accuracy]
+turkish-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Turkish
+
+vietnamese-exams-qa:
+  id: vietnamese-exams-qa.test.ab-v1
+  metrics: [accuracy]
+vietnamese-exams-qa.test.ab-v1:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://exams?name=crosslingual_test&split=test#Vietnamese

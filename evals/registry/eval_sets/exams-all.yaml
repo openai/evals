@@ -1,0 +1,18 @@
+exams:
+  evals:
+    - arabic-exams-qa
+    - albanian-exams-qa
+    - bulgarian-exams-qa
+    - croatian-exams-qa
+    - french-exams-qa
+    - german-exams-qa
+    - hungarian-exams-qa
+    - italian-exams-qa
+    - lithuanian-exams-qa
+    - macedonian-exams-qa
+    - polish-exams-qa
+    - portuguese-exams-qa
+    - serbian-exams-qa
+    - spanish-exams-qa
+    - turkish-exams-qa
+    - vietnamese-exams-qa

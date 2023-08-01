@@ -41,18 +41,32 @@ def get_dataset(url: str) -> list[Sample]:
                 )
                 for sample in dataset
             ]
-    elif parsed.scheme == "local":
-        # data_path = f"{parsed.netloc}{parsed.path}"
-        data_path = parsed.path
-        dataset = load_dataset("json", data_files={"test": data_path})
-        return [
-                Sample(
-                    question=sample["question"],
-                    answers=sample["choices"]["text"],
-                    label={"A": 0, "B": 1, "C": 2, "D": 3}[sample["answerKey"]],
-                )
-                for sample in dataset["test"]
-            ]
+        elif path == "exams":
+            lang = parsed.fragment
+            data = []
+            for sample in dataset:
+                if sample["info"]["language"] == lang:
+                    try:
+                        d = Sample(
+                        question=sample["question"]["stem"],
+                        answers=sample["question"]["choices"]["text"],
+                        label={"A": 0, "B": 1, "C": 2, "D": 3, "E": 4}[sample["answerKey"]],
+                        )
+                        data.append(d)
+                    except KeyError:
+                        print(f"Found unidentified key at {sample}.")
+                        continue
+
+            return data[:10]
+            # return [
+            #         Sample(
+            #             question=sample["question"]["stem"],
+            #             answers=sample["question"]["choices"]["text"],
+            #             label={"A": 0, "B": 1, "C": 2, "D": 3, "E": 4}[sample["answerKey"]],
+            #         )
+            #         for sample in dataset
+            #     if sample["info"]["language"] == lang
+            #     ][:10]
 
 
 
