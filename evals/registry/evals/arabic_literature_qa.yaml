@@ -1,8 +1,0 @@
-arabic-literature-qa:
-  id: arabic-literature-qa.test.v1
-  metrics:
-  - accuracy
-arabic-literature-qa.test.v1:
-  args:
-    samples_jsonl: arabic-literature-qa/samples.jsonl
-  class: evals.elsuite.basic.match:Match
