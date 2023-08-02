@@ -1,0 +1,9 @@
+hebrew_grammar:
+  id: hebrew_grammar.dev.v0
+  description: Hebrew grammar corrections for questions in Hebrew
+  metrics: [accuracy]
+
+hebrew_grammar.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: hebrew_grammar/samples.jsonl
