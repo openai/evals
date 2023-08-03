@@ -49,7 +49,40 @@ def get_parser() -> argparse.ArgumentParser:
         help="Path to the registry",
     )
     parser.add_argument("--debug", action=argparse.BooleanOptionalAction, default=False)
-    parser.add_argument("--local-run", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument(
+        "--local-run",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Enable local mode for running evaluations. In this mode, the evaluation results are stored locally in a JSON file. This mode is enabled by default.",
+    )
+
+    parser.add_argument(
+        "--http-run",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Enable HTTP mode for running evaluations. In this mode, the evaluation results are sent to a specified URL rather than being stored locally or in Snowflake. This mode should be used in conjunction with the '--http-run-url' and '--http-batch-size' arguments.",
+    )
+
+    parser.add_argument(
+        "--http-run-url",
+        type=str,
+        default=None,
+        help="URL to send the evaluation results when in HTTP mode. This option should be used in conjunction with the '--http-run' flag.",
+    )
+
+    parser.add_argument(
+        "--http-batch-size",
+        type=int,
+        default=100,
+        help="Number of events to send in each HTTP request when in HTTP mode. Default is 1, i.e., send events individually. Set to a larger number to send events in batches. This option should be used in conjunction with the '--http-run' flag.",
+    )
+    parser.add_argument(
+        "--http-fail-percent-threshold",
+        type=int,
+        default=5,
+        help="The acceptable percentage threshold of HTTP requests that can fail. Default is 5, meaning 5% of total HTTP requests can fail without causing any issues. If the failure rate goes beyond this threshold, suitable action should be taken or the process will be deemed as failing, but still stored locally.",
+    )
+
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
     return parser
@@ -69,6 +102,10 @@ class OaiEvalArguments(argparse.Namespace):
     registry_path: Optional[str]
     debug: bool
     local_run: bool
+    http_run: bool
+    http_run_url: Optional[str]
+    http_batch_size: int
+    http_fail_percent_threshold: int
     dry_run: bool
     dry_run_logging: bool
 
@@ -122,13 +159,38 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     else:
         record_path = args.record_path
 
-    recorder: evals.record.RecorderBase
-    if args.dry_run:
-        recorder = evals.record.DummyRecorder(run_spec=run_spec, log=args.dry_run_logging)
+    if args.http_run:
+        args.local_run = False
     elif args.local_run:
-        recorder = evals.record.LocalRecorder(record_path, run_spec=run_spec)
+        args.http_run = False
+
+    recorder: evals.record.RecorderBase
+    recorder_kwargs = []
+    if args.dry_run:
+        recorder_class = evals.record.DummyRecorder
+        recorder_args = {"run_spec": run_spec, "log": args.dry_run_logging}
+    elif args.local_run:
+        recorder_class = evals.record.LocalRecorder
+        recorder_args = {"run_spec": run_spec}
+        recorder_kwargs = [record_path]
+    elif args.http_run:
+        if args.http_run_url is None:
+            raise ValueError("URL must be specified when using http-run mode")
+        recorder_class = evals.record.HttpRecorder
+        recorder_args = {
+            "url": args.http_run_url,
+            "run_spec": run_spec,
+            "batch_size": args.http_batch_size,
+            "fail_percent_threshold": args.http_fail_percent_threshold,
+            "local_fallback_path": record_path,
+        }
+
     else:
-        recorder = evals.record.Recorder(record_path, run_spec=run_spec)
+        recorder_class = evals.record.Recorder
+        recorder_args = {"run_spec": run_spec}
+        recorder_kwargs = [record_path]
+
+    recorder = recorder_class(*recorder_kwargs, **recorder_args)
 
     api_extra_options: dict[str, Any] = {}
     if not args.cache:
@@ -190,7 +252,6 @@ def main() -> None:
     )
     logging.getLogger("openai").setLevel(logging.WARN)
 
-    # TODO)) why do we need this?
     if hasattr(openai.error, "set_display_cause"):  # type: ignore
         openai.error.set_display_cause()  # type: ignore
     run(args)
