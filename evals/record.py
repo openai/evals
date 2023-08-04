@@ -14,7 +14,7 @@ import threading
 import time
 from contextvars import ContextVar
 from datetime import datetime, timezone
-from typing import Any, List, Optional, Sequence
+from typing import Any, List, Optional, Sequence, Text
 
 import blobfile as bf
 import requests
@@ -310,9 +310,27 @@ class LocalRecorder(RecorderBase):
     This is the default recorder used by `oaieval`.
     """
 
-    def __init__(self, log_path: Optional[str], run_spec: RunSpec):
+    def __init__(self,
+        log_path: Optional[str],
+        run_spec: RunSpec,
+        hidden_data_fields: Sequence[Text] = []):
+        """
+        Initializes a LocalRecorder.
+
+        Args:
+            log_path (Optional[str]): Path to which the LocalRecorder will 
+                record events. Currently accepts local paths, google cloud 
+                storage paths, or Azure blob paths.
+            run_spec (RunSpec): Passed to the superclass to provide metadata 
+                about the current evals run.
+            hidden_data_fields (Sequence[Text]): Fields to avoid writing in the
+                output. This is particularly useful when using a language model
+                as an evaluator of sensitive customer data which should not be
+                written to disc.
+        """
         super().__init__(run_spec)
         self.event_file_path = log_path
+        self.hidden_data_fields = hidden_data_fields
         if log_path is not None:
             with bf.BlobFile(log_path, "wb") as f:
                 f.write((jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n").encode("utf-8"))
@@ -320,7 +338,7 @@ class LocalRecorder(RecorderBase):
     def _flush_events_internal(self, events_to_write: Sequence[Event]):
         start = time.time()
         try:
-            lines = [jsondumps(event) + "\n" for event in events_to_write]
+            lines = [jsondumps(event, exclude_keys=hidden_data_fields) + "\n" for event in events_to_write]
         except TypeError as e:
             logger.error(f"Failed to serialize events: {events_to_write}")
             raise e

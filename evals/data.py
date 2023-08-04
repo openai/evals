@@ -11,7 +11,7 @@ import os
 import urllib
 from collections.abc import Iterator
 from functools import partial
-from typing import Any, Sequence, Union
+from typing import Any, List, Optional, Sequence, Text, Union
 
 import blobfile as bf
 import lz4.frame
@@ -162,28 +162,44 @@ def get_csv(path, fieldnames=None):
         return [row for row in reader]
 
 
-def _to_py_types(o: Any) -> Any:
+def _to_py_types(o: Any, exclude_keys: List[Text]) -> Any:
     if isinstance(o, dict):
-        return {k: _to_py_types(v) for k, v in o.items()}
+        return {
+            k: _to_py_types(v, exclude_keys=exclude_keys) for k, v in o.items() if k not in exclude_keys}
+
     if isinstance(o, list):
-        return [_to_py_types(v) for v in o]
+        return [_to_py_types(v, exclude_keys=exclude_keys) for v in o]
 
     if dataclasses.is_dataclass(o):
-        return _to_py_types(dataclasses.asdict(o))
+        return _to_py_types(dataclasses.asdict(o), exclude_keys=exclude_keys)
 
     # pydantic data classes
     if isinstance(o, pydantic.BaseModel):
-        return json.loads(o.json())
+        return {
+            k: _to_py_types(v, exclude_keys=exclude_keys)
+            for k, v in json.loads(o.json()).items()
+            if k not in exclude_keys
+        }
 
     return o
 
 
 class EnhancedJSONEncoder(json.JSONEncoder):
+    def __init__(self, exclude_keys: Optional[List[Text]]=None, **kwargs: Any):
+        super().__init__(**kwargs)
+        self.exclude_keys = exclude_keys if exclude_keys else []
+
     def default(self, o: Any) -> str:
-        return _to_py_types(o)
+        return _to_py_types(o, self.exclude_keys)
 
 
 def jsondumps(o: Any, ensure_ascii: bool = False, **kwargs: Any) -> str:
+    # The JSONEncoder class's .default method is only applied to dictionary values,
+    # not keys. In order to exclude keys from the output of this jsondumps method
+    # we need to exclude them outside the encoder.
+    if isinstance(o, dict) and "exclude_keys" in kwargs:
+        for key in kwargs["exclude_keys"]:
+            del o[key]
     return json.dumps(o, cls=EnhancedJSONEncoder, ensure_ascii=ensure_ascii, **kwargs)
 
 
