@@ -1,0 +1,11 @@
+reverse-complement:
+  description: Test the model's ability to provide the reverse complement to DNA sequences.
+  disclaimer: The performance of models tends to depend on sequence length and repetition,
+    with more artifacts appearing for longer sequences and polynucleotides.
+  id: reverse-complement.s1.simple-v0
+  metrics:
+  - accuracy
+reverse-complement.s1.simple-v0:
+  args:
+    samples_jsonl: reverse_complement/samples.jsonl
+  class: evals.elsuite.basic.match:Match
