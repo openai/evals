@@ -2,6 +2,6 @@ arabic-literature-qa:
   id: arabic-literature-qa.test.v0
   metrics: [accuracy]
 arabic-literature-qa.test.v0:
-  class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: arabic-literature-qa/samples.jsonl
