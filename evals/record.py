@@ -338,7 +338,7 @@ class LocalRecorder(RecorderBase):
     def _flush_events_internal(self, events_to_write: Sequence[Event]):
         start = time.time()
         try:
-            lines = [jsondumps(event, exclude_keys=hidden_data_fields) + "\n" for event in events_to_write]
+            lines = [jsondumps(event, exclude_keys=self.hidden_data_fields) + "\n" for event in events_to_write]
         except TypeError as e:
             logger.error(f"Failed to serialize events: {events_to_write}")
             raise e
