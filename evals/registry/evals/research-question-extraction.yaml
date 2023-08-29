@@ -1,0 +1,12 @@
+research-question-extraction:
+  id: research-question-extraction.dev.v0
+  metrics:
+    - accuracy
+  description: The objective of this evaluation explores the proficiency of a model in the task of discovering Research Questions from the abstract of scholarly texts.
+
+research-question-extraction.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: research-question-extraction/research-question-extraction-samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: research-question-extraction
