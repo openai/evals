@@ -1,0 +1,127 @@
+arabic-exams-qa:
+  id: arabic-exams-qa.test.v0
+  metrics: [accuracy]
+arabic-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: arabic-exams-qa/samples.jsonl
+
+albanian-exams-qa:
+  id: albanian-exams-qa.test.v0
+  metrics: [accuracy]
+albanian-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: albanian-exams-qa/samples.jsonl
+
+bulgarian-exams-qa:
+  id: bulgarian-exams-qa.test.v0
+  metrics: [accuracy]
+bulgarian-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: bulgarian-exams-qa/samples.jsonl
+
+croatian-exams-qa:
+  id: croatian-exams-qa.test.v0
+  metrics: [accuracy]
+croatian-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: croatian-exams-qa/samples.jsonl
+
+french-exams-qa:
+  id: french-exams-qa.test.v0
+  metrics: [accuracy]
+french-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: french-exams-qa/samples.jsonl
+
+german-exams-qa:
+  id: german-exams-qa.test.v0
+  metrics: [accuracy]
+german-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: german-exams-qa/samples.jsonl
+
+hungarian-exams-qa:
+  id: hungarian-exams-qa.test.v0
+  metrics: [accuracy]
+hungarian-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: hungarian-exams-qa/samples.jsonl
+
+italian-exams-qa:
+  id: italian-exams-qa.test.v0
+  metrics: [accuracy]
+italian-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: italian-exams-qa/samples.jsonl
+
+lithuanian-exams-qa:
+  id: lithuanian-exams-qa.test.v0
+  metrics: [accuracy]
+lithuanian-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: lithuanian-exams-qa/samples.jsonl
+
+macedonian-exams-qa:
+  id: macedonian-exams-qa.test.v0
+  metrics: [accuracy]
+macedonian-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: macedonian-exams-qa/samples.jsonl
+
+polish-exams-qa:
+  id: polish-exams-qa.test.v0
+  metrics: [accuracy]
+polish-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: polish-exams-qa/samples.jsonl
+
+portuguese-exams-qa:
+  id: portuguese-exams-qa.test.v0
+  metrics: [accuracy]
+portuguese-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: portuguese-exams-qa/samples.jsonl
+
+serbian-exams-qa:
+  id: serbian-exams-qa.test.v0
+  metrics: [accuracy]
+serbian-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: serbian-exams-qa/samples.jsonl
+
+spanish-exams-qa:
+  id: spanish-exams-qa.test.v0
+  metrics: [accuracy]
+spanish-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: spanish-exams-qa/samples.jsonl
+
+turkish-exams-qa:
+  id: turkish-exams-qa.test.v0
+  metrics: [accuracy]
+turkish-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: turkish-exams-qa/samples.jsonl
+
+vietnamese-exams-qa:
+  id: vietnamese-exams-qa.test.v0
+  metrics: [accuracy]
+vietnamese-exams-qa.test.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: vietnamese-exams-qa/samples.jsonl
