@@ -27,10 +27,11 @@ regression-equation:
     Use a tolerance of 0.1 for each coefficient and intercept.
     Ignore differences of notation.  Ignore extra zeros.
     Do not use "curly braces" in your answer.
-
   choice_scores:
     "Y": 1.0
     "N": 0.0
-  choice_strings: 'YN'
+  choice_strings:
+    - "Yes"
+    - "No"
   input_outputs:
-    input: "completion"
+    input: completion
