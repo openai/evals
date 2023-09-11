@@ -8,7 +8,19 @@ cot/gpt-3.5-turbo:
   args:
     cot_completion_fn: gpt-3.5-turbo
 
+cot/gpt-4:
+  class: evals.completion_fns.cot:ChainOfThoughtCompletionFn
+  args:
+    cot_completion_fn: gpt-4
+
 cot/flan-t5-xl:
   class: evals.completion_fns.cot:ChainOfThoughtCompletionFn
   args:
     cot_completion_fn: langchain/llm/flan-t5-xl
+
+
+cot:
+  class: evals.completion_fns.cot:ChainOfThoughtCompletionFn
+  args:
+    # Default to gpt-3.5-turbo, but can be overridden by the user using --completion_args "cot_completion_fn=<completion_fn>"
+    cot_completion_fn: gpt-3.5-turbo
