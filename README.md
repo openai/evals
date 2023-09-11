@@ -1,4 +1,4 @@
-# Evals
+# OpenAI Evals
 
 Evals is a framework for evaluating LLMs (large language models) or systems built using LLMs as components. It also includes an open-source registry of challenging evals.
 
@@ -23,12 +23,6 @@ To get set up with evals, follow the [setup instructions below](README.md#Setup)
 - Write your own completion functions: [completion-fns.md](docs/completion-fns.md)
 
 If you think you have an interesting eval, please open a PR with your contribution. OpenAI staff actively review these evals when considering improvements to upcoming models.
-
-____________________
-🚨 For a limited time, we will be granting GPT-4 access to those who contribute high quality evals. Please follow the instructions mentioned above and note that spam or low quality submissions will be ignored❗️
-
-Access will be granted to the email address associated with an accepted Eval. Due to high volume, we are unable to grant access to any email other than the one used for the pull request.
-____________________
 
 ## Setup
 
