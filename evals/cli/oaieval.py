@@ -32,7 +32,7 @@ def get_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("eval", type=str, help="Name of an eval. See registry.")
     parser.add_argument("--extra_eval_params", type=str, default="")
-    parser.add_argument("--completion_args", type=str, default="")
+    parser.add_argument("--completion_args", type=str, default="", help="Specify additional parameters to modify the behavior of the completion_fn during its creation. Parameters should be passed as a comma-separated list of key-value pairs (e.g., 'key1=value1,key2=value2'). This option allows for the dynamic modification of completion_fn settings, including the ability to override default arguments where necessary.")
     parser.add_argument("--max_samples", type=int, default=None)
     parser.add_argument("--cache", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--visible", action=argparse.BooleanOptionalAction, default=None)
