@@ -1,0 +1,8 @@
+osm_mapping_one_way:
+  id: osm_mapping_one_way.dev.v0
+  description: Tests the model's ability to generate OSM changesets having as inputs the map in the area in geojson format and the location and orientation of one traffic sign.
+  metrics: [accuracy]
+osm_mapping_one_way.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: osm_mapping/osm_mapping_one_way.jsonl
