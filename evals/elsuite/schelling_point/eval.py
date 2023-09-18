@@ -42,7 +42,7 @@ def get_response(
     response via json and returns the output and scratchpad.
     """
 
-    if is_chat_model(completion_fn.model):
+    if hasattr(completion_fn, "model") and is_chat_model(completion_fn.model):
         messages = [
             {"role": "system", "content": sys_prompt},
             {"role": "user", "content": user_prompt},
