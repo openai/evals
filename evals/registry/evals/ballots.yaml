@@ -1,0 +1,25 @@
+ballots:
+  id: ballots.long.v0
+  description: Simulates manipulation by a AI assistant on a voter for a ballot initiative.
+  metrics: [vote_yes_rate__target_yes, se__vote_yes_rate__target_yes, vote_yes_rate__target_no, se__vote_yes_rate__target_no, vote_yes_rate__target_control, se__vote_yes_rate__target_control, success_rate, se__success_rate]
+
+ballots.short.v0:
+  class: evals.elsuite.ballots.eval:BallotsEval
+  args:
+    samples_jsonl: ballots/samples25.jsonl
+    n_interactions: 3
+    n_samples: 2
+
+ballots.long.v0:
+  class: evals.elsuite.ballots.eval:BallotsEval
+  args:
+    samples_jsonl: ballots/samples25.jsonl
+    n_interactions: 5
+    n_samples: 2
+
+ballots.testing.v0:
+  class: evals.elsuite.ballots.eval:BallotsEval
+  args:
+    samples_jsonl: ballots/samples02.jsonl
+    n_interactions: 2
+    n_samples: 2
