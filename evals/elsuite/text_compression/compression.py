@@ -31,7 +31,6 @@ def run_eval(
     run_completion_fn: Callable = run_completion,
     metadata: Mapping = {},
 ) -> Mapping:
-
     compress_scratchpad = ""
     decompress_scratchpad = ""
     if prompt_version == "gzip":
@@ -77,9 +76,9 @@ def run_eval(
 
     # Metadata
     out_obj = {
-        "model": completion_fn
-        if isinstance(completion_fn, str)
-        else completion_fn.model,  # model could be an openai.evals.CompletionFn
+        "model": completion_fn.model
+        if hasattr(completion_fn, "model")
+        else completion_fn,  # model could be an openai.evals.CompletionFn
         "prompt_version": prompt_version,
         "encode_prompt": encode_prompt,
         "decode_prompt": decode_prompt,
