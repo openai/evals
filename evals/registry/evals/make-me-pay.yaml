@@ -5,7 +5,7 @@ make-me-pay:
     [min_donation_amt, max_donation_amt, median_donation_amt, donation_freq]
 
 make-me-pay.one-minute.balanced.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "balanced"
     num_experiments: 100
@@ -13,7 +13,7 @@ make-me-pay.one-minute.balanced.v0:
     duration_cap_minutes: 1
 
 make-me-pay.three-minute.balanced.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "balanced"
     num_experiments: 100
@@ -21,7 +21,7 @@ make-me-pay.three-minute.balanced.v0:
     duration_cap_minutes: 3
 
 make-me-pay.five-minute.balanced.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "balanced"
     num_experiments: 100
@@ -29,7 +29,7 @@ make-me-pay.five-minute.balanced.v0:
     duration_cap_minutes: 5
 
 make-me-pay.ten-minute.balanced.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "balanced"
     num_experiments: 100
@@ -37,7 +37,7 @@ make-me-pay.ten-minute.balanced.v0:
     duration_cap_minutes: 10
 
 make-me-pay.fifteen-minute.balanced.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "balanced"
     num_experiments: 100
@@ -45,7 +45,7 @@ make-me-pay.fifteen-minute.balanced.v0:
     duration_cap_minutes: 15
 
 make-me-pay.one-minute.generous.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "generous"
     num_experiments: 100
@@ -53,7 +53,7 @@ make-me-pay.one-minute.generous.v0:
     duration_cap_minutes: 1
 
 make-me-pay.three-minute.generous.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "generous"
     num_experiments: 100
@@ -61,7 +61,7 @@ make-me-pay.three-minute.generous.v0:
     duration_cap_minutes: 3
 
 make-me-pay.five-minute.generous.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "generous"
     num_experiments: 100
@@ -69,7 +69,7 @@ make-me-pay.five-minute.generous.v0:
     duration_cap_minutes: 5
 
 make-me-pay.ten-minute.generous.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "generous"
     num_experiments: 100
@@ -77,7 +77,7 @@ make-me-pay.ten-minute.generous.v0:
     duration_cap_minutes: 10
 
 make-me-pay.fifteen-minute.generous.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "generous"
     num_experiments: 100
@@ -85,7 +85,7 @@ make-me-pay.fifteen-minute.generous.v0:
     duration_cap_minutes: 15
 
 make-me-pay.one-minute.guarded.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "guarded"
     num_experiments: 100
@@ -93,7 +93,7 @@ make-me-pay.one-minute.guarded.v0:
     duration_cap_minutes: 1
 
 make-me-pay.three-minute.guarded.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "guarded"
     num_experiments: 100
@@ -101,7 +101,7 @@ make-me-pay.three-minute.guarded.v0:
     duration_cap_minutes: 3
 
 make-me-pay.five-minute.guarded.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "guarded"
     num_experiments: 100
@@ -109,7 +109,7 @@ make-me-pay.five-minute.guarded.v0:
     duration_cap_minutes: 5
 
 make-me-pay.ten-minute.guarded.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "guarded"
     num_experiments: 100
@@ -117,7 +117,7 @@ make-me-pay.ten-minute.guarded.v0:
     duration_cap_minutes: 10
 
 make-me-pay.fifteen-minute.guarded.v0:
-  class: evals.elsuite.make-me-pay.eval:MakeMePay
+  class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
     prompt_version: "guarded"
     num_experiments: 100
