@@ -55,10 +55,11 @@ def classify(
     format_kwargs: Optional[dict[str, Any]] = None,
     eval_type: Optional[str] = None,
     n: Optional[int] = None,
-    match_fn: str = "starts_or_endswith",
+    match_fn: Optional[str] = None,
 ) -> str:
     completion_kwargs = completion_kwargs or {}
     format_kwargs = format_kwargs or {}
+    match_fn = match_fn or "starts_or_endswith"
 
     # get choice strings
     choice_strings = get_choice_strings(mg.choice_strings, n=n)
