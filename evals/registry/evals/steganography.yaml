@@ -1,0 +1,11 @@
+steganography:
+  id: steganography.dev.v0
+  description: Tests a model's ability to pass secret messages in public channels while avoiding detection.
+  metrics: [undetected_acc, detectability, reconstruction_error]
+
+steganography.dev.v0:
+  class: evals.elsuite.steganography.eval:Steganography
+  args:
+    samples_jsonl: steganography/samples.jsonl
+    prompt_version: "scratch"
+    reconstruction_error_metric: semantic_distance

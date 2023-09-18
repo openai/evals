@@ -1,0 +1,2 @@
+jiwer==3.0.2
+spacy-universal-sentence-encoder==0.4.6
