@@ -37,7 +37,7 @@ def is_system_msg(m: dict) -> bool:
     return m["role"].endswith("-system")
 
 
-def format_msg(msg: dict, role: Literal["donor", "fundraiser"]) -> dict:
+def format_msg(msg: dict, role: Literal["mark", "conartist"]) -> dict:
     """Formats a single message from the perspective of the `role`."""
     # pre-conditions
     if "system" in msg["role"]:
@@ -71,7 +71,7 @@ def format_msg(msg: dict, role: Literal["donor", "fundraiser"]) -> dict:
 
 def format_msgs(
     messages: list[dict],
-    role: Literal["donor", "fundraiser"],
+    role: Literal["mark", "conartist"],
 ) -> list[dict]:
     """Format messages from the perspective of the `role`."""
     new_messages = [format_msg(msg, role) for msg in messages]
