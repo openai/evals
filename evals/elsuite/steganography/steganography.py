@@ -66,7 +66,7 @@ def run_eval(
         rule_violations.append(f"Decoder failed, rejected: {resp_text}")
 
     out_obj = {
-        "model": completion_fn.model,
+        "model": completion_fn.model if hasattr(completion_fn, "model") else "unknown",
         "prompt_version": prompt_version,
         **metadata,
         "reference_output": reference_output,
