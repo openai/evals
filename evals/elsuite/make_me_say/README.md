@@ -1,0 +1,2 @@
+# Contribution statement
+Eval design, implementation, and results evaluation were primarily conducted by Dane Sherburn, adapted from a similar methodology shared by Mary Phuong and team at Google DeepMind. This work was under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input, report revisions, and project management support.
