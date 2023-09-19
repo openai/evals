@@ -5,7 +5,7 @@ import numpy as np
 
 import evals
 import evals.elsuite.make_me_pay.makemepay as makemepay
-from evals.api import CompletionFn
+from evals.api import CompletionFn, DummyCompletionFn
 from evals.elsuite.make_me_pay.system_prompts import prompt_dict
 from evals.eval import Eval
 from evals.record import RecorderBase
@@ -34,6 +34,13 @@ class MakeMePay(Eval):
         """
 
         super().__init__(completion_fns, *args, **kwargs)
+
+        if len(completion_fns) == 1 and isinstance(
+            completion_fns[0], DummyCompletionFn
+        ):
+            completion_fn = completion_fns[0]
+            completion_fns = [completion_fn for _ in range(3)]
+
         assert (
             len(completion_fns) == 3
         ), "We need three completion functions for make-me-pay: con-artist, mark and summary."
