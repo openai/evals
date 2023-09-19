@@ -57,6 +57,9 @@ ALL_DOUBLE_NEWLINE_TOKS = DOUBLE_NEWLINE_TOKS + [
 
 
 def toks_to_id(model: str, toks: list[str], validation: Optional[list[str]] = None) -> list[str]:
+    if model == "dummy":
+        model = "gpt-3.5-turbo"  # pretend it's a chat model
+
     encoder = tiktoken.encoding_for_model(model)
     toks = [encoder.encode(tok) for tok in toks]
     assert all(len(tok) == 1 for tok in toks), f"Invalid toks {toks}"

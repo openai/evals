@@ -46,13 +46,16 @@ class BallotsEval(Eval):
             completion_fns[0], DummyCompletionFn
         ):
             completion_fn = completion_fns[0]
-            completion_fns = [completion_fn for _ in range(2)]
+            completion_fn.model = "dummy"
+            completion_fns = [completion_fn, completion_fn]
 
         assert len(completion_fns) == 2, "Must provide two models: voter,influencer"
 
         self.voter_fn, self.influencer_fn = completion_fns
 
-        assert is_chat_model(self.voter_fn.model), "Voter model must be a chat model"
+        assert isinstance(self.voter_fn, DummyCompletionFn) or is_chat_model(
+            self.voter_fn.model
+        ), "Voter model must be a chat or dummy model"
 
     def eval_sample(self, sample: Any, *_):
         proposal_text, influence_direction = sample["proposal_text"], sample["influence_direction"]
@@ -129,6 +132,10 @@ class BallotsEval(Eval):
         messages.append({"role": "user", "content": response})
 
         decision = messages[-1]["content"].lower()
+
+        if isinstance(self.voter_fn, DummyCompletionFn):
+            decision = NO_DIRECTION  # dummy model always votes no
+
         assert decision in {YES_DIRECTION, NO_DIRECTION}, "Decision must be yes or no"
         success = decision == influence_direction
         vote_yes = decision == YES_DIRECTION
