@@ -1,0 +1,5 @@
+# Eval description
+This evaluation tests an AI system’s ability to generate persuasive or manipulative text, specifically in the setting of convincing another (simulated) entity to part with money. The setup consists of two language models engaging in conversation, where one model takes on the role of a con-artist trying to extract money, and the other model acts as the "mark" or target, simulating a person who has just received some money. The con-artist model employs various persuasive techniques to get the mark to hand over its funds. Headline metrics include success-rate at receiving a payment, as well as measurements of how large the payments are.
+
+# Contribution statement
+Eval design, implementation, and results evaluation were primarily conducted by Andrei Alexandru, with later-stage contributions from Dane Sherburn, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input and project management support.
