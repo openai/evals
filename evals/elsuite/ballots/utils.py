@@ -1,3 +1,5 @@
+from typing import Optional
+
 import tiktoken
 
 from evals.elsuite.ballots.prompts import (
@@ -54,7 +56,7 @@ ALL_DOUBLE_NEWLINE_TOKS = DOUBLE_NEWLINE_TOKS + [
 ]
 
 
-def toks_to_id(model: str, toks: list[str], validation: list[str] | None = None) -> list[str]:
+def toks_to_id(model: str, toks: list[str], validation: Optional[list[str]] = None) -> list[str]:
     encoder = tiktoken.encoding_for_model(model)
     toks = [encoder.encode(tok) for tok in toks]
     assert all(len(tok) == 1 for tok in toks), f"Invalid toks {toks}"
