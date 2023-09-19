@@ -32,6 +32,7 @@ def get_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("eval", type=str, help="Name of an eval. See registry.")
     parser.add_argument("--extra_eval_params", type=str, default="")
+    parser.add_argument("--completion_args", type=str, default="", help="Specify additional parameters to modify the behavior of the completion_fn during its creation. Parameters should be passed as a comma-separated list of key-value pairs (e.g., 'key1=value1,key2=value2'). This option allows for the dynamic modification of completion_fn settings, including the ability to override default arguments where necessary.")
     parser.add_argument("--max_samples", type=int, default=None)
     parser.add_argument("--cache", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--visible", action=argparse.BooleanOptionalAction, default=None)
@@ -128,8 +129,12 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         eval_spec is not None
     ), f"Eval {args.eval} not found. Available: {list(sorted(registry._evals.keys()))}"
 
+    # If the user provided an argument to --completion_args, parse it into a dict here, to be passed to the completion_fn creation **kwargs
+    completion_args = args.completion_args.split(",")
+    additonal_completion_args = {k: v for k, v in (kv.split("=") for kv in completion_args if kv)}
+
     completion_fns = args.completion_fn.split(",")
-    completion_fn_instances = [registry.make_completion_fn(url) for url in completion_fns]
+    completion_fn_instances = [registry.make_completion_fn(url, **additonal_completion_args) for url in completion_fns]
 
     run_config = {
         "completion_fns": completion_fns,

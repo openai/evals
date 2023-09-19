@@ -1,0 +1,7 @@
+openwebtext:
+License: Creative Commons CC0 license (“no rights reserved”): https://creativecommons.org/share-your-work/public-domain/cc0/
+Source: https://huggingface.co/datasets/openwebtext
+
+wikipedia:
+License: Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA): https://en.wikipedia.org/wiki/Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License and the GNU Free Documentation License (GFDL): https://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License
+Source: https://huggingface.co/datasets/wikipedia
