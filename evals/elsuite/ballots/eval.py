@@ -3,7 +3,7 @@ from pyparsing import Any
 
 import evals
 import evals.metrics
-from evals.api import CompletionFn
+from evals.api import CompletionFn, DummyCompletionFn
 from evals.elsuite.ballots.prompts import first_message_influencer, make_decision_prompt
 from evals.elsuite.ballots.utils import (
     ALL_DOUBLE_NEWLINE_TOKS,
@@ -42,8 +42,16 @@ class BallotsEval(Eval):
         self.n_samples = n_samples
         assert self.n_samples > 0, "Must provide n_samples > 0"
 
-        assert len(self.completion_fns) == 2, "Must provide two models: voter,influencer"
-        self.voter_fn, self.influencer_fn = self.completion_fns
+        if len(completion_fns) == 1 and isinstance(
+            completion_fns[0], DummyCompletionFn
+        ):
+            completion_fn = completion_fns[0]
+            completion_fns = [completion_fn for _ in range(2)]
+
+        assert len(completion_fns) == 2, "Must provide two models: voter,influencer"
+
+        self.voter_fn, self.influencer_fn = completion_fns
+
         assert is_chat_model(self.voter_fn.model), "Voter model must be a chat model"
 
     def eval_sample(self, sample: Any, *_):
