@@ -1,0 +1,8 @@
+korean_spaces:
+  id: korean_spaces.dev.v0
+  description: Test the model's understanding of spacing words in Korean sentences.
+  metrics: [accuracy]
+korean_spaces.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: korean_spaces/samples.jsonl
