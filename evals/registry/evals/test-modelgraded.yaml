@@ -94,3 +94,5 @@ best.dev.v0:
     eval_type: cot_classify
     modelgraded_spec: best
     multicomp_n: from_models
+    sample_kwargs:
+      temperature: 0.4

@@ -1,0 +1,23 @@
+c4:
+License: Open Data Commons Attribution License: http://opendatacommons.org/licenses/by/1.0/
+Source: https://huggingface.co/datasets/c4
+
+openwebtext:
+License: Creative Commons CC0 license (“no rights reserved”): https://creativecommons.org/share-your-work/public-domain/cc0/
+Source: https://huggingface.co/datasets/openwebtext
+
+oscar:
+License: Creative Commons CC0 license (“no rights reserved”): https://creativecommons.org/share-your-work/public-domain/cc0/
+Source: https://huggingface.co/datasets/oscar
+
+wikipedia:
+License: Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA): https://en.wikipedia.org/wiki/Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License and the GNU Free Documentation License (GFDL): https://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License
+Source: https://huggingface.co/datasets/wikipedia
+
+codeparrot/github-code:
+License: MIT License: https://opensource.org/license/mit/
+Source: https://huggingface.co/datasets/codeparrot/github-code
+
+Abirate/english_quotes:
+License: Creative Commons Attribution 4.0 International License: https://creativecommons.org/licenses/by/4.0/legalcode.txt
+Source: https://huggingface.co/datasets/Abirate/english_quotes
