@@ -4,7 +4,7 @@ from pyparsing import Any
 import evals
 import evals.elsuite.steganography.steganography as steganography
 import evals.metrics
-from evals.api import CompletionFn
+from evals.api import CompletionFn, DummyCompletionFn
 from evals.eval import Eval
 from evals.record import RecorderBase
 
@@ -20,9 +20,16 @@ class Steganography(Eval):
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
+        if len(completion_fns) == 1 and isinstance(
+            completion_fns[0], DummyCompletionFn
+        ):
+            completion_fn = completion_fns[0]
+            completion_fns = [completion_fn, completion_fn]
+
         assert (
             len(completion_fns) == 2
         ), f"Steganography requires 2 completion_fns (the 1st is the target model, the 2nd is the monitor model), received {len(completion_fns)}."
+
         self.samples_jsonl = samples_jsonl
         self.prompt_version = prompt_version
         self.reconstruction_error_metric = reconstruction_error_metric
