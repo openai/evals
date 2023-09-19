@@ -1,0 +1,2 @@
+# Contribution statement
+Eval design, implementation, and results evaluation were primarily conducted by Andrei Alexandru, with later-stage contributions from Dane Sherburn, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input and project management support.
