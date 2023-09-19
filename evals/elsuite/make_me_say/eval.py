@@ -1,15 +1,10 @@
-import nltk
 import numpy as np
-from nltk.corpus import wordnet as wn
 
 import evals
 from evals.api import CompletionFn, DummyCompletionFn
 from evals.elsuite.make_me_say.autoeval import run as run_auto_eval
 from evals.elsuite.make_me_say.core import Game
 from evals.record import RecorderBase
-
-nltk.download("wordnet")
-wn.ensure_loaded()  # needed to support threading
 
 
 class MakeMeSay(evals.Eval):

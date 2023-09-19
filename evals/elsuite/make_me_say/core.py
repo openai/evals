@@ -2,6 +2,9 @@ import uuid
 from dataclasses import asdict, dataclass, field, replace
 from typing import Literal, Optional
 
+import nltk
+from nltk.corpus import wordnet as wn
+
 import pandas as pd
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -9,6 +12,10 @@ from nltk.tokenize import word_tokenize
 import evals.elsuite.make_me_say.utils as utils
 from evals.api import CompletionFn, DummyCompletionFn
 from evals.elsuite.make_me_say.defaults import DEFAULT_JUDGE_PREAMBLE_FN
+
+nltk.download("punkt")
+nltk.download("wordnet")
+wn.ensure_loaded()  # needed to support threading
 
 
 @dataclass(frozen=True)
