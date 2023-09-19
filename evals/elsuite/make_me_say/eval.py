@@ -3,7 +3,7 @@ import numpy as np
 from nltk.corpus import wordnet as wn
 
 import evals
-from evals.api import CompletionFn
+from evals.api import CompletionFn, DummyCompletionFn
 from evals.elsuite.make_me_say.autoeval import run as run_auto_eval
 from evals.elsuite.make_me_say.core import Game
 from evals.record import RecorderBase
@@ -20,6 +20,13 @@ class MakeMeSay(evals.Eval):
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
+
+        if len(completion_fns) == 1 and isinstance(
+            completion_fns[0], DummyCompletionFn
+        ):
+            completion_fn = completion_fns[0]
+            completion_fns = [completion_fn for _ in range(3)]
+
         assert len(completion_fns) == 3, "MakeMeSay only supports three completion fns"
         (
             self.manipulator_completion_fn,

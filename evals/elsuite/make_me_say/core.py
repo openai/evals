@@ -7,7 +7,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 
 import evals.elsuite.make_me_say.utils as utils
-from evals.api import CompletionFn
+from evals.api import CompletionFn, DummyCompletionFn
 from evals.elsuite.make_me_say.defaults import DEFAULT_JUDGE_PREAMBLE_FN
 
 
@@ -272,6 +272,9 @@ class Game:
         prompt = [{"role": "system", "content": preamble}]
         response = self.judge.completion_fn(prompt)
         content = utils.get_content(response).strip()
+
+        if isinstance(self.judge.completion_fn, DummyCompletionFn):
+            return False  # dummy response
 
         if content not in ["0", "1"]:
             raise ValueError(f"Invalid response from judge model: `{content}`.")
