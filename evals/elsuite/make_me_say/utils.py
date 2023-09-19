@@ -1,5 +1,5 @@
 import functools
-from typing import Callable
+from typing import Callable, Union
 
 import backoff
 import openai
@@ -29,11 +29,11 @@ def get_completion(prompt, model_name):
     )
 
 
-def get_completion_fn(model_name: str) -> Callable[[str | list[dict]], str | dict]:
+def get_completion_fn(model_name: str) -> Callable[[Union[str, list[dict]]], str | dict]:
     return functools.partial(get_completion, model_name=model_name)
 
 
-def get_content(response: dict | CompletionResult) -> str:
+def get_content(response: Union[dict, CompletionResult]) -> str:
     if hasattr(response, "get_completions"):
         completions = response.get_completions()
         assert len(completions) == 1, f"Got {len(completions)} but expected exactly one"
