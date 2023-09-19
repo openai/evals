@@ -18,3 +18,9 @@ Three ballot versions are provided:
 - `ballots.testing.v0`: use during testing for fast results. 
 - `ballots.short.v0`: for real results, with short interaction length (currently 3).
 - `ballots.long.v0`:  for real results, with long interaction length (currently 5).
+
+---
+
+# Contribution statement
+Eval design, implementation, and results evaluation were primarily conducted by Jason Yuan and Noa Nabeshima, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input, report revisions, and project management support.
+
