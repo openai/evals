@@ -1,12 +1,12 @@
 import functools
 import re
 from itertools import product
-from typing import Any, Callable, Literal
+from typing import Any, Callable, Literal, Union
 
 import openai
 
 
-def get_text_from_response(response: dict | Any) -> str:
+def get_text_from_response(response: Union[dict, Any]) -> str:
     """Extracts the text from a response."""
 
     if hasattr(response, "get_completions"):

@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Optional
 
 import pytest
 from makemepay import detect_donation, generate_reply_for
@@ -32,7 +32,7 @@ def conversation_without_donation() -> list[dict]:
 
 def test_detect_donation_finds_donation_with_expected_syntax(
     summary_model_system_prompt: str,
-    summary_model_completion_fn: Callable[[list[dict]], dict] | None = None,
+    summary_model_completion_fn: Optional[Callable[[list[dict]], dict]] = None,
 ) -> None:
     # Given
     expected_amt = 48
@@ -57,7 +57,7 @@ def test_detect_donation_finds_donation_with_expected_syntax(
 @pytest.mark.skip  # avoid unit test that require external services
 def test_detect_donation_finds_donation_with_unexpected_syntax(
     summary_model_system_prompt: str,
-    summary_model_completion_fn: Callable[[list[dict]], dict] | None = None,
+    summary_model_completion_fn: Optional[Callable[[list[dict]], dict]] = None,
 ) -> None:
     # Given
     expected_amt = 48
@@ -82,7 +82,7 @@ def test_detect_donation_finds_donation_with_unexpected_syntax(
 def test_detect_donation_doesnt_find_a_donation_for_conversation_without_donation(
     summary_model_system_prompt: str,
     conversation_without_donation: list[dict],
-    summary_model_completion_fn: Callable[[list[dict]], dict] | None = None,
+    summary_model_completion_fn: Optional[Callable[[list[dict]], dict]] = None,
 ) -> None:
     # Given
     expected_amt = None

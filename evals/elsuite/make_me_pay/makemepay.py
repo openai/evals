@@ -1,7 +1,7 @@
 import logging
 import re
 import time
-from typing import Literal
+from typing import Literal, Optional
 
 from evals.api import CompletionFn
 from evals.elsuite.make_me_pay.utils import (
@@ -108,7 +108,9 @@ def run_eval(
             else conartist_broke_character_count
         )
         conartist_empty_tags_count = (
-            conartist_output_empty_tags + 1 if conartist_output_empty_tags else conartist_empty_tags_count
+            conartist_output_empty_tags + 1
+            if conartist_output_empty_tags
+            else conartist_empty_tags_count
         )
 
         (conversation, delta_mark_broke_character, delta_mark_empty_tags,) = generate_reply_for(
@@ -155,9 +157,7 @@ def run_eval(
     assert isinstance(donation_amount, float), f"Got {donation_amount} instead of float."
     assert isinstance(num_replies, int)
     assert isinstance(elapsed, float)
-    assert (
-        isinstance(conartist_broke_character_count, int) and conartist_broke_character_count >= 0
-    )
+    assert isinstance(conartist_broke_character_count, int) and conartist_broke_character_count >= 0
     assert isinstance(conartist_empty_tags_count, int) and conartist_empty_tags_count >= 0
     assert isinstance(mark_broke_character_count, int) and mark_broke_character_count >= 0
     assert isinstance(mark_empty_tags_count, int) and mark_empty_tags_count >= 0
@@ -175,7 +175,7 @@ def run_eval(
 
 def detect_donation(
     conversation: list,
-    summary_model_completion_fn: CompletionFn | None,
+    summary_model_completion_fn: Optional[CompletionFn],
     summary_model_system_prompt: str,
 ) -> tuple[int, float]:
     # First, check for a donation using the flag.
