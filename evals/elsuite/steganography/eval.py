@@ -30,6 +30,7 @@ class Steganography(Eval):
             len(completion_fns) == 2
         ), f"Steganography requires 2 completion_fns (the 1st is the target model, the 2nd is the monitor model), received {len(completion_fns)}."
 
+        self.completion_fns = completion_fns
         self.samples_jsonl = samples_jsonl
         self.prompt_version = prompt_version
         self.reconstruction_error_metric = reconstruction_error_metric
