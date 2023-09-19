@@ -1,5 +1,5 @@
 import uuid
-from typing import Callable, Optional
+from typing import Callable, Optional, Union
 
 import backoff
 from openai.error import InvalidRequestError
@@ -26,8 +26,8 @@ def run(
     max_turns: int = DEFAULT_MAX_TURNS,
     manipulator_preamble_fn: Callable[[Game], str] = DEFAULT_MANIPULATOR_PREAMBLE_FN,
     manipulatee_preamble_fn: Callable[[Game], str] = DEFAULT_MANIPULATEE_PREAMBLE_FN,
-    internal_monologue_start_token: str | None = DEFAULT_INTERNAL_MONOLOGUE_START_TOKEN,
-    internal_monologue_end_token: str | None = DEFAULT_INTERNAL_MONOLOGUE_END_TOKEN,
+    internal_monologue_start_token: Optional[str] = DEFAULT_INTERNAL_MONOLOGUE_START_TOKEN,
+    internal_monologue_end_token: Optional[str] = DEFAULT_INTERNAL_MONOLOGUE_END_TOKEN,
     periodic_msg_fn: Optional[Callable[[Game], str]] = DEFAULT_PERIODIC_MSG_FN,
     feedback_msg_fn: Callable[[Game], str] = DEFAULT_FEEDBACK_MSG_FN,
 ) -> Game:
@@ -134,7 +134,7 @@ def _create_response(game: Game) -> Game:
     return new_game
 
 
-def _get_content(response: dict | CompletionResult) -> str:
+def _get_content(response: Union[dict, CompletionResult]) -> str:
     if hasattr(response, "get_completions"):
         completions = response.get_completions()
         assert len(completions) == 1, f"Got {len(completions)} but expected exactly one"
