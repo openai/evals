@@ -1,11 +1,15 @@
 """
     Usage: python scripts/task_identification_generator.py
+    This script generates examples for a task identification challenge, 
+    with the task being to identify patterns between a set of symbols and their resulting labels.
 """
 
+import os
 import json
 import random
 from typing import Literal
 
+# Ensure consistent results across runs
 random.seed(42)
 
 SYMBOLS = list("abcdefghijklmnopqrstuvwxyz")
@@ -15,7 +19,7 @@ INSTRUCTION = (
 )
 TASK_NAME = "pattern_identification"
 
-
+# This function generates an example symbol set and its corresponding label
 def generate_example() -> tuple[str, list[str], Literal["foo", "bar"]]:
     num_symbols = int(len(SYMBOLS) / 2)
     target_symbol = random.choice(SYMBOLS)
@@ -23,7 +27,7 @@ def generate_example() -> tuple[str, list[str], Literal["foo", "bar"]]:
     target: Literal["foo", "bar"] = "foo" if target_symbol in symbol_list else "bar"
     return (target_symbol, symbol_list, target)
 
-
+# This function generates a string of multiple examples, used to give a user multiple attempts to identify the pattern
 def generate_exemplars_str(num_exemplars: int = 8) -> str:
     exemplars = [generate_example() for _ in range(num_exemplars)]
     exemplars_str = [
@@ -32,7 +36,7 @@ def generate_exemplars_str(num_exemplars: int = 8) -> str:
     ]
     return "\n".join([INSTRUCTION] + exemplars_str)
 
-
+# This function generates a set of evaluation examples and their corresponding labels
 def generate_eval_examples(
     num_eval_examples: int = 250,
 ) -> tuple[list[str], list[Literal["foo", "bar"]]]:
@@ -47,7 +51,10 @@ def generate_eval_examples(
 
 if __name__ == "__main__":
     eval_examples_str, targets = generate_eval_examples()
-    output_path = f"evals/registry/data/{TASK_NAME}/samples.v0.jsonl"
+    
+    # Generate the output path in a OS-agnostic manner
+    output_path = os.path.join("evals", "registry", "data", TASK_NAME, "samples.v0.jsonl")
+    
     with open(output_path, "w") as writer:
         for eval_example_str, target in zip(eval_examples_str, targets):
             d = {

@@ -1,0 +1,9 @@
+math_for_5th-grader:
+  id: math_for_5th-grader.dev.v0
+  description: Evaluates the model's ability to solve 5th grade level math problems with slightly complicated sentences.
+  metrics: [accuracy]
+
+math_for_5th-grader.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: math_for_5th-grader/samples.jsonl

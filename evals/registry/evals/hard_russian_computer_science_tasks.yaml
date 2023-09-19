@@ -1,0 +1,11 @@
+hard_russian_computer_science_tasks:
+  id: hard_russian_computer_science_tasks.dev.v0
+  description: Challenging computer science problems primarily sourced from Russian academic and competitive programming contexts. The problems cover various subfields of computer science, including data structures, algorithms, computational mathematics, and more.
+  metrics: [accuracy]
+
+hard_russian_computer_science_tasks.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: hard_russian_computer_science_tasks/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact

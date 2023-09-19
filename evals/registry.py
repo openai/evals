@@ -19,12 +19,16 @@ import yaml
 from evals import OpenAIChatCompletionFn, OpenAICompletionFn
 from evals.api import CompletionFn, DummyCompletionFn
 from evals.base import BaseEvalSpec, CompletionFnSpec, EvalSetSpec, EvalSpec
+from evals.completion_fns.openai import OpenAICompletionKwargs
 from evals.elsuite.modelgraded.base import ModelGradedSpec
 from evals.utils.misc import make_object
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_PATHS = [Path(__file__).parents[0].resolve() / "registry", Path.home() / ".evals"]
+DEFAULT_PATHS = [
+    Path(__file__).parents[0].resolve() / "registry",
+    Path.home() / ".evals",
+]
 SPEC_RESERVED_KEYWORDS = ["key", "group", "cls"]
 
 
@@ -51,6 +55,7 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
         "gpt-3.5-turbo": 4096,
         "gpt-4": 8192,
         "gpt-4-32k": 32768,
+        "gpt-4-base": 8192,
     }
 
     # first, look for an exact match
@@ -67,6 +72,9 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
 
 
 def is_chat_model(model_name: str) -> bool:
+    if model_name in {"gpt-4-base"}:
+        return False
+
     CHAT_MODEL_NAMES = {"gpt-3.5-turbo", "gpt-4", "gpt-4-32k"}
     if model_name in CHAT_MODEL_NAMES:
         return True
@@ -92,28 +100,27 @@ class Registry:
     def api_model_ids(self) -> list[str]:
         try:
             return [m["id"] for m in openai.Model.list()["data"]]
-        except openai.error.OpenAIError as err:
+        except openai.error.OpenAIError as err:  # type: ignore
             # Errors can happen when running eval with completion function that uses custom
             # API endpoints and authentication mechanisms.
             logger.warning(f"Could not fetch API model IDs from OpenAI API: {err}")
             return []
 
-    def make_completion_fn(self, name: str) -> CompletionFn:
+    def make_completion_fn(self, name: str, **kwargs: OpenAICompletionKwargs) -> CompletionFn:
         """
         Create a CompletionFn. The name can be one of the following formats:
         1. openai-model-id (e.g. "gpt-3.5-turbo")
         2. completion-fn-id (from the registry)
         """
-
         if name == "dummy":
             return DummyCompletionFn()
 
         n_ctx = n_ctx_from_model_name(name)
 
         if is_chat_model(name):
-            return OpenAIChatCompletionFn(model=name, n_ctx=n_ctx)
+            return OpenAIChatCompletionFn(model=name, n_ctx=n_ctx, **kwargs)
         elif name in self.api_model_ids:
-            return OpenAICompletionFn(model=name, n_ctx=n_ctx)
+            return OpenAICompletionFn(model=name, n_ctx=n_ctx, **kwargs)
 
         # No match, so try to find a completion-fn-id in the registry
         spec = self.get_completion_fn(name)
@@ -121,6 +128,7 @@ class Registry:
             raise ValueError(f"Could not find CompletionFn in the registry with ID {name}")
         if spec.args is None:
             spec.args = {}
+        spec.args.update(kwargs)
 
         spec.args["registry"] = self
         instance = make_object(spec.cls)(**spec.args or {})

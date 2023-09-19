@@ -1,0 +1,9 @@
+tricky-word-problems:
+  id: tricky-word-problems.dev.v0
+  description: Test the model's ability to recognize and correctly account for unexpected and potentially misleading information provided in word problems.
+  metrics: [accuracy]
+
+tricky-word-problems.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: tricky-word-problems/samples.jsonl

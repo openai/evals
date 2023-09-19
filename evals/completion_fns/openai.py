@@ -1,7 +1,7 @@
 from typing import Any, Optional, Union
+
 from evals.api import CompletionFn, CompletionResult
 from evals.base import CompletionFnSpec
-
 from evals.prompt.base import (
     ChatCompletionPrompt,
     CompletionPrompt,
@@ -43,6 +43,14 @@ class OpenAICompletionResult(OpenAIBaseCompletionResult):
                 if "text" in choice:
                     completions.append(choice["text"])
         return completions
+
+
+class OpenAICompletionKwargs(TypedDict):
+    model: str
+    n_ctx: Optional[int]
+    api_key: Optional[str]
+    api_base: Optional[str]
+    extra_options: Optional[dict[str, Any]]
 
 
 class OpenAICompletionFn(CompletionFn):
@@ -100,7 +108,6 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
         api_key: Optional[str] = None,
         n_ctx: Optional[int] = None,
         extra_options: Optional[dict] = {},
-        **kwargs,
     ):
         self.model = model
         self.api_base = api_base

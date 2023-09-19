@@ -1,0 +1,20 @@
+css-selectors-verbal:
+  id: css-selectors-verbal.dev.v0
+  description: Test the model's ability to translate verbal description to css selectors
+  metrics: [accuracy]
+
+css-selectors-verbal.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: css-selectors/verbal.jsonl
+
+
+css-selectors-explain:
+  id: css-selectors-explain.dev.v0
+  description: Test the models ability to describe css selectors verbaly
+  metrics: [accuracy]
+
+css-selectors-explain.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: css-selectors/explain.jsonl

@@ -1,0 +1,9 @@
+romanian-logic:
+  id: romanian-logic.dev.v0
+  description: Test the model's ability to solve a variety of mathematical, logical and grammatical problems using the Romanian language.
+  metrics: [accuracy]
+
+romanian-logic.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: romanian-logic/romanian-logic.jsonl

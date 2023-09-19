@@ -7,3 +7,8 @@ venv/
 # MacOS folder metadata
 .DS_Store
 .vscode/
+
+# PyCharm folder metadata
+.idea/
+
+build

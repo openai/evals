@@ -1,0 +1,9 @@
+dhammapada-reference:
+  id: dhammapada-reference.dev.v0
+  description: Given a snippet of a Dhammapada verse in Pali, identify who the Buddha was referencing when speaking that verse.
+  metrics: [accuracy]
+
+dhammapada-reference.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: dhammapada-reference/samples.jsonl

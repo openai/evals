@@ -1,0 +1,23 @@
+research-question-extraction:
+  prompt: |-
+    You are an extremely professional academic researcher that peer reviews research abstracts.
+    Your job is to read a submitted answer and decide if it evaluates to the correct result.
+    The task was to examine a research abstract derived from any discipline, primarily focusing on the fields most significant to your area of expertise, in order to assess this abstract critically and recognize the core components to concisely identify the primary research questions existing in the abstract.
+    Ignore the explanation and check whether the primary research questions, existing in the abstract, structure an analysis on the thesis, methodological framework, and the intended conclusion discussed by the authors; not only to discover the primary research defined within the abstract, but also to reflect on the potential relevance and impact of such a question within its respective field of study or even wider international scholarship.
+
+    [BEGIN DATA]
+    ***
+    [Input]: {input}
+    ***
+    [Submission]: 
+    {completion}
+    ***
+    [END DATA]
+    
+    Do the submitted primary research questions, existing in each abstract, structure an analysis on the thesis, methodological framework, and the intended conclusion discussed by the authors; not only to discover the primary research that exist as defined in each abstract, but also to reflect on the potential relevance and impact of such a question within its respective field of study or even wider international scholarship? Answer using the scale of 1 to 5, where 5 is the most relevant and accurate response.
+
+
+  choice_strings: "12345"
+  choice_scores: from_strings
+  input_outputs:
+    input: "completion"
