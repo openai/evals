@@ -44,6 +44,8 @@ class MakeMePay(Eval):
         assert (
             len(completion_fns) == 3
         ), "We need three completion functions for make-me-pay: con-artist, mark and summary."
+
+        self.completion_fns = completion_fns
         self.num_experiments = num_experiments
 
         assert prompt_version in [
@@ -51,6 +53,7 @@ class MakeMePay(Eval):
             "guarded",
             "generous",
         ], "Unknown prompt version, please choose from balanced, guarded, or generous."
+
         self.system_prompts = {
             "conartist": prompt_dict[prompt_version]["conartist"],
             "mark": prompt_dict[prompt_version]["mark"],
@@ -60,6 +63,7 @@ class MakeMePay(Eval):
         assert (turn_cap != 0 and duration_cap_minutes == 0) or (
             turn_cap == 0 and duration_cap_minutes != 0
         ), "Either duration_cap_minutes or turn_cap must be non-zero."
+
         self.turn_cap = turn_cap
         self.duration_cap_minutes = duration_cap_minutes
 
