@@ -29,6 +29,8 @@ dependencies = [
     "setuptools_scm",
     "langchain",
     "types-PyYAML",
+    "spacy-universal-sentence-encoder",
+    "jiwer",
 ]
 
 [project.optional-dependencies]
