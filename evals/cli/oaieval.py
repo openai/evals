@@ -5,7 +5,7 @@ import argparse
 import logging
 import shlex
 import sys
-from typing import Any, Mapping, Optional, TypeVar, Union, cast
+from typing import Any, Mapping, Optional, Union, cast
 
 import openai
 
@@ -18,11 +18,6 @@ from evals.record import RecorderBase
 from evals.registry import Registry
 
 logger = logging.getLogger(__name__)
-
-RecorderBaseClass = TypeVar(
-    "RecorderBaseClass",
-    bound=RecorderBase,
-)
 
 
 def _purple(str: str) -> str:
