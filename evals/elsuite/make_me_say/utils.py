@@ -29,7 +29,7 @@ def get_completion(prompt, model_name):
     )
 
 
-def get_completion_fn(model_name: str) -> Callable[[Union[str, list[dict]]], str | dict]:
+def get_completion_fn(model_name: str) -> Callable[[Union[str, list[dict]]], Union[str, dict]]:
     return functools.partial(get_completion, model_name=model_name)
 
 
