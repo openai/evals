@@ -1,5 +1,6 @@
 from typing import Any
 
+import os
 import pytest
 
 from evals.elsuite.make_me_say.core import Game, Message, Player
@@ -98,6 +99,10 @@ def finished_bot_vs_bot_game(empty_bot_vs_bot_game: Game) -> Game:
         game = game.swap_players()
 
     return game
+
+
+def _is_api_key_set() -> bool:
+    return os.environ.get("OPENAI_API_KEY") is not None
 
 
 def test_player_cant_play_against_themselves(
@@ -313,6 +318,7 @@ def test_manipulatee_cant_see_internal_monologue_of_manipulator(
     )
 
 
+@pytest.mark.skipif(not _is_api_key_set(), reason="`OPENAI_API_KEY` is not set")
 def test_winning_game_is_classified_as_a_win(empty_bot_vs_bot_game: Game) -> None:
     # Given
     codeword = empty_bot_vs_bot_game.word_list[0]
@@ -389,6 +395,7 @@ def test_system_messages_are_ignored_in_violation_check(
     assert not game.is_codeword_mentioned_by_user()
 
 
+@pytest.mark.skipif(not _is_api_key_set(), reason="`OPENAI_API_KEY` is not set")
 def test_system_messages_are_ignored_in_win_check(
     empty_bot_vs_bot_game: Game,
 ) -> None:
@@ -452,6 +459,7 @@ def test_internal_monologue_is_ignored_in_violation_check(
     assert not game.is_codeword_mentioned_by_user()
 
 
+@pytest.mark.skipif(not _is_api_key_set(), reason="`OPENAI_API_KEY` is not set")
 def test_internal_monologue_is_ignored_in_win_check(
     empty_bot_vs_bot_game: Game,
 ) -> None:
@@ -497,6 +505,7 @@ def test_internal_monologue_is_ignored_in_win_check(
     assert codeword != non_codeword
 
 
+@pytest.mark.skipif(not _is_api_key_set(), reason="`OPENAI_API_KEY` is not set")
 def test_loss_game_is_classified_as_a_loss(empty_bot_vs_bot_game: Game) -> None:
     # Given
     game = empty_bot_vs_bot_game
@@ -751,6 +760,7 @@ def test_both_internal_monologue_tokens_cant_be_empty_strings(
         )
 
 
+@pytest.mark.skipif(not _is_api_key_set(), reason="`OPENAI_API_KEY` is not set")
 def test_game_mentioning_codeword_which_exceeds_max_turns_is_a_win(
     empty_bot_vs_bot_game: Game,
 ) -> None:
@@ -795,6 +805,7 @@ def test_game_mentioning_codeword_which_exceeds_max_turns_is_a_win(
     assert not game.is_violation()
 
 
+@pytest.mark.skipif(not _is_api_key_set(), reason="`OPENAI_API_KEY` is not set")
 def test_game_where_user_says_conversation_was_manipulative_is_marked_as_such(
     empty_bot_vs_bot_game: Game,
 ) -> None:
@@ -818,6 +829,7 @@ def test_game_where_user_says_conversation_was_manipulative_is_marked_as_such(
     assert game.is_user_aware_of_manipulation()
 
 
+@pytest.mark.skipif(not _is_api_key_set(), reason="`OPENAI_API_KEY` is not set")
 def test_game_where_user_doesnt_say_conversation_was_manipulative_is_not_marked_as_such(
     empty_bot_vs_bot_game: Game,
 ) -> None:
@@ -860,6 +872,7 @@ def test_game_with_more_than_one_codeword_cant_be_created(
         )
 
 
+@pytest.mark.skipif(not _is_api_key_set(), reason="`OPENAI_API_KEY` is not set")
 def test_game_where_user_mentions_codeword_after_manipulator_but_user_is_aware_of_codeword_is_a_loss(
     empty_bot_vs_bot_game: Game,
 ) -> None:
