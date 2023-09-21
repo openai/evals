@@ -19,7 +19,6 @@ import yaml
 from evals import OpenAIChatCompletionFn, OpenAICompletionFn
 from evals.api import CompletionFn, DummyCompletionFn
 from evals.base import BaseEvalSpec, CompletionFnSpec, EvalSetSpec, EvalSpec
-from evals.completion_fns.openai import OpenAICompletionKwargs
 from evals.elsuite.modelgraded.base import ModelGradedSpec
 from evals.utils.misc import make_object
 
@@ -106,7 +105,11 @@ class Registry:
             logger.warning(f"Could not fetch API model IDs from OpenAI API: {err}")
             return []
 
-    def make_completion_fn(self, name: str, **kwargs: OpenAICompletionKwargs) -> CompletionFn:
+    def make_completion_fn(
+        self,
+        name: str,
+        **kwargs: Any,
+    ) -> CompletionFn:
         """
         Create a CompletionFn. The name can be one of the following formats:
         1. openai-model-id (e.g. "gpt-3.5-turbo")

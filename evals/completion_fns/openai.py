@@ -45,14 +45,6 @@ class OpenAICompletionResult(OpenAIBaseCompletionResult):
         return completions
 
 
-class OpenAICompletionKwargs(TypedDict):
-    model: str
-    n_ctx: Optional[int]
-    api_key: Optional[str]
-    api_base: Optional[str]
-    extra_options: Optional[dict[str, Any]]
-
-
 class OpenAICompletionFn(CompletionFn):
     def __init__(
         self,
