@@ -1,0 +1,8 @@
+tracking-shuffled-objects:
+  id: tracking-shuffled-objects.dev.v0
+  metrics: [accuracy]
+
+tracking-shuffled-objects.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: tracking-shuffled-objects/samples.jsonl

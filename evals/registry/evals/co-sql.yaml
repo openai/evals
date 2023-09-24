@@ -1,0 +1,11 @@
+co-sql:
+  id: co-sql.dev.v0
+  metrics: [accuracy]
+  description: Evaluates performance on a 100 samples of the CoSQL dataset, a conversational version of Text-to-SQL tasks. Each conversation simulates a real-world DB scenario where a user asks NLP questions and a SQL expert retrieves answers in response. Yu, Tao, et al. \"CoSQL A Conversational Text-to-SQL Challenge Towards Cross-Domain Natural Language Interfaces to Databases\" https://arxiv.org/abs/1909.05378
+co-sql.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: sql/co_sql.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: sql
+

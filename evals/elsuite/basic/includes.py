@@ -1,38 +1,57 @@
 from typing import Any
 
 import evals
-import evals.elsuite.utils
 import evals.metrics
-import numpy as np
+from evals.api import CompletionFn
+from evals.elsuite import utils
 
 
 class Includes(evals.Eval):
     def __init__(
         self,
-        model_specs: evals.ModelSpecs,
+        completion_fns: list[CompletionFn],
         samples_jsonl: str,
+        ignore_case: bool = False,
         *args,
-        max_tokens: int = 500,
         **kwargs,
     ):
-        super().__init__(model_specs, *args, **kwargs)
-        self.max_tokens = max_tokens
+        super().__init__(completion_fns, *args, **kwargs)
+        assert len(completion_fns) == 1, "Includes only supports one completion fn"
         self.samples_jsonl = samples_jsonl
+        self.ignore_case = ignore_case
 
     def eval_sample(self, sample: Any, *_):
-        sampled = evals.sample_freeform(
-            self.model_spec, sample["input"], max_tokens=self.max_tokens
+        assert isinstance(sample, dict), "sample must be a dict"
+        assert "input" in sample, "sample must have an 'input' key"
+        assert "ideal" in sample, "sample must have an 'ideal' key"
+
+        prompt = sample["input"]
+        result = self.completion_fn(
+            prompt=prompt,
         )
+        sampled = result.get_completions()[0]
+
+        ideal = sample["ideal"]
+        if not isinstance(ideal, list):
+            ideal = [ideal]
+
+        assert isinstance(ideal, list) and all(
+            isinstance(i, str) for i in ideal
+        ), "ideal must be a list of strings"
+
         includes_answer = any(
-            [evals.elsuite.utils.get_answer(sampled, ref) for ref in sample["ideal"]]
+            [utils.get_answer(sampled, ref, self.ignore_case) is not None for ref in ideal]
         )
-        evals.record.record_metrics(accuracy=float(includes_answer))
+        evals.record.record_match(
+            includes_answer, expected=sample["ideal"], picked=sampled, sampled=sampled
+        )
         return includes_answer
 
     def run(self, recorder):
-        samples = evals.get_jsonl(self.samples_jsonl)
+        samples = self.get_samples()
         self.eval_all_samples(recorder, samples)
-        events = recorder.get_scores("accuracy")
+        events = recorder.get_events("match")
         return {
-            "accuracy": np.mean(events),
+            "accuracy": evals.metrics.get_accuracy(events),
+            "boostrap_std": evals.metrics.get_bootstrap_accuracy_std(events),
         }

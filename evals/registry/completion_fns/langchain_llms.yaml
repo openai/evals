@@ -1,0 +1,27 @@
+langchain/llm/gpt-3.5-turbo:
+  class: evals.completion_fns.langchain_llm:LangChainLLMCompletionFn
+  args:
+    llm: OpenAI
+    llm_kwargs:
+      model_name: gpt-3.5-turbo
+
+langchain/llm/text-davinci-003:
+  class: evals.completion_fns.langchain_llm:LangChainLLMCompletionFn
+  args:
+    llm: OpenAI
+    llm_kwargs:
+      model_name: text-davinci-003
+
+langchain/llm/flan-t5-xl:
+  class: evals.completion_fns.langchain_llm:LangChainLLMCompletionFn
+  args:
+    llm: HuggingFaceHub
+    llm_kwargs:
+      repo_id: google/flan-t5-xl
+
+langchain/chat_model/gpt-3.5-turbo:
+  class: evals.completion_fns.langchain_llm:LangChainChatModelCompletionFn
+  args:
+    llm: ChatOpenAI
+    chat_model_kwargs:
+      model_name: gpt-3.5-turbo

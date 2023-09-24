@@ -1,0 +1,9 @@
+chinese-lantern-riddles:
+  id: chinese-lantern-riddles.dev.v0
+  description: Test the model's ability to solve Chinese lantern riddles.
+  metrics: [accuracy]
+
+chinese-lantern-riddles.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: chinese-lantern-riddles/samples.jsonl

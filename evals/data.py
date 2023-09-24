@@ -4,17 +4,14 @@ This file defines utilities for working with data and files of various types.
 import csv
 import dataclasses
 import gzip
-import hashlib
 import itertools
 import json
 import logging
 import os
-import pickle
 import urllib
 from collections.abc import Iterator
 from functools import partial
-from pathlib import Path
-from typing import Any, Sequence, Union
+from typing import Any, List, Optional, Sequence, Text, Union
 
 import blobfile as bf
 import lz4.frame
@@ -74,10 +71,20 @@ def open_by_file_pattern(filename: str, mode: str = "r", **kwargs: Any) -> Any:
         raise RuntimeError(f"Failed to open: {filename}") from e
 
 
+def _decode_json(line, path, line_number):
+    try:
+        return json.loads(line)
+    except json.JSONDecodeError as e:
+        custom_error_message = f"Error parsing JSON on line {line_number}: {e.msg} at {path}:{line_number}:{e.colno}"
+        logger.error(custom_error_message)
+        raise ValueError(custom_error_message) from None
+
 def _get_jsonl_file(path):
     logger.info(f"Fetching {path}")
+    data = []
     with open_by_file_pattern(path, mode="r") as f:
-        return list(map(json.loads, f.readlines()))
+        return [_decode_json(line, path, i + 1) for i, line in enumerate(f)]
+
 
 
 def _get_json_file(path):
@@ -93,27 +100,6 @@ def _stream_jsonl_file(path) -> Iterator:
             yield json.loads(line)
 
 
-def filecache(func):
-    DIR = "/tmp/filecache"
-    name = func.__name__
-
-    def wrapper(*args, **kwargs):
-        md5 = hashlib.md5((name + ":" + str((args, kwargs))).encode("utf-8")).hexdigest()
-        pkl_path = f"{DIR}/{md5}.pkl"
-        if os.path.exists(pkl_path):
-            logger.debug(f"Loading from file cache: {pkl_path}")
-            with open(pkl_path, "rb") as f:
-                return pickle.load(f)
-        result = func(*args, **kwargs)
-        Path(DIR).mkdir(parents=True, exist_ok=True)
-        with open(pkl_path, "wb") as f:
-            pickle.dump(result, f)
-        return result
-
-    return wrapper
-
-
-@filecache
 def get_lines(path) -> list[dict]:
     """
     Get a list of lines from a file.
@@ -122,7 +108,6 @@ def get_lines(path) -> list[dict]:
         return f.readlines()
 
 
-@filecache
 def get_jsonl(path: str) -> list[dict]:
     """
     Extract json lines from the given path.
@@ -139,12 +124,10 @@ def get_jsonl(path: str) -> list[dict]:
     return _get_jsonl_file(path)
 
 
-@filecache
 def get_jsonls(paths: Sequence[str], line_limit=None) -> list[dict]:
     return list(iter_jsonls(paths, line_limit))
 
 
-@filecache
 def get_json(path) -> dict:
     if bf.isdir(path):
         raise ValueError("Path is a directory, only files are supported")
@@ -179,33 +162,49 @@ def get_csv(path, fieldnames=None):
         return [row for row in reader]
 
 
-def _to_py_types(o: Any) -> Any:
+def _to_py_types(o: Any, exclude_keys: List[Text]) -> Any:
     if isinstance(o, dict):
-        return {k: _to_py_types(v) for k, v in o.items()}
+        return {
+            k: _to_py_types(v, exclude_keys=exclude_keys) for k, v in o.items() if k not in exclude_keys}
+
     if isinstance(o, list):
-        return [_to_py_types(v) for v in o]
+        return [_to_py_types(v, exclude_keys=exclude_keys) for v in o]
 
     if dataclasses.is_dataclass(o):
-        return _to_py_types(dataclasses.asdict(o))
+        return _to_py_types(dataclasses.asdict(o), exclude_keys=exclude_keys)
 
     # pydantic data classes
     if isinstance(o, pydantic.BaseModel):
-        return json.loads(o.json())
+        return {
+            k: _to_py_types(v, exclude_keys=exclude_keys)
+            for k, v in json.loads(o.json()).items()
+            if k not in exclude_keys
+        }
 
     return o
 
 
 class EnhancedJSONEncoder(json.JSONEncoder):
+    def __init__(self, exclude_keys: Optional[List[Text]]=None, **kwargs: Any):
+        super().__init__(**kwargs)
+        self.exclude_keys = exclude_keys if exclude_keys else []
+
     def default(self, o: Any) -> str:
-        return _to_py_types(o)
+        return _to_py_types(o, self.exclude_keys)
 
 
-def jsondumps(o: Any, **kwargs: Any) -> str:
-    return json.dumps(o, cls=EnhancedJSONEncoder, **kwargs)
+def jsondumps(o: Any, ensure_ascii: bool = False, **kwargs: Any) -> str:
+    # The JSONEncoder class's .default method is only applied to dictionary values,
+    # not keys. In order to exclude keys from the output of this jsondumps method
+    # we need to exclude them outside the encoder.
+    if isinstance(o, dict) and "exclude_keys" in kwargs:
+        for key in kwargs["exclude_keys"]:
+            del o[key]
+    return json.dumps(o, cls=EnhancedJSONEncoder, ensure_ascii=ensure_ascii, **kwargs)
 
 
-def jsondump(o: Any, fp: Any, **kwargs: Any) -> None:
-    json.dump(o, fp, cls=EnhancedJSONEncoder, **kwargs)
+def jsondump(o: Any, fp: Any, ensure_ascii: bool = False, **kwargs: Any) -> None:
+    json.dump(o, fp, cls=EnhancedJSONEncoder, ensure_ascii=ensure_ascii, **kwargs)
 
 
 def jsonloads(s: str, **kwargs: Any) -> Any:

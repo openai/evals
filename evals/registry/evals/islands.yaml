@@ -1,0 +1,8 @@
+japanese-remote-island-to-prefecture:
+  id: japanese-remote-island-to-prefecture.dev.v0
+  description: Testing the models ability to answer prefecture of given Japanese remote island.
+  metrics: [accuracy]
+japanese-remote-island-to-prefecture.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: islands/japanese_remote_island_to_prefecture.jsonl

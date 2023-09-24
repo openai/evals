@@ -1,0 +1,9 @@
+3d_object_manipulation:
+  id: 3d_object_manipulation.dev.v0
+  description: This evaluation attempts to calculate the location of a generic 3D object in space given an initial location, a rotation angle, and a translation.
+  metrics: [accuracy]
+
+3d_object_manipulation.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: 3d_object_manipulation/samples.jsonl

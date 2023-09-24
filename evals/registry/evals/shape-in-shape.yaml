@@ -1,0 +1,8 @@
+shape-in-shape:
+  id: shape-in-shape.dev.v1
+  description: Test the model's ability to check whether a given shape will fit within another shape.
+  metrics: [accuracy]
+shape-in-shape.dev.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: shape_in_shape/shape_in_shape.jsonl

@@ -1,0 +1,9 @@
+chinese_chu_ci:
+  id: chinese_chu_ci.dev.v0
+  description: Given a Chinese Chu Ci content, return the name of it.
+  metrics: [accuracy]
+
+chinese_chu_ci.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: chinese_chu_ci/samples.jsonl

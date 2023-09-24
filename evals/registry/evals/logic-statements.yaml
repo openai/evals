@@ -1,0 +1,7 @@
+logic-statements:
+  id: logic-statements.dev.v0
+  metrics: [accuracy]
+logic-statements.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: logic-statements/logic-statements.jsonl

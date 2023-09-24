@@ -1,0 +1,8 @@
+connect4:
+  id: connect4.s1.v1
+  metrics: [accuracy]
+
+connect4.s1.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: connect4/samples.jsonl

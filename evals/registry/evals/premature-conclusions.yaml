@@ -1,0 +1,9 @@
+premature-conclusions:
+  id: premature-conclusions.dev.v0
+  description: This test evaluates the model's ability to identify insufficient data and prevent premature or unsupported deductions.
+  metrics: [accuracy]
+
+premature-conclusions.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: premature-conclusions/samples.jsonl

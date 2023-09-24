@@ -1,0 +1,8 @@
+invoice_due_date_leap_day_adjustment:
+  id: invoice_due_date_leap_day_adjustment.dev.v0
+  metrics: [accuracy]
+
+invoice_due_date_leap_day_adjustment.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: invoice_due_date_leap_day_adjustment/samples.jsonl

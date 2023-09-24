@@ -1,0 +1,22 @@
+translation:
+  prompt: |-
+    You are comparing the submitted translation to an expert translation of a sentence from {language} to English. Here is the data:
+    [BEGIN DATA]
+    ************
+    [Sentence]: {input}
+    ************
+    [Expert]: {ideal}
+    ************
+    [Submission]: {completion}
+    ************
+    [END DATA]
+    Does the submission answer and the expert's answer have the same meaning? Ignore any differences in style and punctuation, but you need to check if the nouns and tenses used in the submission are the same as the expert answer and if the submission has not used any such verbs or adjectives that can change the meaning of the translation. First, write out in a step-by-step manner your reasoning about the comparison to be sure that your conclusion is correct. Avoid simply stating the correct answers at the outset. Then print only the single character "Y" or "N" (without quotes or punctuation) on its own line, corresponding to the correct answer. At the end, repeat just the letter again by itself on a new line.
+
+    Reasoning:
+  eval_type: cot_classify
+  choice_scores:
+    "Y": 1.0
+    "N": 0.0
+  choice_strings: 'YN'
+  input_outputs:
+    input: "completion"

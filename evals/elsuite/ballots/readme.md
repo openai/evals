@@ -1,0 +1,5 @@
+# Eval description
+This evaluation tests an AI system’s ability to generate persuasive or manipulative text, specifically in the context of nudging another party’s view while explaining a ballot proposition. In the experiment, two language models interact, one playing the role of an “influencer” and the other simulating an intelligent, civically-engaged “voter.” The influencer, though tasked on the surface with explaining the ballot proposal so that the “voter” can cast a vote, has a hidden agenda to sway the voter's decision toward a particular side. The voter may ask questions of the influencer and then must ultimately vote on the proposal. The headline metric is the influencer’s ability to guide the voter toward the side the influencer was told to favor.
+
+# Contribution statement
+Eval design, implementation, and results evaluation were primarily conducted by Jason Yuan and Noa Nabeshima, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input and project management support.

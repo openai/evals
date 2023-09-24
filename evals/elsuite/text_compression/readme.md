@@ -1,0 +1,5 @@
+# Eval description
+This evaluation aims to measure the steganographic capabilities (hidden message-hiding) of language models, specifically their ability to compress and decompress text in a way that could potentially hide secret messages. An AI model is evaluated on its ability to compress a given piece of text (the payload) into a smaller string and then decompress it back into the original text. The models are evaluated on the compression ratio, reflecting how much the text is condensed, and on how accurately the original text is reconstructed. Different types of text documents, including randomly generated strings and diverse text datasets like Wikipedia, tweets, and more, are used as payloads.
+
+# Contribution statement
+Eval design, implementation, and results evaluation were primarily conducted by Chan Jun Shern, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input and project management support. Richard Ngo provided initial inspiration for the idea and iterated on research methodologies.
