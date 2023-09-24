@@ -2,7 +2,9 @@ gpt4facts:
   id: gpt4facts.dev.v0
   description: Evaluate the model's ability to recall and provide accurate facts from a diverse range of topics
   metrics: [accuracy]
-gpt4_facts.dev.v0:
-  class: evals.elsuite.basic.match:Match
+gpt4facts.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
-    samples_jsonl: test_gpt4facts/samples.jsonl
+    samples_jsonl: gpt4facts/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
