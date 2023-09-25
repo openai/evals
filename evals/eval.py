@@ -154,7 +154,10 @@ class Eval(abc.ABC):
         return get_jsonl(samples_path.as_posix())
 
     def _get_samples_path(self) -> Path:
-        if os.path.isfile(self.samples_jsonl):
-            return Path(self.samples_jsonl)
-        else:
-            return self.eval_registry_path / "data" / self.samples_jsonl
+        return self._prefix_registry_path(self.samples_jsonl)
+
+    def _prefix_registry_path(self, data_path: str) -> Path:
+        if os.path.isfile(data_path):
+            return Path(data_path)
+
+        return self.eval_registry_path / "data" / data_path
