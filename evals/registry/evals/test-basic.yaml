@@ -6,6 +6,16 @@ test-match:
 test-match.s1.simple-v0:
   class: evals.elsuite.test.match:TestMatch
 
+test-match-does-not-match:
+  id: test-match.s1.simple-v0
+  description: Example eval that checks sampled text DOES NOT match the expected output.
+  disclaimer: This is an example disclaimer.
+  metrics: [accuracy]
+test-match.s1.simple-v1:
+  class: evals.elsuite.test.match:TestMatch
+  args:
+    does_not_match: True
+
 test-fuzzy-match:
   id: test-fuzzy-match.s1.simple-v0
   description: Example eval that uses fuzzy matching to score completions.

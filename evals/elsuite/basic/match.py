@@ -12,6 +12,7 @@ class Match(evals.Eval):
         completion_fns: list[CompletionFn],
         samples_jsonl: str,
         *args,
+        does_not_match: bool = False,
         max_tokens: int = 500,
         num_few_shot: int = 0,
         few_shot_jsonl: str = None,
@@ -19,6 +20,7 @@ class Match(evals.Eval):
     ):
         super().__init__(completion_fns, *args, **kwargs)
         assert len(completion_fns) == 1, "Match only supports one completion fn"
+        self.does_not_match = does_not_match
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
         self.num_few_shot = num_few_shot
@@ -53,6 +55,7 @@ class Match(evals.Eval):
             prompt=prompt,
             sampled=sampled,
             expected=sample["ideal"],
+            does_not_match=self.does_not_match,
         )
 
     def run(self, recorder):
