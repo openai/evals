@@ -1,6 +1,6 @@
 gpt4facts:
   id: gpt4facts.dev.v0
-  description: Evaluate the model's ability to recall and provide accurate facts from a diverse range of topics
+  description: Evaluate the ability to provide accurate facts about GPT-4
   metrics: [accuracy]
 gpt4facts.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
