@@ -26,7 +26,6 @@ dependencies = [
     "sacrebleu",
     "matplotlib",
     "pytest",
-    "setuptools_scm",
     "langchain",
     "types-PyYAML",
     "spacy-universal-sentence-encoder",
