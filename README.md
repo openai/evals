@@ -4,9 +4,9 @@ Evals is a framework for evaluating LLMs (large language models) or systems buil
 
 We now support evaluating the behavior of any system including prompt chains or tool-using agents, via the [Completion Function Protocol](docs/completion-fns.md).
 
-With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. An "eval" is a task used to evaluate the quality of a system's behavior. To get started, we recommend that you follow these steps:
+With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. An "eval" is a task used to evaluate the quality of a system's behavior.
 
-To get set up with evals, follow the [setup instructions below](README.md#Setup).
+To get set up with evals, follow the [setup instructions below](README.md#Setup). You can also run and create evals using [Weights & Biases](https://wandb.ai/wandb_fc/openai-evals/reports/OpenAI-Evals-Demo-Using-W-B-Prompts-to-Run-Evaluations--Vmlldzo0MTI4ODA3).
 
 #### Running evals
 - Learn how to run existing evals: [run-evals.md](docs/run-evals.md).
