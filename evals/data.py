@@ -59,7 +59,7 @@ def open_by_file_pattern(filename: str, mode: str = "r", **kwargs: Any) -> Any:
             return zstd_open(filename, openhook=open_fn, mode=mode)
         else:
             scheme = urllib.parse.urlparse(filename).scheme
-            if scheme == "" or scheme == "file":
+            if (not os.path.exists(filename)) and (scheme == "" or scheme == "file"):
                 return open_fn(
                     os.path.join(
                         os.path.dirname(os.path.abspath(__file__)),
