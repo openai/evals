@@ -92,7 +92,7 @@ class Registry:
     def __init__(self, registry_paths: Sequence[Union[str, Path]] = DEFAULT_PATHS):
         self._registry_paths = [Path(p) if isinstance(p, str) else p for p in registry_paths]
 
-    def add_registry_paths(self, paths: list[Union[str, Path]]) -> None:
+    def add_registry_paths(self, paths: Sequence[Union[str, Path]]) -> None:
         self._registry_paths.extend([Path(p) if isinstance(p, str) else p for p in paths])
 
     @cached_property

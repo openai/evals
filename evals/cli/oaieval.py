@@ -106,7 +106,7 @@ class OaiEvalArguments(argparse.Namespace):
     user: str
     record_path: Optional[str]
     log_to_file: Optional[str]
-    registry_path: Optional[str]
+    registry_path: list[str]
     debug: bool
     local_run: bool
     http_run: bool
@@ -128,7 +128,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
 
     registry = registry or Registry()
     if args.registry_path:
-        registry.add_registry_paths([args.registry_path])
+        registry.add_registry_paths(args.registry_path)
 
     eval_spec = registry.get_eval(args.eval)
     assert (
