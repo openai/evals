@@ -21,6 +21,7 @@ class ModelBasedClassify(evals.Eval):
         eval_kwargs: Optional[dict[str, Any]] = None,
         multicomp_n: Union[int, str] = 1,
         eval_type: Optional[str] = None,
+        match_fn: Optional[str] = None,
         metaeval: bool = False,
         **kwargs,
     ):
@@ -37,6 +38,7 @@ class ModelBasedClassify(evals.Eval):
         self.metaeval = metaeval
         self.modelgraded_spec_args = modelgraded_spec_args or {}
         self.eval_type = eval_type
+        self.match_fn = match_fn
         if multicomp_n == "from_models":
             assert n_models > 1
             self.multicomp_n = n_models
@@ -85,6 +87,7 @@ class ModelBasedClassify(evals.Eval):
             completion_kwargs=self.eval_kwargs,
             eval_type=self.eval_type,
             n=self.multicomp_n,
+            match_fn=self.match_fn,
             format_kwargs={**completions, **test_sample, **self.modelgraded_spec_args},
         )
         metrics.update(dict(choice=choice, score=info["score"]))

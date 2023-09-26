@@ -96,28 +96,27 @@ class Registry:
     def api_model_ids(self) -> list[str]:
         try:
             return [m["id"] for m in openai.Model.list()["data"]]
-        except openai.error.OpenAIError as err:
+        except openai.error.OpenAIError as err:  # type: ignore
             # Errors can happen when running eval with completion function that uses custom
             # API endpoints and authentication mechanisms.
             logger.warning(f"Could not fetch API model IDs from OpenAI API: {err}")
             return []
 
-    def make_completion_fn(self, name: str) -> CompletionFn:
+    def make_completion_fn(self, name: str, **kwargs) -> CompletionFn:
         """
         Create a CompletionFn. The name can be one of the following formats:
         1. openai-model-id (e.g. "gpt-3.5-turbo")
         2. completion-fn-id (from the registry)
         """
-
         if name == "dummy":
             return DummyCompletionFn()
 
         n_ctx = n_ctx_from_model_name(name)
 
         if is_chat_model(name):
-            return OpenAIChatCompletionFn(model=name, n_ctx=n_ctx)
+            return OpenAIChatCompletionFn(model=name, n_ctx=n_ctx, **kwargs)
         elif name in self.api_model_ids:
-            return OpenAICompletionFn(model=name, n_ctx=n_ctx)
+            return OpenAICompletionFn(model=name, n_ctx=n_ctx, **kwargs)
 
         # No match, so try to find a completion-fn-id in the registry
         spec = self.get_completion_fn(name)
@@ -125,6 +124,7 @@ class Registry:
             raise ValueError(f"Could not find CompletionFn in the registry with ID {name}")
         if spec.args is None:
             spec.args = {}
+        spec.args.update(kwargs)
 
         spec.args["registry"] = self
         instance = make_object(spec.cls)(**spec.args or {})

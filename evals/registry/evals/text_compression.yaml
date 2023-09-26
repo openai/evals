@@ -1,0 +1,40 @@
+text_compression:
+  id: text_compression.scratch
+  description: Tests a model's ability to perform text compression (and decompression).
+  metrics: [compression_ratio, reconstruction_error]
+
+text_compression.copytext:
+  class: evals.elsuite.text_compression.eval:TextCompression
+  args:
+    samples_jsonl: text_compression/samples.jsonl
+    prompt_version: "copytext"
+
+text_compression.abbreviate:
+  class: evals.elsuite.text_compression.eval:TextCompression
+  args:
+    samples_jsonl: text_compression/samples.jsonl
+    prompt_version: "abbreviate"
+
+text_compression.simple:
+  class: evals.elsuite.text_compression.eval:TextCompression
+  args:
+    samples_jsonl: text_compression/samples.jsonl
+    prompt_version: "simple"
+
+text_compression.instructions:
+  class: evals.elsuite.text_compression.eval:TextCompression
+  args:
+    samples_jsonl: text_compression/samples.jsonl
+    prompt_version: "instructions"
+
+text_compression.scratch:
+  class: evals.elsuite.text_compression.eval:TextCompression
+  args:
+    samples_jsonl: text_compression/samples.jsonl
+    prompt_version: "scratch"
+
+text_compression.gzip:
+  class: evals.elsuite.text_compression.eval:TextCompression
+  args:
+    samples_jsonl: text_compression/samples.jsonl
+    prompt_version: "gzip"

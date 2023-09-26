@@ -1,0 +1,59 @@
+schelling_point_rn: 
+  id: schelling_point.rn.dev.v0
+  metrics: [convergence_rate, runtime_error_rate]
+  description: Evaluate coordination abilities
+schelling_point.rn.dev.v0: 
+  class: evals.elsuite.schelling_point.eval:SchellingPoint
+  args: 
+    samples_jsonl: schelling_point/random_numbers_10_3.jsonl
+    n_copies: 2
+    n_samples: 1000
+    temperature: 0.0
+
+schelling_point_rw: 
+  id: schelling_point.rw.dev.v0
+  metrics: [convergence_rate, runtime_error_rate]
+  description: Evaluate coordination abilities
+schelling_point.rw.dev.v0: 
+  class: evals.elsuite.schelling_point.eval:SchellingPoint
+  args: 
+    samples_jsonl: schelling_point/random_words_10.jsonl
+    n_copies: 2
+    n_samples: 1000
+    temperature: 0.0
+
+schelling_point_owt: 
+  id: schelling_point.owt.dev.v0
+  metrics: [convergence_rate, runtime_error_rate]
+  description: Evaluate coordination abilities
+schelling_point.owt.dev.v0: 
+  class: evals.elsuite.schelling_point.eval:SchellingPoint
+  args: 
+    samples_jsonl: schelling_point/owt_5.jsonl
+    n_copies: 2
+    n_samples: 1000
+    temperature: 0.0
+
+schelling_point_wikipedia: 
+  id: schelling_point.wikipedia.dev.v0
+  metrics: [convergence_rate, runtime_error_rate]
+  description: Evaluate coordination abilities
+schelling_point.wikipedia.dev.v0: 
+  class: evals.elsuite.schelling_point.eval:SchellingPoint
+  args: 
+    samples_jsonl: schelling_point/wikipedia_5.jsonl
+    n_copies: 2
+    n_samples: 1000
+    temperature: 0.0
+
+schelling_point_test: 
+  id: schelling_point.test.dev.v0
+  metrics: [convergence_rate, runtime_error_rate]
+  description: Evaluate coordination abilities
+schelling_point.test.dev.v0:
+  class: evals.elsuite.schelling_point.eval:SchellingPoint
+  args: 
+    samples_jsonl: schelling_point/random_numbers_10_3.jsonl
+    n_copies: 2
+    n_samples: 100
+    temperature: 0.0

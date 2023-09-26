@@ -1,6 +1,6 @@
 best:
   prompt: |-
-    Which of the following {n} texts is best response to the following instruction?
+    Which of the following {n} texts is the best response to the following instruction?
 
     Instruction: {input}
 
