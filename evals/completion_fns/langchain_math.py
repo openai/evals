@@ -1,11 +1,7 @@
-import importlib
-from typing import Optional
-
+from langchain import LLMMathChain, OpenAI
 from openai import Completion
+
 from evals.api import CompletionResult
-
-from langchain import OpenAI, LLMMathChain
-
 from evals.prompt.base import CompletionPrompt
 from evals.record import record_sampling
 

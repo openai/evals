@@ -1,7 +1,9 @@
 import itertools
-import random
 import json
-from treys import Card, Evaluator, Deck
+import random
+
+from treys import Card, Deck, Evaluator
+
 
 def randomize_num_players_and_community_cards() -> tuple:
     """Randomly generate the number of players and community cards for a game.
@@ -12,6 +14,7 @@ def randomize_num_players_and_community_cards() -> tuple:
     num_players = random.randint(2, 9)
     num_community_cards = random.choice([3, 4, 5])
     return num_players, num_community_cards
+
 
 def generate_hands(num_players: int, num_community_cards: int) -> tuple:
     """Generate hole cards for each player and community cards.
@@ -35,6 +38,7 @@ def generate_hands(num_players: int, num_community_cards: int) -> tuple:
 
     return hole_cards, community_cards
 
+
 def calculate_probabilities(hole_cards_list: list, community_cards: list) -> list:
     """Calculate the winning and tie probabilities for each player.
 
@@ -55,9 +59,7 @@ def calculate_probabilities(hole_cards_list: list, community_cards: list) -> lis
                 deck.cards.remove(card)
 
     # Generate all possible combinations of the remaining community cards
-    remaining_community_cards = list(
-        itertools.combinations(deck.cards, 5 - len(community_cards))
-    )
+    remaining_community_cards = list(itertools.combinations(deck.cards, 5 - len(community_cards)))
 
     num_combinations = len(remaining_community_cards)
     num_wins = [0] * len(hole_cards_list)
@@ -83,6 +85,7 @@ def calculate_probabilities(hole_cards_list: list, community_cards: list) -> lis
 
     return list(zip(win_probabilities, tie_probabilities))
 
+
 def generate_example(num_players: int = None, num_community_cards: int = None) -> dict:
     """Generate an example of a Texas Hold'em hand with winning probabilities.
 
@@ -105,11 +108,10 @@ def generate_example(num_players: int = None, num_community_cards: int = None) -
     probabilities = calculate_probabilities(hole_cards, community_cards)
 
     highest_probability = max(probabilities, key=lambda x: x[0])
-    winning_player = [
-        i for i, prob in enumerate(probabilities) if prob == highest_probability
-    ][0]
+    winning_player = [i for i, prob in enumerate(probabilities) if prob == highest_probability][0]
 
     return format_example(hole_cards, community_cards, winning_player)
+
 
 def format_example(hole_cards: list, community_cards: list, winning_player: int) -> dict:
     """Format the example as a dictionary with input and ideal output.
@@ -128,9 +130,7 @@ def format_example(hole_cards: list, community_cards: list, winning_player: int)
             for i, cards in enumerate(hole_cards)
         ]
     )
-    community_str = "Community: " + ", ".join(
-        [Card.int_to_str(card) for card in community_cards]
-    )
+    community_str = "Community: " + ", ".join([Card.int_to_str(card) for card in community_cards])
     example = {
         "input": [
             {
@@ -143,8 +143,12 @@ def format_example(hole_cards: list, community_cards: list, winning_player: int)
     }
     return example
 
+
 def save_examples_to_json_file(
-    output_file: str, num_examples: int = 100, num_players: int = None, num_community_cards: int = None
+    output_file: str,
+    num_examples: int = 100,
+    num_players: int = None,
+    num_community_cards: int = None,
 ):
     """Save examples to a JSON Lines file.
 
@@ -154,14 +158,13 @@ def save_examples_to_json_file(
         num_players (int, optional): Number of players in the game. Defaults to None.
         num_community_cards (int, optional): Number of community cards. Defaults to None.
     """
-    examples = [
-        generate_example(num_players, num_community_cards) for _ in range(num_examples)
-    ]
+    examples = [generate_example(num_players, num_community_cards) for _ in range(num_examples)]
 
     with open(output_file, "w") as f:
         for example in examples:
             f.write(json.dumps(example))
             f.write("\n")
+
 
 if __name__ == "__main__":
     # This example generates 100 Texas Hold'em hands with 2 players and 5 community cards
@@ -172,4 +175,3 @@ if __name__ == "__main__":
         num_players=2,
         num_community_cards=5,
     )
-

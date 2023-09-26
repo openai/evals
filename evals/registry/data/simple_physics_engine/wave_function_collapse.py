@@ -263,9 +263,9 @@ def propagate(wave, coords):
             possible_neighbors = get_possible_neighbors_in_direction(wave[curr_x][curr_y], vec)
 
             for other_possibility in other_possibilities:
-                if not other_possibility in possible_neighbors:
+                if other_possibility not in possible_neighbors:
                     wave[other_x][other_y].remove(other_possibility)
-                    if not other_coords in stack:
+                    if other_coords not in stack:
                         stack.append(other_coords)
 
 

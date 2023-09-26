@@ -45,15 +45,15 @@ Module Functions:
 
 import concurrent.futures
 import json
+import os
 import random
 import threading
-import os
+from typing import Dict, List, Tuple, Union
+
+import networkx as nx
+import numpy as np
 from numpy import ndarray
 from tqdm import tqdm
-import numpy as np
-import networkx as nx
-from typing import List, Tuple, Dict, Union
-
 
 # Dictionary mapping relative maze positions to their corresponding move names
 move_map = {(1, 0): "down", (-1, 0): "up", (0, 1): "right", (0, -1): "left"}
@@ -181,7 +181,6 @@ def generate_example_files(
         verbose (bool, optional): Whether to print as threads finish. Defaults to False.
     """
 
-
     def create_example(progress_bar: tqdm) -> ProgressUpdate:
         """
         Create an example maze with a solution and update the progress bar.
@@ -205,16 +204,13 @@ def generate_example_files(
 
         graph = build_graph(maze)
         path = nx.shortest_path(graph, start, end)
-        moves = [
-            move_map[(x2 - x1, y2 - y1)] for (x1, y1), (x2, y2) in zip(path, path[1:])
-        ]
+        moves = [move_map[(x2 - x1, y2 - y1)] for (x1, y1), (x2, y2) in zip(path, path[1:])]
 
         maze[start] = 2
         maze[end] = 3
 
         maze_repr = (
-            "\n".join(["[" + ",".join(str(cell) for cell in row) + "]" for row in maze])
-            + "\n"
+            "\n".join(["[" + ",".join(str(cell) for cell in row) + "]" for row in maze]) + "\n"
         )
 
         single_move_line = create_move_line(maze_repr, moves, first_move_only=True)
@@ -230,9 +226,7 @@ def generate_example_files(
     single_move_filename = os.path.join(
         output_directory, f"{maze_width}x{maze_height}-mazes-singlemove.jsonl"
     )
-    all_moves_filename = os.path.join(
-        output_directory, f"{maze_width}x{maze_height}-mazes.jsonl"
-    )
+    all_moves_filename = os.path.join(output_directory, f"{maze_width}x{maze_height}-mazes.jsonl")
 
     with open(single_move_filename, "w") as single_move_file, open(
         all_moves_filename, "w"
@@ -240,8 +234,7 @@ def generate_example_files(
         with concurrent.futures.ThreadPoolExecutor() as executor:
             with tqdm(total=num_examples) as progress_bar:
                 futures = [
-                    executor.submit(create_example, progress_bar)
-                    for _ in range(num_examples)
+                    executor.submit(create_example, progress_bar) for _ in range(num_examples)
                 ]
 
                 for future in concurrent.futures.as_completed(futures):
@@ -323,14 +316,11 @@ Your Notes and thoughts:
 Your Solution:
 """
 
-
     return {
         "input": [
             {"role": "user", "content": task_description},
         ],
-        "ideal": (f"[{moves[0]}]" if first_move_only else f'{moves}')
-        if moves
-        else "No valid path",
+        "ideal": (f"[{moves[0]}]" if first_move_only else f"{moves}") if moves else "No valid path",
     }
 
 
@@ -344,9 +334,10 @@ def plot_maze(maze: np.ndarray, show=False, save_img=False) -> None:
         save_img (bool): Save the plot as an image if True, default is False.
     """
     import os
+
     import matplotlib.pyplot as plt
-    from matplotlib.patches import Patch
     from matplotlib.colors import ListedColormap
+    from matplotlib.patches import Patch
 
     # Set custom colormap for maze
     path_color = "white"
@@ -364,13 +355,15 @@ def plot_maze(maze: np.ndarray, show=False, save_img=False) -> None:
     ]
 
     plt.imshow(maze, cmap=cmap)
-    plt.legend(handles=legend_elements, bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.legend(handles=legend_elements, bbox_to_anchor=(1.05, 1), loc="upper left")
     if save_img:
         output_folder = "images"
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         height, width = maze.shape
-        file_path = os.path.join(output_folder, f"maze-{height}x{width}-{len(os.listdir(output_folder))}.png")
+        file_path = os.path.join(
+            output_folder, f"maze-{height}x{width}-{len(os.listdir(output_folder))}.png"
+        )
         plt.savefig(file_path)
 
     if show:

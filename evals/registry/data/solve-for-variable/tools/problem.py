@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 
-from solve import EquationGenerator
-from tester import Evaluator
-
 import random
 from sys import exit
 
+from solve import EquationGenerator
+from tester import Evaluator
+
+
 class MistakesGenerator:
-    '''
+    """
     Generate "mistakes" for the EquationGenerator.
 
     Each "mistake" is a vector of True/False, of the same length as "location"
@@ -15,10 +16,10 @@ class MistakesGenerator:
 
     In short, when solving for a variable, this True/False vector
     indicates at which step of the solving process an error is introduced.
-    '''
+    """
 
     def generate(self, location):
-        total_replies = 4   # the right answer, plus "n_variants" wrong answers
+        total_replies = 4  # the right answer, plus "n_variants" wrong answers
         n_variants = total_replies - 1
 
         if len(location) < 2:
@@ -42,11 +43,8 @@ class MistakesGenerator:
             changes = set()
             for n in range(n_variants):
                 for tries in range(n_variants):
-                    n_mistakes = random.randrange(
-                        len(location) >> 1,
-                        len(location) + 1)
-                    change = tuple(random.sample(list(range(len(location))),
-                                                 n_mistakes))
+                    n_mistakes = random.randrange(len(location) >> 1, len(location) + 1)
+                    change = tuple(random.sample(list(range(len(location))), n_mistakes))
                     if change not in changes:
                         changes.add(change)
                         break
@@ -59,16 +57,18 @@ class MistakesGenerator:
 
         return mistakes
 
+
 class ProblemGenerator:
-    '''
+    """
     Generate an equation to solve, plus multiple-choice answers.
-    '''
+    """
+
     def __init__(self):
         self.egen = EquationGenerator()
         self.mgen = MistakesGenerator()
 
     def _generate(self):
-        '''
+        """
         Returns a question and multiple-choice answers.
 
         The question is of the form, "solve this equation for this variable"
@@ -79,7 +79,7 @@ class ProblemGenerator:
         where only one of the answers is correct.
 
         The "variable to solve for" is the left-hand side common to all answers.
-        '''
+        """
         eq, solve_for = self.egen.generate()
 
         locs = list(eq.left.var_location(solve_for))
@@ -88,10 +88,10 @@ class ProblemGenerator:
         assert len(locs) == 1
 
         location = locs[0]
-        assert len(location) > 0, f'Empty location? {location}, eq = {eq}, solve for {solve_for}'
+        assert len(location) > 0, f"Empty location? {location}, eq = {eq}, solve for {solve_for}"
 
         mistakes = self.mgen.generate(location)
-        answers  = []
+        answers = []
 
         # generate a number of wrong answers
 
@@ -99,14 +99,14 @@ class ProblemGenerator:
             c = eq.clone()
             c.solve(location, mistake)
 
-            answers.append( (False, str(c)) )
+            answers.append((False, str(c)))
 
         original_eq = str(eq)
 
         # generate the right answer
 
         eq.solve(location)
-        answers.append( (True, str(eq)) )
+        answers.append((True, str(eq)))
 
         answers = list(set(answers))
 
@@ -114,7 +114,7 @@ class ProblemGenerator:
         return original_eq, answers
 
     def generate(self):
-        '''
+        """
         Generate a question (an equation to solve for some variable),
         plus multiple-choice answers.
 
@@ -138,7 +138,7 @@ class ProblemGenerator:
         is left after these eliminations (there should be at least
         two answers to choose from), the problem is just discarded
         and another one is generated.
-        '''
+        """
         while True:
             eq, answers = self._generate()
 
@@ -160,7 +160,7 @@ class ProblemGenerator:
         correct = None
         for i in range(len(answers)):
             if answers[i][0]:
-                assert correct is None, f'Two correct answers: {correct} and {i+1}'
+                assert correct is None, f"Two correct answers: {correct} and {i+1}"
 
                 correct = i + 1
 
@@ -171,27 +171,28 @@ class ProblemGenerator:
         return eq, answers, correct
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+
     def main():
         pgen = ProblemGenerator()
         eq, answers, correct = pgen.generate()
 
-        prompt = f'If\n  {eq}\nthen which of the following is true?'
+        prompt = f"If\n  {eq}\nthen which of the following is true?"
 
         for i in range(len(answers)):
-            prompt += f'\n  {i + 1}: {answers[i]}'
+            prompt += f"\n  {i + 1}: {answers[i]}"
 
-        prompt += '\nYour reply must consist ONLY of the number corresponding to the correct answer, with no further explanation.'
+        prompt += "\nYour reply must consist ONLY of the number corresponding to the correct answer, with no further explanation."
 
-        print('===')
-        print('Question:')
+        print("===")
+        print("Question:")
         print(prompt)
-        print('---')
-        print('Answer:')
+        print("---")
+        print("Answer:")
         print(correct)
 
     try:
         exit(0 if main() else 1)
     except AssertionError as ex:
-        print('Problem generation:', ex)
+        print("Problem generation:", ex)
         exit(1)

@@ -7,13 +7,14 @@ subword presence, and maximum word count.
 Classes:
     - WordCollectionProcessor: Processes and filters collections of words based on specified criteria.
 """
+from collections import namedtuple
+from typing import Iterator, List, Union
+
 from corpus import Corpus, NltkCorpus
 from related_words import RelatedWords
-from collections import namedtuple
-from typing import List, Union, Iterator
 
-Thresholds = namedtuple('Thresholds', ['lower', 'upper'])
-LengthBounds = namedtuple('LengthBounds', ['lower', 'upper'])
+Thresholds = namedtuple("Thresholds", ["lower", "upper"])
+LengthBounds = namedtuple("LengthBounds", ["lower", "upper"])
 
 
 class WordCollectionProcessor:
@@ -40,8 +41,9 @@ class WordCollectionProcessor:
         tagged_words = self.words.get_pos_tagged_words()
         self.words.words = [word for word, pos in tagged_words if pos in parts_of_speech]
 
-    def frequency_filter(self, thresholds: Thresholds = Thresholds(0, float('inf')),
-                         filter_corpus: Corpus = None) -> None:
+    def frequency_filter(
+        self, thresholds: Thresholds = Thresholds(0, float("inf")), filter_corpus: Corpus = None
+    ) -> None:
         """
         Filters words in the collection by their frequency within the specified thresholds.
 
@@ -54,7 +56,9 @@ class WordCollectionProcessor:
             filter_corpus = NltkCorpus("brown")
         frequency_dist = filter_corpus.get_frequency_distribution()
         lower_bound, upper_bound = thresholds
-        self.words.words = [word for word in self.words if lower_bound <= frequency_dist[word] <= upper_bound]
+        self.words.words = [
+            word for word in self.words if lower_bound <= frequency_dist[word] <= upper_bound
+        ]
 
     def char_length_filter(self, length_bounds: LengthBounds) -> None:
         """
@@ -82,8 +86,7 @@ class WordCollectionProcessor:
         Args:
             max_num_words (int): The maximum number of words allowed per element. Default: 1.
         """
-        words_to_remove = [word for word in self.words
-                           if word.count(" ") > max_num_words - 1]
+        words_to_remove = [word for word in self.words if word.count(" ") > max_num_words - 1]
         self.words.words = [word for word in self.words if word not in words_to_remove]
 
     def __iter__(self) -> Iterator[str]:

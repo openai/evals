@@ -1,6 +1,8 @@
 from typing import Union
+
 from evals.api import CompletionFn, CompletionResult
 from evals.prompt.base import OpenAICreateChatPrompt, OpenAICreatePrompt, Prompt
+
 
 class TestCompletionResult(CompletionResult):
     def __init__(self, completion: str):
