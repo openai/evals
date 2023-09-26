@@ -1,0 +1,10 @@
+ab:
+  id: ab.dev.v0
+  description: Evaluate the ability to provide accurate facts about GPT-4
+  metrics: [accuracy]
+ab.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: ab/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
