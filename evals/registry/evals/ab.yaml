@@ -1,6 +1,6 @@
 ab:
   id: ab.dev.v0
-  description: Evaluate the ability to provide accurate facts about GPT-4
+  description: This evaluation aims to assess the models ability to correctly identify and understand the relationship between two entities, where A is a location in the world and B is a description of that place. The model should be able to accurately interpret the users query about the location (A) and provide a relevant description (B), and vice versa. This evaluation will help in fine-tuning the models understanding of context, relation between entities, and its ability to provide accurate and relevant responses.
   metrics: [accuracy]
 ab.dev.v0:
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
