@@ -43,7 +43,7 @@ def test_eval_sample(
         ("world", ["world"], True),
     ],
 )
-def test_eval_sample(
+def test_eval_sample_2(
     completion: str,
     ideal: list[str],
     expected_match: bool,

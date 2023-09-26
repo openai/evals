@@ -144,7 +144,7 @@ class Registry:
     def _dereference(
         self, name: str, d: RawRegistry, object: str, type: Type[T], **kwargs: dict
     ) -> Optional[T]:
-        if not name in d:
+        if name not in d:
             logger.warning(
                 (
                     f"{object} '{name}' not found. "
@@ -217,7 +217,7 @@ class Registry:
         return base_evals
 
     def get_base_eval(self, name: str) -> Optional[BaseEvalSpec]:
-        if not name in self._evals:
+        if name not in self._evals:
             return None
 
         spec_or_alias = self._evals[name]

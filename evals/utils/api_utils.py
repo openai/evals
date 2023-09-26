@@ -45,7 +45,7 @@ def request_with_timeout(func, *args, timeout=EVALS_THREAD_TIMEOUT, **kwargs):
             try:
                 result = future.result(timeout=timeout)
                 return result
-            except concurrent.futures.TimeoutError as e:
+            except concurrent.futures.TimeoutError:
                 continue
 
 

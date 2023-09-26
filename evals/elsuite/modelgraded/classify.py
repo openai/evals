@@ -119,9 +119,9 @@ class ModelBasedClassify(evals.Eval):
         # record the scores
         scores = [m["score"] for m in all_sample_metrics if m["score"] is not None]
         if scores:
-            record_metrics[f"score"] = sum(scores) / len(scores)
+            record_metrics["score"] = sum(scores) / len(scores)
         metascores = [m["metascore"] for m in all_sample_metrics if "metascore" in m]
         if metascores:
-            record_metrics[f"metascore"] = sum(metascores) / len(metascores)
+            record_metrics["metascore"] = sum(metascores) / len(metascores)
 
         return record_metrics
