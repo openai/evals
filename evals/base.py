@@ -5,6 +5,7 @@ evals and most development work should not require familiarity with this file.
 import base64
 import datetime
 import os
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, Optional, Sequence
 
 if TYPE_CHECKING:
@@ -12,11 +13,13 @@ if TYPE_CHECKING:
 else:
     from pydantic.dataclasses import dataclass
 
+
 @dataclass
 class CompletionFnSpec:
     """
     Specification for a CompletionFn.
     """
+
     cls: str
     args: Optional[Dict[str, Any]] = None
     key: Optional[str] = None
@@ -51,6 +54,7 @@ class EvalSpec:
     """
 
     cls: str
+    registry_path: Path
     args: Optional[Dict[str, Any]] = None
     key: Optional[str] = None
     group: Optional[str] = None

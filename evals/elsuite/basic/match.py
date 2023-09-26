@@ -25,7 +25,7 @@ class Match(evals.Eval):
         if self.num_few_shot > 0:
             assert few_shot_jsonl is not None, "few shot requires few shot sample dataset"
             self.few_shot_jsonl = few_shot_jsonl
-            self.few_shot = evals.get_jsonl(self.few_shot_jsonl)
+            self.few_shot = evals.get_jsonl(self._prefix_registry_path(self.few_shot_jsonl))
 
     def eval_sample(self, sample: Any, *_):
         assert isinstance(sample, dict), "sample must be a dict"

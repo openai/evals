@@ -14,6 +14,7 @@ import evals.api
 import evals.base
 import evals.record
 from evals.eval import Eval
+from evals.record import RecorderBase
 from evals.registry import Registry
 
 logger = logging.getLogger(__name__)
@@ -32,7 +33,12 @@ def get_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("eval", type=str, help="Name of an eval. See registry.")
     parser.add_argument("--extra_eval_params", type=str, default="")
-    parser.add_argument("--completion_args", type=str, default="", help="Specify additional parameters to modify the behavior of the completion_fn during its creation. Parameters should be passed as a comma-separated list of key-value pairs (e.g., 'key1=value1,key2=value2'). This option allows for the dynamic modification of completion_fn settings, including the ability to override default arguments where necessary.")
+    parser.add_argument(
+        "--completion_args",
+        type=str,
+        default="",
+        help="Specify additional parameters to modify the behavior of the completion_fn during its creation. Parameters should be passed as a comma-separated list of key-value pairs (e.g., 'key1=value1,key2=value2'). This option allows for the dynamic modification of completion_fn settings, including the ability to override default arguments where necessary.",
+    )
     parser.add_argument("--max_samples", type=int, default=None)
     parser.add_argument("--cache", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--visible", action=argparse.BooleanOptionalAction, default=None)
@@ -100,7 +106,7 @@ class OaiEvalArguments(argparse.Namespace):
     user: str
     record_path: Optional[str]
     log_to_file: Optional[str]
-    registry_path: Optional[str]
+    registry_path: list[str]
     debug: bool
     local_run: bool
     http_run: bool
@@ -134,7 +140,9 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     additonal_completion_args = {k: v for k, v in (kv.split("=") for kv in completion_args if kv)}
 
     completion_fns = args.completion_fn.split(",")
-    completion_fn_instances = [registry.make_completion_fn(url, **additonal_completion_args) for url in completion_fns]
+    completion_fn_instances = [
+        registry.make_completion_fn(url, **additonal_completion_args) for url in completion_fns
+    ]
 
     run_config = {
         "completion_fns": completion_fns,
@@ -159,43 +167,19 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         run_config=run_config,
         created_by=args.user,
     )
-    if args.record_path is None:
-        record_path = f"/tmp/evallogs/{run_spec.run_id}_{args.completion_fn}_{args.eval}.jsonl"
-    else:
-        record_path = args.record_path
+
+    record_path = (
+        f"/tmp/evallogs/{run_spec.run_id}_{args.completion_fn}_{args.eval}.jsonl"
+        if args.record_path is None
+        else args.record_path
+    )
 
     if args.http_run:
         args.local_run = False
     elif args.local_run:
         args.http_run = False
 
-    recorder: evals.record.RecorderBase
-    recorder_kwargs = []
-    if args.dry_run:
-        recorder_class = evals.record.DummyRecorder
-        recorder_args = {"run_spec": run_spec, "log": args.dry_run_logging}
-    elif args.local_run:
-        recorder_class = evals.record.LocalRecorder
-        recorder_args = {"run_spec": run_spec}
-        recorder_kwargs = [record_path]
-    elif args.http_run:
-        if args.http_run_url is None:
-            raise ValueError("URL must be specified when using http-run mode")
-        recorder_class = evals.record.HttpRecorder
-        recorder_args = {
-            "url": args.http_run_url,
-            "run_spec": run_spec,
-            "batch_size": args.http_batch_size,
-            "fail_percent_threshold": args.http_fail_percent_threshold,
-            "local_fallback_path": record_path,
-        }
-
-    else:
-        recorder_class = evals.record.Recorder
-        recorder_args = {"run_spec": run_spec}
-        recorder_kwargs = [record_path]
-
-    recorder = recorder_class(*recorder_kwargs, **recorder_args)
+    recorder = build_recorder(args, run_spec, record_path)
 
     api_extra_options: dict[str, Any] = {}
     if not args.cache:
@@ -232,6 +216,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         completion_fns=completion_fn_instances,
         seed=args.seed,
         name=eval_name,
+        eval_registry_path=eval_spec.registry_path,
         registry=registry,
         **extra_eval_params,
     )
@@ -245,6 +230,33 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     for key, value in result.items():
         logger.info(f"{key}: {value}")
     return run_spec.run_id
+
+
+def build_recorder(
+    args: OaiEvalArguments, run_spec: evals.base.RunSpec, record_path: str
+) -> RecorderBase:
+    if args.dry_run:
+        return evals.record.DummyRecorder(run_spec=run_spec, log=args.dry_run_logging)
+
+    if args.local_run:
+        return evals.record.LocalRecorder(record_path, run_spec=run_spec)
+
+    if args.http_run:
+        if args.http_run_url is None:
+            raise ValueError("URL must be specified when using http-run mode")
+
+        return evals.record.HttpRecorder(
+            url=args.http_run_url,
+            run_spec=run_spec,
+            batch_size=args.http_batch_size,
+            fail_percent_threshold=args.http_fail_percent_threshold,
+            local_fallback_path=record_path,
+        )
+
+    return evals.record.Recorder(
+        record_path,
+        run_spec=run_spec,
+    )
 
 
 def main() -> None:

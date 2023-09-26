@@ -1,6 +1,9 @@
+from pathlib import Path
 from typing import Any, Type, Union
+
 from mock import patch
 from pytest import mark, raises
+
 from evals.api import DummyCompletionFn
 from evals.elsuite.basic.includes import Includes
 from evals.record import DummyRecorder
@@ -26,6 +29,7 @@ def test_eval_sample(
     eval = Includes(
         completion_fns=[TestCompletionFn(completion)],
         samples_jsonl="",
+        eval_registry_path=Path("."),
         ignore_case=ignore_case,
     )
 
@@ -52,6 +56,7 @@ def test_eval_sample_raises(sample: Any, expected_error: Type):
     eval = Includes(
         completion_fns=[DummyCompletionFn()],
         samples_jsonl="",
+        eval_registry_path=Path("."),
     )
 
     with raises(expected_error):
