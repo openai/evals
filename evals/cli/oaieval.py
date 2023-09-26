@@ -198,11 +198,11 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         def to_number(x: str) -> Union[int, float, str]:
             try:
                 return int(x)
-            except:
+            except (ValueError, TypeError):
                 pass
             try:
                 return float(x)
-            except:
+            except (ValueError, TypeError):
                 pass
             return x
 

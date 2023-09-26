@@ -63,6 +63,10 @@ Optionally, you can install the formatters for pre-committing with:
 pip install -e .[formatters]
 ```
 
+Then run `pre-commit install` to install pre-commit into your git hooks. pre-commit will now run on every commit.
+
+If you want to manually run all pre-commit hooks on a repository, run `pre-commit run --all-files`. To run individual hooks use `pre-commit run <hook_id>`.
+
 ### Running evals
 
 If you don't want to contribute new evals, but simply want to run them locally, you can install the evals package via pip:
