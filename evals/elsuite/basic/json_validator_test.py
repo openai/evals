@@ -1,6 +1,9 @@
+from pathlib import Path
 from typing import Any, Type
+
 from mock import patch
 from pytest import mark, raises
+
 from evals.api import DummyCompletionFn
 from evals.elsuite.basic.json_validator import JsonValidator
 from evals.record import DummyRecorder
@@ -11,7 +14,7 @@ from evals.utils.test import TestCompletionFn
     "completion, expected_match",
     [
         ('{"foo": "bar"}', True),
-        ('notjson', False),
+        ("notjson", False),
     ],
 )
 def test_eval_sample(
@@ -21,6 +24,7 @@ def test_eval_sample(
     eval = JsonValidator(
         completion_fns=[TestCompletionFn(completion)],
         samples_jsonl="",
+        eval_registry_path=Path("."),
     )
 
     recorder = DummyRecorder(None)
@@ -28,9 +32,7 @@ def test_eval_sample(
         recorder, "record_match", wraps=recorder.record_match
     ) as record_match:
         eval.eval_sample(dict(input="Hello"), None)
-        record_match.assert_called_once_with(
-            expected_match, expected=None, picked=completion
-        )
+        record_match.assert_called_once_with(expected_match, expected=None, picked=completion)
 
 
 @mark.parametrize(
@@ -45,6 +47,7 @@ def test_eval_sample_raises(sample: Any, expected_error: Type):
     eval = JsonValidator(
         completion_fns=[DummyCompletionFn()],
         samples_jsonl="",
+        eval_registry_path=Path("."),
     )
 
     with raises(expected_error):

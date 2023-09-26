@@ -1,7 +1,7 @@
 from typing import Any, Optional, Union
+
 from evals.api import CompletionFn, CompletionResult
 from evals.base import CompletionFnSpec
-
 from evals.prompt.base import (
     ChatCompletionPrompt,
     CompletionPrompt,
@@ -100,7 +100,6 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
         api_key: Optional[str] = None,
         n_ctx: Optional[int] = None,
         extra_options: Optional[dict] = {},
-        **kwargs,
     ):
         self.model = model
         self.api_base = api_base

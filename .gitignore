@@ -10,3 +10,5 @@ venv/
 
 # PyCharm folder metadata
 .idea/
+
+build
