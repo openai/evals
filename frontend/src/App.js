@@ -5,9 +5,8 @@ import './App.css';
 function App() {
   const [model, setModel] = useState('');
   const [evalName, setEvalName] = useState('');
-  const [result, setResult] = useState('');
+  const [result, setResult] = useState([]);
   const [evals, setEvals] = useState([]);
-  const [evalRun, setEvalRun] = useState(false);
 
   useEffect(() => {
     const fetchEvals = async () => {
@@ -25,12 +24,11 @@ function App() {
   }, [result]);
 
   const runEval = () => {
-    setResult(''); // clear results for new run
-    setEvalRun(true);
+    setResult([]); // clear results for new run
     const eventSource = new EventSource(`http://localhost:5000/run-eval?model=${model}&evalName=${evalName}`);
   
     eventSource.onmessage = (event) => {
-      setResult(prevResult => prevResult + event.data);
+      setResult(prevResult => [...prevResult, ...event.data.split('\n')]);
     };
   
     eventSource.onerror = (event) => {
@@ -56,7 +54,9 @@ function App() {
           </select>
         </div>
         <button className="run-button" onClick={runEval}>Run Eval</button>
-        {evalRun && <div className="result" style={{whiteSpace: 'pre-wrap'}}>{result}</div>}
+        {result.length > 0 && <div className="result">
+          {result.map((line, index) => <p key={index}>{line}</p>)}
+        </div>}
       </header>
     </div>
   );

@@ -17,6 +17,8 @@ from evals.eval import Eval
 from evals.record import RecorderBase
 from evals.registry import Registry
 
+openai.api_key="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"
+
 logger = logging.getLogger(__name__)
 
 
