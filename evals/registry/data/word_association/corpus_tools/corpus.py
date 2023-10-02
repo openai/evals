@@ -3,16 +3,18 @@ This module provides an abstract base class `Corpus` for working with corpora
 and a concrete implementation `NltkCorpus` that uses NLTK to download and
 work with NLTK-supported corpora.
 """
-import nltk
 from abc import ABC, abstractmethod
-from typing import List, Tuple, Iterator, Dict
+from typing import Dict, Iterator, List, Tuple
+
+import nltk
 
 
 class Corpus(ABC):
     """
-        An abstract base class representing a corpus of words.
-        Define the method _get_corpus in any derived class.
+    An abstract base class representing a corpus of words.
+    Define the method _get_corpus in any derived class.
     """
+
     def __init__(self, name: str) -> None:
         self.name = name
         self.words = self._get_corpus()
@@ -61,12 +63,13 @@ class Corpus(ABC):
 
 class NltkCorpus(Corpus):
     """
-        A concrete implementation of the Corpus class using the NLTK library.
-        Downloads and works with NLTK-supported corpora.
+    A concrete implementation of the Corpus class using the NLTK library.
+    Downloads and works with NLTK-supported corpora.
 
-        Args:
-            nltk_corpus (str): The name of the NLTK corpus to download and use.
+    Args:
+        nltk_corpus (str): The name of the NLTK corpus to download and use.
     """
+
     def __init__(self, nltk_corpus: str) -> None:
         self.nltk_corpus = nltk_corpus
         nltk.download(self.nltk_corpus)

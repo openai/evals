@@ -1,11 +1,12 @@
 import json
 import random
+from typing import Any, Callable, Dict, List, Optional
+
+from corpus import Corpus, NltkCorpus
 from logger_config import logger
-from typing import List, Optional, Callable, Any, Dict
-from corpus import NltkCorpus, Corpus
 from processor import WordCollectionProcessor
 from related_words import DataMuseRelatedWords
-from validators import RelatedWordsPair, SimilarityTuple, EmbeddingsValidator
+from validators import EmbeddingsValidator, RelatedWordsPair, SimilarityTuple
 
 
 class IncludesEvalTemplate:
@@ -36,7 +37,10 @@ class IncludesEvalTemplate:
 
 
 def generate_additional_choices(
-    word_association_pair: RelatedWordsPair, corpus: Corpus, num_choices: int = 5, shuffle_choices: bool = False
+    word_association_pair: RelatedWordsPair,
+    corpus: Corpus,
+    num_choices: int = 5,
+    shuffle_choices: bool = False,
 ) -> List[str]:
     # Create a new list without the target word and related words
     correct_answer = word_association_pair.word
@@ -49,14 +53,16 @@ def generate_additional_choices(
     validator = EmbeddingsValidator(0.75)
     correct_answer_embedding = validator.get_embeddings(correct_answer)[0]
     related_words_embeddings = validator.get_embeddings(word_association_pair.related_words)[0]
-    correct_answer_score = validator.calculate_cosine_similarity(correct_answer_embedding.vector,
-                                                                 related_words_embeddings.vector)
+    correct_answer_score = validator.calculate_cosine_similarity(
+        correct_answer_embedding.vector, related_words_embeddings.vector
+    )
     choices = []
     while len(choices) < num_choices:
         choice = random.sample(new_corpus, 1)[0]
         choice_embedding = validator.get_embeddings(choice)[0]
-        similarity = validator.calculate_cosine_similarity(choice_embedding.vector,
-                                                           related_words_embeddings.vector)
+        similarity = validator.calculate_cosine_similarity(
+            choice_embedding.vector, related_words_embeddings.vector
+        )
         if similarity < correct_answer_score:
             choices.append(choice)
         if not new_corpus:
@@ -157,9 +163,7 @@ def main(
         if len(related_words) >= related_words_length:
             related_words = related_words[:related_words_length]
             logger.info(f"Word: {word}, Related Words: {related_words}")
-            word_association_pairs.append(
-                RelatedWordsPair(word, ", ".join(related_words))
-            )
+            word_association_pairs.append(RelatedWordsPair(word, ", ".join(related_words)))
             # generate the system message for each word association
         else:
             logger.info(
@@ -174,17 +178,11 @@ def main(
         for word_association_pair, similarity, similarity_score in similarities
         if similarity
     ]
-    logger.info(
-        f"Total Sample: {len(word_association_pairs)} Valid Samples: {len(valid_samples)}"
-    )
+    logger.info(f"Total Sample: {len(word_association_pairs)} Valid Samples: {len(valid_samples)}")
     for word_association_pair in valid_samples:
         system_message = generate_word_association_system_message(word_association_pair)
-        user_message = generate_word_association_user_message(
-            word_association_pair, corpus
-        )
-        eval_factory.create_sample(
-            system_message, user_message, word_association_pair.word
-        )
+        user_message = generate_word_association_user_message(word_association_pair, corpus)
+        eval_factory.create_sample(system_message, user_message, word_association_pair.word)
         # If the maximum number of samples have been created, break the loop
         if max_samples != -1 and len(eval_factory.samples) >= max_samples:
             break

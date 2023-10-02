@@ -33,3 +33,12 @@ repos:
           - "--remove-unused-variables"
           - "--remove-all-unused-imports"
         exclude: "evals/__init__.py"
+   
+  # This allows ruff to run and autofix the code
+  # The line length is so high because some of the evals are very long
+  # TODO: fix the evals and then reduce the line length here
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.0.277
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix, --line-length=767]

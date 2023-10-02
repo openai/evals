@@ -1,11 +1,12 @@
-import re
 import os
-import openai
-import numpy as np
-from logger_config import logger
+import re
 from abc import ABC, abstractmethod
-from typing import Union, List, NamedTuple, Tuple, Dict
 from collections.abc import Callable
+from typing import Dict, List, NamedTuple, Tuple, Union
+
+import numpy as np
+import openai
+from logger_config import logger
 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
@@ -30,24 +31,28 @@ ANSWER_PROMPT_TEMPLATE = """\nYour final output should be in the following forma
 
 class Embedding(NamedTuple):
     """A named tuple representing a string and its corresponding embedding."""
+
     string: str
     vector: List[float]
 
 
 class RelatedWordsPair(NamedTuple):
     """A named tuple containing a word and its related words."""
+
     word: str
     related_words: str
 
 
 class EmbeddingPair(NamedTuple):
     """A named tuple representing a pair of related words and their embeddings."""
+
     related_words_pair: RelatedWordsPair
     vectors: Tuple[Embedding]
 
 
 class SimilarityTuple(NamedTuple):
     """A named tuple representing the result of a similarity analysis."""
+
     related_words_pair: RelatedWordsPair
     similar: bool
     similarity_score: float
@@ -55,13 +60,12 @@ class SimilarityTuple(NamedTuple):
 
 class QualityValidator(ABC):
     """Abstract base class for implementing quality validators."""
+
     def __init__(self, target_score: int) -> None:
         self.target_score = target_score
 
     @abstractmethod
-    def validate(
-        self, related_words_pair: List[RelatedWordsPair]
-    ) -> List[SimilarityTuple]:
+    def validate(self, related_words_pair: List[RelatedWordsPair]) -> List[SimilarityTuple]:
         raise NotImplementedError
 
 
@@ -69,6 +73,7 @@ class EmbeddingsValidator(QualityValidator):
     """
     An implementation of QualityValidator that validates the similarity of embeddings for pairs of related words.
     """
+
     def validate(
         self,
         related_words_pairs: List[RelatedWordsPair],
@@ -92,9 +97,7 @@ class EmbeddingsValidator(QualityValidator):
 
         # flatten all strings
         all_strings = [
-            string
-            for pair in related_words_pairs
-            for string in (pair.word, pair.related_words)
+            string for pair in related_words_pairs for string in (pair.word, pair.related_words)
         ]
         logger.debug(f"{all_strings} flattened.")
         # get embeddings
@@ -169,21 +172,19 @@ class EmbeddingsValidator(QualityValidator):
             A list of Embedding namedtuples where each Embedding
             represents the input string and its corresponding vector.
         """
-        response = openai.Embedding.create(
-            model="text-embedding-ada-002", input=emb_input
-        )
+        response = openai.Embedding.create(model="text-embedding-ada-002", input=emb_input)
         logger.debug(f"embeddings response: {response}")
         response_data = response["data"]
         emb_list = [data["embedding"] for data in response_data]
         embeddings = [
-            Embedding(string=string, vector=vector)
-            for string, vector in zip(emb_input, emb_list)
+            Embedding(string=string, vector=vector) for string, vector in zip(emb_input, emb_list)
         ]
         return embeddings
 
 
 class GPTValidator(QualityValidator):
     """Uses the GPT model to validate the similarities between pairs of related words."""
+
     def __init__(
         self, target_score: int, criteria: Dict[str, str] = None, model: str = "gpt-4"
     ) -> None:
@@ -199,9 +200,7 @@ class GPTValidator(QualityValidator):
         self.criteria = criteria
         super().__init__(target_score)
 
-    def validate(
-        self, related_words_pairs: List[RelatedWordsPair]
-    ) -> List[SimilarityTuple]:
+    def validate(self, related_words_pairs: List[RelatedWordsPair]) -> List[SimilarityTuple]:
         """
         Validates a list of related word pairs by comparing the outputs of the GPT model.
 
@@ -221,8 +220,12 @@ class GPTValidator(QualityValidator):
             similarity_tuples.append(similarity_tuple)
         return similarity_tuples
 
-    def get_chat_completion(self, related_words_pair: RelatedWordsPair,
-                            correlation_prompt: str = None, answer_prompt: str = None) -> List[SimilarityTuple]:
+    def get_chat_completion(
+        self,
+        related_words_pair: RelatedWordsPair,
+        correlation_prompt: str = None,
+        answer_prompt: str = None,
+    ) -> List[SimilarityTuple]:
         """
         Uses the GPT model to generate a completion based on a given prompt.
 
@@ -235,15 +238,20 @@ class GPTValidator(QualityValidator):
             The content of the message from the GPT model's response.
         """
         if correlation_prompt is None:
-            correlation_prompt = CORRELATION_PROMPT_TEMPLATE.format(word=related_words_pair.word,
-                                                                    related_words=related_words_pair.related_words)
+            correlation_prompt = CORRELATION_PROMPT_TEMPLATE.format(
+                word=related_words_pair.word, related_words=related_words_pair.related_words
+            )
         if answer_prompt is None:
             answer_prompt = ANSWER_PROMPT_TEMPLATE
         prompt = correlation_prompt + answer_prompt
 
         messages = [{"role": "user", "content": prompt}]
-        logger.debug(f"Getting chat_completion using {self._model}.\nPrompting messages: {messages}")
-        response = openai.ChatCompletion.create(model=self._model, messages=messages, temperature=0.0)
+        logger.debug(
+            f"Getting chat_completion using {self._model}.\nPrompting messages: {messages}"
+        )
+        response = openai.ChatCompletion.create(
+            model=self._model, messages=messages, temperature=0.0
+        )
         logger.debug(f"response_message: {response}")
         response_message = response["choices"][0]["message"]["content"]
         logger.info(f"response_message: {response_message}")
@@ -266,7 +274,9 @@ class GPTValidator(QualityValidator):
             logger.debug(f"response_content: {response_content}, score: {score}")
         except AttributeError:
             score = 0.0
-            logger.warning("Answer not found in response, score set to 0, will autofail validation scoring.")
+            logger.warning(
+                "Answer not found in response, score set to 0, will autofail validation scoring."
+            )
         return score
 
     def set_model(self, model: str) -> None:
@@ -282,8 +292,10 @@ class GPTValidator(QualityValidator):
 
 if __name__ == "__main__":
     # Demonstration of Both Validators
-    related_words_pairs = [RelatedWordsPair("stage", "point, level, present"),
-                           RelatedWordsPair("board", "point, level, present")]
+    related_words_pairs = [
+        RelatedWordsPair("stage", "point, level, present"),
+        RelatedWordsPair("board", "point, level, present"),
+    ]
 
     validator = EmbeddingsValidator(0.75)
     similarity_tuples: SimilarityTuple = validator.validate(related_words_pairs)
@@ -292,4 +304,3 @@ if __name__ == "__main__":
     gpt_validator = GPTValidator(0.75, model="gpt-4")
     similarity_tuples: SimilarityTuple = gpt_validator.validate(related_words_pairs)
     print(similarity_tuples)
-

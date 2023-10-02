@@ -1,0 +1,48 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.select-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.select {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.run-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.result {
+  margin-top: 20px;
+  background-color: #444;
+  color: #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  overflow: auto;
+  text-align: left;
+  font-size: 14px; /* Adjust this value to your liking */
+}

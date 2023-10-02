@@ -19,7 +19,6 @@ from evals.registry import Registry
 
 logger = logging.getLogger(__name__)
 
-
 def _purple(str: str) -> str:
     return f"\033[1;35m{str}\033[0m"
 
@@ -198,11 +197,11 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         def to_number(x: str) -> Union[int, float, str]:
             try:
                 return int(x)
-            except:
+            except (ValueError, TypeError):
                 pass
             try:
                 return float(x)
-            except:
+            except (ValueError, TypeError):
                 pass
             return x
 

@@ -1,8 +1,9 @@
-from tqdm import tqdm
 import json
 import re
-import mwxml
+
 import mwparserfromhell
+import mwxml
+from tqdm import tqdm
 
 dump_path = "dewiktionary-20230520-pages-articles-multistream.xml"
 total_pages = 1215724  # correct value
@@ -10,55 +11,55 @@ total_pages = 1215724  # correct value
 
 # mapping part of speech labels
 pos_mapping = {
-    'adjektiv': 'adjective',
-    'adverb': 'adverb',
-    'antwortpartikel': 'particle',
-    'artikel': 'article',
-    'dekliniertes gerundivum': 'adjective',
-    'demonstrativpronomen': 'pronoun',
-    'erweiterter infinitiv': 'verb',
-    'fokuspartikel': 'particle',
-    'gradpartikel': 'particle',
-    'hilfsverb': 'verb',
-    'indefinitpronomen': 'pronoun',
-    'interjektion': 'interjection',
-    'interrogativadverb': 'adverb',
-    'interrogativpronomen': 'pronoun',
-    'komparativ': 'adjective',
-    'konjugierte form': 'verb',
-    'konjunktion': 'conjunction',
-    'konjunktionaladverb': 'adverb',
-    'lokaladverb': 'adverb',
-    'modaladverb': 'adverb',
-    'modalpartikel': 'particle',
-    'negationspartikel': 'particle',
-    'partikel': 'particle',
-    'partizip i': 'adjective',
-    'partizip ii': 'adjective',
-    'personalpronomen': 'pronoun',
-    'possessivpronomen': 'pronoun',
-    'postposition': 'preposition',
-    'präposition': 'preposition',
-    'pronomen': 'pronoun',
-    'pronominaladverb': 'adverb',
-    'reflexivpronomen': 'pronoun',
-    'relativpronomen': 'pronoun',
-    'reziprokpronomen': 'pronoun',
-    'subjunktion': 'conjunction',
-    'substantiv': 'noun',
-    'superlativ': 'adjective',
-    'temporaladverb': 'adverb',
-    'verb': 'verb',
-    'vergleichspartikel': 'particle',
+    "adjektiv": "adjective",
+    "adverb": "adverb",
+    "antwortpartikel": "particle",
+    "artikel": "article",
+    "dekliniertes gerundivum": "adjective",
+    "demonstrativpronomen": "pronoun",
+    "erweiterter infinitiv": "verb",
+    "fokuspartikel": "particle",
+    "gradpartikel": "particle",
+    "hilfsverb": "verb",
+    "indefinitpronomen": "pronoun",
+    "interjektion": "interjection",
+    "interrogativadverb": "adverb",
+    "interrogativpronomen": "pronoun",
+    "komparativ": "adjective",
+    "konjugierte form": "verb",
+    "konjunktion": "conjunction",
+    "konjunktionaladverb": "adverb",
+    "lokaladverb": "adverb",
+    "modaladverb": "adverb",
+    "modalpartikel": "particle",
+    "negationspartikel": "particle",
+    "partikel": "particle",
+    "partizip i": "adjective",
+    "partizip ii": "adjective",
+    "personalpronomen": "pronoun",
+    "possessivpronomen": "pronoun",
+    "postposition": "preposition",
+    "präposition": "preposition",
+    "pronomen": "pronoun",
+    "pronominaladverb": "adverb",
+    "reflexivpronomen": "pronoun",
+    "relativpronomen": "pronoun",
+    "reziprokpronomen": "pronoun",
+    "subjunktion": "conjunction",
+    "substantiv": "noun",
+    "superlativ": "adjective",
+    "temporaladverb": "adverb",
+    "verb": "verb",
+    "vergleichspartikel": "particle",
 }
 possible_pos = sorted(list(set(pos_mapping.values())))
 print(possible_pos)
 inflection_mapping = {
-    'dekliniertes gerundivum': True,
-    'erweiterter infinitiv': True,
-    'konjugierte form': True,
-    'partizip i': True,
-    'partizip ii': True
+    "dekliniertes gerundivum": True,
+    "erweiterter infinitiv": True,
+    "konjugierte form": True,
+    "partizip i": True,
+    "partizip ii": True,
 }
 
 # 'deklinierte form',
@@ -66,12 +67,18 @@ inflection_mapping = {
 
 # iterate over all pages in the dump and print the title
 all_words = {}
-pages = mwxml.Dump.from_file(open(dump_path, 'rb')).pages
+pages = mwxml.Dump.from_file(open(dump_path, "rb")).pages
 count = 0
 for page in tqdm(pages, total=total_pages):
     count += 1
     # Skip titles with one of these characters: " ", "’", "'", "-", "."
-    if " " in page.title or "’" in page.title or "'" in page.title or "-" in page.title or "." in page.title:
+    if (
+        " " in page.title
+        or "’" in page.title
+        or "'" in page.title
+        or "-" in page.title
+        or "." in page.title
+    ):
         continue
     if not any(char.isalpha() for char in page.title):
         continue
@@ -120,7 +127,8 @@ for page in tqdm(pages, total=total_pages):
                     reg = r"\{\{Wortart\|%s\|Deutsch\}\}" % part_of_speech
                     part_of_speech = []
                     section = de_section.get_sections(
-                        matches=lambda x: re.search(reg, str(x), re.IGNORECASE))
+                        matches=lambda x: re.search(reg, str(x), re.IGNORECASE)
+                    )
                     if len(section) == 0:
                         is_inflection = False
                         please_skip = True
@@ -128,17 +136,38 @@ for page in tqdm(pages, total=total_pages):
                         s = str(section[0])
                         s = re.sub(r"\{\{.*?\}\}", "", s, flags=re.DOTALL)
                         for a in allowed:
-                            if ((a == "adjective" and re.search(r"adjektiv", s, re.IGNORECASE)) or
-                                (a == "adverb" and re.search(r"adverb", s, re.IGNORECASE)) or
-                                (a == "noun" and re.search(r"substantiv|nomen", s, re.IGNORECASE)) or
-                                (a == "article" and re.search(r"artikel", s, re.IGNORECASE)) or
-                                    (a == "pronoun" and re.search(r"pronom", s, re.IGNORECASE))):
+                            if (
+                                (a == "adjective" and re.search(r"adjektiv", s, re.IGNORECASE))
+                                or (a == "adverb" and re.search(r"adverb", s, re.IGNORECASE))
+                                or (
+                                    a == "noun" and re.search(r"substantiv|nomen", s, re.IGNORECASE)
+                                )
+                                or (a == "article" and re.search(r"artikel", s, re.IGNORECASE))
+                                or (a == "pronoun" and re.search(r"pronom", s, re.IGNORECASE))
+                            ):
                                 part_of_speech.append(a)
-                            if ((a == "adjective" and re.search(r"adjektiv", page.title, re.IGNORECASE)) or
-                                (a == "adverb" and re.search(r"adverb", page.title, re.IGNORECASE)) or
-                                (a == "noun" and re.search(r"substantiv|nomen", page.title, re.IGNORECASE)) or
-                                (a == "article" and re.search(r"artikel", page.title, re.IGNORECASE)) or
-                                    (a == "pronoun" and re.search(r"pronom", page.title, re.IGNORECASE))):
+                            if (
+                                (
+                                    a == "adjective"
+                                    and re.search(r"adjektiv", page.title, re.IGNORECASE)
+                                )
+                                or (
+                                    a == "adverb"
+                                    and re.search(r"adverb", page.title, re.IGNORECASE)
+                                )
+                                or (
+                                    a == "noun"
+                                    and re.search(r"substantiv|nomen", page.title, re.IGNORECASE)
+                                )
+                                or (
+                                    a == "article"
+                                    and re.search(r"artikel", page.title, re.IGNORECASE)
+                                )
+                                or (
+                                    a == "pronoun"
+                                    and re.search(r"pronom", page.title, re.IGNORECASE)
+                                )
+                            ):
                                 please_skip = True
 
                 # Part of speech needs to be an array
@@ -154,15 +183,13 @@ for page in tqdm(pages, total=total_pages):
 
     # Create one string of the sorted parts of speech, using _i if it is a inflection
     # Example: noun_verb_f
-    pos_string = "_".join([pos + ("_i" if parts_of_speech[pos] else "")
-                          for pos in sorted(parts_of_speech.keys())])
+    pos_string = "_".join(
+        [pos + ("_i" if parts_of_speech[pos] else "") for pos in sorted(parts_of_speech.keys())]
+    )
     if pos_string == "":
         continue
     if pos_string not in all_words:
-        all_words[pos_string] = {
-            "pos": parts_of_speech,
-            "words": []
-        }
+        all_words[pos_string] = {"pos": parts_of_speech, "words": []}
     all_words[pos_string]["words"].append(page.title)
 
     if count > total_pages:

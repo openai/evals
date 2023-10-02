@@ -9,6 +9,7 @@ def test_n_ctx_from_model_name():
     assert n_ctx_from_model_name("gpt-4-32k-0314") == 32768
     assert n_ctx_from_model_name("gpt-4-32k-0613") == 32768
 
+
 def test_is_chat_model():
     assert is_chat_model("gpt-3.5-turbo")
     assert is_chat_model("gpt-3.5-turbo-0314")
