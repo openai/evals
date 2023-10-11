@@ -1,6 +1,9 @@
+from pathlib import Path
 from typing import Any, Type
+
 from mock import patch
 from pytest import mark, raises
+
 from evals.api import DummyCompletionFn
 from evals.elsuite.basic.match import Match
 from evals.record import DummyRecorder
@@ -21,6 +24,7 @@ def test_eval_sample(
     eval = Match(
         completion_fns=[TestCompletionFn(completion)],
         samples_jsonl="",
+        eval_registry_path=Path("."),
     )
 
     recorder = DummyRecorder(None)
@@ -39,7 +43,7 @@ def test_eval_sample(
         ("world", ["world"], True),
     ],
 )
-def test_eval_sample(
+def test_eval_sample_2(
     completion: str,
     ideal: list[str],
     expected_match: bool,
@@ -47,6 +51,7 @@ def test_eval_sample(
     eval = Match(
         completion_fns=[TestCompletionFn(completion)],
         samples_jsonl="",
+        eval_registry_path=Path("."),
     )
 
     recorder = DummyRecorder(None)
@@ -72,6 +77,7 @@ def test_eval_sample_raises(sample: Any, expected_error: Type):
     eval = Match(
         completion_fns=[DummyCompletionFn()],
         samples_jsonl="",
+        eval_registry_path=Path("."),
     )
 
     with raises(expected_error):

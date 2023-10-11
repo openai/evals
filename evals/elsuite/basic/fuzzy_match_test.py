@@ -1,6 +1,9 @@
+from pathlib import Path
 from typing import Any, Type
+
 from mock import patch
 from pytest import mark, raises
+
 from evals.api import DummyCompletionFn
 from evals.elsuite.basic.fuzzy_match import FuzzyMatch
 from evals.record import DummyRecorder
@@ -23,6 +26,7 @@ def test_eval_sample(
     eval = FuzzyMatch(
         completion_fns=[TestCompletionFn(completion)],
         samples_jsonl="",
+        eval_registry_path=Path("."),
     )
 
     recorder = DummyRecorder(None)
@@ -46,6 +50,7 @@ def test_eval_sample_raises(sample: Any, expected_error: Type):
     eval = FuzzyMatch(
         completion_fns=[DummyCompletionFn()],
         samples_jsonl="",
+        eval_registry_path=Path("."),
     )
 
     with raises(expected_error):

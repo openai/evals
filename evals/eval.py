@@ -7,6 +7,7 @@ import logging
 import os
 import random
 from multiprocessing.pool import ThreadPool
+from pathlib import Path
 from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple
 
 from tqdm import tqdm
@@ -53,6 +54,7 @@ class Eval(abc.ABC):
     def __init__(
         self,
         completion_fns: list[CompletionFn],
+        eval_registry_path: Path,
         seed: int = 20220722,
         name: str = "no_name_eval.default",
         registry: Optional[Registry] = None,
@@ -63,6 +65,7 @@ class Eval(abc.ABC):
             raise ValueError(f"Eval name must at least have <base_eval>.<split>. Got name {name}")
 
         self.completion_fns = completion_fns
+        self.eval_registry_path = eval_registry_path
         self.seed = seed
         self.name = name
         self.registry = registry or Registry()
@@ -133,7 +136,7 @@ class Eval(abc.ABC):
 
         with ThreadPool(threads) as pool:
             if os.environ.get("EVALS_SEQUENTIAL", "0") in {"1", "true", "yes"}:
-                logger.info(f"Running in sequential mode!")
+                logger.info("Running in sequential mode!")
                 iter = map(eval_sample, work_items)
             else:
                 logger.info(f"Running in threaded mode with {threads} threads!")
@@ -147,4 +150,14 @@ class Eval(abc.ABC):
                 "To use `get_samples`, you must provide a `samples_jsonl` path." "Got `None`."
             )
 
-        return get_jsonl(self.samples_jsonl)
+        samples_path = self._get_samples_path()
+        return get_jsonl(samples_path.as_posix())
+
+    def _get_samples_path(self) -> Path:
+        return self._prefix_registry_path(self.samples_jsonl)
+
+    def _prefix_registry_path(self, data_path: str) -> Path:
+        if os.path.isfile(data_path):
+            return Path(data_path)
+
+        return self.eval_registry_path / "data" / data_path

@@ -1,8 +1,10 @@
+from datasets import load_dataset
+
 import evals
 import evals.metrics
 from evals.api import CompletionFn
 from evals.record import RecorderBase
-from datasets import load_dataset
+
 
 class Lambada(evals.Eval):
     def __init__(
@@ -36,7 +38,6 @@ class Lambada(evals.Eval):
             sampled=sampled,
             expected=a,
         )
-
 
     def run(self, recorder: RecorderBase):
         samples = load_dataset("EleutherAI/lambada_openai", self.subset, split="test")
