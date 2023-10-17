@@ -48,9 +48,10 @@ class Includes(evals.Eval):
         )
 
         if self.use_exclusions:
+            exclusions = sample["exclude"]
             
             # if any exclude_item is present, this makes the answer False, regardless of presence of any/all include items
-            if any(exclude_item in sampled for exclude_item in self.exclude):
+            if any(exclude_item in sampled for exclude_item in exclusions):
                 includes_answer = False
             
             excluded_item_found = True
