@@ -87,7 +87,7 @@ def get_parser() -> argparse.ArgumentParser:
         "--http-fail-percent-threshold",
         type=int,
         default=5,
-        help="The acceptable percentage threshold of HTTP requests that can fail. Default is 5, meaning 5% of total HTTP requests can fail without causing any issues. If the failure rate goes beyond this threshold, suitable action should be taken or the process will be deemed as failing, but still stored locally.",
+        help="The acceptable percentage threshold of HTTP requests that can fail. Default is 5, meaning 5%% of total HTTP requests can fail without causing any issues. If the failure rate goes beyond this threshold, suitable action should be taken or the process will be deemed as failing, but still stored locally.",
     )
 
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
