@@ -8,7 +8,7 @@ In cases where the desired model response has very little variation, such as ans
 
 For a model completion `a` and a reference list of correct answers `B`, the following evals implement:
 - [`basic/match.py:Match`](../evals/elsuite/basic/match.py): `any([a.startswith(b) for b in B])`
-- [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(b in a) for b in B])` (though note that you can modify this to return `False` if any excluded term is present, even if an expected term is present too - specifically, by including `use_exclusions: True` in your YAML and by including an `"exclude"` key in your sample; see [`hanabi_clues`](../evals/registry/evals/hanabi_clues.yaml) for a particular example)
+- [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(b in a) for b in B])`
 - [`basic/fuzzy_match.py:FuzzyMatch`](../evals/elsuite/basic/fuzzy_match.py): `any([(a in b or b in a) for b in B])`
 
 Which eval template you use will depend on your use case. It is always recommended that you inspect the completions from your model, as this will help you determine how and whether to tweak your prompt (or your reference answers) and pick your eval template. Academic benchmarks oftentimes fit the mold of these basic evals, and we have implemented several end-to-end examples of academic evals as Jupyter notebooks in the `examples` folder.
