@@ -19,9 +19,9 @@ from evals.utils.test import TestCompletionFn
         ("world", ["foo", "bar"], False, False, False, None),
         ("world", ["worldfoo", "worldbar"], False, False, False, None),
         # test for exclusions: does including an excludable word lead to False match, on what would otherwise be True match?
-        ("world exclusion", "world", False, False, True, ["exlusion", "excluded"]),
+        ("world exclusion", "world", False, False, True, ["exclusion", "excluded"]),
         # change the 2nd word in completion from an excluded word, to make sure this would be true otherwise
-        ("world okay", "world", True, False, True, ["exlusion", "excluded"]),
+        ("world okay", "world", True, False, True, ["exclusion", "excluded"]),
     ],
 )
 def test_eval_sample(
