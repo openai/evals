@@ -7,6 +7,10 @@ from evals.prompt.base import is_chat_prompt
 
 
 class Match(evals.Eval):
+    """
+    For a model completion `a` and a reference list of correct answers `B`, the following eval 
+    implements `any([a.startswith(b) for b in B])`, as mentioned in `eval-templates.md`.
+    """
     def __init__(
         self,
         completion_fns: list[CompletionFn],
