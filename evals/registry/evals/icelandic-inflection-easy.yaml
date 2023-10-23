@@ -1,0 +1,9 @@
+icelandic-inflection-easy:
+  id: icelandic-inflection-easy.dev.v0
+  description: Test the model's ability to correctly inflect Icelandic noun phrases (easiest category)
+  metrics: [accuracy]
+
+icelandic-inflection-easy.dev.v0:
+  class: evals.elsuite.basic.json_match:JsonMatch
+  args:
+    samples_jsonl: icelandic-inflection-easy/samples.jsonl
