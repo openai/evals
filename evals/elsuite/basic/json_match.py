@@ -27,11 +27,10 @@ def json_match(sampled_json: Any, correct_json: Any) -> bool:
         if isinstance(correct_json, list):
             slist = cast(List[Any], sampled_json)
             clist = cast(List[Any], correct_json)
-            try:
-                return all(json_match(s, c) for s, c in zip(slist, clist, strict=True))
-            except ValueError:
-                # One of the lists is longer than the other
+            if len(slist) != len(clist):
+                # Lists must have the same length
                 return False
+            return all(json_match(s, c) for s, c in zip(slist, clist))
         else:
             return False
     # Not a structured item: do a direct comparison
