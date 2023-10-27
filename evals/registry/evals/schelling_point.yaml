@@ -1,3 +1,15 @@
+schelling_point: 
+  id: schelling_point.dev.v0
+  metrics: [convergence_rate, runtime_error_rate]
+  description: Evaluate coordination abilities
+schelling_point.dev.v0:
+  class: evals.elsuite.schelling_point.eval:SchellingPoint
+  args: 
+    samples_jsonl: schelling_point/mix.jsonl
+    n_copies: 2
+    n_samples: 4000
+    temperature: 0.0
+    
 schelling_point_rn: 
   id: schelling_point.rn.dev.v0
   metrics: [convergence_rate, runtime_error_rate]
