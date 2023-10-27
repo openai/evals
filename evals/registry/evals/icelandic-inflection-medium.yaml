@@ -1,0 +1,9 @@
+icelandic-inflection-medium:
+  id: icelandic-inflection-medium.dev.v0
+  description: Test the model's ability to correctly inflect Icelandic noun phrases (medium category)
+  metrics: [accuracy]
+
+icelandic-inflection-medium.dev.v0:
+  class: evals.elsuite.basic.json_match:JsonMatch
+  args:
+    samples_jsonl: icelandic-inflection-medium/samples.jsonl

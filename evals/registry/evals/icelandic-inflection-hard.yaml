@@ -1,0 +1,9 @@
+icelandic-inflection-hard:
+  id: icelandic-inflection-hard.dev.v0
+  description: Test the model's ability to correctly inflect Icelandic noun phrases (hard category)
+  metrics: [accuracy]
+
+icelandic-inflection-hard.dev.v0:
+  class: evals.elsuite.basic.json_match:JsonMatch
+  args:
+    samples_jsonl: icelandic-inflection-hard/samples.jsonl
