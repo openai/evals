@@ -1,0 +1,9 @@
+belarusian-antonyms:
+  id: belarusian-antonyms.dev.v0
+  description: Test the model's ability to classify if the Belarusian words are antonyms or not. 
+  metrics: [accuracy]
+
+belarusian-antonyms.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: belarusian_antonyms/samples.jsonl
