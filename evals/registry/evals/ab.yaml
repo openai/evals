@@ -1,0 +1,10 @@
+ab:
+  id: ab.dev.v0
+  description: This evaluation aims to assess the model's ability to correctly identify and understand the relationship between two entities, where A is a specific entity (which could be a chemical element, a painting, a bird species, a star, a mountain, a novel, a river, or a musical instrument) and B is a unique characteristic or fact about that entity. The model should be able to accurately interpret the user's query about the entity (A) and provide a relevant fact (B), and vice versa. This evaluation will help in fine-tuning the model's understanding of context, relation between entities, and its ability to provide accurate and relevant responses. The entities and their characteristics have been chosen to be specific and challenging.
+  metrics: [accuracy]
+ab.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: ab/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
