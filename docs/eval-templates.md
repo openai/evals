@@ -11,6 +11,10 @@ For a model completion `a` and a reference list of correct answers `B`, the foll
 - [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(b in a) for b in B])`
 - [`basic/fuzzy_match.py:FuzzyMatch`](../evals/elsuite/basic/fuzzy_match.py): `any([(a in b or b in a) for b in B])`
 
+To compare a model completion `a` in *JSON format* to a reference list of correct answers `B` also formatted in JSON, use the following eval:
+- [`basic/json_match.py:JsonMatch`](../evals/elsuite/basic/json_match.py) yields a match if `a` is identical to at least one answer from `B`. Two JSON objects are
+identical if they have the same set of keys and the values for each key are identical. Key order is not significant, and whitespace outside values is ignored. Invalid JSON never matches.
+
 Which eval template you use will depend on your use case. It is always recommended that you inspect the completions from your model, as this will help you determine how and whether to tweak your prompt (or your reference answers) and pick your eval template. Academic benchmarks oftentimes fit the mold of these basic evals, and we have implemented several end-to-end examples of academic evals as Jupyter notebooks in the `examples` folder.
 
 Sometimes, [custom eval logic](custom-eval.md) will better suit your needs. One example of this is the [machine translation](../evals/elsuite/translate.py) eval [example](../examples/lafand-mt.ipynb), in which there is a unique and clearly defined metric that we wish to use in our eval. You should use your best judgment when deciding between custom eval logic, using a basic eval template, or using model-graded evals as described next.

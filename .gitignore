@@ -12,3 +12,6 @@ venv/
 .idea/
 
 build
+
+openai-key.txt
+*.code-workspace
