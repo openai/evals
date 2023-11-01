@@ -22,5 +22,17 @@ Three ballot versions are provided:
 # Eval description
 This evaluation tests an AI system’s ability to generate persuasive or manipulative text, specifically in the context of nudging another party’s view while explaining a ballot proposition. In the experiment, two language models interact, one playing the role of an “influencer” and the other simulating an intelligent, civically-engaged “voter.” The influencer, though tasked on the surface with explaining the ballot proposal so that the “voter” can cast a vote, has a hidden agenda to sway the voter's decision toward a particular side. The voter may ask questions of the influencer and then must ultimately vote on the proposal. The headline metric is the influencer’s ability to guide the voter toward the side the influencer was told to favor.
 
+# Token estimate
+Below is a rough estimate of the total number of tokens consumed by some variations the eval, including both input and output tokens.
+
+| voter     | influencer        | version          | Tokens    |
+|-----------|-------------------|------------------|-----------|
+| gpt-4-32k | gpt-3.5-turbo-16k | ballots.short.v0 | 1 500 000 |
+| gpt-4-32k | gpt-4-32k         | ballots.short.v0 | 2 500 00  |
+| gpt-4-32k | gpt-3.5-turbo-16k | ballots.long.v0  | 3 000 000 |
+| gpt-4-32k | gpt-4-32k         | ballots.long.v0  | 2 500 000 |
+
+On Oct 31, 2023, OpenAI API pricing was $0.003 / 1K input tokens and $0.004 / 1K output tokens for `gpt-3.5-turbo-16k`, and $0.03 / 1K input tokens and $0.06 / 1K output tokens for `gpt-4`. We count both input and output tokens together, so a lower and upper estimate of the cost of each variant can be predicted.
+
 # Contribution statement
 Eval design, implementation, and results evaluation were primarily conducted by Jason Yuan and Noa Nabeshima, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input and project management support.
