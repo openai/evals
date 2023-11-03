@@ -17,6 +17,8 @@ from evals.api import CompletionFn
 from .data import get_jsonl
 from .record import RecorderBase
 from .registry import Registry
+from .solvers.solver import Solver
+from .solvers.utils import maybe_wrap_with_solver
 
 logger = logging.getLogger(__name__)
 
@@ -161,3 +163,93 @@ class Eval(abc.ABC):
             return Path(data_path)
 
         return self.eval_registry_path / "data" / data_path
+
+
+class SolverEval(Eval):
+    """
+    Compared to Eval, SolverEval supports a single completion_fn which must be
+    a `Solver` type (see solvers/solver.py). The Solver is what we evaluate,
+    and Eval code should interact with the Solver instead of the CompletionFn
+    directly. A new Solver is created for each sample, and the Solver is passed
+    to eval_sample. This allows Solvers to be stateful (e.g. have a memory)
+    without interfering with other samples.
+
+    Otherwise, this is the same as Eval and requires the same methods to be
+    implemented:
+    `eval_sample`: Takes in a Solver, a test sample, and a random number
+        generator and records the metrics of interest.
+    `run`: Takes in a recorder and runs the evaluation. Generally, most `run`
+        methods will follow this same pattern: loading the data, calling
+        `eval_all_samples`, and aggregating the recorded results.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        assert (
+            len(self.completion_fns) == 1
+        ), f"{type(self).__name__} supports exactly one completion_fn, got {len(self.completion_fns)}."
+        # Technically, instead of arg `completion_fns: list[CompletionFn]` we
+        # should just have `solver: Solver` but we keep the args unchanged for
+        # compatibility with the existing codebase.
+        self._solver = maybe_wrap_with_solver(self.completion_fns[0])
+
+    @abc.abstractmethod
+    def eval_sample(self, solver: Solver, sample: Any, rng: random.Random) -> None:
+        raise NotImplementedError()
+
+    def eval_all_samples(
+        self,
+        recorder: RecorderBase,
+        samples,
+        show_progress=True,
+        **_kwargs: Any,
+    ):
+        """
+        Evaluate all provided samples in parallel.
+        """
+        work_items = _index_samples(samples)
+        threads = int(os.environ.get("EVALS_THREADS", "10"))
+        show_progress = bool(os.environ.get("EVALS_SHOW_EVAL_PROGRESS", show_progress))
+
+        def eval_sample(args):
+            """
+            Evaluate a single sample.
+            """
+            sample, idx = args
+            base_name, split = self.name.split(".")[0:2]
+            sample_id = f"{base_name}.{split}.{idx}"
+            with recorder.as_default_recorder(sample_id):
+                seed = f"{sample_id}:{self.seed}".encode("utf-8")
+                rng = random.Random(seed)
+
+                per_sample_solver = self._solver.copy()
+                return idx, self.eval_sample(per_sample_solver, sample, rng)
+
+        with ThreadPool(threads) as pool:
+            if os.environ.get("EVALS_SEQUENTIAL", "0") in {"1", "true", "yes"}:
+                logger.info("Running in sequential mode!")
+                iter = map(eval_sample, work_items)
+            else:
+                logger.info(f"Running in threaded mode with {threads} threads!")
+                iter = pool.imap_unordered(eval_sample, work_items)
+
+            idx_and_result = []
+            try:
+                for result in tqdm(iter, total=len(work_items), disable=not show_progress):
+                    idx_and_result.append(result)
+            except KeyboardInterrupt:
+                # "Gentle interrupt" allows us to stop early and still get results
+                gentle_interrupt = os.environ.get("EVALS_GENTLE_INTERRUPT", "0") in {
+                    "1",
+                    "true",
+                    "yes",
+                }
+                if gentle_interrupt:
+                    logger.info("Evaluation stopped because of KeyboardInterrupt")
+                    logger.info(
+                        f"Report will be based on {len(idx_and_result)} out of the planned {len(work_items)} samples"
+                    )
+                else:
+                    raise
+
+        return [r for _, r in sorted(idx_and_result)]
