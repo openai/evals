@@ -44,11 +44,13 @@ def zstd_open(filename: str, mode: str = "rb", openhook: Any = open) -> pyzstd.Z
     return pyzstd.ZstdFile(openhook(filename, mode), mode=mode)
 
 
-def open_by_file_pattern(filename: str, mode: str = "r", **kwargs: Any) -> Any:
+def open_by_file_pattern(filename: Union[Path, str], mode: str = "r", **kwargs: Any) -> Any:
     """Can read/write to files on gcs/local with or without gzipping. If file
     is stored on gcs, streams with blobfile. Otherwise use vanilla python open. If
     filename endswith gz, then zip/unzip contents on the fly (note that gcs paths and
     gzip are compatible)"""
+    if type(filename) != str:
+        filename = str(filename)
     open_fn = partial(bf.BlobFile, **kwargs)
     try:
         if filename.endswith(".gz"):
@@ -75,7 +77,9 @@ def open_by_file_pattern(filename: str, mode: str = "r", **kwargs: Any) -> Any:
         raise RuntimeError(f"Failed to open: {filename}") from e
 
 
-def _decode_json(line, path, line_number):
+def _decode_json(line, path: Union[Path, str], line_number):
+    if type(path) != str:
+        path = str(path)
     try:
         return json.loads(line)
     except json.JSONDecodeError as e:
@@ -86,40 +90,50 @@ def _decode_json(line, path, line_number):
         raise ValueError(custom_error_message) from None
 
 
-def _get_jsonl_file(path):
+def _get_jsonl_file(path: Union[Path, str]):
+    if type(path) != str:
+        path = str(path)
     logger.info(f"Fetching {path}")
     with open_by_file_pattern(path, mode="r") as f:
         return [_decode_json(line, path, i + 1) for i, line in enumerate(f)]
 
 
-def _get_json_file(path):
+def _get_json_file(path: Union[Path, str]):
+    if type(path) != str:
+        path = str(path)
     logger.info(f"Fetching {path}")
     with open_by_file_pattern(path, mode="r") as f:
         return json.loads(f.read())
 
 
-def _stream_jsonl_file(path) -> Iterator:
+def _stream_jsonl_file(path: Union[Path, str]) -> Iterator:
+    if type(path) != str:
+        path = str(path)
     logger.info(f"Streaming {path}")
     with bf.BlobFile(path, "r", streaming=True) as f:
         for line in f:
             yield json.loads(line)
 
 
-def get_lines(path) -> list[dict]:
+def get_lines(path: Union[Path, str]) -> list[dict]:
     """
     Get a list of lines from a file.
     """
+    if type(path) != str:
+        path = str(path)
     with open_by_file_pattern(path, mode="r") as f:
         return f.readlines()
 
 
-def get_jsonl(path: str) -> list[dict]:
+def get_jsonl(path: Union[Path, str]) -> list[dict]:
     """
     Extract json lines from the given path.
     If the path is a directory, look in subpaths recursively.
 
     Return all lines from all jsonl files as a single list.
     """
+    if type(path) != str:
+        path = str(path)
     if bf.isdir(path):
         result = []
         for filename in bf.listdir(path):
@@ -129,17 +143,20 @@ def get_jsonl(path: str) -> list[dict]:
     return _get_jsonl_file(path)
 
 
-def get_jsonls(paths: Sequence[str], line_limit=None) -> list[dict]:
+def get_jsonls(paths: Sequence[Union[Path, str]], line_limit=None) -> list[dict]:
+    paths = list(map(lambda x: str(x), paths))
     return list(iter_jsonls(paths, line_limit))
 
 
-def get_json(path) -> dict:
+def get_json(path: Union[Path, str]) -> dict:
+    if type(path) != str:
+        path = str(path)
     if bf.isdir(path):
         raise ValueError("Path is a directory, only files are supported")
     return _get_json_file(path)
 
 
-def iter_jsonls(paths: Union[str, list[str]], line_limit=None) -> Iterator[dict]:
+def iter_jsonls(paths: Union[Union[Path, str], list[Union[Path, str]]], line_limit=None) -> Iterator[dict]:
     """
     For each path in the input, iterate over the jsonl files in that path.
     Look in subdirectories recursively.
@@ -148,6 +165,10 @@ def iter_jsonls(paths: Union[str, list[str]], line_limit=None) -> Iterator[dict]
     """
     if type(paths) == str:
         paths = [paths]
+    elif type(paths) != str:
+        paths = [paths]
+    elif len(paths) > 0 and type(paths[0]) != str:
+        paths = list(map(lambda x: str(x), paths))
 
     def _iter():
         for path in paths:
@@ -161,7 +182,9 @@ def iter_jsonls(paths: Union[str, list[str]], line_limit=None) -> Iterator[dict]
     return itertools.islice(_iter(), line_limit)
 
 
-def get_csv(path, fieldnames=None):
+def get_csv(path: Union[Path, str], fieldnames=None):
+    if type(path) != str:
+        path = str(path)
     with bf.BlobFile(path, "r", cache_dir="/tmp/bf_cache", streaming=False) as f:
         reader = csv.DictReader(f, fieldnames=fieldnames)
         return [row for row in reader]
