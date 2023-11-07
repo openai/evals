@@ -1,0 +1,9 @@
+icelandic-sentences-gec:
+  id: icelandic-sentences-gec.dev.v0
+  description: Test the model's ability to correctly identify whether an Icelandic sentence contains a grammatical error.
+  metrics: [accuracy]
+
+icelandic-sentences-gec.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: icelandic-sentences-gec/samples.jsonl
