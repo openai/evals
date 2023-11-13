@@ -7,8 +7,6 @@ import shlex
 import sys
 from typing import Any, Mapping, Optional, Union, cast
 
-import openai
-
 import evals
 import evals.api
 import evals.base
@@ -268,9 +266,6 @@ def main() -> None:
         filename=args.log_to_file if args.log_to_file else None,
     )
     logging.getLogger("openai").setLevel(logging.WARN)
-
-    if hasattr(openai.error, "set_display_cause"):  # type: ignore
-        openai.error.set_display_cause()  # type: ignore
     run(args)
 
 
