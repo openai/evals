@@ -11,9 +11,12 @@ from evals.api import CompletionResult
 @backoff.on_exception(
     backoff.expo,
     (
+        openai.APIError,
+        openai.APIStatusError,
         openai.RateLimitError,
-        openai.ServiceUnavailableError,
-        openai.TryAgain,
+        openai.APITimeoutError,
+        openai.APIConnectionError,
+        openai.InternalServerError,
         urllib3.exceptions.TimeoutError,
     ),
 )
