@@ -32,7 +32,7 @@ def openai_completion_create_retrying(*args, **kwargs):
     result = openai.Completion.create(*args, **kwargs)
     if "error" in result:
         logging.warning(result)
-        raise openai.error.APIError(result["error"])
+        raise openai.APIError(result["error"])
     return result
 
 
@@ -71,5 +71,5 @@ def openai_chat_completion_create_retrying(*args, **kwargs):
     result = request_with_timeout(openai.ChatCompletion.create, *args, **kwargs)
     if "error" in result:
         logging.warning(result)
-        raise openai.error.APIError(result["error"])
+        raise openai.APIError(result["error"])
     return result
