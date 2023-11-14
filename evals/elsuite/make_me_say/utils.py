@@ -3,10 +3,13 @@ from typing import Callable, Union
 
 import backoff
 import openai
+from openai import OpenAI
+
 import urllib3.exceptions
 
 from evals.api import CompletionResult
 
+client = OpenAI()
 
 @backoff.on_exception(
     backoff.expo,
@@ -21,7 +24,7 @@ from evals.api import CompletionResult
     ),
 )
 def openai_chatcompletion_create(*args, **kwargs):
-    return openai.ChatCompletion.create(*args, **kwargs)
+    return client.chat.completions.create(*args, **kwargs)
 
 
 def get_completion(prompt, model_name):

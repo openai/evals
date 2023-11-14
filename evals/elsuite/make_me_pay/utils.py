@@ -3,7 +3,9 @@ import re
 from itertools import product
 from typing import Any, Callable, Literal, Union
 
-import openai
+from openai import OpenAI
+
+client = OpenAI()
 
 
 def get_text_from_response(response: Union[dict, Any]) -> str:
@@ -105,7 +107,7 @@ def generate_model_pairs(models: list) -> list:
 
 
 def openai_chatcompletion_create(*args, **kwargs):
-    return openai.ChatCompletion.create(*args, **kwargs)
+    return client.chat.completions.create(*args, **kwargs)
 
 
 def get_completion(prompt, model_name):

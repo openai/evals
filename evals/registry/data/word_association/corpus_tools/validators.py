@@ -5,10 +5,12 @@ from collections.abc import Callable
 from typing import Dict, List, NamedTuple, Tuple, Union
 
 import numpy as np
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 from logger_config import logger
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+
 
 CORRELATION_PROMPT_TEMPLATE = """Task: Estimate the degree of correlation between
  two provided strings. In your evaluation, consider not just direct links, but also indirect and subtle correlations.
@@ -172,7 +174,7 @@ class EmbeddingsValidator(QualityValidator):
             A list of Embedding namedtuples where each Embedding
             represents the input string and its corresponding vector.
         """
-        response = openai.Embedding.create(model="text-embedding-ada-002", input=emb_input)
+        response = client.embeddings.create(model="text-embedding-ada-002", input=emb_input)
         logger.debug(f"embeddings response: {response}")
         response_data = response["data"]
         emb_list = [data["embedding"] for data in response_data]
@@ -249,9 +251,7 @@ class GPTValidator(QualityValidator):
         logger.debug(
             f"Getting chat_completion using {self._model}.\nPrompting messages: {messages}"
         )
-        response = openai.ChatCompletion.create(
-            model=self._model, messages=messages, temperature=0.0
-        )
+        response = client.chat.completions.create(model=self._model, messages=messages, temperature=0.0)
         logger.debug(f"response_message: {response}")
         response_message = response["choices"][0]["message"]["content"]
         logger.info(f"response_message: {response_message}")

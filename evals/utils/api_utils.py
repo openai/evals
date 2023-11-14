@@ -6,7 +6,10 @@ import logging
 import os
 
 import backoff
+from openai import OpenAI
 import openai
+
+client = OpenAI()
 
 EVALS_THREAD_TIMEOUT = float(os.environ.get("EVALS_THREAD_TIMEOUT", "40"))
 
@@ -29,7 +32,11 @@ def openai_completion_create_retrying(*args, **kwargs):
     Helper function for creating a completion.
     `args` and `kwargs` match what is accepted by `openai.Completion.create`.
     """
-    result = openai.Completion.create(*args, **kwargs)
+    if "api_base" in kwargs:
+        del kwargs["api_base"]
+    if "api_key" in kwargs:
+        del kwargs["api_key"]
+    result = client.completions.create(*args, **kwargs)
     if "error" in result:
         logging.warning(result)
         raise openai.APIError(result["error"])
@@ -68,7 +75,11 @@ def openai_chat_completion_create_retrying(*args, **kwargs):
     Helper function for creating a chat completion.
     `args` and `kwargs` match what is accepted by `openai.ChatCompletion.create`.
     """
-    result = request_with_timeout(openai.ChatCompletion.create, *args, **kwargs)
+    if "api_base" in kwargs:
+        del kwargs["api_base"]
+    if "api_key" in kwargs:
+        del kwargs["api_key"]
+    result = request_with_timeout(openai.chat.completions.create, *args, **kwargs)
     if "error" in result:
         logging.warning(result)
         raise openai.APIError(result["error"])

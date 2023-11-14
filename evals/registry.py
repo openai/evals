@@ -13,7 +13,9 @@ from functools import cached_property
 from pathlib import Path
 from typing import Any, Generator, Iterator, Optional, Sequence, Tuple, Type, TypeVar, Union
 
+from openai import OpenAI
 import openai
+
 import yaml
 
 from evals import OpenAIChatCompletionFn, OpenAICompletionFn
@@ -22,6 +24,7 @@ from evals.base import BaseEvalSpec, CompletionFnSpec, EvalSetSpec, EvalSpec
 from evals.elsuite.modelgraded.base import ModelGradedSpec
 from evals.utils.misc import make_object
 
+client = OpenAI()
 logger = logging.getLogger(__name__)
 
 DEFAULT_PATHS = [
@@ -98,7 +101,7 @@ class Registry:
     @cached_property
     def api_model_ids(self) -> list[str]:
         try:
-            return [m["id"] for m in openai.Model.list()["data"]]
+            return [m.id for m in client.models.list()]
         except openai.OpenAIError as err:  # type: ignore
             # Errors can happen when running eval with completion function that uses custom
             # API endpoints and authentication mechanisms.
