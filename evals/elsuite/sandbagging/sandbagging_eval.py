@@ -60,7 +60,7 @@ class Sandbagging(SolverEval):
             samples = mmlu_eval.get_samples()
 
             # Dummy solver won't have modify_target func
-            if not isinstance(mmlu_eval._solver, DummyCompletionFn):
+            if not isinstance(mmlu_eval.completion_fns[0], DummyCompletionFn):
                 mmlu_eval._solver.modify_target(
                     target
                 )  # Change target of base solver, so all samples have a solver with this target

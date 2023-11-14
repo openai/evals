@@ -21,6 +21,7 @@ class MMLU(SolverEval):
     ):
         super().__init__(completion_fns, *args, **kwargs)
 
+        self.completion_fns = completion_fns
         self.samples_jsonl = samples_jsonl
 
     def eval_sample(
@@ -48,7 +49,10 @@ class MMLU(SolverEval):
         result = solver(task_state=task_state)
         output = result.output
         output = output.lstrip()
-        prompt = result.metadata["prompt"]
+
+        prompt = [question_msg]
+        if "prompt" in result.metadata:
+            prompt = result.metadata["prompt"]
 
         return record_mmlu_sample(
             prompt=prompt,
