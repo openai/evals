@@ -14,11 +14,12 @@ EVALS_THREAD_TIMEOUT = float(os.environ.get("EVALS_THREAD_TIMEOUT", "40"))
 @backoff.on_exception(
     wait_gen=backoff.expo,
     exception=(
-        openai.error.ServiceUnavailableError,
-        openai.error.APIError,
-        openai.error.RateLimitError,
-        openai.error.APIConnectionError,
-        openai.error.Timeout,
+        openai.APIError,
+        openai.APIStatusError,
+        openai.RateLimitError,
+        openai.APITimeoutError,
+        openai.APIConnectionError,
+        openai.InternalServerError,
     ),
     max_value=60,
     factor=1.5,
@@ -31,7 +32,7 @@ def openai_completion_create_retrying(*args, **kwargs):
     result = openai.Completion.create(*args, **kwargs)
     if "error" in result:
         logging.warning(result)
-        raise openai.error.APIError(result["error"])
+        raise openai.APIError(result["error"])
     return result
 
 
@@ -52,11 +53,12 @@ def request_with_timeout(func, *args, timeout=EVALS_THREAD_TIMEOUT, **kwargs):
 @backoff.on_exception(
     wait_gen=backoff.expo,
     exception=(
-        openai.error.ServiceUnavailableError,
-        openai.error.APIError,
-        openai.error.RateLimitError,
-        openai.error.APIConnectionError,
-        openai.error.Timeout,
+        openai.APIError,
+        openai.APIStatusError,
+        openai.RateLimitError,
+        openai.APITimeoutError,
+        openai.APIConnectionError,
+        openai.InternalServerError,
     ),
     max_value=60,
     factor=1.5,
@@ -69,5 +71,5 @@ def openai_chat_completion_create_retrying(*args, **kwargs):
     result = request_with_timeout(openai.ChatCompletion.create, *args, **kwargs)
     if "error" in result:
         logging.warning(result)
-        raise openai.error.APIError(result["error"])
+        raise openai.APIError(result["error"])
     return result
