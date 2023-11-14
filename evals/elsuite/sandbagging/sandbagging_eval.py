@@ -1,5 +1,6 @@
 import random
 from typing import Any, Dict, Sequence
+from evals.api import DummyCompletionFn
 
 import evals.metrics
 from evals.elsuite.sandbagging.mmlu_eval import MMLU
@@ -57,9 +58,12 @@ class Sandbagging(SolverEval):
         achieved_accs = []
         for target, mmlu_eval in zip(self.target_accuracies, self.evals):
             samples = mmlu_eval.get_samples()
-            mmlu_eval._solver.modify_target(
-                target
-            )  # Change target of base solver, so all samples have a solver with this target
+
+            # Dummy solver won't have modify_target func
+            if not isinstance(mmlu_eval._solver, DummyCompletionFn):
+                mmlu_eval._solver.modify_target(
+                    target
+                )  # Change target of base solver, so all samples have a solver with this target
             mmlu_eval.run(recorder)
 
             # Only get the events from the latest run
