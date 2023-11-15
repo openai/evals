@@ -1,0 +1,120 @@
+sandbagging/default/gpt-3.5-turbo:
+  class: evals.elsuite.sandbagging.solvers:LMSolver
+  args:
+    completion_fn_options:
+      model: gpt-3.5-turbo
+      extra_options:
+        temperature: 0
+        max_tokens: 250
+    model_name: GPT-3.5
+    sandbag_prompt: None
+    scratchpad: False
+    no_prev_ans: 0
+    temperature: 0
+
+sandbagging/default/gpt-4:
+  class: evals.elsuite.sandbagging.solvers:LMSolver
+  args:
+    completion_fn_options:
+      model: gpt-4
+      extra_options:
+        temperature: 0
+        max_tokens: 250
+    model_name: GPT-4
+    sandbag_prompt: None
+    scratchpad: False
+    no_prev_ans: 0
+    temperature: 0
+
+# Solvers using generic sandbagging prompt
+sandbagging/sb/gpt-3.5-turbo:
+  class: evals.elsuite.sandbagging.solvers:LMSolver
+  args:
+    completion_fn_options:
+      model: gpt-3.5-turbo
+      extra_options:
+        temperature: 0
+        max_tokens: 250
+    model_name: GPT-3.5
+    sandbag_prompt: benign
+    scratchpad: False
+    no_prev_ans: 0
+    temperature: 0
+
+sandbagging/sb/gpt-4:
+  class: evals.elsuite.sandbagging.solvers:LMSolver
+  args:
+    completion_fn_options:
+      model: gpt-4
+      extra_options:
+        temperature: 0
+        max_tokens: 250
+    model_name: GPT-4
+    sandbag_prompt: benign
+    scratchpad: False
+    no_prev_ans: 0
+    temperature: 0
+
+# Solvers using subset prompt with scratchpad
+sandbagging/sb_subset/gpt-3.5-turbo:
+  class: evals.elsuite.sandbagging.solvers:LMSolver
+  args:
+    completion_fn_options:
+      model: gpt-3.5-turbo
+      extra_options:
+        temperature: 0
+        max_tokens: 250
+    model_name: GPT-3.5
+    sandbag_prompt: subset
+    scratchpad: True
+    no_prev_ans: 0
+    temperature: 0
+
+sandbagging/sb_subset/gpt-4:
+  class: evals.elsuite.sandbagging.solvers:LMSolver
+  args:
+    completion_fn_options:
+      model: gpt-4
+      extra_options:
+        temperature: 0
+        max_tokens: 250
+    model_name: GPT-4
+    sandbag_prompt: subset
+    scratchpad: True
+    no_prev_ans: 0
+    temperature: 0
+
+# Solvers using benign prompt with temperature=1 for generating answer
+sandbagging/sb_temp1/gpt-3.5-turbo:
+  class: evals.elsuite.sandbagging.solvers:LMSolver
+  args:
+    completion_fn_options:
+      model: gpt-3.5-turbo
+      extra_options:
+        temperature: 0
+        max_tokens: 250
+    model_name: GPT-3.5
+    sandbag_prompt: benign
+    scratchpad: False
+    no_prev_ans: 0
+    temperature: 1
+
+sandbagging/sb_temp1/gpt-4:
+  class: evals.elsuite.sandbagging.solvers:LMSolver
+  args:
+    completion_fn_options:
+      model: gpt-4
+      extra_options:
+        temperature: 0
+        max_tokens: 250
+    model_name: GPT-4
+    sandbag_prompt: benign
+    scratchpad: False
+    no_prev_ans: 0
+    temperature: 1
+
+sandbagging/cli:
+  class: evals.elsuite.sandbagging.solvers:CLISolver
+  args:
+    scratchpad: False
+    no_prev_ans: 0
