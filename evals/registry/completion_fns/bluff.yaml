@@ -1,0 +1,77 @@
+# Recommended strategic solvers
+bluff/strategy/gpt-4:
+  class: evals.elsuite.bluff.strategy_solver:BluffStrategySolver
+  args:
+    base_solver_class: evals.solvers.openai_chat_completion_solver:OpenAIChatCompletionSolver
+    base_solver_args:
+      completion_fn_options:
+        model: gpt-4
+        extra_options:
+          temperature: 0
+
+bluff/strategy/gpt-3.5-turbo-16k:
+  class: evals.elsuite.bluff.strategy_solver:BluffStrategySolver
+  args:
+    base_solver_class: evals.solvers.openai_chat_completion_solver:OpenAIChatCompletionSolver
+    base_solver_args:
+      completion_fn_options:
+        model: gpt-3.5-turbo-16k
+        extra_options:
+          temperature: 0
+
+bluff/strategy/gpt-4-base:
+  class: evals.elsuite.bluff.strategy_solver:BluffStrategySolver
+  args:
+    base_solver_class: evals.solvers.openai_completion_hhh_solver:OpenAICompletionHHHSolver
+    base_solver_args:
+      completion_fn_options:
+        model: gpt-4-base
+        extra_options:
+          temperature: 0
+          max_tokens: 512
+
+bluff/strategy/code-davinci-002:
+  class: evals.elsuite.bluff.strategy_solver:BluffStrategySolver
+  args:
+    base_solver_class: evals.solvers.openai_completion_hhh_solver:OpenAICompletionHHHSolver
+    base_solver_args:
+      completion_fn_options:
+        model: code-davinci-002
+        extra_options:
+          temperature: 0
+          max_tokens: 512
+
+# Other solvers. They are just base models, but with temperature set to 0.
+bluff/gpt-4:
+  class: evals.solvers.openai_chat_completion_solver:OpenAIChatCompletionSolver
+  args:
+    completion_fn_options:
+      model: gpt-4
+      extra_options:
+        temperature: 0
+
+bluff/gpt-3.5-turbo-16k:
+  class: evals.solvers.openai_chat_completion_solver:OpenAIChatCompletionSolver
+  args:
+    completion_fn_options:
+      model: gpt-3.5-turbo-16k
+      extra_options:
+        temperature: 0
+
+bluff/gpt-4-base:
+  class: evals.solvers.openai_completion_hhh_solver:OpenAICompletionHHHSolver
+  args:
+    completion_fn_options:
+      model: gpt-4-base
+      extra_options:
+        temperature: 0
+        max_tokens: 512
+
+bluff/code-davinci-002:
+  class: evals.solvers.openai_completion_hhh_solver:OpenAICompletionHHHSolver
+  args:
+    completion_fn_options:
+      model: code-davinci-002
+      extra_options:
+        temperature: 0
+        max_tokens: 512

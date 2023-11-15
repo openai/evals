@@ -1,0 +1,49 @@
+bluff: 
+  id: bluff.strong_bot
+  metrics: [player_0_win_ratio, player_0_round_ix_coef, player_0_round_ix_pvalue]
+  description: Evaluate Bluff (a card game) skills
+
+# Full scenarios
+bluff.strong_bot:
+  class: evals.elsuite.bluff.eval:BluffEval
+  args: 
+    n_samples: 200
+    opponent: evals.elsuite.bluff.bluff.players:StrongBot
+
+bluff.honest_bot_highest:
+  class: evals.elsuite.bluff.eval:BluffEval
+  args: 
+    n_samples: 200
+    opponent: evals.elsuite.bluff.bluff.players:HonestBotHighest
+
+bluff.gpt-4:
+  class: evals.elsuite.bluff.eval:BluffEval
+  args: 
+    n_samples: 200
+    opponent: bluff/strategy/gpt-4
+
+# Play against a human
+bluff.human_cli:
+  class: evals.elsuite.bluff.eval:BluffEval
+  args: 
+    n_samples: 1
+    opponent: human_cli
+
+# Dev scenarios
+bluff.strong_bot.dev5:
+  class: evals.elsuite.bluff.eval:BluffEval
+  args: 
+    n_samples: 5
+    opponent: evals.elsuite.bluff.bluff.players:StrongBot
+
+bluff.honest_bot_highest.dev5:
+  class: evals.elsuite.bluff.eval:BluffEval
+  args: 
+    n_samples: 5
+    opponent: evals.elsuite.bluff.bluff.players:HonestBotHighest
+
+bluff.gpt-4.dev5:
+  class: evals.elsuite.bluff.eval:BluffEval
+  args: 
+    n_samples: 5
+    opponent: bluff/strategy/gpt-4
