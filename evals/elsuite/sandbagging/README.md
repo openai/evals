@@ -51,4 +51,4 @@ Below is a rough estimate of the total number of tokens consumed by the eval, in
 To calculate dollar cost from token counts, please check the latest token pricing [here](https://openai.com/pricing). Note that we count both input and output tokens together, so a lower and upper estimate of the cost of each variant can be predicted.
 
 # Contribution statement
-Eval design, implementation, and results evaluation were primarily conducted by Oliver Jaffe, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, Jade Leung, and Chan Jun Shern, who provided research input and project management support.
+Eval design, implementation, and results evaluation were primarily conducted by Oliver Jaffe, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, Chan Jun Shern, and Jade Leung who provided research input and project management support.
