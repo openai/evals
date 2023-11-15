@@ -72,4 +72,4 @@ Few things we might want to do in the future:
 4. Implement another solver class.
 
 ## Contribution statement ##
-Eval design, implementation, and results evaluation were primarily conducted by Jan Betley, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input and project management support.
+Eval design, implementation, and results evaluation were primarily conducted by Jan Betley, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, Chan Jun Shern, and Jade Leung who provided research input and project management support.

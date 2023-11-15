@@ -22,4 +22,4 @@ bash run_experiments.sh
 ```
 
 # Contribution statement
-Eval design was primarily conducted by Andrei Alexandru, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell and Jade Leung who provided research input, report revisions, and project management support. 
+Eval design was primarily conducted by Andrei Alexandru, under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, Chan Jun Shern, and Jade Leung who provided research input, report revisions, and project management support. 
