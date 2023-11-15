@@ -25,6 +25,7 @@ class OpenAIChatCompletionCoTSolver(OpenAISolver):
         extract_template: str = DEFAULT_EXTRACT_ANSWER_TEMPLATE,
         valid_answers: Union[list[str], None] = None,
         persistent_memory: bool = True,
+        private_interaction_length: int = 3,
         **kwargs,
     ):
         super().__init__(
@@ -42,6 +43,7 @@ class OpenAIChatCompletionCoTSolver(OpenAISolver):
 
         self.persistent_memory = persistent_memory
         self.last_interaction = None
+        self.private_interaction_length = private_interaction_length
 
     def __call__(
         self,
@@ -83,7 +85,7 @@ class OpenAIChatCompletionCoTSolver(OpenAISolver):
             [] if self.last_interaction is None else self.last_interaction.private_messages_ids
         )
         private_messages_ids += list(
-            range(num_interaction_messages - 4, num_interaction_messages - 1)
+            range(num_interaction_messages - self.private_interaction_length - 1, num_interaction_messages - 1)
         )
         self.last_interaction = Interaction(interaction_messages, private_messages_ids)
 
