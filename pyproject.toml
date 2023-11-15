@@ -30,6 +30,7 @@ dependencies = [
     "types-PyYAML",
     "spacy-universal-sentence-encoder",
     "jiwer",
+    "seaborn",
 ]
 
 [project.optional-dependencies]
