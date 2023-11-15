@@ -3,6 +3,7 @@ from typing import Callable, Union
 
 import backoff
 import openai
+import openai.error
 import urllib3.exceptions
 
 from evals.api import CompletionResult
@@ -11,12 +12,9 @@ from evals.api import CompletionResult
 @backoff.on_exception(
     backoff.expo,
     (
-        openai.APIError,
-        openai.APIStatusError,
-        openai.RateLimitError,
-        openai.APITimeoutError,
-        openai.APIConnectionError,
-        openai.InternalServerError,
+        openai.error.RateLimitError,
+        openai.error.ServiceUnavailableError,
+        openai.error.TryAgain,
         urllib3.exceptions.TimeoutError,
     ),
 )
