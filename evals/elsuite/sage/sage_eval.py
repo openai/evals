@@ -18,9 +18,9 @@ class SageEval(evals.Eval):
 
     def format_annotated_string(self, prompt: str, sample: Mapping[str, str]) -> str:
         def replace_annotation(match) -> str:
-            annotation_id = match.group(0)
+            annotation_id = match.group(1)
             return sample.get(
-                annotation_id, match.group(1)
+                annotation_id, match.group(0)
             )  # Default to the original match if ID not found
 
         return re.sub(r"\{(\w+)\|[^}]*\}", replace_annotation, prompt)

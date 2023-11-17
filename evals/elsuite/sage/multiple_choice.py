@@ -46,7 +46,10 @@ class SageMultiChoice(SageEval):
                 + choice_prompt,
             },
         ]
-        print(prompt)
+        print()
+        print("Sample", sample)
+        print("Prompt", prompt)
+        print("Expected", self.format_annotated_string(self.answer_id, sample))
 
         result = self.completion_fn(
             prompt=prompt,
