@@ -1,9 +1,13 @@
+import logging
+
 import evals
 import evals.metrics
 from evals.api import CompletionFn
 from evals.record import RecorderBase
 
 from .sage_eval import SageEval
+
+logger = logging.getLogger(__name__)
 
 
 class SageMultiChoice(SageEval):
@@ -46,10 +50,8 @@ class SageMultiChoice(SageEval):
                 + choice_prompt,
             },
         ]
-        print()
-        print("Sample", sample)
-        print("Prompt", prompt)
-        print("Expected", self.format_annotated_string(self.answer_id, sample))
+        prompt = "\n\n".join([p["message"] for p in prompt])  # TODO: Make this work with new API
+        expected = self.format_annotated_string(self.answer_id, sample)
 
         result = self.completion_fn(
             prompt=prompt,
@@ -57,11 +59,14 @@ class SageMultiChoice(SageEval):
             max_tokens=1,
         )
         sampled = result.get_completions()[0]
+        logger.debug(
+            f"Sample: {sample}\nPrompt: {prompt}\nExpected: {expected}\nSampled: {sampled}"
+        )
 
         evals.record_and_check_match(
             prompt=prompt,
             sampled=sampled,
-            expected=self.format_annotated_string(self.answer_id, sample),
+            expected=expected,
         )
 
     def run(self, recorder: RecorderBase):

@@ -14,7 +14,7 @@ import threading
 import time
 from contextvars import ContextVar
 from datetime import datetime, timezone
-from typing import Any, List, Optional, Sequence, Text
+from typing import TYPE_CHECKING, Any, List, Optional, Sequence, Text
 
 import blobfile as bf
 import requests
@@ -24,6 +24,12 @@ from evals.base import RunSpec
 from evals.data import jsondumps
 from evals.utils.misc import t
 from evals.utils.snowflake import SnowflakeConnection
+
+if TYPE_CHECKING:
+    try:
+        from flask_socketio import SocketIO
+    except ImportError:
+        pass
 
 logger = logging.getLogger(__name__)
 
@@ -310,18 +316,17 @@ class LocalRecorder(RecorderBase):
     This is the default recorder used by `oaieval`.
     """
 
-    def __init__(self,
-        log_path: Optional[str],
-        run_spec: RunSpec,
-        hidden_data_fields: Sequence[Text] = []):
+    def __init__(
+        self, log_path: Optional[str], run_spec: RunSpec, hidden_data_fields: Sequence[Text] = []
+    ):
         """
         Initializes a LocalRecorder.
 
         Args:
-            log_path (Optional[str]): Path to which the LocalRecorder will 
-                record events. Currently accepts local paths, google cloud 
+            log_path (Optional[str]): Path to which the LocalRecorder will
+                record events. Currently accepts local paths, google cloud
                 storage paths, or Azure blob paths.
-            run_spec (RunSpec): Passed to the superclass to provide metadata 
+            run_spec (RunSpec): Passed to the superclass to provide metadata
                 about the current evals run.
             hidden_data_fields (Sequence[Text]): Fields to avoid writing in the
                 output. This is particularly useful when using a language model
@@ -338,7 +343,10 @@ class LocalRecorder(RecorderBase):
     def _flush_events_internal(self, events_to_write: Sequence[Event]):
         start = time.time()
         try:
-            lines = [jsondumps(event, exclude_keys=self.hidden_data_fields) + "\n" for event in events_to_write]
+            lines = [
+                jsondumps(event, exclude_keys=self.hidden_data_fields) + "\n"
+                for event in events_to_write
+            ]
         except TypeError as e:
             logger.error(f"Failed to serialize events: {events_to_write}")
             raise e
@@ -403,7 +411,7 @@ class HttpRecorder(RecorderBase):
 
             # If the request succeeded, log a success message
             if response.ok:
-                logger.debug(f"Events sent successfully")
+                logger.debug("Events sent successfully")
 
             # If the request failed, log a warning and increment failed_requests
             else:
@@ -454,7 +462,92 @@ class HttpRecorder(RecorderBase):
             self.local_fallback_recorder.record_final_report(final_report)
 
 
-class Recorder(RecorderBase):
+class WebsocketRecorder(RecorderBase):
+    def __init__(
+        self,
+        socket: SocketIO,
+        run_spec: RunSpec,
+        local_fallback_path: str,
+        fail_percent_threshold: int = 5,
+        batch_size: int = 100,
+    ):
+        super().__init__(run_spec)
+        self.socket = socket
+        self.batch_size = batch_size
+        self.fail_percent_threshold = fail_percent_threshold / 100
+        self.failed_requests = 0  # Add this line to track failed requests
+        self.local_fallback_path = local_fallback_path
+        self.local_fallback_recorder = LocalRecorder(local_fallback_path, run_spec)
+        logger.info("WebsocketRecorder initialized")
+
+    def _flush_events_internal(self, events_to_write: Sequence[Event]):
+        batch_size = self.batch_size
+        for i in range(0, len(events_to_write), batch_size):
+            batch = list(events_to_write[i : i + batch_size])
+            try:
+                self._send_event(batch)
+            except RuntimeError as e:
+                logger.error(f"Falling back to LocalRecorder due to error: {str(e)}")
+                self.local_fallback_recorder._flush_events_internal(batch)
+                raise RuntimeError(
+                    "An error occurred when sending events. Your events have been saved locally using the Local recorder."
+                )
+
+    def _send_event(self, events: List[Event]):
+        # Convert the events to dictionaries
+        events_dicts = [dataclasses.asdict(event) for event in events]
+        logger.debug(f"Sending events: {events_dicts}")
+
+        def ack():
+            logger.debug("Events recieved and acknowledged")
+
+        try:
+            # Emit the event over the WebSocket connection
+            self.socket.emit("record_event", events_dicts, callback=ack)
+
+        except Exception as e:
+            logger.warning(f"Failed to send events: {str(e)}")
+            self.failed_requests += len(
+                events
+            )  # Increase the count by the number of events in the failed request
+
+            # Check if the proportion of failed requests exceeds the threshold
+            fail_threshold = self.fail_percent_threshold
+            # Make a string for human comprehention
+            fail_threshold_str = str(fail_threshold * 100) + "%"
+
+            if self.failed_requests / len(self._events) > fail_threshold:
+                raise RuntimeError(
+                    "The proportion of failed events has exceeded the threshold of: "
+                    + fail_threshold_str
+                    + "."
+                    + " Falling back to LocalRecorder. "
+                    "You can modify this via the cli flag --http-fail-percent-threshold"
+                )
+
+    def record_final_report(self, final_report: Any):
+        # Convert the final report to a dictionary and prepare it as an event
+        report_event = Event(
+            run_id=self.run_spec.run_id,
+            event_id=len(self._events),
+            sample_id=None,  # or you could use a specific id for final reports
+            type="final_report",
+            data=final_report,
+            created_by=self.run_spec.created_by,
+            created_at=str(datetime.now(timezone.utc)),
+        )
+
+        # Send the final report event
+        try:
+            self._send_event([report_event])
+            logging.info(f"Final report: {final_report}.")
+            logging.info(f"Data logged to: {self.url}")
+        except RuntimeError as e:
+            logger.error(f"Falling back to LocalRecorder due to error: {str(e)}")
+            self.local_fallback_recorder.record_final_report(final_report)
+
+
+class SnowflakeRecorder(RecorderBase):
     """
     A recorder which logs events to Snowflake.
     Can be used by passing `--no-local-run` when invoking `oaieval`.
