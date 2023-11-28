@@ -7,6 +7,9 @@ import os
 
 import backoff
 import openai
+from openai import OpenAI
+
+client = OpenAI()
 
 EVALS_THREAD_TIMEOUT = float(os.environ.get("EVALS_THREAD_TIMEOUT", "40"))
 
@@ -14,7 +17,7 @@ EVALS_THREAD_TIMEOUT = float(os.environ.get("EVALS_THREAD_TIMEOUT", "40"))
 @backoff.on_exception(
     wait_gen=backoff.expo,
     exception=(
-        openai.error.ServiceUnavailableError,
+        openai.ServiceUnavailableError,
         openai.error.APIError,
         openai.error.RateLimitError,
         openai.error.APIConnectionError,
@@ -28,7 +31,7 @@ def openai_completion_create_retrying(*args, **kwargs):
     Helper function for creating a completion.
     `args` and `kwargs` match what is accepted by `openai.Completion.create`.
     """
-    result = openai.Completion.create(*args, **kwargs)
+    result = client.completions.create(*args, **kwargs)
     if "error" in result:
         logging.warning(result)
         raise openai.error.APIError(result["error"])
@@ -52,7 +55,7 @@ def request_with_timeout(func, *args, timeout=EVALS_THREAD_TIMEOUT, **kwargs):
 @backoff.on_exception(
     wait_gen=backoff.expo,
     exception=(
-        openai.error.ServiceUnavailableError,
+        openai.ServiceUnavailableError,
         openai.error.APIError,
         openai.error.RateLimitError,
         openai.error.APIConnectionError,
