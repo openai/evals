@@ -40,4 +40,4 @@ def get_content(response: Union[dict, CompletionResult]) -> str:
         assert len(completions) == 1, f"Got {len(completions)} but expected exactly one"
         return completions[0]
 
-    return response["choices"][0]["message"]["content"]
+    return response.choices[0].message.content

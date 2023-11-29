@@ -101,7 +101,7 @@ class Registry:
     @cached_property
     def api_model_ids(self) -> list[str]:
         try:
-            return [m["id"] for m in client.models.list()["data"]]
+            return [m.id for m in client.models.list().data]
         except openai.OpenAIError as err:  # type: ignore
             # Errors can happen when running eval with completion function that uses custom
             # API endpoints and authentication mechanisms.
