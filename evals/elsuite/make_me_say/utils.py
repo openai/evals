@@ -6,7 +6,7 @@ import openai
 from openai import OpenAI
 
 client = OpenAI()
-import openai.error
+import openai
 import urllib3.exceptions
 
 from evals.api import CompletionResult
@@ -16,8 +16,6 @@ from evals.api import CompletionResult
     backoff.expo,
     (
         openai.RateLimitError,
-        openai.error.ServiceUnavailableError,
-        openai.error.TryAgain,
         urllib3.exceptions.TimeoutError,
     ),
 )
