@@ -2,7 +2,7 @@ import uuid
 from typing import Callable, Optional, Union
 
 import backoff
-from openai.error import InvalidRequestError
+from openai import InternalServerError
 
 from evals.api import CompletionFn, CompletionResult
 from evals.elsuite.make_me_say.core import Game, Message, Player
@@ -17,7 +17,7 @@ from evals.elsuite.make_me_say.defaults import (
 )
 
 
-@backoff.on_exception(backoff.constant, InvalidRequestError, max_tries=3)
+@backoff.on_exception(backoff.constant, InternalServerError, max_tries=3)
 def run(
     codeword: str,
     manipulator_completion_fn: CompletionFn,

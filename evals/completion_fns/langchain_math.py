@@ -1,7 +1,9 @@
-from langchain import LLMMathChain, OpenAI
-from openai import Completion
+import os
 
-from evals.api import CompletionResult
+from langchain.chains import LLMMathChain
+from langchain.llms import OpenAI
+
+from evals.api import CompletionFn, CompletionResult
 from evals.prompt.base import CompletionPrompt
 from evals.record import record_sampling
 
@@ -14,9 +16,9 @@ class LangChainCompletionResult(CompletionResult):
         return [self.response.strip()]
 
 
-class LangChainMathChainCompletionFn(Completion):
+class LangChainMathChainCompletionFn(CompletionFn):
     def __init__(self, **kwargs) -> None:
-        llm = OpenAI(temperature=0)
+        llm = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"), temperature=0)
         self.llm_math = LLMMathChain(llm=llm)
 
     def __call__(self, prompt, **kwargs) -> LangChainCompletionResult:
