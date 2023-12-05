@@ -1,3 +1,4 @@
+import os
 import functools
 from typing import Callable, Union
 
@@ -5,7 +6,7 @@ import backoff
 import openai
 from openai import OpenAI
 
-client = OpenAI()
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 import openai
 import urllib3.exceptions
 

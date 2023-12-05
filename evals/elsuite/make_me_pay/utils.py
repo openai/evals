@@ -1,9 +1,10 @@
+import os
 import re
 from typing import Literal
 
 from openai import OpenAI
 
-client = OpenAI()
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 
 def is_system_msg(m: dict) -> bool:

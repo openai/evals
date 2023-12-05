@@ -1,13 +1,14 @@
 """
 Extending Completion Functions with Embeddings-based retrieval from a fetched dataset
 """
+import os
 from ast import literal_eval
 from typing import Any, Optional, Union
 
 import numpy as np
 from openai import OpenAI
 
-client = OpenAI()
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 import pandas as pd
 
 from evals.api import CompletionFn, CompletionResult

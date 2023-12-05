@@ -27,6 +27,7 @@ dependencies = [
     "matplotlib",
     "pytest",
     "langchain",
+    "numexpr",
     "types-PyYAML",
     "spacy-universal-sentence-encoder",
     "jiwer",
