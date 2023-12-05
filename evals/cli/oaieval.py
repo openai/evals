@@ -269,8 +269,6 @@ def main() -> None:
     )
     logging.getLogger("openai").setLevel(logging.WARN)
 
-    if hasattr(openai.error, "set_display_cause"):  # type: ignore
-        openai.error.set_display_cause()  # type: ignore
     run(args)
 
 
