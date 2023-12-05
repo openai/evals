@@ -1,9 +1,13 @@
+import os
 import functools
 from typing import Callable, Union
 
 import backoff
 import openai
-import openai.error
+from openai import OpenAI
+
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+import openai
 import urllib3.exceptions
 
 from evals.api import CompletionResult
@@ -12,14 +16,12 @@ from evals.api import CompletionResult
 @backoff.on_exception(
     backoff.expo,
     (
-        openai.error.RateLimitError,
-        openai.error.ServiceUnavailableError,
-        openai.error.TryAgain,
+        openai.RateLimitError,
         urllib3.exceptions.TimeoutError,
     ),
 )
 def openai_chatcompletion_create(*args, **kwargs):
-    return openai.ChatCompletion.create(*args, **kwargs)
+    return client.chat.completions.create(*args, **kwargs)
 
 
 def get_completion(prompt, model_name):
@@ -39,4 +41,4 @@ def get_content(response: Union[dict, CompletionResult]) -> str:
         assert len(completions) == 1, f"Got {len(completions)} but expected exactly one"
         return completions[0]
 
-    return response["choices"][0]["message"]["content"]
+    return response.choices[0].message.content
