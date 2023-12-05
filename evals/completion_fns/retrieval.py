@@ -95,7 +95,7 @@ class RetrievalCompletionFn(CompletionFn):
             kwargs: Additional arguments to pass to the completion function call method.
         """
         # Embed the prompt
-        embedded_prompt = client.embeddings.create(model=self.embedding_model, input=CompletionPrompt(prompt).to_formatted_prompt())["data"][0]["embedding"]
+        embedded_prompt = client.embeddings.create(model=self.embedding_model, input=CompletionPrompt(prompt).to_formatted_prompt()).data[0].embedding
 
         embs = self.embeddings_df["embedding"].to_list()
 
