@@ -15,7 +15,6 @@ EVALS_THREAD_TIMEOUT = float(os.environ.get("EVALS_THREAD_TIMEOUT", "40"))
 @backoff.on_exception(
     wait_gen=backoff.expo,
     exception=(
-        openai.APIError,
         openai.RateLimitError,
         openai.APIConnectionError,
         openai.APITimeoutError,
@@ -53,7 +52,6 @@ def request_with_timeout(func, *args, timeout=EVALS_THREAD_TIMEOUT, **kwargs):
 @backoff.on_exception(
     wait_gen=backoff.expo,
     exception=(
-        openai.APIError,
         openai.RateLimitError,
         openai.APIConnectionError,
         openai.APITimeoutError,
