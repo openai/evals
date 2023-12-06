@@ -1,2 +1,1 @@
 evals/registry/data/**/*.jsonl filter=lfs diff=lfs merge=lfs -text
-evals/registry/data/icelandic-sentences-gec/samples.jsonl filter=lfs diff=lfs merge=lfs -text
