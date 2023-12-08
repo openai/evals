@@ -30,6 +30,6 @@ jobs:
 
     - name: Run unit tests
       env:
-        OPENAI_API_KEY: ${{ Secrets.OPENAI_API_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: |
         pytest
