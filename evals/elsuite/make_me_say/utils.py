@@ -6,7 +6,6 @@ import backoff
 import openai
 from openai import OpenAI
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 import openai
 import urllib3.exceptions
 
@@ -21,6 +20,8 @@ from evals.api import CompletionResult
     ),
 )
 def openai_chatcompletion_create(*args, **kwargs):
+    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
     return client.chat.completions.create(*args, **kwargs)
 
 

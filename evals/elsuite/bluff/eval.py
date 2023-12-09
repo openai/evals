@@ -7,7 +7,7 @@ from typing import Optional, Union
 import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
-from openai.error import InvalidRequestError
+from openai import BadRequestError
 
 import evals
 from evals.api import CompletionFn
@@ -62,8 +62,8 @@ class BluffEval(SolverEval):
                 **info,
                 **self._get_game_metrics(game),
             )
-        except InvalidRequestError as e:
-            if str(e).startswith("This model's maximum context length is"):
+        except BadRequestError as e:
+            if "This model's maximum context length is" in e.message:
                 logger.warning(
                     f"Game exceeded the context window - sample {sample_ix} will be ignored. Consider decreasing n_rounds."
                 )
