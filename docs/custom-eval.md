@@ -72,7 +72,7 @@ Generally, most `run` methods will follow the same pattern shown here: loading t
         This method does the following:
         1. Generate a prompt that contains the task statement, a few examples, and the test question.
         2. Generate a completion from the model.
-        2. Check if the generated answer is correct.
+        3. Check if the generated answer is correct.
         """
         stuffing = rng.sample(self.train_samples, self.train_samples_per_prompt)
 
@@ -93,7 +93,7 @@ Generally, most `run` methods will follow the same pattern shown here: loading t
         result = self.completion_fn(prompt=prompt, temperature=0.0, max_tokens=1)
         sampled = result.get_completions()[0]
 
-        evals.record_and_check_match(prompt=prompt, sampled=sampled, expected=sample["answer"])
+        evals.record_and_check_match(prompt=prompt, sampled=sampled, expected=test_sample["answer"])
 ```
 You'll notice that `eval_sample` doesn't take the `recorder` as an argument. This is because `eval_all_samples` sets it to be the default recorder before calling `eval_sample`, and the recording utilities defined in `evals/record.py` use the default recorder. In this example, the `eval_sample` method passes off a lot of the heavy lifting to the `evals.check_sampled_text` utility function, which is defined in `evals/api.py`. This utility function queries the model, defined by `self.model_spec`, with the given `prompt` and checks to see if the result matches the `expected` answer (or one of them, if given a list). It then records these matches (or non matches) using the default recorder.
 
