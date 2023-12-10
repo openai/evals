@@ -25,7 +25,7 @@ langchain/llm/flan-t5-xl:
 ```
 Here is how it breaks down
 `langchain/llm/flan-t5-xl`: This is the top level key that will be used to access this completion function with `oaieval`.
-`class`: This is the path to your implementation of the completion function protocol. This class needs to importable within your python environment.
+`class`: This is the path to your implementation of the completion function protocol. This class needs to be importable within your python environment.
 `args`:  These are arguments that are passed to your completion function when it is instantiated.
 
 
