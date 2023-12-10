@@ -1,32 +1,16 @@
 # OpenAI Evals
 
-Evals is a framework for evaluating LLMs (large language models) or systems built using LLMs as components. It also includes an open-source registry of challenging evals.
+![Static Badge](https://img.shields.io/badge/Python%20version%3A%203.9%2B)
 
-We now support evaluating the behavior of any system including prompt chains or tool-using agents, via the [Completion Function Protocol](docs/completion-fns.md).
+Evals provide a framework for evaluating large language models (LLMs) or systems built using LLMs. We offer an existing registry of evals to test different dimensions of new models and the ability to write your own custom evals for use cases you care about. You can use your data to build private evals which represent the common patterns you use LLMs for without exposing any of that data publically.
 
-With Evals, we aim to make it as simple as possible to build an eval while writing as little code as possible. An "eval" is a task used to evaluate the quality of a system's behavior.
+If you are building with LLMs, creating high quality evals is one of the most impactful things you can do. With evals, it can be very difficult and time intensive to understand how different model versions might effect you use case. In the words of [OpenAI's President Greg Brockman](https://twitter.com/gdb/status/1733553161884127435):
 
-To get set up with evals, follow the [setup instructions below](README.md#Setup). You can also run and create evals using [Weights & Biases](https://wandb.ai/wandb_fc/openai-evals/reports/OpenAI-Evals-Demo-Using-W-B-Prompts-to-Run-Evaluations--Vmlldzo0MTI4ODA3).
-
-#### Running evals
-- Learn how to run existing evals: [run-evals.md](docs/run-evals.md).
-- Familiarize yourself with the existing eval templates: [eval-templates.md](docs/eval-templates.md).
-
-#### Writing evals
-
-**Important: Please note that we are currently not accepting Evals with custom code!** While we ask you to not submit such evals at the moment, you can still submit modelgraded evals with custom modelgraded YAML files.
-
-- Walk through the process for building an eval: [build-eval.md](docs/build-eval.md)
-- See an example of implementing custom eval logic: [custom-eval.md](docs/custom-eval.md).
-
-#### Writing CompletionFns
-- Write your own completion functions: [completion-fns.md](docs/completion-fns.md)
-
-If you think you have an interesting eval, please open a PR with your contribution. OpenAI staff actively review these evals when considering improvements to upcoming models.
+<img width="596" alt="https://x.com/gdb/status/1733553161884127435?s=20" src="https://github.com/openai/evals/assets/35577566/ce7840ff-43a8-4d88-bb2f-6b207410333b">
 
 ## Setup
 
-To run evals, you will need to set up and specify your OpenAI API key. You can generate one at <https://platform.openai.com/account/api-keys>. After you obtain an API key, specify it using the `OPENAI_API_KEY` environment variable. **Please be aware of the [costs](https://openai.com/pricing) associated with using the API when running evals.**
+To run evals, you will need to set up and specify your [OpenAI API key](https://platform.openai.com/account/api-keys). After you obtain an API key, specify it using the [`OPENAI_API_KEY` environment variable](https://platform.openai.com/docs/quickstart/step-2-setup-your-api-key). Please be aware of the [costs](https://openai.com/pricing) associated with using the API when running evals. You can also run and create evals using [Weights & Biases](https://wandb.ai/wandb_fc/openai-evals/reports/OpenAI-Evals-Demo-Using-W-B-Prompts-to-Run-Evaluations--Vmlldzo0MTI4ODA3).
 
 **Minimum Required Version: Python 3.9**
 
@@ -67,7 +51,7 @@ Then run `pre-commit install` to install pre-commit into your git hooks. pre-com
 
 If you want to manually run all pre-commit hooks on a repository, run `pre-commit run --all-files`. To run individual hooks use `pre-commit run <hook_id>`.
 
-### Running evals
+## Running evals
 
 If you don't want to contribute new evals, but simply want to run them locally, you can install the evals package via pip:
 
@@ -75,7 +59,21 @@ If you don't want to contribute new evals, but simply want to run them locally, 
 pip install evals
 ```
 
+You can find the full instructions to run existing evals in: [run-evals.md](docs/run-evals.md) and our existing eval templates: [eval-templates.md](docs/eval-templates.md). For more advanced use cases like prompt chains or tool-using agents, you can use our: [Completion Function Protocol](docs/completion-fns.md).
+
 We provide the option for you to log your eval results to a Snowflake database, if you have one or wish to set one up. For this option, you will further have to specify the `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_DATABASE`, `SNOWFLAKE_USERNAME`, and `SNOWFLAKE_PASSWORD` environment variables.
+
+## Writing evals
+
+We suggest getting starting by: 
+
+- Walking through the process for building an eval: [build-eval.md](docs/build-eval.md)
+- Exploring an example of implementing custom eval logic: [custom-eval.md](docs/custom-eval.md).
+- Writing your own completion functions: [completion-fns.md](docs/completion-fns.md)
+
+Please note that we are currently not accepting Evals with custom code! While we ask you to not submit such evals at the moment, you can still submit modelgraded evals with custom modelgraded YAML files.
+
+If you think you have an interesting eval, please open a pull request with your contribution. OpenAI staff actively review these evals when considering improvements to upcoming models.
 
 ## FAQ
 
