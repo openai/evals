@@ -102,7 +102,8 @@ def finished_bot_vs_bot_game(empty_bot_vs_bot_game: Game) -> Game:
 
 
 def _is_api_key_set() -> bool:
-    return os.environ.get("OPENAI_API_KEY") is not None
+    api_key = os.environ.get("OPENAI_API_KEY")
+    return api_key not in [None, ""]
 
 
 def test_player_cant_play_against_themselves(
