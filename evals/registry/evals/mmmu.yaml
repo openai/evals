@@ -1,0 +1,419 @@
+mmmu-accounting:
+  id: mmmu-accounting.validation.v1
+  metrics: [accuracy]
+mmmu-accounting.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Accounting&split=dev
+    subject: Accounting
+mmmu-accounting.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Accounting&split=validation
+    subject: Accounting
+
+mmmu-agriculture:
+  id: mmmu-agriculture.validation.v1
+  metrics: [accuracy]
+mmmu-agriculture.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Agriculture&split=dev
+    subject: Agriculture
+mmmu-agriculture.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Agriculture&split=validation
+    subject: Agriculture
+
+mmmu-architecture-and-engineering:
+  id: mmmu-architecture-and-engineering.validation.v1
+  metrics: [accuracy]
+mmmu-architecture-and-engineering.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Architecture_and_Engineering&split=dev
+    subject: Architecture and Engineering
+mmmu-architecture-and-engineering.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Architecture_and_Engineering&split=validation
+    subject: Architecture and Engineering
+
+mmmu-art:
+  id: mmmu-art.validation.v1
+  metrics: [accuracy]
+mmmu-art.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Art&split=dev
+    subject: Art
+mmmu-art.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Art&split=validation
+    subject: Art
+
+mmmu-art-theory:
+  id: mmmu-art-theory.validation.v1
+  metrics: [accuracy]
+mmmu-art-theory.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Art_Theory&split=dev
+    subject: Art Theory
+mmmu-art-theory.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Art_Theory&split=validation
+    subject: Art Theory
+
+mmmu-basic-medical-science:
+  id: mmmu-basic-medical-science.validation.v1
+  metrics: [accuracy]
+mmmu-basic-medical-science.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Basic_Medical_Science&split=dev
+    subject: Basic Medical Science
+mmmu-basic-medical-science.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Basic_Medical_Science&split=validation
+    subject: Basic Medical Science
+
+mmmu-biology:
+  id: mmmu-biology.validation.v1
+  metrics: [accuracy]
+mmmu-biology.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Biology&split=dev
+    subject: Biology
+mmmu-biology.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Biology&split=validation
+    subject: Biology
+
+mmmu-chemistry:
+  id: mmmu-chemistry.validation.v1
+  metrics: [accuracy]
+mmmu-chemistry.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Chemistry&split=dev
+    subject: Chemistry
+mmmu-chemistry.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Chemistry&split=validation
+    subject: Chemistry
+
+mmmu-clinical-medicine:
+  id: mmmu-clinical-medicine.validation.v1
+  metrics: [accuracy]
+mmmu-clinical-medicine.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Clinical_Medicine&split=dev
+    subject: Clinical Medicine
+mmmu-clinical-medicine.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Clinical_Medicine&split=validation
+    subject: Clinical Medicine
+
+mmmu-computer-science:
+  id: mmmu-computer-science.validation.v1
+  metrics: [accuracy]
+mmmu-computer-science.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Computer_Science&split=dev
+    subject: Computer Science
+mmmu-computer-science.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Computer_Science&split=validation
+    subject: Computer Science
+
+mmmu-design:
+  id: mmmu-design.validation.v1
+  metrics: [accuracy]
+mmmu-design.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Design&split=dev
+    subject: Design
+mmmu-design.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Design&split=validation
+    subject: Design
+
+mmmu-diagnostics-and-laboratory-medicine:
+  id: mmmu-diagnostics-and-laboratory-medicine.validation.v1
+  metrics: [accuracy]
+mmmu-diagnostics-and-laboratory-medicine.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Diagnostics_and_Laboratory_Medicine&split=dev
+    subject: Diagnostics and Laboratory Medicine
+mmmu-diagnostics-and-laboratory-medicine.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Diagnostics_and_Laboratory_Medicine&split=validation
+    subject: Diagnostics and Laboratory Medicine
+
+mmmu-economics:
+  id: mmmu-economics.validation.v1
+  metrics: [accuracy]
+mmmu-economics.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Economics&split=dev
+    subject: Economics
+mmmu-economics.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Economics&split=validation
+    subject: Economics
+
+mmmu-electronics:
+  id: mmmu-electronics.validation.v1
+  metrics: [accuracy]
+mmmu-electronics.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Electronics&split=dev
+    subject: Electronics
+mmmu-electronics.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Electronics&split=validation
+    subject: Electronics
+
+mmmu-energy-and-power:
+  id: mmmu-energy-and-power.validation.v1
+  metrics: [accuracy]
+mmmu-energy-and-power.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Energy_and_Power&split=dev
+    subject: Energy and Power
+mmmu-energy-and-power.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Energy_and_Power&split=validation
+    subject: Energy and Power
+
+mmmu-finance:
+  id: mmmu-finance.validation.v1
+  metrics: [accuracy]
+mmmu-finance.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Finance&split=dev
+    subject: Finance
+mmmu-finance.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Finance&split=validation
+    subject: Finance
+
+mmmu-geography:
+  id: mmmu-geography.validation.v1
+  metrics: [accuracy]
+mmmu-geography.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Geography&split=dev
+    subject: Geography
+mmmu-geography.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Geography&split=validation
+    subject: Geography
+
+mmmu-history:
+  id: mmmu-history.validation.v1
+  metrics: [accuracy]
+mmmu-history.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=History&split=dev
+    subject: History
+mmmu-history.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=History&split=validation
+    subject: History
+
+mmmu-literature:
+  id: mmmu-literature.validation.v1
+  metrics: [accuracy]
+mmmu-literature.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Literature&split=dev
+    subject: Literature
+mmmu-literature.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Literature&split=validation
+    subject: Literature
+
+mmmu-manage:
+  id: mmmu-manage.validation.v1
+  metrics: [accuracy]
+mmmu-manage.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Manage&split=dev
+    subject: Manage
+mmmu-manage.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Manage&split=validation
+    subject: Manage
+
+mmmu-marketing:
+  id: mmmu-marketing.validation.v1
+  metrics: [accuracy]
+mmmu-marketing.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Marketing&split=dev
+    subject: Marketing
+mmmu-marketing.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Marketing&split=validation
+    subject: Marketing
+
+mmmu-materials:
+  id: mmmu-materials.validation.v1
+  metrics: [accuracy]
+mmmu-materials.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Materials&split=dev
+    subject: Materials
+mmmu-materials.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Materials&split=validation
+    subject: Materials
+
+mmmu-math:
+  id: mmmu-math.validation.v1
+  metrics: [accuracy]
+mmmu-math.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Math&split=dev
+    subject: Math
+mmmu-math.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Math&split=validation
+    subject: Math
+
+mmmu-mechanical-engineering:
+  id: mmmu-mechanical-engineering.validation.v1
+  metrics: [accuracy]
+mmmu-mechanical-engineering.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Mechanical_Engineering&split=dev
+    subject: Mechanical Engineering
+mmmu-mechanical-engineering.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Mechanical_Engineering&split=validation
+    subject: Mechanical Engineering
+
+mmmu-music:
+  id: mmmu-music.validation.v1
+  metrics: [accuracy]
+mmmu-music.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Music&split=dev
+    subject: Music
+mmmu-music.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Music&split=validation
+    subject: Music
+
+mmmu-pharmacy:
+  id: mmmu-pharmacy.validation.v1
+  metrics: [accuracy]
+mmmu-pharmacy.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Pharmacy&split=dev
+    subject: Pharmacy
+mmmu-pharmacy.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Pharmacy&split=validation
+    subject: Pharmacy
+
+mmmu-physics:
+  id: mmmu-physics.validation.v1
+  metrics: [accuracy]
+mmmu-physics.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Physics&split=dev
+    subject: Physics
+mmmu-physics.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Physics&split=validation
+    subject: Physics
+
+mmmu-psychology:
+  id: mmmu-psychology.validation.v1
+  metrics: [accuracy]
+mmmu-psychology.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Psychology&split=dev
+    subject: Psychology
+mmmu-psychology.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Psychology&split=validation
+    subject: Psychology
+
+mmmu-public-health:
+  id: mmmu-public-health.validation.v1
+  metrics: [accuracy]
+mmmu-public-health.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Public_Health&split=dev
+    subject: Public Health
+mmmu-public-health.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Public_Health&split=validation
+    subject: Public Health
+
+mmmu-sociology:
+  id: mmmu-sociology.validation.v1
+  metrics: [accuracy]
+mmmu-sociology.dev.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Sociology&split=dev
+    subject: Sociology
+mmmu-sociology.validation.v1:
+  class: evals.elsuite.mmmu.eval:MMMU
+  args:
+    dataset: hf://mmmu/mmmu?name=Sociology&split=validation
+    subject: Sociology
