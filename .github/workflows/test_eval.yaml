@@ -43,6 +43,8 @@ jobs:
         echo "new_files=$(cat new_files)" >> $GITHUB_ENV
 
     - name: Run oaieval command for each new YAML file
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: |
         files="${{ env.new_files }}"
         if [ -n "$files" ]; then
