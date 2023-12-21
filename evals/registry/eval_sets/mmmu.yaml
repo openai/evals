@@ -1,0 +1,3 @@
+mmmu:
+  evals:
+    - mmmu-*.validation.v1
