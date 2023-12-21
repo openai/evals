@@ -188,7 +188,7 @@ def _to_py_types(o: Any, exclude_keys: List[Text]) -> Any:
     if isinstance(o, pydantic.BaseModel):
         return {
             k: _to_py_types(v, exclude_keys=exclude_keys)
-            for k, v in json.loads(o.json()).items()
+            for k, v in json.loads(o.model_dump_json()).items()
             if k not in exclude_keys
         }
 
