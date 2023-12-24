@@ -159,6 +159,14 @@ class MMMU(evals.Eval):
 
         match = sampled.find(f"ANSWER: {correct_answer}") != -1
 
+        if not match and sampled.find("ANSWER") == -1 and sample.question_type == "multiple-choice":
+            # The model didn't answer anything, so randomly pick an answer
+            # This matches the behavior described in section 4.1 of the MMMU paper: https://arxiv.org/pdf/2311.16502.pdf
+            logging.info("No answer found for multiple choice so picking a random answer.")
+            answer_idx = rng.randint(0, len(sample.answers) - 1)
+            answer_letter = chr(ord("A") + answer_idx)
+            match = correct_answer == answer_letter
+
         record_match(
             match,
             expected=correct_answer,
