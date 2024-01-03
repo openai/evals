@@ -215,6 +215,15 @@ class RecorderBase:
         }
         self.record_event("sampling", data, sample_id=sample_id)
 
+    def record_function_call(self, name, arguments, return_value, sample_id=None, **extra):
+        data = {
+            "name": name,
+            "arguments": arguments,
+            "return_value": return_value,
+            **extra,
+        }
+        self.record_event("function_call", data, sample_id=sample_id)
+
     def record_cond_logp(self, prompt, completion, logp, sample_id=None, **extra):
         data = {
             "prompt": prompt,
@@ -589,6 +598,10 @@ def record_embedding(prompt, embedding_type, **extra):
 
 def record_sampling(prompt, sampled, **extra):
     return default_recorder().record_sampling(prompt, sampled, **extra)
+
+
+def record_function_call(name, arguments, return_value, **extra):
+    return default_recorder().record_function_call(name, arguments, return_value, **extra)
 
 
 def record_cond_logp(prompt, completion, logp, **extra):
