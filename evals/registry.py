@@ -35,9 +35,10 @@ SPEC_RESERVED_KEYWORDS = ["key", "group", "cls"]
 
 
 def n_ctx_from_model_name(model_name: str) -> Optional[int]:
-    """Returns n_ctx for a given API model name. Model list last updated 2023-06-16."""
+    """Returns n_ctx for a given API model name. Model list last updated 2023-10-24."""
     # note that for most models, the max tokens is n_ctx + 1
     PREFIX_AND_N_CTX: list[tuple[str, int]] = [
+        ("gpt-3.5-turbo-16k-", 16384),
         ("gpt-3.5-turbo-", 4096),
         ("gpt-4-32k-", 32768),
         ("gpt-4-", 8192),
@@ -55,6 +56,7 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
         "text-davinci-002": 4096,
         "text-davinci-003": 4096,
         "gpt-3.5-turbo": 4096,
+        "gpt-3.5-turbo-16k": 16384,
         "gpt-4": 8192,
         "gpt-4-32k": 32768,
         "gpt-4-base": 8192,
@@ -77,13 +79,15 @@ def is_chat_model(model_name: str) -> bool:
     if model_name in {"gpt-4-base"}:
         return False
 
-    CHAT_MODEL_NAMES = {"gpt-3.5-turbo", "gpt-4", "gpt-4-32k"}
+    CHAT_MODEL_NAMES = {"gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4", "gpt-4-32k"}
+
     if model_name in CHAT_MODEL_NAMES:
         return True
 
-    for model_prefix in {"gpt-3.5-turbo-", "gpt-4-", "gpt-4-32k-"}:
+    for model_prefix in {"gpt-3.5-turbo-", "gpt-4-"}:
         if model_name.startswith(model_prefix):
             return True
+
     return False
 
 
