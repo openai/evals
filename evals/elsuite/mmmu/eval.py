@@ -88,7 +88,7 @@ class MMMU(evals.Eval):
                 rng=rng,
             )
             prompt = sample.question + "\n" + options
-            system_prompt = f'You are an expert in {self.subject} whose job is to answer questions from the user using images. First, reason about the correct answer. Then write the answer in the following format where X is exactly one of A,B,C,D: "ANSWER: X"'
+            system_prompt = f'You are an expert in {self.subject} whose job is to answer questions from the user using images. First, reason about the correct answer. Then write the answer in the following format where X is exactly one of A,B,C,D: "ANSWER: X". If you are uncertain of the correct answer, guess the most likely one.'
         else:
             correct_answer = sample.label
             prompt = sample.question
