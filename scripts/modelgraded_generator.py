@@ -13,6 +13,7 @@ def format(template: str, **kwargs: str) -> str:
     cur_keys = {k: kwargs[k] for k in keys}
     return template.format(**cur_keys)
 
+
 # Define the YAML configuration
 YAML = """
 mg-{prompt_name}-{subject}:
