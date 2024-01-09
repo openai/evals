@@ -1,0 +1,19 @@
+arc:
+  id: arc_challenge.dev.0
+  description: Test the model's ability to answer advanced question-answering. Test set of ARC-Challenge
+  metrics: [accuracy]
+
+arc_challenge.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: arc_challenge/samples_train.jsonl
+
+arc_challenge.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: arc_challenge/samples_test.jsonl
+
+arc_challenge.val.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: arc_challenge/samples_validation.jsonl
