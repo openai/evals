@@ -1,0 +1,30 @@
+theory_of_mind:
+  id: theory_of_mind.tomi
+  metrics: [accuracy]
+  description: Runs a series of theory of mind (ToM) benchmarks (ToMI, SocialIQA).
+
+theory_of_mind.tomi:
+  class: evals.elsuite.basic.match_with_solvers:MatchWithSolvers
+  args:
+    samples_jsonl: theory_of_mind/tomi/test.jsonl
+    task_description: "You will read a number of sentences describing a situation involving several people, as well as a question regarding the real or perceived location of an object. Your task is to answer the question based on the information in the sentences. Respond with the single word corresponding to the location."
+
+theory_of_mind.tomi_light:
+  class: evals.elsuite.basic.match_with_solvers:MatchWithSolvers
+  args:
+    samples_jsonl: theory_of_mind/tomi/test.jsonl
+    task_description: "You will read a number of sentences describing a situation involving several people, as well as a question regarding the real or perceived location of an object. Your task is to answer the question based on the information in the sentences. Respond with the single word corresponding to the location."
+    n_samples: 599  # Exactly 1/10th of the total
+
+theory_of_mind.socialiqa:
+  class: evals.elsuite.basic.match_with_solvers:MatchWithSolvers
+  args:
+    samples_jsonl: theory_of_mind/socialiqa/test.jsonl
+    task_description: "You will read a number of sentences describing a situation, followed by a question regarding the situation. Your task is to answer the question based on the information in the sentences by choosing from one of three answers A, B or C. Respond with just the letter corresponding to your answer, e.g. A."
+
+theory_of_mind.socialiqa_light:
+  class: evals.elsuite.basic.match_with_solvers:MatchWithSolvers
+  args:
+    samples_jsonl: theory_of_mind/socialiqa/test.jsonl
+    task_description: "You will read a number of sentences describing a situation, followed by a question regarding the situation. Your task is to answer the question based on the information in the sentences by choosing from one of three answers A, B or C. Respond with just the letter corresponding to your answer, e.g. A."
+    n_samples: 222  # Exactly 1/10th of the total
