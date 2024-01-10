@@ -48,7 +48,7 @@ class ModelBasedClassify(evals.Eval):
         if len(self.completion_fns) > 1:
             assert self.multicomp_n == n_models
 
-        self.mutliturn = kwargs.get("multiturn", False)
+        self.mutliturn = True if "mtbench" in modelgraded_spec else False
 
         self.mg = self.registry.get_modelgraded_spec(modelgraded_spec)
 
@@ -87,11 +87,12 @@ class ModelBasedClassify(evals.Eval):
                     completion, _ = get_input_completion()
                 else:
                     # Get the previous input_output
-                    previous_input_output = input_outputs[index-1]
+                    previous_input_output = self.mg.input_outputs[input_outputs[index-1]]
                     # Get the previous completion
                     previous_completion = completions[previous_input_output]
                     # Need to make the previous completion a prompt with the current input_output
-                    combined_prompt = [{"role": "assistant", "content": previous_completion},
+                    # Have to scrub formatting from the response, otherwise errors on templates
+                    combined_prompt = [{"role": "assistant", "content": scrub_formatting_from_prompt(previous_completion)},
                                        {"role": "user", "content": test_sample[k]}]
                     get_input_completion = PromptFn(
                         combined_prompt, completion_fn=self.completion_fn, **self.sample_kwargs
