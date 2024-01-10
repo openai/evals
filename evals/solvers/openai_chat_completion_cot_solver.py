@@ -85,7 +85,10 @@ class OpenAIChatCompletionCoTSolver(OpenAISolver):
             [] if self.last_interaction is None else self.last_interaction.private_messages_ids
         )
         private_messages_ids += list(
-            range(num_interaction_messages - self.private_interaction_length - 1, num_interaction_messages - 1)
+            range(
+                num_interaction_messages - self.private_interaction_length - 1,
+                num_interaction_messages - 1,
+            )
         )
         self.last_interaction = Interaction(interaction_messages, private_messages_ids)
 

@@ -5,12 +5,10 @@ from collections.abc import Callable
 from typing import Dict, List, NamedTuple, Tuple, Union
 
 import numpy as np
+from logger_config import logger
 from openai import OpenAI
 
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-from logger_config import logger
-
-
 
 CORRELATION_PROMPT_TEMPLATE = """Task: Estimate the degree of correlation between
  two provided strings. In your evaluation, consider not just direct links, but also indirect and subtle correlations.
@@ -251,7 +249,9 @@ class GPTValidator(QualityValidator):
         logger.debug(
             f"Getting chat_completion using {self._model}.\nPrompting messages: {messages}"
         )
-        response = client.chat.completions.create(model=self._model, messages=messages, temperature=0.0)
+        response = client.chat.completions.create(
+            model=self._model, messages=messages, temperature=0.0
+        )
         logger.debug(f"response_message: {response}")
         response_message = response["choices"][0]["message"]["content"]
         logger.info(f"response_message: {response_message}")

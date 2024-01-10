@@ -1,6 +1,5 @@
 import os
 from abc import abstractmethod
-from threading import Lock
 from typing import Any, Dict, Sequence
 
 from evals.completion_fns.openai import OpenAIChatCompletionFn
@@ -149,7 +148,7 @@ class LMSolver(StrategySolver):
         temperature: float = 0.0,
         **kwargs,
     ):
-        print(scratchpad == True)
+        print(scratchpad is True)
         super().__init__(
             model_name=model_name,
             sandbag_prompt=sandbag_prompt,

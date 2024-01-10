@@ -1,9 +1,11 @@
 import json
 import logging
 from typing import Any, Callable, Tuple
-from evals.registry import is_chat_model
-from evals.elsuite.schelling_point.prompts import hhh_prompt
+
 import evals
+from evals.elsuite.schelling_point.prompts import hhh_prompt
+from evals.registry import is_chat_model
+
 
 def replace_last(s: str, old: str, new: str) -> str:
     # Reverse the string, replace the first occurrence, then reverse it back
@@ -42,7 +44,7 @@ def get_response(
 
         # return the first complete '{' '}' pair
         start_pair = response.find("{")
-        
+
         end_pair = response.find("}")
 
         if start_pair == -1 or end_pair == -1 or start_pair > end_pair:
@@ -98,4 +100,3 @@ def get_response(
             return "error", "error"
 
         return response.lower().strip(), "error"
-
