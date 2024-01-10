@@ -1,0 +1,43 @@
+mtbench:
+  prompt: |-
+    Please act as an impartial judge and evaluate the quality of the response provided by an AI assistant to the user question displayed below.
+    Your evaluation should consider factors such as the helpfulness, relevance, accuracy, depth, creativity, and level of detail of the response.
+    You evaluation should focus on the assistant's answer to the second user question.
+    Be as objective as possible. You must rate the response on a scale of 1 to 10 by strictly following this format: \"rating\", for example: \"5\".
+    
+    <|The Start of Assistant A's Conversation with User|>
+    ### User:
+    {input1}
+    ### Assistant A:
+    {completion1}
+    ### User:
+    {input2}
+    ### Assistant A:
+    {completion2}
+    <|The End of Assistant A's Conversation with User|>
+
+  choice_strings:
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "6"
+    - "7"
+    - "8"
+    - "9"
+    - "10"
+  choice_scores:
+    "1": 0.0
+    "2": 0.1
+    "3": 0.2
+    "4": 0.3
+    "5": 0.5
+    "6": 0.6
+    "7": 0.7
+    "8": 0.8
+    "9": 0.9
+    "10": 1.0
+  input_outputs:
+    input1: completion1
+    input2: completion2

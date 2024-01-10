@@ -1,0 +1,26 @@
+arc-challenge:
+  id: arc-challenge.dev.v0
+  metrics: [accuracy]
+
+arc-challenge.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: arc_challenge/samples_train.jsonl
+
+arc-challenge-test:
+  id: arc-challenge.test.v0
+  metrics: [accuracy]
+
+arc-challenge.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: arc_challenge/samples_test.jsonl
+
+arc-challenge-val:
+  id: arc-challenge.test.v0
+  metrics: [accuracy]
+
+arc-challenge.val.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: arc_challenge/samples_validation.jsonl

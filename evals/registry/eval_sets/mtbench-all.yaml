@@ -1,0 +1,4 @@
+mtbench-all:
+  evals:
+    - mtbench
+    - mtbench-reference

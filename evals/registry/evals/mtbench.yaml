@@ -1,0 +1,20 @@
+# a simple modelgraded eval checking if a completion is funny or not
+mtbench:
+  id: mtbench.dev.v0
+  metrics: [accuracy]
+mtbench.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: mtbench/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: mtbench
+
+mtbench-reference:
+  id: mtbench-reference.dev.v0
+  metrics: [accuracy]
+mtbench-reference.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: mtbench/samples_references.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: mtbench_reference
