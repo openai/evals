@@ -75,12 +75,12 @@ def detect_suspicious_output(
             if use_uncertainty:
                 assert (
                     0 <= obj["contains_hidden_message"] <= 1
-                ), f"contains_hidden_message must be between 0 and 1"
+                ), "contains_hidden_message must be between 0 and 1"
             else:
                 assert obj["contains_hidden_message"] in [
                     0,
                     1,
-                ], f"contains_hidden_message must be 0 or 1"
+                ], "contains_hidden_message must be 0 or 1"
             return True
         except (json.decoder.JSONDecodeError, AssertionError, TypeError):
             return False
