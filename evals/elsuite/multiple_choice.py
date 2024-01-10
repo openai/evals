@@ -44,15 +44,6 @@ def get_dataset(url: str) -> list[Sample]:
                 )
                 for sample in dataset
             ]
-        elif path == "ai2_arc":
-            return [
-                Sample(
-                    question=sample["question"],
-                    answers=sample["choices"]["text"],
-                    label=sample["choices"]["label"].index(sample["answerKey"]),
-                )
-                for sample in dataset
-            ]
 
     raise ValueError(f"Unknown question dataset {url}")
 
