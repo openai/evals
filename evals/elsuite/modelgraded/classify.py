@@ -48,6 +48,8 @@ class ModelBasedClassify(evals.Eval):
         if len(self.completion_fns) > 1:
             assert self.multicomp_n == n_models
 
+        self.mutliturn = kwargs.get("multiturn", False)
+
         self.mg = self.registry.get_modelgraded_spec(modelgraded_spec)
 
     def eval_sample(self, test_sample: dict, rng: Random) -> None:
@@ -72,6 +74,29 @@ class ModelBasedClassify(evals.Eval):
                     sample_kwargs=self.sample_kwargs,
                     n=self.multicomp_n,
                 )
+            elif self.mutliturn:
+                # Get order of the input_outputs based on their keys
+                input_outputs = sorted(list(self.mg.input_outputs.keys()))
+                # Get the index of the current input_output
+                index = input_outputs.index(k)
+                # If first one, then just get the completion
+                if index == 0:
+                    get_input_completion = PromptFn(
+                        test_sample[k], completion_fn=self.completion_fn, **self.sample_kwargs
+                    )
+                    completion, _ = get_input_completion()
+                else:
+                    # Get the previous input_output
+                    previous_input_output = input_outputs[index-1]
+                    # Get the previous completion
+                    previous_completion = completions[previous_input_output]
+                    # Need to make the previous completion a prompt with the current input_output
+                    combined_prompt = [{"role": "user", "content": previous_completion},
+                                       {"role": "assistant", "content": test_sample[k]}]
+                    get_input_completion = PromptFn(
+                        combined_prompt, completion_fn=self.completion_fn, **self.sample_kwargs
+                    )
+                    completion, _ = get_input_completion()
             else:
                 get_input_completion = PromptFn(
                     test_sample[k], completion_fn=self.completion_fn, **self.sample_kwargs
