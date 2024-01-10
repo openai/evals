@@ -1,0 +1,5 @@
+arc-challenge-all:
+  evals:
+    - arc-challenge-test
+    - arc-challenge-val
+    - arc-challenge
