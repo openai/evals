@@ -91,8 +91,8 @@ class ModelBasedClassify(evals.Eval):
                     # Get the previous completion
                     previous_completion = completions[previous_input_output]
                     # Need to make the previous completion a prompt with the current input_output
-                    combined_prompt = [{"role": "user", "content": previous_completion},
-                                       {"role": "assistant", "content": test_sample[k]}]
+                    combined_prompt = [{"role": "assistant", "content": previous_completion},
+                                       {"role": "user", "content": test_sample[k]}]
                     get_input_completion = PromptFn(
                         combined_prompt, completion_fn=self.completion_fn, **self.sample_kwargs
                     )
