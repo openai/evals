@@ -1,0 +1,19 @@
+arc_challenge:
+  id: arc_challenge.dev.0
+  description: Test the model's ability to answer advanced question-answering. Test set of ARC-Challenge
+  metrics: [accuracy]
+
+arc_challenge.dev.v0:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://ai2_arc?config=ARC-Challenge&split=train
+
+arc_challenge.test.v0:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://ai2_arc?config=ARC-Challenge&split=test
+
+arc_challenge.val.v0:
+  class: evals.elsuite.multiple_choice:MultipleChoice
+  args:
+    dataset: hf://ai2_arc?config=ARC-Challenge&split=validation
