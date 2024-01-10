@@ -63,7 +63,7 @@ class ModelBasedClassify(evals.Eval):
 
         # run policy completions
         completions = {}
-        for k, v in self.mg.input_outputs.items():
+        for k, v in sorted(list(self.mg.input_outputs.items()), key=lambda x: x[0]):
             if v in test_sample:  # test_sample already has completion, skip.
                 continue
             if self.multicomp_n > 1:
