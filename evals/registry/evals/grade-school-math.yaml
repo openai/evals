@@ -1,0 +1,10 @@
+grade-school-math:
+  id: grade-school-math.dev.v0
+  description: Test the model's ability to tackle grade school math problems and find a result.
+  metrics: [accuracy]
+grade-school-math.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: grade-school-math/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
