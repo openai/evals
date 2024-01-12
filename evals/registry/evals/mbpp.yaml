@@ -1,0 +1,10 @@
+mbpp:
+  id: mbpp.dev.v0
+  metrics: [accuracy]
+  description: Eval that scores python code from examples in the Mostly Basic Python Problem test dataset.
+mbpp.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: mbpp/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: mbpp

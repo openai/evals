@@ -1,0 +1,25 @@
+mbpp:
+  prompt: |-
+    You are comparing a submitted answer to an expert answer on a given python coding question. Here is the data:
+    [BEGIN DATA]
+    ************
+    [Question]: {input}
+    ************
+    [Expert]: {ideal}
+    ************
+    [Submission]: {completion}
+    ************
+    [END DATA]
+
+    Compare the content and correctness of the submitted python code with the expert answer. Ignore any differences in whitespace, or style.
+    The submitted answer may either be correct or incorrect. Determine which case applies. Answer the question by responding with one of the following:
+      "Correct": The submitted Python code correctly solves the question given, even if the approach is different.
+      "Incorrect": The submitted Python code does not correctly solve the question given.
+  choice_strings:
+    - "Correct"
+    - "Incorrect"
+  choice_scores:
+    "Correct": 1.0
+    "Incorrect": 0.0
+  input_outputs:
+    input: completion
