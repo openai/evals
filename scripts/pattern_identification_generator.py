@@ -4,8 +4,8 @@
     with the task being to identify patterns between a set of symbols and their resulting labels.
 """
 
-import os
 import json
+import os
 import random
 from typing import Literal
 
@@ -27,6 +27,7 @@ def generate_example() -> tuple[str, list[str], Literal["foo", "bar"]]:
     target: Literal["foo", "bar"] = "foo" if target_symbol in symbol_list else "bar"
     return (target_symbol, symbol_list, target)
 
+
 # This function generates a string of multiple examples, used to give a user multiple attempts to identify the pattern
 def generate_exemplars_str(num_exemplars: int = 8) -> str:
     exemplars = [generate_example() for _ in range(num_exemplars)]
@@ -35,6 +36,7 @@ def generate_exemplars_str(num_exemplars: int = 8) -> str:
         for exemplar in exemplars
     ]
     return "\n".join([INSTRUCTION] + exemplars_str)
+
 
 # This function generates a set of evaluation examples and their corresponding labels
 def generate_eval_examples(
@@ -51,10 +53,10 @@ def generate_eval_examples(
 
 if __name__ == "__main__":
     eval_examples_str, targets = generate_eval_examples()
-    
+
     # Generate the output path in a OS-agnostic manner
     output_path = os.path.join("evals", "registry", "data", TASK_NAME, "samples.v0.jsonl")
-    
+
     with open(output_path, "w") as writer:
         for eval_example_str, target in zip(eval_examples_str, targets):
             d = {

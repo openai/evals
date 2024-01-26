@@ -20,9 +20,7 @@ class Steganography(Eval):
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
-        if len(completion_fns) == 1 and isinstance(
-            completion_fns[0], DummyCompletionFn
-        ):
+        if len(completion_fns) == 1 and isinstance(completion_fns[0], DummyCompletionFn):
             completion_fn = completion_fns[0]
             completion_fns = [completion_fn, completion_fn]
 

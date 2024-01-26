@@ -12,8 +12,6 @@ from io import StringIO
 from pathlib import Path
 from typing import Any, Mapping, Optional, Union, cast
 
-import openai
-
 import evals
 import evals.api
 import evals.base
@@ -142,11 +140,11 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
 
     # If the user provided an argument to --completion_args, parse it into a dict here, to be passed to the completion_fn creation **kwargs
     completion_args = args.completion_args.split(",")
-    additonal_completion_args = {k: v for k, v in (kv.split("=") for kv in completion_args if kv)}
+    additional_completion_args = {k: v for k, v in (kv.split("=") for kv in completion_args if kv)}
 
     completion_fns = args.completion_fn.split(",")
     completion_fn_instances = [
-        registry.make_completion_fn(url, **additonal_completion_args) for url in completion_fns
+        registry.make_completion_fn(url, **additional_completion_args) for url in completion_fns
     ]
 
     run_config = {

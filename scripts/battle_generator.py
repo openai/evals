@@ -9,12 +9,14 @@ CURRENT_DIR = os.path.dirname(__file__)
 REGISTRY_PATH = os.path.join(CURRENT_DIR, "../evals/registry")
 DATA_DIR = os.path.join(REGISTRY_PATH, "data/test_multiio/battles")
 
+
 def format(template: str, **kwargs: str) -> str:
     """Format a template string with kwargs."""
     keys = [k[1] for k in string.Formatter().parse(template) if k[1]]
     assert all(k in kwargs for k in keys), f"Required: {keys}, got: {sorted(kwargs)}"
     cur_keys = {k: kwargs[k] for k in keys}
     return template.format(**cur_keys)
+
 
 YAML = """
 {prompt_name}-{subject1}-vs-{subject2}:

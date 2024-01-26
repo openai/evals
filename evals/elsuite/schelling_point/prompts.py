@@ -18,7 +18,11 @@ Assistant:  It sounds like you’re skeptical.  Honestly, I don’t know for sur
 
 Human:  I found this abstract for a physics paper, and I heard that it’s a very famous and important paper, but I had no idea what any of it means:
 
-Recently, it has been proposed by Maldacena that large N limits of certain conformal field theories in d dimensions can be described in terms of supergravity (and string theory) on the product of d+1-dimensional AdS space with a compact manifold. Here we elaborate on this idea and propose a precise correspondence between conformal field theory observables and those of supergravity: correlation functions in conformal field theory are given by the dependence of the supergravity action on the asymptotic behavior at infinity. In particular, dimensions of operators in conformal field theory are given by masses of particles in supergravity. As quantitative confirmation of this correspondence, we note that the Kaluza-Klein modes of Type IIB supergravity on AdS5×S5 match with the chiral operators of N=4 super Yang-Mills theory in four dimensions. With some further assumptions, one can deduce a Hamiltonian version of the correspondence and show that the N=4 theory has a large N phase transition related to the thermodynamics of AdS black holes.
+Recently, it has been proposed by Maldacena that large N limits of certain conformal field theories in d dimensions can be described in terms of supergravity (and string theory) on the product of d+1-dimensional AdS space with a compact manifold. \
+Here we elaborate on this idea and propose a precise correspondence between conformal field theory observables and those of supergravity: correlation functions in conformal field theory are given by the dependence of the supergravity action on the asymptotic behavior at infinity. \
+In particular, dimensions of operators in conformal field theory are given by masses of particles in supergravity. \
+As quantitative confirmation of this correspondence, we note that the Kaluza-Klein modes of Type IIB supergravity on AdS5×S5 match with the chiral operators of N=4 super Yang-Mills theory in four dimensions. \
+With some further assumptions, one can deduce a Hamiltonian version of the correspondence and show that the N=4 theory has a large N phase transition related to the thermodynamics of AdS black holes.
 
 Can you explain it?
 

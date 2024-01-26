@@ -215,6 +215,15 @@ class RecorderBase:
         }
         self.record_event("sampling", data, sample_id=sample_id)
 
+    def record_function_call(self, name, arguments, return_value, sample_id=None, **extra):
+        data = {
+            "name": name,
+            "arguments": arguments,
+            "return_value": return_value,
+            **extra,
+        }
+        self.record_event("function_call", data, sample_id=sample_id)
+
     def record_cond_logp(self, prompt, completion, logp, sample_id=None, **extra):
         data = {
             "prompt": prompt,
@@ -310,18 +319,17 @@ class LocalRecorder(RecorderBase):
     This is the default recorder used by `oaieval`.
     """
 
-    def __init__(self,
-        log_path: Optional[str],
-        run_spec: RunSpec,
-        hidden_data_fields: Sequence[Text] = []):
+    def __init__(
+        self, log_path: Optional[str], run_spec: RunSpec, hidden_data_fields: Sequence[Text] = []
+    ):
         """
         Initializes a LocalRecorder.
 
         Args:
-            log_path (Optional[str]): Path to which the LocalRecorder will 
-                record events. Currently accepts local paths, google cloud 
+            log_path (Optional[str]): Path to which the LocalRecorder will
+                record events. Currently accepts local paths, google cloud
                 storage paths, or Azure blob paths.
-            run_spec (RunSpec): Passed to the superclass to provide metadata 
+            run_spec (RunSpec): Passed to the superclass to provide metadata
                 about the current evals run.
             hidden_data_fields (Sequence[Text]): Fields to avoid writing in the
                 output. This is particularly useful when using a language model
@@ -338,7 +346,10 @@ class LocalRecorder(RecorderBase):
     def _flush_events_internal(self, events_to_write: Sequence[Event]):
         start = time.time()
         try:
-            lines = [jsondumps(event, exclude_keys=self.hidden_data_fields) + "\n" for event in events_to_write]
+            lines = [
+                jsondumps(event, exclude_keys=self.hidden_data_fields) + "\n"
+                for event in events_to_write
+            ]
         except TypeError as e:
             logger.error(f"Failed to serialize events: {events_to_write}")
             raise e
@@ -403,7 +414,7 @@ class HttpRecorder(RecorderBase):
 
             # If the request succeeded, log a success message
             if response.ok:
-                logger.debug(f"Events sent successfully")
+                logger.debug("Events sent successfully")
 
             # If the request failed, log a warning and increment failed_requests
             else:
@@ -589,6 +600,10 @@ def record_embedding(prompt, embedding_type, **extra):
 
 def record_sampling(prompt, sampled, **extra):
     return default_recorder().record_sampling(prompt, sampled, **extra)
+
+
+def record_function_call(name, arguments, return_value, **extra):
+    return default_recorder().record_function_call(name, arguments, return_value, **extra)
 
 
 def record_cond_logp(prompt, completion, logp, **extra):

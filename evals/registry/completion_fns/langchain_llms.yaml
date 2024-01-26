@@ -23,5 +23,5 @@ langchain/chat_model/gpt-3.5-turbo:
   class: evals.completion_fns.langchain_llm:LangChainChatModelCompletionFn
   args:
     llm: ChatOpenAI
-    chat_model_kwargs:
+    llm_kwargs:
       model_name: gpt-3.5-turbo
