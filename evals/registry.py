@@ -60,6 +60,7 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
         "gpt-4": 8192,
         "gpt-4-32k": 32768,
         "gpt-4-base": 8192,
+        "gpt-4-1106-preview": 128_000,
     }
 
     # first, look for an exact match
@@ -135,7 +136,7 @@ class Registry:
         # No match, so try to find a completion-fn-id in the registry
         spec = self.get_completion_fn(name)
         if spec is None:
-            raise ValueError(f"Could not find CompletionFn in the registry with ID {name}")
+            raise ValueError(f"Could not find CompletionFn/Solver in the registry with ID {name}")
         if spec.args is None:
             spec.args = {}
         spec.args.update(kwargs)
@@ -195,7 +196,7 @@ class Registry:
         )
 
     def get_completion_fn(self, name: str) -> Optional[CompletionFnSpec]:
-        return self._dereference(name, self._completion_fns, "completion_fn", CompletionFnSpec)
+        return self._dereference(name, self._completion_fns | self._solvers, "completion_fn", CompletionFnSpec)
 
     def get_eval(self, name: str) -> Optional[EvalSpec]:
         return self._dereference(name, self._evals, "eval", EvalSpec)
@@ -302,6 +303,10 @@ class Registry:
     @functools.cached_property
     def _completion_fns(self) -> RawRegistry:
         return self._load_registry(self._registry_paths, "completion_fns")
+
+    @functools.cached_property
+    def _solvers(self) -> RawRegistry:
+        return self._load_registry(self._registry_paths, "solvers")
 
     @functools.cached_property
     def _eval_sets(self) -> RawRegistry:
