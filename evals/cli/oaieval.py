@@ -133,6 +133,30 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         eval_spec is not None
     ), f"Eval {args.eval} not found. Available: {list(sorted(registry._evals.keys()))}"
 
+    def parse_extra_eval_params(
+        param_str: Optional[str],
+    ) -> Mapping[str, Union[str, int, float]]:
+        """Parse a string of the form "key1=value1,key2=value2" into a dict."""
+        if not param_str:
+            return {}
+
+        def to_number(x: str) -> Union[int, float, str]:
+            try:
+                return int(x)
+            except (ValueError, TypeError):
+                pass
+            try:
+                return float(x)
+            except (ValueError, TypeError):
+                pass
+            return x
+
+        str_dict = dict(kv.split("=") for kv in param_str.split(","))
+        return {k: to_number(v) for k, v in str_dict.items()}
+
+    extra_eval_params = parse_extra_eval_params(args.extra_eval_params)
+    eval_spec.args.update(extra_eval_params)
+
     # If the user provided an argument to --completion_args, parse it into a dict here, to be passed to the completion_fn creation **kwargs
     completion_args = args.completion_args.split(",")
     additional_completion_args = {k: v for k, v in (kv.split("=") for kv in completion_args if kv)}
@@ -185,29 +209,6 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
 
     run_url = f"{run_spec.run_id}"
     logger.info(_purple(f"Run started: {run_url}"))
-
-    def parse_extra_eval_params(
-        param_str: Optional[str],
-    ) -> Mapping[str, Union[str, int, float]]:
-        """Parse a string of the form "key1=value1,key2=value2" into a dict."""
-        if not param_str:
-            return {}
-
-        def to_number(x: str) -> Union[int, float, str]:
-            try:
-                return int(x)
-            except (ValueError, TypeError):
-                pass
-            try:
-                return float(x)
-            except (ValueError, TypeError):
-                pass
-            return x
-
-        str_dict = dict(kv.split("=") for kv in param_str.split(","))
-        return {k: to_number(v) for k, v in str_dict.items()}
-
-    extra_eval_params = parse_extra_eval_params(args.extra_eval_params)
 
     eval_class = registry.get_class(eval_spec)
     eval: Eval = eval_class(
