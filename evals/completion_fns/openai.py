@@ -15,6 +15,7 @@ from evals.record import record_sampling
 from evals.utils.api_utils import (
     openai_chat_completion_create_retrying,
     openai_completion_create_retrying,
+    openai_rag_completion_create_retrying
 )
 
 
@@ -44,6 +45,15 @@ class OpenAICompletionResult(OpenAIBaseCompletionResult):
             for choice in self.raw_data.choices:
                 completions.append(choice.text)
         return completions
+
+
+class RetrievalCompletionResult(CompletionResult):
+    def __init__(self, response: str, prompt: Any) -> None:
+        self.response = response
+        self.prompt = prompt
+
+    def get_completions(self) -> list[str]:
+        return [self.response.strip()]
 
 
 class OpenAICompletionFn(CompletionFn):
@@ -81,13 +91,22 @@ class OpenAICompletionFn(CompletionFn):
 
         openai_create_prompt: OpenAICreatePrompt = prompt.to_formatted_prompt()
 
-        result = openai_completion_create_retrying(
-            OpenAI(api_key=self.api_key, base_url=self.api_base),
-            model=self.model,
-            prompt=openai_create_prompt,
-            **{**kwargs, **self.extra_options},
-        )
-        result = OpenAICompletionResult(raw_data=result, prompt=openai_create_prompt)
+        if "file_name" not in kwargs:
+            result = openai_completion_create_retrying(
+                OpenAI(api_key=self.api_key, base_url=self.api_base),
+                model=self.model,
+                prompt=openai_create_prompt,
+                **{**kwargs, **self.extra_options},
+            )
+            result = OpenAICompletionResult(raw_data=result, prompt=openai_create_prompt)
+        else:
+            answer = openai_rag_completion_create_retrying(
+                OpenAI(api_key=self.api_key, base_url=self.api_base),
+                model=self.model,
+                instructions=kwargs.get("instructions", ""),
+                file_name=kwargs.get("file_name", ""),
+            )
+            result = RetrievalCompletionResult(answer, prompt=openai_create_prompt)
         record_sampling(prompt=result.prompt, sampled=result.get_completions())
         return result
 
@@ -126,12 +145,23 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
 
         openai_create_prompt: OpenAICreateChatPrompt = prompt.to_formatted_prompt()
 
-        result = openai_chat_completion_create_retrying(
-            OpenAI(api_key=self.api_key, base_url=self.api_base),
-            model=self.model,
-            messages=openai_create_prompt,
-            **{**kwargs, **self.extra_options},
-        )
-        result = OpenAIChatCompletionResult(raw_data=result, prompt=openai_create_prompt)
+        if "file_name" not in kwargs:
+            result = openai_chat_completion_create_retrying(
+                OpenAI(api_key=self.api_key, base_url=self.api_base),
+                model=self.model,
+                messages=openai_create_prompt,
+                **{**kwargs, **self.extra_options},
+            )
+            result = OpenAIChatCompletionResult(raw_data=result, prompt=openai_create_prompt)
+        else:
+            chatmodel_to_apimodel = lambda x: "gpt-3.5-turbo-1106" if x.startswith("gpt-3.5-turbo") else "gpt-4-1106-preview" if x.startswith("gpt-4") else ""
+            answer = openai_rag_completion_create_retrying(
+                OpenAI(api_key=self.api_key, base_url=self.api_base),
+                model=chatmodel_to_apimodel(self.model),
+                instructions=kwargs.get("instructions", ""),
+                file_name=kwargs.get("file_name", ""),
+                prompt=CompletionPrompt(raw_prompt=openai_create_prompt).to_formatted_prompt()
+            )
+            result = RetrievalCompletionResult(answer, prompt=openai_create_prompt)
         record_sampling(prompt=result.prompt, sampled=result.get_completions())
         return result

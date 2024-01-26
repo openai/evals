@@ -1,0 +1,8 @@
+chemistry_drug:
+  evals:
+    - scipaper_affinity
+    - scipaper_tag2mol
+    - scipaper_hasmol
+    - markush2mol
+    - scipaper_targets
+    - medmcqa

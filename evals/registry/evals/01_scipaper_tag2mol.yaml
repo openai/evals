@@ -1,0 +1,8 @@
+scipaper_tag2mol:
+  id: scipaper_tag2mol.dev.v0
+  metrics: [accuracy]
+
+scipaper_tag2mol.dev.v0:
+  class: evals.elsuite.rag_match:RAGMatch
+  args:
+    samples_jsonl: 01_scipaper_tag2mol/samples.jsonl

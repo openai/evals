@@ -1,0 +1,8 @@
+markush2mol:
+  id: markush2mol.dev.v0
+  metrics: [accuracy]
+
+markush2mol.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: 02_markush2mol/samples.jsonl

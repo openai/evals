@@ -1,0 +1,8 @@
+scipaper_hasmol:
+  id: scipaper_hasmol.dev.v0
+  metrics: [accuracy]
+
+scipaper_hasmol.dev.v0:
+  class: evals.elsuite.rag_match:RAGMatch
+  args:
+    samples_jsonl: 01_scipaper_hasmol/samples.jsonl
