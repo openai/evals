@@ -1,7 +1,8 @@
 import json
 import tempfile
-from evals.record import LocalRecorder
+
 from evals.base import RunSpec
+from evals.record import LocalRecorder
 
 
 def test_passes_hidden_data_field_to_jsondumps() -> None:
@@ -14,10 +15,12 @@ def test_passes_hidden_data_field_to_jsondumps() -> None:
         run_config={},
         created_by="",
         run_id="",
-        created_at=""
+        created_at="",
     )
     local_recorder = LocalRecorder(tmp_file, spec, ["should_be_hidden"])
-    local_recorder.record_event("raw_sample", {"should_be_hidden": 1, "should_not_be_hidden": 2}, sample_id="test")
+    local_recorder.record_event(
+        "raw_sample", {"should_be_hidden": 1, "should_not_be_hidden": 2}, sample_id="test"
+    )
     local_recorder.flush_events()
     with open(tmp_file, "r", -1, "utf-8") as f:
         first_line = f.readline()

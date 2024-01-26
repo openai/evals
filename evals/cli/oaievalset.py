@@ -73,7 +73,7 @@ def get_parser() -> argparse.ArgumentParser:
 class OaiEvalSetArguments(argparse.Namespace):
     model: str
     eval_set: str
-    registry_path: Optional[str]
+    registry_path: Optional[list[str]]
     resume: bool
     exit_on_error: bool
 
@@ -94,8 +94,9 @@ def run(
         for index, eval in enumerate(registry.get_evals(eval_set.evals)):
             if not eval or not eval.key:
                 logger.debug("The eval #%d in eval_set is not valid", index)
+                continue
 
-            command = [run_command, args.model, eval.key] + unknown_args
+            command: list[str] = [run_command, args.model, eval.key] + unknown_args
             if args.registry_path:
                 command.append("--registry_path")
                 command = command + args.registry_path

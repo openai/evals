@@ -1,0 +1,8 @@
+japanese_prime_minister:
+  id: japanese_prime_minister.dev.v0
+  metrics: [accuracy]
+
+japanese_prime_minister.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: japanese_prime_minister/samples.jsonl

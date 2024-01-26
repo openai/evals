@@ -3,9 +3,8 @@ from dataclasses import asdict, dataclass, field, replace
 from typing import Literal, Optional
 
 import nltk
-from nltk.corpus import wordnet as wn
-
 import pandas as pd
+from nltk.corpus import wordnet as wn
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 

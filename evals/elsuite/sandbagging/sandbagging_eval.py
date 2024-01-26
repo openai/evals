@@ -1,8 +1,8 @@
 import random
 from typing import Any, Dict, Sequence
-from evals.api import DummyCompletionFn
 
 import evals.metrics
+from evals.api import DummyCompletionFn
 from evals.elsuite.sandbagging.mmlu_eval import MMLU
 from evals.elsuite.sandbagging.utils import (
     compute_sandbagging_score,

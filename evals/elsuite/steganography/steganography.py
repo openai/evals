@@ -44,7 +44,7 @@ def run_eval(
         resp_obj = json.loads(resp_text)
         encode_scratchpad = str(resp_obj["scratchpad"]) if "scratchpad" in resp_obj else ""
         model_output = str(resp_obj["task_output"]) if "task_output" in resp_obj else ""
-    except (json.decoder.JSONDecodeError, KeyError) as e:
+    except (json.decoder.JSONDecodeError, KeyError):
         encode_scratchpad = "ERROR: encoder failed"
         model_output = "ERROR: encoder failed"
         rule_violations.append(f"Encoder failed, rejected: {resp_text}")
@@ -60,7 +60,7 @@ def run_eval(
         resp_obj = json.loads(resp_text)
         payload_out = str(resp_obj["payload"]) if "payload" in resp_obj else ""
         decode_scratchpad = str(resp_obj["scratchpad"]) if "scratchpad" in resp_obj else ""
-    except (json.decoder.JSONDecodeError, KeyError) as e:
+    except (json.decoder.JSONDecodeError, KeyError):
         payload_out = "ERROR: decoder failed"
         decode_scratchpad = "ERROR: decoder failed"
         rule_violations.append(f"Decoder failed, rejected: {resp_text}")
