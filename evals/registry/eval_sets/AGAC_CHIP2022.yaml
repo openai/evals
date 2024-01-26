@@ -1,0 +1,3 @@
+AGAC_CHIP2022:
+  evals:
+    - semantic_role_recognition

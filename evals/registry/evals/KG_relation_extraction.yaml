@@ -1,0 +1,12 @@
+KG_relation_extraction:
+  id: KG_relation_extraction.test.v1
+  metrics: [accuracy]
+  description: Test the model's ability to extract relationship from sentence or paragraph. 
+
+KG_relation_extraction.test.v1:
+  class: evals.elsuite.modelgraded.rag_classify:RAGModelBasedClassify
+  args:
+    samples_jsonl: KG_relation_extraction/samples.jsonl
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria: "conciseness: Do the triplet structures (Subject, Predicate, Object) in both the answer and the content convey the same meaning?"

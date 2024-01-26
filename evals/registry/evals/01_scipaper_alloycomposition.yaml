@@ -1,0 +1,22 @@
+
+alloycomposition:
+  id: alloycomposition.dev.v0
+  metrics: [accuracy]
+
+alloycomposition.dev.v0:
+  class: evals.elsuite.rag_table_extract_comp:TableExtract
+  args:
+    samples_jsonl: 01_alloycomposition/composition.jsonl
+    instructions: |
+      Please give a complete list of alloy names and compositions of all alloys in this paper. 
+      If there is no alloy composition element ratio in the text, try to extract the element ratio from the alloy name from the perspective of alloy experts.
+      Output in one csv format with multiindex (2 header), The names in first header are 'AlloyName' and 'Composition' forcely. The names in second header are element names of alloy. 
+      Starting on the third row, list the alloy names and their corresponding element content. Based on the number of reference commas, the element name corresponds to the content.
+      Please write units not in header but in value like "50 wt.%","30 at.%","20 %" if with unit.
+       Such as the following example.
+      ```csv
+      AlloyName,Composition,Composition,Composition
+      nan,Fe,Co,Al
+      Fe70Co15Al3,70 %,15 %,3 %
+      Fe70Co18,70 %,18 %,nan,
+      ```

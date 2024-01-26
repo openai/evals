@@ -1,0 +1,9 @@
+
+alloysort:
+  id: alloysort.dev.v0
+  metrics: [accuracy]
+
+alloysort.dev.v0:
+  class: evals.elsuite.rag_match:RAGMatch
+  args:
+    samples_jsonl: 01_alloysort/sort.jsonl

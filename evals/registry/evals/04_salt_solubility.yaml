@@ -1,0 +1,17 @@
+salt_solubility:
+  id: salt_solubility.val.csv
+  metrics: [accuracy]
+
+salt_solubility.val.csv:
+  class: evals.elsuite.rag_table_extract:TableExtract
+  args:
+    samples_jsonl: 04_salt_solubility/samples.jsonl
+    instructions: |
+      Please give a complete list of SMILES structures and physical properties of all molecules in the paper.
+      1. Find all the tables with relevant information
+      2. Output in csv format. Quote the value if it has comma! For example:
+      ```csv
+      Compound,Name,SMILES,Properties_1,Properties_2,Properties_3,Properties_4
+      "5a","Aspirin","CC(=O)Oc1ccccc1C(=O)O",2.0 nM,8.0 nM,12.6 nM,>1000 nM
+      ```
+      3. If there are multiple tables, concat them. Don't give me reference or using "...", give me complete table!

@@ -1,0 +1,10 @@
+
+alloynum:
+  id: alloynum.dev.v0
+  metrics: [accuracy]
+
+alloynum.dev.v0:
+  class: evals.elsuite.rag_match:RAGMatch
+  args:
+    samples_jsonl: 01_alloynum/alloy_number.jsonl
+

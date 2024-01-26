@@ -1,0 +1,153 @@
+[2024-01-23 15:56:10,726] [registry.py:257] Loading registry from /root/evals/evals/registry/evals
+[2024-01-23 15:56:11,413] [registry.py:257] Loading registry from /root/.evals/evals
+[2024-01-23 15:56:11,746] [_client.py:1027] HTTP Request: GET https://api.openai.com/v1/models "HTTP/1.1 200 OK"
+[2024-01-23 15:56:11,749] [registry.py:257] Loading registry from /root/evals/evals/registry/completion_fns
+[2024-01-23 15:56:11,794] [registry.py:257] Loading registry from /root/.evals/completion_fns
+[2024-01-23 15:56:11,796] [oaieval.py:196] [1;35mRun started: 240123075611PS2GCS3E[0m
+[2024-01-23 15:56:12,148] [data.py:91] Fetching /root/evals/evals/registry/data/01_alloytemp/samples.jsonl
+[2024-01-23 15:56:56,708] [eval.py:36] Evaluating 51 samples
+[2024-01-23 15:56:56,712] [eval.py:144] Running in threaded mode with 10 threads!
+/root/evals/evals/registry/data/01_alloytemp/samples.jsonl
+文件 changjunhan/size_10.3390_ma13214806.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.matdes.2018.08.050.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.jma.2020.11.014.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1515_htmp.2011.007.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma13112487.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1007_s41230-018-8044-z.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.jmrt.2020.02.016.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma11122495.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_met8050309.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1515_htmp-2014-0242.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_met9060709.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma13071511.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.jmrt.2018.08.006.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1155_2015_987687.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma13214930.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma12030333.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_e16052756.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.jmrt.2017.06.006.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1515_amm-2016-0111.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.jajp.2021.100067.pdf 已存在于 OSS 中。
+文件 changjunhan/size_j.actamat.2016.08.023.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_met8050298.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.matdes.2021.109647.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma14133686.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_met7100433.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma11112079.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1515_htmp-2014-0083.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.nme.2019.100715.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_met8060439.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma13214711.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_pr9010070.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.matdes.2019.107816.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma11091506.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.matdes.2020.108656.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_cryst8070271.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma12060886.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma13143140.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1038_s41598-017-04343-y.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1080_21663831.2018.1553212.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1088_2053-1591_ab7c25.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1051_matecconf_201818602009.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_met8070497.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.jmrt.2020.12.022.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1088_2053-1591_ab9854.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.jmrt.2021.07.037.pdf 已存在于 OSS 中。
+文件 changjunhan/size_j.actamat.2007.11.014.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma7021271.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_jmmp5020064.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.3390_ma10020161.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1016_j.jmrt.2019.12.033.pdf 已存在于 OSS 中。
+文件 changjunhan/size_10.1515_rams-2020-0047.pdf 已存在于 OSS 中。
+  0%|          | 0/51 [00:00<?, ?it/s]  2%|▏         | 1/51 [00:04<03:46,  4.53s/it]  4%|▍         | 2/51 [00:05<01:46,  2.17s/it]  6%|▌         | 3/51 [00:05<01:10,  1.46s/it]  8%|▊         | 4/51 [00:07<01:14,  1.58s/it] 10%|▉         | 5/51 [00:08<01:06,  1.44s/it] 12%|█▏        | 6/51 [00:10<01:13,  1.63s/it] 14%|█▎        | 7/51 [00:11<01:06,  1.51s/it] 18%|█▊        | 9/51 [00:13<00:53,  1.28s/it] 22%|██▏       | 11/51 [00:14<00:37,  1.06it/s] 24%|██▎       | 12/51 [00:18<00:59,  1.52s/it] 25%|██▌       | 13/51 [00:18<00:46,  1.23s/it] 27%|██▋       | 14/51 [00:18<00:36,  1.02it/s] 29%|██▉       | 15/51 [00:19<00:30,  1.19it/s] 31%|███▏      | 16/51 [00:20<00:30,  1.16it/s] 33%|███▎      | 17/51 [00:20<00:24,  1.37it/s] 35%|███▌      | 18/51 [00:20<00:19,  1.68it/s] 37%|███▋      | 19/51 [00:23<00:40,  1.27s/it] 39%|███▉      | 20/51 [00:26<00:51,  1.67s/it] 41%|████      | 21/51 [00:27<00:47,  1.58s/it] 43%|████▎     | 22/51 [00:28<00:36,  1.25s/it] 45%|████▌     | 23/51 [00:29<00:37,  1.35s/it] 47%|████▋     | 24/51 [00:30<00:28,  1.06s/it] 49%|████▉     | 25/51 [00:30<00:21,  1.22it/s] 51%|█████     | 26/51 [00:33<00:34,  1.39s/it] 53%|█████▎    | 27/51 [00:34<00:30,  1.27s/it] 55%|█████▍    | 28/51 [00:34<00:22,  1.01it/s] 57%|█████▋    | 29/51 [00:35<00:22,  1.03s/it] 59%|█████▉    | 30/51 [00:36<00:20,  1.02it/s] 61%|██████    | 31/51 [00:37<00:21,  1.09s/it] 63%|██████▎   | 32/51 [00:38<00:16,  1.16it/s] 65%|██████▍   | 33/51 [00:39<00:19,  1.10s/it] 67%|██████▋   | 34/51 [00:41<00:19,  1.17s/it] 69%|██████▊   | 35/51 [00:42<00:17,  1.07s/it] 71%|███████   | 36/51 [00:42<00:11,  1.26it/s] 73%|███████▎  | 37/51 [00:44<00:18,  1.32s/it] 75%|███████▍  | 38/51 [01:06<01:36,  7.43s/it] 76%|███████▋  | 39/51 [01:06<01:03,  5.30s/it] 78%|███████▊  | 40/51 [01:07<00:44,  4.02s/it] 80%|████████  | 41/51 [01:08<00:31,  3.15s/it] 82%|████████▏ | 42/51 [01:09<00:21,  2.35s/it] 84%|████████▍ | 43/51 [01:10<00:15,  1.94s/it] 86%|████████▋ | 44/51 [01:12<00:12,  1.84s/it] 88%|████████▊ | 45/51 [01:23<00:28,  4.75s/it] 88%|████████▊ | 45/51 [07:07<00:56,  9.50s/it]
+############# pdf_id ############## 94ff7031e7cb469ba1d6e8d020958845
+############# pdf_id ############## 51063fac7bb34195adb10c98cc3061e8
+############# pdf_id ############## 3c7ef3df29854b289891c116ae9e4940
+############# pdf_id ############## b16619404f9945dc89c02b86fbe0d9aa
+############# pdf_id ############## cbf1b83a680646b5bef2d82247ca9e5e
+############# pdf_id ############## 680af6f0a6444431b1c0dd9372b27895
+############# pdf_id ############## 6de7e104c35c40cba729dc34baf5d358
+############# pdf_id ############## de61848426ed480fa24eb33989a3abdd
+############# pdf_id ############## d3e42695d8d84f8482e435800ce615c2
+############# pdf_id ############## 547e965ef70e4b74963436be15a79272
+############# pdf_id ############## eb03b7b7ea20462e933e2b6e79691cc0
+############# pdf_id ############## f13e59d5bf9042aeac126dff3f91301c
+############# pdf_id ############## e3c72a4b15b24ee1a3a794fed65dcbe1
+############# pdf_id ############## 0c6662e514844060bbaf5b810119f2ba
+############# pdf_id ############## b984a3c114084af2a4ae66b4ff703196
+############# pdf_id ############## c6170465c7e840e599a9fb0eb23c9869
+############# pdf_id ############## 918e11b1deda48ee99ca0088f2456f22
+############# pdf_id ############## 9b54eeb6308440a98a6d147383643d7a
+############# pdf_id ############## ad6ad375145243a981012e52a5124f44
+############# pdf_id ############## e4350e232c544192a77775102abf177f
+############# pdf_id ############## ebc2113287ea4010b68d45020e0837ec
+############# pdf_id ############## 528bed794fde405996cc8a2c925615af
+############# pdf_id ############## c458013dfefe42329dbca69e674e371d
+############# pdf_id ############## 8c9c96d9750044568d57ee949d0e091d
+############# pdf_id ############## 6cf540ec67774cac93a41253302c33fd
+############# pdf_id ############## 1a3b3171a9bb4ffda87a1cf5025c033f
+############# pdf_id ############## 6a21a732bc3949eabf74dc629d97b9dd
+############# pdf_id ############## bf1a4df3df9a460bb7c09c5fbf737b96
+############# pdf_id ############## 8bb0860b836847ecb52060e70cd0086c
+############# pdf_id ############## bf4404a1567b4b5e884fb48b951d6d4e
+############# pdf_id ############## 9fd3960852654d959a8d279216a482f1
+############# pdf_id ############## 7b2136e79bbb4b59b4ff234aac95f615
+############# pdf_id ############## 024ffa7c077a411b9671e08faf97b1f8
+############# pdf_id ############## b5b30fd4e0374cf7a79a18a561e6fcfc
+############# pdf_id ############## 6d86c2f26fb24795acd886197981e1be
+############# pdf_id ############## bb68131f261e41dc8cb6b0fe1e906547
+############# pdf_id ############## 6a8837fb0d8a4746ae5de3c43bf70de4
+############# pdf_id ############## c56e19b1b59b4384b56389e0f904ea45
+############# pdf_id ############## 7169a60fb4714f0c8f6837a6f9a29946
+############# pdf_id ############## 2d2b4ca8f5b94a08a9370622c58323e0
+############# pdf_id ############## b099fe07471b45a2851d57b860c7634f
+############# pdf_id ############## 9e81d66bf9284d73b52c91806153707c
+############# pdf_id ############## fe50ee48f4fa4621aae985339106be53
+############# pdf_id ############## 45e130df33fa4bc4aab8b5c70b616914
+############# pdf_id ############## 08d7357cb760479eb94f4dad868b30b9
+<!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+Traceback (most recent call last):
+  File "/root/mambaforge/lib/python3.10/site-packages/requests/models.py", line 971, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/root/mambaforge/lib/python3.10/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/root/mambaforge/lib/python3.10/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/root/mambaforge/lib/python3.10/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/mambaforge/bin/oaieval", line 8, in <module>
+    sys.exit(main())
+  File "/root/evals/evals/cli/oaieval.py", line 321, in main
+    run(args)
+  File "/root/evals/evals/cli/oaieval.py", line 230, in run
+    result = eval.run(recorder)
+  File "/root/evals/evals/elsuite/rag_match.py", line 120, in run
+    self.eval_all_samples(recorder, samples)
+  File "/root/evals/evals/eval.py", line 146, in eval_all_samples
+    idx_and_result = list(tqdm(iter, total=len(work_items), disable=not show_progress))
+  File "/root/mambaforge/lib/python3.10/site-packages/tqdm/std.py", line 1182, in __iter__
+    for obj in iterable:
+  File "/root/mambaforge/lib/python3.10/multiprocessing/pool.py", line 873, in next
+    raise value
+  File "/root/mambaforge/lib/python3.10/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+  File "/root/evals/evals/eval.py", line 137, in eval_sample
+    return idx, self.eval_sample(sample, rng)
+  File "/root/evals/evals/elsuite/rag_match.py", line 100, in eval_sample
+    result = self.completion_fn(
+  File "/root/evals/evals/completion_fns/uni_finder.py", line 74, in __call__
+    pdf_id = response.json()['pdf_token']  # 获得pdf的id，表示上传成功，后续可以使用这个id来指定pdf
+  File "/root/mambaforge/lib/python3.10/site-packages/requests/models.py", line 975, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[2024-01-23 16:04:04,054] [record.py:349] Logged 90 rows of events to /tmp/evallogs/240123075611PS2GCS3E_uni_finder/fast/gpt-4-all_alloytemp.jsonl: insert_time=17.057ms

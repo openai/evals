@@ -1,0 +1,200 @@
+mafand_translation_en-amh:
+  id: mafand_translation_en-amh.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-amh.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/evals/registry/data/lafand-mt/en-amh/en-amh_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/evals/registry/data/lafand-mt/en-amh/en-amh_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-hau:
+  id: mafand_translation_en-hau.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-hau.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-hau/en-hau_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-hau/en-hau_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-ibo:
+  id: mafand_translation_en-ibo.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-ibo.test.v1:
+  args:
+    few_shot_jsonl: lafand-mt/en-ibo/en-ibo_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: lafand-mt/en-ibo/en-ibo_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-kin:
+  id: mafand_translation_en-kin.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-kin.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-kin/en-kin_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-kin/en-kin_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-lug:
+  id: mafand_translation_en-lug.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-lug.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-lug/en-lug_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-lug/en-lug_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-nya:
+  id: mafand_translation_en-nya.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-nya.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-nya/en-nya_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-nya/en-nya_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-pcm:
+  id: mafand_translation_en-pcm.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-pcm.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-pcm/en-pcm_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-pcm/en-pcm_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-sna:
+  id: mafand_translation_en-sna.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-sna.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-sna/en-sna_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-sna/en-sna_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-swa:
+  id: mafand_translation_en-swa.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-swa.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-swa/en-swa_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-swa/en-swa_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-tsn:
+  id: mafand_translation_en-tsn.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-tsn.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-tsn/en-tsn_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-tsn/en-tsn_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-twi:
+  id: mafand_translation_en-twi.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-twi.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-twi/en-twi_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-twi/en-twi_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-xho:
+  id: mafand_translation_en-xho.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-xho.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-xho/en-xho_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-xho/en-xho_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-yor:
+  id: mafand_translation_en-yor.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-yor.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-yor/en-yor_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-yor/en-yor_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_en-zul:
+  id: mafand_translation_en-zul.test.v1
+  metrics:
+  - accuracy
+mafand_translation_en-zul.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-zul/en-zul_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/en-zul/en-zul_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_fr-bam:
+  id: mafand_translation_fr-bam.test.v1
+  metrics:
+  - accuracy
+mafand_translation_fr-bam.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-bam/fr-bam_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-bam/fr-bam_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_fr-bbj:
+  id: mafand_translation_fr-bbj.test.v1
+  metrics:
+  - accuracy
+mafand_translation_fr-bbj.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-bbj/fr-bbj_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-bbj/fr-bbj_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_fr-ewe:
+  id: mafand_translation_fr-ewe.test.v1
+  metrics:
+  - accuracy
+mafand_translation_fr-ewe.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-ewe/fr-ewe_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-ewe/fr-ewe_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_fr-fon:
+  id: mafand_translation_fr-fon.test.v1
+  metrics:
+  - accuracy
+mafand_translation_fr-fon.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-fon/fr-fon_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-fon/fr-fon_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_fr-mos:
+  id: mafand_translation_fr-mos.test.v1
+  metrics:
+  - accuracy
+mafand_translation_fr-mos.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-mos/fr-mos_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-mos/fr-mos_samples.jsonl
+  class: evals.elsuite.translate:Translate
+mafand_translation_fr-wol:
+  id: mafand_translation_fr-wol.test.v1
+  metrics:
+  - accuracy
+mafand_translation_fr-wol.test.v1:
+  args:
+    few_shot_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-wol/fr-wol_few_shot.jsonl
+    num_few_shot: 4
+    samples_jsonl: /root/evals/examples/../evals/registry/data/lafand-mt/fr-wol/fr-wol_samples.jsonl
+  class: evals.elsuite.translate:Translate
