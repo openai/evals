@@ -366,7 +366,7 @@ class LocalRecorder(RecorderBase):
 
     def record_final_report(self, final_report: Any):
         with bf.BlobFile(self.event_file_path, "ab") as f:
-            f.write((jsondumps({"final_report": final_report}) + "\n").encode("utf-8"))
+            f.write((jsondumps({"final_report": final_report, "run_id": self.run_spec.run_id}) + "\n").encode("utf-8"))
 
         logging.info(f"Final report: {final_report}. Logged to {self.event_file_path}")
 
