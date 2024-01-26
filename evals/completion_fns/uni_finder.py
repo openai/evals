@@ -66,7 +66,7 @@ class UniFinderCompletionFn(CompletionFn):
                 url = f"{self.api_base}/api/external/upload_pdf"
                 files = {'file': open(kwargs["file_name"], 'rb')}
                 data = {
-                    'pdf_parse_mode': self.pdf_parse_mode,
+                    # 'pdf_parse_mode': self.pdf_parse_mode,
                     'api_key': self.api_key
                 }
                 response = requests.post(url, data=data, files=files)
