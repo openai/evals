@@ -1,0 +1,38 @@
+scipaper_affinity:
+  id: scipaper_affinity.val.csv
+  metrics: [accuracy]
+scipaper_affinity.val.json:
+  class: evals.elsuite.rag_table_extract:TableExtract
+  args:
+    samples_jsonl: 00_scipaper_affinity/samples.jsonl
+    instructions: |
+      Please give a complete list of names, affinities, target info (protein or cell line), and affinity types (chosen from IC50, EC50, TC50, GI50, Ki, Kd) of all inhibitors in the paper. If there are multiple tables, combine them. Don't give me reference. Output in json format. For example:
+      ```json
+      [
+          {
+              "Compound": "5a",
+              "Name": "Aspirin",
+              "Affinities": {
+                  "5HT1A (IC50)": "2.0 nM",
+                  "5HT1D (IC50)": "8.0 nM",
+                  "5HT-UT (IC50)": "12.6 nM",
+                  "5HT1E (IC50)": ">1000 nM"
+              }
+          }
+      ]
+      ```
+
+scipaper_affinity.val.csv:
+  class: evals.elsuite.rag_table_extract:TableExtract
+  args:
+    samples_jsonl: 00_scipaper_affinity/samples.jsonl
+    instructions: |
+      Please give a complete list of SMILES structures, affinities, target info (protein or cell line), and affinity types (chosen from IC50, EC50, TC50, GI50, Ki, Kd) of all compounds in the paper. Usually the coumpounds' tags are numbers.
+      1. Find all the tables with relevant information
+      2. Output in csv format with multiindex (Affinities, protein/cell line), write units not in header but in the value like "10.5 µM". Quote the value if it has comma! For example:
+      ```csv
+      Compound,Name,SMILES,Affinities,Affinities,Affinities,Affinities
+      ,,,5HT1A (IC50),5HT1D (IC50),5HT-UT (IC50),5HT1E (<affinity type>)
+      "5a","Aspirin","CC(=O)Oc1ccccc1C(=O)O",2.0 nM,8.0 nM,12.6 nM,>1000 nM
+      ```
+      3. If there are multiple tables, concat them. Don't give me reference or using "...", give me complete table!

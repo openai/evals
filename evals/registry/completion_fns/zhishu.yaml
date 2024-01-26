@@ -1,0 +1,11 @@
+zhishu/gpt-4:
+  class: evals.completion_fns.zhishu:ZhishuCompletionFn
+  args:
+    model: gpt-4-all
+    all_tools: False
+
+zhishu/gpt-4-all:
+  class: evals.completion_fns.zhishu:ZhishuCompletionFn
+  args:
+    model: gpt-4-all
+    all_tools: True

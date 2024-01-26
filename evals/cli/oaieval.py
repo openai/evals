@@ -2,9 +2,14 @@
 This file defines the `oaieval` CLI for running evals.
 """
 import argparse
+import json
 import logging
+import pickle
+import re
 import shlex
 import sys
+from io import StringIO
+from pathlib import Path
 from typing import Any, Mapping, Optional, Union, cast
 
 import openai
@@ -229,6 +234,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     logger.info("Final report:")
     for key, value in result.items():
         logger.info(f"{key}: {value}")
+
     return run_spec.run_id
 
 

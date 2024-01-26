@@ -1,0 +1,12 @@
+scipaper_targets:
+  id: scipaper_targets.test.v1
+  metrics: [accuracy]
+  description: Test the model's ability to retrieve protein/cell line targets from literature.
+
+scipaper_targets.test.v1:
+  class: evals.elsuite.modelgraded.rag_classify:RAGModelBasedClassify
+  args:
+    samples_jsonl: 03_scipaper_targets/samples.jsonl
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria: "conciseness: Does the answer has the same biological meaning as the content?"

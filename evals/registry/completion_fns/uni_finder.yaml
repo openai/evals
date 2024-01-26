@@ -1,0 +1,23 @@
+uni_finder/fast/gpt-3.5-turbo:
+  class: evals.completion_fns.uni_finder:UniFinderCompletionFn
+  args:
+    pdf_parse_mode: fast
+    model: gpt35
+
+uni_finder/precise/gpt-3.5-turbo:
+  class: evals.completion_fns.uni_finder:UniFinderCompletionFn
+  args:
+    pdf_parse_mode: precise
+    model: gpt35
+
+uni_finder/fast/gpt-4-all:
+  class: evals.completion_fns.uni_finder:UniFinderCompletionFn
+  args:
+    pdf_parse_mode: fast
+    model: gpt4
+
+uni_finder/precise/gpt-4-all:
+  class: evals.completion_fns.uni_finder:UniFinderCompletionFn
+  args:
+    pdf_parse_mode: precise
+    model: gpt4

@@ -46,6 +46,7 @@ formatters = [
 [project.scripts]
 oaieval = "evals.cli.oaieval:main"
 oaievalset = "evals.cli.oaievalset:main"
+llmreport = "evals.cli.llmreport:main"
 
 [tool.setuptools]
 packages = ["evals"]
