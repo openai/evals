@@ -1,0 +1,8 @@
+kypso-enrichment:
+  id: kypso-enrichment.v0
+  description: Enrich productivity tools items and compare results.
+  metrics: [accuracy]
+kypso-enrichment.v0:
+  class: evals.elsuite.basic.json_match:JsonMatch
+  args:
+    samples_jsonl: kypso_enrichment/samples.jsonl
