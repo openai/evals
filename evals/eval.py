@@ -136,14 +136,14 @@ class Eval(abc.ABC):
                 rng = random.Random(seed)
                 return idx, self.eval_sample(sample, rng)
 
-        with ThreadPool(threads) as pool:
-            if os.environ.get("EVALS_SEQUENTIAL", "0") in {"1", "true", "yes"}:
-                logger.info("Running in sequential mode!")
-                iter = map(eval_sample, work_items)
-            else:
+        if os.environ.get("EVALS_SEQUENTIAL", "0") in {"1", "true", "yes"}:
+            logger.info("Running in sequential mode!")
+            iter = map(eval_sample, work_items)
+        else:
+            with ThreadPool(threads) as pool:            
                 logger.info(f"Running in threaded mode with {threads} threads!")
                 iter = pool.imap_unordered(eval_sample, work_items)
-            idx_and_result = list(tqdm(iter, total=len(work_items), disable=not show_progress))
+        idx_and_result = list(tqdm(iter, total=len(work_items), disable=not show_progress))
         return [r for _, r in sorted(idx_and_result)]
 
     def get_samples(self):
