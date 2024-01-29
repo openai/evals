@@ -126,7 +126,7 @@ class StrategySolver(Solver):
 
         return prompt
 
-    def __call__(self, task_state: TaskState, **kwargs) -> (Sequence[Dict], SolverResult):
+    def _solve(self, task_state: TaskState, **kwargs) -> (Sequence[Dict], SolverResult):
         prompt = self._construct_prompt(task_state)
         result = self._predict_answer(prompt, **kwargs)
 

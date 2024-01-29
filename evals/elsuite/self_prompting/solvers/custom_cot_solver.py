@@ -36,7 +36,7 @@ class CustomCoTSolver(OpenAISolver):
         self.extract_completion_fn = OpenAIChatCompletionFn(**self.completion_fn_options)
         self.extract_template = extract_template
 
-    def __call__(
+    def _solve(
         self,
         task_state: TaskState,
         **kwargs,
