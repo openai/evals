@@ -20,6 +20,8 @@ In the context of evals, we call the systems that are used to solve evals “Sol
 
 Careful design of the interface between the eval and the Solver is central to successful implementation of the Solver abstraction. On each turn, the eval provides a `TaskState` object to the Solver, and the Solver returns a `SolverResult` object to the Eval. The Eval then uses the `SolverResult` to update its internal state, and the process repeats until the Eval is complete.
 
+<img width="1180" alt="image" src="https://github.com/openai/evals/assets/7796965/0e9c37d7-ed9e-47d4-bb9c-6bf909c19927">
+
 The `TaskState` should contain all the information that a Solver needs to provide a response to the Eval environment. 
 ```python
 @dataclass
