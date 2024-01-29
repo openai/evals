@@ -1,13 +1,13 @@
 # Chat models
 
-self_prompting/chat_completion/gpt-4-32k:
-  class: evals.solvers.openai_chat_completion_solver:OpenAIChatCompletionSolver
+self_prompting/direct/gpt-4-32k:
+  class: evals.solvers.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-4-32k
 
-self_prompting/chat_completion/gpt-3.5-turbo-16k:
-  class: evals.solvers.openai_chat_completion_solver:OpenAIChatCompletionSolver
+self_prompting/direct/gpt-3.5-turbo-16k:
+  class: evals.solvers.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-3.5-turbo-16k
@@ -15,16 +15,22 @@ self_prompting/chat_completion/gpt-3.5-turbo-16k:
 # Completion models
 
 self_prompting/completion_hhh/code-davinci-002:
-  class: evals.solvers.openai_completion_hhh_solver:OpenAICompletionHHHSolver
+  class: evals.solvers.nested.hhh_solver:HHHSolver
   args:
-    completion_fn_options:
-      model: code-davinci-002
+    solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: code-davinci-002
 
 self_prompting/completion_hhh/gpt-4-base:
-  class: evals.solvers.openai_completion_hhh_solver:OpenAICompletionHHHSolver
+  class: evals.solvers.nested.hhh_solver:HHHSolver
   args:
-    completion_fn_options:
-      model: gpt-4-base
+    solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-base
 
 # CoT
 

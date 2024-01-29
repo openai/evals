@@ -1,14 +1,16 @@
 import json
-import logging
 from abc import ABC, abstractmethod
 from copy import deepcopy
-from typing import Any, Dict, TypeVar, Union
+from importlib import import_module
+from typing import Any, Dict, TypeVar
 
-import tiktoken
+from pydantic import TypeAdapter, ValidationError
+from typing_extensions import TypedDict
 
 from evals.api import CompletionFn
 from evals.task_state import TaskState
 
+SolverSpec = TypedDict("SolverSpec", {"class": str, "args": Dict[str, Any]})
 SolverType = TypeVar("SolverType", bound="Solver")
 
 
@@ -39,7 +41,7 @@ class Solver(ABC, CompletionFn):
     # We need to inherit from CompletionFn because of how the oaival registry works.
 
     @abstractmethod
-    def __call__(
+    def _solve(
         self,
         task_state: TaskState,
         **kwargs,
@@ -55,8 +57,15 @@ class Solver(ABC, CompletionFn):
         The result of the solver.
         """
 
+    def __call__(
+        self,
+        task_state: TaskState,
+        **kwargs,
+    ) -> SolverResult:
+        """Deepcopies task_state to prevent solvers from modifying the original object."""
+        return self._solve(deepcopy(task_state), **kwargs)
+
     @property
-    @abstractmethod
     def name(self) -> str:
         """
         Name of the Solver. This is intended mostly for logging.
@@ -65,6 +74,7 @@ class Solver(ABC, CompletionFn):
         =======
         A human-readable name that describes this solver.
         """
+        return type(self).__name__
 
     def copy(self: SolverType) -> SolverType:
         #   The deepcopy may be quite heavy for some solvers; if that's the
@@ -72,48 +82,75 @@ class Solver(ABC, CompletionFn):
         return deepcopy(self)
 
 
-class OpenAISolver(Solver):
-    """An abstract solver class that uses the OpenAI API through completion functions."""
-
-    def __init__(
-        self,
-        completion_fn_options: Dict[str, Any] = {},
-        valid_answers: Union[list[str], None] = None,
-    ):
-        self.completion_fn_options = completion_fn_options
-
-        # If valid answers were provided, encode them into a logit bias dictionary.
-        if valid_answers is not None and len(valid_answers) > 0:
-            model = completion_fn_options["model"] if "model" in completion_fn_options else None
-            if model is None:
-                raise ValueError("OpenAISolver requires a model to be specified.")
-            if model == "code-davinci-002":
-                logging.info(
-                    f"Attempting to use logit bias with model {model}, which does not support logit bias."
-                )
-
-            enc = tiktoken.encoding_for_model(model)
-            token_ids = []
-            for answer in valid_answers:
-                encoded_answer = enc.encode(answer)
-                if len(encoded_answer) > 1:
-                    raise ValueError(
-                        f"Answer {answer} was encoded to {encoded_answer}, but we expected a single token."
-                    )
-                token_ids.append(encoded_answer[0])
-            self.completion_fn_options["extra_options"]["logit_bias"] = {
-                token_id: 100 for token_id in token_ids
-            }
-
-
 class DummySolver(Solver):
-    def __call__(
+    def _solve(
         self,
         task_state: TaskState,
         **kwargs,
     ) -> SolverResult:
         return SolverResult("This is a dummy response.")
 
-    @property
-    def name(self) -> str:
-        return "DummySolver"
+
+class NestedSolver(Solver):
+    """An abstract solver class that receives specification of any number of other solvers as an argument."""
+
+    # TODO: Should we allow nested solvers to (also) take Solver classes instead of SolverSpecs?
+
+    def __init__(self, *, registry=None, **solver_specs):
+        self.solver_specs = {}
+        self._solver_cache = {}
+
+        SolverSpecValidator = TypeAdapter(SolverSpec)
+        for name, value in solver_specs.items():
+            try:
+                SolverSpecValidator.validate_python(value)
+                self.solver_specs[name] = value
+                self.get_solver(name)  # Initialize the solver
+            except ValidationError:
+                raise ValueError(f"Expected a sub-solver spec at '{name}', got '{value}'")
+
+        assert (
+            self.solver_specs
+        ), f"{type(self).__name__} requires at least one sub-solver as an argument"
+
+    def get_solver(self, solver_name: str) -> Solver:
+        """
+        IMPORTANT: All subclasses of NestedSolver should use this method to reference any
+        sub-solvers, otherwise solver copies will not work properly.
+
+        For convenience, your subclass can have a @property method like this:
+        ```python
+        @property
+        def my_sub_solver(self) -> Solver:
+            return self.get_solver("my_sub_solver")
+        ```
+        which is used in the _solve method like this:
+        ```python
+        def _solve(
+            self,
+            task_state: TaskState,
+            **kwargs,
+        ) -> SolverResult:
+            ...
+            solver_result = self.my_sub_solver(task_state=task_state, **kwargs)
+            ...
+        ```
+        """
+        if solver_name not in self._solver_cache:
+            solver_spec = self.solver_specs[solver_name]
+            self._solver_cache[solver_name] = self._create_solver(solver_spec)
+        return self._solver_cache[solver_name]
+
+    def _create_solver(self, solver_spec: SolverSpec) -> Solver:
+        module_name, class_name = solver_spec["class"].split(":")
+        module = import_module(module_name)
+        cls = getattr(module, class_name)
+        return cls(**solver_spec["args"])
+
+    def copy(self: SolverType) -> SolverType:
+        # The NestedSolver needs to manually copy the sub-solvers, otherwise we will miss any
+        # special copy logic they may have.
+        solver_copy = deepcopy(self)  # TODO: We should deepcopy without copying the cache
+        for name, solver in self._solver_cache.items():
+            solver_copy._solver_cache[name] = solver.copy()
+        return solver_copy

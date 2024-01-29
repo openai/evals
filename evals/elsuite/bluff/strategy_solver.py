@@ -1,9 +1,11 @@
+import copy
 import re
 from importlib import import_module
 from typing import Optional
 
 from evals.elsuite.bluff.bluff.cards import get_bluff_move
 from evals.solvers.solver import Solver, SolverResult
+from evals.solvers.utils import PersistentMemoryCache
 from evals.task_state import Message, TaskState
 
 
@@ -24,7 +26,23 @@ class BluffStrategySolver(Solver):
         self.max_attempts = max_attempts
         self.rethink_strategy_after = rethink_strategy_after
 
-    def __call__(self, task_state: TaskState):
+        # interaction_length=1 to store reasoning step in private memory
+        self.interaction_cache = PersistentMemoryCache(interaction_length=1)
+        
+    def _generate_response(self, task_state: TaskState):
+        """
+        Calls base solver. Modifies taks state to remove all non-reasoning messages
+        from assistant
+        """
+        task_state = copy.deepcopy(task_state)
+        task_state.messages = [
+            msg
+            for msg in task_state.messages
+            if msg.role != "assistant" or msg.content.startswith("{") or len(msg.content) > 20
+        ]
+        return self.base_solver(task_state).output
+
+    def _solve(self, task_state: TaskState):
         """
         This solver does three things that should help the model play better:
             1. Adds a strategy guide as the first message (just after the task description)
@@ -35,25 +53,12 @@ class BluffStrategySolver(Solver):
         #   GENERAL NOTE.
         #   This function is pretty ugly. I'm not sure how to implement this better. We decided this is good enough.
 
-        #   Remove assistant messages added by the main solver (i.e. non-JSON).
-        #   We need len(msg.content) > 20 because we don't want to remove "rething startegy".
-        task_state.messages = [
-            msg
-            for msg in task_state.messages
-            if msg.role != "assistant" or msg.content.startswith("{") or len(msg.content) > 20
-        ]
+        #   Before the first move in a game - strategy guide goes first
+        strategy_msg = Message("system", strategy)
+        task_state.messages.insert(0, strategy_msg)
+        task_state.messages = self.interaction_cache.load_private_interaction(task_state)
 
         game = task_state.current_state
-
-        if len(game.rounds) == 1 and len(game.rounds[0].moves) < 2:
-            #   Before the first move in a game - strategy guide goes first
-            strategy_msg = Message("system", strategy)
-
-            #   This if is important - we might have already tried
-            #   to bid, but gave an invalid bid, so still we have no moves
-            if strategy_msg not in task_state.messages:
-                task_state.messages.insert(0, strategy_msg)
-
         if (
             self.rethink_strategy_after is not None
             and len(game.rounds) == 1 + self.rethink_strategy_after
@@ -67,15 +72,32 @@ class BluffStrategySolver(Solver):
             if strategy_update_msg not in task_state.messages:
                 last_system_message = task_state.messages.pop()
                 task_state.messages.append(strategy_update_msg)
-                response = self.base_solver(task_state).output
+                response = self._generate_response(task_state)
                 task_state.messages.append(Message("assistant", response))
                 task_state.messages.append(last_system_message)
+
+                # Manually update interaction cache, since we re-order messages
+                last_interaction = self.interaction_cache.last_interaction
+                last_interaction_messages = last_interaction.messages[:-1] + [
+                    Message("system", strategy_update_msg),
+                    Message("assistant", response),
+                    Message("system", last_system_message),
+                ]
+                last_interaction_private_ids = last_interaction.private_messages_ids + [
+                    len(task_state.messages) - 3,
+                    len(task_state.messages) - 2,
+                ]
+
+                self.interaction_cache.last_interaction.messages = last_interaction_messages
+                self.interaction_cache.last_interaction.private_messages_ids = (
+                    last_interaction_private_ids
+                )
 
         #   If this move_str is preserved, the game engine will have to deal with that
         #   (and it has some way of solving this problem)
         move_str = "[INVALID MOVE]"
         for _ in range(self.max_attempts):
-            response = self.base_solver(task_state).output
+            response = self._generate_response(task_state)
             try:
                 move_str = self._parse_response(response)
                 #   This will raise ValueError if this is not a valid move
@@ -85,6 +107,9 @@ class BluffStrategySolver(Solver):
                 pass
 
         task_state.messages.append(Message("assistant", response))
+        task_state.messages.append(Message("assistant", move_str))
+        self.interaction_cache.save_private_interaction(task_state)
+
         return SolverResult(move_str)
 
     @property

@@ -11,7 +11,7 @@ class BaselineNoPromptSolver(Solver):
         This solver simply returns an empty string as the prompt.
         """
 
-    def __call__(
+    def _solve(
         self,
         task_state: TaskState,
         **kwargs,
@@ -32,7 +32,7 @@ class BaselineOriginalPromptSolver(Solver):
         This solver simply returns the original instruction as the prompt.
         """
 
-    def __call__(
+    def _solve(
         self,
         task_state: TaskState,
         **kwargs,
@@ -54,7 +54,7 @@ class BaselineFewShotSolver(Solver):
         This solver concatenates the given input-output examples as few-shot demonstrations.
         """
 
-    def __call__(
+    def _solve(
         self,
         task_state: TaskState,
         **kwargs,

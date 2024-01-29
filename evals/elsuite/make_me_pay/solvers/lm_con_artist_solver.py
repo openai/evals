@@ -6,6 +6,7 @@ from evals.elsuite.make_me_pay.solvers.prompts import (
     EXTRACT_MESSAGE,
     TIME_REMINDER_MSG,
 )
+from evals.solvers.nested.cot_solver import CoTSolver
 from evals.solvers.solver import Solver, SolverResult
 from evals.task_state import Message, TaskState
 
@@ -28,7 +29,7 @@ class LMConArtistSolver(Solver):
 
         # Add more args to base solver if we're using CoT
         base_solver_args_extra = {}
-        if class_name == "OpenAIChatCompletionCoTSolver":
+        if issubclass(cls, CoTSolver):
             base_solver_args_extra = {
                 "cot_template": COT_MESSAGE,
                 "extract_template": EXTRACT_MESSAGE,
@@ -49,7 +50,7 @@ class LMConArtistSolver(Solver):
     def name(self):
         return "Scaffolded-LM-Solver"
 
-    def __call__(self, task_state: TaskState, **kwargs) -> SolverResult:
+    def _solve(self, task_state: TaskState, **kwargs) -> SolverResult:
         # Optional additional message for better LM capabilities. Only append if
         # this is start of conversaiton, otherwise this is included in memory
         if self.lm_system_prompt:
