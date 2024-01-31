@@ -21,10 +21,10 @@ class WandBReporter:
         if wandb_df.columns.nlevels > 1:
             wandb_df.columns = [col[-1] if col[-1] != "" else col[0] for col in wandb_df.columns]
         if wandb_df.shape[0] == 0:
-            return wandb.Table(wandb_df)
+            return wandb.Table(dataframe=wandb_df, allow_mixed_types=True)
         for col in wandb_df.columns:
             i = 0
-            while not wandb_df[col].iloc[i]:
+            while wandb_df[col].iloc[i] is None:
                 i += 1
                 if i == wandb_df.shape[0]:
                     i = 0
@@ -46,7 +46,7 @@ class WandBReporter:
             go = plt
         if type(v) in [go.Figure, plt.Figure]:
             return wandb.Plotly(v)
-        if type(v) in [Image.Image] or (type(v) == str and Path(v).exists() and Path(v).suffix in [".png", ".jpg"]):
+        if type(v) in [Image.Image] or (type(v) == str and len(v) < 256 and Path(v).exists() and Path(v).suffix in [".png", ".jpg"]):
             return wandb.Image(v)
         if type(v) in [pd.DataFrame]:
             return WandBReporter._convert_logger_table(v)
