@@ -58,6 +58,7 @@ def record_and_check_match(
     expected: Union[str, list[str], tuple[str]],
     separator: Callable[[str], bool] = None,
     options: Optional[list[str]] = None,
+    **kwargs
 ):
     """
     Records and checks if a sampled response from a CompletionFn matches the expected result.
@@ -101,5 +102,5 @@ def record_and_check_match(
     match = picked in expected
     result["expected"] = expected
     result["match"] = match
-    record_match(match, expected=expected, picked=picked, sampled=sampled, options=options)
+    record_match(match, prompt=prompt, expected=expected, picked=picked, sampled=sampled, options=options, **kwargs)
     return picked

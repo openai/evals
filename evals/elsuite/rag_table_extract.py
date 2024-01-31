@@ -212,13 +212,9 @@ class TableExtract(evals.Eval):
             picked_str = open(answerfile_out, 'r').read()
         except:
             print(Path(sample.file_name).stem)
-            code = re.search(code_pattern, sampled).group()
-            code_content = re.sub(code_pattern, r"\1", code)
-            code_content_processed = parse_csv_text(code_content)
-            print(code_content)
-            print(code_content_processed)
             traceback.print_exc()
             record_match(
+                prompt=prompt,
                 correct=False,
                 expected=correct_str,
                 picked=sampled,
@@ -289,6 +285,7 @@ class TableExtract(evals.Eval):
                         jobtype=field if type(field) == str else field[0]
                     )
         record_match(
+            prompt=prompt,
             correct=match_all,
             expected=correct_str,
             picked=picked_str,

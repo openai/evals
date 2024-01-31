@@ -4,6 +4,7 @@ This file defines the `oaievalset` CLI for running eval sets.
 import argparse
 import json
 import logging
+import os
 import subprocess
 from pathlib import Path
 from typing import Optional, cast
@@ -48,6 +49,7 @@ def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run eval sets through the API")
     parser.add_argument("model", type=str, help="Name of a completion model.")
     parser.add_argument("eval_set", type=str, help="Name of eval set. See registry.")
+    parser.add_argument("--mlops", type=str, default=None)
     parser.add_argument(
         "--registry_path",
         type=str,
@@ -73,6 +75,7 @@ def get_parser() -> argparse.ArgumentParser:
 class OaiEvalSetArguments(argparse.Namespace):
     model: str
     eval_set: str
+    mlops: Optional[str]
     registry_path: Optional[list[str]]
     resume: bool
     exit_on_error: bool
@@ -91,6 +94,7 @@ def run(
     commands: list[Task] = []
     eval_set = registry.get_eval_set(args.eval_set) if args.eval_set else None
     if eval_set:
+        os.environ["EVALS_RUN_GROUP"] = args.eval_set
         for index, eval in enumerate(registry.get_evals(eval_set.evals)):
             if not eval or not eval.key:
                 logger.debug("The eval #%d in eval_set is not valid", index)
@@ -100,6 +104,9 @@ def run(
             if args.registry_path:
                 command.append("--registry_path")
                 command = command + args.registry_path
+            if args.mlops:
+                command.append("--mlops")
+                command.append(args.mlops)
             if command in commands:
                 continue
             commands.append(command)

@@ -4,6 +4,7 @@ This file defines the `oaieval` CLI for running evals.
 import argparse
 import json
 import logging
+import os
 import pickle
 import re
 import shlex
@@ -16,6 +17,7 @@ import evals
 import evals.api
 import evals.base
 import evals.record
+from evals.cli.llmreport import parse_jsonl_log
 from evals.eval import Eval
 from evals.record import RecorderBase
 from evals.registry import Registry
@@ -51,6 +53,7 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--log_to_file", type=str, default=None, help="Log to a file instead of stdout"
     )
+    parser.add_argument("--mlops", type=str, default=None)
     parser.add_argument(
         "--registry_path",
         type=str,
@@ -109,6 +112,7 @@ class OaiEvalArguments(argparse.Namespace):
     user: str
     record_path: Optional[str]
     log_to_file: Optional[str]
+    mlops: Optional[str]
     registry_path: list[str]
     debug: bool
     local_run: bool
@@ -232,6 +236,23 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     logger.info("Final report:")
     for key, value in result.items():
         logger.info(f"{key}: {value}")
+
+    if args.mlops:
+        recorder.flush_events()
+        run_config, evalname, model, final_report, logger_data, accuracy_by_type_and_file = parse_jsonl_log(record_path)
+
+        config_logger = json.load(open(args.mlops, 'r'))
+        config_logger["group"] = os.environ.get("EVALS_RUN_GROUP", "")
+        if "name" not in config_logger.keys():
+            config_logger["name"] = f"{args.eval}|{args.completion_fn}"
+        if "id" not in config_logger.keys():
+            config_logger["id"] = run_spec.run_id
+        if "dp_mlops" in config_logger:
+            from evals.reporters.DPTracking import DPTrackingReporter
+            DPTrackingReporter.report_run(config_logger, run_config, logger_data, step=0)
+        if "wandb" in config_logger:
+            from evals.reporters.WandB import WandBReporter
+            WandBReporter.report_run(config_logger, run_config, logger_data, step=0)
 
     return run_spec.run_id
 
