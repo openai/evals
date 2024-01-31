@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import pickle
 import re
 import glob
@@ -91,7 +92,7 @@ def main() -> None:
     for logfile in logfiles:
         run_config, evalname, model, final_report, logger_data, accuracy_by_type_and_file = parse_jsonl_log(logfile)
         qa_collection.append({"evalname": evalname, "model": model, **final_report})
-        if accuracy_by_type_and_file:
+        if accuracy_by_type_and_file is not None:
             table_collection.append(accuracy_by_type_and_file)
 
     if len(table_collection) > 0:
@@ -108,18 +109,22 @@ def main() -> None:
             logger_data["TableExtraction"] = px.box(accuracy_by_model_type_and_file,
                                                     x="jobtype", y="correct", color="model",
                                                     title="Accuracy by jobtype and model")
-            logger_data["QA_accuracy"] = px.bar(accuracies, x="eval", y="accuracy", color="model",
+            logger_data["QA_accuracy"] = px.bar(accuracies, x="evalname", y="accuracy", color="model",
                                                 title="Accuracy by eval and model")
             if "score" in metrics_by_eval.columns:
                 logger_data["QA_score"] = px.bar(scores, x="eval", y="accuracy", color="model",
                                                  title="Accuracy by eval and model")
     if args.mlops:
         config_logger = json.load(open(args.mlops, 'r'))
+        config_logger["group"] = config_logger.get("group", os.environ.get("EVALS_RUN_GROUP", ""))
         if "name" not in config_logger.keys():
             config_logger["name"] = args.name
         if "dp_mlops" in config_logger:
             from evals.reporters.DPTracking import DPTrackingReporter
             DPTrackingReporter.report_run(config_logger, {}, logger_data, step=0)
+        if "wandb" in config_logger:
+            from evals.reporters.WandB import WandBReporter
+            WandBReporter.report_run(config_logger, {}, logger_data, step=0)
 
 
 if __name__ == "__main__":

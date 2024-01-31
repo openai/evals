@@ -18,6 +18,8 @@ class WandBReporter:
     @staticmethod
     def _convert_logger_table(df: pd.DataFrame) -> wandb.Table:
         wandb_df = deepcopy(df)
+        if wandb_df.columns.nlevels > 1:
+            wandb_df.columns = [col[-1] if col[-1] != "" else col[0] for col in wandb_df.columns]
         if wandb_df.shape[0] == 0:
             return wandb.Table(wandb_df)
         for col in wandb_df.columns:
@@ -59,7 +61,6 @@ class WandBReporter:
         wandb_config = config_logger.get("wandb", {}).copy()
         wandb_config["name"] = config_logger["name"]
         wandb_config["group"] = config_logger["group"]
-        wandb_config["id"] = config_logger["id"]
         wandb_config["config"] = config_run
         wandb_config["tags"] = list(set([config_logger["name"]] + wandb_config.get("tags", [])))
         wandb.login(key=os.environ.get("WANDB_API_KEY", None))
@@ -67,6 +68,8 @@ class WandBReporter:
             wandb_config["entity"] = os.environ.get("WANDB_ENTITY", "uni-finder")
         if "project" not in wandb_config:
             wandb_config["project"] = config_logger.get("project", os.environ.get("WANDB_PROJECT", "LLM-Eval"))
+        if "id" in config_logger:
+            wandb_config["id"] = config_logger["id"]
 
         try:
             run = wandb.init(**wandb_config)
