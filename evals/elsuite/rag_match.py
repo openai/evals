@@ -108,6 +108,7 @@ class RAGMatch(evals.Eval):
             prompt=prompt,
             sampled=sampled,
             expected=sample["ideal"],
+            file_name=sample["file_name"]
         )
 
     def run(self, recorder):

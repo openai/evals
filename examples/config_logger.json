@@ -1,7 +1,8 @@
 {
     "name": "20231231-unifinder-poc",
-    "project": "Uni-Finder/Benchmark",
+    "project": "LLM-Evals",
     "dp_mlops":{
         "aim_repo": "aim://tracking-api.mlops.dp.tech:443"
-    }
+    },
+    "wandb": {}
 }
