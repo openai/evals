@@ -9,3 +9,8 @@ zhishu/gpt-4-all:
   args:
     model: gpt-4-all
     all_tools: True
+
+zhishu/gpt-4-cot:
+  class: evals.completion_fns.cot:ChainOfThoughtCompletionFn
+  args:
+    cot_completion_fn: zhishu/gpt-4

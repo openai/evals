@@ -192,3 +192,10 @@ class PromptFn:
         )
         sampled = result.get_completions()[0]
         return sampled, prompt
+
+
+def markdown_format_prompt(prompt):
+    if type(prompt) == list:
+        return "\n\n".join([f"**{message['role']}**: {message['content']}" for message in prompt])
+    else:
+        return prompt
