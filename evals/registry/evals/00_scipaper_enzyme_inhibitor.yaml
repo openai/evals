@@ -1,0 +1,18 @@
+scipaper_enzyme_inhibitor:
+  id: scipaper_enzyme_inhibitor.val.csv
+  metrics: [accuracy]
+
+scipaper_enzyme_inhibitor.val.csv:
+  class: evals.elsuite.rag_table_extract:TableExtract
+  args:
+    samples_jsonl: 00_scipaper_enzyme_inhibitor/samples.jsonl
+    instructions: |
+      Please give a complete list of Inhibitor, Commentand Organism of all substrates in the paper. Usually the substrates' tags are numbers or IUPAC names.
+      1. Output in csv format, write units not in header but in the value like "10.5 µM". Quote the value if it has comma! For example:
+      ```csv
+      Inhibitor,Comment,Organism
+      ATP,"competitive inhibition of verapamil-dependent ATPase-activity",Homo sapiens
+      p-xylene,"11.4 mM, slight inhibitor",Bos taurus
+      NH4+, 0.002 mM,Bos taurus
+      ```
+      2. If there are multiple tables, concat them. Don't give me reference or using "...", give me complete table!

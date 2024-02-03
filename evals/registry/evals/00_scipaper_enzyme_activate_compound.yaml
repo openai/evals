@@ -1,0 +1,18 @@
+scipaper_enzyme_activate_compound:
+  id: scipaper_enzyme_activate_compound.val.csv
+  metrics: [accuracy]
+
+scipaper_enzyme_activate_compound.val.csv:
+  class: evals.elsuite.rag_table_extract:TableExtract
+  args:
+    samples_jsonl: 00_scipaper_enzyme_activate_compound/samples.jsonl
+    instructions: |
+      Please give a complete list of Activating Compound, Commentand Organism of all substrates in the paper. Usually the substrates' tags are numbers or IUPAC names.
+      1. Output in csv format, write units not in header but in the value like "10.5 µM". Quote the value if it has comma! For example:
+      ```csv
+      Activating Compound,Comment,Organism
+      Cu2+,at 0.001 mM of the activity without activator,Homo sapiens
+      p-xylene,"11.4 mM, slight activation",Bos taurus
+      NH4+, 0.002 mM,Bos taurus
+      ```
+      2. If there are multiple tables, concat them. Don't give me reference or using "...", give me complete table!

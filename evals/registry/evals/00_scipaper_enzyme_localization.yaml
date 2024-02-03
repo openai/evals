@@ -1,0 +1,16 @@
+scipaper_enzyme_localization:
+  id: scipaper_enzyme_localization.val.csv
+  metrics: [accuracy]
+
+scipaper_enzyme_localization.val.csv:
+  class: evals.elsuite.rag_table_extract:TableExtract
+  args:
+    samples_jsonl: 00_scipaper_enzyme_localization/samples.jsonl
+    instructions: |
+      Please give a complete list of Localization, Commentand and Organism of all substrates in the paper. Usually the substrates' tags are numbers or IUPAC names.
+      1. Output in csv format, write units not in header but in the value like "10.5 µM". Quote the value if it has comma! For example:
+      ```csv
+      Localization,Organism
+      periplasm,Bos taurus
+      ```
+      2. If there are multiple tables, concat them. Don't give me reference or using "...", give me complete table!
