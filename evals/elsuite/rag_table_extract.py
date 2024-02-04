@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import List, Optional, Tuple, Union
 
 import pandas as pd
+import numpy as np
 from pydantic import BaseModel
 import uuid
 
@@ -35,13 +36,13 @@ def parse_csv_text(csvtext: str) -> str:
     return "\n".join(unified_lines)
 
 
-def parse_table_multiindex(table: pd.DataFrame) -> pd.DataFrame:
+def parse_table_multiindex(table: pd.DataFrame, compare_fields: list = []) -> pd.DataFrame:
     """
     Parse a table with multiindex columns.
     """
 
     df = table.copy()
-    if df.columns.nlevels == 1:
+    if df.columns.nlevels == 1 and tuple in [type(f) for f in compare_fields]:
         coltypes = {col: type(df[col].iloc[0]) for col in df.columns}
         for col, ctype in coltypes.items():
             if ctype == str:
@@ -98,11 +99,20 @@ def fuzzy_compare(a: str, b: str) -> Union[bool, float]:
             mark = ""
         return f"{mark}{number:.1f} {unit}"
 
-    unit_str = ["nM", "uM", "µM", "mM", "M", "%", " %"]
+    def is_float(str):
+        try:
+            float(str)
+            return True
+        except ValueError:
+            return False
+
+    unit_str = ["nM", "uM", "µM", "mM", "%", " %"]
     nan_str = ["n/a", "nan", "na", "n.a.", "nd", "not determined", "not tested", "inactive"]
     a = a.strip()
     b = b.strip()
-    if (a[-2:] in unit_str or a[-1] in unit_str) and (b[-2:] in unit_str or b[-1] in unit_str):
+    if is_float(a) and is_float(b):
+        return np.allclose(float(a), float(b), equal_nan=True, atol=1e-2, rtol=1e-2)
+    elif (a[-2:] in unit_str or a[-1] in unit_str) and (b[-2:] in unit_str or b[-1] in unit_str):
         a = standardize_unit(a)
         b = standardize_unit(b)
         return a == b
@@ -174,7 +184,7 @@ class TableExtract(evals.Eval):
         compare_fields_types = [type(x) for x in sample.compare_fields]
         header_rows = [0, 1] if tuple in compare_fields_types else [0]
 
-        correct_answer = parse_table_multiindex(pd.read_csv(sample.answerfile_name, header=header_rows).astype(str))
+        correct_answer = parse_table_multiindex(pd.read_csv(sample.answerfile_name, header=header_rows).astype(str), compare_fields=sample.compare_fields)
         correct_answer.to_csv("temp.csv", index=False)
         correct_str = open("temp.csv", 'r').read()
 
@@ -203,7 +213,7 @@ class TableExtract(evals.Eval):
                 table = pd.DataFrame(json.loads(code_content))
             else:
                 table = pd.DataFrame()
-            table = parse_table_multiindex(table)
+            table = parse_table_multiindex(table, compare_fields=sample.compare_fields)
 
             if sample.index not in table.columns:
                 table.columns = [sample.index] + list(table.columns)[1:]
@@ -304,3 +314,31 @@ class TableExtract(evals.Eval):
         return {
             "accuracy": evals.metrics.get_accuracy(recorder.get_events("match")),
         }
+
+
+def tableMatchingStrict(df_ref, df_prompt, idx_col='Nickname'):
+    df_ref = df_ref.set_index(idx_col)
+    if len(df_prompt) == 0:
+        return 0.0, 0.0
+    df_prompt = df_prompt.set_index(idx_col)
+    ref_columns = [col for col in df_ref.columns if col not in [idx_col]]
+    idx_list = df_ref.index.values.tolist()
+    prompt_idx_list = df_prompt.index.values.tolist()
+    N, M = len(idx_list), len(ref_columns)
+    match_score, total_match_score = 0.0, 0.0
+    for idx in idx_list:
+        _total_matching = 1.0
+        for col in ref_columns:
+            gt = df_ref.loc[idx, col]
+            try:
+                pd = df_prompt.loc[idx, col]
+            except:
+                pd = 'not found'
+            _is_matching = fuzzy_compare(gt, pd)
+            _total_matching *= float(_is_matching)
+            match_score += float(_is_matching) / M
+        total_match_score += _total_matching
+        _total_matching = 1.0
+    recall = max(len([item for item in prompt_idx_list if item in idx_list]) / len(idx_list), 1.0)
+    print(f'Recall:{recall}, Acc: {match_score / N * recall}, Strict Acc: {total_match_score / N * recall}')
+    return match_score / N * recall, total_match_score / N * recall

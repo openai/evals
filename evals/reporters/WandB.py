@@ -19,7 +19,7 @@ class WandBReporter:
     def _convert_logger_table(df: pd.DataFrame) -> wandb.Table:
         wandb_df = deepcopy(df)
         if wandb_df.columns.nlevels > 1:
-            wandb_df.columns = [col[-1] if col[-1] != "" else col[0] for col in wandb_df.columns]
+            wandb_df.columns = [col[-1] if col[-1] != "" and not col[-1].startswith("Unnamed") else col[0] for col in wandb_df.columns]
         if wandb_df.shape[0] == 0:
             return wandb.Table(dataframe=wandb_df, allow_mixed_types=True)
         for col in wandb_df.columns:
