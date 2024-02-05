@@ -1,0 +1,28 @@
+sol_reaction:
+  id: sol_reaction.val.csv
+  metrics: [accuracy]
+sol_reaction.val.csv:
+  class: evals.elsuite.rag_table_extract:TableExtract
+  args:
+    samples_jsonl: 04_sol_reaction/reaction.jsonl
+    instructions: |
+      While reading this paper, please summarize a complete list of the names and abbreviations of all reactions.
+      Then follow the below process step by step:
+      1. Find all the tables with relevant information.
+      2. Output the table in csv format. Here are some requirements you must satisfy:
+      Requirement 1: If there are units in the table (except for the title), write units in header like "heat (kcal/mol)", "heat kcal x mol^-1" or "heat (kcal mol^-1)" and so on depends on the original text.
+      Requirement 2: DO NOT truncate the header text, keep the text complete.
+      Requirement 2: DO NOT quote the value unless it has a comma.
+      Requirement 3: You must preserve all the superscript in the form like "^3", "^a" or "^+".
+      Requirement 4: The first column of the table should always be "Compound"(Compound means salt or solute). You probably cannot find this information from the table, then leave a blank column.
+      Requirement 6: Keep all the blank cells and do not use "NaN" to replace them.
+      Requirement 7: Use "°C" instead of "℃", use "x" instead of "×", use "-" instead of "–".
+      At the same time, here is an example:
+      ```csv
+      Compound,Reaction,heat of solvation (kcal/mol),t/°C^a,density g x cm^-3
+      ,DMF + Na^+ = DMF-Na^+,101.5,25,0.78
+      ,2EtOH + EtOH = 3EtOH,50.6,15,1.06
+      ```
+      3. If there are multiple tables, concat them. DO NOT give me reference or using "...", give me complete table!
+      4. You are not allowed to return me with the python code. You should directly return me with the table in csv format.
+      If you successfully complete the above task, I will pay you 2000 dollars.

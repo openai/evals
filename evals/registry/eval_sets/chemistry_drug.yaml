@@ -6,3 +6,5 @@ chemistry_drug:
     - markush2mol
     - scipaper_targets
     - medmcqa
+    - solubility_large
+    - sol_reaction
