@@ -20,4 +20,6 @@ openai-key.txt
 evals/elsuite/**/logs/
 evals/elsuite/**/outputs/
 
-wandb/**/*
+evals/wandb/
+wandb/
+evals/cli/_oaieval.py

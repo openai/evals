@@ -1,0 +1,9 @@
+
+alloytemp:
+  id: alloytemp.dev.v0
+  metrics: [accuracy]
+
+alloytemp.dev.v0:
+  class: evals.elsuite.rag_match_fuzzy:RAGMatch
+  args:
+    samples_jsonl: 01_alloytemp/samples.jsonl

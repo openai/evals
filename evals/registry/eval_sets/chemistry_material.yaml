@@ -1,0 +1,6 @@
+chemistry_material:
+  evals:
+    - alloynum
+    - alloycomposition
+    - alloysort
+    - alloytemp
