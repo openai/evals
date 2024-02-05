@@ -1,0 +1,19 @@
+scipaper_enzyme_substrate:
+  id: scipaper_enzyme_substrate.val.csv
+  metrics: [accuracy]
+
+scipaper_enzyme_substrate.val.csv:
+  class: evals.elsuite.rag_table_extract:TableExtract
+  args:
+    samples_jsonl: 00_scipaper_enzyme_substrate/samples.jsonl
+    instructions: |
+      Please give a complete list of SMILES structures, Km values, Vmax values, target info (protein or cell line), and organism of all substrates in the paper. Usually the substrates' tags are numbers or IUPAC names.
+      1. Output in csv format, write units not in header but in the value like "10.5 µM". Quote the value if it has comma! For example:
+      ```csv
+      Substrate,Inhibitors, Km value,Km max,Comment,organism,Vmax value,SMILES,Target info,Activating Compound,
+      ATP,Cu2+,0.001 mM,-,-,Homo sapiens,-,-,ATP-linker aldehyde,Carboxybenzaldehyde,
+      p-xylene,NADH,0.004 mM,-,-,Homo sapiens,-,C1CCCCC1,-,Methylbenzaldehyde
+      NADPH,benzaldehyde, 0.12 mM,125 mM,enzyme form ATP,Bos taurus,-,-,NH4+
+
+      ```
+      2. If there are multiple tables, concat them. Don't give me reference or using "...", give me complete table!

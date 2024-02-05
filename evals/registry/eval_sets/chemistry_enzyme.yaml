@@ -1,0 +1,6 @@
+chemistry_enzyme:
+  evals:
+    - scipaper_enzyme_substrate
+    - scipaper_enzyme_activate_compound
+    - scipaper_enzyme_inhibitor
+    - scipaper_enzyme_localization
