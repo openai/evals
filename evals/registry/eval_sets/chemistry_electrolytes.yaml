@@ -1,0 +1,4 @@
+chemistry_drug:
+  evals:
+    - solubility_large
+    - sol_reaction
