@@ -53,11 +53,14 @@ def parse_jsonl_log(logfile):
                 logger_data[f"{doi.replace('/', '_')}/context:match"] = df[df["jobtype"] != "match_all"][
                     ["correct", "expected", "picked", "jobtype"]]
                 match_all_data = df[df["jobtype"] == "match_all"].iloc[0, :]
-                logger_data[f"{doi.replace('/', '_')}/context:truth"] = pd.read_csv(
-                    StringIO(match_all_data["expected"]), header=[0, 1])
-                logger_data[f"{doi.replace('/', '_')}/context:extract"] = pd.read_csv(
-                    StringIO(match_all_data["picked"]), header=[0, 1]) \
-                    if df["jobtype"].iloc[0] != "match_all" else match_all_data["picked"]
+                try:
+                    logger_data[f"{doi.replace('/', '_')}/context:truth"] = pd.read_csv(
+                        StringIO(match_all_data["expected"]), header=[0, 1])
+                    logger_data[f"{doi.replace('/', '_')}/context:extract"] = pd.read_csv(
+                        StringIO(match_all_data["picked"]), header=[0, 1]) \
+                        if df["jobtype"].iloc[0] != "match_all" else match_all_data["picked"]
+                except:
+                    pass
         else:
             accuracy_by_type_and_file = None
     else:

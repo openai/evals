@@ -1,4 +1,4 @@
-chemistry_drug:
+chemistry_electrolytes:
   evals:
     - solubility_large
     - sol_reaction
