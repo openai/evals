@@ -350,7 +350,7 @@ def tableMatching(df_ref, df_prompt, index='Compound', compare_fields=[], record
                 query_j = name2query(name_j)
                 if fuzzy_normalize_name(query_i) == "" or fuzzy_normalize_name(query_j) == "":
                     similarities[i, j] = 0
-                result = fuzzy_compare_value(fuzzy_normalize_name(query_i), fuzzy_normalize_name(query_j))
+                result = fuzzy_compare_name(fuzzy_normalize_name(query_i), fuzzy_normalize_name(query_j))
                 if type(result) == bool:
                     similarities[i, j] = 1 if result else 0
                 elif type(result) == float:
@@ -415,9 +415,11 @@ def tableMatching(df_ref, df_prompt, index='Compound', compare_fields=[], record
     for idx in df_ref.index:
         _total_matching = 1.0
         for col in compare_fields_:
-            gt = str(df_ref.loc[idx, col])
+            gt = df_ref.loc[idx, col]
+            gt = str(gt[0]) if type(gt) == pd.Series else str(gt)
             try:
-                p = str(df_prompt.loc[idx, col])
+                p = df_prompt.loc[idx, col]
+                p = str(p[0]) if type(p) == pd.Series else str(p)
             except:
                 p = 'not found'
 
