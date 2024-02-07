@@ -12,7 +12,7 @@ polymer_attribute.val.csv:
       * Should return all columns mentioned, if empty just return `NaN`. Nickname should not be empty.
       * Nickname should be short name of polymers, for example: `PCBM:PffBT4T-2OD:PC61PM` should return `PffBT4T-2OD`.
       * Only return acceptor `PC71BM` related records.
-      * If duplicate acceptor or with different experiment settings, only return the record with `highest PCE` !
+      * If with different experiment settings for the same nickname, only return the record with `highest PCE` !
       * Should find more information from the whole content, including tables, text.
       * For FF use 0.xx instead of xx.x, for example: 63.0 should return 0.63 !
       for example, you should return:
