@@ -350,7 +350,7 @@ def tableMatching(df_ref, df_prompt, index='Compound', compare_fields=[], record
                 query_j = name2query(name_j)
                 if fuzzy_normalize_name(query_i) == "" or fuzzy_normalize_name(query_j) == "":
                     similarities[i, j] = 0
-                result = fuzzy_compare_value(fuzzy_normalize_name(query_i), fuzzy_normalize_name(query_j))
+                result = fuzzy_compare_name(fuzzy_normalize_name(query_i), fuzzy_normalize_name(query_j))
                 if type(result) == bool:
                     similarities[i, j] = 1 if result else 0
                 elif type(result) == float:
