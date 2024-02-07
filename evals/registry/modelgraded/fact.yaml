@@ -18,6 +18,13 @@ fact:
     (C) The submitted answer contains all the same details as the expert answer.
     (D) There is a disagreement between the submitted answer and the expert answer.
     (E) The answers differ, but these differences don't matter from the perspective of factuality.
+  eval_type: classify
+  choice_scores:
+    "A": 0.5
+    "B": 0.75
+    "C": 1.0
+    "D": 0.0
+    "E": 0.75
   choice_strings: ABCDE
   input_outputs:
     input: completion
