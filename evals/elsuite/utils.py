@@ -322,7 +322,11 @@ def fuzzy_normalize_value(vi):
 
 def tableMatching(df_ref, df_prompt, index='Compound', compare_fields=[], record=True, file_name=None):
     from munkres import Munkres
+    assert len(df_ref) > 0, "Prompt table is empty."
 
+    if df_prompt is None or len(df_prompt) == 0:
+        return {"recall_field": 0.0, "recall_index": 0.0, "recall_value": 0.0, "recall_value_strict": 0.0,
+                "accuracy_value": 0.0, "accuracy_value_strict": 0.0, "recall_SMILES": 0.0}
     metrics = {}
     index_names = ["Compound", "Name", "SMILES", "Nickname", "Substrate"]
 
