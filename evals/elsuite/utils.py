@@ -4,6 +4,9 @@ import string
 from collections import Counter, defaultdict
 from typing import Optional, Union
 
+import numpy as np
+import pandas as pd
+
 from evals import CompletionFn
 from evals.prompt.base import (
     OpenAICreateChatPrompt,
@@ -12,6 +15,111 @@ from evals.prompt.base import (
     chat_prompt_to_text_prompt,
     is_chat_prompt,
 )
+from evals.record import record_match
+
+synonyms = {
+    'Hydrogen': 'H',
+    'Helium': 'He',
+    'Lithium': 'Li',
+    'Beryllium': 'Be',
+    'Boron': 'B',
+    'Carbon': 'C',
+    'Nitrogen': 'N',
+    'Oxygen': 'O',
+    'Fluorine': 'F',
+    'Neon': 'Ne',
+    'Sodium': 'Na',
+    'Magnesium': 'Mg',
+    'Aluminium': 'Al',
+    'Aluminium(aluminum)': 'Al',
+    'Silicon': 'Si',
+    'Phosphorus': 'P',
+    'Sulfur': 'S',
+    'Chlorine': 'Cl',
+    'Argon': 'Ar',
+    'Potassium': 'K',
+    'Calcium': 'Ca',
+    'Scandium': 'Sc',
+    'Titanium': 'Ti',
+    'Vanadium': 'V',
+    'Chromium': 'Cr',
+    'Manganese': 'Mn',
+    'Iron': 'Fe',
+    'Cobalt': 'Co',
+    'Nickel': 'Ni',
+    'Copper': 'Cu',
+    'Zinc': 'Zn',
+    'Gallium': 'Ga',
+    'Germanium': 'Ge',
+    'Arsenic': 'As',
+    'Selenium': 'Se',
+    'Bromine': 'Br',
+    'Krypton': 'Kr',
+    'Rubidium': 'Rb',
+    'Strontium': 'Sr',
+    'Yttrium': 'Y',
+    'Zirconium': 'Zr',
+    'Niobium': 'Nb',
+    'Molybdenum': 'Mo',
+    'Technetium': 'Tc',
+    'Ruthenium': 'Ru',
+    'Rhodium': 'Rh',
+    'Palladium': 'Pd',
+    'Silver': 'Ag',
+    'Cadmium': 'Cd',
+    'Indium': 'In',
+    'Tin': 'Sn',
+    'Antimony': 'Sb',
+    'Tellurium': 'Te',
+    'Iodine': 'I',
+    'Xenon': 'Xe',
+    'Cesium': 'Cs',
+    'Barium': 'Ba',
+    'Lanthanum': 'La',
+    'Cerium': 'Ce',
+    'Praseodymium': 'Pr',
+    'Neodymium': 'Nd',
+    'Promethium': 'Pm',
+    'Samarium': 'Sm',
+    'Europium': 'Eu',
+    'Gadolinium': 'Gd',
+    'Terbium': 'Tb',
+    'Dysprosium': 'Dy',
+    'Holmium': 'Ho',
+    'Erbium': 'Er',
+    'Thulium': 'Tm',
+    'Ytterbium': 'Yb',
+    'Lutetium': 'Lu',
+    'Hafnium': 'Hf',
+    'Tantalum': 'Ta',
+    'Tungsten': 'W',
+    'Rhenium': 'Re',
+    'Osmium': 'Os',
+    'Iridium': 'Ir',
+    'Platinum': 'Pt',
+    'Gold': 'Au',
+    'Mercury': 'Hg',
+    'Thallium': 'Tl',
+    'Lead': 'Pb',
+    'Bismuth': 'Bi',
+    'Polonium': 'Po',
+    'Astatine': 'At',
+    'Radon': 'Rn',
+    'Francium': 'Fr',
+    'Radium': 'Ra',
+    'Actinium': 'Ac',
+    'Thorium': 'Th',
+    'Protactinium': 'Pa',
+    'Uranium': 'U',
+    'Neptunium': 'Np',
+    'Plutonium': 'Pu',
+    'Americium': 'Am',
+    'Curium': 'Cm',
+    'Berkelium': 'Bk',
+    'Californium': 'Cf',
+    'Einsteinium': 'Es',
+    'Fermium': 'Fm'
+}
 
 
 def get_answer(text, answer_prompt, ignore_case=False):
@@ -22,7 +130,7 @@ def get_answer(text, answer_prompt, ignore_case=False):
 
     if idx == -1:
         return None
-    return text[idx : idx + len(answer_prompt)]
+    return text[idx: idx + len(answer_prompt)]
 
 
 def get_consensus(answers):
@@ -31,6 +139,22 @@ def get_consensus(answers):
         counts[answer] += 1
     counts[None] = 0
     return max(counts, key=counts.get)
+
+
+def compare_molecule(smi1, smi2) -> bool:
+    from rdkit import Chem
+    from rdkit.Chem import AllChem
+
+    mol1 = Chem.MolFromSmiles(smi1)
+    mol2 = Chem.MolFromSmiles(smi2)
+    if mol1 is None or mol2 is None:
+        return False
+    else:
+        return Chem.MolToSmiles(Chem.RemoveHs(mol1)) == Chem.MolToSmiles(Chem.RemoveHs(mol2))
+    # return False
+    # fp1 = AllChem.GetMorganFingerprint(mol1, 2)
+    # fp2 = AllChem.GetMorganFingerprint(mol2, 2)
+    # return DataStructs.TanimotoSimilarity(fp1, fp2)
 
 
 def normalize(s: str) -> str:
@@ -51,6 +175,284 @@ def fuzzy_match(s1: str, s2: str) -> bool:
         return s1 == s2
 
     return s1 in s2 or s2 in s1
+
+
+def fuzzy_compare(a: str, b: str, metric="EditDistance") -> Union[bool, float]:
+    """
+    Compare two strings with fuzzy matching.
+    """
+
+    def standardize_unit(s: str) -> str:
+        """
+        Standardize a (affinity) string to common units.
+        """
+        mark = "" if re.search(r"[><=]", s) is None else re.search(r"[><=]", s).group()
+        unit = s.rstrip()[-2:]
+        number = float(re.search(r"[\+\-]*[0-9.]+", s).group())
+
+        if unit in ["µM", "uM"]:
+            unit = "nM"
+            number *= 1000
+        elif unit in ["mM", "mm"]:
+            unit = "nM"
+            number *= 1000000
+
+        if mark == "=":
+            mark = ""
+        return f"{mark}{number:.1f} {unit}"
+
+    def is_float(str):
+        try:
+            float(str)
+            return True
+        except ValueError:
+            return False
+
+    unit_str = ["nM", "uM", "µM", "mM", "%", " %", "wt.%", "at.%", "at%", "wt%"]
+    nan_str = ["n/a", "nan", "na", "n.a.", "nd", "not determined", "not tested", "inactive"]
+    a = a.strip()
+    b = b.strip()
+    if is_float(a) and is_float(b):
+        return np.allclose(float(a), float(b), equal_nan=True, atol=1e-2, rtol=1e-2)
+    elif fuzzy_normalize_value(a) == "bal" or fuzzy_normalize_value(b) == "bal":
+        return True
+    elif fuzzy_normalize_value(a) == fuzzy_normalize_value(b):
+        return True
+    elif ((a[-2:] in unit_str or a[-1] in unit_str or a.split()[-1] in unit_str) and
+          (b[-2:] in unit_str or b[-1] in unit_str or b.split()[-1] in unit_str)):
+        a = standardize_unit(a)
+        b = standardize_unit(b)
+        return a == b
+    elif a.lower() in nan_str and b.lower() in nan_str:
+        return True
+    elif (a.lower() in b.lower()) or (b.lower() in a.lower()):
+        return True
+    else:
+        if metric == "EditDistance":
+            import Levenshtein
+            return 1 - Levenshtein.distance(a.lower(), b.lower()) / (len(a) + len(b))
+        elif metric == "Word2Vec":
+            pass
+
+
+def fuzzy_normalize_name(s):
+    if s.startswith("Unnamed"):
+        return ""
+    else:
+        """ 标准化字符串 """
+        # 定义需要移除的单位和符号
+        units = ["µM", "µg/mL", "nM", "%", "wt.%", "at.%", "at%", "wt%"]
+        for unit in units:
+            s = s.replace(unit, "")
+
+        # 定义特定关键字
+        keywords = ["pIC50", "IC50", "EC50", "TC50", "GI50", "Ki", "Kd", "Kb", "pKb"]
+
+        # 移除非字母数字的字符，除了空格
+        s = re.sub(r'[^\w\s.\-\(\)]', '', s)
+        if s in synonyms:
+            s = synonyms[s]
+
+        # 分割字符串为单词列表
+        words = s.split()
+
+        # 将关键字移到末尾
+        reordered_words = [word for word in words if word not in keywords]
+        keywords_in_string = [word for word in words if word in keywords]
+        reordered_words.extend(keywords_in_string)
+        # 重新组合为字符串
+        return ' '.join(reordered_words)
+
+
+def fuzzy_normalize_value(vi):
+    try:
+        vi = str(vi).lower()
+
+        if "bal" in vi or "remainder" in vi or "bas" in vi:
+            vi = "bal"
+            return "bal"
+
+        if "nan" in vi or "/" == vi or "n/a" in vi or "na" in vi or vi == "":
+            vi = "0"
+
+        vi = vi.replace("~", "-")
+
+        pattern = r"\d+(?:\.\d+)?"
+        vi = re.findall(pattern, vi)
+        if len(vi) == 2:
+            vi = f"{vi[0]}-{vi[1]}"
+        else:
+            vi = vi[0]
+
+        if "<" in vi:
+            vi = vi.replace("<", "")
+        if ">" in vi:
+            vi = vi.replace(">", "")
+
+        try:
+            vi = float(vi)
+            vi = round(vi, 3)
+        except:
+            # print(vi)
+            pass
+    except:
+        print("Can't fuzzy for", vi)
+
+    return vi
+
+
+def tableMatching(df_ref, df_prompt, index='Compound', compare_fields=[], record=True, file_name=None):
+    from munkres import Munkres
+
+    metrics = {}
+    index_names = ["Compound", "Name", "SMILES", "Nickname", "Substrate"]
+
+    df_prompt[index] = df_prompt[index].astype(str)
+    df_ref[index] = df_ref[index].astype(str)
+    df_ref = df_ref.set_index(index)
+    df_prompt = df_prompt.set_index(index)
+
+    def match_indices(ind0, ind1, threshold=0.9) -> dict:
+        """
+        Match the indices of two dataframes.
+        """
+        renames = {}
+        name2query = lambda name: name if type(name) != tuple else name[0] if name[1] == "" else name[1]
+        similarities = np.array(np.ones([len(ind0) + 15, len(ind1) + 15]), dtype=np.float64)
+        querys0 = [name2query(name) for name in ind0]
+        querys1 = [name2query(name) for name in ind1]
+        for i, name_i in enumerate(ind0):
+            query_i = name2query(name_i)
+            for j, name_j in enumerate(ind1):
+                query_j = name2query(name_j)
+                if fuzzy_normalize_name(query_i) == "" or fuzzy_normalize_name(query_j) == "":
+                    similarities[i, j] = 0
+                result = fuzzy_compare(fuzzy_normalize_name(query_i), fuzzy_normalize_name(query_j))
+                if type(result) == bool:
+                    similarities[i, j] = 1 if result else 0
+                elif type(result) == float:
+                    similarities[i, j] = result
+
+        for k in range(15):
+            for i in range(len(ind0)):
+                similarities[i][len(ind1) + k] = threshold
+            for j in range(len(ind1)):
+                similarities[len(ind0) + k][j] = threshold
+        dists = 1 - similarities
+        # print(pd.DataFrame(dists, index=querys0 + ["v"] * 15, columns=querys1 + ["v"] * 15))
+
+        # Kuhn-Munkres algorithm for useful solving the rectangular Assignment Problem
+        mu = Munkres()
+        indexes = mu.compute(dists.tolist())
+
+        # 根据最优匹配下标输出映射
+        for i, j in indexes:
+            if (i < len(ind0)) and (j < len(ind1)):
+                renames[name2query(ind1[j])] = name2query(ind0[i])
+        return renames
+
+    renames = match_indices(compare_fields, df_prompt.columns)
+    renames = {key: value for key, value in renames.items() if key not in index_names}
+    if len(renames) > 0:
+        print("Find similar fields between answer and correct:", renames)
+        df_prompt.rename(columns=renames, inplace=True)
+
+    renames = match_indices(df_ref.index, df_prompt.index)
+    renames = {key: value for key, value in renames.items() if key not in index_names}
+    if len(renames) > 0:
+        print("Find similar indices between answer and correct:", renames)
+        df_prompt.rename(index=renames, inplace=True)
+
+    compare_fields_ = [col for col in compare_fields if
+                       col not in [index] + ([index[0]] if type(index) == tuple else [])]
+    metrics["recall_field"] = max(
+        len([item for item in compare_fields_ if item in df_prompt.columns]) / len(compare_fields_), 1.0)
+    metrics["recall_index"] = max(len([item for item in df_ref.index if item in df_prompt.index]) / df_ref.shape[0], 1.0)
+
+    if record:
+        for col in compare_fields_:
+            record_match(
+                correct=col in df_prompt.columns,
+                expected=col,
+                picked=str(list(df_prompt.columns)),
+                file_name=file_name,
+                jobtype="match_field"
+            )
+        for ind in df_ref.index:
+            record_match(
+                correct=ind in df_prompt.index,
+                expected=ind,
+                picked=str(list(df_prompt.index)),
+                file_name=file_name,
+                jobtype="match_index"
+            )
+
+    match_score, total_match_score, smiles_match_score = 0.0, 0.0, 0.0
+    N, M = len(df_ref.index), len(compare_fields_)
+    for idx in df_ref.index:
+        _total_matching = 1.0
+        for col in compare_fields_:
+            gt = str(df_ref.loc[idx, col])
+            try:
+                p = str(df_prompt.loc[idx, col])
+            except:
+                p = 'not found'
+
+            _is_matching = fuzzy_compare(gt, p) if col != "SMILES" else compare_molecule(gt, p)
+            if col == "SMILES":
+                smiles_match_score += float(_is_matching)
+            if record:
+                record_match(
+                    correct=_is_matching > 0,
+                    expected=gt,
+                    picked=p,
+                    file_name=file_name,
+                    jobtype="match_value" if col != "SMILES" else "match_SMILES"
+                )
+            _total_matching *= float(_is_matching)
+            match_score += float(_is_matching) / M
+
+        total_match_score += _total_matching
+        _total_matching = 1.0
+
+    metrics = {
+        **metrics,
+        "recall_value": match_score / N,
+        "recall_value_strict": total_match_score / N,
+        "accuracy_value": match_score / N * metrics["recall_index"],
+        "accuracy_value_strict": total_match_score / N * metrics["recall_index"],
+    }
+    if "SMILES" in compare_fields_:
+        metrics["recall_SMILES"] = smiles_match_score / N
+    return metrics
+
+
+def tableMatchingStrict(df_ref, df_prompt, idx_col='Nickname'):
+    df_ref = df_ref.set_index(idx_col)
+    if len(df_prompt) == 0:
+        return 0.0, 0.0
+    df_prompt = df_prompt.set_index(idx_col)
+    ref_columns = [col for col in df_ref.columns if col not in [idx_col]]
+    idx_list = df_ref.index.values.tolist()
+    prompt_idx_list = df_prompt.index.values.tolist()
+    N, M = len(idx_list), len(ref_columns)
+    match_score, total_match_score = 0.0, 0.0
+    for idx in idx_list:
+        _total_matching = 1.0
+        for col in ref_columns:
+            gt = df_ref.loc[idx, col]
+            try:
+                pd = df_prompt.loc[idx, col]
+            except:
+                pd = 'not found'
+            _is_matching = fuzzy_compare(gt, pd)
+            _total_matching *= float(_is_matching)
+            match_score += float(_is_matching) / M
+        total_match_score += _total_matching
+        _total_matching = 1.0
+    recall = max(len([item for item in prompt_idx_list if item in idx_list]) / len(idx_list), 1.0)
+    print(f'Recall:{recall}, Acc: {match_score / N * recall}, Strict Acc: {total_match_score / N * recall}')
+    return match_score / N * recall, total_match_score / N * recall
 
 
 def get_scores_from_text(text: str) -> dict:

@@ -16,6 +16,7 @@ import evals
 import evals.metrics
 from evals.api import CompletionFn
 from evals.elsuite.rag_match import get_rag_dataset
+from evals.elsuite.utils import fuzzy_compare, fuzzy_normalize_name, tableMatching, tableMatchingStrict
 from evals.record import RecorderBase, record_match
 
 
@@ -55,13 +56,13 @@ def parse_table_multiindex(table: pd.DataFrame, compare_fields: list = []) -> pd
         for col, ctype in coltypes.items():
             if ctype == dict:
                 d = pd.DataFrame(df.pop(col).tolist())
-                d.columns = pd.MultiIndex.from_tuples([(col, fuzzy_normalize(key)) for key in d.columns])
+                d.columns = pd.MultiIndex.from_tuples([(col, fuzzy_normalize_name(key)) for key in d.columns])
                 dfs.append(d)
         df.columns = pd.MultiIndex.from_tuples([eval(col.replace("|", ",")) if (col[0] == "(" and col[-1] == ")") else
                                                 (col, "") for col in df.columns])
         df = pd.concat([df] + dfs, axis=1)
     if df.columns.nlevels > 1:
-        df.columns = pd.MultiIndex.from_tuples([(col, fuzzy_normalize(subcol)) for col, subcol in df.columns])
+        df.columns = pd.MultiIndex.from_tuples([(col, fuzzy_normalize_name(subcol)) for col, subcol in df.columns])
 
     return df
 
@@ -73,83 +74,6 @@ class FileSample(BaseModel):
     answerfile_link: Optional[str]
     compare_fields: List[Union[str, Tuple]]
     index: Union[str, Tuple] = ("Compound", "")
-
-
-def fuzzy_compare(a: str, b: str) -> Union[bool, float]:
-    """
-    Compare two strings with fuzzy matching.
-    """
-
-    def standardize_unit(s: str) -> str:
-        """
-        Standardize a (affinity) string to common units.
-        """
-        mark = "" if re.search(r"[><=]", s) is None else re.search(r"[><=]", s).group()
-        unit = s.rstrip()[-2:]
-        number = float(re.search(r"[\+\-]*[0-9.]+", s).group())
-
-        if unit in ["µM", "uM"]:
-            unit = "nM"
-            number *= 1000
-        elif unit in ["mM", "mm"]:
-            unit = "nM"
-            number *= 1000000
-
-        if mark == "=":
-            mark = ""
-        return f"{mark}{number:.1f} {unit}"
-
-    def is_float(str):
-        try:
-            float(str)
-            return True
-        except ValueError:
-            return False
-
-    unit_str = ["nM", "uM", "µM", "mM", "%", " %"]
-    nan_str = ["n/a", "nan", "na", "n.a.", "nd", "not determined", "not tested", "inactive"]
-    a = a.strip()
-    b = b.strip()
-    if is_float(a) and is_float(b):
-        return np.allclose(float(a), float(b), equal_nan=True, atol=1e-2, rtol=1e-2)
-    elif (a[-2:] in unit_str or a[-1] in unit_str) and (b[-2:] in unit_str or b[-1] in unit_str):
-        a = standardize_unit(a)
-        b = standardize_unit(b)
-        return a == b
-    elif a.lower() in nan_str and b.lower() in nan_str:
-        return True
-    elif (a.lower() in b.lower()) or (b.lower() in a.lower()):
-        return True
-    else:
-        import Levenshtein
-        return Levenshtein.distance(a.lower(), b.lower()) / (len(a) + len(b)) < 0.1
-
-
-def fuzzy_normalize(s):
-    if s.startswith("Unnamed"):
-        return ""
-    else:
-        """ 标准化字符串 """
-        # 定义需要移除的单位和符号
-        units = ["µM", "µg/mL", "nM"]
-        for unit in units:
-            s = s.replace(unit, "")
-
-        # 定义特定关键字
-        keywords = ["pIC50", "IC50", "EC50", "TC50", "GI50", "Ki", "Kd", "Kb", "pKb"]
-
-        # 移除非字母数字的字符，除了空格
-        # s = re.sub(r'[^\w\s]', '', s)
-
-        # 分割字符串为单词列表
-        words = s.split()
-
-        # 将关键字移到末尾
-        reordered_words = [word for word in words if word not in keywords]
-        keywords_in_string = [word for word in words if word in keywords]
-        reordered_words.extend(keywords_in_string)
-        # 重新组合为字符串
-        return ' '.join(reordered_words)
 
 
 class TableExtract(evals.Eval):
@@ -233,70 +157,11 @@ class TableExtract(evals.Eval):
             )
             return
 
-        # TODO: Use similarity and Bipartite matching to match fields
-        renames = {}
-        for field in sample.compare_fields:
-            for i, sample_field in enumerate(table.columns):
-                field_query = field if type(field) != tuple else field[0] if field[1] == "" else field[1]
-                sample_field_query = sample_field if type(sample_field) != tuple else sample_field[0] if sample_field[1] == "" else sample_field[1]
-                if fuzzy_normalize(field_query) == "" or fuzzy_normalize(sample_field_query) == "":
-                    continue
-                if fuzzy_compare(fuzzy_normalize(field_query), fuzzy_normalize(sample_field_query)) and \
-                        fuzzy_normalize(field_query).split()[-1] == fuzzy_normalize(sample_field_query).split()[-1]:
-                    if sample_field not in renames.keys() and field_query not in renames.values():
-                        renames[sample_field_query] = field_query
-                        break
-        renames = {key: value for key, value in renames.items() if key not in ["Compound", "Name", "SMILES"]}
-        if len(renames) > 0:
-            print("Find similar fields between answer and correct:", renames)
-            table.rename(columns=renames, inplace=True)
-            print(table)
-
-        table[sample.index] = table[sample.index].astype(str)
-        correct_answer[sample.index] = correct_answer[sample.index].astype(str)
-        comparison_df = pd.merge(table.set_index(sample.index, drop=False),
-                                 correct_answer.set_index(sample.index, drop=False),
-                                 how="right", left_index=True, right_index=True)
-
-        match_all = True
-        for field in sample.compare_fields:
-            if type(field) == tuple and len(field) > 1:
-                field_sample, field_correct = (f"{field[0]}_x", field[1]), (f"{field[0]}_y", field[1])
-            else:
-                field_sample, field_correct = f"{field}_x", f"{field}_y"
-            match_field = field in table.columns and field in correct_answer.columns
-            match_all = match_all and match_field
-            record_match(
-                correct=match_field,
-                expected=field,
-                picked=str(list(table.columns)),
-                file_name=sample.file_name,
-                jobtype="match_field"
-            )
-            if match_field:
-                match_number = table[field].shape[0] == correct_answer[field].shape[0]
-                match_all = match_all and match_number
-                record_match(
-                    correct=match_number,
-                    expected=correct_answer[field].shape[0],
-                    picked=table[field].shape[0],
-                    file_name=sample.file_name,
-                    jobtype="match_number"
-                )
-
-                for sample_value, correct_value in zip(comparison_df[field_sample], comparison_df[field_correct]):
-                    match_value = fuzzy_compare(str(sample_value), str(correct_value))
-                    match_all = match_all and match_value
-                    record_match(
-                        correct=match_value,
-                        expected=correct_value,
-                        picked=sample_value,
-                        file_name=sample.file_name,
-                        jobtype=field if type(field) == str else field[0]
-                    )
+        metrics = tableMatching(correct_answer, table, index=sample.index, compare_fields=sample.compare_fields,
+                                record=False, file_name=sample.file_name)
         record_match(
             prompt=prompt,
-            correct=match_all,
+            correct=(metrics["recall_field"] == 1.0 and metrics["recall_index"] == 1.0 and metrics["recall_value"] == 1.0),
             expected=correct_str,
             picked=picked_str,
             file_name=sample.file_name,
@@ -310,35 +175,14 @@ class TableExtract(evals.Eval):
                                             raw_sample["compare_fields"]]
 
         samples = [FileSample(**raw_sample) for raw_sample in raw_samples]
-        self.eval_all_samples(recorder, samples)
-        return {
-            "accuracy": evals.metrics.get_accuracy(recorder.get_events("match")),
-        }
+        metrics_all_sample = self.eval_all_samples(recorder, samples)
 
-
-def tableMatchingStrict(df_ref, df_prompt, idx_col='Nickname'):
-    df_ref = df_ref.set_index(idx_col)
-    if len(df_prompt) == 0:
-        return 0.0, 0.0
-    df_prompt = df_prompt.set_index(idx_col)
-    ref_columns = [col for col in df_ref.columns if col not in [idx_col]]
-    idx_list = df_ref.index.values.tolist()
-    prompt_idx_list = df_prompt.index.values.tolist()
-    N, M = len(idx_list), len(ref_columns)
-    match_score, total_match_score = 0.0, 0.0
-    for idx in idx_list:
-        _total_matching = 1.0
-        for col in ref_columns:
-            gt = df_ref.loc[idx, col]
-            try:
-                pd = df_prompt.loc[idx, col]
-            except:
-                pd = 'not found'
-            _is_matching = fuzzy_compare(gt, pd)
-            _total_matching *= float(_is_matching)
-            match_score += float(_is_matching) / M
-        total_match_score += _total_matching
-        _total_matching = 1.0
-    recall = max(len([item for item in prompt_idx_list if item in idx_list]) / len(idx_list), 1.0)
-    print(f'Recall:{recall}, Acc: {match_score / N * recall}, Strict Acc: {total_match_score / N * recall}')
-    return match_score / N * recall, total_match_score / N * recall
+        metrics = {key: np.mean([sample_metrics[key] for sample_metrics in metrics_all_sample]) for key in
+                   ["recall_field", "recall_index", "recall_value", "recall_value_strict", "accuracy_value", "accuracy_value_strict"]}
+        if "SMILES" in raw_samples[0]["compare_fields"]:
+            metrics["recall_SMILES"] = np.mean([sample_metrics["recall_SMILES"] for sample_metrics in metrics_all_sample
+                                                if "recall_SMILES" in sample_metrics])
+        return metrics
+        # return {
+        #     "accuracy": evals.metrics.get_accuracy(recorder.get_events("match")),
+        # }
