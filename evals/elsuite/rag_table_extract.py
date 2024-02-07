@@ -167,6 +167,7 @@ class TableExtract(evals.Eval):
             file_name=sample.file_name,
             jobtype="match_all"
         )
+        return metrics
 
     def run(self, recorder: RecorderBase):
         raw_samples = get_rag_dataset(self._prefix_registry_path(self.samples_jsonl).as_posix())
