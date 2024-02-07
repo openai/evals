@@ -16,7 +16,7 @@ import evals
 import evals.metrics
 from evals.api import CompletionFn
 from evals.elsuite.rag_match import get_rag_dataset
-from evals.elsuite.utils import fuzzy_compare, fuzzy_normalize_name, tableMatching, tableMatchingStrict
+from evals.elsuite.utils import fuzzy_compare_name, fuzzy_normalize_value, fuzzy_normalize_name, tableMatching, tableMatchingStrict
 from evals.record import RecorderBase, record_match
 
 
