@@ -10,6 +10,7 @@ import openai
 from openai import OpenAI
 
 EVALS_THREAD_TIMEOUT = float(os.environ.get("EVALS_THREAD_TIMEOUT", "40"))
+logging.getLogger("httpx").setLevel(logging.WARNING)  # suppress "OK" logs from openai API calls
 
 
 @backoff.on_exception(
