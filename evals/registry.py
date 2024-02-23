@@ -24,11 +24,7 @@ from evals.elsuite.modelgraded.base import ModelGradedSpec
 from evals.openai_client.openai_client_provider import OpenAIClientProvider
 from evals.utils.misc import make_object
 
-client = OpenAIClientProvider(
-    api_key=os.environ.get("OPENAI_API_KEY"),
-    azure_endpoint=os.environ.get("OPENAI_AZURE_ENDPOINT"),
-    api_version=os.environ.get("OPENAI_API_VERSION"),
-).get_client()
+client = OpenAIClientProvider(api_key=os.environ.get("OPENAI_API_KEY")).get_client()
 
 logger = logging.getLogger(__name__)
 
