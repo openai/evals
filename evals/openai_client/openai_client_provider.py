@@ -24,4 +24,5 @@ class OpenAIClientProvider(ABC):
             api_key=os.environ.get("OPENAI_API_KEY"),
             azure_endpoint=os.environ.get("OPENAI_AZURE_ENDPOINT"),
             api_version=os.environ.get("OPENAI_API_VERSION"),
+            azure_deployment=os.environ.get("OPENAI_AZURE_DEPLOYMENT"),
         )
