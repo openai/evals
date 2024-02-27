@@ -6,29 +6,39 @@ solubility_large.val.csv:
   args:
     samples_jsonl: 04_solubility_large/solute.jsonl
     instructions: |
-      While reading this paper, please summarize a complete list of the names and abbreviations of all solutions.
-      Then follow the below process step by step:
-      1. Find all the tables with relevant information.
-      2. If there are multiple tables, rank them based on relevance to "solubility". Then Select the ONLY ONE which has the HIGHEST relevance to "solubility" and the LARGEST size (the table with the most compounds and solvents).
-      You should always choose based on relevance first. If there are multiple tables you cannot deside which is the most relevant, then choose the largest one.
-      3. DO NOT return me with the concatenation of two tables!
-      3. Output the table in csv format. Here are the requirements you MUST satisfy:
-      Requirement 1: Write units in header like "heat (kcal/mol)", "heat kcal x mol^-1" or "heat (kcal mol^-1)" and so on depends on the original text.
-      Requirement 2: You MUST quote the value if it has a comma.
-      Requirement 3: You MUST preserve all the superscript in the form like "^3", "^+" or "^a".
-      Requirement 4: The first two columns of the table should always be "Compound"(Compound means salt or solute) and "Solvent". 
-      You probably cannot find this information directly from the table, then check the category headers, title of the table and the context.
-      If the orientation of the table is not correct, you should transpose it or convert it to the mapping between "Compound"-"Solvent" pairs and properties.
-      (convertion means concat the columns of the original table)
-      Requirement 5: Category headers are NOT allowed. Check whether or not the "Compound" or "Solvent" columns are blank. If they are NOT, you should always drop the category headers.
-      Requirement 6: You should always preserve every column! DO NOT drop any of them, unless they are the SAME as either "Compound" or "Solvent". 
-      Requirement 7: DO NOT use "NaN" to replace the blank cells. 
-      Requirement 8: Use "°C" instead of "℃", use "x" instead of "×", use "-" instead of "–". Also, you should always add space before and after "x", "+" and "±" like " ± "
-      At the same time, here is an example:
-      ```csv
-      Compound,Solvent,picture of molecule,heat of solvation (kcal/mol),t/°C,density g x cm^-3
-      NaCl,DMF,,101.5,25,0.78
-      CaSO4^a,Water^b,,50.6,15,1.06
-      ```
-      4. You are not allowed to return me with the python code. You should directly return me with the table in csv format.
-      If you successfully complete the above task, I will pay you 2000 dollars.
+      You need to follow these steps to extract tables from the paper:
+      1. Find all tables which contains the word "solubility". If you cannot find anyone, then find all tables related to "solubility".
+      2. Select the table with most salts and solvents.
+      3. Collect all the headers of the table and generate a list.
+      4. If there's no "Compound"(Compound means salt or solute) and "Solvent" in the list, place them at the first two positions in the list. 
+      5. Output the whole table in csv format and satisfy these requirements:
+        (1) Do not truncate tables using "...". Always output the complete tables.
+        (2) Quote the values only if they contain commas.
+        (3) Keep all the superscripts in the form like "^3", "^+" or "^a".
+        (4) Do not use "NaN" to replace the blank cells, just leave it empty.
+        (5) Use "x" to replace all "×", Use "()" to replace all "（）"
+        (6) Always add space before and after operators like " ± ".
+        Remember, the table format should be correct. Here is an example, the original table is:
+        ```csv
+        Table 1 solubilities (mole fraction x),,
+        t/°C,NaCl,
+        ,DMF,PC^b
+        25,1.01 x 10^-2,8.3 x 10^-3
+        15,1.25 x 10^-2,9.0 x 10^-3
+        ,CaSO4^a,
+        ,DMF,PC^b
+        25,,5.6 x 10^-2
+        15,1.83 x 10^-1,6.2 x 10^-2
+        ```
+        It should be converted to:
+        ```csv
+        Compound,Solvent,t/°C,solubilities (mole fraction x)
+        NaCl,DMF,25,1.01 x 10^-2
+        NaCl,DMF,15,1.25 x 10^-2
+        NaCl,PC^b,25,8.3 x 10^-3
+        NaCl,PC^b,15,9.0 x 10^-3
+        CaSO4^a,DMF,25,
+        CaSO4^a,DMF,15,1.83 x 10^-1
+        CaSO4^a,PC^b,25,5.6 x 10^-2
+        CaSO4^a,PC^b,15,6.2 x 10^-2
+        ```

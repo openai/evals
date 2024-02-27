@@ -1,0 +1,9 @@
+
+solQA:
+  id: solQA.dev.v0
+  metrics: [accuracy]
+
+solQA.dev.v0:
+  class: evals.elsuite.rag_match_fuzzy:RAGMatch
+  args:
+    samples_jsonl: 04_sol_QA/sol_QA.jsonl
