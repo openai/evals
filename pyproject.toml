@@ -1,0 +1,61 @@
+[project]
+name = "evals"
+version = "2.0.0.post1"
+requires-python = ">=3.9"
+readme = "README.md"
+dependencies = [
+    "mypy",
+    "openai>=1.0.0",
+    "tiktoken",
+    "blobfile",
+    "backoff",
+    "numpy",
+    "snowflake-connector-python[pandas]",
+    "pandas",
+    "datasets",
+    "fire",
+    "pydantic",
+    "tqdm",
+    "nltk",
+    "filelock",
+    "mock",
+    "langdetect",
+    'termcolor',
+    "lz4",
+    "pyzstd",
+    "pyyaml",
+    "sacrebleu",
+    "matplotlib",
+    "pytest",
+    "langchain",
+    "numexpr",
+    "types-PyYAML",
+    "spacy-universal-sentence-encoder",
+    "jiwer",
+    "seaborn",
+    "statsmodels",
+]
+
+[project.urls]
+repository = "https://github.com/openai/evals"
+
+[project.optional-dependencies]
+formatters = [
+    "black",
+    "isort",
+    "autoflake",
+    "ruff"
+]
+
+[project.scripts]
+oaieval = "evals.cli.oaieval:main"
+oaievalset = "evals.cli.oaievalset:main"
+llmreport = "evals.cli.llmreport:main"
+
+[tool.setuptools]
+packages = ["evals"]
+
+[tool.ruff]
+# Allow lines to be as long as 767 characters, this is currently the longest line
+# TODO: This should be brought down in the future
+line-length = 767
