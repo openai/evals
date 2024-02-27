@@ -1,0 +1,19 @@
+claude-2.1-unofficial:
+  class: evals.completion_fns.claude:ClaudeUnofficialCompletionFn
+  args:
+    model: claude-2.1
+
+claude-2.0-unofficial:
+  class: evals.completion_fns.claude:ClaudeUnofficialCompletionFn
+  args:
+    model: claude-2.0
+
+claude-2.1:
+  class: evals.completion_fns.claude:ClaudeOfficialCompletionFn
+  args:
+    model: claude-2.1
+
+claude-2.0:
+  class: evals.completion_fns.claude:ClaudeOfficialCompletionFn
+  args:
+    model: claude-2.0

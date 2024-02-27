@@ -1,0 +1,9 @@
+gemini-1.0-pro:
+  class: evals.completion_fns.gemini:GeminiCompletionFn
+  args:
+    model: gemini-pro
+
+gemini-1.0-pro-vision:
+  class: evals.completion_fns.gemini:GeminiCompletionFn
+  args:
+    model: gemini-pro-vision
