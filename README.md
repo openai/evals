@@ -2,7 +2,7 @@
 
 Evals provide a framework for evaluating large language models (LLMs) or systems built using LLMs. We offer an existing registry of evals to test different dimensions of OpenAI models and the ability to write your own custom evals for use cases you care about. You can also use your data to build private evals which represent the common LLMs patterns in your workflow without exposing any of that data publicly.
 
-If you are building with LLMs, creating high quality evals is one of the most impactful things you can do. Without evals, it can be very difficult and time intensive to understand how different model versions might effect your use case. In the words of [OpenAI's President Greg Brockman](https://twitter.com/gdb/status/1733553161884127435):
+If you are building with LLMs, creating high quality evals is one of the most impactful things you can do. Without evals, it can be very difficult and time intensive to understand how different model versions might affect your use case. In the words of [OpenAI's President Greg Brockman](https://twitter.com/gdb/status/1733553161884127435):
 
 <img width="596" alt="https://x.com/gdb/status/1733553161884127435?s=20" src="https://github.com/openai/evals/assets/35577566/ce7840ff-43a8-4d88-bb2f-6b207410333b">
 
@@ -14,7 +14,7 @@ To run evals, you will need to set up and specify your [OpenAI API key](https://
 
 ### Downloading evals
 
-Our Evals registry is stored using [Git-LFS](https://git-lfs.com/). Once you have downloaded and installed LFS, you can fetch the evals (from within your local copy of the evals repo) with:
+Our evals registry is stored using [Git-LFS](https://git-lfs.com/). Once you have downloaded and installed LFS, you can fetch the evals (from within your local copy of the evals repo) with:
 ```sh
 cd evals
 git lfs fetch --all
@@ -57,7 +57,7 @@ If you don't want to contribute new evals, but simply want to run them locally, 
 pip install evals
 ```
 
-You can find the full instructions to run existing evals in: [run-evals.md](docs/run-evals.md) and our existing eval templates in: [eval-templates.md](docs/eval-templates.md). For more advanced use cases like prompt chains or tool-using agents, you can use our: [Completion Function Protocol](docs/completion-fns.md).
+You can find the full instructions to run existing evals in [`run-evals.md`](docs/run-evals.md) and our existing eval templates in [`eval-templates.md`](docs/eval-templates.md). For more advanced use cases like prompt chains or tool-using agents, you can use our [Completion Function Protocol](docs/completion-fns.md).
 
 We provide the option for you to log your eval results to a Snowflake database, if you have one or wish to set one up. For this option, you will further have to specify the `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_DATABASE`, `SNOWFLAKE_USERNAME`, and `SNOWFLAKE_PASSWORD` environment variables.
 
@@ -65,11 +65,11 @@ We provide the option for you to log your eval results to a Snowflake database, 
 
 We suggest getting starting by: 
 
-- Walking through the process for building an eval: [build-eval.md](docs/build-eval.md)
-- Exploring an example of implementing custom eval logic: [custom-eval.md](docs/custom-eval.md).
-- Writing your own completion functions: [completion-fns.md](docs/completion-fns.md)
+- Walking through the process for building an eval: [`build-eval.md`](docs/build-eval.md)
+- Exploring an example of implementing custom eval logic: [`custom-eval.md`](docs/custom-eval.md)
+- Writing your own completion functions: [`completion-fns.md`](docs/completion-fns.md)
 
-Please note that we are currently not accepting Evals with custom code! While we ask you to not submit such evals at the moment, you can still submit modelgraded evals with custom modelgraded YAML files.
+Please note that we are currently not accepting evals with custom code! While we ask you to not submit such evals at the moment, you can still submit model-graded evals with custom model-graded YAML files.
 
 If you think you have an interesting eval, please open a pull request with your contribution. OpenAI staff actively review these evals when considering improvements to upcoming models.
 
@@ -77,7 +77,7 @@ If you think you have an interesting eval, please open a pull request with your 
 
 Do you have any examples of how to build an eval from start to finish?
 
-- Yes! These are in the `examples` folder. We recommend that you also read through [build-eval.md](docs/build-eval.md) in order to gain a deeper understanding of what is happening in these examples.
+- Yes! These are in the `examples` folder. We recommend that you also read through [`build-eval.md`](docs/build-eval.md) in order to gain a deeper understanding of what is happening in these examples.
 
 Do you have any examples of evals implemented in multiple different ways?
 
@@ -95,4 +95,4 @@ I am a world-class prompt engineer. I choose not to code. How can I contribute m
 
 ## Disclaimer
 
-By contributing to Evals, you are agreeing to make your evaluation logic and data under the same MIT license as this repository. You must have adequate rights to upload any data used in an Eval. OpenAI reserves the right to use this data in future service improvements to our product. Contributions to OpenAI Evals will be subject to our usual Usage Policies: https://platform.openai.com/docs/usage-policies.
+By contributing to evals, you are agreeing to make your evaluation logic and data under the same MIT license as this repository. You must have adequate rights to upload any data used in an eval. OpenAI reserves the right to use this data in future service improvements to our product. Contributions to OpenAI evals will be subject to our usual Usage Policies: https://platform.openai.com/docs/usage-policies.

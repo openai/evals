@@ -44,12 +44,16 @@ def zstd_open(filename: str, mode: str = "rb", openhook: Any = open) -> pyzstd.Z
     return pyzstd.ZstdFile(openhook(filename, mode), mode=mode)
 
 
-def open_by_file_pattern(filename: str, mode: str = "r", **kwargs: Any) -> Any:
+def open_by_file_pattern(filename: Union[str, Path], mode: str = "r", **kwargs: Any) -> Any:
     """Can read/write to files on gcs/local with or without gzipping. If file
     is stored on gcs, streams with blobfile. Otherwise use vanilla python open. If
     filename endswith gz, then zip/unzip contents on the fly (note that gcs paths and
     gzip are compatible)"""
     open_fn = partial(bf.BlobFile, **kwargs)
+
+    if isinstance(filename, Path):
+        filename = filename.as_posix()
+
     try:
         if filename.endswith(".gz"):
             return gzip_open(filename, openhook=open_fn, mode=mode)
@@ -188,7 +192,7 @@ def _to_py_types(o: Any, exclude_keys: List[Text]) -> Any:
     if isinstance(o, pydantic.BaseModel):
         return {
             k: _to_py_types(v, exclude_keys=exclude_keys)
-            for k, v in json.loads(o.json()).items()
+            for k, v in json.loads(o.model_dump_json()).items()
             if k not in exclude_keys
         }
 

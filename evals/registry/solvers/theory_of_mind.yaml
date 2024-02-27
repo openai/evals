@@ -1,0 +1,290 @@
+### ToMi dataset: open-ended completion, the answer usually a single word.
+tomi/simple_solver/gpt-3.5-turbo:
+  class: evals.solvers.openai_solver:OpenAISolver
+  args:
+    completion_fn_options:
+      model: gpt-3.5-turbo
+      extra_options:
+        temperature: 0
+        max_tokens: 10
+
+tomi/cot_solver/gpt-3.5-turbo:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo
+          extra_options:
+            temperature: 0
+            max_tokens: 10
+
+tomi/simple_solver/code-davinci-002:
+  class: evals.solvers.nested.hhh_solver:HHHSolver
+  args:
+    solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: code-davinci-002
+          extra_options:
+            temperature: 0
+            max_tokens: 10
+
+tomi/cot_solver/code-davinci-002:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: code-davinci-002
+              extra_options:
+                temperature: 1
+                max_tokens: 512
+    extract_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: code-davinci-002
+              extra_options:
+                temperature: 0
+                max_tokens: 10
+
+tomi/simple_solver/gpt-4:
+  class: evals.solvers.openai_solver:OpenAISolver
+  args:
+    completion_fn_options:
+      model: gpt-4
+      extra_options:
+        temperature: 0
+        max_tokens: 10
+
+tomi/cot_solver/gpt-4:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4
+          extra_options:
+            temperature: 0
+            max_tokens: 10
+
+tomi/simple_solver/gpt-4-base:
+  class: evals.solvers.nested.hhh_solver:HHHSolver
+  args:
+    solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-base
+          extra_options:
+            temperature: 0
+            max_tokens: 10
+
+tomi/cot_solver/gpt-4-base:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 1
+                max_tokens: 512
+    extract_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 0
+                max_tokens: 10
+
+### SocialIQA dataset: multiple-choice completion (A, B, C – only one correct).
+socialiqa/simple_solver/gpt-3.5-turbo:
+  class: evals.solvers.openai_solver:OpenAISolver
+  args:
+    completion_fn_options:
+      model: gpt-3.5-turbo
+      extra_options:
+        temperature: 0
+        max_tokens: 1
+    valid_answers: ["A", "B", "C"]
+
+socialiqa/cot_solver/gpt-3.5-turbo:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo
+          extra_options:
+            temperature: 0
+            max_tokens: 1
+        valid_answers: ["A", "B", "C"]
+
+socialiqa/simple_solver/code-davinci-002:
+  class: evals.solvers.nested.hhh_solver:HHHSolver
+  args:
+    solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: code-davinci-002
+          extra_options:
+            temperature: 0
+            max_tokens: 2
+        valid_answers: ["A", "B", "C"]
+
+socialiqa/cot_solver/code-davinci-002:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: code-davinci-002
+              extra_options:
+                temperature: 1
+                max_tokens: 512
+    extract_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: code-davinci-002
+              extra_options:
+                temperature: 0
+                max_tokens: 2 # If this is set to 1 the model doesn't sample anything, perhaps a tokeniser issue.
+            valid_answers: ["A", "B", "C"]
+
+socialiqa/simple_solver/gpt-4:
+  class: evals.solvers.openai_solver:OpenAISolver
+  args:
+    completion_fn_options:
+      model: gpt-4
+      extra_options:
+        temperature: 0
+        max_tokens: 1
+    valid_answers: ["A", "B", "C"]
+
+socialiqa/cot_solver/gpt-4:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4
+          extra_options:
+            temperature: 0
+            max_tokens: 1
+        valid_answers: ["A", "B", "C"]
+
+socialiqa/simple_solver/gpt-4-base:
+  class: evals.solvers.nested.hhh_solver:HHHSolver
+  args:
+    solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-base
+          extra_options:
+            temperature: 0
+            max_tokens: 1
+        valid_answers: ["A", "B", "C"]
+
+socialiqa/cot_solver/gpt-4-base:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 1
+                max_tokens: 512
+    extract_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 0
+                max_tokens: 1
+            valid_answers: ["A", "B", "C"]
+
+socialiqa/selfconsistency/gpt-4:
+  class: evals.solvers.nested.self_consistency_solver:SelfConsistencySolver
+  args:
+    solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4
+          extra_options:
+            temperature: 1
+            max_tokens: 128
+    mode: "judge"

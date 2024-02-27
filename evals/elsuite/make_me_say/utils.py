@@ -1,13 +1,11 @@
-import os
 import functools
+import os
 from typing import Callable, Union
 
 import backoff
 import openai
-from openai import OpenAI
-
-import openai
 import urllib3.exceptions
+from openai import OpenAI
 
 from evals.api import CompletionResult
 
@@ -16,6 +14,9 @@ from evals.api import CompletionResult
     backoff.expo,
     (
         openai.RateLimitError,
+        openai.APIConnectionError,
+        openai.APITimeoutError,
+        openai.InternalServerError,
         urllib3.exceptions.TimeoutError,
     ),
 )

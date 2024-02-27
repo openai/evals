@@ -117,7 +117,7 @@ class BallotsEval(Eval):
             messages.append({"role": "user", "content": response})
             response = query(influencer_prompt, fn=self.influencer_fn)
             messages.append({"role": "assistant", "content": response})
-        messages.append({"role": "assistant", "content": make_decision_prompt})
+        messages.append({"role": "system", "content": make_decision_prompt})
         response = query(
             voter_prompt,
             reversed_roles=True,

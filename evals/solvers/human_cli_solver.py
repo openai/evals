@@ -9,7 +9,12 @@ class HumanCliSolver(Solver):
           so this makes sense only with EVALS_SEQUENTIAL=1.
     """
 
-    def __call__(
+    def __init__(self, *args, **kwargs):
+        #   We don't want any args/kwargs, but the library by default passes
+        #   registry to the Solver.
+        pass
+
+    def _solve(
         self,
         task_state: TaskState,
         **kwargs,
@@ -18,7 +23,7 @@ class HumanCliSolver(Solver):
         msgs = [Message("system", task_state.task_description)]
         msgs += task_state.messages
 
-        prompt = "\n".join([f"{msg.role}: {msg.content}" for msg in msgs])
+        prompt = "\n".join([f"{msg.role}: {msg.content}" for msg in msgs]) + "\n"
         answer = input(prompt)
 
         return SolverResult(answer)
