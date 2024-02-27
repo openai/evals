@@ -48,8 +48,8 @@ formatters = [
 ]
 
 [project.scripts]
-oaieval = "evals.cli.oaieval:main"
-oaievalset = "evals.cli.oaievalset:main"
+oaievalsol = "evals.cli.oaieval:main"
+oaievalsetsol = "evals.cli.oaievalset:main"
 llmreport = "evals.cli.llmreport:main"
 
 [tool.setuptools]

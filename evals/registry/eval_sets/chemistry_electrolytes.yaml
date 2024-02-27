@@ -2,3 +2,4 @@ chemistry_electrolytes:
   evals:
     - solubility_large
     - sol_reaction
+    - sol_QA
