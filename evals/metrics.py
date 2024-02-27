@@ -2,12 +2,13 @@
 This file defines various common metrics of interest.
 """
 import random
+import os
 from typing import Optional, Sequence, Set
 
 import numpy as np
-
+from evals.elsuite import utils
 from evals.record import Event
-
+from scipy.spatial.distance import cosine
 
 def get_accuracy(events: Sequence[Event]) -> float:
     num_correct = sum(int(event.data["correct"]) for event in events)
@@ -71,3 +72,4 @@ def compute_averaged_f_score(
     for i in range(confusion_matrix.shape[0]):
         f_scores.append(compute_f_score(confusion_matrix, idx=i, beta=beta))
     return np.array(f_scores).mean()
+

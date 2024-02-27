@@ -4,6 +4,7 @@ This file defines the `oaieval` CLI for running evals.
 import argparse
 import json
 import logging
+import os
 import pickle
 import re
 import shlex
@@ -16,6 +17,7 @@ import evals
 import evals.api
 import evals.base
 import evals.record
+from evals.cli.llmreport import parse_jsonl_log
 from evals.eval import Eval
 from evals.record import RecorderBase
 from evals.registry import Registry
@@ -51,6 +53,7 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--log_to_file", type=str, default=None, help="Log to a file instead of stdout"
     )
+    parser.add_argument("--mlops", type=str, default=None)
     parser.add_argument(
         "--registry_path",
         type=str,
@@ -95,6 +98,7 @@ def get_parser() -> argparse.ArgumentParser:
 
     parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--dry-run-logging", action=argparse.BooleanOptionalAction, default=True)
+    
     return parser
 
 
@@ -109,6 +113,7 @@ class OaiEvalArguments(argparse.Namespace):
     user: str
     record_path: Optional[str]
     log_to_file: Optional[str]
+    mlops: Optional[str]
     registry_path: list[str]
     debug: bool
     local_run: bool
@@ -123,7 +128,7 @@ class OaiEvalArguments(argparse.Namespace):
 def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
-
+    
     visible = args.visible if args.visible is not None else (args.max_samples is None)
 
     if args.max_samples is not None:
@@ -233,7 +238,50 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     for key, value in result.items():
         logger.info(f"{key}: {value}")
 
+    if args.mlops:
+        recorder.flush_events()
+        run_config, evalname, model, final_report, logger_data, accuracy_by_type_and_file = parse_jsonl_log(record_path)
+
+        config_logger = json.load(open(args.mlops, 'r'))
+        config_logger["group"] = os.environ.get("EVALS_RUN_GROUP", "")
+        if "name" not in config_logger.keys():
+            config_logger["name"] = f"{args.eval}|{args.completion_fn}"
+        if "id" not in config_logger.keys():
+            config_logger["id"] = run_spec.run_id
+        if "dp_mlops" in config_logger:
+            from evals.reporters.DPTracking import DPTrackingReporter
+            DPTrackingReporter.report_run(config_logger, run_config, logger_data, step=0)
+        if "wandb" in config_logger:
+            from evals.reporters.WandB import WandBReporter
+            WandBReporter.report_run(config_logger, run_config, logger_data, step=0)
+
     return run_spec.run_id
+
+def build_recorder(
+    args: OaiEvalArguments, run_spec: evals.base.RunSpec, record_path: str
+) -> RecorderBase:
+    if args.dry_run:
+        return evals.record.DummyRecorder(run_spec=run_spec, log=args.dry_run_logging)
+
+    if args.local_run:
+        return evals.record.LocalRecorder(record_path, run_spec=run_spec)
+
+    if args.http_run:
+        if args.http_run_url is None:
+            raise ValueError("URL must be specified when using http-run mode")
+
+        return evals.record.HttpRecorder(
+            url=args.http_run_url,
+            run_spec=run_spec,
+            batch_size=args.http_batch_size,
+            fail_percent_threshold=args.http_fail_percent_threshold,
+            local_fallback_path=record_path,
+        )
+
+    return evals.record.Recorder(
+        record_path,
+        run_spec=run_spec,
+    )
 
 
 def build_recorder(
@@ -272,7 +320,6 @@ def main() -> None:
         filename=args.log_to_file if args.log_to_file else None,
     )
     logging.getLogger("openai").setLevel(logging.WARN)
-
     run(args)
 
 

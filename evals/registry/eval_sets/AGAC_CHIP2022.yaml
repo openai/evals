@@ -1,3 +1,6 @@
 AGAC_CHIP2022:
   evals:
     - semantic_role_recognition
+    - chemical_entities_recognition
+    - CDR
+    - disease_entities_recognition

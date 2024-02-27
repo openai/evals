@@ -102,3 +102,4 @@ class DPTrackingReporter:
                 context_dict = {k: v for k, v in [kv.split(":") for kv in context_str.split(",")]}
                 run.track(value, name=key, context={**context_dict})
         run.close()
+        print(f"Logged Run at https://tracking.dp.tech/{run.hash}")

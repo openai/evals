@@ -5,6 +5,7 @@ from evals.api import CompletionFn, CompletionResult
 from evals.prompt.base import ChatCompletionPrompt
 from evals.record import record_sampling
 from evals.registry import Registry
+from evals.elsuite.utils import markdown_format_prompt
 
 DEFAULT_COT_TEMPLATE = "\nBefore answering, reason in a step-by-step manner as to get the right answer, then conclude with the answer."
 DEFAULT_EXTRACT_ANSWER_TEMPLATE = (
@@ -13,8 +14,9 @@ DEFAULT_EXTRACT_ANSWER_TEMPLATE = (
 
 
 class ChainOfThoughtCompletionResult(CompletionResult):
-    def __init__(self, response) -> None:
+    def __init__(self, response, extras={}) -> None:
         self.response = response
+        self.extras = extras
 
     def get_completions(self) -> list[str]:
         return [self.response.strip()]
@@ -58,9 +60,13 @@ class ChainOfThoughtCompletionFn(CompletionFn):
             {"role": "assistant", "content": answer},
             {"role": "assistant", "content": self.extract_answer_template},
         ]
+
+        kwargs = {k: v for k, v in kwargs.items() if not k.startswith("file")}
         extracted_answer = self.extract_completion_fn_instance(
             prompt=extraction_prompt, **kwargs
         ).get_completions()[0]
         record_sampling(prompt=extraction_prompt, sampled=extracted_answer)
 
-        return ChainOfThoughtCompletionResult(extracted_answer)
+        return ChainOfThoughtCompletionResult(extracted_answer, {"cot_prompt": markdown_format_prompt(cot_prompt),
+                                                                 "extraction_prompt": markdown_format_prompt(extraction_prompt),
+                                                                 "answer": answer, "extracted_answer": extracted_answer})

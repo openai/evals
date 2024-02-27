@@ -45,9 +45,12 @@ class ZhishuCompletionResult(BaseCompletionResult):
     def get_completions(self) -> list[str]:
         completions = []
         if self.raw_data:
-            for choice in self.raw_data.choices:
-                if choice.message.content is not None:
-                    completions.append(choice.message.content)
+            if hasattr(self.raw_data, "choices"):
+                for choice in self.raw_data.choices:
+                    if choice.message.content is not None:
+                        completions.append(choice.message.content)
+            else:
+                completions.append("Error!")
         return completions
 
 

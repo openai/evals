@@ -98,6 +98,13 @@ class ModelBasedClassify(evals.Eval):
             metrics["metascore"] = choice == test_sample["choice"]
 
         evals.record.record_metrics(**metrics)
+        if "ideal" in test_sample:
+            k, v = list(self.mg.input_outputs.items())[0]
+            evals.record.record_match(correct=metrics["score"] >= 1.0,
+                                      expected=test_sample["ideal"],
+                                      picked=info["sampled"][0], sampled=completions[v],
+                                      prompt=test_sample[k], prompt_modelgrade=info["prompt"],
+                                      **metrics)
 
         return choice
 

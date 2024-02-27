@@ -2,12 +2,17 @@ semantic_role_recognition:
   id: semantic_role_recognition.test.v1
   metrics: [accuracy]
   description: Test the model's ability to retrieve semantic role recognition from literature. 
-  
+
 semantic_role_recognition.test.v1:
-  class: evals.elsuite.modelgraded.rag_classify:RAGModelBasedClassify
+  class: evals.elsuite.modelgraded.classify:CosineMatch
   args:
     samples_jsonl: 31_semantic_role_recognition/samples.jsonl
-    modelgraded_spec: fact
-    eval_type: cot_classify
-    # modelgraded_spec_args:
-    #   criteria: "conciseness: Does the answer has the same triples as in ideal?"
+
+# semantic_role_recognition.test.v1:
+#   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+#   args:
+#     samples_jsonl: 31_semantic_role_recognition/samples.jsonl
+#     modelgraded_spec: fact
+#     eval_type: cot_classify
+#     # modelgraded_spec_args:
+#     #   criteria: "conciseness: Does the answer has the same triples as in ideal?"

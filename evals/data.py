@@ -50,14 +50,18 @@ def open_by_file_pattern(filename: Union[str, Path], mode: str = "r", **kwargs: 
     filename endswith gz, then zip/unzip contents on the fly (note that gcs paths and
     gzip are compatible)"""
     open_fn = partial(bf.BlobFile, **kwargs)
-<<<<<<< Updated upstream
+
 
     if isinstance(filename, Path):
         filename = filename.as_posix()
 
-=======
+
     print(filename)
->>>>>>> Stashed changes
+
+
+    if isinstance(filename, Path):
+        filename = filename.as_posix()
+
     try:
         if filename.endswith(".gz"):
             return gzip_open(filename, openhook=open_fn, mode=mode)

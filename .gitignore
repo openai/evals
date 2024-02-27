@@ -19,3 +19,12 @@ openai-key.txt
 # Ignore run_experiments.sh results
 evals/elsuite/**/logs/
 evals/elsuite/**/outputs/
+
+#Ignore the large model
+scripts/model/GoogleNews_vectors_negative300.bin
+scripts/model/GoogleNews-vectors-negative300.bin.gz
+scripts/metrics/GoogleNews-vectors-negative300.bin.gz
+
+raw_data
+
+wandb/**/*

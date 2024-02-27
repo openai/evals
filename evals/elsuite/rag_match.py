@@ -103,16 +103,19 @@ class RAGMatch(evals.Eval):
             **{k: v for k, v in sample.items() if k not in ["input", "ideal"]}
         )
         sampled = result.get_completions()[0]
-        
-        # if "file_name" in sample:
-        #     fn = sample["file_name"]
-        # else:
-        #     fn = sample["file_link"]
+
+        extras = {}
+        if hasattr(result, "extras"):
+            if "extracted_answer" in result.extras:
+                sampled = result.extras["extracted_answer"].rstrip(".")
+            extras = result.extras
 
         return evals.record_and_check_match(
             prompt=prompt,
             sampled=sampled,
             expected=sample["ideal"],
+            file_name=sample["file_name"],
+            **extras
         )
 
     def run(self, recorder):

@@ -1,0 +1,8 @@
+pubmedqa:
+  id: pubmedqa.dev.v0
+  metrics: [f1_score]
+
+pubmedqa.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: 34_pubmedqa/samples.jsonl
