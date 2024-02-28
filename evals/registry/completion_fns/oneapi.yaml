@@ -1,0 +1,22 @@
+oneapi-claude-2.1:
+  class: evals.completion_fns.oneapi:OneAPIChatCompletionFn
+  args:
+    api_base: https://oneapi.wetolink.com/v1
+    model: claude-2
+    max_tokens: 3000
+
+
+oneapi-gemini-1.0-pro:
+  class: evals.completion_fns.oneapi:OneAPIChatCompletionFn
+  args:
+    api_base: https://oneapi.wetolink.com/v1
+    model: gemini-pro
+    max_tokens: 3000
+
+
+oneapi-chatglm-lite:
+  class: evals.completion_fns.oneapi:OneAPIChatCompletionFn
+  args:
+    api_base: https://oneapi.wetolink.com/v1
+    model: chatglm_lite
+    max_tokens: 3000
