@@ -19,7 +19,12 @@ from evals.utils.api_utils import (
     openai_rag_completion_create_retrying
 )
 from evals.completion_fns.openai import OpenAICompletionResult, OpenAIChatCompletionResult
-from evals.utils.doc_utils import extract_text_and_fill_in_images, extract_text
+from evals.utils.doc_utils import extract_text_and_fill_in_images, extract_text, num_tokens_from_string
+
+
+model_max_tokens = {
+    "gpt-3.5-turbo": 15800,
+}
 
 
 class OpenAIBaseCompletionResult(CompletionResult):
@@ -100,6 +105,7 @@ class OneAPIChatCompletionFn(CompletionFnSpec):
         self.api_key = api_key or os.environ.get("ONEAPI_KEY", None)
         self.n_ctx = n_ctx
         self.extra_options = extra_options
+        self.client = OpenAI(api_key=self.api_key, base_url=self.api_base)
 
     def __call__(
         self,
@@ -122,16 +128,19 @@ class OneAPIChatCompletionFn(CompletionFnSpec):
 
         if "file_name" in kwargs:
             attached_file_content = "\nThe file is as follows:\n\n" + "".join(extract_text(kwargs["file_name"]))
+            max_tokens = model_max_tokens.get(self.model, 1000000)
+            while num_tokens_from_string(attached_file_content, "cl100k_base") > max_tokens:
+                attached_file_content = attached_file_content[:-1000]
         else:
             attached_file_content = ""
         kwargs = {k: v for k, v in kwargs.items() if not k.startswith("file")}
 
         openai_create_prompt[-1]["content"] += attached_file_content
-        for message in openai_create_prompt:
-            message["role"] = "human" if message["role"] == "user" else message["role"]
+        # for message in openai_create_prompt:
+        #     message["role"] = "human" if message["role"] == "user" else message["role"]
 
         result = openai_chat_completion_create_retrying(
-            OpenAI(api_key=self.api_key, base_url=self.api_base),
+            self.client,
             model=self.model,
             messages=openai_create_prompt,
             **{**kwargs, **self.extra_options},

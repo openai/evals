@@ -3,7 +3,7 @@ oneapi-claude-2.1:
   args:
     api_base: https://oneapi.wetolink.com/v1
     model: claude-2
-    max_tokens: 3000
+    max_tokens: 10000
 
 
 oneapi-gemini-1.0-pro:
@@ -11,7 +11,7 @@ oneapi-gemini-1.0-pro:
   args:
     api_base: https://oneapi.wetolink.com/v1
     model: gemini-pro
-    max_tokens: 3000
+    max_tokens: 10000
 
 
 oneapi-chatglm-lite:
@@ -19,4 +19,20 @@ oneapi-chatglm-lite:
   args:
     api_base: https://oneapi.wetolink.com/v1
     model: chatglm_lite
-    max_tokens: 3000
+    max_tokens: 10000
+
+
+oneapi-gpt-3.5:
+  class: evals.completion_fns.oneapi:OneAPIChatCompletionFn
+  args:
+    api_base: https://oneapi.wetolink.com/v1
+    model: gpt-3.5-turbo
+    max_tokens: 20000
+
+
+oneapi-gpt-4:
+  class: evals.completion_fns.oneapi:OneAPIChatCompletionFn
+  args:
+    api_base: https://oneapi.wetolink.com/v1
+    model: gpt-4
+    max_tokens: 20000

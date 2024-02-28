@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 import fitz  # PyMuPDF
 import PyPDF2
+import tiktoken
 
 
 def extract_text_and_images_with_positioning(pdf_path, save_img_path=None):
@@ -116,3 +117,10 @@ def extract_text_and_fill_in_images(pdf_path, save_img_path=None, add_page_num: 
                 # else:
                 #     texts_from_pypdf.append(img_cookie)
     return all_contents
+
+
+def num_tokens_from_string(string: str, encoding_name: str) -> int:
+    """返回文本字符串中的单词数。"""
+    encoding = tiktoken.get_encoding(encoding_name)
+    num_tokens = len(encoding.encode(string))
+    return num_tokens
