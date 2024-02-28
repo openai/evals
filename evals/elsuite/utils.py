@@ -178,11 +178,20 @@ def fuzzy_match(s1: str, s2: str) -> bool:
 
 
 def fuzzy_compare_name(a: str, b: str, metric="EditDistance", compare_value=False) -> Union[bool, float]:
-    unit_str = ["nM", "uM", "µM", "mM", "%", " %", "wt.%", "at.%", "at%", "wt%"]
-    nan_str = ["n/a", "nan", "na", "n.a.", "nd", "not determined", "not tested", "inactive"]
-    keywords = ["pIC50", "IC50", "EC50", "TC50", "GI50", "Ki", "Kd", "Kb", "pKb"]
+    def is_float(str):
+        try:
+            float(str)
+            return True
+        except ValueError:
+            return False
+
     a = a.strip()
     b = b.strip()
+
+    if a == "" or b == "" and not a+b == "":
+        return False
+    if is_float(a) and is_float(b):
+        return np.allclose(float(a), float(b), equal_nan=True, atol=1e-2, rtol=1e-2)
 
     if ((a.lower().startswith(b.lower()) or a.lower().endswith(b.lower())) or
         (b.lower().startswith(a.lower()) or b.lower().endswith(a.lower()))):
@@ -340,7 +349,7 @@ def tableMatching(df_ref, df_prompt, index='Compound', compare_fields=[], record
         Match the indices of two dataframes.
         """
         renames = {}
-        name2query = lambda name: name if type(name) != tuple else name[0] if name[1] == "" else name[1]
+        name2query = lambda name: name if type(name) != tuple else name[0] if len(name) == 1 or name[1] == "" else name[1]
         similarities = np.array(np.ones([len(ind0) + 15, len(ind1) + 15]), dtype=np.float64)
         querys0 = [name2query(name) for name in ind0]
         querys1 = [name2query(name) for name in ind1]
@@ -415,11 +424,11 @@ def tableMatching(df_ref, df_prompt, index='Compound', compare_fields=[], record
     for idx in df_ref.index:
         _total_matching = 1.0
         for col in compare_fields_:
-            gt = df_ref.loc[idx, col]
-            gt = str(gt[0]) if type(gt) == pd.Series else str(gt)
+            gtval = df_ref.loc[idx, col]
+            gt = str(gtval.iloc[0]) if type(gtval) == pd.Series else str(gtval)
             try:
-                p = df_prompt.loc[idx, col]
-                p = str(p[0]) if type(p) == pd.Series else str(p)
+                pval = df_prompt.loc[idx, col]
+                p = str(pval.iloc[0]) if type(pval) == pd.Series else str(pval)
             except:
                 p = 'not found'
 

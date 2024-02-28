@@ -5,4 +5,3 @@ chemistry_drug:
     - scipaper_hasmol
     - markush2mol
     - scipaper_targets
-    - medmcqa

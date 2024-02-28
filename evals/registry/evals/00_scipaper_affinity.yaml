@@ -27,12 +27,14 @@ scipaper_affinity.val.csv:
   args:
     samples_jsonl: 00_scipaper_affinity/samples.jsonl
     instructions: |
-      Please give a complete list of SMILES structures, affinities, target info (protein or cell line), and affinity types (chosen from IC50, EC50, TC50, GI50, Ki, Kd) of all compounds in the paper. Usually the coumpounds' tags are numbers.
-      1. Find all the tables with relevant information
-      2. Output in csv format with multiindex (Affinities, protein/cell line), write units not in header but in the value like "10.5 µM". Quote the value if it has comma! For example:
+      You are an expert in the field of pharmaceutical chemistry, and your task is to summarize the results of activity assays from an article in a tabular format. Please follow these steps to complete the task:
+      1. Determine if the article includes an activity assay. If it does, locate the section(s) presenting the assay results, which are usually in one or more tables.
+      2. Compile all the activity assay results into a single table. You may use multiple columns to represent different conditions or outcomes of various experiments.
+      3. Identify the names or codes used in the table, such as Example 1 or Compound A, and find the corresponding sections in the article that mention these substances. Extract the full name and SMILES notation of each substance.
+      4. Compile the names and SMILES notations of each substance in the table. Output in csv format with multiindex (Affinities, protein/cell line), write units not in header but in the value like "10.5 µM". Quote the value if it has comma! For example:
       ```csv
       Compound,Name,SMILES,Affinities,Affinities,Affinities,Affinities
       ,,,5HT1A (IC50),5HT1D (IC50),5HT-UT (IC50),5HT1E (<affinity type>)
       "5a","Aspirin","CC(=O)Oc1ccccc1C(=O)O",2.0 nM,8.0 nM,12.6 nM,>1000 nM
       ```
-      3. If there are multiple tables, concat them. Don't give me reference or using "...", give me complete table!
+      5. If there are multiple tables, concat them. Don't give me reference or using "...", give me complete table!
