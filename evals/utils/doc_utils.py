@@ -102,11 +102,11 @@ def extract_text(pdf_path, add_page_num: bool = False):
 def extract_text_and_fill_in_images(pdf_path, save_img_path=None, add_page_num: bool = False):
     all_contents = []
     texts_from_pypdf = extract_text(pdf_path, add_page_num)
-    blocks_from_pymupdf = extract_text_and_images_with_positioning(pdf_path, save_img_path)
+    blocks_from_pymupdf, contents_from_pymupdf = extract_text_and_images_with_positioning(pdf_path, save_img_path)
 
     for page_num, text in enumerate(texts_from_pypdf):
         all_contents.append(text)
-        for i, block in blocks_from_pymupdf[page_num]:
+        for i, block in enumerate(blocks_from_pymupdf[page_num]):
             if block[1] == "image":
                 img_cookie = {'mime_type': 'image/png', 'data': block[2]}
                 all_contents.append(img_cookie)
