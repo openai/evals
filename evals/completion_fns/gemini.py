@@ -1,4 +1,5 @@
 import os
+import numpy as np
 from typing import Any, Optional, Union
 
 from evals.api import CompletionFn, CompletionResult
@@ -8,13 +9,14 @@ from evals.prompt.base import (
     OpenAICreatePrompt,
     Prompt,
 )
+from evals.utils.api_utils import request_with_timeout
 from evals.utils.doc_utils import extract_text_and_fill_in_images, extract_text
 from evals.record import record_sampling
 
 try:
     import google.generativeai as genai
 except ImportError:
-    print("Run `pip install unofficial-claude2-api` to use Unofficial Claude API.")
+    print("Run `pip install google-generativeai` to use Gemini API.")
 
 
 class GeminiCompletionResult(CompletionResult):
@@ -31,14 +33,14 @@ class GeminiCompletionFn(CompletionFn):
         self,
         model: Optional[str] = "gemini-pro",
         api_base: Optional[str] = None,
-        api_key: Optional[str] = None,
+        api_keys: Optional[list[str], str] = None,
         n_ctx: Optional[int] = None,
         extra_options: Optional[dict] = {},
         **kwargs,
     ):
         self.model = model
         self.api_base = api_base
-        self.api_key = api_key or os.environ.get("GOOGLE_API_KEY")
+        self.api_keys = [api_keys] if type(api_keys) == str else [api_keys] or os.environ.get("GOOGLE_API_KEY").split(",")
         self.n_ctx = n_ctx
         self.extra_options = extra_options
 
@@ -69,11 +71,13 @@ class GeminiCompletionFn(CompletionFn):
             attached_file_content = []
             self.model = "gemini-pro"
 
+        genai.configure(api_key=np.random.choice(self.api_keys))
+
         generation_config = {
             "temperature": 0.4,
             "top_p": 1,
             "top_k": 1,
-            "max_output_tokens": 2048,
+            "max_output_tokens": 8192,
         }
         safety_settings = [
             {
@@ -96,9 +100,10 @@ class GeminiCompletionFn(CompletionFn):
         model = genai.GenerativeModel(model_name=self.model,
                                       generation_config=generation_config,
                                       safety_settings=safety_settings)
-        response = model.generate_content(
-            contents=[openai_create_prompt] + attached_file_content
-        )
+        response = request_with_timeout(model.generate_content, contents=[openai_create_prompt] + attached_file_content)
+        # response = model.generate_content(
+        #     contents=[openai_create_prompt] + attached_file_content
+        # )
         answer = response.text
 
         record_sampling(prompt=prompt, sampled=answer)
