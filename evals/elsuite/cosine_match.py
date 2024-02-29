@@ -2,7 +2,6 @@ import os
 import requests
 from tqdm import tqdm
 import numpy as np
-
 from gensim.models import KeyedVectors
 
 import evals
@@ -11,7 +10,64 @@ from evals.elsuite import utils
 from evals.record import RecorderBase
 from evals import metrics
 
-from gensim.models import KeyedVectors
+
+def extract_entities(input_str):
+    """
+    Extracts entities from the input string that are formatted as (...), (...), (...).
+    
+    Args:
+    - input_str (str): The input string containing entities.
+    
+    Returns:
+    - list of entities: A list containing all extracted entities.
+    """
+    pattern = r'\(\s*([^,]+)\s*\)'
+    try:
+        matches = re.findall(pattern, input_str)
+        return matches
+    except:
+        print(f"cannot extract entities from {input_str}")
+        return []
+
+def extract_tuple(input_str):
+    """
+    Extracts tuples from the input string that are formatted as (element1, element2),
+    allowing for variable spacing between elements.
+    
+    Args:
+    - input_str (str): The input string containing pairs.
+    
+    Returns:
+    - list of tuples: A list containing all extracted pairs.
+    """
+    pattern = r'\(\s*([^,]+)\s*,\s*([^,]+)\s*\)'
+    try:
+        matches = re.findall(pattern, input_str)
+        return matches
+    except:
+        print(f"cannot extract tuples from {input_str}")
+        return []
+
+
+def extract_triplets(input_str):
+    """
+    Extracts tuples from the input string that are formatted as (..., ..., ...).
+    
+    Args:
+    - input_str (str): The input string containing tuples.
+    
+    Returns:
+    - list of tuples: A list containing all extracted tuples.
+    """
+    # 正则表达式用于匹配格式为 (..., ..., ...) 的三元组
+    pattern = r'\(\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^,]+)\s*\)'
+    try:
+        matches = re.findall(pattern, input_str)
+        return matches
+    except:
+        print(f"cannot extract triplets from {input_str}")
+        return []
+
 
 # 定义下载用的进度条以及下载行为
 def download_file_with_progress(url, path):
@@ -81,8 +137,7 @@ class Word2VecModel:
         self.model = KeyedVectors.load_word2vec_format(model_path, binary=True)
         print(f"Pretrained Word2Vec Model loaded/reloaded from {model_path}")
 
-
-class CosineMatch(evals.Eval):
+class CosineMatchEntity(evals.Eval):
     def __init__(
         self,
         completion_fns: list[CompletionFn],
@@ -109,8 +164,9 @@ class CosineMatch(evals.Eval):
         assert "ideal" in test_sample, "sample must have an 'ideal' key"
 
         prompt, correct_answers = test_sample["input"], test_sample["ideal"]
-        if not isinstance(correct_answers, list):
-            correct_answers = [correct_answers]
+        correct_answers = parse_triplets(correct_answers)
+        # if not isinstance(correct_answers, list):
+        #     correct_answers = [correct_answers]
 
         result = self.completion_fn(
             prompt=prompt,
@@ -118,17 +174,146 @@ class CosineMatch(evals.Eval):
             max_tokens=self.max_tokens,
         )
         sampled = result.get_completions()[0]
-
-        matches = [utils.same_entities(self.word2vec_model, sampled, correct_answer) for correct_answer in correct_answers]
+        sample_list = extract_triplets(sampled)
+        # 以下matches = [True, True, False, ....]
+        if sample_list:
+            matches = [utils.same_triplets(self.word2vec_model, sample_list, correct_answer) for correct_answer in correct_answers]
+        else:
+            matches = [False for correct_answer in correct_answers]
 
         evals.record.record_match(
             True in matches,
-            expected=correct_answers,
-            picked=[sampled for i in range(len(correct_answers)) if matches[i]],
+            expected=correct_answers, #这一条文献的标准答案
+            picked=[utils.pick_most_similar_entity_in_pred(self.word2vec_model, sample_list, correct_answers[i]) for i in range(len(correct_answers)) if matches[i]], #输出的list里边能在答案找到的三元组
         )
         evals.record.record_metrics(
-            accuracy = utils.list_match_ratio(sampled, correct_answers), #改成新写的函数了
-            f1_score = utils.cos_f1_score(sampled, correct_answers),#改成新写的函数了
+            accuracy = sum(matches)/len(matches) if matches else 0.0, 
+            f1_score = utils.macro_f1_score_3(self.word2vec_model, sample_list, correct_answers),
+        )
+
+    def run(self, recorder: RecorderBase):
+        samples = self.get_samples()
+        self.eval_all_samples(recorder, samples)
+
+        return {
+            "accuracy": np.mean(recorder.get_scores("accuracy")),
+            "f1_score": np.mean(recorder.get_scores("f1_score")),
+        }
+
+class CosineMatchTuple(evals.Eval):
+    def __init__(
+        self,
+        completion_fns: list[CompletionFn],
+        samples_jsonl: str,
+        *args,
+        max_tokens: int = 100,
+        **kwargs,
+    ):
+        super().__init__(completion_fns, *args, **kwargs)
+        assert len(completion_fns) == 1, "CosineMatchTuple only supports one completion fn"
+        self.max_tokens = max_tokens
+        self.samples_jsonl = samples_jsonl
+
+        # 加载并缓存word2vec模型
+        W2V_MODEL_PATH = get_word2vec_model_path()
+        self.word2vec_model = Word2VecModel.get_instance(W2V_MODEL_PATH).model
+
+
+    def eval_sample(self, test_sample, rng):
+        del rng
+
+        assert isinstance(test_sample, dict), "sample must be a dict"
+        assert "input" in test_sample, "sample must have an 'input' key"
+        assert "ideal" in test_sample, "sample must have an 'ideal' key"
+
+        prompt, correct_answers = test_sample["input"], test_sample["ideal"]
+        correct_answers = extract_tuple(correct_answers)
+        # if not isinstance(correct_answers, list):
+        #     correct_answers = [correct_answers]
+
+        result = self.completion_fn(
+            prompt=prompt,
+            temperature=0.0,  # Q: why are these hardcoded?
+            max_tokens=self.max_tokens,
+        )
+        sampled = result.get_completions()[0]
+        sample_list = extract_tuple(sampled)
+        if sample_list:
+            matches = [utils.same_turples(self.word2vec_model, sample_list, correct_answer) for correct_answer in correct_answers]
+        else:
+            matches = [False for correct_answer in correct_answers]
+        evals.record.record_match(
+            True in matches, 
+            expected=correct_answers,
+            picked=[utils.pick_same_turples_in_pred(self.word2vec_model, sample_list, correct_answers[i]) for i in range(len(correct_answers)) if matches[i]],
+        )
+        evals.record.record_metrics(
+            accuracy=sum(matches)/len(matches) if matches else 0.0, 
+            f1_score=utils.macro_f1_score_3(self.word2vec_model, sample_list, correct_answers),
+        )
+        
+
+    def run(self, recorder: RecorderBase):
+        samples = self.get_samples()
+        self.eval_all_samples(recorder, samples)
+
+        return {
+            "accuracy": np.mean(recorder.get_scores("accuracy")),
+            "f1_score": np.mean(recorder.get_scores("f1_score")),
+        }
+
+class CosineMatchTriplet(evals.Eval):
+    def __init__(
+        self,
+        completion_fns: list[CompletionFn],
+        samples_jsonl: str,
+        *args,
+        max_tokens: int = 100,
+        **kwargs,
+    ):
+        super().__init__(completion_fns, *args, **kwargs)
+        assert len(completion_fns) == 1, "CosineMatch only supports one completion fn"
+        self.max_tokens = max_tokens
+        self.samples_jsonl = samples_jsonl
+
+        # 加载并缓存word2vec模型
+        W2V_MODEL_PATH = get_word2vec_model_path()
+        self.word2vec_model = Word2VecModel.get_instance(W2V_MODEL_PATH).model
+
+
+    def eval_sample(self, test_sample, rng):
+        del rng
+
+        assert isinstance(test_sample, dict), "sample must be a dict"
+        assert "input" in test_sample, "sample must have an 'input' key"
+        assert "ideal" in test_sample, "sample must have an 'ideal' key"
+
+        prompt, correct_answers = test_sample["input"], test_sample["ideal"]
+        correct_answers = parse_triplets(correct_answers)
+        # if not isinstance(correct_answers, list):
+        #     correct_answers = [correct_answers]
+
+        result = self.completion_fn(
+            prompt=prompt,
+            temperature=0.0,  # Q: why are these hardcoded?
+            max_tokens=self.max_tokens,
+        )
+        sampled = result.get_completions()[0]
+        sample_list = extract_triplets(sampled)
+        # 以下matches = [True, True, False, ....]
+        if sample_list:
+            matches = [utils.same_triplets(self.word2vec_model, sample_list, correct_answer) for correct_answer in correct_answers]
+        else:
+            matches = [False for correct_answer in correct_answers]
+
+        evals.record.record_match(
+            True in matches,
+            expected=correct_answers, #这一条文献的标准答案
+            picked=[utils.pick_same_triplets_in_pred(self.word2vec_model, sample_list, correct_answers[i]) for i in range(len(correct_answers)) if matches[i]], #输出的list里边能在答案找到的三元组
+        )
+        evals.record.record_metrics(
+            accuracy = sum(matches)/len(matches) if matches else 0.0, 
+            f1_score = utils.macro_f1_score_3(self.word2vec_model, sample_list, correct_answers),
         )
 
     def run(self, recorder: RecorderBase):
