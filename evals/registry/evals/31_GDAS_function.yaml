@@ -1,0 +1,9 @@
+GDAS_function:
+  id: GDAS_function.test.v1
+  metrics: [accuracy]
+  description: Test the model's ability to retrieve semantic role recognition from literature. 
+
+GDAS_function.test.v1:
+  class: evals.elsuite.cosine_match:CosineMatchTriplet
+  args:
+    samples_jsonl: 31_GDAS/function.jsonl
