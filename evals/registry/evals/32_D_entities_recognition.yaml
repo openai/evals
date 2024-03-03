@@ -1,0 +1,9 @@
+disease_entities_recognition:
+  id: disease_entities_recognition.test.v1
+  metrics: [f1_score]
+  description: Test the model's ability to retrieve disease entities recognition from literature. 
+  
+disease_entities_recognition.test.v1:
+  class: evals.elsuite.cosine_match:CosineMatchEntity
+  args:
+    samples_jsonl: 32_B5CDR/disease_samples.jsonl

@@ -1,0 +1,9 @@
+GDAS_regulation:
+  id: GDAS_regulation.test.v1
+  metrics: [f1_score]
+  description: Test the model's ability to retrieve GDAS recognition from literature. 
+
+GDAS_regulation.test.v1:
+  class: evals.elsuite.cosine_match:CosineMatchTriplet
+  args:
+    samples_jsonl: 31_GDAS/regulation.jsonl

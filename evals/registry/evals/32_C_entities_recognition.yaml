@@ -1,0 +1,9 @@
+chemical_entities_recognition:
+  id: chemical_entities_recognition.test.v1
+  metrics: [f1_score]
+  description: Test the model's ability to retrieve chemical entities recognition from literature. 
+  
+chemical_entities_recognition.test.v1:
+  class: evals.elsuite.cosine_match:CosineMatchEntity
+  args:
+    samples_jsonl: 32_B5CDR/chemical_samples.jsonl

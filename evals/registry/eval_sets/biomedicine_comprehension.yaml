@@ -1,0 +1,9 @@
+biomedicine_comprehension:
+  evals:
+    - GDAS_regulation
+    - GDAS_function
+    - chemical_entities_recognition
+    - CDR
+    - disease_entities_recognition
+    - DDI_triplet
+    - pubmedqa

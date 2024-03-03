@@ -1,0 +1,9 @@
+DDI_triplet:
+  id: DDI_triplet.test.v1
+  metrics: [f1_score]
+  description: Test the model's ability to retrieve drug-drug interactions from literature. 
+
+DDI_triplet.test.v1:
+  class: evals.elsuite.modelgraded.classify:CosineMatchTriplet
+  args:
+    samples_jsonl: 33_DDI/samples.jsonl
