@@ -9,6 +9,7 @@ from evals.api import CompletionFn
 from evals.elsuite import utils
 from evals.record import RecorderBase
 from evals import metrics
+import re
 
 
 def extract_entities(input_str):
