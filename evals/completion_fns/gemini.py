@@ -33,7 +33,7 @@ class GeminiCompletionFn(CompletionFn):
         self,
         model: Optional[str] = "gemini-pro",
         api_base: Optional[str] = None,
-        api_keys: Optional[list[str], str] = None,
+        api_keys: Optional[list[str]] = None,
         n_ctx: Optional[int] = None,
         extra_options: Optional[dict] = {},
         **kwargs,

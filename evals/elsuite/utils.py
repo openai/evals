@@ -536,7 +536,12 @@ def cosine_similarity(model, sentence1: str, sentence2: str):
         return 0  # Return 0 similarity if word not found
 
 
-def same_entities(model, word1: str, word2: str, threshold: float) -> bool:
+def same_entities(model, word1: Union[list, str], word2: str, threshold: float = 0.9) -> bool:
+    if isinstance(word1, list):
+        for w in word1:
+            if (cosine_similarity(model, w, word2) - threshold) > 1e-8:
+                return True
+        return False
     if (cosine_similarity(model, word1, word2) - threshold) > 1e-8:
         return True
     else:
@@ -606,9 +611,9 @@ def f1_score(prediction: str, answers: list[str]) -> float:
 def same_triplets(model, preds: List[List[Any]], true: List[Any]) -> bool:
     match = False
     for pred in preds:
-        if same_entities(model, pred[0], true[0], 0.9) and same_entities(model, pred[1], true[1],
-                                                                         0.9) and same_entities(model, pred[2], true[2],
-                                                                                                0.9):
+        if (same_entities(model, pred[0], true[0], 0.9) and
+                same_entities(model, pred[1], true[1],0.9) and
+                same_entities(model, pred[2], true[2],0.9)):
             match = True
             break
     return match

@@ -168,21 +168,26 @@ class CosineMatchEntity(evals.Eval):
         assert "input" in test_sample, "sample must have an 'input' key"
         assert "ideal" in test_sample, "sample must have an 'ideal' key"
 
-        prompt, correct_answers = test_sample["input"], test_sample["ideal"]
-        correct_answers = extract_triplets(correct_answers)
+        prompt, ideal = test_sample["input"], test_sample["ideal"]
+        correct_answers = extract_entities(ideal)
         # if not isinstance(correct_answers, list):
         #     correct_answers = [correct_answers]
 
-        result = self.completion_fn(
-            prompt=prompt,
-            temperature=0.0,  # Q: why are these hardcoded?
-            max_tokens=self.max_tokens,
-        )
-        sampled = result.get_completions()[0]
-        sample_list = extract_triplets(sampled)
+        try:
+            result = self.completion_fn(
+                prompt=prompt,
+                temperature=0.0,  # Q: why are these hardcoded?
+                max_tokens=self.max_tokens,
+            )
+            sampled = result.get_completions()[0]
+        except:
+            print('###################################################')
+            print(f"##### Error in completion_fn with prompt: {prompt}")
+            sampled = ""
+        sample_list = extract_entities(sampled)
         # 以下matches = [True, True, False, ....]
         if sample_list:
-            matches = [utils.same_triplets(self.word2vec_model, sample_list, correct_answer) for correct_answer in correct_answers]
+            matches = [utils.same_entities(self.word2vec_model, sample_list, correct_answer) for correct_answer in correct_answers]
         else:
             matches = [False for correct_answer in correct_answers]
 
@@ -192,7 +197,7 @@ class CosineMatchEntity(evals.Eval):
             picked=[utils.pick_most_similar_entity_in_pred(self.word2vec_model, sample_list, correct_answers[i]) for i in range(len(correct_answers)) if matches[i]], #输出的list里边能在答案找到的三元组
         )
         evals.record.record_metrics(
-            accuracy = sum(matches)/len(matches) if matches else 0.0, 
+            value_recall = sum(matches)/len(matches) if matches else 0.0,
             f1_score = utils.macro_f1_score_3(self.word2vec_model, sample_list, correct_answers),
         )
 
@@ -201,7 +206,7 @@ class CosineMatchEntity(evals.Eval):
         self.eval_all_samples(recorder, samples)
 
         return {
-            "accuracy": np.mean(recorder.get_scores("accuracy")),
+            "value_recall": np.mean(recorder.get_scores("value_recall")),
             "f1_score": np.mean(recorder.get_scores("f1_score")),
         }
 
@@ -236,12 +241,17 @@ class CosineMatchTuple(evals.Eval):
         # if not isinstance(correct_answers, list):
         #     correct_answers = [correct_answers]
 
-        result = self.completion_fn(
-            prompt=prompt,
-            temperature=0.0,  # Q: why are these hardcoded?
-            max_tokens=self.max_tokens,
-        )
-        sampled = result.get_completions()[0]
+        try:
+            result = self.completion_fn(
+                prompt=prompt,
+                temperature=0.0,  # Q: why are these hardcoded?
+                max_tokens=self.max_tokens,
+            )
+            sampled = result.get_completions()[0]
+        except:
+            print('###################################################')
+            print(f"##### Error in completion_fn with prompt: {prompt}")
+            sampled = ""
         sample_list = extract_tuple(sampled)
         if sample_list:
             matches = [utils.same_turples(self.word2vec_model, sample_list, correct_answer) for correct_answer in correct_answers]
@@ -253,7 +263,7 @@ class CosineMatchTuple(evals.Eval):
             picked=[utils.pick_same_turples_in_pred(self.word2vec_model, sample_list, correct_answers[i]) for i in range(len(correct_answers)) if matches[i]],
         )
         evals.record.record_metrics(
-            accuracy=sum(matches)/len(matches) if matches else 0.0, 
+            value_recall=sum(matches)/len(matches) if matches else 0.0,
             f1_score=utils.macro_f1_score_3(self.word2vec_model, sample_list, correct_answers),
         )
         
@@ -263,7 +273,7 @@ class CosineMatchTuple(evals.Eval):
         self.eval_all_samples(recorder, samples)
 
         return {
-            "accuracy": np.mean(recorder.get_scores("accuracy")),
+            "value_recall": np.mean(recorder.get_scores("value_recall")),
             "f1_score": np.mean(recorder.get_scores("f1_score")),
         }
 
@@ -298,15 +308,21 @@ class CosineMatchTriplet(evals.Eval):
         # if not isinstance(correct_answers, list):
         #     correct_answers = [correct_answers]
 
-        result = self.completion_fn(
-            prompt=prompt,
-            temperature=0.0,  # Q: why are these hardcoded?
-            max_tokens=self.max_tokens,
-        )
-        sampled = result.get_completions()[0]
+        try:
+            result = self.completion_fn(
+                prompt=prompt,
+                temperature=0.0,  # Q: why are these hardcoded?
+                max_tokens=self.max_tokens,
+            )
+            sampled = result.get_completions()[0]
+        except:
+            print('###################################################')
+            print(f"##### Error in completion_fn with prompt: {prompt}")
+            sampled = ""
         sample_list = extract_triplets(sampled)
         # 以下matches = [True, True, False, ....]
         if sample_list:
+            # matches 是correct_answers里边每一个三元组在sample_list里边是否有匹配的
             matches = [utils.same_triplets(self.word2vec_model, sample_list, correct_answer) for correct_answer in correct_answers]
         else:
             matches = [False for correct_answer in correct_answers]
@@ -317,7 +333,7 @@ class CosineMatchTriplet(evals.Eval):
             picked=[utils.pick_same_triplets_in_pred(self.word2vec_model, sample_list, correct_answers[i]) for i in range(len(correct_answers)) if matches[i]], #输出的list里边能在答案找到的三元组
         )
         evals.record.record_metrics(
-            accuracy = sum(matches)/len(matches) if matches else 0.0, 
+            value_recall = sum(matches)/len(matches) if matches else 0.0,
             f1_score = utils.macro_f1_score_3(self.word2vec_model, sample_list, correct_answers),
         )
 
@@ -326,6 +342,6 @@ class CosineMatchTriplet(evals.Eval):
         self.eval_all_samples(recorder, samples)
 
         return {
-            "accuracy": np.mean(recorder.get_scores("accuracy")),
+            "value_recall": np.mean(recorder.get_scores("value_recall")),
             "f1_score": np.mean(recorder.get_scores("f1_score")),
         }
