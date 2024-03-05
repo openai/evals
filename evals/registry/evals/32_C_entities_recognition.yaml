@@ -1,6 +1,6 @@
 chemical_entities_recognition:
   id: chemical_entities_recognition.test.v1
-  metrics: [f1_score]
+  metrics: [value_recall]
   description: Test the model's ability to retrieve chemical entities recognition from literature. 
   
 chemical_entities_recognition.test.v1:

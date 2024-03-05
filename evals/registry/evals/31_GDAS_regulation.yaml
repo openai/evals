@@ -1,6 +1,6 @@
 GDAS_regulation:
   id: GDAS_regulation.test.v1
-  metrics: [f1_score]
+  metrics: [value_recall]
   description: Test the model's ability to retrieve GDAS recognition from literature. 
 
 GDAS_regulation.test.v1:

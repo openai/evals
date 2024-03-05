@@ -1,9 +1,9 @@
 CDR:
   id: CDR.test.v1
-  metrics: [f1_score]
+  metrics: [value_recall]
   description: Test the model's ability to retrieve [compound, disease] entities recognition from literature. 
   
 CDR.test.v1:
-  class: evals.elsuite.cosine_match_tuple:CosineMatchTuple
+  class: evals.elsuite.cosine_match:CosineMatchTuple
   args:
     samples_jsonl: 32_B5CDR/relations_samples.jsonl

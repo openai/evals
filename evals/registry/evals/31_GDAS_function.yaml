@@ -1,6 +1,6 @@
 GDAS_function:
   id: GDAS_function.test.v1
-  metrics: [accuracy]
+  metrics: [value_recall]
   description: Test the model's ability to retrieve semantic role recognition from literature. 
 
 GDAS_function.test.v1:
