@@ -8,3 +8,15 @@ uni_finder-v1.26-cot:
   class: evals.completion_fns.cot:ChainOfThoughtCompletionFn
   args:
     cot_completion_fn: uni_finder-v1.26
+
+
+uni_finder-v3.07:
+  class: evals.completion_fns.uni_finder:UniFinderCompletionFn
+  args:
+    pdf_parse_mode: v3.07
+
+
+uni_finder-v3.07-cot:
+  class: evals.completion_fns.cot:ChainOfThoughtCompletionFn
+  args:
+    cot_completion_fn: uni_finder-v3.07
