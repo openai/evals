@@ -33,6 +33,42 @@ class GeminiCompletionResult(CompletionResult):
         return [self.response.strip()]
 
 
+def truncate_multimodal_prompt(prompt_list, max_images=16, max_size_bytes=4 * 1024 * 1024):
+    """
+    Truncates a list of texts and images to meet the constraints of maximum images and total size in bytes.
+
+    Parameters:
+    - prompt_list: List containing texts and images. Images are expected to be dictionaries with keys 'mime_type' and 'data'.
+    - max_images: Maximum number of images allowed.
+    - max_size_bytes: Maximum total size allowed in bytes.
+
+    Returns:
+    - A truncated list that fits the constraints.
+    """
+    truncated_list = []
+    total_size = 0
+    image_count = 0
+
+    for item in prompt_list:
+        if isinstance(item, str):  # It's text
+            item_size = len(item.encode('utf-8'))  # Size in bytes
+        elif isinstance(item, dict) and item.get('mime_type') and item.get('data'):  # It's an image
+            # The image data is a string representation of bytes; calculate its length accordingly.
+            item_size = len(item['data'])  # Approximation of size in bytes
+            image_count += 1
+        else:
+            continue  # Skip any item that doesn't fit expected structure
+
+        # Check if adding this item would exceed limits
+        if total_size + item_size > max_size_bytes or image_count > max_images:
+            break  # Stop adding items
+
+        total_size += item_size
+        truncated_list.append(item)
+
+    return truncated_list
+
+
 class GeminiCompletionFn(CompletionFn):
     def __init__(
         self,
@@ -81,11 +117,16 @@ class GeminiCompletionFn(CompletionFn):
                     attached_file_content = ["The file is as follows:"] + ["".join(extract_text(kwargs["file_name"]))]
             else:
                 attached_file_content += ["".join(extract_text(kwargs["file_name"]))]
+
+            contents = [openai_create_prompt] + attached_file_content
+
             if self.model == "gemini-pro":
-                while num_tokens_from_string(attached_file_content[1], "cl100k_base") > max_tokens:
-                    attached_file_content[1] = attached_file_content[1][:-1000]
+                while num_tokens_from_string(contents[2], "cl100k_base") > max_tokens:
+                    contents[2] = contents[2][:-1000]
+            elif self.model == "gemini-pro-vision":
+                contents = truncate_multimodal_prompt(contents, max_images=16, max_size_bytes=4 * 1024 * 1024)
         else:
-            attached_file_content = []
+            contents = [openai_create_prompt]
             self.model = "gemini-pro"
 
         genai.configure(api_key=np.random.choice(self.api_keys))
@@ -119,7 +160,7 @@ class GeminiCompletionFn(CompletionFn):
                                       safety_settings=safety_settings)
         # response = request_with_timeout(model.generate_content, contents=[openai_create_prompt] + attached_file_content)
         response = model.generate_content(
-            contents=[openai_create_prompt] + attached_file_content,
+            contents=contents,
         )
         # answer = response.text
 
