@@ -69,12 +69,21 @@ class GeminiCompletionFn(CompletionFn):
         openai_create_prompt: OpenAICreatePrompt = prompt.to_formatted_prompt()
 
         if "file_name" in kwargs:
-            attached_file_content = ["The file is as follows:"]
-            attached_file_content += extract_text_and_fill_in_images(kwargs["file_name"], None, False) \
-                if self.model == "gemini-pro-vision" else ["".join(extract_text(kwargs["file_name"]))]
             max_tokens = model_max_tokens.get(self.model, 1000000)
-            while num_tokens_from_string(attached_file_content[1], "cl100k_base") > max_tokens:
-                attached_file_content[1] = attached_file_content[1][:-1000]
+            attached_file_content = ["The file is as follows:"]
+
+            if self.model == "gemini-pro-vision":
+                attached_file_content += extract_text_and_fill_in_images(kwargs["file_name"], None, False)
+                content_types = [type(c) for c in attached_file_content]
+                if not dict in content_types:
+                    print(f"WARNING: pdf {kwargs['file_name']} has no image!")
+                    self.model = "gemini-pro"
+                    attached_file_content = ["The file is as follows:"] + ["".join(extract_text(kwargs["file_name"]))]
+            else:
+                attached_file_content += ["".join(extract_text(kwargs["file_name"]))]
+            if self.model == "gemini-pro":
+                while num_tokens_from_string(attached_file_content[1], "cl100k_base") > max_tokens:
+                    attached_file_content[1] = attached_file_content[1][:-1000]
         else:
             attached_file_content = []
             self.model = "gemini-pro"
