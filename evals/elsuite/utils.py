@@ -1,11 +1,10 @@
 import copy
+import json
 import re
 import string
 from collections import Counter, defaultdict
 from typing import Optional, Union, List, Any
 from scipy.spatial.distance import cosine
-from gensim.models import KeyedVectors
-from evals import metrics
 import numpy as np
 import pandas as pd
 
@@ -489,6 +488,31 @@ def tableMatchingStrict(df_ref, df_prompt, idx_col='Nickname'):
     recall = max(len([item for item in prompt_idx_list if item in idx_list]) / len(idx_list), 1.0)
     print(f'Recall:{recall}, Acc: {match_score / N * recall}, Strict Acc: {total_match_score / N * recall}')
     return match_score / N * recall, total_match_score / N * recall
+
+
+def ReactionDictMatching(dict_ref, dict_prompt, content: str = "inputs"):
+    from google.protobuf import json_format
+    from ord_schema.proto import reaction_pb2
+    from ord_diff.schema import MDict, MDictDiff, MDictListDiff, MessageType
+    from ord_diff.report import report_diff
+
+    mdict_empty = json_format.Parse(json.dumps({}), reaction_pb2.Reaction())
+    mdict_ref = json_format.Parse(json.dumps(dict_ref), reaction_pb2.Reaction())
+    if content == "inputs":
+        # mdict_ref = mdict_ref.inputs[0]
+        mdict_prompt = json_format.Parse(json.dumps({"inputs": dict_prompt}), reaction_pb2.Reaction())
+    else:
+        mdict_prompt = json_format.Parse(json.dumps(dict_prompt), reaction_pb2.Reaction())
+
+    diff = MDictDiff.from_message_pair(mdict_ref, mdict_prompt, message_type=MessageType.REACTION)
+    df = report_diff(diff, message_type=MessageType.REACTION)
+
+    diff_empty = MDictDiff.from_message_pair(mdict_ref, mdict_empty, message_type=MessageType.REACTION)
+    df_empty = report_diff(diff_empty, message_type=MessageType.REACTION)
+    print("############# Output:", mdict_prompt)
+
+    accuracy = 1.0 - df.shape[0] / df_empty.shape[0]
+    return accuracy, df
 
 
 def get_scores_from_text(text: str) -> dict:
