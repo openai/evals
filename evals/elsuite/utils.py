@@ -722,11 +722,38 @@ def entity_match(model, preds: List[Any], true: str) -> bool:
             match = True
     return match
 
-
 def pick_most_similar_entity_in_pred(model, preds: List[Any], true: str):
     scores = [cosine_similarity(model, pred, true) for pred in preds]
     i = scores.index(max(scores))  # 获取最大数对应的下标
     return preds[i]
+
+#查找compare这个二元组是否在bases这个二元组构成的list中出现，如果出现，则返回True
+def match_turple(model, compare:List[Any],bases:List[List[Any]]) -> bool:
+    found_match = False
+    for base in bases:
+        if compare[0] == base[0] and compare[1] == base[1] :
+            found_match = True
+            break
+        elif same_entities(model, compare[0], base[0], 0.95) and same_entities(model, compare[1], base[1], 0.95):
+            found_match = True
+            break
+        else:
+            continue
+    return found_match
+
+#查找compare这个三元组是否在bases这个三元组构成的list中出现，如果出现，则返回True
+def match_triplet(model, compare:List[Any],bases:List[List[Any]]) -> bool:
+    found_match = False
+    for base in bases:
+        if compare[0] == base[0] and compare[1] == base[1] and compare[2] == base[2] :
+            found_match = True
+            break
+        elif same_entities(model, compare[0], base[0], 0.95) and same_entities(model, compare[1], base[1], 0.95) and same_entities(model, compare[2], base[2], 0.95):
+            found_match = True
+            break
+        else:
+            continue
+    return found_match
 
 
 # 定义用于实体识别的f1-score
@@ -785,21 +812,14 @@ def macro_f1_score_2(model, prediction: List[List[Any]], answers: List[List[Any]
         true_positives = 0
         false_positives = 0
         false_negatives = 0
-        matched_ground_truth_tokens = set()
         for pred_entity in prediction:
-            found_match = False
-            for idx, true_entity in enumerate(answers):
-                if same_entities(model, pred_entity[0], true_entity[0], 0.9) and same_entities(model, pred_entity[1],
-                                                                                               true_entity[1], 0.9):
-                    found_match = True
-                    if idx not in matched_ground_truth_tokens:
-                        true_positives += 1
-                        matched_ground_truth_tokens.add(idx)
-                    break
-            if not found_match:
+            if match_turple(model, pred_entity, answers):
+                true_positives += 1
+            else:
                 false_positives += 1
-        false_negatives = len(answers) - len(matched_ground_truth_tokens)
-
+        for true_entity in answers:
+            if match_turple(model, true_entity, prediction) == False:
+                false_negatives += 1
         # Calculate precision, recall, and F1 score
         precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
         recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
@@ -807,7 +827,6 @@ def macro_f1_score_2(model, prediction: List[List[Any]], answers: List[List[Any]
         return f1
     except:
         return 0.0
-
 
 # 定义用于三元组关系抽取的f1-score
 def macro_f1_score_3(model, prediction: List[List[Any]], answers: List[List[Any]]) -> float:
@@ -825,24 +844,16 @@ def macro_f1_score_3(model, prediction: List[List[Any]], answers: List[List[Any]
         true_positives = 0
         false_positives = 0
         false_negatives = 0
-        matched_ground_truth_tokens = set()
-        # similarity_threshold = 0.7
+        # matched_ground_truth_tokens = set()
+        # similarity_threshold = 0.7 
         for pred_entity in prediction:
-            found_match = False
-            for idx, true_entity in enumerate(answers):
-                if same_entities(model, pred_entity[0], true_entity[0], 0.9) and same_entities(model, pred_entity[1],
-                                                                                               true_entity[1],
-                                                                                               0.9) and same_entities(
-                        model, pred_entity[2], true_entity[2], 0.9):
-                    found_match = True
-                    if idx not in matched_ground_truth_tokens:
-                        true_positives += 1
-                        matched_ground_truth_tokens.add(idx)
-                    break
-            if not found_match:
+            if match_triplet(model, pred_entity, answers):
+                true_positives += 1
+            else:
                 false_positives += 1
-        false_negatives = len(answers) - len(matched_ground_truth_tokens)
-
+        for true_entity in answers:
+            if match_triplet(model, true_entity, prediction) == False:
+                false_negatives += 1
         # Calculate precision, recall, and F1 score
         precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
         recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
@@ -850,8 +861,6 @@ def macro_f1_score_3(model, prediction: List[List[Any]], answers: List[List[Any]
         return f1
     except:
         return 0.0
-
-
 
 def scrub_formatting_from_prompt(prompt):
     scrubbed_prompt = copy.copy(prompt)
