@@ -515,6 +515,51 @@ def ReactionDictMatching(dict_ref, dict_prompt, content: str = "inputs"):
     return accuracy, df
 
 
+def ReactionDictMatchingSimple(dict_ref, dict_prompt, content: str = "inputs"):
+    """
+    Calculates the ratio of different leaves in two nested dictionaries using the deepdiff library.
+
+    Parameters:
+    - dict1: First dictionary to compare.
+    - dict2: Second dictionary to compare.
+
+    Returns:
+    - Ratio of different leaves.
+    """
+    from deepdiff import DeepDiff
+    # Compare the two dictionaries
+    if content == "inputs":
+        dict_ref = dict_ref["inputs"]
+    diff = DeepDiff(dict_ref, dict_prompt, ignore_order=True, report_repetition=True)
+
+    # Extract the count of different leaves
+    # The 'values_changed', 'type_changes', 'dictionary_item_added', and 'dictionary_item_removed'
+    # can be considered as indicators of different leaves
+    diff_keys = ['values_changed',
+                 'type_changes',
+                 # 'dictionary_item_added',
+                 'dictionary_item_removed']
+    total_diff_leaves = sum(len(diff.get(key, {})) for key in diff_keys)
+
+    # Count total leaves in both dictionaries (assuming all values are leaves)
+    def count_leaves(d, count=0):
+        for v in d.values():
+            if isinstance(v, dict):
+                count = count_leaves(v, count)
+            else:
+                count += 1
+        return count
+
+    total_leaves_dict1 = count_leaves(dict_ref)
+
+    # Calculate the ratio of different leaves to total leaves
+    if total_leaves_dict1 == 0:  # Prevent division by zero
+        return 0
+    ratio = total_diff_leaves / total_leaves_dict1
+
+    return 1.0 - ratio, diff
+
+
 def get_scores_from_text(text: str) -> dict:
     pattern = r"## (.+?)\n.+?(\d)/5"
     matches = re.findall(pattern, text, re.DOTALL)

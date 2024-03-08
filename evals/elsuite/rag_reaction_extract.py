@@ -12,7 +12,7 @@ from pydantic import BaseModel
 import evals.metrics
 from evals.api import CompletionFn
 from evals.elsuite.rag_match import get_rag_dataset
-from evals.elsuite.utils import ReactionDictMatching
+from evals.elsuite.utils import ReactionDictMatching, ReactionDictMatchingSimple
 from evals.record import RecorderBase, record_match
 
 code_pattern = r"```[\s\S]*?\n([\s\S]+?)\n```"
@@ -75,8 +75,11 @@ class ReactionExtract(evals.Eval):
                 answer = json.load(open(fname, 'r'))
             elif "json" in self.instructions:
                 code = re.search(json_pattern, sampled).group()
-                code_content = re.sub(json_pattern, r"\1", code).replace("\"", '"')
-                print(code_content)
+                code_content = re.sub(json_pattern, r"\1", code)
+                code_content = code_content.replace("\"", '"')
+
+                # Delete comments
+                code_content = re.sub(r'//.*', '', code_content)
                 answer = json.loads(code_content)
             else:
                 answer = {}
@@ -96,7 +99,7 @@ class ReactionExtract(evals.Eval):
             picked_str = "Failed to parse"
             answer = {}
             
-        accuracy_leaves, df = ReactionDictMatching(correct_answer, answer)
+        accuracy_leaves, df = ReactionDictMatchingSimple(correct_answer, answer)
         record_match(
             prompt=prompt,
             correct=(accuracy_leaves == 1.0),
