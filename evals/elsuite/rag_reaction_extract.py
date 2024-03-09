@@ -60,10 +60,10 @@ class ReactionExtract(evals.Eval):
             file_link=sample["file_link"]
         )
         sampled = result.get_completions()[0]
-        correct_str = open(sample["answerfile_name"], 'r').read()
-        correct_answer = json.loads(correct_str)
-        # correct_answer = json.load(open(sample["answerfile_name"], 'r'))["inputs"]
-        # correct_str = json.dumps(correct_answer, indent=4)
+        # correct_str = open(sample["answerfile_name"], 'r').read()
+        # correct_answer = json.loads(correct_str)
+        correct_answer = json.load(open(sample["answerfile_name"], 'r'))["inputs"]
+        correct_str = json.dumps(correct_answer, indent=4)
 
         try:
             if re.search(outlink_pattern, sampled) is not None:
@@ -84,7 +84,7 @@ class ReactionExtract(evals.Eval):
             else:
                 answer = {}
             picked_str = json.dumps(answer, indent=4)
-            open(sample["file_name"].replace(".json", "_out.json"), 'w').write(picked_str)
+            open(sample["answerfile_name"].replace(".json", "_out.json"), 'w').write(picked_str)
         except:
             print(Path(sample["file_name"]).stem)
             traceback.print_exc()
@@ -98,8 +98,9 @@ class ReactionExtract(evals.Eval):
             )
             picked_str = "Failed to parse"
             answer = {}
+            return {"accuracy_leaves": 0}
             
-        accuracy_leaves, df = ReactionDictMatchingSimple(correct_answer, answer)
+        accuracy_leaves, df = ReactionDictMatchingSimple(correct_answer, answer, content="raw")
         record_match(
             prompt=prompt,
             correct=(accuracy_leaves == 1.0),
