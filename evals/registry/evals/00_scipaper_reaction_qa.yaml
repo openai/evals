@@ -1,0 +1,8 @@
+scipaper_reaction_qa:
+  id: scipaper_reaction_qa.val.json
+  metrics: [accuracy]
+
+scipaper_reaction_qa.val.json:
+  class: evals.elsuite.rag_match:RAGMatch
+  args:
+    samples_jsonl: 00_scipaper_reaction_qa/samples.jsonl
