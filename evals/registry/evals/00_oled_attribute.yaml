@@ -1,0 +1,21 @@
+oled_attribute:
+  id: oled_attribute.val.csv
+  metrics: [accuracy]
+
+oled_attribute.val.csv:
+  class: evals.elsuite.rag_table_extract:TableExtract
+  args:
+    samples_jsonl: 00_oled_attribute/samples.jsonl
+    instructions: |
+      Please give a complete list of Host, Dopant, Assistant Dopant (if exists), Td/Tg/ET, Von,max EQE/CE/PE,EQE/CE/PE, and CIE [x, y]
+      * Output in csv format with columns of those attributes, do not write units only the value like "10.5".
+      * If there are multiple tables, concat them. Don't give me reference or using "...", give me complete table!
+      * Should return all columns mentioned, if empty just return `NaN`. "Host" and "Dopant" should not be empty.
+      * "Host" and "Dopant" should be short name of the organic molecule.
+      * Should find more information from the whole content, including tables, text.
+      for example, you should return:
+      ```csv
+      Host,Dopant,Td [°C]/Tg [°C]/ET [eV], Von [V],max EQE [%]/CE [cd A−1]/PE [lm W-1],EQE [%]/CE [cd A−1]/PE [lm W-1],"CIE [x, y]"
+      PPO1,FCNIr,–/74/3.02,–,17.1/20.5/14.3,–/–/–,"(0.14, 0.16)"
+      PPO2,FCNIr,–/123/3.02,–,18.4/21.1/16.6,–/–/–,"(0.14, 0.15)"
+      ```
