@@ -9,7 +9,9 @@ override certain methods.
 import atexit
 import contextlib
 import dataclasses
+import json
 import logging
+import os.path
 import threading
 import time
 from contextvars import ContextVar
@@ -340,8 +342,13 @@ class LocalRecorder(RecorderBase):
         self.event_file_path = log_path
         self.hidden_data_fields = hidden_data_fields
         if log_path is not None:
-            with bf.BlobFile(log_path, "wb") as f:
-                f.write((jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n").encode("utf-8"))
+            if not os.path.exists(log_path):
+                with bf.BlobFile(log_path, "wb") as f:
+                    f.write((jsondumps({"spec": dataclasses.asdict(run_spec)}) + "\n").encode("utf-8"))
+            else:
+                lines = bf.BlobFile(log_path, "rb").readlines()
+                run_spec.run_id = json.loads(lines[0])["spec"]["run_id"]
+                self._events = [Event(**json.loads(line)) for line in lines[1:]]
 
     def _flush_events_internal(self, events_to_write: Sequence[Event]):
         start = time.time()

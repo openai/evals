@@ -27,14 +27,14 @@ SHUFFLE_SEED = 123
 _MAX_SAMPLES = None
 
 
-def _index_samples(samples: List[Any]) -> List[Tuple[Any, int]]:
+def _index_samples(samples: List[Any], completed_ids: List[int] = []) -> List[Tuple[Any, int]]:
     """Shuffle `samples` and pair each sample with its index."""
     indices = list(range(len(samples)))
     random.Random(SHUFFLE_SEED).shuffle(indices)
     if _MAX_SAMPLES is not None:
         indices = indices[:_MAX_SAMPLES]
     logger.info(f"Evaluating {len(indices)} samples")
-    work_items = [(samples[i], i) for i in indices]
+    work_items = [(samples[i], i) for i in indices if not i in completed_ids]
     return work_items
 
 
@@ -120,7 +120,10 @@ class Eval(abc.ABC):
         """
         Evaluate all provided samples in parallel.
         """
-        work_items = _index_samples(samples)
+        samples_completed_ids = [int(event.sample_id.split(".")[-1]) for event in recorder.get_events(type="sampling")]
+        logger.info(f"Completed samples: {samples_completed_ids}")
+
+        work_items = _index_samples(samples, completed_ids=samples_completed_ids)
         threads = int(os.environ.get("EVALS_THREADS", "10"))
         show_progress = bool(os.environ.get("EVALS_SHOW_EVAL_PROGRESS", show_progress))
 
@@ -207,7 +210,10 @@ class SolverEval(Eval):
         """
         Evaluate all provided samples in parallel.
         """
-        work_items = _index_samples(samples)
+        samples_completed_ids = [int(event.sample_id.split(".")[-1]) for event in recorder.get_events(type="sampling")]
+        logger.info(f"Completed samples: {samples_completed_ids}")
+
+        work_items = _index_samples(samples, completed_ids=samples_completed_ids)
         threads = int(os.environ.get("EVALS_THREADS", "10"))
         show_progress = bool(os.environ.get("EVALS_SHOW_EVAL_PROGRESS", show_progress))
 
