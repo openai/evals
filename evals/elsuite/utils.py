@@ -301,10 +301,9 @@ def fuzzy_normalize_value(vi):
             vi = "bal"
             return "bal"
 
-        if "nan" in vi or "/" == vi or "n/a" in vi or "na" in vi or vi == "":
+        if ("nan" in vi and not "–" in vi) or "/" == vi or "n/a" in vi or "na" in vi or vi == "":
             vi = "0"
-
-        vi = vi.replace("~", "-")
+        vi = vi.replace("nan", "–").replace("~", "-")
 
         pattern = r"\d+(?:\.\d+)?"
         matches = re.findall(pattern, vi)
@@ -340,10 +339,11 @@ def tableMatching(df_ref, df_prompt, index='Compound', compare_fields=[], record
     metrics = {}
     index_names = ["Compound", "Name", "SMILES", "Nickname", "Substrate"]
 
-    df_prompt[index] = df_prompt[index].astype(str)
-    df_ref[index] = df_ref[index].astype(str)
-    df_ref = df_ref.set_index(index)
-    df_prompt = df_prompt.set_index(index)
+    if index not in [None, ""]:
+        df_ref[index] = df_ref[index].astype(str)
+        df_ref = df_ref.set_index(index)
+        df_prompt[index] = df_prompt[index].astype(str)
+        df_prompt = df_prompt.set_index(index)
 
     def match_indices(ind0, ind1, threshold=0.9) -> dict:
         """
