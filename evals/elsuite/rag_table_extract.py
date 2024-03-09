@@ -152,6 +152,8 @@ class TableExtract(evals.Eval):
 
             if table.shape[0] != 0:
                 idxlist = table.columns
+                if type(sample.index) == str and table.columns.nlevels > 1:
+                    sample.index = tuple([sample.index] + ["" for _ in range(table.columns.nlevels - 1)])
                 if type(sample.index) in [str, tuple]:
                     if sample.index not in table.columns:
                         idxlist = [sample.index] + list(table.columns)[1:]

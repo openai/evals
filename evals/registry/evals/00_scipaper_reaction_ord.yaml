@@ -7,7 +7,7 @@ scipaper_reaction_ord.val.json:
   args:
     samples_jsonl: 00_scipaper_reaction_ord/samples.jsonl
     instructions: |
-      Act as a professional researcher in organic chemistry. You need to extact reactant/solvent information from a given reaction text and transform it to an organic reaction database (ORD) json format for reactants/solvents. I will first give you two example of reaction_text and ORD output, then I will guide you one step by one step on how to generate ORD format output. Then I will give you a new reaction text and you need to generate the ORD format output.
+      Act as a professional researcher in organic chemistry. You need to extract reactant/solvent information from a given reaction text and transform it to an organic reaction database (ORD) json format for reactants/solvents. I will first give you two example of reaction_text and ORD output, then I will guide you one step by one step on how to generate ORD format output. Then I will give you a new reaction text and you need to generate the ORD format output.
       
       Step 1: Identify all the reactant/solvent chemicals in the reaction_text by their name. If you can find the SMILES structure of the reactants in related figures/schemas, use SMILES as identifiers. Only reactant and solvent chemicals should be included, product chemicals should not be included. Use the exact given chemical name in the reaction_text.
       Step 2: Get the corresponding amount of all the reactant chemicals, in volume or mass or mole. If there appears two or more than two form units to represent the same amount, for example (4-Pentynoic acid (441 mg, 4.5 mmol)) uses both mass in mg and mole in mmol, only choose the first appearing one, 441 mg.

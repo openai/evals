@@ -269,16 +269,16 @@ def fuzzy_normalize_name(s):
         return ""
     else:
         """ 标准化字符串 """
-        # 定义需要移除的单位和符号
-        units = ["µM", "µg/mL", "nM", "%", "wt.%", "at.%", "at%", "wt%"]
-        for unit in units:
-            s = s.replace(unit, "")
+        # # 定义需要移除的单位和符号
+        # units = ["µM", "µg/mL", "nM", "%", "wt.%", "at.%", "at%", "wt%"]
+        # for unit in units:
+        #     s = s.replace(unit, "")
 
         # 定义特定关键字
         keywords = ["pIC50", "IC50", "EC50", "TC50", "GI50", "Ki", "Kd", "Kb", "pKb"]
 
         # 移除非字母数字的字符，除了空格
-        s = re.sub(r'[^\w\s.\-\(\)]', '', s)
+        s = re.sub(r'[^\w\s%.\-\(\)]', '', s)
         if s in synonyms:
             s = synonyms[s]
 
@@ -390,11 +390,12 @@ def tableMatching(df_ref, df_prompt, index='Compound', compare_fields=[], record
         print("Find similar fields between answer and correct:", renames)
         df_prompt.rename(columns=renames, inplace=True)
 
-    renames = match_indices(df_ref.index, df_prompt.index)
-    renames = {key: value for key, value in renames.items() if key not in index_names}
-    if len(renames) > 0:
-        print("Find similar indices between answer and correct:", renames)
-        df_prompt.rename(index=renames, inplace=True)
+    if index != "":
+        renames = match_indices(df_ref.index, df_prompt.index)
+        renames = {key: value for key, value in renames.items() if key not in index_names}
+        if len(renames) > 0:
+            print("Find similar indices between answer and correct:", renames)
+            df_prompt.rename(index=renames, inplace=True)
 
     compare_fields_ = [col for col in compare_fields if
                        col not in [index] + ([index[0]] if type(index) == tuple else [])]
