@@ -1,9 +1,0 @@
-indian_women_menstrual_health:
-  id: indian_women_menstrual_health.dev.v0
-  description: Questions and answers related to menstrual health verified by health researchers and contextualized for India.
-  metrics: [accuracy]
-
-indian_women_menstrual_health.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: indian_women_menstrual_health/samples.jsonl
