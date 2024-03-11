@@ -107,7 +107,7 @@ class RAGMatch(evals.Eval):
         sampled = result.get_completions()[0]
         
         try:
-            pattern = re.compile(r'\w\)\s\d+\s?[°]?[CK]?')
+            pattern = re.compile(r'\w\)\s\d+(?:\.\d+)?(?:\s?:\s?\d+(?:\.\d+)?)?\s?[°]?[CK]?')
             sampled0 = pattern.findall(sampled)[0]
             if sampled0 is None or sampled0==[]:
                 pass

@@ -1,0 +1,8 @@
+polymer_chart:
+  id: polymer_chart.dev.v0
+  metrics: [accuracy]
+  
+polymer_chart.dev.v0:
+  class: evals.elsuite.rag_match_fuzzy:RAGMatch
+  args:
+    samples_jsonl: 00_polymer_chart/samples.jsonl
