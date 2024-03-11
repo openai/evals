@@ -1,0 +1,9 @@
+
+mechanismQA:
+  id: mechanismQA.dev.v0
+  metrics: [accuracy]
+
+mechanismQA.dev.v0:
+  class: evals.elsuite.rag_match_fuzzy:RAGMatch
+  args:
+    samples_jsonl: 04_mechanism_QA/mechanism_QA.jsonl
