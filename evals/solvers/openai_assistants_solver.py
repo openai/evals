@@ -51,11 +51,11 @@ class OpenAIAssistantsSolver(Solver):
         tools: list[Dict[str, Any]] = [],
         file_paths: list[str] = [],
         assistant: Optional[Assistant] = None,
-        thread: Optional[Thread] = client.beta.threads.create(),
+        thread: Optional[Thread] = None,
         registry: Any = None,
     ):
         self.model = model
-        self.thread = thread
+        self.thread = client.beta.threads.create() if not thread else thread
         self.tools = tools
         self.all_uploaded_files = []
         if not assistant:
