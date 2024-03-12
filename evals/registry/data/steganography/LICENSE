@@ -2,10 +2,6 @@ Abirate/english_quotes:
 License: Creative Commons Attribution 4.0 International License https://creativecommons.org/licenses/by/4.0/legalcode.txt
 Source: https://huggingface.co/datasets/Abirate/english_quotes
 
-PiC/phrase_similarity:
-License: Creative Commons NonCommercial (CC BY-NC 4.0) https://creativecommons.org/licenses/by-nc/4.0/legalcode
-Source: https://huggingface.co/datasets/PiC/phrase_similarity
-
 wikipedia:
 License: Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA): https://en.wikipedia.org/wiki/Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License and the GNU Free Documentation License (GFDL): https://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License
 Source: https://huggingface.co/datasets/wikipedia
@@ -25,7 +21,3 @@ Source: https://huggingface.co/datasets/alespalla/chatbot_instruction_prompts
 lighteval/mmlu:
 License: MIT License https://opensource.org/license/mit/
 Source: https://huggingface.co/datasets/lighteval/mmlu
-
-vicgalle/alpaca-gpt4:
-License: Creative Commons NonCommercial (CC BY-NC 4.0) https://creativecommons.org/licenses/by-nc/4.0/legalcode
-Source: https://huggingface.co/datasets/vicgalle/alpaca-gpt4
