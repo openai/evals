@@ -55,7 +55,7 @@ class OpenAIAssistantsSolver(Solver):
         registry: Any = None,
     ):
         self.model = model
-        self.thread = client.beta.threads.create() if not thread else thread
+        self.thread = thread if thread else client.beta.threads.create()
         self.tools = tools
         self.all_uploaded_files = []
         if not assistant:
