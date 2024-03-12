@@ -13,6 +13,7 @@ from evals.task_state import Message, TaskState
 IN_GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS") == "true"
 MODEL = "gpt-4-1106-preview"
 
+print("IN_GITHUB_ACTIONS", IN_GITHUB_ACTIONS)
 
 @pytest.fixture
 def dummy_data_file(scope="session"):
