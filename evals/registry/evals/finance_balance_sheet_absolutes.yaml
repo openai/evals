@@ -1,0 +1,11 @@
+finance_balance_sheet_absolutes:
+  id: finance_balance_sheet_absolutes.dev.v0
+  metrics:
+    - [accuracy]
+  description: Evaluate LLM's understanding of financial balance sheets when a position with negative numbers increases but the absolute is a gain, not a loss.
+
+
+finance_balance_sheet_absolutes.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: finance_balance_sheet_absolutes/samples.jsonl
