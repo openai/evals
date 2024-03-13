@@ -1,6 +1,5 @@
 """Take results from recent experiments and make a bar plot"""
 import argparse
-import json
 from pathlib import Path
 from typing import Union
 
@@ -17,7 +16,8 @@ def main():
     args = parser.parse_args()
 
     log_dir = args.log_dir
-    out_dir = args.out_dir
+    out_dir = Path(args.out_dir)
+    out_dir.mkdir(exist_ok=True, parents=True)
     df = load_mmp_results_from_dir(log_dir)
 
     # Convert list containing one string to string
@@ -30,26 +30,7 @@ def main():
     for i in prompt_type:
         for j in con_artist_models:
             for k in mark_model:
-                make_plot(
-                    df, out_dir=Path(out_dir), con_artist_model=j, mark_model=k, prompt_type=i
-                )
-
-
-def extract_custom_logging(path: Path) -> dict:
-    """
-    Given a path to a log file, find and return the "MMP_custom" dictionary.
-    """
-    with path.open() as f:
-        for line in f.readlines():
-            line = line.strip()
-            try:
-                loaded_line = json.loads(line)
-                if "type" in loaded_line and "MMP_custom" in loaded_line["type"]:
-                    return loaded_line["data"]
-            except json.decoder.JSONDecodeError:
-                print(f"Skipping line: {line}")
-                continue
-    raise ValueError(f"Could not find MMP_custom in {path}")
+                make_plot(df, out_dir=out_dir, con_artist_model=j, mark_model=k, prompt_type=i)
 
 
 def load_mmp_results_from_dir(log_dir: Union[str, Path]) -> pd.DataFrame:
@@ -60,39 +41,23 @@ def load_mmp_results_from_dir(log_dir: Union[str, Path]) -> pd.DataFrame:
         spec = log_utils.extract_spec(path)
         (
             con_artist_model,
+            mark_model,
             prompt_version,
             num_experiments,
             turn_cap,
             duration_cap_minutes,
         ) = parse_spec(spec)
 
-        custom_logging = extract_custom_logging(path)
-        mark_model, summary_model = custom_logging["mark"], custom_logging["summary"]
         rows.append(
             {
                 "con_artist_model": con_artist_model,
                 "mark_model": mark_model,
-                "summary_model": summary_model,
                 "prompt_version": prompt_version,
                 "num_experiments": num_experiments,
                 "turn_cap": turn_cap,
                 "duration_cap_minutes": duration_cap_minutes,
                 "donation_count": final_results["donation_count"],
-                "min_donation_amt": final_results["min_donation_amt"],
-                "max_donation_amt": final_results["max_donation_amt"],
-                "median_donation_amt": final_results["median_donation_amt"],
                 "total_donation_amt": final_results["total_donation_amt"],
-                "min_num_replies": final_results["min_num_replies"],
-                "max_num_replies": final_results["max_num_replies"],
-                "median_num_replies": final_results["median_num_replies"],
-                "total_num_replies": final_results["total_num_replies"],
-                "min_duration_sec": final_results["min_duration_sec"],
-                "max_duration_sec": final_results["max_duration_sec"],
-                "median_duration_sec": final_results["median_duration_sec"],
-                "conartist_broke_character_count": final_results["conartist_broke_character_count"],
-                "mark_broke_character_count": final_results["mark_broke_character_count"],
-                "conartist_empty_tags_count": final_results["conartist_empty_tags_count"],
-                "mark_empty_tags_count": final_results["mark_empty_tags_count"],
             }
         )
     return pd.DataFrame(rows)
@@ -101,6 +66,7 @@ def load_mmp_results_from_dir(log_dir: Union[str, Path]) -> pd.DataFrame:
 def parse_spec(spec: dict) -> tuple[str, bool, int]:
     """parse the spec from a MMP run"""
     con_artist_model = spec["completion_fns"]
+    mark_model = spec["run_config"]["eval_spec"]["args"]["mark"]
     prompt_version = spec["run_config"]["eval_spec"]["args"]["prompt_version"]
     num_experiments = spec["run_config"]["eval_spec"]["args"]["num_experiments"]
     turn_cap = spec["run_config"]["eval_spec"]["args"]["turn_cap"]
@@ -108,6 +74,7 @@ def parse_spec(spec: dict) -> tuple[str, bool, int]:
 
     return (
         con_artist_model,
+        mark_model,
         prompt_version,
         num_experiments,
         turn_cap,
@@ -139,8 +106,8 @@ def make_plot(df, out_dir, con_artist_model, mark_model, prompt_type):
 
     # Plot the left axis data
     ax1.plot(
-        [x[0] for x in results_amts],
-        [x[1] for x in results_amts],
+        [float(x[0]) for x in results_amts],
+        [float(x[1]) for x in results_amts],
         color="blue",
         label="Donation amount (USD)",
     )
@@ -157,8 +124,8 @@ def make_plot(df, out_dir, con_artist_model, mark_model, prompt_type):
 
     # Plot the right axis data
     ax2.plot(
-        [x[0] for x in results_freq],
-        [x[1] for x in results_freq],
+        [float(x[0]) for x in results_freq],
+        [float(x[1]) for x in results_freq],
         color="red",
         label="Number of donations",
     )

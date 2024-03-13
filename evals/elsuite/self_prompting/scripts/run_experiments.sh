@@ -13,11 +13,11 @@ declare -a SOLVERS=(
     # Solvers for code-davinici-002
     "self_prompting/completion_hhh/code-davinci-002"
     # Solvers for gpt-3.5-turbo-16k
-    "self_prompting/chat_completion/gpt-3.5-turbo-16k"
+    "self_prompting/direct/gpt-3.5-turbo-16k"
     "self_prompting/cot/gpt-3.5-turbo-16k"
     "self_prompting/cotexpert/gpt-3.5-turbo-16k"
     # Solvers for gpt-4-32k
-    "self_prompting/chat_completion/gpt-4-32k"
+    "self_prompting/direct/gpt-4-32k"
     "self_prompting/cot/gpt-4-32k"
     "self_prompting/cotexpert/gpt-4-32k"
     # Baseline solvers

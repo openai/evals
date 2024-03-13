@@ -1,0 +1,6 @@
+apache-beam==2.48.0
+datasets==2.12.0
+jiwer==3.0.1
+nltk==3.8.1
+scipy==1.10.1
+spacy-universal-sentence-encoder==0.4.6

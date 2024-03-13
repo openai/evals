@@ -31,9 +31,12 @@ class SelfConsistencySolver(NestedSolver):
         mode: str = "count",
         persistent_memory: bool = True,
         private_interaction_length: int = 1,
+        postprocessors: list[str] = [],
         registry: Any = None,
     ):
-        super().__init__(registry=registry, solver=solver, judge_solver=solver)
+        super().__init__(
+            postprocessors=postprocessors, registry=registry, solver=solver, judge_solver=solver
+        )
         self.num_generations = num_generations
         self.answer_prefix = answer_prefix
         self.cot_template = cot_template.format(prefix=self.answer_prefix)

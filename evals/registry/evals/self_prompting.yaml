@@ -8,8 +8,8 @@ self_prompting.full:
   args:
     samples_jsonl: self_prompting/samples.jsonl
     tasker_models: ["gpt-3.5-turbo", "gpt-4-base", "gpt-4"]
-    n_tasks: 5
-    n_samples_per_task: 1
+    n_tasks: 50
+    n_samples_per_task: 10
     baseline_logpath: self_prompting/oriprompt.log
 
 self_prompting.small:
