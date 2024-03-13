@@ -2,12 +2,13 @@ import json
 from abc import ABC, abstractmethod
 from copy import deepcopy
 from importlib import import_module
-from typing import Any, Dict, TypeVar
+from typing import Any, Dict, TypeVar, Union
 
 from pydantic import TypeAdapter, ValidationError
 from typing_extensions import TypedDict
 
 from evals.api import CompletionFn
+from evals.record import record_event
 from evals.task_state import TaskState
 
 SolverSpec = TypedDict("SolverSpec", {"class": str, "args": Dict[str, Any]})
@@ -40,6 +41,21 @@ class SolverResult:
 class Solver(ABC, CompletionFn):
     # We need to inherit from CompletionFn because of how the oaival registry works.
 
+    def __init__(
+        self,
+        postprocessors: list[str] = [],
+        registry: Any = None,
+    ) -> None:
+        self.postprocessors: list = []
+        for postprocessor_path in postprocessors:
+            try:
+                module_path, class_name = postprocessor_path.rsplit(":", 1)
+                module = import_module(module_path)
+                postprocessor_class = getattr(module, class_name)
+                self.postprocessors.append(postprocessor_class())
+            except AttributeError:
+                raise ValueError(f"Invalid postprocessor: {postprocessor_path}")
+
     @abstractmethod
     def _solve(
         self,
@@ -63,7 +79,22 @@ class Solver(ABC, CompletionFn):
         **kwargs,
     ) -> SolverResult:
         """Deepcopies task_state to prevent solvers from modifying the original object."""
-        return self._solve(deepcopy(task_state), **kwargs)
+        res = self._solve(deepcopy(task_state), **kwargs)
+
+        if hasattr(self, "postprocessors"):
+            # Iteratively apply postprocessors to the output
+            for postprocessor in self.postprocessors:
+                prev_output = res.output
+                res = postprocessor(res)
+                record_event(
+                    "postprocessor",
+                    {
+                        "name": postprocessor.__class__.__name__,
+                        "input": prev_output,
+                        "output": res.output,
+                    },
+                )
+        return res
 
     @property
     def name(self) -> str:
@@ -75,6 +106,18 @@ class Solver(ABC, CompletionFn):
         A human-readable name that describes this solver.
         """
         return type(self).__name__
+
+    @property
+    def model_version(self) -> Union[str, dict]:
+        """
+        Exact version of the underlying model used by the solver
+
+        RETURNS
+        =======
+        Dictionary mapping name to exact model version. If no models
+        are used (e.g. dummy solver) returns empty dictionary
+        """
+        return {}
 
     def copy(self: SolverType) -> SolverType:
         #   The deepcopy may be quite heavy for some solvers; if that's the
@@ -96,7 +139,8 @@ class NestedSolver(Solver):
 
     # TODO: Should we allow nested solvers to (also) take Solver classes instead of SolverSpecs?
 
-    def __init__(self, *, registry=None, **solver_specs):
+    def __init__(self, *, postprocessors: list[str] = [], registry=None, **solver_specs):
+        super().__init__(postprocessors=postprocessors)
         self.solver_specs = {}
         self._solver_cache = {}
 
@@ -154,3 +198,15 @@ class NestedSolver(Solver):
         for name, solver in self._solver_cache.items():
             solver_copy._solver_cache[name] = solver.copy()
         return solver_copy
+
+    @property
+    def model_version(self) -> Union[str, dict]:
+        """
+        Retrieves model versions of each nested solver
+        """
+        model_versions = {}
+        for solver_name, solver in self._solver_cache.items():
+            solver_model_version = solver.model_version
+            model_versions[solver_name] = solver_model_version
+
+        return model_versions

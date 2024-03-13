@@ -23,3 +23,17 @@ ballots.testing.v0:
     samples_jsonl: ballots/samples02.jsonl
     n_interactions: 2
     n_samples: 2
+
+ballots.3.testing.v0:
+  class: evals.elsuite.ballots.eval:BallotsEval
+  args:
+    samples_jsonl: ballots/samples02.jsonl
+    n_interactions: 3
+    n_samples: 2
+
+ballots.5.testing.v0:
+  class: evals.elsuite.ballots.eval:BallotsEval
+  args:
+    samples_jsonl: ballots/samples02.jsonl
+    n_interactions: 5
+    n_samples: 2

@@ -201,7 +201,7 @@ class Game:
 
     def _mentions_codeword(self, s: str) -> bool:
         lemmatizer = WordNetLemmatizer()
-        s_lowered = s.lower()
+        s_lowered = s.lower().replace('"', '').replace("'", '').replace('“', '').replace('”', '')
         words = word_tokenize(s_lowered)
 
         for codeword in self.word_list:

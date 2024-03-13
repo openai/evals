@@ -85,7 +85,9 @@ class PersistentMemoryCache:
                     raise ValueError(
                         (
                             f"task_state message {task_state_message_ix} different than the corresponding message "
-                            "in the interaction history. "
+                            "in the interaction history.\n"
+                            f"task_state.messages:\n{task_state.messages}\n"
+                            f"interaction.messages:\n{interaction.messages}\n"
                         )
                     )
                 task_state_message_ix += 1

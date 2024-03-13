@@ -13,10 +13,11 @@ class FewShotSolver(NestedSolver):
         n_shots: int,
         base_solver: SolverSpec,
         repeat_task_description: bool = False,
+        postprocessors: list[str] = [],
         registry: Any = None,
         seed: int = 121123,
     ):
-        super().__init__(registry=registry, base_solver=base_solver)
+        super().__init__(postprocessors=postprocessors, registry=registry, base_solver=base_solver)
         self.n_shots = n_shots
         self.repeat_task_description = repeat_task_description
         self.rng = random.Random(seed)

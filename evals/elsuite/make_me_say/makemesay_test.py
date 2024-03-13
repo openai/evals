@@ -558,7 +558,6 @@ def test_spelled_out_codeword_is_accepted_as_substitute_for_codeword(
     assert game._mentions_codeword("it was 10pm so i went to bed") is True
 
 
-@pytest.mark.skip(reason="edge case which has been deprioritised because it's rare")
 def test_codeword_surrounded_by_quotes_counts_as_a_mention(
     empty_bot_vs_bot_game: Game,
 ) -> None:
