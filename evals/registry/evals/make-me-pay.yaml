@@ -8,8 +8,9 @@ make-me-pay:
 make-me-pay.5-turn.balanced.v2:
   class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
+    mark: "make-me-pay/baseline/gpt-4-32k"
     prompt_version: "balanced"
-    num_experiments: 100
+    num_experiments: 20
     turn_cap: 5
     duration_cap_minutes: 0
     allow_withdraw: True
@@ -17,8 +18,9 @@ make-me-pay.5-turn.balanced.v2:
 make-me-pay.10-turn.balanced.v2:
   class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
+    mark: "make-me-pay/baseline/gpt-4-32k"
     prompt_version: "balanced"
-    num_experiments: 100
+    num_experiments: 20
     turn_cap: 10
     duration_cap_minutes: 0
     allow_withdraw: True
@@ -26,82 +28,9 @@ make-me-pay.10-turn.balanced.v2:
 make-me-pay.15-turn.balanced.v2:
   class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
+    mark: "make-me-pay/baseline/gpt-4-32k"
     prompt_version: "balanced"
-    num_experiments: 100
-    turn_cap: 15
-    duration_cap_minutes: 0
-    allow_withdraw: True
-
-make-me-pay.50-turn.balanced.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "balanced"
-    num_experiments: 100
-    turn_cap: 50
-    duration_cap_minutes: 0
-    allow_withdraw: True
-
-make-me-pay.100-turn.balanced.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "balanced"
-    num_experiments: 100
-    turn_cap: 100
-    duration_cap_minutes: 0
-    allow_withdraw: True
-
-# Genorous turn experiments
-make-me-pay.5-turn.generous.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "generous"
-    num_experiments: 100
-    turn_cap: 5
-    duration_cap_minutes: 0
-    allow_withdraw: True
-
-make-me-pay.10-turn.generous.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "generous"
-    num_experiments: 100
-    turn_cap: 10
-    duration_cap_minutes: 0
-    allow_withdraw: True
-
-make-me-pay.15-turn.generous.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "generous"
-    num_experiments: 100
-    turn_cap: 15
-    duration_cap_minutes: 0
-    allow_withdraw: True
-
-# Guarded turn experiments
-make-me-pay.5-turn.guarded.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "guarded"
-    num_experiments: 100
-    turn_cap: 5
-    duration_cap_minutes: 0
-    allow_withdraw: True
-
-make-me-pay.10-turn.guarded.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "guarded"
-    num_experiments: 100
-    turn_cap: 10
-    duration_cap_minutes: 0
-    allow_withdraw: True
-
-make-me-pay.15-turn.guarded.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "guarded"
-    num_experiments: 100
+    num_experiments: 20
     turn_cap: 15
     duration_cap_minutes: 0
     allow_withdraw: True
@@ -110,8 +39,9 @@ make-me-pay.15-turn.guarded.v2:
 make-me-pay.one-minute.balanced.v2:
   class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
+    mark: "make-me-pay/baseline/gpt-4-32k"
     prompt_version: "balanced"
-    num_experiments: 100
+    num_experiments: 20
     turn_cap: 0
     duration_cap_minutes: 1
     allow_withdraw: True
@@ -119,113 +49,19 @@ make-me-pay.one-minute.balanced.v2:
 make-me-pay.three-minute.balanced.v2:
   class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
+    mark: "make-me-pay/baseline/gpt-4-32k"
     prompt_version: "balanced"
-    num_experiments: 100
+    num_experiments: 20
     turn_cap: 0
     duration_cap_minutes: 3
+    allow_withdraw: True
 
 make-me-pay.five-minute.balanced.v2:
   class: evals.elsuite.make_me_pay.eval:MakeMePay
   args:
+    mark: "make-me-pay/baseline/gpt-4-32k"
     prompt_version: "balanced"
-    num_experiments: 100
+    num_experiments: 20
     turn_cap: 0
     duration_cap_minutes: 5
-
-make-me-pay.ten-minute.balanced.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "balanced"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 10
-
-make-me-pay.fifteen-minute.balanced.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "balanced"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 15
-
-# Generous time experiments
-make-me-pay.one-minute.generous.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "generous"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 1
-
-make-me-pay.three-minute.generous.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "generous"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 3
-
-make-me-pay.five-minute.generous.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "generous"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 5
-
-make-me-pay.ten-minute.generous.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "generous"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 10
-
-make-me-pay.fifteen-minute.generous.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "generous"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 15
-
-# Guarded turn experiments
-make-me-pay.one-minute.guarded.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "guarded"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 1
-
-make-me-pay.three-minute.guarded.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "guarded"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 3
-
-make-me-pay.five-minute.guarded.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "guarded"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 5
-
-make-me-pay.ten-minute.guarded.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "guarded"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 10
-
-make-me-pay.fifteen-minute.guarded.v2:
-  class: evals.elsuite.make_me_pay.eval:MakeMePay
-  args:
-    prompt_version: "guarded"
-    num_experiments: 100
-    turn_cap: 0
-    duration_cap_minutes: 15
+    allow_withdraw: True

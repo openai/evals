@@ -97,12 +97,12 @@ def test_render_messages() -> None:
             "system": "",  # System messages have no prefix
             "user": "Human:  ",
             "assistant": "Assistant:  ",
+            "spacer": "-----",
         }
         rendered_text = ""
         for msg in messages:
             rendered_text += f"{role_to_prefix[msg.role]}{msg.content}\n\n"
         return rendered_text
 
-    assert (
-        render_messages(HHH_MSGS) == HHH_PROMPT
-    ), "Rendered HHH messages do not match expected HHH prompt."
+    rendered = render_messages(HHH_MSGS)
+    assert rendered == HHH_PROMPT, "Rendered HHH messages do not match expected HHH prompt."

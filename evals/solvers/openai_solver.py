@@ -1,14 +1,22 @@
 import logging
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import tiktoken
 from openai import BadRequestError
 
 from evals.completion_fns.openai import OpenAIChatCompletionFn, OpenAICompletionFn
 from evals.prompt.base import chat_prompt_to_text_prompt
-from evals.registry import is_chat_model
+from evals.registry import is_chat_model, n_ctx_from_model_name
 from evals.solvers.solver import Solver, SolverResult
 from evals.task_state import TaskState
+
+# Default prefixes when rendering chat prompts as text
+ROLE_TO_PREFIX = {
+    "system": "System: ",
+    "user": "User: ",
+    "assistant": "Assistant: ",
+    "spacer": "-----",
+}
 
 
 class OpenAISolver(Solver):
@@ -19,10 +27,17 @@ class OpenAISolver(Solver):
         completion_fn_options: Dict[str, Any] = {},
         valid_answers: Optional[list[str]] = None,
         fixed_start: Optional[str] = None,
+        continue_last_assistant_msg: bool = False,
+        role_to_prefix: Dict = ROLE_TO_PREFIX,
+        postprocessors: list[str] = [],
         registry: Any = None,
     ):
+        super().__init__(postprocessors=postprocessors)
         self.completion_fn_options = completion_fn_options
+        # Additional options for base model
         self.fixed_start = fixed_start
+        self.continue_last_assistant_msg = continue_last_assistant_msg
+        self.role_to_prefix = role_to_prefix
 
         if "model" not in completion_fn_options:
             raise ValueError("OpenAISolver requires a model to be specified.")
@@ -31,9 +46,16 @@ class OpenAISolver(Solver):
         # Infer suitable CompletionFn class from the model name
         if is_chat_model(model):
             completion_fn_cls = OpenAIChatCompletionFn
-            if self.fixed_start is not None:
-                raise ValueError("OpenAISolver does not support fixed_start with chat models.")
+            if self.fixed_start is not None or self.continue_last_assistant_msg:
+                raise ValueError(
+                    "OpenAISolver does not support fixed_start or continue_last_assistant_msg with chat models."
+                )
         else:
+            if self.fixed_start is not None and self.continue_last_assistant_msg:
+                raise ValueError(
+                    "OpenAISolver does not support both fixed_start and continue_last_assistant_msg being used."
+                )
+
             completion_fn_cls = OpenAICompletionFn
 
         # If valid answers were provided, apply logit bias to those tokens
@@ -75,18 +97,21 @@ class OpenAISolver(Solver):
 
     def _render_completion_prompt(self, msgs: list[dict[str, str]]) -> str:
         # Render messages as a chat dialogue in plaintext (also postfixes "Assistant: " to tee up the model)
-        prompt = chat_prompt_to_text_prompt(msgs)
+        if self.continue_last_assistant_msg and len(msgs) > 0 and msgs[-1]["role"] == "assistant":
+            self.fixed_start = msgs[-1]["content"]
+            msgs = msgs[:-1]
 
-        # Force model to begin response with fixed_start
+        prompt = chat_prompt_to_text_prompt(msgs, chat_to_prefixes=self.role_to_prefix)
+
+        # Force model to begin response with specified string
         if self.fixed_start is not None:
-            prompt = prompt + self.fixed_start
+            prompt = prompt + " " + self.fixed_start
         return prompt
 
     def _parse_completion_response(self, raw_response: str) -> str:
         # Parse response up to the next message separator
-        # Technically should look for new messages from "system" role too, but
-        # the default renderer doesn't show a prefix for new system messages.
-        msg_separators = ["User:", "Assistant:", "-----"]
+        # e.g. "System:", "User:", "Assistant:", "-----"
+        msg_separators = self._get_msg_separators()
 
         parsed_response = raw_response
         for msg_sep in msg_separators:
@@ -94,25 +119,50 @@ class OpenAISolver(Solver):
 
         # The fixed_start should be included in the response
         if self.fixed_start is not None:
-            parsed_response = self.fixed_start + parsed_response
+            parsed_response = self.fixed_start + " " + parsed_response
         return parsed_response
+
+    def _get_msg_separators(self) -> list[str]:
+        """Return the separators between parts of the prompt (e.g. "User:", "-----").
+
+        This is used to cut hallucination from base models.
+        """
+        return [v.strip() for v in self.role_to_prefix.values() if v.strip() != ""]
 
     def _solve(
         self,
         task_state: TaskState,
         **kwargs,
     ) -> SolverResult:
-
         msgs = [
             {"role": "system", "content": task_state.task_description},
         ] + [msg.to_dict() for msg in task_state.messages]
+
+        # Check if the prompt exceeds the context length before querying the
+        # API to avoid it contributing to the tokens per minute (TPM) limit
+        enc = tiktoken.encoding_for_model(self.model)
+        ctx_len = n_ctx_from_model_name(self.model)
+        n_tokens = 0
+
+        for msg in msgs:
+            tokens = enc.encode(msg["content"])
+            n_tokens += len(tokens)
+
+        if ctx_len is not None and n_tokens >= ctx_len:
+            return SolverResult(
+                output=f"Request too large for {self.model}. Context length: {ctx_len} tokens. Requested: {n_tokens} tokens.",
+            )
 
         try:
             if self.is_completion_model:
                 # Manually render the prompt for completion models so that we can
                 # implement things like custom render formats and/or fixed_start
                 prompt = self._render_completion_prompt(msgs)
-                completion_result = self.completion_fn(prompt=prompt, **kwargs)
+
+                stop_sequences = self._get_msg_separators()
+                if len(stop_sequences) > 4:
+                    logging.warn("Using more than 4 stop sequences is unsupported")
+                completion_result = self.completion_fn(prompt=prompt, stop=stop_sequences, **kwargs)
 
                 completion_output = completion_result.get_completions()[0]
 
@@ -120,6 +170,7 @@ class OpenAISolver(Solver):
                 solver_result = SolverResult(
                     self._parse_completion_response(completion_output),
                     raw_output=completion_output,
+                    raw_completion_result=completion_result,
                 )
             else:
                 completion_result = self.completion_fn(prompt=msgs, **kwargs)
@@ -127,11 +178,14 @@ class OpenAISolver(Solver):
                 completion_output = completion_result.get_completions()[0]
 
                 # Chat model output is already parsed, just return it
-                solver_result = SolverResult(completion_output)
+                solver_result = SolverResult(
+                    completion_output, raw_completion_result=completion_result
+                )
         except BadRequestError as e:
             if (
                 e.code == "context_length_exceeded"
-                or "Please reduce your prompt; or completion length" in e.message   # For context length errors where code is not specified.
+                or "Please reduce your prompt; or completion length"
+                in e.message  # For context length errors where code is not specified.
             ):
                 logging.warn(
                     f"OpenAI API context length exceeded, using error message as solver response: {e.message}"
@@ -140,10 +194,29 @@ class OpenAISolver(Solver):
                     e.message,
                     error=e.body,
                 )
+            elif "'$.messages' is too long" in e.message:  # If we have too many messages
+                logging.warn(
+                    f"Exceeded maximum chat messages on OpenAI API, using error message as solver response: {e.message}"
+                )
+                solver_result = SolverResult(
+                    e.message,
+                    error=e.body,
+                )
             else:
                 raise e
+
         return solver_result
 
     @property
     def name(self) -> str:
         return self.completion_fn.model
+
+    @property
+    def model_version(self) -> Union[str, dict]:
+        """
+        Makes dummy API request to get exact snapshot
+        """
+        dummy_task_state = TaskState("", "")
+        solver_result = self(dummy_task_state, **{"max_tokens": 1})
+        raw_data = solver_result._metadata["raw_completion_result"].raw_data
+        return raw_data.model

@@ -16,9 +16,10 @@ class HHHSolver(NestedSolver):
     def __init__(
         self,
         solver: SolverSpec,
+        postprocessors: list[str] = [],
         registry: Any = None,
     ):
-        super().__init__(solver=solver)
+        super().__init__(postprocessors=postprocessors, solver=solver)
 
     @property
     def solver(self) -> Solver:

@@ -88,7 +88,12 @@ class OpenAICompletionFn(CompletionFn):
             **{**kwargs, **self.extra_options},
         )
         result = OpenAICompletionResult(raw_data=result, prompt=openai_create_prompt)
-        record_sampling(prompt=result.prompt, sampled=result.get_completions())
+        record_sampling(
+            prompt=result.prompt,
+            sampled=result.get_completions(),
+            model=result.raw_data.model,
+            usage=result.raw_data.usage,
+        )
         return result
 
 
@@ -133,5 +138,10 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
             **{**kwargs, **self.extra_options},
         )
         result = OpenAIChatCompletionResult(raw_data=result, prompt=openai_create_prompt)
-        record_sampling(prompt=result.prompt, sampled=result.get_completions())
+        record_sampling(
+            prompt=result.prompt,
+            sampled=result.get_completions(),
+            model=result.raw_data.model,
+            usage=result.raw_data.usage,
+        )
         return result
