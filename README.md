@@ -1,3 +1,4 @@
+
 # OpenAI Evals
 
 Evals provide a framework for evaluating large language models (LLMs) or systems built using LLMs. We offer an existing registry of evals to test different dimensions of OpenAI models and the ability to write your own custom evals for use cases you care about. You can also use your data to build private evals which represent the common LLMs patterns in your workflow without exposing any of that data publicly.
@@ -5,6 +6,12 @@ Evals provide a framework for evaluating large language models (LLMs) or systems
 If you are building with LLMs, creating high quality evals is one of the most impactful things you can do. Without evals, it can be very difficult and time intensive to understand how different model versions might affect your use case. In the words of [OpenAI's President Greg Brockman](https://twitter.com/gdb/status/1733553161884127435):
 
 <img width="596" alt="https://x.com/gdb/status/1733553161884127435?s=20" src="https://github.com/openai/evals/assets/35577566/ce7840ff-43a8-4d88-bb2f-6b207410333b">
+
+| Eval | Summary of evaluation | Capability targeted |
+| --- | --- | --- |
+| [Track the Stat](evals/elsuite/track_the_stat) | Perform a sequential task by keeping track of state implicitly | AI R&D |
+
+---
 
 ## Setup
 
