@@ -24,7 +24,7 @@ do
     log_name=${SPLIT}_${solver//\//-}_own-reasoning
 
     oaieval $solver error-recovery.$SPLIT \
-    --extra_eval_params final_answer_prompt_role=system,n_samples=10 \
+    --extra_eval_params final_answer_prompt_role=system \
     --record_path "$logpathbase/$log_name.log"
 done
 
@@ -34,7 +34,7 @@ do
     log_name=${SPLIT}_${solver//\//-}_other-reasoning
 
     oaieval $solver error-recovery.$SPLIT.other-reasoning \
-    --extra_eval_params final_answer_prompt_role=system,n_samples=10 \
+    --extra_eval_params final_answer_prompt_role=system \
     --record_path "$logpathbase/$log_name.log"
 done
 
