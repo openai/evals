@@ -91,6 +91,23 @@ NOTE: This license applies to all parts of this repository except for the datase
         - **License**: Public Domain
         - **Source**: https://repository.uclawsf.edu/ca_ballot_props/
 
+#### Sandbagging
+- **Location**: evals/registry/data/sandbagging
+- **Components**:
+    - **MMLU**:
+        - **License**: MIT License: https://opensource.org/license/mit/
+        - **Source**: https://huggingface.co/datasets/cais/mmlu
+
+#### Theory of Mind
+- **Location**: evals/registry/data/theory_of_mind
+- **Components**:
+    - **ToMi**:
+        - **License**: Creative Commons Attribution-NonCommercial 4.0 International: https://creativecommons.org/licenses/by-nc/4.0/deed.en
+        - **Source**: https://github.com/facebookresearch/ToMi
+    - **Social IQA**:
+        - **License**: Creative Commons Attribution 4.0 International: https://creativecommons.org/licenses/by/4.0/
+        - **Source**: https://allenai.org/data/socialiqa
+          
 #### Already Said That
 
 - **Location**: evals/registry/data/already_said_that

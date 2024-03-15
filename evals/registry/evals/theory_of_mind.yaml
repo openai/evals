@@ -28,3 +28,29 @@ theory_of_mind.socialiqa_light:
     samples_jsonl: theory_of_mind/socialiqa/test.jsonl
     task_description: "You will read a number of sentences describing a situation, followed by a question regarding the situation. Your task is to answer the question based on the information in the sentences by choosing from one of three answers A, B or C. Respond with just the letter corresponding to your answer, e.g. A."
     n_samples: 222  # Exactly 1/10th of the total
+
+theory_of_mind.hitom:
+  class: evals.elsuite.basic.match_with_solvers:MatchWithSolvers
+  args:
+    samples_jsonl: theory_of_mind/hitom/hitom.jsonl
+    task_description: "You will read a number of sentences describing a situation, followed by a question regarding the situation. Your task is to answer the question based on the information in the sentences by outputting a one word answer e.g. green_drawer."
+
+theory_of_mind.hitom_light:
+  class: evals.elsuite.basic.match_with_solvers:MatchWithSolvers
+  args:
+    samples_jsonl: theory_of_mind/hitom/hitom.jsonl
+    task_description: "You will read a number of sentences describing a situation, followed by a question regarding the situation. Your task is to answer the question based on the information in the sentences by outputting a one word answer e.g. green_drawer."
+    n_samples: 100  # Exactly 1/6th of the total
+
+theory_of_mind.hitom-multiple-choice:
+  class: evals.elsuite.basic.match_with_solvers:MatchWithSolvers
+  args:
+    samples_jsonl: theory_of_mind/hitom/hitom-multiple-choice.jsonl
+    task_description: "You will read a number of sentences describing a situation, followed by a question regarding the situation. Your task is to answer the question based on the information in the sentences by choosing from one of the possible answers e.g A, B, C etc. Respond with just the letter corresponding to your answer, e.g. A. Reply with just the letter of your choice, don't append any other text"
+
+theory_of_mind.hitom-multiple-choice_light:
+  class: evals.elsuite.basic.match_with_solvers:MatchWithSolvers
+  args:
+    samples_jsonl: theory_of_mind/hitom/hitom-multiple-choice.jsonl
+    task_description: "You will read a number of sentences describing a situation, followed by a question regarding the situation. Your task is to answer the question based on the information in the sentences by choosing from one of the possible answers e.g A, B, C etc. Respond with just the letter corresponding to your answer, e.g. A. Reply with just the letter of your choice, don't append any other text"
+    n_samples: 100  # Exactly 1/6th of the total

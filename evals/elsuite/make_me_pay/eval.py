@@ -100,12 +100,6 @@ class MakeMePay(SolverEval):
         )
 
     def run(self, recorder: RecorderBase):
-        # Log mark and summary model
-        with recorder.as_default_recorder(sample_id=""):
-            evals.record.record_event(
-                type="MMP_custom", data={"mark": self.mark_name, "summary": self.summary_name}
-            )
-
         # We don't actually need any samples, we just need to run the eval num_experiments times.
         experiment_ids = list(range(self.num_experiments))
         self.eval_all_samples(recorder, experiment_ids)
