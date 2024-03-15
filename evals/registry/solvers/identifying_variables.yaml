@@ -1,0 +1,5 @@
+identifying_variables/random:
+  class: evals.elsuite.identifying_variables.solvers:RandomSolver
+
+identifying_variables/noctrl:
+  class: evals.elsuite.identifying_variables.solvers:NoCtrl

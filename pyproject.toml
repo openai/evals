@@ -30,10 +30,27 @@ dependencies = [
     "langchain",
     "numexpr",
     "types-PyYAML",
+    "docker",
+    "python-socketio",
+    "IPython",
+    "ipywidgets",
+    "selenium",
     "spacy-universal-sentence-encoder",
     "jiwer",
+    "docker",
     "seaborn",
     "statsmodels",
+    "networkx",
+    "dacite",
+    "playwright==1.32.1",
+    "evaluate",
+    "types-tqdm",
+    "aiolimiter",
+    "beartype==0.12.0",
+    "flask",
+    "google-generativeai",
+    "gymnasium",
+    "chess",
 ]
 
 [project.urls]
@@ -58,3 +75,6 @@ packages = ["evals"]
 # Allow lines to be as long as 767 characters, this is currently the longest line
 # TODO: This should be brought down in the future
 line-length = 767
+
+[tool.pytest.ini_options]
+norecursedirs = ["evals/elsuite/ml_agent_bench/benchmarks"]
