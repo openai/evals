@@ -1,0 +1,9 @@
+dhivehi-diacriticals:
+  id: dhivehi-diacriticals.dev.v0
+  description: <description>
+  metrics: [accuracy]
+
+dhivehi-diacriticals.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: dhivehi-diacriticals/samples.jsonl
