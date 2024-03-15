@@ -1,0 +1,23 @@
+cant_do_that_anymore:
+  id: cant_do_that_anymore.all
+  metrics: [variant_impact_factor, delta, predicted_move_proportion, predicted_move_in_variant_proportion, avg_num_previous_moves, std_num_previous_moves]
+  description: Evaluates how well models can adapt to new rules of an environment (chess)
+
+cant_do_that_anymore.all:
+  class: evals.elsuite.cant_do_that_anymore.eval:CantDoThatAnymore
+  args:
+    default_model_dataset: "gpt-3.5-turbo-0125"
+    n_samples: 1000
+
+cant_do_that_anymore.all_small:
+  class: evals.elsuite.cant_do_that_anymore.eval:CantDoThatAnymore
+  args:
+    default_model_dataset: "gpt-3.5-turbo-0125"
+    n_samples: 100
+
+cant_do_that_anymore.all_diagonal:
+  class: evals.elsuite.cant_do_that_anymore.eval:CantDoThatAnymore
+  args:
+    default_model_dataset: "gpt-3.5-turbo-0125"
+    n_samples: 1000
+    diagonal_variation: True
