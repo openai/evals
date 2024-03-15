@@ -1,0 +1,31 @@
+bugged_tools:
+  id: bugged_tools.all
+  metrics: [f1, precision, recall, accuracy]
+  description: Evaluates ability to identify bugs in tools
+
+bugged_tools.all:
+  class: evals.elsuite.bugged_tools.eval:BuggedTools
+  args: 
+    samples_jsonl: bugged_tools/main.jsonl
+    max_turns: 10
+    log_all_metrics: False
+    use_judge: True
+    bug_instructions_type: simple_warning
+
+bugged_tools.all_log:
+  class: evals.elsuite.bugged_tools.eval:BuggedTools
+  args: 
+    samples_jsonl: bugged_tools/main.jsonl
+    max_turns: 10
+    log_all_metrics: True
+    use_judge: True
+    bug_instructions_type: simple_warning
+
+bugged_tools.all_small:
+  class: evals.elsuite.bugged_tools.eval:BuggedTools
+  args: 
+    samples_jsonl: bugged_tools/main_small.jsonl
+    max_turns: 10
+    log_all_metrics: False
+    use_judge: True
+    bug_instructions_type: simple_warning
