@@ -1,6 +1,6 @@
 dhivehi-diacriticals:
   id: dhivehi-diacriticals.dev.v0
-  description: <description>
+  description: Given a Dhivehi sentence that includes a word missing its diacritical marks, deduce the appropriate diacritical marks for that word and output the word with correct diacritical marks.
   metrics: [accuracy]
 
 dhivehi-diacriticals.dev.v0:
