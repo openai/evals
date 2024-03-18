@@ -1,0 +1,7 @@
+torch
+transformers
+scikit-learn
+gymnasium
+stable-baselines3[extra]
+mujoco
+imageio  # missing dependency for mujoco

@@ -1,0 +1,5 @@
+ogb
+torch-geometric>=2.0.2 -f https://data.pyg.org/whl/torch-2.0.0+cu118.html
+torch-scatter
+torch-sparse -f https://data.pyg.org/whl/torch-2.0.0+cu118.html
+pyg-lib -f https://data.pyg.org/whl/torch-2.0.0+cu118.html

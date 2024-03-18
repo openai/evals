@@ -1,0 +1,27 @@
+ogbn-arxiv:
+ODC-BY License: https://opendatacommons.org/licenses/by/
+Source: https://ogb.stanford.edu/docs/nodeprop/#ogbn-arxiv
+
+House Prices - Advanced Regression Techniques:
+MIT License: https://opensource.org/licenses/MIT
+Source: https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data 
+
+Spaceship Titanic:
+CC BY 4.0 Deed License: https://creativecommons.org/licenses/by/4.0/ 
+Source: https://www.kaggle.com/competitions/spaceship-titanic/data 
+
+Feedback Prize:
+MIT License: https://opensource.org/licenses/MIT
+Source: https://www.kaggle.com/competitions/feedback-prize-english-language-learning/rules#7-competition-data 
+
+Google Research - Identify Contrails to Reduce Global Warming:
+CC BY 4.0 License: https://creativecommons.org/licenses/by/4.0/
+Source: https://www.kaggle.com/competitions/google-research-identify-contrails-reduce-global-warming/rules#7-competition-data 
+
+BabyLM:
+MIT License: https://opensource.org/licenses/MIT
+Source: https://github.com/babylm/evaluation-pipeline/blob/main/LICENSE.md 
+
+CLRS:
+Apache License: https://www.apache.org/licenses/LICENSE-2.0
+Source: https://github.com/google-deepmind/clrs/blob/master/LICENSE 

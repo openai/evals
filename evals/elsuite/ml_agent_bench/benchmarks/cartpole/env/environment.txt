@@ -1,0 +1,1 @@
+The environment contains a pole attached to a cart, which moves along a frictionless track. The pole is placed upright on the cart and the goal is to balance the pole by applying forces in the left and right direction on the cart.

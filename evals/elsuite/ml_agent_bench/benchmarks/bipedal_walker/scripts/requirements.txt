@@ -1,0 +1,1 @@
+gymnasium[box2d]

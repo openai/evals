@@ -1,0 +1,12 @@
+Submissions are evaluated on SMAPE between forecasts and actual values. We define SMAPE = 0 when the actual and predicted values are both 0.
+
+For each patient visit where a protein/peptide sample was taken you will need to estimate both their UPDRS scores for that visit and predict their scores for any potential visits 6, 12, and 24 months later. Predictions for any visits that didn't ultimately take place are ignored.
+
+You must submit to this competition using the provided python time-series API, which ensures that models do not peek forward in time. To use the API, follow this template in Kaggle Notebooks:
+
+from public_timeseries_testing_util import MockApi
+env = MockApi.make_env()   # initialize the environment
+iter_test = env.iter_test()    # an iterator which loops over the test files
+for (test, test_peptides, test_proteins, sample_submission) in iter_test:
+    sample_prediction_df['rating'] = np.arange(len(sample_prediction))  # make your predictions here
+    env.predict(sample_prediction_df)   # register your predictions
