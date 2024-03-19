@@ -14,7 +14,7 @@ logger = getLogger(__name__)
 
 def get_research_problem(task: str) -> str:
     """Get the research problem for the given task."""
-    
+
     data_dir = get_data_dir()
 
     for config in data_dir.glob("**/*.jsonl"):
