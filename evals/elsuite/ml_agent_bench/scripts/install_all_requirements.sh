@@ -11,4 +11,9 @@ fi
 find "$start_directory" -type f -name 'requirements.txt' | while read -r file; do
     echo "Installing requirements from: $file"
     pip install -r "$file"
+    
+    if [[ $? -ne 0 ]]; then
+        echo "Error: Failed to install requirements from $file"
+        exit 1
+    fi
 done

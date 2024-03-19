@@ -1,12 +1,3 @@
-ml-agent-bench.babylm:
-  id: ml-agent-bench.babylm.v0
-  metrics:
-    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
-ml-agent-bench.babylm.v0:
-  class: evals.elsuite.ml_agent_bench.eval:MLAgentBench
-  args:
-    samples_jsonl: ml_agent_bench/babylm.jsonl
-
 ml-agent-bench.ant:
   id: ml-agent-bench.ant.gpu.v0
   metrics:
@@ -24,6 +15,10 @@ ml-agent-bench.cifar10:
   id: ml-agent-bench.cifar10.v0
   metrics:
     [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+ml-agent-bench.cifar10.v0:
+  class: evals.elsuite.ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: ml_agent_bench/cifar10.jsonl
 
 ml-agent-bench.bipedal-walker:
   id: ml-agent-bench.bipedal-walker.v0
@@ -42,29 +37,6 @@ ml-agent-bench.cartpole.v0:
   class: evals.elsuite.ml_agent_bench.eval:MLAgentBench
   args:
     samples_jsonl: ml_agent_bench/cartpole.jsonl
-
-ml-agent-bench.cifar10.v0:
-  class: evals.elsuite.ml_agent_bench.eval:MLAgentBench
-  args:
-    samples_jsonl: ml_agent_bench/cifar10.jsonl
-
-ml-agent-bench.clrs:
-  id: ml-agent-bench.clrs.v0
-  metrics:
-    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
-ml-agent-bench.clrs.v0:
-  class: evals.elsuite.ml_agent_bench.eval:MLAgentBench
-  args:
-    samples_jsonl: ml_agent_bench/clrs.jsonl
-
-ml-agent-bench.fathomnet:
-  id: ml-agent-bench.fathomnet.v0
-  metrics:
-    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
-ml-agent-bench.fathomnet.v0:
-  class: evals.elsuite.ml_agent_bench.eval:MLAgentBench
-  args:
-    samples_jsonl: ml_agent_bench/fathomnet/fathomnet.jsonl
 
 ml-agent-bench.feedback:
   id: ml-agent-bench.feedback.v0
@@ -97,15 +69,6 @@ ml-agent-bench.humanoid.gpu.v0:
   args:
     samples_jsonl: ml_agent_bench/humanoid/gpu.jsonl
 
-ml-agent-bench.identify-contrails:
-  id: ml-agent-bench.identify-contrails.v0
-  metrics:
-    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
-ml-agent-bench.identify-contrails.v0:
-  class: evals.elsuite.ml_agent_bench.eval:MLAgentBench
-  args:
-    samples_jsonl: ml_agent_bench/identify_contrails/identify-contrails.jsonl
-
 ml-agent-bench.imdb:
   id: ml-agent-bench.imdb.v0
   metrics:
@@ -132,15 +95,6 @@ ml-agent-bench.parkinsons-disease.v0:
   class: evals.elsuite.ml_agent_bench.eval:MLAgentBench
   args:
     samples_jsonl: ml_agent_bench/parkinsons_disease/parkinsons-disease.jsonl
-
-ml-agent-bench.llama-inference:
-  id: ml-agent-bench.llama-inference.v0
-  metrics:
-    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
-ml-agent-bench.llama-inference.v0:
-  class: evals.elsuite.ml_agent_bench.eval:MLAgentBench
-  args:
-    samples_jsonl: ml_agent_bench/llama-inference.jsonl
 
 ml-agent-bench.ogbn-arxiv:
   id: ml-agent-bench.ogbn-arxiv.v0

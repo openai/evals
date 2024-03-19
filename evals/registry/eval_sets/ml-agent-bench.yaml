@@ -9,7 +9,6 @@ ml-agent-bench:
     - ml-agent-bench.humanoid
     - ml-agent-bench.imdb
     - ml-agent-bench.inverted-pendulum
-    - ml-agent-bench.llama-inference
     - ml-agent-bench.ogbn-arxiv
     - ml-agent-bench.parkinsons-disease
     - ml-agent-bench.pong
