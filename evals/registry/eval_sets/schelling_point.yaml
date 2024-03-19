@@ -1,0 +1,6 @@
+schelling_point: 
+  evals: 
+    - schelling_point_rn
+    - schelling_point_rw
+    - schelling_point_owt
+    - schelling_point_wikipedia

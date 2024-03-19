@@ -57,6 +57,8 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
         "text-davinci-003": 4096,
         "gpt-3.5-turbo": 4096,
         "gpt-3.5-turbo-16k": 16384,
+        "gpt-3.5-turbo-instruct": 4096,
+        "gpt-3.5-turbo-instruct-0914": 4096,
         "gpt-4": 8192,
         "gpt-4-32k": 32768,
         "gpt-4-base": 8192,
@@ -77,7 +79,7 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
 
 
 def is_chat_model(model_name: str) -> bool:
-    if model_name in {"gpt-4-base"}:
+    if model_name in {"gpt-4-base"} or model_name.startswith("gpt-3.5-turbo-instruct"):
         return False
 
     CHAT_MODEL_NAMES = {"gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4", "gpt-4-32k"}
@@ -134,7 +136,7 @@ class Registry:
             return OpenAICompletionFn(model=name, n_ctx=n_ctx, **kwargs)
 
         # No match, so try to find a completion-fn-id in the registry
-        spec = self.get_completion_fn(name)
+        spec = self.get_completion_fn(name) or self.get_solver(name)
         if spec is None:
             raise ValueError(f"Could not find CompletionFn/Solver in the registry with ID {name}")
         if spec.args is None:
@@ -196,7 +198,12 @@ class Registry:
         )
 
     def get_completion_fn(self, name: str) -> Optional[CompletionFnSpec]:
-        return self._dereference(name, self._completion_fns | self._solvers, "completion_fn", CompletionFnSpec)
+        return self._dereference(
+            name, self._completion_fns | self._solvers, "completion_fn", CompletionFnSpec
+        )
+
+    def get_solver(self, name: str) -> Optional[CompletionFnSpec]:
+        return self._dereference(name, self._solvers, "solver", CompletionFnSpec)
 
     def get_eval(self, name: str) -> Optional[EvalSpec]:
         return self._dereference(name, self._evals, "eval", EvalSpec)

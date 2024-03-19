@@ -53,7 +53,7 @@ class SolverPlayer(Player):
         #         but we must do **something** if the response is not a correct move,
         #         and this seems better than e.g. "you lost the game, bye".
         for i in range(num_attempts):
-            response = self._solve()
+            response = self._get_response()
 
             #  We allow KK, "KK", <KK> etc
             move_str = re.sub(r"\W+", "", response)
@@ -92,7 +92,7 @@ class SolverPlayer(Player):
             ),
         )
 
-    def _solve(self) -> str:
+    def _get_response(self) -> str:
         response = self.solver(self.task_state).output
         self._add_message("assistant", response)
         return response

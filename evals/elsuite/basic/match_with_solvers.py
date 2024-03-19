@@ -57,10 +57,12 @@ class MatchWithSolvers(SolverEval):
         solver_result = solver(task_state)
         output = solver_result._output
 
+        ideal = sample["ideal"] if isinstance(sample["ideal"], str) else sample["ideal"][0]
+
         return evals.record_and_check_match(
             prompt=sample["input"],
             sampled=output,
-            expected=[sample["ideal"], sample["ideal"].capitalize()],
+            expected=[ideal, ideal.capitalize()],
         )
 
     def run(self, recorder):

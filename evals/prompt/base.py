@@ -6,7 +6,7 @@ import logging
 import threading
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Dict, List, Union
+from typing import Dict, List, Optional, Union
 
 logger = logging.getLogger(__name__)
 ENCODER_LOCK = threading.Lock()
@@ -19,20 +19,25 @@ OpenAIChatMessage = Dict[str, str]  # A message is a dictionary with "role" and 
 OpenAICreateChatPrompt = List[OpenAIChatMessage]  # A chat log is a list of messages
 
 
-def chat_prompt_to_text_prompt(prompt: OpenAICreateChatPrompt, for_completion: bool = True) -> str:
+def chat_prompt_to_text_prompt(
+    prompt: OpenAICreateChatPrompt,
+    for_completion: bool = True,
+    chat_to_prefixes: Optional[Dict] = None,
+) -> str:
     """
     Render a chat prompt as a text prompt. User and assistant messages are separated by newlines
     and prefixed with "User: " and "Assistant: ", respectively, unless there is only one message.
     System messages have no prefix.
     """
     assert is_chat_prompt(prompt), f"Expected a chat prompt, got {prompt}"
-    chat_to_prefixes = {
-        # roles
-        "system": "",
-        # names
-        "example_user": "User: ",
-        "example_assistant": "Assistant: ",
-    }
+    if chat_to_prefixes is None:
+        chat_to_prefixes = {
+            # roles
+            "system": "",
+            # names
+            "example_user": "User: ",
+            "example_assistant": "Assistant: ",
+        }
 
     # For a single message, be it system, user, or assistant, just return the message
     if len(prompt) == 1:
@@ -45,7 +50,9 @@ def chat_prompt_to_text_prompt(prompt: OpenAICreateChatPrompt, for_completion: b
         content = msg["content"]
         text += f"{prefix}{content}\n"
     if for_completion:
-        text += "Assistant: "
+        text += chat_to_prefixes.get(
+            "assistant", "Assistant: "
+        ).rstrip()  # rstrip to remove trailing whitespace
     return text.lstrip()
 
 
