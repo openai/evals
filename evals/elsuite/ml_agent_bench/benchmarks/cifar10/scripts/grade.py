@@ -9,6 +9,8 @@ from torchvision import datasets
 
 import evals.elsuite.ml_agent_bench.benchmarks.cifar10.env.train as baseline_script
 from evals.elsuite.ml_agent_bench.low_level_actions import execute_script
+from evals.elsuite.ml_agent_bench.utils import get_baseline_score
+
 
 logger = logging.getLogger(__name__)
 
@@ -52,31 +54,12 @@ def get_naive_baseline_score() -> float:
     Executes the baseline script `train.py` and returns the accuracy.
     Expects the predictions to be saved to `submission.csv` when run.
     """
+    
+    scripts_dir = Path(__file__).parent
+    env_dir = scripts_dir.parent / "env"
+    naive_baseline = env_dir / "train.py"
 
-    src_dir = Path(baseline_script.__file__).parent
-
-    with TemporaryDirectory() as tmpdir:
-        dst_dir = Path(tmpdir)
-        tmp_baseline_script = dst_dir / "train.py"
-
-        logger.info(f"Executing baseline script: {tmp_baseline_script.as_posix()}")
-
-        shutil.copytree(
-            src=src_dir.as_posix(),
-            dst=dst_dir.as_posix(),
-            dirs_exist_ok=True,
-        )
-
-        execute_script(
-            script_name=tmp_baseline_script.as_posix(),
-            device=0,
-            python="python",
-            work_dir=dst_dir.as_posix(),
-        )
-
-        accuracy = get_score(dst_dir)
-
-    return accuracy
+    return get_baseline_score(naive_baseline, get_score)
 
 
 def normalize_score(score: float) -> float:
