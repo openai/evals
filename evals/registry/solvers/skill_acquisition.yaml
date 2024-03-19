@@ -1,0 +1,287 @@
+# CoT solvers with a custom extraction prompt.
+skill_acquisition/cot/gpt-3.5-turbo:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_template: &extract_template Given the above reasoning, what is the next action you wish to take? Please respond in the format required by the instructions.
+    extract_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+skill_acquisition/cot/gpt-4-turbo-preview:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-turbo-preview
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_template: *extract_template
+    extract_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-turbo-preview
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+  
+skill_acquisition/cot/gemini-pro:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.providers.google.gemini_solver:GeminiSolver
+      args:
+        model_name: gemini-pro
+    extract_template: *extract_template
+    extract_solver:
+      class: evals.solvers.providers.google.gemini_solver:GeminiSolver
+      args:
+        model_name: gemini-pro
+          
+skill_acquisition/cot/gpt-4:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_template: *extract_template
+    extract_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+skill_acquisition/cot_hhh/gpt-4-base:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 1
+                max_tokens: 512
+    extract_template: *extract_template
+    extract_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 1
+                max_tokens: 512
+
+skill_acquisition/assistants/gpt-4-turbo-preview:
+  class: evals.elsuite.skill_acquisition.solvers:SkillAcquisitionAssistantsSolver
+  args:
+    tools:
+      - type: code_interpreter
+      - type: retrieval
+    model: gpt-4-turbo-preview
+
+skill_acquisition/cot_assistant/gpt-4-turbo-preview:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.elsuite.skill_acquisition.solvers:SkillAcquisitionAssistantsSolver
+      args:
+        tools:
+          - type: code_interpreter
+          - type: retrieval
+        model: gpt-4-turbo-preview
+    extract_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-turbo-preview
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+### Few-shot solvers.
+# TODO: refactor few-shot solver so that train_jsonl is not parameterised here to reduce verbosity.
+# Miskito full.
+miskito_all/fewshot_direct/gpt-3.5-turbo:
+  class: evals.solvers.nested.fewshot_solver:FewShotSolver
+  args:
+    train_jsonl: evals/registry/data/skill_acquisition/miskito/variants/miskito_train_all.jsonl
+    n_shots: 3
+    base_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+miskito_all/fewshot_direct/gpt-4-turbo-preview:
+  class: evals.solvers.nested.fewshot_solver:FewShotSolver
+  args:
+    train_jsonl: evals/registry/data/skill_acquisition/miskito/variants/miskito_train_all.jsonl
+    n_shots: 3
+    base_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-turbo-preview
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+miskito_all/fewshot_direct/gpt-4-32k:
+  class: evals.solvers.nested.fewshot_solver:FewShotSolver
+  args:
+    train_jsonl: evals/registry/data/skill_acquisition/miskito/variants/miskito_train_all.jsonl
+    n_shots: 3
+    base_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-32k
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+miskito_all/fewshot_direct/gpt-4-base:
+  class: evals.solvers.nested.fewshot_solver:FewShotSolver
+  args:
+    train_jsonl: evals/registry/data/skill_acquisition/miskito/variants/miskito_train_all.jsonl
+    n_shots: 3
+    base_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 1
+                max_tokens: 512
+
+miskito_manipulation/fewshot_direct/gpt-4-32k:
+  class: evals.solvers.nested.fewshot_solver:FewShotSolver
+  args:
+    train_jsonl: evals/registry/data/skill_acquisition/miskito/variants/miskito_train_manipulation.jsonl
+    n_shots: 3
+    base_solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-32k
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+miskito_manipulation/fewshot_direct/gpt-4-base:
+  class: evals.solvers.nested.fewshot_solver:FewShotSolver
+  args:
+    train_jsonl: evals/registry/data/skill_acquisition/miskito/variants/miskito_train_manipulation.jsonl
+    n_shots: 3
+    base_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 1
+                max_tokens: 512
+
+# OS models
+skill_acquisition/cot/llama-2-13b-chat:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-13b-chat-hf
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_template: *extract_template
+    extract_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-13b-chat-hf
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+skill_acquisition/cot/llama-2-70b-chat:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-70b-chat-hf
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_template: *extract_template
+    extract_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-70b-chat-hf
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+skill_acquisition/cot/mixtral-8x7b-instruct:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: mistralai/Mixtral-8x7B-Instruct-v0.1
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_template: *extract_template
+    extract_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: mistralai/Mixtral-8x7B-Instruct-v0.1
+          extra_options:
+            temperature: 1
+            max_tokens: 512
