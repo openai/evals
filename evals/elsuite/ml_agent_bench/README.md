@@ -42,16 +42,22 @@ pip install -r benchmarks/<taskid>/scripts/requirements.txt
 
 where `<taskid>` is the name of the task you wish to run (e.g. `ant`).
 
+To install all dependencies for all tasks, run:
+
+```bash
+sh scripts/install_all_requirements.sh
+```
+
 ## Usage
 
-Run with:
+Run individual tasks with:
 
 ```bash
 EVALS_SEQUENTIAL=1 oaieval <solver> ml-agent-bench.<taskid>
 # This eval doesn't currently support multi-threading.
 ```
 
-Where `<taskid>` is one of the 8 tasks listed in the Tasks section below (e.g. `ml-agent-bench.vectorization`).
+Where `<taskid>` is one of the 15 tasks listed in the Tasks section below (e.g. `ml-agent-bench.vectorization`).
 
 We suggest using `gpt-4-1106-preview` or `ml_agent_bench/baseline/gpt-4-1106-preview` as default choices for `<solver>`.
 
@@ -62,6 +68,12 @@ EVALS_SEQUENTIAL=1 oaieval ml_agent_bench/baseline/gpt-4-1106-preview ml-agent-b
 ```
 
 See `evals/registry/solvers/ml-agent-bench.yaml` for a full list of recommended Solvers.
+
+Alternatively, run all tasks with:
+
+```bash
+EVALS_SEQUENTIAL=1 oaievalset <solver> ml-agent-bench
+```
 
 ## Evaluation Process
 
