@@ -34,7 +34,6 @@ dependencies = [
     "jiwer",
     "seaborn",
     "statsmodels",
-    "torch",
 ]
 
 [project.urls]

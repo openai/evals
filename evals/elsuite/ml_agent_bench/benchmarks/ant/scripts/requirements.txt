@@ -1,3 +1,0 @@
-gymnasium[atari]
-gymnasium[accept-rom-license]
-stable-baselines3[extra]
