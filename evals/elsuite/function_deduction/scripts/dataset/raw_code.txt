@@ -1,0 +1,141 @@
+#   Lines starting with '#' or empty are ignored.
+#   Every other line is code for a single sample.
+#   This file is parsed by create_datset.py script
+#   (-> is not accessed when the eval is running).
+
+#   Single operation
+x
+x * 2
+x * 27
+-x
+x * -2
+x * -19
+math.floor(x * 1.5)
+math.floor(x * 8.5)
+math.floor(x / 2)
+math.floor(x / 10)
+math.ceil(x / 2)
+round(x / 10)
+math.ceil(x / 10)
+x + 1
+x + 17
+x - 1
+x - 29
+7 - x
+x ** 2
+x ** 3
+
+#   Small set of values
+7
+7 if x % 2 else 17
+x % 3
+x % 7
+x % 10
+int(x % 3 == 1)
+int(x % 3 == 2)
+int(x % 3 == 1) * 7
+int(x % 3 == 2) * 18
+int(x < 32)
+int(x % 8 < 4)
+
+#   Threshold
+min(x, 30)
+max(x, 30)
+min(x * 2, 70)
+max(x * 2, 70)
+x * 2 if x < 50 else x
+x + 7 if x < 50 else x - 7
+x + 50 if x < 50 else 100 - x
+x * 2 if x > 40 else x * 3
+3 if 30 < x < 70 else 4
+min(1000000, 2 ** x)
+
+#   Multiple operations
+math.floor(x + math.sqrt(x))
+math.floor(math.sqrt(x))
+math.floor(math.sqrt(x)) - 1
+math.floor(math.sqrt(x)) * 2
+math.floor(math.sqrt(x) * 2)
+math.floor(round(x ** (1/3), 8))
+x / 2 if not x % 2 else x * 3
+x / 2 if not x % 2 else x * 3 + 1
+x ** 2 if x % 2 else x ** 3
+x / 3 if not x % 3 else x
+x / 3 if not x % 3 else x * 2
+(x + 1) / 3 if x % 3 == 2 else x
+x ** 2 - 10
+x ** 3 - x ** 2
+x ** 2 * 2
+x * (x - 1)
+x * (x - 1) * (x - 2)
+x * (x + 1) / 2
+5 - (x % 5)
+10 - (x % 10)
+16 - (x % 16)
+x - x % 6
+x - x % 15
+x - x % 10
+x + x % 10
+x + x % 4
+x + x // 10
+x + x // 8
+x // 10 + x % 2
+(x + 5) * 3
+(x + 2) * 7
+(2 * x) ** 2
+
+
+#   Math, sin, cos etc
+round(math.sin(x))
+round(math.sin(x * 0.5 * math.pi))
+round(math.sin(x * 0.25 * math.pi) * 10)
+round(math.sin(x * 0.1 * math.pi) * 10)
+round(math.cos(x))
+round(math.cos(x * 0.5 * math.pi))
+round(math.cos(x * 0.25 * math.pi) * 10)
+round(math.cos(x * 0.1 * math.pi) * 10)
+
+# Is prime number?
+int(x > 1 and all(x % i for i in range(2, x)))
+x if x > 1 and all(x % i for i in range(2, x)) else x + 1
+
+# Is perfect square?
+int(int(x**0.5)**2 == x)
+
+# Divisors - number / sum
+sum(1 for i in range(1, x + 1) if not x % i)
+sum(i for i in range(1, x + 1) if not x % i)
+
+# Reverse digits
+int(str(x)[::-1])
+abs(x - int(str(x)[::-1]))
+x + int(str(x)[::-1])
+
+# Sum of digits
+sum(int(d) for d in str(x))
+x + sum(int(d) for d in str(x))
+int(sum(int(d) for d in str(x)) % 10)
+
+# Count odd/even digits
+sum(1 for d in str(x) if int(d) % 2)
+sum(1 for d in str(x) if not int(d) % 2)
+
+# Multiple digits
+0 if x < 10 else (x % 10) * (x // 10)
+
+# Higher vs lower digit
+0 if x < 10 else max(int(d) for d in str(x)) - min(int(d) for d in str(x))
+
+#   Other
+bin(x).count("1")
+x | 1
+int(str(x) == str(x)[::-1])
+x * int(str(x)[-1])
+
+#   More ideas: convert to binary
+#   int(bin(x)[2:])
+#   int(bin(~x)[3:])
+#   int(bin(x * 2)[2:])
+
+#   More ideas: highest divisor lower than x?
+#   0 if x == 0 else max(1 for i in range(1, x) if not x % i)
