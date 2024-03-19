@@ -48,6 +48,8 @@ To install all dependencies for all tasks, run:
 sh scripts/install_all_requirements.sh
 ```
 
+Alternatively, a [Dev Container](https://code.visualstudio.com/docs/devcontainers/containers), `devcontainer.json`, is provided for use with Visual Studio Code, which contains all necessary dependencies and is pre-configured to run the eval. This Dev Container requires the [NVIDIA Container Runtime](https://developer.nvidia.com/container-runtime) to be installed on the host machine.
+
 ## Usage
 
 Run individual tasks with:
