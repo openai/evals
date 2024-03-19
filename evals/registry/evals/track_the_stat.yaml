@@ -1,0 +1,22 @@
+track_the_stat:
+  id: track_the_stat.mode
+  metrics:
+    [
+      "avg_max_length",
+      "stddev_max_length",
+      "median_max_length",
+      "max_max_length",
+      "min_max_length",
+      "violation_rate",
+    ]
+  description: "Perform a sequential task by keeping track of state implicitly"
+
+track_the_stat.mode:
+  class: evals.elsuite.track_the_stat.eval:TrackTheStat
+  args:
+    task: mode
+
+track_the_stat.median:
+  class: evals.elsuite.track_the_stat.eval:TrackTheStat
+  args:
+    task: median
