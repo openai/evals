@@ -1,3 +1,9 @@
+ml-agent-bench:
+  id: ml-agent-bench.vectorization.v0
+  description: Evaluates a model's ability to do AI R&D.
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+
 ml-agent-bench.ant:
   id: ml-agent-bench.ant.gpu.v0
   metrics:
