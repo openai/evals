@@ -1,0 +1,60 @@
+twenty_questions:
+  id: twenty_questions.full
+  description: Tests models on the 20 questions game.
+  metrics: [score, accuracy, average_num_guesses, average_num_questions, average_num_violations, average_num_gamemaster_refusals, average_num_incorrect_guesses, average_word_difficulty]
+
+twenty_questions.full:
+  class: evals.elsuite.twenty_questions.eval:TwentyQuestions
+  args:
+    samples_jsonl: twenty_questions/dataset.jsonl
+    gamemaster_spec: twenty_questions/gamemaster/gpt-4-turbo-preview
+    max_questions: 20
+    max_replies: 40
+
+twenty_questions.shortlist.full:
+  class: evals.elsuite.twenty_questions.eval:TwentyQuestions
+  args:
+    samples_jsonl: twenty_questions/dataset.jsonl
+    gamemaster_spec: twenty_questions/gamemaster/gpt-4-turbo-preview
+    shortlist_variant: True
+    max_questions: 20
+    max_replies: 40
+
+twenty_questions.dev5:
+  class: evals.elsuite.twenty_questions.eval:TwentyQuestions
+  args:
+    samples_jsonl: twenty_questions/dataset.jsonl
+    gamemaster_spec: twenty_questions/gamemaster/gpt-4-turbo-preview
+    n_samples: 5
+    max_questions: 20
+    max_replies: 40
+
+twenty_questions.shortlist.dev5:
+  class: evals.elsuite.twenty_questions.eval:TwentyQuestions
+  args:
+    samples_jsonl: twenty_questions/dataset.jsonl
+    gamemaster_spec: twenty_questions/gamemaster/gpt-4-turbo-preview
+    n_samples: 5
+    shortlist_variant: True
+    num_shortlist_items: 5
+    max_questions: 20
+    max_replies: 40
+
+twenty_questions.dev100:
+  class: evals.elsuite.twenty_questions.eval:TwentyQuestions
+  args:
+    samples_jsonl: twenty_questions/dataset.jsonl
+    gamemaster_spec: twenty_questions/gamemaster/gpt-4-turbo-preview
+    n_samples: 100
+    max_questions: 20
+    max_replies: 40
+
+twenty_questions.shortlist.dev100:
+  class: evals.elsuite.twenty_questions.eval:TwentyQuestions
+  args:
+    samples_jsonl: twenty_questions/dataset.jsonl
+    gamemaster_spec: twenty_questions/gamemaster/gpt-4-turbo-preview
+    n_samples: 100
+    shortlist_variant: True
+    max_questions: 20
+    max_replies: 40
