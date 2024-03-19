@@ -1,0 +1,3 @@
+# Additional requirements for specific environments
+gymnasium
+git+https://github.com/james-aung/gymnasium-bandits
