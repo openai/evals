@@ -1,0 +1,36 @@
+error-recovery:
+  id: error-recovery.main
+  metrics: [accuracy]
+  description: TODO
+
+error-recovery.main:
+  class: evals.elsuite.error_recovery.eval:ErrorRecovery
+  args: 
+    samples_jsonl: error_recovery/main.jsonl
+
+error-recovery.small:
+  class: evals.elsuite.error_recovery.eval:ErrorRecovery
+  args: 
+    samples_jsonl: error_recovery/small.jsonl
+
+error-recovery.medium:
+  class: evals.elsuite.error_recovery.eval:ErrorRecovery
+  args: 
+    samples_jsonl: error_recovery/medium.jsonl
+
+#  --- mark reasoning as 'user' variant ---
+error-recovery.main.other-reasoning:
+  class: evals.elsuite.error_recovery.eval:ErrorRecovery
+  args: 
+    samples_jsonl: error_recovery/main.jsonl
+    mark_as_own_reasoning: False
+error-recovery.small.other-reasoning:
+  class: evals.elsuite.error_recovery.eval:ErrorRecovery
+  args: 
+    samples_jsonl: error_recovery/small.jsonl
+    mark_as_own_reasoning: False
+error-recovery.medium.other-reasoning:
+  class: evals.elsuite.error_recovery.eval:ErrorRecovery
+  args: 
+    samples_jsonl: error_recovery/medium.jsonl
+    mark_as_own_reasoning: False
