@@ -14,17 +14,6 @@ def get_final_results_from_dir(log_dir: Union[str, Path]) -> dict[Path, dict]:
     return final_results_dict
 
 
-def get_specs_from_dir(log_dir: Union[str, Path]) -> dict[Path, dict]:
-    """
-    Given a directory of log files, return a dictionary mapping log file paths to specs.
-    """
-    specs_dict = {}
-    for path in Path(log_dir).glob("**/*.log"):
-        spec = extract_spec(path)
-        specs_dict[path] = spec
-    return specs_dict
-
-
 def extract_final_results(path: Path) -> dict:
     """
     Given a path to a log file, find and return the "final_report" dictionary.
