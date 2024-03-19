@@ -1,35 +1,35 @@
-ml-agent-bench:
+hr-ml-agent-bench:
   evals:
-    - ml-agent-bench.ant
-    - ml-agent-bench.bipedal-walker
-    - ml-agent-bench.cartpole
-    - ml-agent-bench.cifar10
-    - ml-agent-bench.feedback
-    - ml-agent-bench.house-price
-    - ml-agent-bench.humanoid
-    - ml-agent-bench.imdb
-    - ml-agent-bench.inverted-pendulum
-    - ml-agent-bench.ogbn-arxiv
-    - ml-agent-bench.parkinsons-disease
-    - ml-agent-bench.pong
-    - ml-agent-bench.pusher
-    - ml-agent-bench.spaceship-titanic
-    - ml-agent-bench.vectorization
+    - hr-ml-agent-bench.ant
+    - hr-ml-agent-bench.bipedal-walker
+    - hr-ml-agent-bench.cartpole
+    - hr-ml-agent-bench.cifar10
+    - hr-ml-agent-bench.feedback
+    - hr-ml-agent-bench.house-price
+    - hr-ml-agent-bench.humanoid
+    - hr-ml-agent-bench.imdb
+    - hr-ml-agent-bench.inverted-pendulum
+    - hr-ml-agent-bench.ogbn-arxiv
+    - hr-ml-agent-bench.parkinsons-disease
+    - hr-ml-agent-bench.pong
+    - hr-ml-agent-bench.pusher
+    - hr-ml-agent-bench.spaceship-titanic
+    - hr-ml-agent-bench.vectorization
 
-ml-agent-bench-cpu:
+hr-ml-agent-bench-cpu:
   evals:
-    - ml-agent-bench.ant.cpu.v0
-    - ml-agent-bench.bipedal-walker
-    - ml-agent-bench.cartpole
-    - ml-agent-bench.cifar10
-    - ml-agent-bench.feedback
-    - ml-agent-bench.house-price
-    - ml-agent-bench.humanoid.cpu.v0
-    - ml-agent-bench.imdb
-    - ml-agent-bench.inverted-pendulum
-    - ml-agent-bench.ogbn-arxiv
-    - ml-agent-bench.parkinsons-disease
-    - ml-agent-bench.pong.cpu.v0
-    - ml-agent-bench.pusher
-    - ml-agent-bench.spaceship-titanic
-    - ml-agent-bench.vectorization
+    - hr-ml-agent-bench.ant.cpu.v0
+    - hr-ml-agent-bench.bipedal-walker
+    - hr-ml-agent-bench.cartpole
+    - hr-ml-agent-bench.cifar10
+    - hr-ml-agent-bench.feedback
+    - hr-ml-agent-bench.house-price
+    - hr-ml-agent-bench.humanoid.cpu.v0
+    - hr-ml-agent-bench.imdb
+    - hr-ml-agent-bench.inverted-pendulum
+    - hr-ml-agent-bench.ogbn-arxiv
+    - hr-ml-agent-bench.parkinsons-disease
+    - hr-ml-agent-bench.pong.cpu.v0
+    - hr-ml-agent-bench.pusher
+    - hr-ml-agent-bench.spaceship-titanic
+    - hr-ml-agent-bench.vectorization
