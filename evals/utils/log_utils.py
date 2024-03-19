@@ -14,6 +14,17 @@ def get_final_results_from_dir(log_dir: Union[str, Path]) -> dict[Path, dict]:
     return final_results_dict
 
 
+def get_specs_from_dir(log_dir: Union[str, Path]) -> dict[Path, dict]:
+    """
+    Given a directory of log files, return a dictionary mapping log file paths to specs.
+    """
+    specs_dict = {}
+    for path in Path(log_dir).glob("**/*.log"):
+        spec = extract_spec(path)
+        specs_dict[path] = spec
+    return specs_dict
+
+
 def extract_final_results(path: Path) -> dict:
     """
     Given a path to a log file, find and return the "final_report" dictionary.
@@ -31,7 +42,7 @@ def extract_final_results(path: Path) -> dict:
     raise ValueError(f"Could not find final_report in {path}")
 
 
-def extract_individual_results(path: Path) -> list[dict]:
+def extract_individual_results(path: Path, type_string: str = "metrics") -> list[dict]:
     """
     Given a path to a log file, grab all the individual sample results.
     """
@@ -42,7 +53,7 @@ def extract_individual_results(path: Path) -> list[dict]:
             try:
                 loaded_line = json.loads(line)
                 if "type" in loaded_line:
-                    if loaded_line["type"] == "metrics":
+                    if loaded_line["type"] == type_string:
                         all_data.append(loaded_line["data"])
             except json.decoder.JSONDecodeError:
                 print(f"Skipping line: {line}")
