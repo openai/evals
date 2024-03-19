@@ -35,6 +35,7 @@ dependencies = [
     "seaborn",
     "statsmodels",
     "networkx",
+    "chess",
 ]
 
 [project.urls]

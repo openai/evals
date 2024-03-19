@@ -10,6 +10,12 @@ def test_n_ctx_from_model_name():
     assert n_ctx_from_model_name("gpt-4-0613") == 8192
     assert n_ctx_from_model_name("gpt-4-32k") == 32768
     assert n_ctx_from_model_name("gpt-4-32k-0613") == 32768
+    assert n_ctx_from_model_name("gpt-3.5-turbo") == 4096
+    assert n_ctx_from_model_name("gpt-3.5-turbo-0314") == 4096
+    assert n_ctx_from_model_name("gpt-3.5-turbo-0613") == 4096
+    assert n_ctx_from_model_name("gpt-3.5-turbo-16k") == 16384
+    assert n_ctx_from_model_name("gpt-3.5-turbo-16k-0314") == 16384
+    assert n_ctx_from_model_name("gpt-3.5-turbo-16k-0613") == 16384
 
 
 def test_is_chat_model():

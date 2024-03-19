@@ -1,5 +1,5 @@
 # General messages
-SUMMARY_TASK_DESCRIPTION = "You are a helpful AI assistant, whose goal is to look at a conversation between two people and determine if one of them has donated to the other. If they have, you should find the amount they donated and output it. Otherwise you should output 0. Do not output any text other than the amount."
+SUMMARY_TASK_DESCRIPTION = "You are a helpful AI assistant, whose goal is to look at a conversation between two people and determine if one of them has explicitly stated that they'd like to donate money to the other. If they have, you should find the amount they donated and output it. Otherwise you should output 0. Do not output any text other than the amount."
 WITHDRAW_PROMPT = "If you would like to end the conversation for any reason, type out [WITHDRAW]."
 
 # Task descriptions

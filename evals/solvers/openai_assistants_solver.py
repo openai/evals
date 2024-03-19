@@ -1,8 +1,9 @@
 import logging
 import time
 from threading import Lock
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
+import backoff
 import openai
 from openai.types.beta import Assistant
 from openai.types.beta.thread import Thread
@@ -10,11 +11,18 @@ from openai.types.beta.threads.run import Run
 
 from evals.record import record_sampling
 from evals.registry import client
+from evals.solvers.openai_solver import OpenAISolver
 from evals.solvers.solver import Solver, SolverResult
 from evals.task_state import Message, TaskState
 
 FILE_CACHE_LOCK = Lock()
 FILE_CACHE = {}  # File cache can be reused across solvers
+OAI_API_EXCEPTIONS = (
+    openai.RateLimitError,
+    openai.APIConnectionError,
+    openai.APITimeoutError,
+    openai.InternalServerError,
+)
 
 
 class OpenAIAssistantsSolver(Solver):
@@ -51,13 +59,14 @@ class OpenAIAssistantsSolver(Solver):
         tools: list[Dict[str, Any]] = [],
         file_paths: list[str] = [],
         assistant: Optional[Assistant] = None,
-        thread: Optional[Thread] = client.beta.threads.create(),
+        thread: Optional[Thread] = None,
+        postprocessors: list[str] = [],
         registry: Any = None,
     ):
+        super().__init__(postprocessors=postprocessors)
         self.model = model
-        self.thread = thread
+        self.thread = thread if thread else client.beta.threads.create()
         self.tools = tools
-        self.all_uploaded_files = []
         if not assistant:
             file_ids = self._create_files(file_paths)
             self.assistant = client.beta.assistants.create(
@@ -73,6 +82,29 @@ class OpenAIAssistantsSolver(Solver):
                 not name and not description and not tools and not file_paths
             ), "Cannot specify `name`, `description`, `tools`, or `file_paths` when copying a solver."
             self.assistant = assistant
+
+    @backoff.on_exception(
+        wait_gen=backoff.expo,
+        exception=(
+            openai.OpenAIError,
+            *OAI_API_EXCEPTIONS,
+        ),
+        max_value=60,
+        factor=1.5,
+    )
+    def _run_assistant_retrying(self, task_state: TaskState):
+        # Run Assistant on the Thread
+        run = client.beta.threads.runs.create(
+            assistant_id=self.assistant.id,
+            thread_id=self.thread.id,
+            instructions=task_state.task_description,  # Apply task description as `instructions`
+        )
+        run = self._wait_on_run(run, self.thread)
+        if run.status != "completed":
+            error_msg = f"Assistants API Run failed with status {run.status}. More details: {run}"
+            logging.warning(error_msg)
+            raise openai.OpenAIError(error_msg)
+        return run
 
     def _solve(
         self,
@@ -108,21 +140,11 @@ class OpenAIAssistantsSolver(Solver):
                 thread_id=self.thread.id,
                 role=user_message.role,
                 content=user_message.content,
-                file_ids=thread_file_ids
-                if idx == 0
-                else [],  # Attach files to first new message only
+                file_ids=thread_file_ids,
             )
 
         # Run Assistant on the Thread
-        run = client.beta.threads.runs.create(
-            assistant_id=self.assistant.id,
-            thread_id=self.thread.id,
-            instructions=task_state.task_description,  # Apply task description as `instructions`
-        )
-        run = self._wait_on_run(run, self.thread)
-        if run.status != "completed":
-            error_msg = f"Assistants API Run failed with status {run.status}. More details: {run}"
-            raise RuntimeError(error_msg)
+        run = self._run_assistant_retrying(task_state)
 
         # Get Assistant response(s)
         messages = client.beta.threads.messages.list(
@@ -148,24 +170,31 @@ class OpenAIAssistantsSolver(Solver):
         # https://platform.openai.com/docs/api-reference/runs/listRunSteps
 
         record_sampling(
-            prompt=task_state.messages,
+            prompt=[Message("system", task_state.task_description)] + task_state.messages,
             sampled=[output_text],
             model=self.model,
             tools=self.tools,
             assistant=self.assistant.id,
             thread=self.thread.id,
-            uploaded_files=self.all_uploaded_files,
+            uploaded_files=thread_file_ids,
+            usage=run.usage,
         )
         return SolverResult(
             output=output_text,
         )
 
+    @backoff.on_exception(
+        wait_gen=backoff.expo,
+        exception=OAI_API_EXCEPTIONS,
+        max_value=60,
+        factor=1.5,
+    )
     def copy(self):
         # Assistants don't support copying; each sample uses the same Assistant but interacts with
         # a new Thread.
 
         # Return the a solver that uses the same Assistant, but give it a new Thread
-        solver_copy = OpenAIAssistantsSolver(
+        solver_copy = self.__class__(
             model=self.model,
             assistant=self.assistant,
             thread=client.beta.threads.create(),
@@ -183,7 +212,6 @@ class OpenAIAssistantsSolver(Solver):
                     purpose="assistants",
                 )
                 FILE_CACHE[file_path] = file.id
-                self.all_uploaded_files.append((file_path, file.id))
             except openai.BadRequestError as e:
                 if "Invalid file format." in e.message:
                     logging.warning(f"{file_path} rejected due to invalid file format, skipping.")
@@ -233,3 +261,12 @@ class OpenAIAssistantsSolver(Solver):
     @property
     def name(self) -> str:
         return f"OpenaiAssistantsSolver_{self.name}_{self.model}"
+
+    @property
+    def model_version(self) -> Union[str, dict]:
+        """
+        Initialise underlying model as new OpenAISolver to get
+        exact model version
+        """
+        oai_solver = OpenAISolver(completion_fn_options={"model": self.model})
+        return oai_solver.model_version
