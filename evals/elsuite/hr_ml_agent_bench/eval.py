@@ -52,7 +52,7 @@ class MLAgentBench(SolverEval):
     def __init__(self, completion_fns: list[CompletionFn], *args, **kwargs):
         super().__init__(completion_fns, *args, **kwargs)
 
-        if os.getenv("EVALS_SEQUENTIAL") not in {"1", "yes", "true"}:
+        if not in_ci() and os.getenv("EVALS_SEQUENTIAL") not in {"1", "yes", "true"}:
             raise ValueError(
                 "Multi-threading not supported! Please set the environment variable "
                 "`EVALS_SEQUENTIAL` to 1."
@@ -114,3 +114,7 @@ class MLAgentBench(SolverEval):
             )
 
         return final_report
+
+
+def in_ci():
+    return os.environ.get("GITHUB_ACTIONS") == "true"
