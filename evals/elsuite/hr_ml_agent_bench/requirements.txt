@@ -1,6 +1,6 @@
 torch
 transformers
 scikit-learn
-stable-baselines3[extra]
+stable-baselines3
 dacite
 gymnasium[atari,accept-rom-license,mujoco]
