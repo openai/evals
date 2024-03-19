@@ -1,0 +1,136 @@
+identifying_variables:
+  id: identifying_variables.language-corrset.balanced-ctrl
+  metrics:
+    [
+      "ctrl_nDCG",
+      "ctrl_recall",
+      "ctrl_fallout",
+      "hyp_valid_acc",
+      "ind_acc",
+      "dep_acc",
+      "violation_rate",
+    ]
+  description:
+    "Evaluate the model's ability of identifying the right experimental
+    variables for testing a given hypothesis."
+
+# Balanced-hypotheses datasets
+
+identifying_variables.markdown.balanced-hypotheses:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    n_samples: 500
+    renderer: markdown
+identifying_variables.markdown.balanced-hypotheses-large:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    renderer: markdown
+    group_metrics: true
+
+identifying_variables.csv.balanced-hypotheses:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    n_samples: 500
+    renderer: csv
+identifying_variables.csv.balanced-hypotheses-large:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    renderer: csv
+    group_metrics: true
+
+identifying_variables.json.balanced-hypotheses:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    n_samples: 500
+    renderer: json
+identifying_variables.json.balanced-hypotheses-large:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    renderer: json
+    group_metrics: true
+
+identifying_variables.language-tabular.balanced-hypotheses:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    n_samples: 500
+    renderer: language-tabular
+identifying_variables.language-tabular.balanced-hypotheses-large:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    renderer: language-tabular
+    group_metrics: true
+
+identifying_variables.language-corrset.balanced-hypotheses:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    n_samples: 500
+    renderer: language-corrset
+identifying_variables.language-corrset.balanced-hypotheses-large:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    renderer: language-corrset
+    group_metrics: true
+
+identifying_variables.corrset.balanced-hypotheses:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    n_samples: 500
+    renderer: corrset
+identifying_variables.corrset.balanced-hypotheses-large:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_hypotheses.jsonl
+    renderer: corrset
+    group_metrics: true
+
+# Balanced-control datasets
+
+identifying_variables.csv.balanced-ctrl:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_ctrl_vars.jsonl
+    n_samples: 500
+    renderer: csv
+identifying_variables.csv.balanced-ctrl-large:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_ctrl_vars.jsonl
+    renderer: csv
+    group_metrics: true
+
+identifying_variables.language-corrset.balanced-ctrl:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_ctrl_vars.jsonl
+    n_samples: 500
+    renderer: language-corrset
+identifying_variables.language-corrset.balanced-ctrl-large:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_ctrl_vars.jsonl
+    renderer: language-corrset
+    group_metrics: true
+
+identifying_variables.corrset.balanced-ctrl:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_ctrl_vars.jsonl
+    n_samples: 500
+    renderer: corrset
+identifying_variables.corrset.balanced-ctrl-large:
+  class: evals.elsuite.identifying_variables.eval:IdentifyingVariables
+  args:
+    samples_jsonl: identifying_variables/balanced_ctrl_vars.jsonl
+    renderer: corrset
+    group_metrics: true
