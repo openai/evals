@@ -1,0 +1,17 @@
+Submissions are scored using MCRMSE, mean columnwise root mean squared error:
+
+MCRMSE=1𝑁𝑡∑𝑗=1𝑁𝑡1𝑛∑𝑖=1𝑛(𝑦𝑖𝑗−𝑦̂ 𝑖𝑗)2‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾⎷
+where 𝑁𝑡
+ is the number of scored ground truth target columns, and 𝑦
+ and 𝑦̂ 
+ are the actual and predicted values, respectively.
+
+Submission File
+For each text_id in the test set, you must predict a value for each of the six analytic measures (described on the Data page). The file should contain a header and have the following format:
+
+text_id,cohesion,syntax,vocabulary,phraseology,grammar,conventions
+0000C359D63E,3.0,3.0,3.0,3.0,3.0,3.0
+000BAD50D026,3.0,3.0,3.0,3.0,3.0,3.0
+00367BB2546B,3.0,3.0,3.0,3.0,3.0,3.0
+003969F4EDB6,3.0,3.0,3.0,3.0,3.0,3.0
+...

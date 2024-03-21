@@ -1,0 +1,1 @@
+You control the right paddle and compete against the left paddle, which is controlled by the computer. The goal is to keep deflecting the ball away from your goal and into your opponent’s goal.

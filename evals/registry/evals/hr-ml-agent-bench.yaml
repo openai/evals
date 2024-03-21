@@ -1,0 +1,152 @@
+hr-ml-agent-bench.test:
+  id: hr-ml-agent-bench.vectorization.v0
+  description: Runs a lightweight task end-to-end which is useful for testing.
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+
+hr-ml-agent-bench.ant:
+  id: hr-ml-agent-bench.ant.gpu.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.ant.cpu.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/ant/cpu.jsonl
+hr-ml-agent-bench.ant.gpu.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/ant/gpu.jsonl
+
+hr-ml-agent-bench.cifar10:
+  id: hr-ml-agent-bench.cifar10.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.cifar10.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/cifar10.jsonl
+
+hr-ml-agent-bench.bipedal-walker:
+  id: hr-ml-agent-bench.bipedal-walker.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.bipedal-walker.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/bipedal-walker.jsonl
+
+hr-ml-agent-bench.cartpole:
+  id: hr-ml-agent-bench.cartpole.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.cartpole.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/cartpole.jsonl
+
+hr-ml-agent-bench.feedback:
+  id: hr-ml-agent-bench.feedback.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.feedback.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/feedback/feedback.jsonl
+
+hr-ml-agent-bench.house-price:
+  id: hr-ml-agent-bench.house-price.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.house-price.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/house_price/house-price.jsonl
+
+hr-ml-agent-bench.humanoid:
+  id: hr-ml-agent-bench.humanoid.gpu.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.humanoid.cpu.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/humanoid/cpu.jsonl
+hr-ml-agent-bench.humanoid.gpu.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/humanoid/gpu.jsonl
+
+hr-ml-agent-bench.imdb:
+  id: hr-ml-agent-bench.imdb.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.imdb.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/imdb.jsonl
+
+hr-ml-agent-bench.inverted-pendulum:
+  id: hr-ml-agent-bench.inverted-pendulum.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.inverted-pendulum.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/inverted-pendulum.jsonl
+
+hr-ml-agent-bench.parkinsons-disease:
+  id: hr-ml-agent-bench.parkinsons-disease.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.parkinsons-disease.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/parkinsons_disease/parkinsons-disease.jsonl
+
+hr-ml-agent-bench.ogbn-arxiv:
+  id: hr-ml-agent-bench.ogbn-arxiv.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.ogbn-arxiv.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/ogbn_arxiv/ogbn-arxiv.jsonl
+
+hr-ml-agent-bench.pong:
+  id: hr-ml-agent-bench.pong.gpu.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.pong.cpu.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/pong/cpu.jsonl
+hr-ml-agent-bench.pong.gpu.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/pong/gpu.jsonl
+
+hr-ml-agent-bench.pusher:
+  id: hr-ml-agent-bench.pusher.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.pusher.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/pusher.jsonl
+
+hr-ml-agent-bench.spaceship-titanic:
+  id: hr-ml-agent-bench.spaceship-titanic.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.spaceship-titanic.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/spaceship_titanic/spaceship-titanic.jsonl
+
+hr-ml-agent-bench.vectorization:
+  id: hr-ml-agent-bench.vectorization.v0
+  metrics:
+    [model_score, naive_baseline_score, human_baseline_score, model_score_normalized, naive_baseline_score_normalized, human_baseline_score_normalized, model_score_humanrelative]
+hr-ml-agent-bench.vectorization.v0:
+  class: evals.elsuite.hr_ml_agent_bench.eval:MLAgentBench
+  args:
+    samples_jsonl: hr_ml_agent_bench/vectorization.jsonl
