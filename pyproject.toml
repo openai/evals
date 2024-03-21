@@ -46,7 +46,8 @@ dependencies = [
     "gymnasium",
     "networkx",
     "chess",
-    "anthropic"
+    "anthropic",
+    "google-generativeai",
 ]
 
 [project.urls]
