@@ -1,0 +1,50 @@
+already_said_that:
+  id: already_said_that.reverse-sort-words-eng
+  metrics:
+    [
+      "avg_num_turns",
+      "stddev_num_turns",
+      "median_num_turns",
+      "max_num_turns",
+      "min_num_turns",
+      "false_positive_rate",
+      "false_negative_rate",
+      "avg_distractor_accuracy",
+      "violation_rate",
+      "avg_num_distractors",
+      "stddev_num_distractors",
+      "median_num_distractors",
+      "max_num_distractors",
+      "min_num_distractors",
+    ]
+  description: "Sustain performance in the presence of distractors"
+
+already_said_that.which-is-heavier:
+  class: evals.elsuite.already_said_that.eval:AlreadySaidThat
+  args:
+    samples_jsonl: already_said_that/500_100.jsonl
+    distractor_variant: which-is-heavier
+
+already_said_that.first-letters:
+  class: evals.elsuite.already_said_that.eval:AlreadySaidThat
+  args:
+    samples_jsonl: already_said_that/500_100.jsonl
+    distractor_variant: first-letters
+
+already_said_that.ambiguous-sentences:
+  class: evals.elsuite.already_said_that.eval:AlreadySaidThat
+  args:
+    samples_jsonl: already_said_that/500_100.jsonl
+    distractor_variant: ambiguous-sentences
+
+already_said_that.reverse-sort-words-eng:
+  class: evals.elsuite.already_said_that.eval:AlreadySaidThat
+  args:
+    samples_jsonl: already_said_that/500_100.jsonl
+    distractor_variant: reverse-sort-words-eng
+
+already_said_that.distractorless:
+  class: evals.elsuite.already_said_that.eval:AlreadySaidThat
+  args:
+    samples_jsonl: already_said_that/500_100.jsonl
+    distractor_variant: distractorless

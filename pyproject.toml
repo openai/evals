@@ -41,6 +41,9 @@ dependencies = [
     "beartype==0.12.0",
     "flask",
     "docker",
+    "gymnasium",
+    "networkx",
+    "chess",
 ]
 
 [project.urls]

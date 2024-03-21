@@ -1,0 +1,37 @@
+function_deduction:
+  id: function_deduction.easy
+  metrics: [adjusted_avg_rounds, solved_ratio, solved, samples, avg_success_rounds, avg_sample_rounds_std_adjusted, avg_sample_rounds_std_no_failed, solved_ratio_if_any_solved, avg_ask_rounds, avg_guess_rounds, avg_incorrect_format_rounds, solved_avg_complexity, not_solved_avg_complexity, solved_or_not_mann_whitney_u_p_value, sem_adjusted_avg_rounds, sem_avg_success_rounds, sem_avg_guess_rounds, sem_avg_incorrect_format_rounds]
+  description: Test a model's ability to deduce unknown functions
+
+function_deduction.easy:
+  class: evals.elsuite.function_deduction.eval:FunctionDeductionEval
+  args:
+    mode: easy
+    n_rounds: 20
+
+function_deduction.easy.long:
+  class: evals.elsuite.function_deduction.eval:FunctionDeductionEval
+  args:
+    mode: easy
+    n_rounds: 20
+    n_repeat: 10
+
+function_deduction.easy.dev5:
+  class: evals.elsuite.function_deduction.eval:FunctionDeductionEval
+  args:
+    mode: easy
+    n_rounds: 20
+    n_samples: 5
+
+function_deduction.hard:
+  class: evals.elsuite.function_deduction.eval:FunctionDeductionEval
+  args:
+    mode: hard
+    n_rounds: 20
+
+function_deduction.hard.dev5:
+  class: evals.elsuite.function_deduction.eval:FunctionDeductionEval
+  args:
+    mode: hard
+    n_rounds: 20
+    n_samples: 5

@@ -108,5 +108,12 @@ NOTE: This license applies to all parts of this repository except for the datase
         - **License**: Creative Commons Attribution 4.0 International: https://creativecommons.org/licenses/by/4.0/
         - **Source**: https://allenai.org/data/socialiqa
           
+#### Already Said That
+
+- **Location**: evals/registry/data/already_said_that
+- **Components**:
+    - **WordNet**:
+        - **License**: WordNet License: https://wordnet.princeton.edu/license-and-commercial-use
+        - **Source**: https://wordnet.princeton.edu/
 
 Please note: While efforts have been made to accurately represent the licenses associated with each dataset, users should consult the original source of the dataset to ensure compliance with any licensing terms and conditions.

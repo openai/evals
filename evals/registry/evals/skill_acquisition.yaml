@@ -1,0 +1,107 @@
+# ---------------
+# Miskito dataset
+# ---------------
+
+skill_acquisition.miskito:
+  id: skill_acquisition.miskito.zero_shot.full
+  metrics: [delta_accuracy]
+  description: Evaluates whether models can learn the Miskito language through retrieval.
+
+# Miskito manipulation + translation dataset, zero- and few-shot.
+skill_acquisition.miskito.zero_shot.full:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_all.jsonl
+    target_language: miskito
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30
+skill_acquisition.miskito.zero_shot.dev5:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_all.jsonl
+    target_language: miskito
+    n_samples: 5
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30
+
+skill_acquisition.miskito.few_shot.full:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_all_fewshot.jsonl
+    target_language: miskito
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30
+skill_acquisition.miskito.few_shot.dev5:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_all_fewshot.jsonl
+    target_language: miskito
+    n_samples: 5
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30
+
+# Miskito translation-only, zero- and few-shot.
+skill_acquisition.miskito.zero_shot.translation.full:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_translation.jsonl
+    target_language: miskito
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30
+skill_acquisition.miskito.zero_shot.translation.dev5:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_translation.jsonl
+    target_language: miskito
+    n_samples: 5
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30
+
+skill_acquisition.miskito.few_shot.translation.full:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_translation_fewshot.jsonl
+    target_language: miskito
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30
+skill_acquisition.miskito.few_shot.translation.dev5:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_translation_fewshot.jsonl
+    target_language: miskito
+    n_samples: 5
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30
+
+# Miskito manipulation-only, zero- and few-shot.
+skill_acquisition.miskito.zero_shot.manipulation.full:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_manipulation.jsonl
+    target_language: miskito
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30
+skill_acquisition.miskito.zero_shot.manipulation.dev5:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_manipulation.jsonl
+    target_language: miskito
+    n_samples: 5
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30
+
+skill_acquisition.miskito.few_shot.manipulation.full:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_manipulation_fewshot.jsonl
+    target_language: miskito
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30
+skill_acquisition.miskito.few_shot.manipulation.dev5:
+  class: evals.elsuite.skill_acquisition.eval:SkillAcquisition
+  args:
+    samples_jsonl: skill_acquisition/miskito/variants/miskito_test_manipulation_fewshot.jsonl
+    target_language: miskito
+    n_samples: 5
+    knowledge_base_directory: skill_acquisition/miskito/knowledge_base/
+    max_replies: 30

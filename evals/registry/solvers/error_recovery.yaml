@@ -1,0 +1,38 @@
+# TODO: use default solvers once they are versioned
+error_recovery/gpt-3.5-turbo-0613:
+  class: evals.solvers.openai_solver:OpenAISolver
+  args:
+    completion_fn_options:
+      model: gpt-3.5-turbo-0613
+
+error_recovery/gpt-4-0613:
+  class: evals.solvers.openai_solver:OpenAISolver
+  args:
+    completion_fn_options:
+      model: gpt-4-0613
+    
+error_recovery/default/gpt-4-base:
+  class: evals.solvers.nested.hhh_solver:HHHSolver
+  args:
+    solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-base
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+# solver that continues the previous message
+error_recovery/continue/gpt-4-base:
+  class: evals.solvers.nested.hhh_solver:HHHSolver
+  args:
+    solver:
+      class: evals.solvers.openai_solver:OpenAISolver
+      args:
+        continue_last_assistant_msg: True
+        completion_fn_options:
+          model: gpt-4-base
+          extra_options:
+            temperature: 1
+            max_tokens: 512
