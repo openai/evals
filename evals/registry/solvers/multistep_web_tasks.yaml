@@ -1,0 +1,63 @@
+mwt/strong/gpt-4-32k-0613:
+  class: evals.elsuite.multistep_web_tasks.solvers.strong_solver.strong_solver:StrongSolver
+  args:
+    completion_fn_options:
+      model: gpt-4-32k-0613
+      extra_options:
+        temperature: 1
+        max_tokens: 300
+
+mwt/strong/gpt-3.5-turbo-16k-0613:
+  class: evals.elsuite.multistep_web_tasks.solvers.strong_solver.strong_solver:StrongSolver
+  args:
+    completion_fn_options:
+      model: gpt-3.5-turbo-16k-0613
+      extra_options:
+        temperature: 1
+        max_tokens: 300
+
+# below: old completion functions
+mwt/bash-browser/cot/gpt-4-32k-0613:
+  class: evals.elsuite.multistep_web_tasks.solvers.webarena_solvers.webarena_solvers:CoTBashBrowserWebArenaSolver
+  args:
+    completion_fn_options:
+      model: gpt-4-32k-0613
+      extra_options:
+        temperature: 0
+
+mwt/browser/cot/gpt-3.5-turbo-16k-0613:
+  class: evals.elsuite.multistep_web_tasks.solvers.webarena_solvers.webarena_solvers:CoTBrowserWebArenaSolver
+  args:
+    completion_fn_options:
+      model: gpt-3.5-turbo-16k-0613
+      extra_options:
+        temperature: 0
+
+mwt/bash-browser/cot/gpt-3.5-turbo-16k-0613:
+  class: evals.elsuite.multistep_web_tasks.solvers.webarena_solvers.webarena_solvers:CoTBashBrowserWebArenaSolver
+  args:
+    completion_fn_options:
+      model: gpt-3.5-turbo-16k-0613
+      extra_options:
+        temperature: 0
+
+mwt/cot/gpt-4-32k-0613:
+  class: evals.solvers.openai_chat_completion_cot_solver:OpenAIChatCompletionCoTSolver
+  args:
+    cot_options:
+      model: gpt-4-32k-0613
+      extra_options:
+        temperature: 0
+    extract_options:
+      model: gpt-4-32k-0613
+      extra_options:
+        temperature: 0
+        max_tokens: 100
+
+mwt/direct/gpt-4-32k-0613:
+  class: evals.solvers.openai_chat_completion_solver:OpenAIChatCompletionSolver
+  args:
+    completion_fn_options:
+      model: gpt-4-32k-0613
+      extra_options:
+        temperature: 0
