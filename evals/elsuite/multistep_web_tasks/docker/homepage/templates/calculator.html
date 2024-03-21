@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+        #calculator {
+            border: 1px solid #333;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        #calculator h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            align-self: center;
+        }
+        #calculator p {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #666;
+            align-self: center;
+        }
+        #inputExpression {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+            color: #333;
+            width: 100%;
+            align-self: center;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+        #calculate {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #clear {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <h1>Calculator</h1>
+        <p>Enter the expression and get the results</p>
+        <input type="text" id="inputExpression" placeholder="Enter expression" />
+        <button id="calculate">=</button>
+        <button id="clear">Clear</button>
+        <div id="result">Result: <span id="calculationResult"></span></div>
+    </div>
+
+    <script>
+        document.getElementById('calculate').addEventListener('click', function() {
+            try {
+                const result = eval(document.getElementById('inputExpression').value);
+                if (!isNaN(result)) {
+                    document.getElementById('calculationResult').textContent = result;
+                } else {
+                    document.getElementById('calculationResult').textContent = 'Invalid expression';
+                }
+            } catch {
+                document.getElementById('calculationResult').textContent = 'Invalid expression';
+            }
+        });
+
+        document.getElementById('clear').addEventListener('click', function() {
+            document.getElementById('inputExpression').value = '';
+            document.getElementById('calculationResult').textContent = '';
+        });
+
+        document.getElementById('inputExpression').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('calculate').click();
+            }
+        });
+    </script>
+</body>
+</html>

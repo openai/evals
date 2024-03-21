@@ -1,0 +1,80 @@
+multistep-web-tasks: 
+  id: multistep-web-tasks.simple
+  metrics: []
+  description: Run a collection of web/shell-based tasks (defaults to simple-web for testing)
+
+# all tasks
+multistep-web-tasks.main:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args: 
+    samples_jsonl: multistep-web-tasks/all_tasks.jsonl
+
+# only one task that uses simple-web, as a minimal test
+multistep-web-tasks.simple:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args: 
+    samples_jsonl: multistep-web-tasks/simple.jsonl
+
+# the three EASY tasks
+multistep-web-tasks.easy:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args: 
+    samples_jsonl: multistep-web-tasks/easy_tasks.jsonl
+
+# the three MEDIUM tasks
+multistep-web-tasks.medium:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args: 
+    samples_jsonl: multistep-web-tasks/medium_tasks.jsonl
+
+# the three HARD tasks
+multistep-web-tasks.hard:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args: 
+    samples_jsonl: multistep-web-tasks/hard_tasks.jsonl
+
+# each individual task, mainly for testing
+multistep-web-tasks.task_1:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args:
+    samples_jsonl: multistep-web-tasks/task_1.jsonl
+
+multistep-web-tasks.task_2:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args:
+    samples_jsonl: multistep-web-tasks/task_2.jsonl
+
+multistep-web-tasks.task_3:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args:
+    samples_jsonl: multistep-web-tasks/task_3.jsonl
+
+multistep-web-tasks.task_4:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args:
+    samples_jsonl: multistep-web-tasks/task_4.jsonl
+
+multistep-web-tasks.task_5:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args:
+    samples_jsonl: multistep-web-tasks/task_5.jsonl
+
+multistep-web-tasks.task_6:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args:
+    samples_jsonl: multistep-web-tasks/task_6.jsonl
+
+multistep-web-tasks.task_7:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args:
+    samples_jsonl: multistep-web-tasks/task_7.jsonl
+
+multistep-web-tasks.task_8:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args:
+    samples_jsonl: multistep-web-tasks/task_8.jsonl
+
+multistep-web-tasks.task_9:
+  class: evals.elsuite.multistep_web_tasks.eval:MultistepWebTasks
+  args:
+    samples_jsonl: multistep-web-tasks/task_9.jsonl
