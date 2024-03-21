@@ -40,6 +40,9 @@ dependencies = [
     "aiolimiter",
     "beartype==0.12.0",
     "flask",
+    "gymnasium",
+    "networkx",
+    "chess",
 ]
 
 [project.urls]
