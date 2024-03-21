@@ -46,6 +46,7 @@ dependencies = [
     "gymnasium",
     "networkx",
     "chess",
+    "anthropic"
 ]
 
 [project.urls]

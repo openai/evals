@@ -1,0 +1,125 @@
+# ------------------
+# claude-3-opus-20240229
+# ------------------
+
+generation/direct/claude-3-opus-20240229:
+  class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+  args:
+    model_name: claude-3-opus-20240229
+
+generation/cot/claude-3-opus-20240229:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-3-opus-20240229
+    extract_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-3-opus-20240229
+
+# ------------------
+# claude-3-sonnet-20240229
+# ------------------
+
+generation/direct/claude-3-sonnet-20240229:
+  class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+  args:
+    model_name: claude-3-sonnet-20240229
+
+generation/cot/claude-3-sonnet-20240229:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-3-sonnet-20240229
+    extract_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-3-sonnet-20240229
+
+# ------------------
+# claude-3-haiku-20240307
+# ------------------
+
+generation/direct/claude-3-haiku-20240307:
+  class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+  args:
+    model_name: claude-3-haiku-20240307
+
+generation/cot/claude-3-haiku-20240307:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-3-haiku-20240307
+    extract_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-3-haiku-20240307
+
+# ------------------
+# claude-2.1
+# ------------------
+
+generation/direct/claude-2.1:
+  class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+  args:
+    model_name: claude-2.1
+
+generation/cot/claude-2.1:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-2.1
+    extract_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-2.1
+
+# ------------------
+# claude-2.0
+# ------------------
+
+generation/direct/claude-2.0:
+  class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+  args:
+    model_name: claude-2.0
+
+generation/cot/claude-2.0:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-2.0
+    extract_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-2.0
+
+# ------------------
+# claude-instant-1.2
+# ------------------
+
+generation/direct/claude-instant-1.2:
+  class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+  args:
+    model_name: claude-instant-1.2
+
+generation/cot/claude-instant-1.2:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-instant-1.2
+    extract_solver:
+      class: evals.solvers.providers.anthropic.anthropic_solver:AnthropicSolver
+      args:
+        model_name: claude-instant-1.2
