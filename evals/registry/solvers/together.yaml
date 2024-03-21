@@ -1,0 +1,92 @@
+# --- Direct Solvers --- 
+generation/direct/llama-2-13b-chat:
+  class: evals.solvers.together_solver:TogetherSolver
+  args:
+    completion_fn_options:
+      model: meta-llama/Llama-2-13b-chat-hf
+      extra_options:
+        temperature: 1
+        max_tokens: 512
+    postprocessors: &postprocessors
+      - evals.solvers.postprocessors.postprocessors:Strip
+
+generation/direct/llama-2-70b-chat:
+  class: evals.solvers.together_solver:TogetherSolver
+  args:
+    completion_fn_options:
+      model: meta-llama/Llama-2-70b-chat-hf
+      extra_options:
+        temperature: 1
+        max_tokens: 512
+    postprocessors: *postprocessors
+
+generation/direct/mixtral-8x7b-instruct:
+  class: evals.solvers.together_solver:TogetherSolver
+  args:
+    completion_fn_options:
+      model: mistralai/Mixtral-8x7B-Instruct-v0.1
+      extra_options:
+        temperature: 1
+        max_tokens: 512
+    postprocessors: *postprocessors
+# --- COT Solvers ---
+
+generation/cot/llama-2-13b-chat:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-13b-chat-hf
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-13b-chat-hf
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+generation/cot/llama-2-70b-chat:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-70b-chat-hf
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-70b-chat-hf
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+generation/cot/mixtral-8x7b-instruct:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: mistralai/Mixtral-8x7B-Instruct-v0.1
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: mistralai/Mixtral-8x7B-Instruct-v0.1
+          extra_options:
+            temperature: 1
+            max_tokens: 512
