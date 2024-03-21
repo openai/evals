@@ -16,6 +16,7 @@ dependencies = [
     "fire",
     "pydantic",
     "tqdm",
+    "types-tqdm",
     "nltk",
     "filelock",
     "mock",
@@ -36,6 +37,14 @@ dependencies = [
     "statsmodels",
     "torch",
     "dacite",
+    "playwright==1.32.1",
+    "evaluate",
+    "aiolimiter",
+    "beartype==0.12.0",
+    "flask",
+    "docker",
+    "gymnasium",
+    "networkx",
     "chess",
 ]
 
