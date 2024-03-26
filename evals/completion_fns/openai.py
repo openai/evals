@@ -1,5 +1,7 @@
+import logging
 from typing import Any, Optional, Union
 
+import openai
 from openai import OpenAI
 
 from evals.api import CompletionFn, CompletionResult
@@ -12,10 +14,42 @@ from evals.prompt.base import (
     Prompt,
 )
 from evals.record import record_sampling
-from evals.utils.api_utils import (
-    openai_chat_completion_create_retrying,
-    openai_completion_create_retrying,
+from evals.utils.api_utils import create_retrying
+
+OPENAI_TIMEOUT_EXCEPTIONS = (
+    openai.RateLimitError,
+    openai.APIConnectionError,
+    openai.APITimeoutError,
+    openai.InternalServerError,
 )
+
+
+def openai_completion_create_retrying(client: OpenAI, *args, **kwargs):
+    """
+    Helper function for creating a completion.
+    `args` and `kwargs` match what is accepted by `openai.Completion.create`.
+    """
+    result = create_retrying(
+        client.completions.create, retry_exceptions=OPENAI_TIMEOUT_EXCEPTIONS, *args, **kwargs
+    )
+    if "error" in result:
+        logging.warning(result)
+        raise openai.APIError(result["error"])
+    return result
+
+
+def openai_chat_completion_create_retrying(client: OpenAI, *args, **kwargs):
+    """
+    Helper function for creating a completion.
+    `args` and `kwargs` match what is accepted by `openai.Completion.create`.
+    """
+    result = create_retrying(
+        client.chat.completions.create, retry_exceptions=OPENAI_TIMEOUT_EXCEPTIONS, *args, **kwargs
+    )
+    if "error" in result:
+        logging.warning(result)
+        raise openai.APIError(result["error"])
+    return result
 
 
 class OpenAIBaseCompletionResult(CompletionResult):

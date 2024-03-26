@@ -1,20 +1,25 @@
 from typing import Any, Optional, Union
 
-from evals.solvers.solver import Solver, SolverResult
-from evals.task_state import TaskState, Message
-from evals.record import record_sampling
-from evals.utils.api_utils import request_with_timeout
-
 import anthropic
 from anthropic import Anthropic
 from anthropic.types import ContentBlock, MessageParam, Usage
-import backoff
+
+from evals.record import record_sampling
+from evals.solvers.solver import Solver, SolverResult
+from evals.task_state import Message, TaskState
+from evals.utils.api_utils import create_retrying
 
 oai_to_anthropic_role = {
     "system": "user",
     "user": "user",
     "assistant": "assistant",
 }
+ANTHROPIC_TIMEOUT_EXCEPTIONS = (
+    anthropic.RateLimitError,
+    anthropic.APIConnectionError,
+    anthropic.APITimeoutError,
+    anthropic.InternalServerError,
+)
 
 
 class AnthropicSolver(Solver):
@@ -59,9 +64,7 @@ class AnthropicSolver(Solver):
         )
 
         # for logging purposes: prepend the task desc to the orig msgs as a system message
-        orig_msgs.insert(
-            0, Message(role="system", content=task_state.task_description).to_dict()
-        )
+        orig_msgs.insert(0, Message(role="system", content=task_state.task_description).to_dict())
         record_sampling(
             prompt=orig_msgs,  # original message format, supported by our logviz
             sampled=[solver_result.output],
@@ -113,23 +116,14 @@ class AnthropicSolver(Solver):
         return alt_msgs
 
 
-@backoff.on_exception(
-    wait_gen=backoff.expo,
-    exception=(
-        anthropic.RateLimitError,
-        anthropic.APIConnectionError,
-        anthropic.APITimeoutError,
-        anthropic.InternalServerError,
-    ),
-    max_value=60,
-    factor=1.5,
-)
 def anthropic_create_retrying(client: Anthropic, *args, **kwargs):
     """
     Helper function for creating a backoff-retry enabled message request.
     `args` and `kwargs` match what is accepted by `client.messages.create`.
     """
-    result = request_with_timeout(client.messages.create, *args, **kwargs)
+    result = create_retrying(
+        client.messages.create, retry_exceptions=ANTHROPIC_TIMEOUT_EXCEPTIONS, *args, **kwargs
+    )
     if "error" in result:
         raise Exception(result["error"])
     return result
