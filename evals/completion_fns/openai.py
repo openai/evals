@@ -116,7 +116,7 @@ class OpenAICompletionFn(CompletionFn):
         openai_create_prompt: OpenAICreatePrompt = prompt.to_formatted_prompt()
 
         result = openai_completion_create_retrying(
-            client=OpenAI(api_key=self.api_key, base_url=self.api_base),
+            OpenAI(api_key=self.api_key, base_url=self.api_base),
             model=self.model,
             prompt=openai_create_prompt,
             **{**kwargs, **self.extra_options},
@@ -166,7 +166,7 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
         openai_create_prompt: OpenAICreateChatPrompt = prompt.to_formatted_prompt()
 
         result = openai_chat_completion_create_retrying(
-            client=OpenAI(api_key=self.api_key, base_url=self.api_base),
+            OpenAI(api_key=self.api_key, base_url=self.api_base),
             model=self.model,
             messages=openai_create_prompt,
             **{**kwargs, **self.extra_options},
