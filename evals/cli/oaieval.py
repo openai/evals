@@ -138,6 +138,9 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     # If the user provided an argument to --completion_args, parse it into a dict here, to be passed to the completion_fn creation **kwargs
     completion_args = args.completion_args.split(",")
     additonal_completion_args = {k: v for k, v in (kv.split("=") for kv in completion_args if kv)}
+    # if the user provides temperature, transform that into a number:
+    if "temperature" in additonal_completion_args:
+        additonal_completion_args["temperature"] = float(additonal_completion_args["temperature"])
 
     completion_fns = args.completion_fn.split(",")
     completion_fn_instances = [

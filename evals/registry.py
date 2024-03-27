@@ -121,9 +121,9 @@ class Registry:
         n_ctx = n_ctx_from_model_name(name)
 
         if is_chat_model(name):
-            return OpenAIChatCompletionFn(model=name, n_ctx=n_ctx, **kwargs)
+            return OpenAIChatCompletionFn(model=name, n_ctx=n_ctx, extra_options=kwargs)
         elif name in self.api_model_ids:
-            return OpenAICompletionFn(model=name, n_ctx=n_ctx, **kwargs)
+            return OpenAICompletionFn(model=name, n_ctx=n_ctx, extra_options=kwargs)
 
         # No match, so try to find a completion-fn-id in the registry
         spec = self.get_completion_fn(name)
