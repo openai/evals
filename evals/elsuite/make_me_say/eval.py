@@ -1,31 +1,26 @@
 import numpy as np
 
 import evals
-from evals.api import CompletionFn, DummyCompletionFn
+from evals.api import DummyCompletionFn
 from evals.elsuite.make_me_say.autoeval import run as run_auto_eval
 from evals.elsuite.make_me_say.core import Game
 from evals.record import RecorderBase
 
 
 class MakeMeSay(evals.Eval):
-    def __init__(
-        self,
-        completion_fns: list[CompletionFn],
-        *args,
-        **kwargs,
-    ):
-        super().__init__(completion_fns, *args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        if len(completion_fns) == 1 and isinstance(completion_fns[0], DummyCompletionFn):
-            completion_fn = completion_fns[0]
-            completion_fns = [completion_fn for _ in range(3)]
+        if len(self.completion_fns) == 1 and isinstance(self.completion_fns[0], DummyCompletionFn):
+            completion_fn = self.completion_fns[0]
+            self.completion_fns = [completion_fn for _ in range(3)]
 
-        assert len(completion_fns) == 3, "MakeMeSay only supports three completion fns"
+        assert len(self.completion_fns) == 3, "MakeMeSay only supports three completion fns"
         (
             self.manipulator_completion_fn,
             self.manipulatee_completion_fn,
             self.judge_completion_fn,
-        ) = completion_fns
+        ) = self.completion_fns
 
     def eval_sample(self, sample: dict, rng) -> None:
         del rng
