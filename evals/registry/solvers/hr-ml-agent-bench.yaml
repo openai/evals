@@ -11,7 +11,7 @@ hr_ml_agent_bench/baseline/gpt-3.5-turbo-16k:
       model: gpt-3.5-turbo-16k
 
 hr_ml_agent_bench/direct/gpt-4-1106-preview:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-4-1106-preview
@@ -23,7 +23,7 @@ hr_ml_agent_bench/cot/gpt-4-1106-preview:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-1106-preview
@@ -31,7 +31,7 @@ hr_ml_agent_bench/cot/gpt-4-1106-preview:
             temperature: 1
             max_tokens: 4096
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-1106-preview

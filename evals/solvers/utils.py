@@ -3,7 +3,7 @@ from typing import List
 
 from evals.api import DummyCompletionFn
 from evals.completion_fns.openai import OpenAIChatCompletionFn, OpenAICompletionFn
-from evals.solvers.openai_solver import OpenAISolver
+from evals.solvers.providers.openai.openai_solver import OpenAISolver
 from evals.solvers.solver import DummySolver, Solver
 from evals.task_state import Message, TaskState
 

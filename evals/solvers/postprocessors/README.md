@@ -11,7 +11,7 @@ Postprocessors can be applied by passing a list of `path:Class` strings via the 
 For example, in [`defaults.yaml`](/evals/registry/solvers/defaults.yaml) we have:
 ```yaml
 generation/direct/gpt-3.5-turbo:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-3.5-turbo-0125

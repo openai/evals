@@ -11,7 +11,7 @@ from openai.types.beta.threads.run import Run
 
 from evals.record import record_sampling
 from evals.registry import client
-from evals.solvers.openai_solver import OpenAISolver
+from evals.solvers.providers.openai.openai_solver import OpenAISolver
 from evals.solvers.solver import Solver, SolverResult
 from evals.task_state import Message, TaskState
 

@@ -14,7 +14,7 @@ already_said_that/cot/gpt-3.5-turbo:
   args:
     persistent_memory: False
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo
@@ -22,7 +22,7 @@ already_said_that/cot/gpt-3.5-turbo:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo
@@ -35,7 +35,7 @@ already_said_that/cot/gpt-4-turbo-preview:
   args:
     persistent_memory: False
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
@@ -43,7 +43,7 @@ already_said_that/cot/gpt-4-turbo-preview:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
@@ -59,7 +59,7 @@ already_said_that/cot_hhh/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base
@@ -70,7 +70,7 @@ already_said_that/cot_hhh/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base

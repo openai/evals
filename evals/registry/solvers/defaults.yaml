@@ -14,7 +14,7 @@ human_cli:
 # generation tasks
 
 generation/direct/gpt-3.5-turbo:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-3.5-turbo
@@ -26,7 +26,7 @@ generation/cot/gpt-3.5-turbo:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo
@@ -34,7 +34,7 @@ generation/cot/gpt-3.5-turbo:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo
@@ -45,7 +45,7 @@ generation/cot/gpt-3.5-turbo:
 # classification tasks
 
 classification/direct/gpt-3.5-turbo:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-3.5-turbo
@@ -58,7 +58,7 @@ classification/cot/gpt-3.5-turbo:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo
@@ -66,7 +66,7 @@ classification/cot/gpt-3.5-turbo:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo
@@ -83,7 +83,7 @@ classification/cot/gpt-3.5-turbo:
 # generation tasks
 
 generation/direct/gpt-4:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-4
@@ -95,7 +95,7 @@ generation/cot/gpt-4:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4
@@ -103,7 +103,7 @@ generation/cot/gpt-4:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4
@@ -114,7 +114,7 @@ generation/cot/gpt-4:
 # classification tasks
 
 classification/direct/gpt-4:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-4
@@ -127,7 +127,7 @@ classification/cot/gpt-4:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4
@@ -135,7 +135,7 @@ classification/cot/gpt-4:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4
@@ -152,7 +152,7 @@ classification/cot/gpt-4:
 # generation tasks
 
 generation/direct/gpt-4-turbo-preview:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-4-turbo-preview
@@ -164,7 +164,7 @@ generation/cot/gpt-4-turbo-preview:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
@@ -172,7 +172,7 @@ generation/cot/gpt-4-turbo-preview:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
@@ -183,7 +183,7 @@ generation/cot/gpt-4-turbo-preview:
 # classification tasks
 
 classification/direct/gpt-4-turbo-preview:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-4-turbo-preview
@@ -196,7 +196,7 @@ classification/cot/gpt-4-turbo-preview:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
@@ -204,7 +204,7 @@ classification/cot/gpt-4-turbo-preview:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
@@ -224,7 +224,7 @@ generation/hhh/gpt-4-base:
   class: evals.solvers.nested.hhh_solver:HHHSolver
   args:
     solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-base
@@ -239,7 +239,7 @@ generation/cot_hhh/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base
@@ -250,7 +250,7 @@ generation/cot_hhh/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base
@@ -264,7 +264,7 @@ classification/hhh/gpt-4-base:
   class: evals.solvers.nested.hhh_solver:HHHSolver
   args:
     solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-base
@@ -280,7 +280,7 @@ classification/cot_hhh/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base
@@ -291,7 +291,7 @@ classification/cot_hhh/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base
@@ -324,7 +324,7 @@ generation/cot_assistant/gpt-3.5-turbo:
           - type: retrieval
         model: gpt-3.5-turbo
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo
@@ -351,7 +351,7 @@ generation/cot_assistant/gpt-4-turbo-preview:
           - type: retrieval
         model: gpt-4-turbo-preview
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
