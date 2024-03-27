@@ -85,7 +85,7 @@ def test_base_model_cot_solver():
         Message(role="system", content="I have a hidden function. What is your first action?"),
         Message(
             role="system",
-            content="This is the first round. Think out loud about a general strategy of solving tasks like this.",
+            content="This is the first round. Think out loud about a general strategy of solving tasks like this. (You now have an opportunity to reason privately before submitting an action. Your next response will not be evaluated.)",
         ),
         Message(
             role="assistant",
@@ -93,13 +93,13 @@ def test_base_model_cot_solver():
         ),
         Message(
             role="system",
-            content="Given the above reasoning, the answer in the format requested by the question is:",
+            content="Given the above reasoning, your response in the format requested by the instructions is:",
         ),
         Message(role="assistant", content="40"),
         Message(role="system", content="calc(40) = 160"),
         Message(
             role="system",
-            content="This is round 2 out of 10.\n\nSummary of the information you have already gathered:\ncalc(40) = 160\n\nThink out loud about the following questions:\n* Do you have any hypothesis on what this function might be doing?\n* If yes, should you try to test it (how?), or just use it to calculate the answer?\n* If not, what additional information should you gather to be able to formulate a hypothesis?\n",
+            content="This is round 2 out of 10.\n\nSummary of the information you have already gathered:\ncalc(40) = 160\n\nThink out loud about the following questions:\n* Do you have any hypothesis on what this function might be doing?\n* If yes, should you try to test it (how?), or just use it to calculate the answer?\n* If not, what additional information should you gather to be able to formulate a hypothesis?\n\n(You now have an opportunity to reason privately before submitting an action. Your next response will not be evaluated.)",
         ),
         Message(
             role="assistant",
@@ -107,21 +107,21 @@ def test_base_model_cot_solver():
         ),
         Message(
             role="system",
-            content="Given the above reasoning, the answer in the format requested by the question is:",
+            content="Given the above reasoning, your response in the format requested by the instructions is:",
         ),
         Message(role="assistant", content="52"),
         Message(role="system", content="calc(52) = 204"),
         Message(
             role="system",
-            content="This is round 3 out of 10.\n\nSummary of the information you have already gathered:\ncalc(40) = 160\ncalc(52) = 204\n\nThink out loud about the following questions:\n* Do you have any hypothesis on what this function might be doing?\n* If yes, should you try to test it (how?), or just use it to calculate the answer?\n* If not, what additional information should you gather to be able to formulate a hypothesis?\n",
+            content="This is round 3 out of 10.\n\nSummary of the information you have already gathered:\ncalc(40) = 160\ncalc(52) = 204\n\nThink out loud about the following questions:\n* Do you have any hypothesis on what this function might be doing?\n* If yes, should you try to test it (how?), or just use it to calculate the answer?\n* If not, what additional information should you gather to be able to formulate a hypothesis?\n\n(You now have an opportunity to reason privately before submitting an action. Your next response will not be evaluated.)",
         ),
         Message(
             role="assistant",
-            content="Now we have two results where the ouput is the input times 4. It seems that the function multiplies by 4. I will make the guess now. 17 * 4 = 68, 36 * 4 = 144 and 68 * 4 = 272, so my guess will be 68 144 272.",
+            content="Now we have two results where the output is the input times 4. It seems that the function multiplies by 4. I will make the guess now. 17 * 4 = 68, 36 * 4 = 144 and 68 * 4 = 272, so my guess will be 68 144 272.",
         ),
         Message(
             role="system",
-            content="Given the above reasoning, the answer in the format requested by the question is:",
+            content="Given the above reasoning, your response in the format requested by the instructions is:",
         ),
         Message(role="assistant", content="68 144 272"),
         Message(role="system", content="Correct guess!"),
@@ -130,7 +130,9 @@ def test_base_model_cot_solver():
             content="I now have a new function. Forget about the previous one, we start again.",
         ),
     ]
-    assert solver_private_memory[: len(expected_few_shot_msgs)] == expected_few_shot_msgs
+    for i in range(len(expected_few_shot_msgs)):
+        assert solver_private_memory[i].role == expected_few_shot_msgs[i].role
+        assert solver_private_memory[i].content.strip() == expected_few_shot_msgs[i].content.strip()
     assert (
         solver_private_memory[len(expected_few_shot_msgs) + 0].content == cot_template_first_round
     )
