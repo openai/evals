@@ -1,0 +1,8 @@
+needle_in_a_matrix:
+  id: needle_in_a_matrix.dev.v0
+  description: Tests the models ability to identify the coordinates of an element 'q' in a 50x50 matrix of 'p' characters.
+  metrics: [accuracy]
+needle_in_a_matrix.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: needle_in_a_matrix/samples.jsonl
