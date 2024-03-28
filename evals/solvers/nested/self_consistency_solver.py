@@ -2,8 +2,8 @@ import logging
 from collections import Counter
 from typing import Any, Optional
 
+from evals.solvers.memory import PersistentMemoryCache
 from evals.solvers.solver import NestedSolver, Solver, SolverResult, SolverSpec
-from evals.solvers.utils import PersistentMemoryCache
 from evals.task_state import Message, TaskState
 
 DEFAULT_COT_TEMPLATE = """Before answering, reason in a step-by-step manner as to get the right answer, then conclude with the answer. Format your output as {prefix} <answer>"""

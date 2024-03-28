@@ -1,8 +1,8 @@
 from typing import Any
 
+from evals.solvers.memory import PersistentMemoryCache
 from evals.solvers.prompts.cot import DEFAULT_COT_TEMPLATE, DEFAULT_EXTRACT_ANSWER_TEMPLATE
 from evals.solvers.solver import NestedSolver, Solver, SolverResult, SolverSpec
-from evals.solvers.utils import PersistentMemoryCache
 from evals.task_state import Message, TaskState
 
 

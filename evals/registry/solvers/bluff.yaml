@@ -2,7 +2,7 @@
 bluff/strategy/gpt-4:
   class: evals.elsuite.bluff.strategy_solver:BluffStrategySolver
   args:
-    base_solver_class: evals.solvers.openai_solver:OpenAISolver
+    base_solver_class: evals.solvers.providers.openai.openai_solver:OpenAISolver
     base_solver_args:
       completion_fn_options:
         model: gpt-4
@@ -12,7 +12,7 @@ bluff/strategy/gpt-4:
 bluff/strategy/gpt-3.5-turbo-16k:
   class: evals.elsuite.bluff.strategy_solver:BluffStrategySolver
   args:
-    base_solver_class: evals.solvers.openai_solver:OpenAISolver
+    base_solver_class: evals.solvers.providers.openai.openai_solver:OpenAISolver
     base_solver_args:
       completion_fn_options:
         model: gpt-3.5-turbo-16k
@@ -25,7 +25,7 @@ bluff/strategy/gpt-4-base:
     base_solver_class: evals.solvers.nested.hhh_solver:HHHSolver
     base_solver_args:
       solver:
-        class: evals.solvers.openai_solver:OpenAISolver
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
         args:
           completion_fn_options:
             model: gpt-4-base
@@ -39,7 +39,7 @@ bluff/strategy/code-davinci-002:
     base_solver_class: evals.solvers.nested.hhh_solver:HHHSolver
     base_solver_args:
       solver:
-        class: evals.solvers.openai_solver:OpenAISolver
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
         args:
           completion_fn_options:
             model: code-davinci-002
@@ -49,7 +49,7 @@ bluff/strategy/code-davinci-002:
 
 # Other solvers. They are just base models, but with temperature set to 0.
 bluff/gpt-4:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-4
@@ -57,7 +57,7 @@ bluff/gpt-4:
         temperature: 0
 
 bluff/gpt-3.5-turbo-16k:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-3.5-turbo-16k
@@ -68,7 +68,7 @@ bluff/gpt-4-base:
   class: evals.solvers.nested.hhh_solver:HHHSolver
   args:
     solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-base
@@ -80,7 +80,7 @@ bluff/code-davinci-002:
   class: evals.solvers.nested.hhh_solver:HHHSolver
   args:
     solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: code-davinci-002

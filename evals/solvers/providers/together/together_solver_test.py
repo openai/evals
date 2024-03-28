@@ -1,6 +1,6 @@
 import pytest
 
-from evals.solvers.together_solver import TogetherSolver
+from evals.solvers.providers.together.together_solver import TogetherSolver
 
 
 @pytest.fixture

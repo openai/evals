@@ -7,7 +7,10 @@ from pathlib import Path
 import pytest
 
 from evals.record import DummyRecorder
-from evals.solvers.openai_assistants_solver import FILE_CACHE, OpenAIAssistantsSolver
+from evals.solvers.providers.openai.openai_assistants_solver import (
+    FILE_CACHE,
+    OpenAIAssistantsSolver,
+)
 from evals.task_state import Message, TaskState
 
 IN_GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS") == "true"

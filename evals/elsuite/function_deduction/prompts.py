@@ -29,7 +29,7 @@ incorrect_format = "You responded in an incorrect format. Respond with either a 
 new_value = "calc({in_}) = {out}"
 test_input_not_allowed = "Numbers {inputs} are not allowed"
 
-cot_template_first_round = """This is the first round. Think out loud about a general strategy of solving tasks like this."""
+cot_template_first_round = """This is the first round. Think out loud about a general strategy of solving tasks like this. (You now have an opportunity to reason privately before submitting an action. Your next response will not be evaluated.)"""
 cot_template_later_rounds = """\
 This is round {round_ix} out of {num_rounds}.
 
@@ -40,4 +40,6 @@ Think out loud about the following questions:
 * Do you have any hypothesis on what this function might be doing?
 * If yes, should you try to test it (how?), or just use it to calculate the answer?
 * If not, what additional information should you gather to be able to formulate a hypothesis?
+
+(You now have an opportunity to reason privately before submitting an action. Your next response will not be evaluated.) 
 """

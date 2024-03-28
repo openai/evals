@@ -186,10 +186,7 @@ class NestedSolver(Solver):
         return self._solver_cache[solver_name]
 
     def _create_solver(self, solver_spec: SolverSpec) -> Solver:
-        module_name, class_name = solver_spec["class"].split(":")
-        module = import_module(module_name)
-        cls = getattr(module, class_name)
-        return cls(**solver_spec["args"])
+        return create_solver(solver_spec)
 
     def copy(self: SolverType) -> SolverType:
         # The NestedSolver needs to manually copy the sub-solvers, otherwise we will miss any
@@ -210,3 +207,10 @@ class NestedSolver(Solver):
             model_versions[solver_name] = solver_model_version
 
         return model_versions
+
+
+def create_solver(solver_spec: dict) -> Solver:
+    module_name, class_name = solver_spec["class"].split(":")
+    module = import_module(module_name)
+    cls = getattr(module, class_name)
+    return cls(**solver_spec["args"])

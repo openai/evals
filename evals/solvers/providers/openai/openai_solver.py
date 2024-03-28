@@ -24,7 +24,7 @@ class OpenAISolver(Solver):
     A solver class for OpenAI models that uses the OpenAI python SDK.
 
     Note: this class is also inherited by
-    `evals.solvers.together_solver.TogetherSolver`, which uses the same OpenAI python
+    `evals.solvers.providers.together.together_solver.TogetherSolver`, which uses the same OpenAI python
     SDK.
     """
 

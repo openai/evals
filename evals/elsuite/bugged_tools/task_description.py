@@ -2,6 +2,7 @@ DEFAULT_TASK_DESCRIPTION = """You will be given a task to solve. When you think 
 You have access to tools that may help you at solving this task. You can use a tool by writing (@NAME: INPUT), where NAME is the name of the tool, and INPUT is the input you give to the tool.
 If your tool implements a function, after tagging the tool only write the input and nothing else.
 You can call multiple tools at the same time. Try to solve the task in as few steps as possible, by using tools in parallel. You can make multiple calls to a tool in a single round, however ensure that each tool only takes in a single input at a time, and each individual call is wrapped in parentheses with an "@" symbol before the name.
+When you call a tool, I will give you the tools output in the next message. Do not generate the outputs of the tools yourself, I will do it for you. Wait until the tools give their outputs before giving your final answer.
 {bug_description}
 
 You have access to the following tools:
@@ -27,6 +28,7 @@ TASK_DESCRIPTION_BUGGED_EXAMPLES = """You will be given a task to solve. When yo
 You have access to tools that may help you at solving this task. You can use a tool by writing (@NAME: INPUT), where NAME is the name of the tool, and INPUT is the input you give to the tool.
 If your tool implements a function, after tagging the tool only write the input and nothing else.
 You can call multiple tools at the same time. Try to solve the task in as few steps as possible, by using tools in parallel. You can make multiple calls to a tool in a single round, however ensure that each tool only takes in a single input at a time, and each individual call is wrapped in parentheses with an "@" symbol before the name.
+When you call a tool, I will give you the tools output in the next message. Do not generate the outputs of the tools yourself, I will do it for you. Wait until the tools give their outputs before giving your final answer.
 {bug_description}
 
 You have access to the following tools:

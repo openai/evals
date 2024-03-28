@@ -1,12 +1,12 @@
-import os
 import copy
 import logging
+import os
 from typing import Optional
 
 from openai import PermissionDeniedError
 
+from evals.solvers.providers.openai.openai_solver import OpenAISolver
 from evals.solvers.solver import SolverResult
-from evals.solvers.openai_solver import OpenAISolver
 
 
 def is_chat_model(model: str) -> bool:
@@ -21,9 +21,7 @@ def is_chat_model(model: str) -> bool:
     elif model in {}:
         return False
     else:
-        raise NotImplementedError(
-            f"Model {model} not currently supported by TogetherSolver"
-        )
+        raise NotImplementedError(f"Model {model} not currently supported by TogetherSolver")
 
 
 class TogetherSolver(OpenAISolver):
@@ -81,7 +79,6 @@ class TogetherSolver(OpenAISolver):
         options preprocessing since the TogetherSolver does not support the
         `valid_answers` parameter
         """
-        pass
 
     def _perform_prechecks(self, msgs: list[dict[str, str]]) -> Optional[SolverResult]:
         """

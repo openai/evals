@@ -158,7 +158,7 @@ class BaseModelCoTSolver(CustomCoT):
             (
                 "assistant",
                 (
-                    "Now we have two results where the ouput is the input times 4. It seems that the function multiplies by 4. "
+                    "Now we have two results where the output is the input times 4. It seems that the function multiplies by 4. "
                     "I will make the guess now. 17 * 4 = 68, 36 * 4 = 144 and 68 * 4 = 272, so my guess will be 68 144 272."
                 ),
             )

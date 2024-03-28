@@ -48,19 +48,22 @@ class SolverResult:
 
 ## Which evals can I use with Solvers?
 
-`SolverEval` is our new class for building evals that are compatible with Solvers. It is a subclass of `Eval`, with a few small differences:
+[`SolverEval`](/evals/eval.py#L168) is our new class for building evals that are compatible with Solvers. It is a subclass of [`Eval`](/evals/eval.py#L46), with a few small differences:
 - It expects only a single Solver as input rather than a list of CompletionFns. This clarifies that only one Solver can be evaluated at once; evals may still use additional models e.g. for model-model interactions, but additional models belong to the environment and should be created by the eval itself rather than passed in as input.
 - Each call to `SolverEval.eval_sample()` is provided a different copy of the Solver. This allows Solvers to be stateful (e.g. have a memory) without interfering with other samples.
+- Most of our custom code evals in [`evals/elsuite/`](/evals/elsuite/) are of this `SolverEval` type.
 
-We currently have a number of Solver-compatible evals that subclass `SolverEval` in [`evals/elsuite/`](/evals/elsuite/). As of now, old `Eval`-based evals built with Completion Functions protocol in mind will not work with Solvers. This is because `Solver` and `CompletionFn` have different protocols (i.e. `Solver` takes a `TaskState` and returns a `SolverResult` while `CompletionFn` takes a `Prompt` and returns a `CompletionResult`).
+> **Backward compatibility:** Older `Eval`-based evals work with Solvers, albeit with some limitations, e.g. `Eval` classes are not compatible with stateful Solvers since `Evals` use the same solver on all samples. See [here](/evals/completion_fns/solver_completion_fn.py) for how this works.
 
 ## Working with Solvers
 
 The Solvers framework is still in beta, and we make this available largely for power-users who want to experiment with the Solver abstraction. If you simply wish to contribute new dataset submissions that rely on existing eval templates, you should still use the original Eval classes with CompletionFn instead of SolverEval with Solvers.
 
-If you already know how to write an Eval class (see [Eval docs](/docs/custom-eval.md)), writing a SolverEval is very similar. See the following examples of SolverEval classes:
+If you already know how to write an [`Eval`](/evals/eval.py#L46) class (see [Eval docs](/docs/custom-eval.md)), writing a [`SolverEval`](/evals/eval.py#L168) is very similar. See the following examples of SolverEval classes:
 - [evals/elsuite/basic/match_with_solvers.py](/evals/elsuite/basic/match_with_solvers.py): A simple eval template for multiple-choice QA tasks.
-- More coming soon!
+- [evals/elsuite/twenty_questions/eval.py](/evals/elsuite/twenty_questions/eval.py): A multi-turn eval where the solver attempts to guess a word in 20 questions.
+- [evals/elsuite/identifying_variables/eval.py](/evals/elsuite/identifying_variables/eval.py): An eval with multi-stage task setup and complex output grading.
+- [evals/elsuite/bugged_tools/eval.py](/evals/elsuite/bugged_tools/eval.py): A multi-turn eval where the solver interacts with various tools to solve a task.
 
 Likewise, writing Solvers is similar to writing CompletionFns, and follows the same process as documented [here](/docs/completion-fns.md). You can see examples of our currently implemented Solvers in [`evals/solvers/`](/evals/solvers); please see [`evals/registry/solvers/defaults.yaml`](/evals/registry/solvers/defaults.yaml) for Solvers that have been designed to be usable by any SolverEval. For example, to run a Chain-of-Thought solver using gpt-3.5-turbo against an eval, you can run:
 ```bash

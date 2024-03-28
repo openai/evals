@@ -8,7 +8,7 @@ import os
 import random
 from multiprocessing.pool import ThreadPool
 from pathlib import Path
-from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple
+from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple, Union
 
 from tqdm import tqdm
 
@@ -18,7 +18,7 @@ from .data import get_jsonl
 from .record import RecorderBase
 from .registry import Registry
 from .solvers.solver import Solver
-from .solvers.utils import maybe_wrap_with_solver
+from .solvers.utils import maybe_wrap_with_compl_fn, maybe_wrap_with_solver
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +55,7 @@ class Eval(abc.ABC):
 
     def __init__(
         self,
-        completion_fns: list[CompletionFn],
+        completion_fns: list[Union[CompletionFn, Solver]],
         eval_registry_path: Path,
         seed: int = 20220722,
         name: str = "no_name_eval.default",
@@ -66,7 +66,7 @@ class Eval(abc.ABC):
         if len(splits) < 2:
             raise ValueError(f"Eval name must at least have <base_eval>.<split>. Got name {name}")
 
-        self.completion_fns = completion_fns
+        self.completion_fns = [maybe_wrap_with_compl_fn(fn) for fn in completion_fns]
         self.eval_registry_path = eval_registry_path
         self.seed = seed
         self.name = name

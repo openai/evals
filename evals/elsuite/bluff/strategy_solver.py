@@ -4,8 +4,8 @@ from importlib import import_module
 from typing import Optional
 
 from evals.elsuite.bluff.bluff.cards import get_bluff_move
+from evals.solvers.memory import PersistentMemoryCache
 from evals.solvers.solver import Solver, SolverResult
-from evals.solvers.utils import PersistentMemoryCache
 from evals.task_state import Message, TaskState
 
 
@@ -28,7 +28,7 @@ class BluffStrategySolver(Solver):
 
         # interaction_length=1 to store reasoning step in private memory
         self.interaction_cache = PersistentMemoryCache(interaction_length=1)
-        
+
     def _generate_response(self, task_state: TaskState):
         """
         Calls base solver. Modifies taks state to remove all non-reasoning messages

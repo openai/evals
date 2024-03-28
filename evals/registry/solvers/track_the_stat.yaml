@@ -11,7 +11,7 @@ track_the_stat/explicit_state/llama-2-70b-chat:
   class: evals.elsuite.track_the_stat.solvers:ExplicitStateSolver
   args:
     underlying_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: meta-llama/Llama-2-70b-chat-hf
@@ -23,7 +23,7 @@ track_the_stat/explicit_state/mixtral-8x7b-instruct:
   class: evals.elsuite.track_the_stat.solvers:ExplicitStateSolver
   args:
     underlying_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: mistralai/Mixtral-8x7B-Instruct-v0.1
@@ -35,7 +35,7 @@ track_the_stat/explicit_state/gpt-3.5-turbo:
   class: evals.elsuite.track_the_stat.solvers:ExplicitStateSolver
   args:
     underlying_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo
@@ -47,7 +47,7 @@ track_the_stat/explicit_state/gpt-4-turbo-preview:
   class: evals.elsuite.track_the_stat.solvers:ExplicitStateSolver
   args:
     underlying_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
@@ -62,7 +62,7 @@ track_the_stat/explicit_state/hhh/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base

@@ -3,7 +3,7 @@ function_deduction/cot/llama-2-13b-chat:
   class: evals.elsuite.function_deduction.solvers:CustomCoT
   args:
     cot_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: meta-llama/Llama-2-13b-chat-hf
@@ -11,7 +11,7 @@ function_deduction/cot/llama-2-13b-chat:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: meta-llama/Llama-2-13b-chat-hf
@@ -23,7 +23,7 @@ function_deduction/cot/llama-2-70b-chat:
   class: evals.elsuite.function_deduction.solvers:CustomCoT
   args:
     cot_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: meta-llama/Llama-2-70b-chat-hf
@@ -31,7 +31,7 @@ function_deduction/cot/llama-2-70b-chat:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: meta-llama/Llama-2-70b-chat-hf
@@ -43,7 +43,7 @@ function_deduction/cot/mixtral-8x7b-instruct:
   class: evals.elsuite.function_deduction.solvers:CustomCoT
   args:
     cot_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: mistralai/Mixtral-8x7B-Instruct-v0.1
@@ -51,7 +51,7 @@ function_deduction/cot/mixtral-8x7b-instruct:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: mistralai/Mixtral-8x7B-Instruct-v0.1
@@ -65,7 +65,7 @@ function_deduction/cot/gpt-4-1106-preview:
   class: evals.elsuite.function_deduction.solvers:CustomCoT
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-1106-preview
@@ -73,7 +73,7 @@ function_deduction/cot/gpt-4-1106-preview:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-1106-preview
@@ -85,7 +85,7 @@ function_deduction/cot/gpt-4-32k:
   class: evals.elsuite.function_deduction.solvers:CustomCoT
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-32k
@@ -93,7 +93,7 @@ function_deduction/cot/gpt-4-32k:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-32k
@@ -105,7 +105,7 @@ function_deduction/cot/gpt-3.5-turbo-16k:
   class: evals.elsuite.function_deduction.solvers:CustomCoT
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo-16k
@@ -113,7 +113,7 @@ function_deduction/cot/gpt-3.5-turbo-16k:
             temperature: 1
             max_tokens: 512
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo-16k
@@ -139,7 +139,7 @@ function_deduction/gpt-4-base:
   class: evals.elsuite.function_deduction.solvers:BaseModelSolver
   args:
     solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-base
@@ -154,7 +154,7 @@ function_deduction/cot/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base
@@ -166,7 +166,7 @@ function_deduction/cot/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base

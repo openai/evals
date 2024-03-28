@@ -3,7 +3,7 @@ skill_acquisition/cot/gpt-3.5-turbo:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo
@@ -12,7 +12,7 @@ skill_acquisition/cot/gpt-3.5-turbo:
             max_tokens: 512
     extract_template: &extract_template Given the above reasoning, what is the next action you wish to take? Please respond in the format required by the instructions.
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo
@@ -24,7 +24,7 @@ skill_acquisition/cot/gpt-4-turbo-preview:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
@@ -33,7 +33,7 @@ skill_acquisition/cot/gpt-4-turbo-preview:
             max_tokens: 512
     extract_template: *extract_template
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
@@ -58,7 +58,7 @@ skill_acquisition/cot/gpt-4:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4
@@ -67,7 +67,7 @@ skill_acquisition/cot/gpt-4:
             max_tokens: 512
     extract_template: *extract_template
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4
@@ -82,7 +82,7 @@ skill_acquisition/cot_hhh/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base
@@ -94,7 +94,7 @@ skill_acquisition/cot_hhh/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base
@@ -121,7 +121,7 @@ skill_acquisition/cot_assistant/gpt-4-turbo-preview:
           - type: retrieval
         model: gpt-4-turbo-preview
     extract_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
@@ -138,7 +138,7 @@ miskito_all/fewshot_direct/gpt-3.5-turbo:
     train_jsonl: evals/registry/data/skill_acquisition/miskito/variants/miskito_train_all.jsonl
     n_shots: 3
     base_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-3.5-turbo
@@ -152,7 +152,7 @@ miskito_all/fewshot_direct/gpt-4-turbo-preview:
     train_jsonl: evals/registry/data/skill_acquisition/miskito/variants/miskito_train_all.jsonl
     n_shots: 3
     base_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-turbo-preview
@@ -166,7 +166,7 @@ miskito_all/fewshot_direct/gpt-4-32k:
     train_jsonl: evals/registry/data/skill_acquisition/miskito/variants/miskito_train_all.jsonl
     n_shots: 3
     base_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-32k
@@ -183,7 +183,7 @@ miskito_all/fewshot_direct/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base
@@ -197,7 +197,7 @@ miskito_manipulation/fewshot_direct/gpt-4-32k:
     train_jsonl: evals/registry/data/skill_acquisition/miskito/variants/miskito_train_manipulation.jsonl
     n_shots: 3
     base_solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-32k
@@ -214,7 +214,7 @@ miskito_manipulation/fewshot_direct/gpt-4-base:
       class: evals.solvers.nested.hhh_solver:HHHSolver
       args:
         solver:
-          class: evals.solvers.openai_solver:OpenAISolver
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
           args:
             completion_fn_options:
               model: gpt-4-base
@@ -227,7 +227,7 @@ skill_acquisition/cot/llama-2-13b-chat:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: meta-llama/Llama-2-13b-chat-hf
@@ -236,7 +236,7 @@ skill_acquisition/cot/llama-2-13b-chat:
             max_tokens: 512
     extract_template: *extract_template
     extract_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: meta-llama/Llama-2-13b-chat-hf
@@ -248,7 +248,7 @@ skill_acquisition/cot/llama-2-70b-chat:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: meta-llama/Llama-2-70b-chat-hf
@@ -257,7 +257,7 @@ skill_acquisition/cot/llama-2-70b-chat:
             max_tokens: 512
     extract_template: *extract_template
     extract_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: meta-llama/Llama-2-70b-chat-hf
@@ -269,7 +269,7 @@ skill_acquisition/cot/mixtral-8x7b-instruct:
   class: evals.solvers.nested.cot_solver:CoTSolver
   args:
     cot_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: mistralai/Mixtral-8x7B-Instruct-v0.1
@@ -278,7 +278,7 @@ skill_acquisition/cot/mixtral-8x7b-instruct:
             max_tokens: 512
     extract_template: *extract_template
     extract_solver:
-      class: evals.solvers.together_solver:TogetherSolver
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
       args:
         completion_fn_options:
           model: mistralai/Mixtral-8x7B-Instruct-v0.1

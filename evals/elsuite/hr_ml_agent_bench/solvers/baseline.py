@@ -6,7 +6,7 @@ from logging import getLogger
 import tiktoken
 
 from evals.registry import Registry, n_ctx_from_model_name
-from evals.solvers.openai_solver import OpenAISolver
+from evals.solvers.providers.openai.openai_solver import OpenAISolver
 from evals.solvers.solver import Solver, SolverResult
 from evals.task_state import Message, TaskState
 
