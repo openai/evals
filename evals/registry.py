@@ -15,15 +15,16 @@ from typing import Any, Generator, Iterator, Optional, Sequence, Tuple, Type, Ty
 
 import openai
 import yaml
-from openai import OpenAI
+
 
 from evals import OpenAIChatCompletionFn, OpenAICompletionFn
 from evals.api import CompletionFn, DummyCompletionFn
 from evals.base import BaseEvalSpec, CompletionFnSpec, EvalSetSpec, EvalSpec
 from evals.elsuite.modelgraded.base import ModelGradedSpec
+from evals.openai_client.openai_client_provider import OpenAIClientProvider
 from evals.utils.misc import make_object
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = OpenAIClientProvider(api_key=os.environ.get("OPENAI_API_KEY")).get_client()
 
 logger = logging.getLogger(__name__)
 
