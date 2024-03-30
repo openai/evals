@@ -1,0 +1,2677 @@
+articulate-rules.articulation.in-context.freeform.contains_a_digit.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_a_digit.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_a_french_word.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_a_french_word.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_word_w.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_word_w.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_word_w_and_a_digit.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_word_w_and_a_digit.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_word_w_and_a_french_word.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_word_w_and_a_french_word.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_word_w_and_is_in_alphabetical_order.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_word_w_and_is_in_alphabetical_order.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_word_w_and_the_word_w_prime_in_sorted_order.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_word_w_and_the_word_w_prime_in_sorted_order.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_word_w_at_least_k_times.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_word_w_at_least_k_times.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_word_w_between_k_and_k_prime_times.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_word_w_between_k_and_k_prime_times.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_word_w_followed_by_w_prime.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_word_w_followed_by_w_prime.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_word_w_within_x_positions_of_the_word_w_prime.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_word_w_within_x_positions_of_the_word_w_prime.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_words_w_and_w_prime.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_words_w_and_w_prime.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_words_w_or_w_prime.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_words_w_or_w_prime.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.contains_the_words_w_or_w_prime_but_not_both.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/contains_the_words_w_or_w_prime_but_not_both.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.does_not_contain_the_word_w.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/does_not_contain_the_word_w.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.does_not_start_with_the_word_w.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/does_not_start_with_the_word_w.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.ends_with_the_word_w.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/ends_with_the_word_w.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.ends_with_the_word_w_or_contains_the_word_w_prime.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/ends_with_the_word_w_or_contains_the_word_w_prime.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.repeats_the_word_w.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/repeats_the_word_w.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.repeats_the_word_w_and_contains_a_digit.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/repeats_the_word_w_and_contains_a_digit.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.repeats_the_word_w_and_contains_a_french_word.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/repeats_the_word_w_and_contains_a_french_word.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.repeats_the_word_w_and_contains_the_word_w_prime.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/repeats_the_word_w_and_contains_the_word_w_prime.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.repeats_the_word_w_and_is_in_alphabetical_order.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/repeats_the_word_w_and_is_in_alphabetical_order.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.repeats_the_word_w_and_starts_with_w.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/repeats_the_word_w_and_starts_with_w.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.starts_with_the_word_w.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/starts_with_the_word_w.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.word_w_appears_in_position_i.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/word_w_appears_in_position_i.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.words_are_in_alphabetical_order.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/words_are_in_alphabetical_order.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.freeform.words_are_in_reverse_alphabetical_order.v0:
+  args:
+    eval_type: classify
+    modelgraded_spec: articulate-rules
+    samples_jsonl: articulate_rules/articulation/in-context/freeform/words_are_in_reverse_alphabetical_order.jsonl
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+
+articulate-rules.articulation.in-context.multiple-choice.contains_a_digit.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_a_digit.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_a_digit.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_a_digit.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_a_french_word.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_a_french_word.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_word_w.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_word_w_and_a_digit.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_word_w_and_a_digit.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_word_w_and_a_french_word.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_word_w_and_a_french_word.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_word_w_and_is_in_alphabetical_order.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_word_w_and_is_in_alphabetical_order.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_word_w_and_the_word_w_prime_in_sorted_order.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_word_w_and_the_word_w_prime_in_sorted_order.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_word_w_at_least_k_times.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_word_w_at_least_k_times.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_word_w_between_k_and_k_prime_times.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_word_w_between_k_and_k_prime_times.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_word_w_followed_by_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_word_w_followed_by_w_prime.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_word_w_within_x_positions_of_the_word_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_word_w_within_x_positions_of_the_word_w_prime.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_words_w_and_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_words_w_and_w_prime.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_words_w_or_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_words_w_or_w_prime.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.contains_the_words_w_or_w_prime_but_not_both.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/contains_the_words_w_or_w_prime_but_not_both.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.does_not_contain_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/does_not_contain_the_word_w.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.does_not_start_with_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/does_not_start_with_the_word_w.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.ends_with_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/ends_with_the_word_w.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.ends_with_the_word_w_or_contains_the_word_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/ends_with_the_word_w_or_contains_the_word_w_prime.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.repeats_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/repeats_the_word_w.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.repeats_the_word_w_and_contains_a_digit.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/repeats_the_word_w_and_contains_a_digit.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.repeats_the_word_w_and_contains_a_french_word.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/repeats_the_word_w_and_contains_a_french_word.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.repeats_the_word_w_and_contains_the_word_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/repeats_the_word_w_and_contains_the_word_w_prime.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.repeats_the_word_w_and_is_in_alphabetical_order.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/repeats_the_word_w_and_is_in_alphabetical_order.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.repeats_the_word_w_and_starts_with_w.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/repeats_the_word_w_and_starts_with_w.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.starts_with_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/starts_with_the_word_w.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.word_w_appears_in_position_i.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/word_w_appears_in_position_i.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.words_are_in_alphabetical_order.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/words_are_in_alphabetical_order.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.articulation.in-context.multiple-choice.words_are_in_reverse_alphabetical_order.v0:
+  args:
+    samples_jsonl: articulate_rules/articulation/in-context/multiple-choice/words_are_in_reverse_alphabetical_order.jsonl
+  class: evals.elsuite.basic.includes:Includes
+
+articulate-rules.classification.in-context.in-distribution.contains_a_digit.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_a_digit.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_a_digit.dev.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_a_digit.dev.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_a_french_word.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_a_french_word.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_word_w.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_word_w_and_a_digit.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_word_w_and_a_digit.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_word_w_and_a_french_word.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_word_w_and_a_french_word.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_word_w_and_is_in_alphabetical_order.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_word_w_and_is_in_alphabetical_order.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_word_w_at_least_k_times.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_word_w_at_least_k_times.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_word_w_between_k_and_k_prime_times.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_word_w_between_k_and_k_prime_times.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_word_w_followed_by_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_word_w_followed_by_w_prime.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_words_w_and_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_words_w_and_w_prime.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_words_w_or_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_words_w_or_w_prime.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.contains_the_words_w_or_w_prime_but_not_both.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/contains_the_words_w_or_w_prime_but_not_both.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.does_not_contain_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/does_not_contain_the_word_w.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.does_not_start_with_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/does_not_start_with_the_word_w.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.ends_with_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/ends_with_the_word_w.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/ends_with_the_word_w_or_contains_the_word_w_prime.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.repeats_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/repeats_the_word_w.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.repeats_the_word_w_and_contains_a_digit.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/repeats_the_word_w_and_contains_a_digit.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.repeats_the_word_w_and_contains_a_french_word.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/repeats_the_word_w_and_contains_a_french_word.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.repeats_the_word_w_and_contains_the_word_w_prime.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/repeats_the_word_w_and_contains_the_word_w_prime.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.repeats_the_word_w_and_is_in_alphabetical_order.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/repeats_the_word_w_and_is_in_alphabetical_order.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.repeats_the_word_w_and_starts_with_w.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/repeats_the_word_w_and_starts_with_w.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.starts_with_the_word_w.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/starts_with_the_word_w.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.word_w_appears_in_position_i.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/word_w_appears_in_position_i.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.words_are_in_alphabetical_order.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/words_are_in_alphabetical_order.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.in-distribution.words_are_in_reverse_alphabetical_order.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/in-distribution/words_are_in_reverse_alphabetical_order.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_digit.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_digit/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_a_french_word.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_a_french_word/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_digit.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_digit/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_a_french_word.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_a_french_word/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_is_in_alphabetical_order.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_is_in_alphabetical_order/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_and_the_word_w_prime_in_sorted_order.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_and_the_word_w_prime_in_sorted_order/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_at_least_k_times.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_at_least_k_times/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_between_k_and_k_prime_times.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_between_k_and_k_prime_times/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_followed_by_w_prime.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_followed_by_w_prime/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_word_w_within_x_positions_of_the_word_w_prime.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_word_w_within_x_positions_of_the_word_w_prime/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_and_w_prime.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_and_w_prime/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.contains_the_words_w_or_w_prime_but_not_both.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/contains_the_words_w_or_w_prime_but_not_both/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_contain_the_word_w.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_contain_the_word_w/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.does_not_start_with_the_word_w.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/does_not_start_with_the_word_w/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.ends_with_the_word_w_or_contains_the_word_w_prime.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/ends_with_the_word_w_or_contains_the_word_w_prime/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_digit.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_digit/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_a_french_word.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_a_french_word/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_contains_the_word_w_prime.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_contains_the_word_w_prime/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_is_in_alphabetical_order.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_is_in_alphabetical_order/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.repeats_the_word_w_and_starts_with_w.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/repeats_the_word_w_and_starts_with_w/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/starts_with_the_word_w_or_repeats_the_word_w_prime_but_not_both/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.word_w_appears_in_position_i.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/word_w_appears_in_position_i/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_alphabetical_order.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_alphabetical_order/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.ChangeCaseAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/ChangeCaseAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.ChangeLanguageOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/ChangeLanguageOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.ChangePositionOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/ChangePositionOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.CommonMisspellingsOfWordAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/CommonMisspellingsOfWordAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.DecreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/DecreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.DifferentPartOfSpeechAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/DifferentPartOfSpeechAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.IncreaseNumberOfWordsAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/IncreaseNumberOfWordsAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.InfillTrickAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/InfillTrickAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.InsertRandomCharactersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/InsertRandomCharactersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.InsertSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/InsertSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.InstructionInjectionAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/InstructionInjectionAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.JumbleLettersAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/JumbleLettersAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.MarkdownStylingAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/MarkdownStylingAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.RemoveSpacesAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/RemoveSpacesAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+
+articulate-rules.classification.in-context.out-of-distribution.words_are_in_reverse_alphabetical_order.SynonymAttackBehaviour.v0:
+  args:
+    samples_jsonl: articulate_rules/classification/in-context/out-of-distribution/words_are_in_reverse_alphabetical_order/SynonymAttackBehaviour.jsonl
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
