@@ -155,7 +155,11 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         return {k: to_number(v) for k, v in str_dict.items()}
 
     extra_eval_params = parse_extra_eval_params(args.extra_eval_params)
-    eval_spec.args.update(extra_eval_params)
+
+    if eval_spec.args is None:
+        eval_spec.args = extra_eval_params
+    else:
+        eval_spec.args.update(extra_eval_params)
 
     # If the user provided an argument to --completion_args, parse it into a dict here, to be passed to the completion_fn creation **kwargs
     completion_args = args.completion_args.split(",")
