@@ -1,3 +1,0 @@
-## Rescraping
-
-The initial scrape was conducted over ML paper metadata from 10-01-2021 to 08-15-2023. If you would like to rescrape to a different time period, you can do so by modifying the parameters in `run_scrape.sh` and executing. If you would just like to filter out papers from the existing scrape, we'd recomment working with a Jupyter notebook and modifying the jsonl files inside evals/data/citation_count directly. Note that the initial scrape took a little less than a day to complete.
