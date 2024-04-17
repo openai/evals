@@ -6,6 +6,7 @@ import pytest
 
 from evals import metrics
 
+print("hi")
 
 @pytest.mark.parametrize(
     "event_labels, expected",
