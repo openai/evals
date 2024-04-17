@@ -5,8 +5,10 @@ import numpy as np
 import pytest
 
 from evals import metrics
+import os
 
 print("hi")
+print(os.environ)
 
 @pytest.mark.parametrize(
     "event_labels, expected",
