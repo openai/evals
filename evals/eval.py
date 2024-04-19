@@ -84,7 +84,6 @@ class Eval(abc.ABC):
         """Helper for more ergonomic access to a single CompletionFn."""
         return self.completion_fns[0]
 
-    # @weave.op()
     def run(self, recorder: RecorderBase) -> Dict[str, float]:
         """Run the evaluation with the corresponding recorder."""
         print("Running eval", self.name)

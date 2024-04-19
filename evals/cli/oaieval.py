@@ -215,7 +215,6 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     logger.info(_purple(f"Run started: {run_url}"))
 
     eval_class = registry.get_class(eval_spec)
-    print(f"using spec, found a class. {eval_class=} {eval_spec=}")
     eval: Eval = eval_class(
         completion_fns=completion_fn_instances,
         seed=args.seed,
@@ -224,7 +223,6 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         registry=registry,
         **extra_eval_params,
     )
-    print(f"running eval object: {eval.run.__code__=}")
     result = eval.run(recorder)
     add_token_usage_to_result(result, recorder)
     recorder.record_final_report(result)
