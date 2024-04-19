@@ -20,6 +20,8 @@ from .registry import Registry
 from .solvers.solver import Solver
 from .solvers.utils import maybe_wrap_with_compl_fn, maybe_wrap_with_solver
 
+import weave
+
 logger = logging.getLogger(__name__)
 
 
@@ -82,10 +84,15 @@ class Eval(abc.ABC):
         """Helper for more ergonomic access to a single CompletionFn."""
         return self.completion_fns[0]
 
-    @abc.abstractmethod
     def run(self, recorder: RecorderBase) -> Dict[str, float]:
         """Run the evaluation with the corresponding recorder."""
-        raise NotImplementedError()
+        print("Running eval", self.name)
+
+        # @weave.op()
+        def yovaluate() -> Dict[str, Any]:
+            return self._run_impl(recorder)
+
+        return yovaluate()
 
     async def async_eval_all_samples(
         self,

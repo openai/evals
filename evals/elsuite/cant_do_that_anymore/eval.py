@@ -112,7 +112,7 @@ class CantDoThatAnymore(SolverEval):
 
         evals.record.record_metrics(**metrics)
 
-    def run(self, recorder: RecorderBase) -> dict[str, Union[float, int]]:
+    def _run_impl(self, recorder: RecorderBase) -> dict[str, Union[float, int]]:
         if self.diagonal_variation:
             self.samples_jsonl = get_diagonal_dataset_path(
                 registry_path=self._prefix_registry_path("")

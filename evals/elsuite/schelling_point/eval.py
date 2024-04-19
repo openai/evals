@@ -75,7 +75,7 @@ class SchellingPoint(Eval):
             is_runtime_error=False,
         )
 
-    def run(self, recorder: evals.record.Recorder) -> dict[str, Union[float, int]]:
+    def _run_impl(self, recorder: evals.record.Recorder) -> dict[str, Union[float, int]]:
 
         samples = self.get_samples()[0 : self.n_samples]
 
