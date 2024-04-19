@@ -7,6 +7,8 @@ import logging
 from abc import ABC, abstractmethod
 from typing import Any, Callable, Optional, Protocol, Union, runtime_checkable
 
+import weave
+
 from evals.prompt.base import OpenAICreateChatPrompt, OpenAICreatePrompt, Prompt
 from evals.record import record_match
 
@@ -52,8 +54,6 @@ class DummyCompletionFn(CompletionFn):
         return DummyCompletionResult()
 
 
-# import weave
-# @weave.op()
 def record_and_check_match(
     prompt: Any,
     sampled: str,
@@ -74,7 +74,6 @@ def record_and_check_match(
     Returns:
         The matched option or None if no match found.
     """
-
     if isinstance(expected, tuple):
         expected = list(expected)
     elif not isinstance(expected, list):
@@ -109,7 +108,6 @@ def record_and_check_match(
     prompt_0_content = prompt[0] if len(prompt) > 0 else dict()
     prompt_0_content = prompt_0_content.get("content", "")
 
-    import weave
     @weave.op()
     def row(prompt_0_content, sampled, expected, picked, match):
         return
