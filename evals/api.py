@@ -52,6 +52,8 @@ class DummyCompletionFn(CompletionFn):
         return DummyCompletionResult()
 
 
+# import weave
+# @weave.op()
 def record_and_check_match(
     prompt: Any,
     sampled: str,

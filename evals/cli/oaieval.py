@@ -224,6 +224,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         registry=registry,
         **extra_eval_params,
     )
+    print(f"running eval object: {eval.run.__code__=}")
     result = eval.run(recorder)
     add_token_usage_to_result(result, recorder)
     recorder.record_final_report(result)
