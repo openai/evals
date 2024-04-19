@@ -74,6 +74,7 @@ def record_and_check_match(
     Returns:
         The matched option or None if no match found.
     """
+
     if isinstance(expected, tuple):
         expected = list(expected)
     elif not isinstance(expected, list):
@@ -104,4 +105,14 @@ def record_and_check_match(
     result["expected"] = expected
     result["match"] = match
     record_match(match, expected=expected, picked=picked, sampled=sampled, options=options)
+
+    prompt_0_content = prompt[0] if len(prompt) > 0 else dict()
+    prompt_0_content = prompt_0_content.get("content", "")
+
+    import weave
+    @weave.op()
+    def row(prompt_0_content, sampled, expected, picked, match):
+        return
+    row(prompt_0_content, sampled, expected, picked, match)
+
     return picked
