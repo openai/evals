@@ -92,7 +92,10 @@ class Eval(abc.ABC):
         def yovaluate() -> Dict[str, Any]:
             return self._run_impl(recorder)
 
-        return yovaluate()
+        res = yovaluate()
+
+        print("Got result for eval", self.name, f"res={res}")
+        return res
 
     async def async_eval_all_samples(
         self,
