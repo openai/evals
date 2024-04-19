@@ -88,7 +88,7 @@ class Eval(abc.ABC):
         """Run the evaluation with the corresponding recorder."""
         print("Running eval", self.name)
 
-        # @weave.op()
+        @weave.op()
         def yovaluate() -> Dict[str, Any]:
             return self._run_impl(recorder)
 
