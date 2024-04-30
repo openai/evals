@@ -43,7 +43,6 @@ dependencies = [
     "statsmodels",
     "termcolor",
     "tiktoken",
-    "torch",
     "tqdm",
     "types-PyYAML",
     "types-tqdm",
@@ -54,12 +53,9 @@ dependencies = [
 repository = "https://github.com/openai/evals"
 
 [project.optional-dependencies]
-formatters = [
-    "black",
-    "isort",
-    "autoflake",
-    "ruff"
-]
+formatters = ["black", "isort", "autoflake", "ruff"]
+
+torch = ["torch"]
 
 [project.scripts]
 oaieval = "evals.cli.oaieval:main"
