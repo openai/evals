@@ -1,0 +1,9 @@
+Indian_Menstrual_Health_ChatBot-closedqa:
+  id: Indian_Menstrual_Health_ChatBot-closedqa.dev.v0
+  metrics: [accuracy]
+Indian_Menstrual_Health_ChatBot-closedqa.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: Indian_Menstrual_Health_ChatBot_closedqa/closedqa/Indian_Menstrual_Bot_ClosedQA.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: closedqa
