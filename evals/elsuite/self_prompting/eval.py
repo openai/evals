@@ -177,7 +177,7 @@ class SelfPrompting(SolverEval):
         logger.info(f"Improvement scores: {improvement_scores}")
         return improvement_scores
 
-    def run(self, recorder: evals.record.Recorder) -> dict[str, Union[float, int]]:
+    def _run_impl(self, recorder: evals.record.Recorder) -> dict[str, Union[float, int]]:
         samples = self.get_samples()
 
         # Shuffle and limit samples

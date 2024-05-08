@@ -148,7 +148,7 @@ class FunctionDeductionEval(SolverEval):
             complexity=sample.complexity,
         )
 
-    def run(self, recorder: evals.record.Recorder):
+    def _run_impl(self, recorder: evals.record.Recorder):
         samples = self.get_samples()
 
         #   Add copies according to self.n_repeat

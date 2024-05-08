@@ -147,7 +147,7 @@ class InContextRl(SolverEval):
             episode_end_steps=ts.current_state.episode_end_steps,
         )
 
-    def run(self, recorder: evals.record.Recorder):
+    def _run_impl(self, recorder: evals.record.Recorder):
         samples = self.get_samples()
         for sample in samples:
             # Create environments and pass them to each thread via the sample

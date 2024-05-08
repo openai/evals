@@ -186,7 +186,7 @@ class SkillAcquisition(SolverEval):
         }
         return out_obj
 
-    def run(self, recorder: evals.record.Recorder) -> dict[str, Union[float, int]]:
+    def _run_impl(self, recorder: evals.record.Recorder) -> dict[str, Union[float, int]]:
         samples = self.get_samples()
         self.rng.shuffle(samples)
         samples = samples[: self.n_samples] if self.n_samples is not None else samples

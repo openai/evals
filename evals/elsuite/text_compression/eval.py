@@ -46,7 +46,7 @@ class TextCompression(Eval):
             semantic_distance=results["semantic_distance"],
         )
 
-    def run(self, recorder: RecorderBase):
+    def _run_impl(self, recorder: RecorderBase):
         samples = self.get_samples()
         self.eval_all_samples(recorder, samples)
         metrics = recorder.get_metrics()

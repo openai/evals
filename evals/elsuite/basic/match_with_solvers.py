@@ -65,7 +65,7 @@ class MatchWithSolvers(SolverEval):
             expected=[ideal, ideal.capitalize()],
         )
 
-    def run(self, recorder):
+    def _run_impl(self, recorder):
         samples = self.get_samples()
 
         if self.shuffle:

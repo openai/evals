@@ -67,7 +67,7 @@ class TrackTheStat(SolverEval):
             "violation": violation,
         }
 
-    def run(self, recorder: RecorderBase):
+    def _run_impl(self, recorder: RecorderBase):
         samples = self._get_samples()
         self.eval_all_samples(recorder, samples)
         logged_metrics: list[dict] = recorder.get_metrics()
