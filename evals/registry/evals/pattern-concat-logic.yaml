@@ -1,0 +1,7 @@
+pattern-concat-logic:
+  id: pattern-concat-logic.dev.v0
+  metrics: [accuracy]
+pattern-concat-logic.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: pattern_concat_logic/samples.jsonl
