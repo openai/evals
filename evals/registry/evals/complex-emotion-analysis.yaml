@@ -1,0 +1,7 @@
+complex-emotion-analysis:
+  id: complex-emotion-analysis.dev.v0
+  metrics: [accuracy]
+complex-emotion-analysis.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: complex-emotion-analysis/samples.jsonl
