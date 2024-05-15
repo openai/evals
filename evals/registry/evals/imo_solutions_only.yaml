@@ -1,6 +1,6 @@
 <eval_name>:
   id: imo_solutions_only.dev.v0
-  description: <description>
+  description: A small set of IMO problems that have yes/no, numeric solutions as answers.
   metrics: [accuracy]
 
 <eval_name>.dev.v0:
