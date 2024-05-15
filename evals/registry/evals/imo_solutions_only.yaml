@@ -1,9 +1,0 @@
-<eval_name>:
-  id: imo_solutions_only.dev.v0
-  description: A small set of IMO problems that have yes/no, numeric solutions as answers.
-  metrics: [accuracy]
-
-<eval_name>.dev.v0:
-  class: evals.elsuite.basic.match:Match
-  args:
-    samples_jsonl: imo_solutions_only/samples.jsonl
