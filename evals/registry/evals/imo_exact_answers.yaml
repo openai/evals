@@ -1,9 +1,9 @@
-<eval_name>:
+imo_exact_answers:
   id: imo_exact_answers.dev.v0
   description: A small set of IMO problems that have exact answers (e.g. yes/no, number, fraction).
   metrics: [accuracy]
 
-<eval_name>.dev.v0:
+imo_exact_answers.dev.v0:
   class: evals.elsuite.basic.match:Match
   args:
     samples_jsonl: imo_exact_answers/samples.jsonl
