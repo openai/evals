@@ -23,6 +23,7 @@ MODELS = [
     "cot/gpt-3.5-turbo",
     "gpt-3.5-turbo",
     "gpt-4-base",
+    "gpt-4o",
     "gemini-pro",
     "mixtral-8x7b-instruct",
     "llama-2-70b-chat",
@@ -35,6 +36,7 @@ OAI_MODELS = [
     "cot/gpt-3.5-turbo",
     "gpt-3.5-turbo",
     "gpt-4-base",
+    "gpt-4o",
 ]
 
 
@@ -154,6 +156,8 @@ def get_model(spec):
         return "gpt-3.5-turbo"
     elif "gpt-4-base" in spec["completion_fns"][0]:
         return "gpt-4-base"
+    elif "gpt-4o" in spec["completion_fns"][0]:
+        return "gpt-4o"
     elif "gemini-pro" in spec["completion_fns"][0]:
         return "gemini-pro"
     elif "mixtral-8x7b-instruct" in spec["completion_fns"][0]:

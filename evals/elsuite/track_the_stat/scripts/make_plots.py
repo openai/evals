@@ -20,6 +20,7 @@ def zero_if_none(input_num):
 MODELS = [
     "gpt-4-0125-preview",
     "gpt-4-base",
+    "gpt-4o",
     "gpt-3.5-turbo-0125",
     "gemini-pro-1.0",
     "mixtral-8x7b-instruct",
@@ -32,6 +33,7 @@ OAI_MODELS = [
     "gpt-4-0125-preview",
     "gpt-3.5-turbo-0125",
     "gpt-4-base",
+    "gpt-4o",
 ]
 
 STAT_TO_LABEL = {
@@ -54,6 +56,8 @@ def get_model(spec):
         return "gpt-3.5-turbo-0125"
     elif "gpt-4-base" in spec["completion_fns"][0]:
         return "gpt-4-base"
+    elif "gpt-4o" in spec["completion_fns"][0]:
+        return "gpt-4o"
     elif "gemini-pro" in spec["completion_fns"][0]:
         return "gemini-pro-1.0"
     elif "mixtral-8x7b-instruct" in spec["completion_fns"][0]:
