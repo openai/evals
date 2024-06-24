@@ -6,7 +6,9 @@ from typing import Any, Dict, Optional, Union
 import backoff
 import openai
 from openai.types.beta import Assistant
+from openai.types.beta.assistant_create_params import ToolResourcesCodeInterpreter
 from openai.types.beta.thread import Thread
+from openai.types.beta.threads import message_create_params
 from openai.types.beta.threads.run import Run
 
 from evals.record import record_sampling
@@ -74,7 +76,12 @@ class OpenAIAssistantsSolver(Solver):
                 name=name,
                 description=description,
                 tools=tools,
-                file_ids=file_ids,  # Files attached here are available to all threads.
+                tool_resources={
+                    "code_interpreter": ToolResourcesCodeInterpreter(file_ids=file_ids),
+                    "file_search": {
+                        "vector_store_ids": file_ids,
+                    },
+                },
             )
         else:
             # This is a special init case for copying the solver - see `OpenAIAssistantsSolver.copy()`
@@ -140,7 +147,13 @@ class OpenAIAssistantsSolver(Solver):
                 thread_id=self.thread.id,
                 role=user_message.role,
                 content=user_message.content,
-                file_ids=thread_file_ids,
+                attachments=[
+                    message_create_params.Attachment(
+                        file_id=file_id,
+                        tools=[{"type": "code_interpreter"}, {"type": "file_search"}],
+                    )
+                    for file_id in thread_file_ids
+                ],
             )
 
         # Run Assistant on the Thread

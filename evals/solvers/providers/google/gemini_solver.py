@@ -124,7 +124,7 @@ class GeminiSolver(Solver):
             else:
                 # Get text response
                 solver_result = SolverResult(
-                    gen_content_resp.text,
+                    gen_content_resp.parts[0].text,
                     error=gen_content_resp.prompt_feedback,
                 )
         except (google.api_core.exceptions.GoogleAPIError,) as e:
