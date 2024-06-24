@@ -59,7 +59,7 @@ def code_interpreter_solver():
 def retrieval_solver():
     solver = OpenAIAssistantsSolver(
         model=MODEL,
-        tools=[{"type": "retrieval"}],
+        tools=[{"type": "file_search"}],
     )
     return solver
 
