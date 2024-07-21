@@ -7,6 +7,7 @@ from evals.solvers.providers.google.gemini_solver import GeminiSolver, GoogleMes
 from evals.task_state import Message, TaskState
 
 IN_GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS") == "true"
+MISSING_GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY") in {None, ""}
 MODEL_NAME = "gemini-pro"
 
 
@@ -26,7 +27,7 @@ def gemini_solver():
     return solver
 
 
-@pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="API tests are wasteful to run on every commit.")
+@pytest.mark.skipif(IN_GITHUB_ACTIONS or MISSING_GOOGLE_API_KEY, reason="API tests are wasteful to run on every commit.")
 def test_solver(dummy_recorder, gemini_solver):
     """
     Test that the solver generates a response coherent with the message history

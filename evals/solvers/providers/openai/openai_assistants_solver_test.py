@@ -14,6 +14,7 @@ from evals.solvers.providers.openai.openai_assistants_solver import (
 from evals.task_state import Message, TaskState
 
 IN_GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS") == "true"
+MISSING_OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") in {"", None}
 MODEL = "gpt-4-1106-preview"
 
 
@@ -64,7 +65,7 @@ def retrieval_solver():
     return solver
 
 
-@pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="API tests are wasteful to run on every commit.")
+@pytest.mark.skipif(IN_GITHUB_ACTIONS or MISSING_OPENAI_API_KEY, reason="API tests are wasteful to run on every commit.")
 def test_solver_copying(dummy_recorder, vanilla_solver):
     """
     When OpenAIAssistantsSolver is copied, the Assistant should be the same
@@ -80,7 +81,7 @@ def test_solver_copying(dummy_recorder, vanilla_solver):
         test_multiturn_conversation(dummy_recorder, solver_copy)
 
 
-@pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="API tests are wasteful to run on every commit.")
+@pytest.mark.skipif(IN_GITHUB_ACTIONS or MISSING_OPENAI_API_KEY, reason="API tests are wasteful to run on every commit.")
 def test_multiturn_conversation(dummy_recorder, vanilla_solver):
     """
     Test that message history of the conversation is preserved across multiple turns.
@@ -103,7 +104,7 @@ def test_multiturn_conversation(dummy_recorder, vanilla_solver):
         assert int(solver_result.output.strip()) == sum(numbers[: idx + 1])
 
 
-@pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="API tests are wasteful to run on every commit.")
+@pytest.mark.skipif(IN_GITHUB_ACTIONS or MISSING_OPENAI_API_KEY, reason="API tests are wasteful to run on every commit.")
 def test_code_interpreter(dummy_recorder, code_interpreter_solver):
     solver = code_interpreter_solver
 
@@ -122,7 +123,7 @@ def test_code_interpreter(dummy_recorder, code_interpreter_solver):
     assert str(round(math.sqrt(145145), 3)) in solver_result.output
 
 
-@pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="API tests are wasteful to run on every commit.")
+@pytest.mark.skipif(IN_GITHUB_ACTIONS or MISSING_OPENAI_API_KEY, reason="API tests are wasteful to run on every commit.")
 def test_task_description(dummy_recorder, vanilla_solver):
     solver = vanilla_solver
 
@@ -141,7 +142,7 @@ def test_task_description(dummy_recorder, vanilla_solver):
     assert solver_result.output == target_string
 
 
-@pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="API tests are wasteful to run on every commit.")
+@pytest.mark.skipif(IN_GITHUB_ACTIONS or MISSING_OPENAI_API_KEY, reason="API tests are wasteful to run on every commit.")
 def test_code_interpreter_file(dummy_recorder, dummy_data_file, code_interpreter_solver):
     dummy_data, tmpfile_path = dummy_data_file
     solver = code_interpreter_solver
@@ -168,7 +169,7 @@ def test_code_interpreter_file(dummy_recorder, dummy_data_file, code_interpreter
     ), f"Expected password '{dummy_data['password']}' to be in output, but got: {solver_result.output}"
 
 
-@pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="API tests are wasteful to run on every commit.")
+@pytest.mark.skipif(IN_GITHUB_ACTIONS or MISSING_OPENAI_API_KEY, reason="API tests are wasteful to run on every commit.")
 def test_retrieval_file(dummy_recorder, dummy_data_file, retrieval_solver):
     dummy_data, tmpfile_path = dummy_data_file
     solver = retrieval_solver
@@ -202,7 +203,7 @@ def test_retrieval_file(dummy_recorder, dummy_data_file, retrieval_solver):
     ), f"Expected password '{dummy_data['password']}' to be in output, but got: {solver_result.output}"
 
 
-@pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="API tests are wasteful to run on every commit.")
+@pytest.mark.skipif(IN_GITHUB_ACTIONS or MISSING_OPENAI_API_KEY, reason="API tests are wasteful to run on every commit.")
 def test_file_cache(dummy_recorder, dummy_data_file, retrieval_solver):
     dummy_data, tmpfile_path = dummy_data_file
     solver = retrieval_solver

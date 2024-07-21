@@ -9,12 +9,13 @@ import functools
 import logging
 import os
 import re
+import yaml
+
 from functools import cached_property
 from pathlib import Path
 from typing import Any, Generator, Iterator, Optional, Sequence, Tuple, Type, TypeVar, Union
 
 import openai
-import yaml
 from openai import OpenAI
 
 from evals import OpenAIChatCompletionFn, OpenAICompletionFn
@@ -23,7 +24,6 @@ from evals.base import BaseEvalSpec, CompletionFnSpec, EvalSetSpec, EvalSpec
 from evals.elsuite.modelgraded.base import ModelGradedSpec
 from evals.utils.misc import make_object
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 logger = logging.getLogger(__name__)
 
@@ -103,6 +103,10 @@ RawRegistry = dict[str, Any]
 class Registry:
     def __init__(self, registry_paths: Sequence[Union[str, Path]] = DEFAULT_PATHS):
         self._registry_paths = [Path(p) if isinstance(p, str) else p for p in registry_paths]
+        try:
+            self.client = OpenAI()
+        except openai.OpenAIError as err:
+            logger.warning(f"Could not initialize OpenAI client: {err}")
 
     def add_registry_paths(self, paths: Sequence[Union[str, Path]]) -> None:
         self._registry_paths.extend([Path(p) if isinstance(p, str) else p for p in paths])
@@ -110,7 +114,7 @@ class Registry:
     @cached_property
     def api_model_ids(self) -> list[str]:
         try:
-            return [m.id for m in client.models.list().data]
+            return [m.id for m in self.client.models.list().data]
         except openai.OpenAIError as err:
             # Errors can happen when running eval with completion function that uses custom
             # API endpoints and authentication mechanisms.
@@ -329,5 +333,3 @@ class Registry:
     def _modelgraded_specs(self) -> RawRegistry:
         return self._load_registry(self._registry_paths, "modelgraded")
 
-
-registry = Registry()
