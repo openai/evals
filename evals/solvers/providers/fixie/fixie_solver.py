@@ -35,6 +35,7 @@ class FixieSolver(OpenAISolver):
     """
 
     def __init__(self, merge_adjacent_msgs: bool = False, **kwargs):
+        os.environ["EVALS_SEQUENTIAL"] = "1"
         super().__init__(**kwargs)
         self.merge_adjacent_msgs = merge_adjacent_msgs
         if self.valid_answers is not None:

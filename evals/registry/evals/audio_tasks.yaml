@@ -9,3 +9,55 @@ audio-transcribe.validation.v1:
   class: evals.elsuite.audio.eval:Transcribe
   args:
     dataset: hf://openslr/librispeech_asr?split=test.clean
+
+audio-translate-to-en:
+  id: audio-translate-to-en.validation.v1
+  metrics: [accuracy]
+audio-translate-to-en.dev.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-aicovost2?name=zh-CN_en&split=train
+    target_language: English
+audio-translate-to-en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=zh-CN_en&split=validation
+    target_language: English
+
+audio-translate-from-en:
+  id: audio-translate-from-en.validation.v1
+  metrics: [accuracy]
+audio-translate-from-en.dev.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-aicovost2?name=en_zh-CN&split=train
+    target_language: Chinese
+audio-translate-from-en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_zh-CN&split=validation
+    target_language: Chinese
+
+audio-ser:
+  id: audio-ser.validation.v1
+  metrics: [accuracy]
+audio-ser.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenER
+  args:
+    dataset: hf://Zahra99/IEMOCAP_Audio?split=session1
+audio-ser.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenER
+  args:
+    dataset: hf://Zahra99/IEMOCAP_Audio?split=session5
+
+audio-sqa:
+  id: audio-sqa.validation.v1
+  metrics: [accuracy]
+audio-sqa.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://WillHeld/HeySQuAD_distill?split=train
+audio-sqa.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://WillHeld/HeySQuAD_distill?split=validation
