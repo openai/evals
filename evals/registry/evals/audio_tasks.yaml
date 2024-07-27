@@ -57,7 +57,27 @@ audio-sqa.dev.v1:
   class: evals.elsuite.audio.eval:SpokenQA
   args:
     dataset: hf://WillHeld/HeySQuAD_distill?split=train
+    eval_completion_fn: gpt-4-turbo
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria: "correctness: Is the answer correct?"
 audio-sqa.validation.v1:
   class: evals.elsuite.audio.eval:SpokenQA
   args:
     dataset: hf://WillHeld/HeySQuAD_distill?split=validation
+    eval_completion_fn: gpt-4-turbo
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria: "correctness: Is the answer correct?"
+
+audio-boolq:
+  id: audio-boolq.validation.v1
+  metrics: [accuracy]
+audio-boolq.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenBoolQ
+  args:
+    dataset: hf://fixie-ai/boolq-audio?split=train
+audio-boolq.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenBoolQ
+  args:
+    dataset: hf://fixie-ai/boolq-audio?split=validation
