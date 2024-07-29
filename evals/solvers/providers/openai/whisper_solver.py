@@ -12,7 +12,7 @@ from evals.task_state import TaskState
 class WhisperSolver(NestedSolver):
     """
     This solver rewrites any supplied messages with audio content to only have text content,
-    by transcribing the audio using Whisper.
+    by transcribing the audio using Whisper (Large).
     """
 
     def __init__(
@@ -22,6 +22,7 @@ class WhisperSolver(NestedSolver):
         registry: Any = None,
     ):
         super().__init__(postprocessors=postprocessors, solver=solver)
+        # Initializing this in the ctor leads to strange pickle errors.
         self.client: Optional[openai.OpenAI] = None
 
     @property
