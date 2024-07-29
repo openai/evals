@@ -1,23 +1,22 @@
 import base64
-import jiwer
-import soundfile as sf
 import logging
 import string
+from collections import Counter
 from io import BytesIO
+from typing import Any, List, Optional
 from urllib.parse import parse_qs, urlparse
 
-from datasets import load_dataset, Audio
+import jiwer
+import soundfile as sf
+from datasets import Audio, load_dataset
 from pydantic import BaseModel
 from sacrebleu.metrics.bleu import BLEU
 
-from collections import Counter
-
-from typing import Any, List, Optional
 import evals
 import evals.metrics
 from evals.api import CompletionFn
-from evals.record import RecorderBase
 from evals.elsuite.modelgraded.classify_utils import classify
+from evals.record import RecorderBase
 
 logger = logging.getLogger(__name__)
 DEFAULT_SAMPLE_RATE = 16000
@@ -63,7 +62,8 @@ class AudioTask(evals.Eval):
                     "content": [
                         {
                             "type": "text",
-                            "text": "You are an audio language model with the ability to understand human speech.\n" + task_prompt,
+                            "text": "You are an audio language model with the ability to understand human speech.\n"
+                            + task_prompt,
                         },
                         {
                             "type": "image_url",
@@ -98,7 +98,9 @@ class AudioTask(evals.Eval):
         parsed = urlparse(self.dataset)
         query = parse_qs(parsed.query)
         query = {k: v[0] for k, v in query.items()}
-        dataset = load_dataset(parsed.netloc + parsed.path, **query).cast_column("audio", Audio(sampling_rate=DEFAULT_SAMPLE_RATE))
+        dataset = load_dataset(parsed.netloc + parsed.path, **query).cast_column(
+            "audio", Audio(sampling_rate=DEFAULT_SAMPLE_RATE)
+        )
         return [self.load_sample(sample) for sample in dataset]
 
 
@@ -116,7 +118,16 @@ class MatchAudioTask(AudioTask):
 
 
 class ModelGradedAudioTask(AudioTask):
-    def __init__(self, completion_fns: list[CompletionFn], dataset: str, eval_completion_fn: CompletionFn, modelgraded_spec: str, modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None, *args, **kwargs):
+    def __init__(
+        self,
+        completion_fns: list[CompletionFn],
+        dataset: str,
+        eval_completion_fn: CompletionFn,
+        modelgraded_spec: str,
+        modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
+        *args,
+        **kwargs,
+    ):
         super().__init__(completion_fns, dataset, *args, **kwargs)
         self.eval_completion_fn = evals.registry.Registry().make_completion_fn(eval_completion_fn)
         self.eval_completion_kwargs = {"max_tokens": 1024}
@@ -163,7 +174,10 @@ class Transcribe(MatchAudioTask):
         return match
 
     def compute_corpus_metrics(self, events, expected, sampled):
-        return {"accuracy": evals.metrics.get_accuracy(events), "wer": self._compute_wer(expected, sampled)}
+        return {
+            "accuracy": evals.metrics.get_accuracy(events),
+            "wer": self._compute_wer(expected, sampled),
+        }
 
     def _compute_wer(self, expected, sampled):
         transform = jiwer.Compose(
@@ -175,7 +189,9 @@ class Transcribe(MatchAudioTask):
                 jiwer.ReduceToListOfListOfWords(),
             ]
         )
-        output = jiwer.process_words(expected, sampled, reference_transform=transform, hypothesis_transform=transform)
+        output = jiwer.process_words(
+            expected, sampled, reference_transform=transform, hypothesis_transform=transform
+        )
         return output.wer
 
 
@@ -193,7 +209,9 @@ class Translate(MatchAudioTask):
         self.bleu = BLEU(effective_order=True)
 
     def load_sample(self, row):
-        return Sample(audio=row["audio"]["array"], transcript=row["sentence"], expected=row["translation"])
+        return Sample(
+            audio=row["audio"]["array"], transcript=row["sentence"], expected=row["translation"]
+        )
 
     def build_prompt(self, sample: Sample):
         return "Translate the following into %s, without any explanation:" % self.target_language
@@ -204,12 +222,17 @@ class Translate(MatchAudioTask):
         evals.record.record_metrics(sacrebleu_sentence_score=score)
         match = score > 30
         if score is not None:
-            evals.record.record_match(match, expected=expected, sampled=sampled, sacrebleu_sentence_score=score)
+            evals.record.record_match(
+                match, expected=expected, sampled=sampled, sacrebleu_sentence_score=score
+            )
         return match
 
     def compute_corpus_metrics(self, events, expected: List[str], sampled: List[str]):
         refs = [[e] for e in expected]
-        return {"accuracy": evals.metrics.get_accuracy(events), "sacrebleu_score": self.bleu.corpus_score(sampled, refs).score}
+        return {
+            "accuracy": evals.metrics.get_accuracy(events),
+            "sacrebleu_score": self.bleu.corpus_score(sampled, refs).score,
+        }
 
 
 class SpokenER(MatchAudioTask):
@@ -222,10 +245,15 @@ class SpokenER(MatchAudioTask):
     ]
 
     def load_sample(self, row):
-        return Sample(audio=row["audio"]["array"], transcript="", expected=self.EMOTIONS[row["label"]])
+        return Sample(
+            audio=row["audio"]["array"], transcript="", expected=self.EMOTIONS[row["label"]]
+        )
 
     def build_prompt(self, sample: Sample):
-        return "Respond in a single word which of these emotions (%s) best matches the following:" % ", ".join(self.EMOTIONS)
+        return (
+            "Respond in a single word which of these emotions (%s) best matches the following:"
+            % ", ".join(self.EMOTIONS)
+        )
 
     def compute_metrics(self, sample: Sample, sampled: str):
         expected = sample.expected
@@ -237,7 +265,12 @@ class SpokenER(MatchAudioTask):
 
 class SpokenBoolQ(MatchAudioTask):
     def load_sample(self, row):
-        return Sample(audio=row["audio"]["array"], transcript="question", expected=str(row["answer"]).lower(), context=row["passage"])
+        return Sample(
+            audio=row["audio"]["array"],
+            transcript="question",
+            expected=str(row["answer"]).lower(),
+            context=row["passage"],
+        )
 
     def build_prompt(self, sample: Sample):
         return f'Context:\n{sample.context}\n\nAnswer the following question with only the single word "True" or "False", and no additional explanation:'
@@ -252,8 +285,17 @@ class SpokenBoolQ(MatchAudioTask):
 
 class SpokenQA(ModelGradedAudioTask):
     def load_sample(self, row):
-        expected = row["answers"][0]["text"] if not row["is_impossible"] else "the question is impossible to answer"
-        return Sample(audio=row["audio"]["array"], transcript=row["question"], expected=expected, context=row["context"])
+        expected = (
+            row["answers"][0]["text"]
+            if not row["is_impossible"]
+            else "the question is impossible to answer"
+        )
+        return Sample(
+            audio=row["audio"]["array"],
+            transcript=row["question"],
+            expected=expected,
+            context=row["context"],
+        )
 
     def build_prompt(self, sample: Sample):
         return f"Context:\n{sample.context}\n\nAnswer the following question:"
