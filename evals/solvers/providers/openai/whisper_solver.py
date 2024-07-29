@@ -1,11 +1,12 @@
 # from evals.solvers.providers.openai.openai_solver import OpenAISolver
-from evals.solvers.solver import NestedSolver, Solver, SolverResult, SolverSpec
-from evals.task_state import Message, TaskState
-
-from typing import Any, Optional
-import openai
 import base64
 import io
+from typing import Any, Optional
+
+import openai
+
+from evals.solvers.solver import NestedSolver, Solver, SolverResult, SolverSpec
+from evals.task_state import TaskState
 
 
 class WhisperSolver(NestedSolver):
