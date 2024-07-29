@@ -1,0 +1,36 @@
+generation/whisper/gpt-4-turbo:
+  #solver: OpenAISolver
+  class: evals.solvers.providers.openai.whisper_solver:WhisperSolver
+  args:
+    solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-turbo
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+generation/whisper/ultravox-v0.2:
+  class: evals.solvers.providers.openai.whisper_solver:WhisperSolver
+  args:
+    solver:
+      class: evals.solvers.providers.fixie.fixie_solver:FixieSolver
+      args:
+        completion_fn_options:
+          model: fixie-ai/ultravox-v0.2
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+generation/whisper/mixtral:
+  class: evals.solvers.providers.openai.whisper_solver:WhisperSolver
+  args:
+    solver:
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: mistralai/Mixtral-8x7B-Instruct-v0.1
+          extra_options:
+            temperature: 1
+            max_tokens: 512

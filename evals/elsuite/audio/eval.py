@@ -35,6 +35,7 @@ class AudioTask(evals.Eval):
         self,
         completion_fns: list[CompletionFn],
         dataset: str,
+        text_only: bool = False,
         temperature: float = 0.7,
         max_tokens: int = 4096,
         *args,
@@ -43,36 +44,40 @@ class AudioTask(evals.Eval):
         super().__init__(completion_fns, *args, **kwargs)
         assert len(completion_fns) == 1, "Audio tasks only support one completion fn"
         self.dataset = dataset
+        self.text_only = text_only
         self.temperature = temperature
         self.max_tokens = max_tokens
 
     def eval_sample(self, sample: Sample, rng):
         assert isinstance(sample, Sample)
-        prompt = self.build_prompt(sample)
-        with BytesIO() as buffer:
-            sf.write(buffer, sample.audio, DEFAULT_SAMPLE_RATE, format="WAV", subtype="PCM_16")
-            base_64_wav = base64.b64encode(buffer.getvalue()).decode()
+        task_prompt = self.build_prompt(sample)
+        if self.text_only:
+            prompt = [{"role": "system", "content": task_prompt + sample.transcript}]
+        else:
+            with BytesIO() as buffer:
+                sf.write(buffer, sample.audio, DEFAULT_SAMPLE_RATE, format="WAV", subtype="PCM_16")
+                base_64_wav = base64.b64encode(buffer.getvalue()).decode()
+            prompt = [
+                {
+                    "role": "system",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "You are an audio language model with the ability to understand human speech.\n" + task_prompt,
+                        },
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:audio/x-wav;base64,{base_64_wav}",
+                            },
+                        },
+                    ],
+                },
+            ]
 
         try:
             result = self.completion_fn(
-                prompt=[
-                    {"role": "system", "content": "You are an audio language model with the ability to understand human speech."},
-                    {
-                        "role": "user",
-                        "content": [
-                            {
-                                "type": "text",
-                                "text": prompt,
-                            },
-                            {
-                                "type": "image_url",
-                                "image_url": {
-                                    "url": f"data:audio/x-wav;base64,{base_64_wav}",
-                                },
-                            },
-                        ],
-                    },
-                ],
+                prompt=prompt,
                 temperature=self.temperature,
                 max_tokens=self.max_tokens,
             )
@@ -235,11 +240,11 @@ class SpokenBoolQ(MatchAudioTask):
         return Sample(audio=row["audio"]["array"], transcript="question", expected=str(row["answer"]).lower(), context=row["passage"])
 
     def build_prompt(self, sample: Sample):
-        return f'Context:\n{sample.context}\n\nAnswer the following question with either "True" or "False", without any explanation:'
+        return f'Context:\n{sample.context}\n\nAnswer the following question with only the single word "True" or "False", and no additional explanation:'
 
     def compute_metrics(self, sample: Sample, sampled: str):
         expected = sample.expected
-        normalized = sampled.strip().rstrip(string.punctuation).lower()
+        normalized = sampled.strip().split()[0].rstrip(string.punctuation).lower()
         match = normalized == expected
         evals.record.record_match(match, expected=expected, sampled=sampled)
         return match

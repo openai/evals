@@ -38,6 +38,18 @@ audio-translate-from-en.validation.v1:
     dataset: hf://fixie-ai/covost2?name=en_zh-CN&split=validation
     target_language: Chinese
 
+audio-boolq:
+  id: audio-boolq.validation.v1
+  metrics: [accuracy]
+audio-boolq.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenBoolQ
+  args:
+    dataset: hf://fixie-ai/boolq-audio?split=train
+audio-boolq.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenBoolQ
+  args:
+    dataset: hf://fixie-ai/boolq-audio?split=validation
+
 audio-ser:
   id: audio-ser.validation.v1
   metrics: [accuracy]
@@ -70,14 +82,92 @@ audio-sqa.validation.v1:
     modelgraded_spec_args:
       criteria: "correctness: Is the answer correct?"
 
-audio-boolq:
-  id: audio-boolq.validation.v1
+transcript-transcribe:
+  id: transcript-transcribe.validation.v1
   metrics: [accuracy]
-audio-boolq.dev.v1:
+transcript-transcribe.dev.v1:
+  class: evals.elsuite.audio.eval:Transcribe
+  args:
+    dataset: hf://openslr/librispeech_asr?split=train.clean.100
+transcript-transcribe-text.validation.v1:
+  class: evals.elsuite.audio.eval:Transcribe
+  args:
+    dataset: hf://openslr/librispeech_asr?split=test.clean
+    text_only: true
+
+transcript-translate-to-en:
+  id: transcript-translate-to-en.validation.v1
+  metrics: [accuracy]
+transcript-translate-to-en.dev.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-aicovost2?name=zh-CN_en&split=train
+    target_language: English
+transcript-translate-to-en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=zh-CN_en&split=validation
+    text_only: true
+    target_language: English
+
+transcript-translate-from-en:
+  id: transcript-translate-from-en.validation.v1
+  metrics: [accuracy]
+transcript-translate-from-en.dev.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-aicovost2?name=en_zh-CN&split=train
+    target_language: Chinese
+transcript-translate-from-en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_zh-CN&split=validation
+    text_only: true
+    target_language: Chinese
+
+transcript-boolq:
+  id: transcript-boolq.validation.v1
+  metrics: [accuracy]
+transcript-boolq.dev.v1:
   class: evals.elsuite.audio.eval:SpokenBoolQ
   args:
     dataset: hf://fixie-ai/boolq-audio?split=train
-audio-boolq.validation.v1:
+transcript-boolq.validation.v1:
   class: evals.elsuite.audio.eval:SpokenBoolQ
   args:
     dataset: hf://fixie-ai/boolq-audio?split=validation
+    text_only: true
+
+transcript-ser:
+  id: transcript-ser.validation.v1
+  metrics: [accuracy]
+transcript-ser.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenER
+  args:
+    dataset: hf://Zahra99/IEMOCAP_Audio?split=session1
+transcript-ser.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenER
+  args:
+    dataset: hf://Zahra99/IEMOCAP_Audio?split=session5
+    text_only: true
+
+transcript-sqa:
+  id: transcript-sqa.validation.v1
+  metrics: [accuracy]
+transcript-sqa.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://WillHeld/HeySQuAD_distill?split=train
+    eval_completion_fn: gpt-4-turbo
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria: "correctness: Is the answer correct?"
+transcript-sqa.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://WillHeld/HeySQuAD_distill?split=validation
+    text_only: true
+    eval_completion_fn: gpt-4-turbo
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria: "correctness: Is the answer correct?"

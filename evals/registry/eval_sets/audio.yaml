@@ -1,3 +1,7 @@
 audio:
   evals:
     - audio-*.validation.v1
+
+transcript:
+  evals:
+    - transcript-*.validation.v1
