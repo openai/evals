@@ -21,6 +21,7 @@ class FixieSolver(OpenAISolver):
     - `_api_base` to point to the Ultravox API server
     - `_api_key` to use the Ultravox_API_KEY environment variable
     - `_is_chat_model` to use a different dictionary of supported chat models
+    - `_perform_prechecks` to not try to calculate token lengths on audio inputs
     """
 
     def __init__(self, merge_adjacent_msgs: bool = False, **kwargs):
