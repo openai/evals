@@ -1,7 +1,7 @@
 from importlib import import_module
 
 from evals.elsuite.make_me_say.solvers.prompts import (
-    CONARTIST_MSG,
+    PERSUADER_MSG,
     COT_MESSAGE,
     EXTRACT_MESSAGE,
     TIME_REMINDER_MSG,
@@ -56,7 +56,7 @@ class LMManipulatorSolver(Solver):
         if self.lm_system_prompt:
             max_turns_or_time = task_state.current_state["max_turns_or_time"]
 
-            content = CONARTIST_MSG.format(duration=max_turns_or_time)
+            content = PERSUADER_MSG.format(duration=max_turns_or_time)
             task_state.task_description += f"\n{content}"
 
         # Add time reminder system message
