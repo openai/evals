@@ -6,10 +6,10 @@ from typing import Any, Optional
 import openai
 
 from evals.solvers.solver import NestedSolver, Solver, SolverResult, SolverSpec
-from evals.task_state import TaskState
+from evals.task_state import Message, TaskState
 
 
-class WhisperSolver(NestedSolver):
+class WhisperCascadedSolver(NestedSolver):
     """
     This solver rewrites any supplied messages with audio content to only have text content,
     by transcribing the audio using Whisper (Large).
@@ -41,17 +41,17 @@ class WhisperSolver(NestedSolver):
     def name(self) -> str:
         return f"{self.solver.name}_whisper"
 
-    def _process_msgs(self, raw_msgs: list[dict[str, str]]) -> list[dict[str, str]]:
+    def _process_msgs(self, raw_msgs: list[Message]) -> list[Message]:
         return [self._process_message(msg) for msg in raw_msgs]
 
-    def _process_message(self, msg: dict[str, str]) -> dict[str, str]:
+    def _process_message(self, msg: Message) -> Message:
         if msg.role == "user" and isinstance(msg.content, list):
-            parts = [self._process_part(part) for part in msg.content]
+            parts = [self._process_part(part) for part in msg.content]  # type: ignore
             if all([part["type"] == "text" for part in parts]):
                 msg.content = "\n".join([part["text"] for part in parts])
         return msg
 
-    def _process_part(self, part: dict[str, str]) -> dict[str, str]:
+    def _process_part(self, part: dict[str, Any]) -> dict[str, Any]:
         if part["type"] == "image_url":
             url = part["image_url"]["url"]
             if url.startswith("data:audio/x-wav;base64,"):

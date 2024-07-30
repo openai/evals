@@ -20,6 +20,7 @@ from evals.record import RecorderBase
 
 logger = logging.getLogger(__name__)
 DEFAULT_SAMPLE_RATE = 16000
+AUDIO_PLACEHOLDER = "<|audio|>"
 
 
 class Sample(BaseModel):
@@ -51,30 +52,31 @@ class AudioTask(evals.Eval):
         assert isinstance(sample, Sample)
         task_prompt = self.build_prompt(sample)
         if self.text_only:
-            prompt = [{"role": "system", "content": task_prompt + sample.transcript}]
+            content = task_prompt.replace(AUDIO_PLACEHOLDER, sample.transcript)
         else:
+            content = []
             with BytesIO() as buffer:
                 sf.write(buffer, sample.audio, DEFAULT_SAMPLE_RATE, format="WAV", subtype="PCM_16")
                 base_64_wav = base64.b64encode(buffer.getvalue()).decode()
-            prompt = [
+            parts = task_prompt.split(AUDIO_PLACEHOLDER)
+            assert len(parts) > 1
+            if parts[0]:
+                content.append({"type": "text", "text": parts[0]})
+            content.append(
                 {
-                    "role": "system",
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": "You are an audio language model with the ability to understand human speech.\n"
-                            + task_prompt,
-                        },
-                        {
-                            "type": "image_url",
-                            "image_url": {
-                                "url": f"data:audio/x-wav;base64,{base_64_wav}",
-                            },
-                        },
-                    ],
-                },
-            ]
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:audio/x-wav;base64,{base_64_wav}",
+                    },
+                }
+            )
+            if parts[1]:
+                content.append({"type": "text", "text": parts[1]})
 
+        prompt = [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": content},
+        ]
         try:
             result = self.completion_fn(
                 prompt=prompt,
@@ -83,6 +85,10 @@ class AudioTask(evals.Eval):
             )
             sampled = result.get_completions()[0]
         except Exception as e:
+            if isinstance(content, list):
+                for part in content:
+                    if part["type"] == "image_url":
+                        part["image_url"]["url"] = "<audio data>"
             logging.info("Sampling failed!")
             logging.info(sample)
             logging.info(f"Prompt: {prompt}")
@@ -163,7 +169,7 @@ class Transcribe(MatchAudioTask):
         return Sample(audio=row["audio"]["array"], transcript=row["text"], expected=row["text"])
 
     def build_prompt(self, sample: Sample):
-        return "Repeat after me in English:"
+        return f"Repeat after me in English: {AUDIO_PLACEHOLDER}"
 
     def compute_metrics(self, sample: Sample, sampled):
         expected = sample.expected
@@ -214,7 +220,7 @@ class Translate(MatchAudioTask):
         )
 
     def build_prompt(self, sample: Sample):
-        return "Translate the following into %s, without any explanation:" % self.target_language
+        return f"Translate the following into {self.target_language}, without any explanation: {AUDIO_PLACEHOLDER}"
 
     def compute_metrics(self, sample: Sample, sampled: str):
         expected = sample.expected
@@ -250,10 +256,8 @@ class SpokenER(MatchAudioTask):
         )
 
     def build_prompt(self, sample: Sample):
-        return (
-            "Respond in a single word which of these emotions (%s) best matches the following:"
-            % ", ".join(self.EMOTIONS)
-        )
+        emotion_list = ", ".join(self.EMOTIONS)
+        return f"Respond in a single word which of these emotions ({emotion_list}) best matches the following: {AUDIO_PLACEHOLDER}"
 
     def compute_metrics(self, sample: Sample, sampled: str):
         expected = sample.expected
@@ -273,7 +277,7 @@ class SpokenBoolQ(MatchAudioTask):
         )
 
     def build_prompt(self, sample: Sample):
-        return f'Context:\n{sample.context}\n\nAnswer the following question with only the single word "True" or "False", and no additional explanation:'
+        return f'Context:\n{sample.context}\n\nAnswer the following question with only the single word "True" or "False", and no additional explanation: {AUDIO_PLACEHOLDER}'
 
     def compute_metrics(self, sample: Sample, sampled: str):
         expected = sample.expected
@@ -298,4 +302,4 @@ class SpokenQA(ModelGradedAudioTask):
         )
 
     def build_prompt(self, sample: Sample):
-        return f"Context:\n{sample.context}\n\nAnswer the following question:"
+        return f"Context:\n{sample.context}\n\nAnswer the following question: {AUDIO_PLACEHOLDER}"

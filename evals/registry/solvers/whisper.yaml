@@ -1,6 +1,10 @@
+# The Whisper solver is a cascaded solver that can perform evals of audio datasets
+# by first transcribing the audio using the Whisper model, and then passing the
+# text transcript to the downstream solver. The Whisper solver can be used with
+# any solver that accepts text input.
+
 generation/whisper/gpt-4-turbo:
-  #solver: OpenAISolver
-  class: evals.solvers.providers.openai.whisper_solver:WhisperSolver
+  class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
   args:
     solver:
       class: evals.solvers.providers.openai.openai_solver:OpenAISolver
@@ -12,7 +16,7 @@ generation/whisper/gpt-4-turbo:
             max_tokens: 512
 
 generation/whisper/ultravox-v0.2:
-  class: evals.solvers.providers.openai.whisper_solver:WhisperSolver
+  class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
   args:
     solver:
       class: evals.solvers.providers.fixie.fixie_solver:FixieSolver
@@ -24,7 +28,7 @@ generation/whisper/ultravox-v0.2:
             max_tokens: 512
 
 generation/whisper/mixtral:
-  class: evals.solvers.providers.openai.whisper_solver:WhisperSolver
+  class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
   args:
     solver:
       class: evals.solvers.providers.together.together_solver:TogetherSolver
