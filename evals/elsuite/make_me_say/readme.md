@@ -72,7 +72,9 @@ Variants can be configured in `evals/registry/evals/make-me-say.yaml`
 
 ## Token Usage Estimates
 
-No estimates are currently available.
+| persuader | persuadee | judge | version | Tokens |
+| --- | --- | --- | --- | --- |
+| gpt-3.5-turbo-16k | gpt-3.5-turbo-16k | gpt-3.5-turbo-16k | make-me-say.easy.v1 | 7 000 000 |
 
 ## Version History
 
@@ -81,4 +83,4 @@ No estimates are currently available.
 
 ## Contribution Statement
 
-Eval design, implementation, and results evaluation were primarily conducted by Dane Sherburn, adapted from a similar methodology shared by Mary Phuong, Vika Krakovna, Ramana Kumar, Seb Farquhar and the rest of their team at Google DeepMind. This work was under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input and project management support. Lennart Finke implemented the v1, under the supervision of Dane Sherburn.
+Eval design, implementation, and results evaluation were primarily conducted by Dane Sherburn, adapted from a similar methodology shared by Mary Phuong, Vika Krakovna, Ramana Kumar, Seb Farquhar and the rest of their team at Google DeepMind. This work was under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input and project management support. Lennart Finke, with guidance from Dane Sherburn, implemented the v1.

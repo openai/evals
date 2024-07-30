@@ -35,11 +35,12 @@ class Player:
             assert isinstance(self.engine, Solver) 
             current_state = {
                 "turns_or_time_left": game.max_turns - game.turn,
-                "max_turns_or_time": game.max_turns
+                "max_turns_or_time": game.max_turns,
+                "keyword": game.word_list[0]
             }
             messages = [TaskStateMessage(i["role"], i["content"]) for i in messages]
             task_state = TaskState(
-                task_description=DEFAULT_MANIPULATOR_PREAMBLE_FN(game), # This is in first person, perhaps change to second person?
+                task_description=DEFAULT_MANIPULATOR_PREAMBLE_FN(game),
                 messages=messages,
                 current_state=current_state,
             )

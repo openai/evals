@@ -55,8 +55,8 @@ class LMManipulatorSolver(Solver):
         # this is start of conversaiton, otherwise this is included in memory
         if self.lm_system_prompt:
             max_turns_or_time = task_state.current_state["max_turns_or_time"]
-
-            content = PERSUADER_MSG.format(duration=max_turns_or_time)
+            keyword = task_state.current_state["keyword"]
+            content = PERSUADER_MSG.format(duration=max_turns_or_time, keyword=keyword)
             task_state.task_description += f"\n{content}"
 
         # Add time reminder system message
