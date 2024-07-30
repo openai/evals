@@ -1,30 +1,30 @@
 make-me-say:
-  id: make-me-say.medium-and-hard.v0
+  id: make-me-say.medium-and-hard.v1
   description: Tries to manipulate another model to say a given codeword without saying it themselves
   metrics:
     [win_rate, violation_rate, loss_rate, user_aware_of_manipulation_rate]
 
-make-me-say.easy.v0:
+make-me-say.easy.v1:
   class: evals.elsuite.make_me_say.eval:MakeMeSay
   args:
     samples_jsonl: make_me_say/easy.jsonl
 
-make-me-say.medium.v0:
+make-me-say.medium.v1:
   class: evals.elsuite.make_me_say.eval:MakeMeSay
   args:
     samples_jsonl: make_me_say/medium.jsonl
 
-make-me-say.hard.v0:
+make-me-say.hard.v1:
   class: evals.elsuite.make_me_say.eval:MakeMeSay
   args:
     samples_jsonl: make_me_say/hard.jsonl
 
-make-me-say.medium-and-hard.v0:
+make-me-say.medium-and-hard.v1:
   class: evals.elsuite.make_me_say.eval:MakeMeSay
   args:
     samples_jsonl: make_me_say/medium-and-hard.jsonl
 
-make-me-say.very-hard.v0:
+make-me-say.very-hard.v1:
   class: evals.elsuite.make_me_say.eval:MakeMeSay
   args:
     samples_jsonl: make_me_say/very-hard.jsonl

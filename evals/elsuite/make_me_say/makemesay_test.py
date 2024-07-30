@@ -10,7 +10,7 @@ from evals.elsuite.make_me_say.utils import openai_chatcompletion_create
 @pytest.fixture()
 def example_player_completion_fn() -> Any:
     return lambda prompt: openai_chatcompletion_create(  # type: ignore
-        model="gpt-3.5-turbo",
+        model="gpt-4o-mini",
         messages=prompt,
     )
 

@@ -1,0 +1,142 @@
+make-me-say/baseline/gpt-4o-mini:
+  class: evals.elsuite.make_me_say.solvers.lm_manipulator_solver:LMManipulatorSolver
+  args:
+    base_solver_class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+    base_solver_args:
+      completion_fn_options:
+        model: gpt-4o-mini
+        extra_options:
+          temperature: 0
+          max_tokens: 1000
+
+make-me-say/baseline/gpt-3.5-turbo-16k:
+  class: evals.elsuite.make_me_say.solvers.lm_manipulator_solver:LMManipulatorSolver
+  args:
+    base_solver_class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+    base_solver_args:
+      completion_fn_options:
+        model: gpt-3.5-turbo-16k
+        extra_options:
+          temperature: 1.0
+          max_tokens: 1000
+
+make-me-say/baseline/gpt-4:
+  class: evals.elsuite.make_me_say.solvers.lm_manipulator_solver:LMManipulatorSolver
+  args:
+    base_solver_class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+    base_solver_args:
+      completion_fn_options:
+        model: gpt-4
+        extra_options:
+          temperature: 1.0
+          max_tokens: 1000
+
+make-me-say/baseline/gpt-4-32k:
+  class: evals.elsuite.make_me_say.solvers.lm_manipulator_solver:LMManipulatorSolver
+  args:
+    base_solver_class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+    base_solver_args:
+      completion_fn_options:
+        model: gpt-4-32k
+        extra_options:
+          temperature: 1.0
+          max_tokens: 1000
+
+make-me-say/gpt-3.5-turbo-16k:
+  class: evals.elsuite.make_me_say.solvers.lm_manipulator_solver:LMManipulatorSolver
+  args:
+    base_solver_class: evals.solvers.nested.cot_solver:CoTSolver
+    base_solver_args:
+      cot_solver:
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+        args:
+          completion_fn_options:
+            model: gpt-3.5-turbo-16k
+            extra_options:
+              temperature: 1
+              max_tokens: 1000
+      extract_solver:
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+        args:
+          completion_fn_options:
+            model: gpt-3.5-turbo-16k
+            extra_options:
+              temperature: 1
+              max_tokens: 1000
+    lm_system_prompt: True
+    time_reminder: True
+
+make-me-say/gpt-4:
+  class: evals.elsuite.make_me_say.solvers.lm_manipulator_solver:LMManipulatorSolver
+  args:
+    base_solver_class: evals.solvers.nested.cot_solver:CoTSolver
+    base_solver_args:
+      cot_solver:
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+        args:
+          completion_fn_options:
+            model: gpt-4
+            extra_options:
+              temperature: 1
+              max_tokens: 1000
+      extract_solver:
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+        args:
+          completion_fn_options:
+            model: gpt-4
+            extra_options:
+              temperature: 1
+              max_tokens: 1000
+    lm_system_prompt: True
+    time_reminder: True
+  
+make-me-say/gpt-4o-mini:
+  class: evals.elsuite.make_me_say.solvers.lm_manipulator_solver:LMManipulatorSolver
+  args:
+    base_solver_class: evals.solvers.nested.cot_solver:CoTSolver
+    base_solver_args:
+      cot_solver:
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+        args:
+          completion_fn_options:
+            model: gpt-4o-mini
+            extra_options:
+              temperature: 1
+              max_tokens: 1000
+      extract_solver:
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+        args:
+          completion_fn_options:
+            model: gpt-4o-mini
+            extra_options:
+              temperature: 1
+              max_tokens: 1000
+    lm_system_prompt: True
+    time_reminder: True
+
+make-me-say/gpt-4-32k:
+  class: evals.elsuite.make_me_say.solvers.lm_manipulator_solver:LMManipulatorSolver
+  args:
+    base_solver_class: evals.solvers.nested.cot_solver:CoTSolver
+    base_solver_args:
+      cot_solver:
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+        args:
+          completion_fn_options:
+            model: gpt-4-32k
+            extra_options:
+              temperature: 1
+              max_tokens: 1000
+      extract_solver:
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+        args:
+          completion_fn_options:
+            model: gpt-4-32k
+            extra_options:
+              temperature: 1
+              max_tokens: 1000
+    lm_system_prompt: True
+    time_reminder: True
+
+make-me-say/cli:
+  class: evals.solvers.human_cli_solver:HumanCliSolver

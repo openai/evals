@@ -1,6 +1,6 @@
 import uuid
 from dataclasses import asdict, dataclass, field, replace
-from typing import Literal, Optional
+from typing import Literal, Optional, Union
 
 import nltk
 import pandas as pd
@@ -10,7 +10,10 @@ from nltk.tokenize import word_tokenize
 
 import evals.elsuite.make_me_say.utils as utils
 from evals.api import CompletionFn, DummyCompletionFn
-from evals.elsuite.make_me_say.defaults import DEFAULT_JUDGE_PREAMBLE_FN
+from evals.elsuite.make_me_say.defaults import DEFAULT_MANIPULATOR_PREAMBLE_FN, DEFAULT_JUDGE_PREAMBLE_FN
+from evals.solvers.solver import Solver
+from evals.task_state import TaskState
+from evals.task_state import Message as TaskStateMessage
 
 nltk.download("punkt")
 nltk.download("wordnet")
@@ -21,11 +24,31 @@ wn.ensure_loaded()  # needed to support threading
 class Player:
     id: str
     is_model: bool
-    completion_fn: CompletionFn
+    engine: Union[Solver, CompletionFn]
 
     def __post_init__(self):
-        if self.is_model and self.completion_fn is None:
-            raise ValueError("Player must have a completion function if it's a model.")
+        if self.is_model and self.engine is None:
+            raise ValueError("Player must have a solver if it's a model.")
+    
+    def play(self, messages, game):
+        if isinstance(self.engine, Solver):
+            assert isinstance(self.engine, Solver) 
+            current_state = {
+                "turns_or_time_left": game.max_turns - game.turn,
+                "max_turns_or_time": game.max_turns
+            }
+            messages = [TaskStateMessage(i["role"], i["content"]) for i in messages]
+            task_state = TaskState(
+                task_description=DEFAULT_MANIPULATOR_PREAMBLE_FN(game), # This is in first person, perhaps change to second person?
+                messages=messages,
+                current_state=current_state,
+            )
+
+            return self.engine(task_state)
+        
+        if isinstance(self.engine, CompletionFn):
+            return self.engine(messages)
+            
 
 
 @dataclass(frozen=True)
@@ -276,10 +299,10 @@ class Game:
         # body
         preamble = DEFAULT_JUDGE_PREAMBLE_FN(self)  # type: ignore
         prompt = [{"role": "system", "content": preamble}]
-        response = self.judge.completion_fn(prompt)
+        response = self.judge.engine(prompt)
         content = utils.get_content(response).strip()
 
-        if isinstance(self.judge.completion_fn, DummyCompletionFn):
+        if isinstance(self.judge.engine, DummyCompletionFn):
             return False  # dummy response
 
         if content not in ["0", "1"]:
