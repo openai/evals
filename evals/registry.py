@@ -3,7 +3,6 @@ Functions to handle registration of evals. To add a new eval to the registry,
 add an entry in one of the YAML files in the `../registry` dir.
 By convention, every eval name should start with {base_eval}.{split}.
 """
-
 import copy
 import difflib
 import functools
