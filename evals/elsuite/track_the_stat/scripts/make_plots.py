@@ -1,11 +1,11 @@
+from pathlib import Path
 import argparse
 import json
-from pathlib import Path
 
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
 from tqdm.auto import tqdm
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from evals.utils import log_utils
 
@@ -20,7 +20,6 @@ def zero_if_none(input_num):
 MODELS = [
     "gpt-4-0125-preview",
     "gpt-4-base",
-    "gpt-4o",
     "gpt-3.5-turbo-0125",
     "gemini-pro-1.0",
     "mixtral-8x7b-instruct",
@@ -33,7 +32,6 @@ OAI_MODELS = [
     "gpt-4-0125-preview",
     "gpt-3.5-turbo-0125",
     "gpt-4-base",
-    "gpt-4o",
 ]
 
 STAT_TO_LABEL = {
@@ -56,8 +54,6 @@ def get_model(spec):
         return "gpt-3.5-turbo-0125"
     elif "gpt-4-base" in spec["completion_fns"][0]:
         return "gpt-4-base"
-    elif "gpt-4o" in spec["completion_fns"][0]:
-        return "gpt-4o"
     elif "gemini-pro" in spec["completion_fns"][0]:
         return "gemini-pro-1.0"
     elif "mixtral-8x7b-instruct" in spec["completion_fns"][0]:
@@ -90,7 +86,9 @@ def fill_results_dict(results_dict, log_dir):
         model = get_model(spec)
         state_tracking = get_state_tracking(spec)
         for stat in results_dict:
-            results_dict[stat][task][model][state_tracking]["raw"].append(final_result[stat])
+            results_dict[stat][task][model][state_tracking]["raw"].append(
+                final_result[stat]
+            )
     # compute means/std_errs
     for file in tqdm(files):
         spec = specs[file]
@@ -99,7 +97,9 @@ def fill_results_dict(results_dict, log_dir):
         state_tracking = get_state_tracking(spec)
         for stat in results_dict:
             data_points = results_dict[stat][task][model][state_tracking]["raw"]
-            results_dict[stat][task][model][state_tracking]["mean"] = np.mean(data_points)
+            results_dict[stat][task][model][state_tracking]["mean"] = np.mean(
+                data_points
+            )
             results_dict[stat][task][model][state_tracking]["std_err"] = np.std(
                 data_points
             ) / np.sqrt(len(data_points) if len(data_points) > 1 else 1)
@@ -110,7 +110,10 @@ def prepare_results_dict():
     results_dict = {
         stat: {
             task: {
-                model: {state_tracking: {"raw": []} for state_tracking in ["implicit", "explicit"]}
+                model: {
+                    state_tracking: {"raw": []}
+                    for state_tracking in ["implicit", "explicit"]
+                }
                 for model in MODELS
             }
             for task in ["mode", "median"]
@@ -131,8 +134,13 @@ def make_bar_plot(results_dict: dict, task: str, stat: str, save_path: Path):
 
     state_tracking_kinds = ["explicit", "implicit"]
 
-    means = [[data[model][cat]["mean"] for cat in state_tracking_kinds] for model in models]
-    std_errs = [[data[model][cat]["std_err"] for cat in state_tracking_kinds] for model in models]
+    means = [
+        [data[model][cat]["mean"] for cat in state_tracking_kinds] for model in models
+    ]
+    std_errs = [
+        [data[model][cat]["std_err"] for cat in state_tracking_kinds]
+        for model in models
+    ]
     cmap = plt.get_cmap("Paired")
     colors = np.array([cmap(i) for i in range(len(state_tracking_kinds))])
 
@@ -163,7 +171,8 @@ def make_bar_plot(results_dict: dict, task: str, stat: str, save_path: Path):
     ax.set_xlabel(STAT_TO_LABEL[stat])
     # maximum x + xerr value times 1.2
     x_max = (
-        max([m for mean in means for m in mean]) + max([e for err in std_errs for e in err])
+        max([m for mean in means for m in mean])
+        + max([e for err in std_errs for e in err])
     ) * 1.2
     ax.set_xlim([0, x_max])
     ax.set_yticks(x)
@@ -261,7 +270,7 @@ def main(args: argparse.Namespace):
 
     results_dict = make_results_dict(log_dir)
 
-    for stat in tqdm(results_dict.keys(), desc="Plotting..."):
+    for stat in tqdm(results_dict.keys(), desc=f"Plotting..."):
         for task in tqdm(["mode", "median"], desc=f"Plotting {stat}"):
             save_path = save_dir / f"{task}_{stat}.png"
             make_bar_plot(results_dict, task, stat, save_path)
@@ -277,7 +286,11 @@ def main(args: argparse.Namespace):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--log_dir", type=str, required=True, help="Where the logs are stored")
-    parser.add_argument("--save_dir", type=str, required=True, help="Where to save the plots")
+    parser.add_argument(
+        "--log_dir", type=str, required=True, help="Where the logs are stored"
+    )
+    parser.add_argument(
+        "--save_dir", type=str, required=True, help="Where to save the plots"
+    )
     args = parser.parse_args()
     main(args)

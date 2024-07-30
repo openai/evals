@@ -1,11 +1,11 @@
+from pathlib import Path
 import argparse
 import json
-from pathlib import Path
 
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
 from tqdm.auto import tqdm
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from evals.utils import log_utils
 
@@ -23,7 +23,6 @@ MODELS = [
     "cot/gpt-3.5-turbo",
     "gpt-3.5-turbo",
     "gpt-4-base",
-    "gpt-4o",
     "gemini-pro",
     "mixtral-8x7b-instruct",
     "llama-2-70b-chat",
@@ -36,7 +35,6 @@ OAI_MODELS = [
     "cot/gpt-3.5-turbo",
     "gpt-3.5-turbo",
     "gpt-4-base",
-    "gpt-4o",
 ]
 
 
@@ -100,7 +98,9 @@ def make_results_dict(log_dir: Path) -> dict:
 def prepare_results_dict() -> dict:
     results_dict = {
         stat: {
-            distractor: {model: {"raw": [], "mean": 0, "std_err": 0} for model in MODELS}
+            distractor: {
+                model: {"raw": [], "mean": 0, "std_err": 0} for model in MODELS
+            }
             for distractor in DISTRACTORS
         }
         for stat in [
@@ -136,9 +136,9 @@ def fill_results_dict(results_dict: dict, log_dir: Path) -> dict:
         for stat in results_dict:
             data_points = results_dict[stat][distractor][model]["raw"]
             results_dict[stat][distractor][model]["mean"] = np.mean(data_points)
-            results_dict[stat][distractor][model]["std_err"] = np.std(data_points) / np.sqrt(
-                NUM_REPEATS
-            )
+            results_dict[stat][distractor][model]["std_err"] = np.std(
+                data_points
+            ) / np.sqrt(NUM_REPEATS)
     return results_dict
 
 
@@ -154,8 +154,6 @@ def get_model(spec):
         return "gpt-3.5-turbo"
     elif "gpt-4-base" in spec["completion_fns"][0]:
         return "gpt-4-base"
-    elif "gpt-4o" in spec["completion_fns"][0]:
-        return "gpt-4o"
     elif "gemini-pro" in spec["completion_fns"][0]:
         return "gemini-pro"
     elif "mixtral-8x7b-instruct" in spec["completion_fns"][0]:
@@ -207,7 +205,9 @@ def make_bar_plot(results_dict: dict, stat: str, save_path: Path):
         legend_indices = list(range(len(distractors)))[::-1]
 
     means = [[data[dis][model]["mean"] for dis in distractors] for model in models]
-    std_errs = [[data[dis][model]["std_err"] for dis in distractors] for model in models]
+    std_errs = [
+        [data[dis][model]["std_err"] for dis in distractors] for model in models
+    ]
     cmap = plt.get_cmap("Set3")
     colors = np.array([cmap(i) for i in range(len(distractors))])
 
@@ -282,9 +282,15 @@ def count_tokens(log_dir) -> dict[str, dict[str, dict[str, int]]]:
         samplings = log_utils.extract_individual_results(log, "sampling")
         for sampling in samplings:
             usage = sampling["usage"]
-            token_counts[model][distractor]["input"] += zero_if_none(usage["prompt_tokens"])
-            token_counts[model][distractor]["output"] += zero_if_none(usage["completion_tokens"])
-            token_counts[model][distractor]["total"] += zero_if_none(usage["total_tokens"])
+            token_counts[model][distractor]["input"] += zero_if_none(
+                usage["prompt_tokens"]
+            )
+            token_counts[model][distractor]["output"] += zero_if_none(
+                usage["completion_tokens"]
+            )
+            token_counts[model][distractor]["total"] += zero_if_none(
+                usage["total_tokens"]
+            )
     return token_counts
 
 
@@ -312,7 +318,11 @@ def main(args: argparse.Namespace):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--log_dir", type=str, required=True, help="Where the logs are stored")
-    parser.add_argument("--save_dir", type=str, required=True, help="Where to save the plots")
+    parser.add_argument(
+        "--log_dir", type=str, required=True, help="Where the logs are stored"
+    )
+    parser.add_argument(
+        "--save_dir", type=str, required=True, help="Where to save the plots"
+    )
     args = parser.parse_args()
     main(args)
