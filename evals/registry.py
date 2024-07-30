@@ -43,6 +43,7 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
         ("gpt-4-32k-", 32768),
         ("gpt-4-", 8192),
         ("gpt-4o-", 128_000),
+        ("gpt-4o-mini", 128_000),
     ]
     MODEL_NAME_TO_N_CTX: dict[str, int] = {
         "ada": 2048,
@@ -66,7 +67,8 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
         "gpt-4-1106-preview": 128_000,
         "gpt-4-turbo-preview": 128_000,
         "gpt-4-0125-preview": 128_000,
-        "gpt-4o": 128_000
+        "gpt-4o": 128_000,
+        "gpt-4o-mini": 128_000,
     }
 
     # first, look for an exact match
@@ -86,7 +88,14 @@ def is_chat_model(model_name: str) -> bool:
     if model_name in {"gpt-4-base"} or model_name.startswith("gpt-3.5-turbo-instruct"):
         return False
 
-    CHAT_MODEL_NAMES = {"gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4", "gpt-4-32k", "gpt-4o"}
+    CHAT_MODEL_NAMES = {
+        "gpt-3.5-turbo",
+        "gpt-3.5-turbo-16k",
+        "gpt-4",
+        "gpt-4-32k",
+        "gpt-4o",
+        "gpt-4o-mini",
+    }
 
     if model_name in CHAT_MODEL_NAMES:
         return True
