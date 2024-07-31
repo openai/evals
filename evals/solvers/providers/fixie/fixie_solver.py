@@ -24,17 +24,17 @@ class FixieSolver(OpenAISolver):
     - `_perform_prechecks` to not try to calculate token lengths on audio inputs
     """
 
-    def __init__(self, merge_adjacent_msgs: bool = False, **kwargs):
+    def __init__(self, api_base: Optional[str] = None, **kwargs):
         os.environ["EVALS_SEQUENTIAL"] = "1"  # Needed until vLLM supports parallel requests
+        self.api_base = api_base
         super().__init__(**kwargs)
-        self.merge_adjacent_msgs = merge_adjacent_msgs
         if self.valid_answers is not None:
             raise NotImplementedError("`valid_answers` not supported by FixieSolver")
 
     @property
     def _api_base(self) -> Optional[str]:
         """The base URL for the API"""
-        return "https://ultravox.api.fixie.ai/v1"
+        return self.api_base or "https://ultravox.api.fixie.ai/v1"
 
     @property
     def _api_key(self) -> Optional[str]:
