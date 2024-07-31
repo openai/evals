@@ -1,0 +1,5 @@
+generation/direct/ultravox-v0.2:
+  class: evals.solvers.providers.fixie.fixie_solver:FixieSolver
+  args:
+    completion_fn_options:
+      model: fixie-ai/ultravox-v0.2
