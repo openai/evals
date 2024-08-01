@@ -1,0 +1,26 @@
+generation/direct/llama-31-8b-chat:
+  class: evals.solvers.providers.groq.groq_solver:GroqSolver
+  args:
+    completion_fn_options:
+      model: llama-3.1-8b-instant
+      extra_options:
+        temperature: 1
+        max_tokens: 512
+
+generation/direct/llama-3-groq-70b-chat:
+  class: evals.solvers.providers.groq.groq_solver:GroqSolver
+  args:
+    completion_fn_options:
+      model: llama3-groq-70b-8192-tool-use-preview
+      extra_options:
+        temperature: 1
+        max_tokens: 512
+
+generation/direct/llama-3-groq-8b-chat:
+  class: evals.solvers.providers.groq.groq_solver:GroqSolver
+  args:
+    completion_fn_options:
+      model: llama3-groq-8b-8192-tool-use-preview
+      extra_options:
+        temperature: 1
+        max_tokens: 512

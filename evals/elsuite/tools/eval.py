@@ -3,7 +3,6 @@ import logging
 from typing import Any, Dict, List, Union
 from urllib.parse import parse_qs, urlparse
 
-import numpy as np
 from datasets import load_dataset
 from pydantic import BaseModel
 
@@ -13,7 +12,6 @@ from evals.api import CompletionFn
 from evals.record import RecorderBase
 
 logger = logging.getLogger(__name__)
-DEFAULT_SAMPLE_RATE = 16000
 
 
 class Sample(BaseModel):
@@ -32,12 +30,14 @@ class ToolsTask(evals.Eval):
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
-        assert len(completion_fns) == 1, "Audio tasks only support one completion fn"
+        assert len(completion_fns) == 1, "Tools tasks only support one completion fn"
         self.dataset = dataset
         self.temperature = temperature
         self.max_tokens = max_tokens
 
     def load_sample(self, row) -> list[Sample]:
+        # The FireFunction test data that we have doesn't have the right tool_call_ids, so
+        # we need to fix them up here.
         messages = row["messages"]
         last_tool_call_id = None
         for m in messages:
@@ -52,6 +52,10 @@ class ToolsTask(evals.Eval):
     def eval_sample(self, sample: Sample, rng):
         assert isinstance(sample, Sample)
         prompt = sample.messages[:2]
+        # For some reason non-OpenAI solvers don't work with additional keys on prompts.
+        for msg in prompt:
+            del msg["tool_calls"]
+            del msg["tool_call_id"]
         assistant_msg = sample.messages[2]
         try:
             result = self.completion_fn(
@@ -60,7 +64,6 @@ class ToolsTask(evals.Eval):
                 max_tokens=self.max_tokens,
                 tools=[{"type": "function", "function": f} for f in sample.functions],
             )
-            print("result", vars(result))
             sampled = result.get_completions()[0]
         except Exception as e:
             logging.info("Sampling failed!")
@@ -69,36 +72,48 @@ class ToolsTask(evals.Eval):
             logging.info(f"Error: {str(e)}")
             sampled = "ERROR: " + str(e)
 
-        match = self.match_tool_call(assistant_msg, sampled)
-        evals.record.record_metrics(score=match)
+        score = self.score_tool_call(assistant_msg, sampled)
+        match = score == 1
+        evals.record.record_match(match, expected=assistant_msg, sampled=sampled, score=score)
+        return match
 
-    def match_tool_call(self, gt_message: Sample, sampled: List[Union[str, Dict[str, Any]]]) -> int:
+    def score_tool_call(self, gt_message: Sample, sampled: List[Union[str, Dict[str, Any]]]) -> int:
         sampled_tool_call = isinstance(sampled, dict) and sampled.get("type") == "function"
         expected_tool_call = gt_message.get("tool_calls") is not None
 
         if sampled_tool_call != expected_tool_call:
+            print(f"tool call mismatch: {sampled_tool_call} != {expected_tool_call}")
+            print(f"sampled: {sampled}")
             return 0
 
         if not sampled_tool_call:
-            # simply not using a tool call is considered a valid response
+            # simply not using a tool call when none is needed is a correct response
             return 1
 
+        # 0.333 for getting any tool call, 0.333 for the right function name, 0.333 for the right args
         sampled_func = sampled["function"]
+        sampled_name = sampled_func["name"]
+        sampled_args = json.loads(sampled_func["arguments"])
         gt_func = gt_message["tool_calls"][0]["function"]
-
-        score = (
-            1  # since it did a tool call
-            + (sampled_func["name"] == gt_func["name"])
-            + (sampled_func["arguments"] == gt_func["arguments"])
-        )
-
-        return score / 3
+        gt_name = gt_func["name"]
+        gt_args = json.loads(gt_func["arguments"])
+        raw_score = 1
+        if sampled_name == gt_name:
+            raw_score += 1
+        else:
+            print(f"Function name mismatch: {sampled_name} != {gt_name}")
+        if sampled_args == gt_args:
+            raw_score += 1
+        else:
+            print(f"Function arguments mismatch: {sampled_args} != {gt_args}")
+        return raw_score / 3
 
     def run(self, recorder: RecorderBase):
         samples = self._get_dataset()
         self.eval_all_samples(recorder, samples)
-        metrics = recorder.get_metrics()
-        return {"score": np.mean([d["score"] for d in metrics])}
+        events = recorder.get_events("match")
+        score = sum(e.data["score"] for e in events) / len(events)
+        return {"accuracy": evals.metrics.get_accuracy(events), "score": score}
 
     def _get_dataset(self) -> List[Sample]:
         parsed = urlparse(self.dataset)
