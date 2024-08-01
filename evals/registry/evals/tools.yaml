@@ -4,8 +4,8 @@ tools:
 tools.dev.v1:
   class: evals.elsuite.tools.eval:ToolsTask
   args:
-    dataset: hf://fixie-ai/tools?split=train
+    dataset: hf://fixie-ai/tools-audio?split=train
 tools.validation.v1:
   class: evals.elsuite.tools.eval:ToolsTask
   args:
-    dataset: hf://fixie-ai/tools?split=validation
+    dataset: hf://fixie-ai/tools-audio?split=validation

@@ -3,7 +3,7 @@ from datasets import load_dataset
 
 def print_dataset_messages():
     # Load the dataset
-    dataset = load_dataset("fixie-ai/tools")
+    dataset = load_dataset("fixie-ai/tools-audio")
 
     # Iterate through each row in the dataset
     for row in dataset["train"]:

@@ -1,8 +1,9 @@
 import json
 import logging
-from typing import Any, List
+from typing import Any, Dict, List, Union
 from urllib.parse import parse_qs, urlparse
 
+import numpy as np
 from datasets import load_dataset
 from pydantic import BaseModel
 
@@ -67,15 +68,34 @@ class ToolsTask(evals.Eval):
             logging.info(f"Prompt: {prompt}")
             logging.info(f"Error: {str(e)}")
             sampled = "ERROR: " + str(e)
-        match = sampled == assistant_msg["content"]
-        evals.record.record_match(match, expected=assistant_msg["content"], sampled=sampled)
-        return match
+
+        match = self.match_tool_call(assistant_msg, sampled)
+        evals.record.record_metrics(score=match)
+
+    def match_tool_call(self, gt_message: Sample, sampled: List[Union[str, Dict[str, Any]]]) -> int:
+        sampled_tool_call = isinstance(sampled, dict) and sampled.get("type") == "function"
+        expected_tool_call = gt_message.get("tool_calls") is not None
+
+        if sampled_tool_call != expected_tool_call:
+            return 0
+
+        if not sampled_tool_call:
+            # simply not using a tool call is considered a valid response
+            return 1
+
+        sampled_func = sampled["function"]
+        gt_func = gt_message["tool_calls"][0]["function"]
+
+        return (
+            sampled_func["name"] == gt_func["name"]
+            and sampled_func["arguments"] == gt_func["arguments"]
+        )
 
     def run(self, recorder: RecorderBase):
         samples = self._get_dataset()
         self.eval_all_samples(recorder, samples)
-        events = recorder.get_metrics()
-        return {"accuracy": evals.metrics.get_accuracy(events)}
+        metrics = recorder.get_metrics()
+        return {"score": np.mean([d["score"] for d in metrics])}
 
     def _get_dataset(self) -> List[Sample]:
         parsed = urlparse(self.dataset)
