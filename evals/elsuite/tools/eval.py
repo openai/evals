@@ -86,10 +86,13 @@ class ToolsTask(evals.Eval):
         sampled_func = sampled["function"]
         gt_func = gt_message["tool_calls"][0]["function"]
 
-        return (
-            sampled_func["name"] == gt_func["name"]
-            and sampled_func["arguments"] == gt_func["arguments"]
+        score = (
+            1  # since it did a tool call
+            + (sampled_func["name"] == gt_func["name"])
+            + (sampled_func["arguments"] == gt_func["arguments"])
         )
+
+        return score / 3
 
     def run(self, recorder: RecorderBase):
         samples = self._get_dataset()
