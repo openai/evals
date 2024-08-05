@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 import openai
 from openai import OpenAI
@@ -62,12 +62,20 @@ class OpenAIBaseCompletionResult(CompletionResult):
 
 
 class OpenAIChatCompletionResult(OpenAIBaseCompletionResult):
-    def get_completions(self) -> list[str]:
+    def get_completions(self) -> list[Union[str, Dict[str, Any]]]:
         completions = []
         if self.raw_data:
             for choice in self.raw_data.choices:
                 if choice.message.content is not None:
                     completions.append(choice.message.content)
+                if choice.message.tool_calls is not None:
+                    # TODO: is this the right output format?
+                    completions.extend(
+                        [
+                            {"function": vars(f.function), "id": f.id, "type": f.type}
+                            for f in choice.message.tool_calls
+                        ]
+                    )
         return completions
 
 
