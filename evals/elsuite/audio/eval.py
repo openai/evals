@@ -277,7 +277,11 @@ class SpokenQA(ModelGradedAudioTask):
         return build_messages(self.DEFAULT_PROMPT, task_prompt, input)
 
     def get_expected(self, sample: Sample):
-        return sample.data["answer"]
+        return (
+            sample.data["answers"][0]["text"]
+            if not sample.data["is_impossible"]
+            else "the question is impossible to answer"
+        )
 
 
 class SpokenTools(MatchAudioTask):
