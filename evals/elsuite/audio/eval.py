@@ -25,6 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class Sample(BaseModel):
+    # This will typically correspond to a row in a HF dataset, although
+    # in some cases a row may produce multiple samples.
     data: dict[str, Any]
 
 
@@ -48,6 +50,10 @@ class AudioTask(evals.Eval):
         self.temperature = temperature
         self.max_tokens = max_tokens
 
+    @property
+    def recorder(self):
+        return evals.record.default_recorder()
+
     def eval_sample(self, sample: Sample, rng):
         assert isinstance(sample, Sample)
         prompt = self.build_prompt(sample)
@@ -58,7 +64,7 @@ class AudioTask(evals.Eval):
     def run(self, recorder: RecorderBase):
         samples = self.load_dataset()
         self.eval_all_samples(recorder, samples)
-        self.compute_corpus_metrics(recorder)
+        self.compute_corpus_metrics()
 
     def load_dataset(self):
         ds = load_hf_dataset(self.dataset).cast_column("audio", Audio)
@@ -86,20 +92,17 @@ class AudioTask(evals.Eval):
 
 
 class MatchAudioTask(AudioTask):
-    def get_match_events(self, recorder: RecorderBase):
-        return recorder.get_events("match")
+    def get_match_events(self):
+        return self.recorder.get_events("match")
 
-    def get_expected(self, recorder: RecorderBase):
-        events = self.get_match_events(recorder)
-        return list(map(lambda e: e.data["expected"], events))
+    def get_expected_values(self):
+        return list(map(lambda e: e.data["expected"], self.get_match_events()))
 
-    def get_sampled(self, recorder: RecorderBase):
-        events = recorder.get_events("match")
-        return list(map(lambda e: e.data["sampled"], events))
+    def get_sampled_values(self):
+        return list(map(lambda e: e.data["sampled"], self.get_match_events()))
 
-    def compute_corpus_metrics(self, recorder: RecorderBase):
-        events = recorder.get_events("match")
-        return {"accuracy": evals.metrics.get_accuracy(events)}
+    def compute_corpus_metrics(self):
+        return {"accuracy": evals.metrics.get_accuracy(self.get_match_events())}
 
 
 class ModelGradedAudioTask(AudioTask):
@@ -130,16 +133,16 @@ class ModelGradedAudioTask(AudioTask):
         )
         evals.record.record_metrics(choice=choice, score=info["score"])
 
-    def compute_corpus_metrics(self, recorder: RecorderBase):
-        record_metrics = {}
-        events = recorder.get_metrics()
+    def compute_corpus_metrics(self):
+        metrics = {}
+        events = self.recorder.get_metrics()
         choices = [m["choice"] for m in events]
         counts = dict(Counter(choices))
-        record_metrics.update({f"counts/{k}": v for k, v in counts.items()})
+        metrics.update({f"counts/{k}": v for k, v in counts.items()})
         scores = [m["score"] for m in events if m["score"] is not None]
         if scores:
-            record_metrics["score"] = sum(scores) / len(scores)
-        return record_metrics
+            metrics["accuracy"] = sum(scores) / len(scores)
+        return metrics
 
 
 class Transcribe(MatchAudioTask):
@@ -157,10 +160,9 @@ class Transcribe(MatchAudioTask):
         evals.record.record_match(match, expected=expected, sampled=sampled, wer=score)
         return match
 
-    def compute_corpus_metrics(self, recorder: RecorderBase):
-        metrics = super().compute_corpus_metrics(recorder)
-        events = recorder.get_events("match")
-        metrics["wer"] = self._compute_wer(self.get_expected(events), self.get_sampled(events))
+    def compute_corpus_metrics(self):
+        metrics = super().compute_corpus_metrics()
+        metrics["wer"] = self._compute_wer(self.get_expected_values(), self.get_sampled_values())
         return metrics
 
     def _compute_wer(self, expected, sampled):
@@ -217,10 +219,8 @@ class Translate(MatchAudioTask):
 
     def compute_corpus_metrics(self, recorder: RecorderBase):
         metrics = super().compute_corpus_metrics(recorder)
-        events = recorder.get_events("match")
-        expected = self.get_expected(events)
-        sampled = self.get_sampled(events)
-        refs = [[e] for e in expected]
+        sampled = self.get_sampled_values()
+        refs = [[e] for e in self.get_expected_values()]
         metrics["sacrebleu_score"] = self.bleu.corpus_score(sampled, refs).score
         return metrics
 
@@ -272,13 +272,14 @@ class SpokenQA(ModelGradedAudioTask):
         input = sample.data["question"] if text_only else sample.data["audio"]
         return build_messages(self.DEFAULT_PROMPT, task_prompt, input)
 
-    # def get_expected(self, sample: Sample):
-    #    return sample.data["answer"]
+    def get_expected(self, sample: Sample):
+        return sample.data["answer"]
 
 
-class Tools(AudioTask):
+class SpokenTools(AudioTask):
     def load_dataset(self):
-        ds = load_hf_dataset(self.dataset).cast_column("user_message_audios", List[Audio])
+        # TODO: create samples for each user message in the row.
+        ds = load_hf_dataset(self.dataset).cast_column("user_message_audios", Audio)
         return [Sample(sample) for sample in ds]
 
     def build_messages(self, sample: Sample, text_only: bool = False):
@@ -343,7 +344,8 @@ class Tools(AudioTask):
             print(f"Function arguments mismatch: {sampled_args} != {gt_args}")
         return raw_score / 3
 
-    def compute_corpus_metrics(self, recorder: RecorderBase):
-        events = recorder.get_events("match")
-        score = sum(e.data["score"] for e in events) / len(events)
-        return {"accuracy": evals.metrics.get_accuracy(events), "score": score}
+    def compute_corpus_metrics(self):
+        metrics = super().compute_corpus_metrics()
+        events = self.recorder.get_match_events()
+        metrics["score"] = sum(e.data["score"] for e in events) / len(events)
+        return metrics
