@@ -16,7 +16,7 @@ audio-translate-to-en:
 audio-translate-to-en.dev.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
-    dataset: hf://fixie-aicovost2?name=es_en&split=train
+    dataset: hf://fixie-ai/covost2?name=es_en&split=train
     target_language: English
 audio-translate-to-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
@@ -30,7 +30,7 @@ audio-translate-from-en:
 audio-translate-from-en.dev.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
-    dataset: hf://fixie-aicovost2?name=en_desplit=train
+    dataset: hf://fixie-ai/covost2?name=en_de&split=train
     target_language: German
 audio-translate-from-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
@@ -101,7 +101,7 @@ transcript-translate-to-en:
 transcript-translate-to-en.dev.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
-    dataset: hf://fixie-aicovost2?name=es_en&split=train
+    dataset: hf://fixie-ai/covost2?name=es_en&split=train
     target_language: English
 transcript-translate-to-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
@@ -116,7 +116,7 @@ transcript-translate-from-en:
 transcript-translate-from-en.dev.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
-    dataset: hf://fixie-aicovost2?name=en_de&split=train
+    dataset: hf://fixie-ai/covost2?name=en_de&split=train
     target_language: German
 transcript-translate-from-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate

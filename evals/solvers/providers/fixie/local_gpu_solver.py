@@ -1,9 +1,10 @@
 import base64
 import contextlib
 import io
+from concurrent.futures import ProcessPoolExecutor
 from typing import Any, Dict
 
-import soundfile as sf
+import librosa
 import torch
 import torch.distributed
 import torch.multiprocessing as mp
@@ -30,30 +31,26 @@ def run_on_master_first(is_master: bool):
         yield
 
 
-def solver_worker(rank: int, world_size: int, queue: mp.Queue, model: str):
+def solver_initializer(rank_queue: mp.Queue, world_size: int, model: str):
     print("is dist inited?", torch.distributed.is_initialized())
-    print("queue", queue)
+    # torch.distributed.recv
+    # print("queue", queue)
+    rank = rank_queue.get()
 
     if torch.cuda.is_available():
         device = torch.device("cuda", rank)
     else:
         raise ValueError("Only GPU mode is supported by LocalGPUSolver, but no GPUs were found")
 
+    global pipe
+
     with run_on_master_first(is_master=rank == 0):
         pipe = transformers.pipeline(model=model, trust_remote_code=True, device=device)
 
-    inputs: Dict[str, Any]
-    result_queue: mp.Queue
 
-    while True:
-        inputs, result_queue = queue.get()
-        print("got intput", inputs)
-        if inputs is None:
-            # indicates the end of inputs / kill process
-            return
-
-        pipe(inputs)
-        # result_queue.put(completion)
+def solver_worker(inputs: Dict[str, Any]):
+    global pipe
+    return pipe(inputs, max_new_tokens=64)
 
 
 class LocalGPUSolver(Solver):
@@ -78,15 +75,15 @@ class LocalGPUSolver(Solver):
         # Set the start method for the entire script
         mp.set_start_method("spawn")
 
-        self.queue = mp.Queue()
+        rank_queue = mp.Queue()
+        for i in range(num_gpus):
+            rank_queue.put(i)
 
-        # TODO: handle num_gpus=0 differently
-        self.process_context = mp.spawn(
-            solver_worker,
-            args=(num_gpus, self.queue, completion_fn_options["model"]),
-            nprocs=num_gpus,
-            join=False,
-            daemon=True,
+        # # TODO: handle num_gpus=0 differently
+        self.executor = ProcessPoolExecutor(
+            max_workers=num_gpus,
+            initializer=solver_initializer,
+            initargs=(rank_queue, num_gpus, completion_fn_options["model"]),
         )
 
     def copy(self):
@@ -105,29 +102,20 @@ class LocalGPUSolver(Solver):
             msgs[-1]["content"] = "".join(parts_str)
             data_parts = [x["image_url"] for x in parts if x["type"] == "image_url"]
             assert len(data_parts) == 1
-            audio_data = base64.b64decode(data_parts[0])
+            audio_data = data_parts[0]["url"].split(",")[1]
+            audio_data = base64.b64decode(audio_data)
             audio_stream = io.BytesIO(audio_data)
 
             # Read the audio data using soundfile
-            inputs["audio"] = sf.read(audio_stream, samplerate=16000)[0]
+            inputs["audio"] = librosa.load(audio_stream, sr=16000)[0]
 
         inputs["turns"] = msgs
 
-        # create a way for the worker to return the result
-        # result_queue = mp.Queue()
-        # send the inputs to the worker
-        self.queue.put((inputs, None))
-        # get the result back from the worker
-        # completion_output = None.get()
-        completion_output = "True"
+        completion_output = self.executor.submit(solver_worker, inputs).result()
 
         solver_result = SolverResult(completion_output)
 
         return solver_result
 
     def __del__(self):
-        if getattr(self, "process_context", None):
-            for _ in self.process_context.processes:
-                self.queue.put((None, None))
-
-            self.process_context.join()
+        self.executor.shutdown()
