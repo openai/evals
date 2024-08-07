@@ -1,5 +1,4 @@
 import base64
-import contextlib
 import io
 from concurrent.futures import ProcessPoolExecutor
 from typing import Any, Dict
@@ -14,26 +13,6 @@ from evals.solvers.solver import Solver, SolverResult
 from evals.task_state import TaskState
 
 SAMPLE_RATE = 16000
-
-
-def solver_initializer(rank_queue: mp.Queue, world_size: int, model: str):
-    """Initializes the pipeline and the underlying model on the specified GPU."""
-    print("is dist inited?", torch.distributed.is_initialized())
-    rank = rank_queue.get()
-
-    if torch.cuda.is_available():
-        device = torch.device("cuda", rank)
-    else:
-        raise ValueError("Only GPU mode is supported by LocalGPUSolver, but no GPUs were found")
-
-    global pipe
-
-    with run_on_master_first(is_master=rank == 0):
-        pipe = transformers.pipeline(model=model, trust_remote_code=True, device=device)
-
-
-def solver_worker(inputs: Dict[str, Any]):
-    return pipe(inputs, max_new_tokens=64)
 
 
 class LocalGPUSolver(Solver):
@@ -66,8 +45,9 @@ class LocalGPUSolver(Solver):
         mp.set_start_method("spawn")
 
         rank_queue = mp.Queue()
-        for i in range(num_gpus):
-            rank_queue.put(i)
+
+        # Only start the primary to let it download the model first
+        rank_queue.put(0)
 
         # # TODO: handle num_gpus=0 differently
         self.executor = ProcessPoolExecutor(
@@ -77,7 +57,6 @@ class LocalGPUSolver(Solver):
         )
 
     def copy(self):
-        # FIXME: ignoring copy due to MP error
         return self
 
     def _solve(self, task_state: TaskState, **kwargs) -> SolverResult:
@@ -113,18 +92,23 @@ class LocalGPUSolver(Solver):
         self.executor.shutdown()
 
 
-@contextlib.contextmanager
-def run_on_master_first(is_master: bool):
-    """
-    If using DDP, allows the master process to run the enclosed code first.
-    This is useful when only one process should download a model or other resources first to avoid race conditions.
-    """
-    if is_master:
-        yield
-        if torch.distributed.is_initialized():
-            torch.distributed.barrier()
+def solver_initializer(rank_queue: mp.Queue, world_size: int, model: str):
+    """Initializes the pipeline and the underlying model on the specified GPU."""
+    rank = rank_queue.get()
+
+    if torch.cuda.is_available():
+        device = torch.device("cuda", rank)
     else:
-        # All other processes wait for the master to download the model first
-        if torch.distributed.is_initialized():
-            torch.distributed.barrier()
-        yield
+        raise ValueError("Only GPU mode is supported by LocalGPUSolver, but no GPUs were found")
+
+    global pipe
+
+    pipe = transformers.pipeline(model=model, trust_remote_code=True, device=device)
+
+    # Let the other initializers start now that the download has finished
+    for i in range(1, world_size):
+        rank_queue.put(i)
+
+
+def solver_worker(inputs: Dict[str, Any]):
+    return pipe(inputs, max_new_tokens=64)
