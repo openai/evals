@@ -187,13 +187,12 @@ transcript-sqa.validation.v1:
       criteria: "correctness: Is the answer correct?"
 
 transcript-tools:
-  id: audio-tools.validation.v1
+  id: transcript-tools.validation.v1
   metrics: [accuracy]
 transcript-tools.dev.v1:
   class: evals.elsuite.audio.eval:SpokenTools
   args:
     dataset: hf://fixie-ai/tools-audio?split=train
-    text_only: true
 transcript-tools.validation.v1:
   class: evals.elsuite.audio.eval:SpokenTools
   args:

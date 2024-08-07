@@ -18,13 +18,11 @@ def load_hf_dataset(hf_url: str) -> Dataset:
     return load_dataset(parsed.netloc + parsed.path, **query)
 
 
-def build_messages(
-    system_prompt: str, task_prompt: str, audio: Audio, transcript: str, text_only: bool
-):
-    if text_only:
-        content = task_prompt.replace(AUDIO_PLACEHOLDER, transcript)
+def build_messages(system_prompt: str, task_prompt: str, audio_or_transcript: Union[str, Audio]):
+    if isinstance(audio_or_transcript, str):
+        content = task_prompt.replace(AUDIO_PLACEHOLDER, audio_or_transcript)
     else:
-        content = make_audio_content(task_prompt, audio["array"])
+        content = make_audio_content(task_prompt, audio_or_transcript["array"])
     prompt = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": content},
@@ -51,6 +49,7 @@ def make_audio_content(prompt: str, audio: np.ndarray):
     )
     if parts[1]:
         content.append({"type": "text", "text": parts[1]})
+    return content
 
 
 def redact_audio_content(content: Union[str, list[dict[str, Any]]]):

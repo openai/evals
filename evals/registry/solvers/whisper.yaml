@@ -15,6 +15,30 @@ generation/whisper/gpt-4-turbo:
             temperature: 1
             max_tokens: 512
 
+generation/whisper/gpt-4o:
+  class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
+  args:
+    solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4o
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+generation/whisper/gpt-4o-mini:
+  class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
+  args:
+    solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4o-mini
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
 generation/whisper/ultravox-v0.2:
   class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
   args:
