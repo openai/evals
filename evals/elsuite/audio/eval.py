@@ -104,9 +104,11 @@ class AudioTask(evals.Eval):
         parsed = urlparse(self.dataset)
         query = parse_qs(parsed.query)
         query = {k: v[0] for k, v in query.items()}
-        dataset = load_dataset(parsed.netloc + parsed.path, **query).cast_column(
+        dataset = load_dataset(parsed.netloc + parsed.path, **query, streaming=True).cast_column(
             "audio", Audio(sampling_rate=DEFAULT_SAMPLE_RATE)
         )
+        if evals.eval._MAX_SAMPLES is not None:
+            dataset = dataset.take(evals.eval._MAX_SAMPLES)
         return [self.load_sample(sample) for sample in dataset]
 
 
