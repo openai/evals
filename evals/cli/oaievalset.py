@@ -1,6 +1,7 @@
 """
 This file defines the `oaievalset` CLI for running eval sets.
 """
+
 import argparse
 import json
 import logging
@@ -67,6 +68,12 @@ def get_parser() -> argparse.ArgumentParser:
         default=True,
         help="Exit if any oaieval command fails.",
     )
+    parser.add_argument(
+        "--record_dir",
+        type=str,
+        default=None,
+        help="Directory to store eval metrics.",
+    )
     return parser
 
 
@@ -100,6 +107,9 @@ def run(
             if args.registry_path:
                 command.append("--registry_path")
                 command = command + args.registry_path
+            if args.record_dir:
+                command.append("--record_path")
+                command.append(f"{args.record_dir}/{eval.key}.log")
             if command in commands:
                 continue
             commands.append(command)
