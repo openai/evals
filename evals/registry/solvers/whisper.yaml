@@ -38,12 +38,3 @@ generation/whisper/mixtral:
           extra_options:
             temperature: 1
             max_tokens: 512
-
-generation/whisper/gpu-ultravox-dev:
-  class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
-  args:
-    solver:
-      class: evals.solvers.providers.fixie.local_gpu_solver:LocalGPUSolver
-      args:
-        completion_fn_options:
-          model: fixie-ai/ultravox-dev
