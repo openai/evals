@@ -236,10 +236,12 @@ class Translate(MatchAudioTask):
         return match
 
     def compute_corpus_metrics(self, events, expected: List[str], sampled: List[str]):
-        refs = [[e] for e in expected]
+        refs = [[e for e in expected]]
         return {
             "accuracy": evals.metrics.get_accuracy(events),
             "sacrebleu_score": self.bleu.corpus_score(sampled, refs).score,
+            "sacrebleu_sentence_score": sum(e.data["sacrebleu_sentence_score"] for e in events)
+            / len(events),
         }
 
 
