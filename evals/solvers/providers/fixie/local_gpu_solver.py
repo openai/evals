@@ -38,9 +38,6 @@ class LocalGPUSolver(Solver):
         num_gpus = completion_fn_options.get("num_gpus", torch.cuda.device_count())
         completion_fn_options.get("max_num_tokens", 64)
 
-        if "model" not in completion_fn_options:
-            raise ValueError("LocalGPUSolver requires a model to be specified.")
-
         # Set the start method for the entire script
         mp.set_start_method("spawn")
 
@@ -49,14 +46,23 @@ class LocalGPUSolver(Solver):
         # Only start the primary to let it download the model first
         rank_queue.put(0)
 
-        # # TODO: handle num_gpus=0 differently
+        if "model" not in completion_fn_options:
+            raise ValueError("LocalGPUSolver requires a model to be specified.")
+
+        model = completion_fn_options["model"]
+        extra_options = completion_fn_options.get("extra_options", {})
+        if "max_new_tokens" not in extra_options:
+            extra_options["max_new_tokens"] = 256
+
+        # TODO: handle num_gpus=0 differently
         self.executor = ProcessPoolExecutor(
             max_workers=num_gpus,
             initializer=solver_initializer,
-            initargs=(rank_queue, num_gpus, completion_fn_options["model"]),
+            initargs=(rank_queue, num_gpus, model, extra_options),
         )
 
     def copy(self):
+        # The queue objects (in self.executor) must not be copied
         return self
 
     def _solve(self, task_state: TaskState, **kwargs) -> SolverResult:
@@ -79,9 +85,11 @@ class LocalGPUSolver(Solver):
 
             # Read the audio data using soundfile and enforce the expected sample rate
             inputs["audio"] = librosa.load(audio_stream, sr=SAMPLE_RATE)[0]
+            inputs["sampling_rate"] = SAMPLE_RATE
 
         inputs["turns"] = msgs
 
+        # This is where the magic happens: we send the inputs to be processed by the model
         completion_output = self.executor.submit(solver_worker, inputs).result()
 
         solver_result = SolverResult(completion_output)
@@ -89,10 +97,13 @@ class LocalGPUSolver(Solver):
         return solver_result
 
     def __del__(self):
-        self.executor.shutdown()
+        if hasattr(self, "executor"):
+            self.executor.shutdown()
 
 
-def solver_initializer(rank_queue: mp.Queue, world_size: int, model: str):
+def solver_initializer(
+    rank_queue: mp.Queue, world_size: int, model: str, extra_options: Dict[str, Any]
+):
     """Initializes the pipeline and the underlying model on the specified GPU."""
     rank = rank_queue.get()
 
@@ -103,7 +114,9 @@ def solver_initializer(rank_queue: mp.Queue, world_size: int, model: str):
 
     global pipe
 
-    pipe = transformers.pipeline(model=model, trust_remote_code=True, device=device)
+    pipe = transformers.pipeline(
+        model=model, trust_remote_code=True, device=device, **extra_options
+    )
 
     # Let the other initializers start now that the download has finished
     for i in range(1, world_size):
@@ -111,4 +124,4 @@ def solver_initializer(rank_queue: mp.Queue, world_size: int, model: str):
 
 
 def solver_worker(inputs: Dict[str, Any]):
-    return pipe(inputs, max_new_tokens=64)
+    return pipe(inputs)
