@@ -1,3 +1,4 @@
+#!/bin/bash
 logdir=./logs
 
 completion=$1
@@ -15,4 +16,4 @@ echo Running experiments and logging to $logpathbase
 oaievalset $completion audio --record_dir ${logpathbase} --max_samples=${maxsamples}
 
 echo Done running experiments, all logs in $logpathbase
-python make_table.py --log_dir $logpathbase 
+python -m evals.elsuite.audio.make_table --log_dir $logpathbase 

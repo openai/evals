@@ -30,7 +30,7 @@ audio-translate-from-en:
 audio-translate-from-en.dev.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
-    dataset: hf://fixie-ai/covost2?name=en_desplit=train
+    dataset: hf://fixie-ai/covost2?name=en_de&split=train
     target_language: German
 audio-translate-from-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
