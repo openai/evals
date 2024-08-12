@@ -48,6 +48,9 @@ dependencies = [
     "types-PyYAML",
     "types-tqdm",
     "zstandard",
+    "transformers[torch]",
+    "peft",
+    "librosa",
 ]
 
 [project.urls]

@@ -71,7 +71,7 @@ class AudioTask(evals.Eval):
         return self.compute_corpus_metrics()
 
     def load_dataset(self):
-        ds = load_hf_dataset(self.dataset).cast_column(
+        ds = load_hf_dataset(self.dataset, evals.eval._MAX_SAMPLES).cast_column(
             "audio", Audio(sampling_rate=DEFAULT_SAMPLE_RATE)
         )
         return [Sample(data=row) for row in ds]
@@ -223,9 +223,13 @@ class Translate(MatchAudioTask):
 
     def compute_corpus_metrics(self):
         metrics = super().compute_corpus_metrics()
+        events = self.get_match_events()
         sampled = self.get_sampled_values()
-        refs = [[e] for e in self.get_expected_values()]
+        refs = [[e for e in self.get_expected_values()]]
         metrics["sacrebleu_score"] = self.bleu.corpus_score(sampled, refs).score
+        metrics["sacrebleu_sentence_score"] = sum(
+            e.data["sacrebleu_sentence_score"] for e in events
+        ) / len(events)
         return metrics
 
 

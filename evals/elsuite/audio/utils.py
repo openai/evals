@@ -1,6 +1,6 @@
 import base64
 from io import BytesIO
-from typing import Any, Union
+from typing import Any, Optional, Union
 from urllib.parse import parse_qs, urlparse
 
 import numpy as np
@@ -11,11 +11,14 @@ DEFAULT_SAMPLE_RATE = 16000
 AUDIO_PLACEHOLDER = "<|audio|>"
 
 
-def load_hf_dataset(hf_url: str) -> Dataset:
+def load_hf_dataset(hf_url: str, max_samples: Optional[int]) -> Dataset:
     parsed = urlparse(hf_url)
     query = parse_qs(parsed.query)
     query = {k: v[0] for k, v in query.items()}
-    return load_dataset(parsed.netloc + parsed.path, **query)
+    ds = load_dataset(parsed.netloc + parsed.path, **query, streaming=True)
+    if max_samples:
+        ds = ds.take(max_samples)
+    return ds
 
 
 def build_messages(system_prompt: str, task_prompt: str, audio_or_transcript: Union[str, Audio]):
