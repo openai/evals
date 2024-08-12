@@ -117,6 +117,7 @@ transcript-translate-from-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=en_de&split=validation
+    text_only: true
     target_language: German
 transcript-translate-from-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
@@ -132,6 +133,7 @@ transcript-boolq.dev.v1:
   class: evals.elsuite.audio.eval:SpokenBoolQ
   args:
     dataset: hf://fixie-ai/boolq-audio?split=train
+    text_only: true
 transcript-boolq.validation.v1:
   class: evals.elsuite.audio.eval:SpokenBoolQ
   args:
@@ -145,6 +147,7 @@ transcript-ser.dev.v1:
   class: evals.elsuite.audio.eval:SpokenER
   args:
     dataset: hf://Zahra99/IEMOCAP_Audio?split=session1
+    text_only: true
 transcript-ser.validation.v1:
   class: evals.elsuite.audio.eval:SpokenER
   args:
