@@ -102,7 +102,7 @@ class MatchAudioTask(AudioTask):
         return self.recorder.get_events("match")
 
     def get_expected_values(self):
-        return list(map(lambda e: e.data["expected"], self.get_match_events()))
+        return [e.data["expected"] for e in self.get_match_events()]
 
     def get_sampled_values(self):
         return list(map(lambda e: e.data["sampled"], self.get_match_events()))
