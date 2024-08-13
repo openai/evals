@@ -25,7 +25,6 @@ class FixieSolver(OpenAISolver):
     """
 
     def __init__(self, api_base: Optional[str] = None, **kwargs):
-        os.environ["EVALS_SEQUENTIAL"] = "1"  # Needed until vLLM supports parallel requests
         self.api_base = api_base
         super().__init__(**kwargs)
         if self.valid_answers is not None:

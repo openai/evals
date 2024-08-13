@@ -115,7 +115,11 @@ def solver_initializer(
     global pipe
 
     pipe = transformers.pipeline(
-        model=model, trust_remote_code=True, device=device, **extra_options
+        model=model,
+        trust_remote_code=True,
+        device=device,
+        torch_dtype=torch.bfloat16,
+        **extra_options
     )
 
     # Let the other initializers start now that the download has finished
@@ -124,4 +128,5 @@ def solver_initializer(
 
 
 def solver_worker(inputs: Dict[str, Any]):
-    return pipe(inputs)
+    with torch.inference_mode():
+        return pipe(inputs)

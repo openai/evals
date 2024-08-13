@@ -171,7 +171,7 @@ class Transcribe(MatchAudioTask):
         return Sample(audio=row["audio"]["array"], transcript=row["text"], expected=row["text"])
 
     def build_prompt(self, sample: Sample):
-        return f"Repeat after me in English: {AUDIO_PLACEHOLDER}"
+        return f"Repeat the following text, without any explanation: {AUDIO_PLACEHOLDER}"
 
     def compute_metrics(self, sample: Sample, sampled):
         expected = sample.expected

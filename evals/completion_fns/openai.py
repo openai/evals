@@ -123,12 +123,13 @@ class OpenAICompletionFn(CompletionFn):
 
         openai_create_prompt: OpenAICreatePrompt = prompt.to_formatted_prompt()
 
-        result = openai_completion_create_retrying(
-            OpenAI(api_key=self.api_key, base_url=self.api_base),
-            model=self.model,
-            prompt=openai_create_prompt,
-            **{**kwargs, **self.extra_options},
-        )
+        with OpenAI(api_key=self.api_key, base_url=self.api_base) as client:
+            result = openai_completion_create_retrying(
+                client,
+                model=self.model,
+                prompt=openai_create_prompt,
+                **{**kwargs, **self.extra_options},
+            )
         result = OpenAICompletionResult(raw_data=result, prompt=openai_create_prompt)
         record_sampling(
             prompt=result.prompt,
@@ -173,12 +174,13 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
 
         openai_create_prompt: OpenAICreateChatPrompt = prompt.to_formatted_prompt()
 
-        result = openai_chat_completion_create_retrying(
-            OpenAI(api_key=self.api_key, base_url=self.api_base),
-            model=self.model,
-            messages=openai_create_prompt,
-            **{**kwargs, **self.extra_options},
-        )
+        with OpenAI(api_key=self.api_key, base_url=self.api_base) as client:
+            result = openai_chat_completion_create_retrying(
+                client,
+                model=self.model,
+                messages=openai_create_prompt,
+                **{**kwargs, **self.extra_options},
+            )
         result = OpenAIChatCompletionResult(raw_data=result, prompt=openai_create_prompt)
         record_sampling(
             prompt=result.prompt,
