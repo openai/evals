@@ -95,7 +95,7 @@ class AudioTask(evals.Eval):
             logging.info(f"Prompt: {prompt}")
             logging.info(f"Error: {str(e)}")
             sampled = "ERROR: " + str(e)
-            print(traceback.format_exc())
+            logging.info(traceback.format_exc())
         return self.compute_metrics(sample, sampled)
 
     def run(self, recorder: RecorderBase):
