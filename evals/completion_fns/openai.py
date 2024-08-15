@@ -16,6 +16,7 @@ from evals.prompt.base import (
 from evals.record import record_sampling
 from evals.utils.api_utils import create_retrying
 
+CLIENTS = {}
 OPENAI_TIMEOUT_EXCEPTIONS = (
     openai.RateLimitError,
     openai.APIConnectionError,
@@ -123,13 +124,16 @@ class OpenAICompletionFn(CompletionFn):
 
         openai_create_prompt: OpenAICreatePrompt = prompt.to_formatted_prompt()
 
-        with OpenAI(api_key=self.api_key, base_url=self.api_base) as client:
-            result = openai_completion_create_retrying(
-                client,
-                model=self.model,
-                prompt=openai_create_prompt,
-                **{**kwargs, **self.extra_options},
-            )
+        client_id = (self.api_key, self.api_base)
+        if client_id not in CLIENTS:
+            CLIENTS[client_id] = OpenAI(api_key=self.api_key, base_url=self.api_base)
+
+        result = openai_completion_create_retrying(
+            CLIENTS[client_id],
+            model=self.model,
+            prompt=openai_create_prompt,
+            **{**kwargs, **self.extra_options},
+        )
         result = OpenAICompletionResult(raw_data=result, prompt=openai_create_prompt)
         record_sampling(
             prompt=result.prompt,
@@ -174,13 +178,16 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
 
         openai_create_prompt: OpenAICreateChatPrompt = prompt.to_formatted_prompt()
 
-        with OpenAI(api_key=self.api_key, base_url=self.api_base) as client:
-            result = openai_chat_completion_create_retrying(
-                client,
-                model=self.model,
-                messages=openai_create_prompt,
-                **{**kwargs, **self.extra_options},
-            )
+        client_id = (self.api_key, self.api_base)
+        if client_id not in CLIENTS:
+            CLIENTS[client_id] = OpenAI(api_key=self.api_key, base_url=self.api_base)
+
+        result = openai_chat_completion_create_retrying(
+            CLIENTS[client_id],
+            model=self.model,
+            messages=openai_create_prompt,
+            **{**kwargs, **self.extra_options},
+        )
         result = OpenAIChatCompletionResult(raw_data=result, prompt=openai_create_prompt)
         record_sampling(
             prompt=result.prompt,
