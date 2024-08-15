@@ -31,7 +31,6 @@ def extract_results(datadir: Path) -> pd.DataFrame:
         df_rows.append(obj)
     df_rows.sort(key=lambda x: (x["eval"], x["model"]))
     df = pd.DataFrame(df_rows)
-    pd.set_option("display.precision", 2)  # Adjust precision as needed
     return df
 
 
@@ -43,6 +42,7 @@ def main():
     log_dir = Path(args.log_dir)
 
     df = extract_results(log_dir)
+    pd.set_option("display.precision", 2)  # Adjust precision as needed
     print(df)
 
 
