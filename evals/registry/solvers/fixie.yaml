@@ -8,7 +8,7 @@ generation/direct/ultravox-v0.3:
         frequency_penalty: 1.0
 
 generation/gpu/ultravox-dev:
-  class: evals.solvers.providers.fixie.local_gpu_solver:LocalGPUSolver
+  class: evals.solvers.providers.fixie.local_gpu_solver:FixieGPUSolver
   args:
     completion_fn_options:
       model: fixie-ai/ultravox-dev

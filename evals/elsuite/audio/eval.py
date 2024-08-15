@@ -1,6 +1,7 @@
 import base64
 import logging
 import string
+import traceback
 from collections import Counter
 from io import BytesIO
 from typing import Any, List, Optional
@@ -94,6 +95,7 @@ class AudioTask(evals.Eval):
             logging.info(f"Prompt: {prompt}")
             logging.info(f"Error: {str(e)}")
             sampled = "ERROR: " + str(e)
+            print(traceback.format_exc())
         return self.compute_metrics(sample, sampled)
 
     def run(self, recorder: RecorderBase):

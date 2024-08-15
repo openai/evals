@@ -9,15 +9,17 @@ import librosa
 import torch
 import torch.distributed
 import torch.multiprocessing as mp
+import torch.nn.functional as F
 import transformers
 
 from evals.solvers.solver import Solver, SolverResult
 from evals.task_state import TaskState
 
 SAMPLE_RATE = 16000
+MAX_BATCH_SIZE = 32
 
 
-class LocalGPUSolver(Solver):
+class FixieGPUSolver(Solver):
     """
     A solver class for the locally running a model on multiple GPUs using a ProcessPoolExecutor.
     The model is employed using a Hugging Face Transformers pipeline. We assume that the pipeline
@@ -49,14 +51,16 @@ class LocalGPUSolver(Solver):
         rank_queue.put(0)
 
         if "model" not in completion_fn_options:
-            raise ValueError("LocalGPUSolver requires a model to be specified.")
+            raise ValueError("FixieGPUSolver requires a model to be specified.")
 
         model = completion_fn_options["model"]
         extra_options = completion_fn_options.get("extra_options", {})
         if "max_new_tokens" not in extra_options:
             extra_options["max_new_tokens"] = 256
 
-        # TODO: handle num_gpus=0 differently
+        # monkey patching the executor to allow handling batch inputs
+        futures_process._ExecutorManagerThread = _BatchedExectuorManagerThread
+
         self.executor = ProcessPoolExecutor(
             max_workers=max(1, num_gpus),
             initializer=solver_initializer,
@@ -103,6 +107,27 @@ class LocalGPUSolver(Solver):
             self.executor.shutdown()
 
 
+class DataCollatorForSeq2SeqWithAudio(transformers.DataCollatorForSeq2Seq):
+    def __call__(self, features, *args, **kwargs):
+        audio_values = [f.pop("audio_values", None) for f in features]
+        input_ids_lens = torch.LongTensor([f["input_ids"].shape[-1] for f in features])
+        batch = super().__call__(features, *args, **kwargs)
+
+        # Pad the last dimension of all audio_values to the same length, with 0s on the right.
+        if audio_values and audio_values[0] is not None:
+            max_len = max([x.shape[-1] for x in audio_values])
+            batch["audio_values"] = torch.stack(
+                [F.pad(x, (0, max_len - x.shape[-1])) for x in audio_values]
+            )
+            if self.tokenizer.padding_side == "left":
+                displacement = batch["input_ids"].shape[-1] - input_ids_lens
+                batch["audio_token_start_idx"] += displacement.to(
+                    batch["audio_token_start_idx"].device
+                )
+
+        return batch
+
+
 def solver_initializer(
     rank_queue: mp.Queue, world_size: int, model: str, extra_options: Dict[str, Any]
 ):
@@ -114,7 +139,7 @@ def solver_initializer(
     else:
         device = torch.device("cpu")
 
-    global pipe
+    global pipe, collator
 
     pipe = transformers.pipeline(
         model=model,
@@ -123,6 +148,9 @@ def solver_initializer(
         torch_dtype=torch.bfloat16,
         **extra_options,
     )
+    pipe.tokenizer.padding_side = "left"
+
+    collator = DataCollatorForSeq2SeqWithAudio(tokenizer=pipe.tokenizer)
 
     # Let the other initializers start now that the download has finished
     for i in range(1, world_size):
@@ -130,19 +158,13 @@ def solver_initializer(
 
 
 def solver_worker(inputs: Dict[str, Any]):
-    print("got inputs of type", type(inputs))
-    if isinstance(inputs, list):
-        print("inputs len", len(inputs), "inputs[0] type is", type(inputs[0]))
-
     prepped = [pipe.preprocess(item) for item in inputs]
-    batch = {}
+    prepped = [
+        {k: v.to(pipe.model.device).squeeze(0) for k, v in sample.items()} for sample in prepped
+    ]
 
-    for key in prepped[0]:
-        padding_side = "right" if key == "audio_values" else "left"
-        padding_value = pipe.tokenizer.pad_token_id if key == "input_ids" else 0
-        batch[key] = transformers.pipelines.base._pad(
-            prepped, key, padding_value, padding_side=padding_side
-        ).to(pipe.model.device)
+    batch = collator(prepped)
+    batch = {k: v.to(pipe.model.device) for k, v in batch.items() if v is not None}
 
     with torch.inference_mode():
         terminators = [pipe.tokenizer.eos_token_id]
@@ -163,7 +185,13 @@ def solver_worker(inputs: Dict[str, Any]):
 
 
 class _BatchedExectuorManagerThread(futures_process._ExecutorManagerThread):
-    MAX_BATCH_SIZE = 64
+    """
+    This is a monkey-patched version of the _ExecutorManagerThread class that allows for
+    batching the inputs. This is necessary for efficiently generating completions.
+
+    NOTE: This class assumes that all submitted work items use the same function and that
+    they only have a single argument and no keyword arguments.
+    """
 
     def add_call_item_to_queue(self):
         # Fills call_queue with _WorkItems from pending_work_items.
@@ -173,12 +201,13 @@ class _BatchedExectuorManagerThread(futures_process._ExecutorManagerThread):
                 return
 
             work_ids = []
-            while len(work_ids) < self.MAX_BATCH_SIZE:
+            while len(work_ids) < MAX_BATCH_SIZE:
                 try:
                     work_id = self.work_ids_queue.get(block=False)
                     work_ids.append(work_id)
                 except queue.Empty:
                     break
+
             if not work_ids:
                 return
 
@@ -225,6 +254,3 @@ class _BatchedExectuorManagerThread(futures_process._ExecutorManagerThread):
                         work_item.future.set_exception(result_item.exception)
                     else:
                         work_item.future.set_result(result_item.result[i])
-
-
-futures_process._ExecutorManagerThread = _BatchedExectuorManagerThread

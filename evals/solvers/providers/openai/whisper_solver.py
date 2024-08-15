@@ -126,7 +126,6 @@ def solver_initializer(rank_queue: mp.Queue, world_size: int, model: str):
         device = torch.device("cuda", rank)
     else:
         device = torch.device("cpu")
-        # raise ValueError("Only GPU mode is supported by LocalGPUSolver, but no GPUs were found")
 
     global pipe
 
