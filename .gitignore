@@ -1,3 +1,5 @@
+logs/
+
 __pycache__/
 evals.egg-info/
 
