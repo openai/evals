@@ -79,6 +79,7 @@ class WhisperCascadedSolver(NestedSolver):
         return self.client.audio.transcriptions.create(model="whisper-1", file=file).text
 
 
+# TODO: merge with the code in local_gpu_solver.py
 class WhisperCascadedGPUSolver(WhisperCascadedSolver):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -95,7 +96,6 @@ class WhisperCascadedGPUSolver(WhisperCascadedSolver):
 
         num_gpus = torch.cuda.device_count()
 
-        # TODO: handle num_gpus=0 differently
         self.executor = ProcessPoolExecutor(
             max_workers=max(1, num_gpus),
             initializer=solver_initializer,
