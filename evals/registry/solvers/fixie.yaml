@@ -10,8 +10,7 @@ generation/direct/ultravox-v0.3:
 generation/gpu/ultravox-dev:
   class: evals.solvers.providers.fixie.local_gpu_solver:FixieGPUSolver
   args:
-    completion_fn_options:
-      model: fixie-ai/ultravox-dev
-      extra_options:
-        temperature: 0
-        max_new_tokens: 512
+    model: fixie-ai/ultravox-dev
+    extra_options:
+      temperature: 0
+      max_new_tokens: 512

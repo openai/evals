@@ -45,8 +45,7 @@ generation/whisper/gpu-ultravox-dev:
     solver:
       class: evals.solvers.providers.fixie.local_gpu_solver:FixieGPUSolver
       args:
-        completion_fn_options:
-          model: fixie-ai/ultravox-dev
+        model: fixie-ai/ultravox-dev
 
 
 generation/whisper-local/ultravox-v0.3:

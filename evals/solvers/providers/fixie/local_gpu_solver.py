@@ -3,7 +3,7 @@ import io
 import queue
 from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import process as futures_process
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import librosa
 import torch
@@ -32,29 +32,25 @@ class FixieGPUSolver(Solver):
 
     def __init__(
         self,
-        completion_fn_options: Dict[str, Any] = {},
+        model: str,
+        num_gpus: int = torch.cuda.device_count(),
+        extra_options: Optional[Dict[str, Any]] = None,
         postprocessors: list[str] = [],
         registry: Any = None,
     ):
-        super().__init__(postprocessors=postprocessors)
-        self.completion_fn_options = completion_fn_options
+        super().__init__(postprocessors=postprocessors, registry=registry)
 
-        num_gpus = completion_fn_options.get("num_gpus", torch.cuda.device_count())
-        completion_fn_options.get("max_num_tokens", 64)
+        if extra_options is None:
+            extra_options = {}
 
         # Set the start method for the entire script
         mp.set_start_method("spawn")
 
         rank_queue = mp.Queue()
 
-        # Only start the primary to let it download the model first
+        # First, we only start the primary process/GPU to let it download the model and avoid race-conditions
         rank_queue.put(0)
 
-        if "model" not in completion_fn_options:
-            raise ValueError("FixieGPUSolver requires a model to be specified.")
-
-        model = completion_fn_options["model"]
-        extra_options = completion_fn_options.get("extra_options", {})
         if "max_new_tokens" not in extra_options:
             extra_options["max_new_tokens"] = 256
 
@@ -152,9 +148,10 @@ def solver_initializer(
 
     collator = DataCollatorForSeq2SeqWithAudio(tokenizer=pipe.tokenizer)
 
-    # Let the other initializers start now that the download has finished
-    for i in range(1, world_size):
-        rank_queue.put(i)
+    if rank == 0:
+        # Let the other initializers start now that the download has finished
+        for i in range(1, world_size):
+            rank_queue.put(i)
 
 
 def solver_worker(inputs: Dict[str, Any]):
