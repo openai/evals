@@ -1,6 +1,8 @@
 import base64
 import io
+import queue
 from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import process as futures_process
 from typing import Any, Dict
 
 import librosa
@@ -56,7 +58,7 @@ class LocalGPUSolver(Solver):
 
         # TODO: handle num_gpus=0 differently
         self.executor = ProcessPoolExecutor(
-            max_workers=num_gpus,
+            max_workers=max(1, num_gpus),
             initializer=solver_initializer,
             initargs=(rank_queue, num_gpus, model, extra_options),
         )
@@ -110,7 +112,7 @@ def solver_initializer(
     if torch.cuda.is_available():
         device = torch.device("cuda", rank)
     else:
-        raise ValueError("Only GPU mode is supported by LocalGPUSolver, but no GPUs were found")
+        device = torch.device("cpu")
 
     global pipe
 
@@ -119,7 +121,7 @@ def solver_initializer(
         trust_remote_code=True,
         device=device,
         torch_dtype=torch.bfloat16,
-        **extra_options
+        **extra_options,
     )
 
     # Let the other initializers start now that the download has finished
@@ -128,5 +130,101 @@ def solver_initializer(
 
 
 def solver_worker(inputs: Dict[str, Any]):
+    print("got inputs of type", type(inputs))
+    if isinstance(inputs, list):
+        print("inputs len", len(inputs), "inputs[0] type is", type(inputs[0]))
+
+    prepped = [pipe.preprocess(item) for item in inputs]
+    batch = {}
+
+    for key in prepped[0]:
+        padding_side = "right" if key == "audio_values" else "left"
+        padding_value = pipe.tokenizer.pad_token_id if key == "input_ids" else 0
+        batch[key] = transformers.pipelines.base._pad(
+            prepped, key, padding_value, padding_side=padding_side
+        ).to(pipe.model.device)
+
     with torch.inference_mode():
-        return pipe(inputs)
+        terminators = [pipe.tokenizer.eos_token_id]
+        if "<|eot_id|>" in pipe.tokenizer.added_tokens_encoder:
+            terminators.append(pipe.tokenizer.convert_tokens_to_ids("<|eot_id|>"))
+
+        input_len = batch["input_ids"].shape[1]
+
+        outputs = pipe.model.generate(
+            **batch,
+            eos_token_id=terminators,
+            **pipe._forward_params,
+        )
+        out_texts = [
+            pipe.tokenizer.decode(o[input_len:], skip_special_tokens=True) for o in outputs
+        ]
+        return out_texts
+
+
+class _BatchedExectuorManagerThread(futures_process._ExecutorManagerThread):
+    MAX_BATCH_SIZE = 64
+
+    def add_call_item_to_queue(self):
+        # Fills call_queue with _WorkItems from pending_work_items.
+        # This function never blocks.
+        while True:
+            if self.call_queue.full():
+                return
+
+            work_ids = []
+            while len(work_ids) < self.MAX_BATCH_SIZE:
+                try:
+                    work_id = self.work_ids_queue.get(block=False)
+                    work_ids.append(work_id)
+                except queue.Empty:
+                    break
+            if not work_ids:
+                return
+
+            work_items = [self.pending_work_items[work_id] for work_id in work_ids]
+            is_not_cancelled = [item.future.set_running_or_notify_cancel() for item in work_items]
+            work_items = [
+                item
+                for item, is_not_cancelled in zip(work_items, is_not_cancelled)
+                if is_not_cancelled
+            ]
+
+            if work_items:
+                self.call_queue.put(
+                    futures_process._CallItem(
+                        work_ids,
+                        work_items[0].fn,
+                        ([work_item.args[0] for work_item in work_items],),
+                        {},
+                    ),
+                    block=True,
+                )
+
+    def process_result_item(self, result_item):
+        # Process the received a result_item. This can be either the PID of a
+        # worker that exited gracefully or a _ResultItem
+
+        if isinstance(result_item, int):
+            # Clean shutdown of a worker using its PID
+            # (avoids marking the executor broken)
+            assert self.is_shutting_down()
+            p = self.processes.pop(result_item)
+            p.join()
+            if not self.processes:
+                self.join_executor_internals()
+                return
+        else:
+            # Received a _ResultItem so mark the future as completed.
+            result_work_ids = result_item.work_id
+            work_items = [self.pending_work_items.pop(work_id, None) for work_id in result_work_ids]
+            # work_item can be None if another process terminated (see above)
+            for i, work_item in enumerate(work_items):
+                if work_item is not None:
+                    if result_item.exception:
+                        work_item.future.set_exception(result_item.exception)
+                    else:
+                        work_item.future.set_result(result_item.result[i])
+
+
+futures_process._ExecutorManagerThread = _BatchedExectuorManagerThread
