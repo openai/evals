@@ -24,6 +24,20 @@ class FixieGPUSolver(Solver):
     The model is employed using a Hugging Face Transformers pipeline. We assume that the pipeline
     is an UltravoxPipeline class and the inputs are text/audio messages.
 
+    The way that it works is that
+    1. Initiatization:
+        a. We create `num_gpus` processes, each with a copy of the model.
+        b. Process 0 is run first to download the model and avoid race conditions.
+        c. The other processes are started after the model is downloaded.
+
+    2. Processing:
+        a. We need to use a high enough `EVALS_THREADS` count to flood the requests into the requests queue.
+            I recommend using at least `2 * MAX_BATCH_SIZE * num_gpus` threads.
+        b. _BatchedExectuorManagerThread gathers as many samples as are available for its batch to submit for inference.
+            A maximum batch size is enforced.
+        c. Batch inference is done after preprocessing and collating the inputs.
+        d. Resulting completions are returned to the right threads by _BatchedExectuorManagerThread.
+
     Completion function parameters:
     - model: str - The model name/path to use for the pipeline
     - num_gpus: int - The number of GPUs to use for parallel processing (default: all available GPUs)
@@ -183,7 +197,7 @@ class _BatchedExectuorManagerThread(futures_process._ExecutorManagerThread):
     batching the inputs. This is necessary for efficiently generating completions.
 
     NOTE: This class assumes that all submitted work items use the same function and that
-    they only have a single argument and no keyword arguments. Extending this is left for future work.
+    they only have a single positional argument and no keyword arguments.
     """
 
     def add_call_item_to_queue(self):
@@ -237,7 +251,7 @@ class _BatchedExectuorManagerThread(futures_process._ExecutorManagerThread):
                 self.join_executor_internals()
                 return
         else:
-            # Everything above this line is the same as the parent class
+            # Everything above this line in this function is the same as the parent class
             # Received a _ResultItem so mark the future as completed.
             result_work_ids = result_item.work_id
             work_items = [self.pending_work_items.pop(work_id, None) for work_id in result_work_ids]
