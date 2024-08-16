@@ -1,7 +1,6 @@
 import base64
 import io
 import queue
-from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import process as futures_process
 from typing import Any, Dict, Optional
 
@@ -54,10 +53,7 @@ class FixieGPUSolver(Solver):
         if "max_new_tokens" not in extra_options:
             extra_options["max_new_tokens"] = 256
 
-        # monkey patching the executor to allow handling batch inputs
-        futures_process._ExecutorManagerThread = _BatchedExectuorManagerThread
-
-        self.executor = ProcessPoolExecutor(
+        self.executor = BatchedProcessPoolExecutor(
             max_workers=max(1, num_gpus),
             initializer=solver_initializer,
             initargs=(rank_queue, num_gpus, model, extra_options),
@@ -183,11 +179,11 @@ def solver_worker(inputs: Dict[str, Any]):
 
 class _BatchedExectuorManagerThread(futures_process._ExecutorManagerThread):
     """
-    This is a monkey-patched version of the _ExecutorManagerThread class that allows for
+    This is a version of the _ExecutorManagerThread class that allows for
     batching the inputs. This is necessary for efficiently generating completions.
 
     NOTE: This class assumes that all submitted work items use the same function and that
-    they only have a single argument and no keyword arguments.
+    they only have a single argument and no keyword arguments. Extending this is left for future work.
     """
 
     def add_call_item_to_queue(self):
@@ -241,6 +237,7 @@ class _BatchedExectuorManagerThread(futures_process._ExecutorManagerThread):
                 self.join_executor_internals()
                 return
         else:
+            # Everything above this line is the same as the parent class
             # Received a _ResultItem so mark the future as completed.
             result_work_ids = result_item.work_id
             work_items = [self.pending_work_items.pop(work_id, None) for work_id in result_work_ids]
@@ -251,3 +248,22 @@ class _BatchedExectuorManagerThread(futures_process._ExecutorManagerThread):
                         work_item.future.set_exception(result_item.exception)
                     else:
                         work_item.future.set_result(result_item.result[i])
+
+
+class BatchedProcessPoolExecutor(futures_process.ProcessPoolExecutor):
+    """
+    This is a ProcessPoolExecutor that uses a custom _ExecutorManagerThread to allow batching of inputs.
+    """
+
+    def _start_executor_manager_thread(self):
+        if self._executor_manager_thread is None:
+            # Start the processes so that their sentinels are known.
+            if not self._safe_to_dynamically_spawn_children:  # ie, using fork.
+                self._launch_processes()
+            # The next line is the only difference from the parent class
+            # plus _threads_wakeups being changed to futures_process._threads_wakeups
+            self._executor_manager_thread = _BatchedExectuorManagerThread(self)
+            self._executor_manager_thread.start()
+            futures_process._threads_wakeups[
+                self._executor_manager_thread
+            ] = self._executor_manager_thread_wakeup
