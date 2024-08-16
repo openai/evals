@@ -25,6 +25,7 @@ generation/whisper/ultravox-v0.3:
           model: fixie-ai/ultravox-v0.3
           extra_options:
             temperature: 0
+            max_tokens: 512
             frequency_penalty: 1.0
 
 generation/whisper/mixtral:
@@ -58,4 +59,5 @@ generation/whisper-local/ultravox-v0.3:
           model: fixie-ai/ultravox-v0.3
           extra_options:
             temperature: 0
+            max_tokens: 512
             frequency_penalty: 1.0
