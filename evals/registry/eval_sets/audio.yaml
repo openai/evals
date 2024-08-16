@@ -1,7 +1,21 @@
 audio:
   evals:
-    - audio-*.validation.v1
+    - audio-*.test.v1
 
 transcript:
   evals:
-    - transcript-*.validation.v1
+    - transcript-*.test.v1
+
+audio-core:
+  evals:
+    - audio-translate-from-en
+    - audio-translate-to-en
+    - audio-boolq
+    - audio-transcribe
+
+transcript-core:
+  evals:
+    - transcript-translate-from-en
+    - transcript-translate-to-en
+    - transcript-boolq
+    - transcript-transcribe
