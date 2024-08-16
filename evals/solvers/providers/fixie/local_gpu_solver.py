@@ -256,12 +256,13 @@ class BatchedProcessPoolExecutor(futures_process.ProcessPoolExecutor):
     """
 
     def _start_executor_manager_thread(self):
+        # Everything in this function is the same as the parent class, except for:
+        # 1. _ExectuorManagerThread  ->  _BatchedExectuorManagerThread class
+        # 2. _threads_wakeups  ->  futures_process._threads_wakeups
         if self._executor_manager_thread is None:
             # Start the processes so that their sentinels are known.
             if not self._safe_to_dynamically_spawn_children:  # ie, using fork.
                 self._launch_processes()
-            # The next line is the only difference from the parent class
-            # plus _threads_wakeups being changed to futures_process._threads_wakeups
             self._executor_manager_thread = _BatchedExectuorManagerThread(self)
             self._executor_manager_thread.start()
             futures_process._threads_wakeups[
