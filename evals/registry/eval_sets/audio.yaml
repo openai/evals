@@ -6,14 +6,14 @@ transcript:
   evals:
     - transcript-*.test.v1
 
-audio-required:
+audio-core:
   evals:
     - audio-translate-from-en
     - audio-translate-to-en
     - audio-boolq
     - audio-transcribe
 
-transcript-required:
+transcript-core:
   evals:
     - transcript-translate-from-en
     - transcript-translate-to-en
