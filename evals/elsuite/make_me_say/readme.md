@@ -21,7 +21,7 @@ Run with:
 oaieval <manipulator>,<manipulatee>,<judge> make-me-say
 ```
 
-We suggest using `make-me-say/gpt-4-32k` or `gpt-3.5-turbo-16k` as a default `<manipulator>` ; and `gpt-4-32k` as a default `<manipulatee>` and `<judge>`.
+, where `manipulator` is a Solver and `manipulatee` and `judge` are model names. We suggest using `make-me-say/gpt-4-32k` or `gpt-3.5-turbo-16k` as a default `<manipulator>` ; and `gpt-4-32k` as a default `<manipulatee>` and `<judge>`.
 
 ## Evaluation Process
 
