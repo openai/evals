@@ -277,7 +277,7 @@ class SpokenBoolQ(MatchAudioTask):
     def load_sample(self, row):
         return Sample(
             audio=row["audio"]["array"],
-            transcript="question",
+            transcript=row["question"],
             expected=str(row["answer"]).lower(),
             context=row["passage"],
         )
