@@ -1,0 +1,16 @@
+// This is a config file for a Dev Container. See
+// https://code.visualstudio.com/docs/devcontainers/containers for more
+// information. This Dev Container assumes that the NVIDIA Container
+// Runtime is installed on the host machine. For more information, see:
+// https://developer.nvidia.com/container-runtime.
+
+{
+	"name": "Pytorch with CUDA",
+	"image": "anibali/pytorch:2.0.1-cuda11.8",
+	"postCreateCommand": "pip install --upgrade pip && pip install -e . && sh evals/elsuite/hr_ml_agent_bench/scripts/install_all_requirements.sh",
+	"runArgs": [
+		"--runtime=nvidia",
+		"--gpus",
+		"all"
+	]
+}

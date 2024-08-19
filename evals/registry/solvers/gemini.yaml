@@ -1,0 +1,23 @@
+
+# ------------------
+# gemini-pro
+# ------------------
+
+# generation tasks
+
+generation/direct/gemini-pro:
+  class: evals.solvers.providers.google.gemini_solver:GeminiSolver
+  args:
+    model_name: gemini-pro
+
+generation/cot/gemini-pro:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.providers.google.gemini_solver:GeminiSolver
+      args:
+        model_name: gemini-pro
+    extract_solver:
+      class: evals.solvers.providers.google.gemini_solver:GeminiSolver
+      args:
+        model_name: gemini-pro

@@ -29,7 +29,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pyyaml
         pip install pytest
-        pip install -e .
+        pip install -e .[torch]
 
     - name: Run unit tests
       env:

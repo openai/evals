@@ -1,0 +1,17 @@
+# This requirements.txt file installs PyTorch sub-modules and assumes that
+# CUDA 11.8 is installed via the provided Dev Container.
+#
+# If you are using a CPU instead of a GPU, replace "cu118" with "cpu"
+# in the URLs below for the following packages:
+# - torch-geometric
+# - torch-sparse
+# - pyg-lib
+#
+# If you are using a different version of CUDA, replace "cu118" with the
+# appropriate CUDA version identifier in the URLs.
+
+ogb
+torch-geometric>=2.0.2 -f https://data.pyg.org/whl/torch-2.0.0+cu118.html
+torch-scatter
+torch-sparse -f https://data.pyg.org/whl/torch-2.0.0+cu118.html
+pyg-lib -f https://data.pyg.org/whl/torch-2.0.0+cu118.html

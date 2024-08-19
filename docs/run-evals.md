@@ -38,3 +38,7 @@ Running with more threads will make the eval faster, though keep in mind the cos
 If you have to stop your run or your run crashes, we've got you covered! `oaievalset` records the evals that finished in `/tmp/oaievalset/{model}.{eval_set}.progress.txt`. You can simply rerun the command to pick up where you left off. If you want to run the eval set starting from the beginning, delete this progress file.
 
 Unfortunately, you can't resume a single eval from the middle. You'll have to restart from the beginning, so try to keep your individual evals quick to run.
+
+## Logging
+
+By default, `oaieval` [records events](/evals/record.py) into local JSONL logs which can be inspected using a text editor or analyzed programmatically. 3rd-party tools such as [naimenz/logviz](https://github.com/naimenz/logviz) may be helpful to visualize the logs, though we don't provide support or guarantees for their use.

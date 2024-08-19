@@ -1,0 +1,192 @@
+# OS CHAIN OF THOUGHT
+function_deduction/cot/llama-2-13b-chat:
+  class: evals.elsuite.function_deduction.solvers:CustomCoT
+  args:
+    cot_solver:
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-13b-chat-hf
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-13b-chat-hf
+          extra_options:
+            temperature: 0
+            max_tokens: 32
+
+function_deduction/cot/llama-2-70b-chat:
+  class: evals.elsuite.function_deduction.solvers:CustomCoT
+  args:
+    cot_solver:
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-70b-chat-hf
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-70b-chat-hf
+          extra_options:
+            temperature: 0
+            max_tokens: 32
+
+function_deduction/cot/mixtral-8x7b-instruct:
+  class: evals.elsuite.function_deduction.solvers:CustomCoT
+  args:
+    cot_solver:
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: mistralai/Mixtral-8x7B-Instruct-v0.1
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: mistralai/Mixtral-8x7B-Instruct-v0.1
+          extra_options:
+            temperature: 0
+            max_tokens: 32
+
+
+# CUSTOM CHAIN OF THOUGHT
+function_deduction/cot/gpt-4-1106-preview:
+  class: evals.elsuite.function_deduction.solvers:CustomCoT
+  args:
+    cot_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-1106-preview
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-1106-preview
+          extra_options:
+            temperature: 0
+            max_tokens: 32
+
+function_deduction/cot/gpt-4-32k:
+  class: evals.elsuite.function_deduction.solvers:CustomCoT
+  args:
+    cot_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-32k
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-32k
+          extra_options:
+            temperature: 0
+            max_tokens: 32
+
+function_deduction/cot/gpt-3.5-turbo-16k:
+  class: evals.elsuite.function_deduction.solvers:CustomCoT
+  args:
+    cot_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo-16k
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo-16k
+          extra_options:
+            temperature: 0
+            max_tokens: 32
+
+function_deduction/cot/gemini-pro:
+  class: evals.elsuite.function_deduction.solvers:CustomCoT
+  args:
+    cot_solver:
+      class: evals.solvers.providers.google.gemini_solver:GeminiSolver
+      args:
+        model_name: gemini-pro
+    extract_solver:
+      class: evals.solvers.providers.google.gemini_solver:GeminiSolver
+      args:
+        model_name: gemini-pro
+
+
+# BASE MODELS
+function_deduction/gpt-4-base:
+  class: evals.elsuite.function_deduction.solvers:BaseModelSolver
+  args:
+    solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-base
+          extra_options:
+            temperature: 1
+            max_tokens: 32
+
+function_deduction/cot/gpt-4-base:
+  class: evals.elsuite.function_deduction.solvers:BaseModelCoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 1
+                max_tokens: 512
+            fixed_start: "Let's think step by step. "
+    extract_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 0
+                max_tokens: 32
+
+
+# BASELINES
+function_deduction/average_baseline:
+  class: evals.elsuite.function_deduction.baselines:AverageBaseline
+
+function_deduction/full_knowledge_random:
+  class: evals.elsuite.function_deduction.baselines:FullKnowledge
+  args:
+    mode: random
+    samples_jsonl: function_deduction/data.jsonl
+
+function_deduction/full_knowledge_best:
+  class: evals.elsuite.function_deduction.baselines:FullKnowledge
+  args:
+    mode: best
+    samples_jsonl: function_deduction/data.jsonl

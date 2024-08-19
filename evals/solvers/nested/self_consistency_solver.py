@@ -2,8 +2,8 @@ import logging
 from collections import Counter
 from typing import Any, Optional
 
+from evals.solvers.memory import PersistentMemoryCache
 from evals.solvers.solver import NestedSolver, Solver, SolverResult, SolverSpec
-from evals.solvers.utils import PersistentMemoryCache
 from evals.task_state import Message, TaskState
 
 DEFAULT_COT_TEMPLATE = """Before answering, reason in a step-by-step manner as to get the right answer, then conclude with the answer. Format your output as {prefix} <answer>"""
@@ -31,9 +31,12 @@ class SelfConsistencySolver(NestedSolver):
         mode: str = "count",
         persistent_memory: bool = True,
         private_interaction_length: int = 1,
+        postprocessors: list[str] = [],
         registry: Any = None,
     ):
-        super().__init__(registry=registry, solver=solver, judge_solver=solver)
+        super().__init__(
+            postprocessors=postprocessors, registry=registry, solver=solver, judge_solver=solver
+        )
         self.num_generations = num_generations
         self.answer_prefix = answer_prefix
         self.cot_template = cot_template.format(prefix=self.answer_prefix)

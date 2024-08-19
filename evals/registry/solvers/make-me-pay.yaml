@@ -1,7 +1,7 @@
 make-me-pay/baseline/gpt-3.5-turbo-16k:
   class: evals.elsuite.make_me_pay.solvers.lm_con_artist_solver:LMConArtistSolver
   args:
-    base_solver_class: evals.solvers.openai_solver:OpenAISolver
+    base_solver_class: evals.solvers.providers.openai.openai_solver:OpenAISolver
     base_solver_args:
       completion_fn_options:
         model: gpt-3.5-turbo-16k
@@ -12,7 +12,7 @@ make-me-pay/baseline/gpt-3.5-turbo-16k:
 make-me-pay/baseline/gpt-4:
   class: evals.elsuite.make_me_pay.solvers.lm_con_artist_solver:LMConArtistSolver
   args:
-    base_solver_class: evals.solvers.openai_solver:OpenAISolver
+    base_solver_class: evals.solvers.providers.openai.openai_solver:OpenAISolver
     base_solver_args:
       completion_fn_options:
         model: gpt-4
@@ -23,7 +23,7 @@ make-me-pay/baseline/gpt-4:
 make-me-pay/baseline/gpt-4-32k:
   class: evals.elsuite.make_me_pay.solvers.lm_con_artist_solver:LMConArtistSolver
   args:
-    base_solver_class: evals.solvers.openai_solver:OpenAISolver
+    base_solver_class: evals.solvers.providers.openai.openai_solver:OpenAISolver
     base_solver_args:
       completion_fn_options:
         model: gpt-4-32k
@@ -37,7 +37,7 @@ make-me-pay/gpt-3.5-turbo-16k:
     base_solver_class: evals.solvers.nested.cot_solver:CoTSolver
     base_solver_args:
       cot_solver:
-        class: evals.solvers.openai_solver:OpenAISolver
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
         args:
           completion_fn_options:
             model: gpt-3.5-turbo-16k
@@ -45,7 +45,7 @@ make-me-pay/gpt-3.5-turbo-16k:
               temperature: 1
               max_tokens: 1000
       extract_solver:
-        class: evals.solvers.openai_solver:OpenAISolver
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
         args:
           completion_fn_options:
             model: gpt-3.5-turbo-16k
@@ -61,7 +61,7 @@ make-me-pay/gpt-4:
     base_solver_class: evals.solvers.nested.cot_solver:CoTSolver
     base_solver_args:
       cot_solver:
-        class: evals.solvers.openai_solver:OpenAISolver
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
         args:
           completion_fn_options:
             model: gpt-4
@@ -69,7 +69,7 @@ make-me-pay/gpt-4:
               temperature: 1
               max_tokens: 1000
       extract_solver:
-        class: evals.solvers.openai_solver:OpenAISolver
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
         args:
           completion_fn_options:
             model: gpt-4
@@ -85,7 +85,7 @@ make-me-pay/gpt-4-32k:
     base_solver_class: evals.solvers.nested.cot_solver:CoTSolver
     base_solver_args:
       cot_solver:
-        class: evals.solvers.openai_solver:OpenAISolver
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
         args:
           completion_fn_options:
             model: gpt-4-32k
@@ -93,7 +93,7 @@ make-me-pay/gpt-4-32k:
               temperature: 1
               max_tokens: 1000
       extract_solver:
-        class: evals.solvers.openai_solver:OpenAISolver
+        class: evals.solvers.providers.openai.openai_solver:OpenAISolver
         args:
           completion_fn_options:
             model: gpt-4-32k

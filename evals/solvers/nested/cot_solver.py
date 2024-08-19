@@ -1,8 +1,8 @@
 from typing import Any
 
+from evals.solvers.memory import PersistentMemoryCache
 from evals.solvers.prompts.cot import DEFAULT_COT_TEMPLATE, DEFAULT_EXTRACT_ANSWER_TEMPLATE
 from evals.solvers.solver import NestedSolver, Solver, SolverResult, SolverSpec
-from evals.solvers.utils import PersistentMemoryCache
 from evals.task_state import Message, TaskState
 
 
@@ -15,9 +15,12 @@ class CoTSolver(NestedSolver):
         extract_template: str = DEFAULT_EXTRACT_ANSWER_TEMPLATE,
         persistent_memory: bool = True,
         private_interaction_length: int = 3,  # TODO: do this better
+        postprocessors: list[str] = [],
         registry: Any = None,
     ):
-        super().__init__(cot_solver=cot_solver, extract_solver=extract_solver)
+        super().__init__(
+            postprocessors=postprocessors, cot_solver=cot_solver, extract_solver=extract_solver
+        )
 
         self._cot_template = cot_template
         self._extract_template = extract_template

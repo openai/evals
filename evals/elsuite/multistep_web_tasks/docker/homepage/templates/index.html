@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        #container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        #header {
+            background-color: #f4f7f9;
+            color: #232f34;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #b1c1c6 3px solid;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #header h1 {
+            padding: 5px;
+            margin: 0;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 200px; /* Changed width */
+            height: 200px; /* Added height */
+            text-align: center;
+            margin: 10px;
+            padding: 10px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            display: inline-block;
+            overflow: auto; /* To handle content that might overflow */
+        }
+
+        .card img {
+            width: 35%;
+        }
+
+        .card h2 {
+            font-size: 15px;
+        }
+
+        .card p {
+            font-size: 14px;
+        }
+
+        .card a {
+            color: #35424a;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <h1>Resource Directory</h1>
+        </div>
+
+        <div class="card" role="region" aria-label="OneStopShop">
+         <img src="{{ url_for('static', filename='figures/onestopshop.png') }}"  alt="Logo for OneStopShop">
+         <a href="http://shopping">
+            <h2 id="appName">OneStopShop</h2>
+         </a>
+         <p id="appDescription">An online shopping site</p>
+        </div>
+
+    <!--
+        <div class="card" role="region" aria-label="Merchant Admin Portal">
+            <img src="{{ url_for('static', filename='figures/cms.png') }}"  alt="Logo for CMS">
+            <a href="http://127.0.0.1:7780/admin">
+                <h2 id="appName">Merchant Admin Portal</h2>
+            </a>
+            <p id="appDescription">An admin portal to manage E-commerce business (u: admin, p: admin1234)</p>
+        </div>
+    -->
+
+        <div class="card" role="region" aria-label="Reddit">
+            <img src="{{ url_for('static', filename='figures/reddit.png') }}"  alt="Logo for Reddit">
+            <a href="http://reddit/forums/all">
+                <h2 id="appName">Reddit</h2>
+            </a>
+            <p id="appDescription">A social news aggregation and discussion website</p>
+        </div>
+
+        <div class="card" role="region" aria-label="Gitlab">
+            <img src="{{ url_for('static', filename='figures/gitlab.png') }}"  alt="Logo for Gitlab">
+            <a href="http://gitlab:8023/explore">
+                <h2 id="appName">Gitlab</h2>
+            </a>
+            <p id="appDescription">a DevOps software</p>
+        </div>
+
+    <!--
+        <div class="card" role="region" aria-label="Map">
+            <img src="{{ url_for('static', filename='figures/map.png') }}"  alt="Logo for Map">
+            <a href="http://127.0.0.1:3000">
+                <h2 id="appName">OpenStreetMap</h2>
+            </a>
+            <p id="appDescription">North east US map</p>
+        </div>
+    -->
+
+        <div class="card" role="region" aria-label="Calculator">
+            <img src="{{ url_for('static', filename='figures/calculator.png') }}"  alt="Logo for Calculator">
+            <a href="calculator.html">
+                <h2 id="appName">Calculator</h2>
+            </a>
+            <p id="appDescription">A calculator</p>
+        </div>
+
+        <div class="card" role="region" aria-label="Scratchpad">
+            <img src="{{ url_for('static', filename='figures/scratchpad.png') }}"  alt="Logo for Scratchpad">
+            <a href="scratchpad.html">
+                <h2 id="appName">Scratchpad</h2>
+            </a>
+            <p id="appDescription">A scratchpad for taking notes</p>
+        </div>
+
+        <div class="card" role="region" aria-label="Wikipedia">
+            <img src="{{ url_for('static', filename='figures/wikipedia.png') }}"  alt="Logo for Wikipedia">
+            <a href="http://wikipedia/wikipedia_en_all_maxi_2022-05/A/User:The_other_Kiwix_guy/Landing">
+                <h2 id="appName">Wikipedia</h2>
+            </a>
+            <p id="appDescription">An online encyclopedia</p>
+        </div>
+
+    <!--
+        <div class="card" role="region" aria-label="Gitlab Manual">
+            <img src="{{ url_for('static', filename='figures/manual1.png') }}"  alt="Logo for Gitlab Manual">
+            <a href="https://docs.gitlab.com/">
+                <h2 id="appName">Gitlab Documentation</h2>
+            </a>
+            <p id="appDescription">Documentation for GitLab</p>
+        </div>
+
+        <div class="card" role="region" aria-label="Admin Manual">
+            <img src="{{ url_for('static', filename='figures/manual2.png') }}"  alt="Logo for Admin Manual">
+            <a href="https://experienceleague.adobe.com/docs/commerce-admin/user-guides/home.html?lang=en">
+                <h2 id="appName">Admin Portal Manual</h2>
+            </a>
+            <p id="appDescription">Manual on using the admin portal</p>
+        </div>
+    -->
+        <!-- Repeat the above card structure for each app -->
+
+    </div>
+</body>
+</html>

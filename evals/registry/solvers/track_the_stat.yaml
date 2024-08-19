@@ -1,0 +1,82 @@
+track_the_stat/explicit_state/gemini-pro:
+  class: evals.elsuite.track_the_stat.solvers:ExplicitStateSolver
+  args:
+    underlying_solver:
+      class: evals.solvers.providers.google.gemini_solver:GeminiSolver
+      args:
+        model_name: gemini-pro
+    state_role: "user"
+
+track_the_stat/explicit_state/llama-2-70b-chat:
+  class: evals.elsuite.track_the_stat.solvers:ExplicitStateSolver
+  args:
+    underlying_solver:
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: meta-llama/Llama-2-70b-chat-hf
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+track_the_stat/explicit_state/mixtral-8x7b-instruct:
+  class: evals.elsuite.track_the_stat.solvers:ExplicitStateSolver
+  args:
+    underlying_solver:
+      class: evals.solvers.providers.together.together_solver:TogetherSolver
+      args:
+        completion_fn_options:
+          model: mistralai/Mixtral-8x7B-Instruct-v0.1
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+track_the_stat/explicit_state/gpt-3.5-turbo:
+  class: evals.elsuite.track_the_stat.solvers:ExplicitStateSolver
+  args:
+    underlying_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+track_the_stat/explicit_state/gpt-4-turbo-preview:
+  class: evals.elsuite.track_the_stat.solvers:ExplicitStateSolver
+  args:
+    underlying_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-turbo-preview
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+track_the_stat/explicit_state/hhh/gpt-4-base:
+  class: evals.elsuite.track_the_stat.solvers:ExplicitStateSolver
+  args:
+    underlying_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 1
+                max_tokens: 512
+
+track_the_stat/human_cli:
+  class: evals.elsuite.track_the_stat.solvers:TrackTheStatHuman
+  args:
+    human_cli_solver:
+      class: evals.solvers.human_cli_solver:HumanCliSolver
+      args:
+        registry: null
+
+track_the_stat/random_baseline:
+  class: evals.elsuite.track_the_stat.solvers:RandomBaselineSolver

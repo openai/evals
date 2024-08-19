@@ -1,0 +1,27 @@
+incontext_rl/random:
+  class: evals.elsuite.incontext_rl.baselines:RandomSolver
+
+incontext_rl/q-learning:
+  class: evals.elsuite.incontext_rl.baselines:QlearningSolver
+
+incontext_rl/anti-cot/gpt-3.5-turbo:
+  class: evals.elsuite.incontext_rl.anti-cot_solver:AntiCoTSolver
+  args:
+    solver: 
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo
+          extra_options:
+            temperature: 1
+
+incontext_rl/anti-cot/gpt-4-turbo-preview:
+  class: evals.elsuite.incontext_rl.anti-cot_solver:AntiCoTSolver
+  args:
+    solver: 
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-turbo-preview
+          extra_options:
+            temperature: 1

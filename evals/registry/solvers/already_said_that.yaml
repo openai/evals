@@ -1,0 +1,79 @@
+already_said_that/random_baseline:
+  class: evals.elsuite.already_said_that.solvers:RandomBaselineSolver
+
+already_said_that/human_cli:
+  class: evals.elsuite.already_said_that.solvers:AlreadySaidThatHuman
+  args:
+    human_cli_solver:
+      class: evals.solvers.human_cli_solver:HumanCliSolver
+      args:
+        registry: null
+
+already_said_that/cot/gpt-3.5-turbo:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    persistent_memory: False
+    cot_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-3.5-turbo
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+already_said_that/cot/gpt-4-turbo-preview:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    persistent_memory: False
+    cot_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-turbo-preview
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4-turbo-preview
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+already_said_that/cot_hhh/gpt-4-base:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    persistent_memory: False
+    cot_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 1
+                max_tokens: 512
+    extract_solver:
+      class: evals.solvers.nested.hhh_solver:HHHSolver
+      args:
+        solver:
+          class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+          args:
+            completion_fn_options:
+              model: gpt-4-base
+              extra_options:
+                temperature: 1
+                max_tokens: 512

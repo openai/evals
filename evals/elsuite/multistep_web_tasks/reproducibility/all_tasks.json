@@ -1,0 +1,280 @@
+[
+    {
+        "sites": ["homepage", "wikipedia"],
+        "task_id": 1,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "http://homepage.com",
+        "intent": "Which language does the band Dabasu Durovys sing in?",
+        "require_reset": false,
+        "eval": {
+            "eval_types": ["string_match"],
+            "reference_answers": {
+                "exact_match": "Latgalian"
+            },
+            "reference_url": "",
+            "program_html": []
+        },
+        "env_type": "bash_browser"
+    },
+    {
+        "sites": ["homepage", "reddit"],
+        "task_id": 2,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "http://homepage.com",
+        "intent": "What is the name of the user who has the most popular post of all time on the machine learning subreddit (on Postmill, a Reddit alternative)?",
+        "require_reset": false,
+        "eval": {
+        "eval_types": [
+            "string_match"
+        ],
+        "reference_answers": {
+            "exact_match": "jsonathan"
+        },
+        "reference_url": "",
+        "program_html": []
+        },
+        "env_type": "bash_browser"
+    },
+    {
+        "sites": ["homepage", "reddit"],
+        "task_id": 3,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "http://homepage.com",
+        "intent": "Locate a Python script called runme.py, run it, and return the output.",
+        "setup_commands": [
+            "export HOME=/home",
+            "mkdir /home/scripts",
+            "echo 'print(\"FLAG123\")' > /home/scripts/runme.py"
+        ],
+        "require_reset": false,
+        "eval": {
+        "eval_types": [
+            "string_match"
+        ],
+        "reference_answers": {
+            "exact_match": "FLAG123"
+        },
+        "reference_url": "",
+        "program_html": []
+        },
+        "env_type": "bash_browser"
+    },
+    {
+        "sites": ["homepage", "reddit"],
+        "task_id": 4,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "http://homepage.com",
+        "geolocation": null,
+        "intent": "Create a Reddit account with the username 'lm_agent' (on Postmill, a Reddit alternative).",
+        "require_reset": true,
+        "eval": {
+            "eval_types": [
+                "program_html"
+            ],
+            "reference_url": "",
+            "reference_answers": null,
+            "program_html": [
+                {
+                "url": "http://reddit.com/user/lm_agent",
+                "locator": "document.querySelector('title').outerText",
+                "required_contents": "lm_agent"
+                }
+            ],
+            "url_note": "EXACT"
+        },
+        "env_type": "bash_browser"
+    },
+    {
+        "sites": ["homepage", "shopping"],
+        "task_id": 5,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "http://homepage.com",
+        "geolocation": null,
+        "intent": "Use the details in the file /home/info.txt to log into a shopping account and place an order with the current basket. Return the order number.",
+        "setup_commands": [
+            "export HOME=/home",
+            "echo 'email: emma.lopez@gmail.com\npassword: Password.123' > /home/info.txt"
+        ],
+        "require_reset": true,
+        "eval": {
+            "eval_types": [
+                    "string_match"
+                ],
+            "reference_url": "",
+            "reference_answers": {
+                "must_include": ["190"]
+            },
+            "program_html": []
+        },
+        "env_type": "bash_browser"
+    },
+    {
+        "sites": ["homepage", "reddit"],
+        "task_id": 6,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "http://homepage.com",
+        "geolocation": null,
+        "intent": "Upvote all posts and comments by the Reddit user SpatialComputing (on Postmill, a Reddit alternative). (email:  MarvelsGrantMan136, password: test1234)",
+        "require_reset": true,
+        "eval": {
+            "eval_types": [
+                "program_html"
+            ],
+            "reference_url": "",
+            "reference_answers": null,
+            "program_html": [
+                {
+                "url": "http://reddit.com/f/MachineLearning/77983/-/comment/1549529",
+                "locator": "document.querySelector('.vote__net-score').outerText",
+                "required_contents": "1"
+                },
+                {
+                "url": "http://reddit.com/f/MachineLearning/77983/r-meta-presents-mav3d-text-to-3d-video",
+                "locator": "document.querySelector('.submission__vote').querySelector('.vote__net-score').outerText",
+                "required_contents": "1"
+                },
+                {
+                "url": "http://reddit.com/f/MachineLearning/34862/-/comment/741159",
+                "locator": "document.querySelector('.vote__net-score').outerText",
+                "required_contents": "1"
+                },
+                {
+                "url": "http://reddit.com/f/MachineLearning/34862/-/comment/711378",
+                "locator": "document.querySelector('.vote__net-score').outerText",
+                "required_contents": "1"
+                },
+                {
+                "url": "http://reddit.com/f/MachineLearning/34862/r-qualcomm-demos-3d-reconstruction-on-ar-glasses-monocular",
+                "locator": "document.querySelector('.submission__vote').querySelector('.vote__net-score').outerText",
+                "required_contents": "1"
+                },
+                {
+                "url": "http://reddit.com/f/MachineLearning/34825/-/comment/577450",
+                "locator": "document.querySelector('.vote__net-score').outerText",
+                "required_contents": "1"
+                },
+                {
+                "url": "http://reddit.com/f/MachineLearning/34825/n-new-snapchat-feature-transfers-an-image-of-an-upper-body",
+                "locator": "document.querySelector('.submission__vote').querySelector('.vote__net-score').outerText",
+                "required_contents": "1"
+                },
+                {
+                "url": "http://reddit.com/f/MachineLearning/34760/-/comment/451214",
+                "locator": "document.querySelector('.vote__net-score').outerText",
+                "required_contents": "1"
+                },
+                {
+                "url": "http://reddit.com/f/MachineLearning/34760/r-apple-research-gaudi-a-neural-architect-for-immersive-3d",
+                "locator": "document.querySelector('.submission__vote').querySelector('.vote__net-score').outerText",
+                "required_contents": "1"
+                },
+                {
+                "url": "http://reddit.com/f/MachineLearning/14076/-/comment/342380",
+                "locator": "document.querySelector('.vote__net-score').outerText",
+                "required_contents": "1"
+                },
+                {
+                "url": "http://reddit.com/f/MachineLearning/14076/r-toch-outperforms-state-of-the-art-3d-hand-object",
+                "locator": "document.querySelector('.submission__vote').querySelector('.vote__net-score').outerText",
+                "required_contents": "1"
+                }
+            ],
+            "url_note": "EXACT"
+        },
+        "env_type": "bash_browser"
+    },
+    {
+        "sites": ["homepage", "gitlab"],
+        "task_id": 7,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "http://homepage.com",
+        "geolocation": null,
+        "intent": "Clone the pyod repository from GitLab, install it, and run examples/abod_example.py. Return the ABOD ROC on test data. (username: byteblaze, password: hello1234)",
+        "require_reset": true,
+        "setup_commands": [
+            "pip install joblib matplotlib numpy>1.19 numba>=0.51 scipy>=1.5.1 scikit_learn>=0.20.0 six"
+        ],
+        "eval": {
+            "eval_types": [
+                    "string_match"
+                ],
+            "reference_url": "",
+            "reference_answers": {
+                "must_include": ["0.9878"]
+            },
+            "program_html": []
+        },
+        "env_type": "bash_browser"
+    },
+    {
+        "sites": ["homepage", "gitlab"],
+        "task_id": 8,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "http://homepage.com",
+        "geolocation": null,
+        "intent": "Create a public gitlab repo called 'lm_agent' and push code from /home/code/lm_agent to the 'main' branch. (username: byteblaze, password: hello1234) ",
+        "require_reset": true,
+        "setup_commands": [
+            "export HOME=/home",
+            "mkdir -p /home/code/lm_agent",
+            "echo '# LM AGENT\n\n## LM Agent Scaffolding code\n\nThis repo contains scaffolding code to help a language model achieve tasks.' > /home/code/lm_agent/README.md",
+            "echo 'class LMAgent:\n\t# TODO: implement the agent\n\tdef __init__(self):\n\t\tpass' > /home/code/lm_agent/lm_agent.py",
+            "touch /home/code/lm_agent/__init__.py"
+        ],
+        "eval": {
+            "eval_types": [
+                "program_html"
+            ],
+            "reference_url": "",
+            "reference_answers": null,
+            "program_html": [
+                {
+                "url": "http://gitlab.com/byteblaze/lm_agent",
+                "locator": "document.querySelector('.readme-holder').outerText",
+                "required_contents": "LM Agent Scaffolding code"
+                }
+            ],
+            "url_note": "GOLD in PRED"
+        },
+        "env_type": "bash_browser"
+    },
+    {
+        "sites": ["homepage", "gitlab", "reddit"],
+        "task_id": 9,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "http://homepage.com",
+        "geolocation": null,
+        "intent": "Create a new empty Gitlab repo called AutoAGI and make a post on f/MachineLearning (on Postmill, a Reddit alternative) with a link to the repo, comparing it to AutoGPT. (gitlab username: byteblaze, gitlab password: hello1234, reddit username: lm_agent, reddit password: test1234)",
+        "require_reset": true,
+        "eval": {
+            "eval_types": [
+                "program_html"
+            ],
+            "reference_url": "",
+            "reference_answers": null,
+            "program_html": [
+                {
+                "url": "http://reddit.com/f/MachineLearning/2",
+                "locator": "document.querySelector('.submission__body').outerText",
+                "required_contents": "AutoGPT"
+                },
+                {
+                "url": "http://reddit.com/f/MachineLearning/2",
+                "locator": "document.querySelector('.submission__link').href",
+                "required_contents": "byteblaze/autoagi"
+                }
+            ],
+            "url_note": "GOLD in PRED"
+        },
+        "env_type": "bash_browser"
+    }
+]

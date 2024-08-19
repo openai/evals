@@ -1,0 +1,7 @@
+benchmarks/babylm/env/babylm_data
+benchmarks/**/prepared
+benchmarks/**/submission.txt
+benchmarks/**/*.checkpoint
+benchmarks/**/*.log
+scripts/**/*.log
+data

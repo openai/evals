@@ -1,13 +1,13 @@
 # Chat models
 
 self_prompting/direct/gpt-4-32k:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-4-32k
 
 self_prompting/direct/gpt-3.5-turbo-16k:
-  class: evals.solvers.openai_solver:OpenAISolver
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
     completion_fn_options:
       model: gpt-3.5-turbo-16k
@@ -18,7 +18,7 @@ self_prompting/completion_hhh/code-davinci-002:
   class: evals.solvers.nested.hhh_solver:HHHSolver
   args:
     solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: code-davinci-002
@@ -27,7 +27,7 @@ self_prompting/completion_hhh/gpt-4-base:
   class: evals.solvers.nested.hhh_solver:HHHSolver
   args:
     solver:
-      class: evals.solvers.openai_solver:OpenAISolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
           model: gpt-4-base

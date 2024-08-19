@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Note Taking App</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #note-creation {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    #note-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 300px;
+    }
+
+    #note-input {
+      width: 100%;
+      min-height: 300px;
+      max-height: 900px;
+      min-width: 600px;
+      max-width: 600px;
+      padding: 10px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      overflow-y: auto;
+      resize: none;
+    }
+
+    #note-form button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    #note-form button:hover {
+      background-color: #0056b3;
+    }
+
+    #notes-display {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      width: 600px;
+    }
+
+    .note {
+      margin: 1em 0;
+      padding: 1em;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #f9f9f9;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Notes</h1>
+  </header>
+
+  <main>
+    <section id="note-creation">
+      <form id="note-form">
+        <textarea id="note-input" placeholder="Type your note here..."></textarea>
+        <button type="submit">Add Note</button>
+      </form>
+    </section>
+
+    <h2>History</h2>
+
+    <section id="notes-display">
+      <!-- Notes will be dynamically added here -->
+    </section>
+  </main>
+
+  <script>
+    const form = document.querySelector("#note-form");
+    const noteInput = document.querySelector("#note-input");
+    const notesDisplay = document.querySelector("#notes-display");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const note = document.createElement("div");
+      note.classList.add("note");
+      note.textContent = noteInput.value;
+
+      note.innerHTML = noteInput.value.replace(/\n/g, '<br>');
+      note.tabIndex = 0;
+
+      notesDisplay.prepend(note);
+      noteInput.value = '';
+    });
+  </script>
+</body>
+</html>

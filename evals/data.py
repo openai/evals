@@ -12,12 +12,12 @@ import urllib
 from collections.abc import Iterator
 from functools import partial
 from pathlib import Path
-from typing import Any, List, Optional, Sequence, Text, Union
+from typing import Any, BinaryIO, List, Optional, Sequence, Text, Union
 
 import blobfile as bf
 import lz4.frame
 import pydantic
-import pyzstd
+import zstandard
 
 logger = logging.getLogger(__name__)
 
@@ -37,11 +37,11 @@ def lz4_open(filename: str, mode: str = "rb", openhook: Any = open) -> lz4.frame
     return lz4.frame.LZ4FrameFile(openhook(filename, mode), mode=mode)
 
 
-def zstd_open(filename: str, mode: str = "rb", openhook: Any = open) -> pyzstd.ZstdFile:
+def zstd_open(filename: str, mode: str = "rb", openhook: Any = open) -> BinaryIO:
     if mode and "b" not in mode:
         mode += "b"
 
-    return pyzstd.ZstdFile(openhook(filename, mode), mode=mode)
+    return zstandard.open(openhook(filename, mode), mode=mode, closefd=True)
 
 
 def open_by_file_pattern(filename: Union[str, Path], mode: str = "r", **kwargs: Any) -> Any:

@@ -1,0 +1,62 @@
+incontext_rl: 
+  id: incontext_rl.gymnasium.v0
+  metrics: []
+
+incontext_rl.v0:
+  class: evals.elsuite.incontext_rl.eval:InContextRl
+  args: 
+    use_explanations: True
+    samples_jsonl: incontext_rl/samples.jsonl
+
+incontext_rl.raw.v0:
+  class: evals.elsuite.incontext_rl.eval:InContextRl
+  args: 
+    use_explanations: False
+    samples_jsonl: incontext_rl/samples.jsonl
+
+incontext_rl.gymnasium.v0:
+  class: evals.elsuite.incontext_rl.eval:InContextRl
+  args: 
+    use_explanations: True
+    samples_jsonl: incontext_rl/samples_gymnasium_only.jsonl
+
+incontext_rl.gymnasium.raw.v0:
+  class: evals.elsuite.incontext_rl.eval:InContextRl
+  args: 
+    use_explanations: False
+    samples_jsonl: incontext_rl/samples_gymnasium_only.jsonl
+
+incontext_rl.short.v0:
+  class: evals.elsuite.incontext_rl.eval:InContextRl
+  args: 
+    use_explanations: True
+    max_steps: 100
+    samples_jsonl: incontext_rl/samples.jsonl
+
+incontext_rl.raw.short.v0:
+  class: evals.elsuite.incontext_rl.eval:InContextRl
+  args: 
+    use_explanations: False
+    max_steps: 100
+    samples_jsonl: incontext_rl/samples.jsonl
+
+incontext_rl.gymnasium.short.v0:
+  class: evals.elsuite.incontext_rl.eval:InContextRl
+  args: 
+    use_explanations: True
+    max_steps: 100
+    samples_jsonl: incontext_rl/samples_gymnasium_only.jsonl
+
+incontext_rl.gymnasium.raw.short.v0:
+  class: evals.elsuite.incontext_rl.eval:InContextRl
+  args: 
+    use_explanations: False
+    max_steps: 100
+    samples_jsonl: incontext_rl/samples_gymnasium_only.jsonl
+
+incontext_rl.dev.v0:
+  class: evals.elsuite.incontext_rl.eval:InContextRl
+  args: 
+    use_explanations: True
+    max_steps: 5
+    samples_jsonl: incontext_rl/samples.jsonl

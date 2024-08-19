@@ -1,0 +1,1 @@
+This environment contains a 3D bipedal humanoid robot. It has a torso (abdomen) with a pair of legs and arms. The legs each consist of three body parts, and the arms 2 body parts (representing the knees and elbows respectively). The goal of the environment is to walk forward as fast as possible without falling over.
