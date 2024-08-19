@@ -36,14 +36,19 @@ class FixieGPUSolver(Solver):
     2. Processing:
         a. We need to use a high enough `EVALS_THREADS` count to flood the requests into the requests queue.
             I recommend using at least `2 * MAX_BATCH_SIZE * num_gpus` threads.
-        b. _BatchedExectuorManagerThread gathers as many samples as are available for its batch to submit for inference.
+        b. BatchedProcessPoolExecutor gathers as many samples as are available for its batch to submit for inference.
             A maximum batch size is enforced.
         c. Batch inference is done after preprocessing and collating the inputs.
-        d. Resulting completions are returned to the right threads by _BatchedExectuorManagerThread.
+        d. Resulting completions are returned to the right threads by BatchedProcessPoolExecutor.
 
     Completion function parameters:
     - model: str - The model name/path to use for the pipeline
     - num_gpus: int - The number of GPUs to use for parallel processing (default: all available GPUs)
+    - max_batch_size: int - The maximum batch size to use for inference (default: 32)
+    - extra_options: Dict[str, Any] - Extra options to pass to the pipeline
+        - max_new_tokens: int - The maximum number of new tokens to generate in a single call (default: 256)
+        - temperature: float - The temperature to use for sampling (default: 1.0)
+        - repetition_penalty: float - The repetition penalty to use for sampling (default: 1.0)
     """
 
     def __init__(
