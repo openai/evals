@@ -1,8 +1,11 @@
 import base64
+import dataclasses
 import io
+import logging
 import queue
-from concurrent.futures import process as futures_process
-from typing import Any, Dict, Optional
+import threading
+from concurrent import futures
+from typing import Any, Callable, Dict, List, Optional, TypeVar
 
 import librosa
 import torch
@@ -15,7 +18,7 @@ from evals.solvers.solver import Solver, SolverResult
 from evals.task_state import TaskState
 
 SAMPLE_RATE = 16000
-MAX_BATCH_SIZE = 32
+DEFAULT_MAX_BATCH_SIZE = 32
 
 
 class FixieGPUSolver(Solver):
@@ -47,6 +50,7 @@ class FixieGPUSolver(Solver):
         self,
         model: str,
         num_gpus: int = torch.cuda.device_count(),
+        max_batch_size: int = DEFAULT_MAX_BATCH_SIZE,
         extra_options: Optional[Dict[str, Any]] = None,
         postprocessors: list[str] = [],
         registry: Any = None,
@@ -69,8 +73,10 @@ class FixieGPUSolver(Solver):
 
         self.executor = BatchedProcessPoolExecutor(
             max_workers=max(1, num_gpus),
+            max_batch_size=max_batch_size,
             initializer=solver_initializer,
             initargs=(rank_queue, num_gpus, model, extra_options),
+            batch_worker_fn=solver_worker,
         )
 
     def copy(self):
@@ -102,7 +108,7 @@ class FixieGPUSolver(Solver):
         inputs["turns"] = msgs
 
         # This is where the magic happens: we send the inputs to be processed by the model
-        completion_output = self.executor.submit(solver_worker, inputs).result()
+        completion_output = self.executor.submit(inputs).result()
 
         solver_result = SolverResult(completion_output)
 
@@ -191,94 +197,84 @@ def solver_worker(inputs: Dict[str, Any]):
         return out_texts
 
 
-class _BatchedExectuorManagerThread(futures_process._ExecutorManagerThread):
-    """
-    This is a version of the _ExecutorManagerThread class that allows for
-    batching the inputs. This is necessary for efficiently generating completions.
+T_In = TypeVar("T_In")
+T_Out = TypeVar("T_Out")
 
-    NOTE: This class assumes that all submitted work items use the same function and that
-    they only have a single positional argument and no keyword arguments.
-    """
 
-    def add_call_item_to_queue(self):
-        # Fills call_queue with _WorkItems from pending_work_items.
-        # This function never blocks.
+@dataclasses.dataclass
+class BatchableWorkItem:
+    request: T_In
+    future: futures.Future
+
+
+class BatchedProcessPoolExecutor:
+    def __init__(
+        self,
+        *args,
+        batch_worker_fn: Callable[[List[T_In]], List[T_Out]],
+        max_batch_size: int,
+        **kwargs
+    ):
+        self.max_batch_size = max_batch_size
+        self.batch_worker_fn = batch_worker_fn
+        self._batch_queue = queue.Queue()
+        self.process_pool_executor = futures.process.ProcessPoolExecutor(*args, **kwargs)
+        self._batch_thread = threading.Thread(target=self.batch_requests)
+        self._batch_thread.start()
+
+    def submit(self, request: T_In) -> futures.Future:
+        item = BatchableWorkItem(request, futures.Future())
+        self._batch_queue.put(item)
+        return item.future
+
+    def shutdown(self):
+        # signal the batch thread to stop
+        self._batch_queue.put(None)
+        # shut down the process pool executor
+        self.process_pool_executor.shutdown()
+
+    def batch_requests(self):
+        """
+        Batches requests and dispatches them to the process pool executor
+
+        Steps:
+        1. greedily grab items
+        2. dispatch them to ProcessPoolExecutor
+        3. set the results back on the source future
+        """
         while True:
-            if self.call_queue.full():
-                return
-
-            work_ids = []
-            while len(work_ids) < MAX_BATCH_SIZE:
+            # greedily grab items
+            work_items: List[BatchableWorkItem] = [self._batch_queue.get()]
+            while len(work_items) < self.max_batch_size:
                 try:
-                    work_id = self.work_ids_queue.get(block=False)
-                    work_ids.append(work_id)
+                    item = self._batch_queue.get(block=False)
+                    work_items.append(item)
                 except queue.Empty:
                     break
 
-            if not work_ids:
-                return
+            # When we're done, a None item is added to the queue to signal the end of requests.
+            # We will ignore any existing work_items since the process pool executor
+            # is already shutting down.
+            if work_items[-1] is None:
+                if len(work_items) > 1:
+                    logging.warn(
+                        "There remained work items in the queue when shutting down. The items will be ignored."
+                    )
+                break
 
-            work_items = [self.pending_work_items[work_id] for work_id in work_ids]
-            is_not_cancelled = [item.future.set_running_or_notify_cancel() for item in work_items]
-            work_items = [
-                item
-                for item, is_not_cancelled in zip(work_items, is_not_cancelled)
-                if is_not_cancelled
-            ]
+            requests = [item.request for item in work_items]
+            futures = [item.future for item in work_items]
 
-            if work_items:
-                self.call_queue.put(
-                    futures_process._CallItem(
-                        work_ids,
-                        work_items[0].fn,
-                        ([work_item.args[0] for work_item in work_items],),
-                        {},
-                    ),
-                    block=True,
-                )
+            # dispatch to the process pool
+            result_future = self.process_pool_executor.submit(self.batch_worker_fn, requests)
 
-    def process_result_item(self, result_item):
-        # Process the received a result_item. This can be either the PID of a
-        # worker that exited gracefully or a _ResultItem
-
-        if isinstance(result_item, int):
-            # Clean shutdown of a worker using its PID
-            # (avoids marking the executor broken)
-            assert self.is_shutting_down()
-            p = self.processes.pop(result_item)
-            p.join()
-            if not self.processes:
-                self.join_executor_internals()
-                return
-        else:
-            # Everything above this line in this function is the same as the parent class
-            # Received a _ResultItem so mark the future as completed.
-            result_work_ids = result_item.work_id
-            work_items = [self.pending_work_items.pop(work_id, None) for work_id in result_work_ids]
-            # work_item can be None if another process terminated (see above)
-            for i, work_item in enumerate(work_items):
-                if work_item is not None:
-                    if result_item.exception:
-                        work_item.future.set_exception(result_item.exception)
-                    else:
-                        work_item.future.set_result(result_item.result[i])
+            # add callback for when the result is ready
+            result_future.add_done_callback(set_results_cb(futures))
 
 
-class BatchedProcessPoolExecutor(futures_process.ProcessPoolExecutor):
-    """
-    This is a ProcessPoolExecutor that uses a custom _ExecutorManagerThread to allow batching of inputs.
-    """
+def set_results_cb(task_futures: List[futures.Future]):
+    def cb(batch_future: futures.Future):
+        for f, r in zip(task_futures, batch_future.result()):
+            f.set_result(r)
 
-    def _start_executor_manager_thread(self):
-        # Everything in this function is the same as the parent class, except for:
-        # 1. _ExectuorManagerThread  ->  _BatchedExectuorManagerThread class
-        # 2. _threads_wakeups  ->  futures_process._threads_wakeups
-        if self._executor_manager_thread is None:
-            # Start the processes so that their sentinels are known.
-            if not self._safe_to_dynamically_spawn_children:  # ie, using fork.
-                self._launch_processes()
-            self._executor_manager_thread = _BatchedExectuorManagerThread(self)
-            self._executor_manager_thread.start()
-            futures_process._threads_wakeups[
-                self._executor_manager_thread
-            ] = self._executor_manager_thread_wakeup
+    return cb
