@@ -6,7 +6,6 @@ from typing import Any, Dict, List, Optional, Union
 
 import jiwer
 from datasets import Audio
-from pydantic import BaseModel
 from sacrebleu.metrics.bleu import BLEU
 
 import evals
@@ -25,11 +24,9 @@ from evals.record import RecorderBase
 
 logger = logging.getLogger(__name__)
 
-
-class Sample(BaseModel):
-    # This will typically correspond to a row in a HF dataset, although
-    # in some cases a row may produce multiple samples.
-    data: dict[str, Any]
+# This will typically correspond to a row in a HF dataset, although
+# in some cases a row may produce multiple samples.
+Sample = Dict[str, Any]
 
 
 class AudioTask(evals.Eval):
@@ -105,7 +102,7 @@ class MatchAudioTask(AudioTask):
         return [e.data["expected"] for e in self.get_match_events()]
 
     def get_sampled_values(self):
-        return list(map(lambda e: e.data["sampled"], self.get_match_events()))
+        return [e.data["sampled"] for e in self.get_match_events()]
 
     def compute_corpus_metrics(self):
         return {"accuracy": evals.metrics.get_accuracy(self.get_match_events())}
@@ -156,11 +153,11 @@ class Transcribe(MatchAudioTask):
     TASK_PROMPT = f"Repeat the following text in English: {AUDIO_PLACEHOLDER}"
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
-        input = sample.data["text"] if text_only else sample.data["audio"]
+        input = sample["text"] if text_only else sample["audio"]
         return build_messages(self.DEFAULT_PROMPT, self.TASK_PROMPT, input)
 
     def compute_metrics(self, sample: Sample, sampled):
-        expected = sample.data["text"]
+        expected = sample["text"]
         score = self._compute_wer(expected, sampled)
         evals.record.record_metrics(wer=score)
         match = score < 0.1
@@ -189,9 +186,7 @@ class Transcribe(MatchAudioTask):
 
 
 class Translate(MatchAudioTask):
-    TASK_PROMPT = (
-        f"Translate the following text into %s, without any explanation: {AUDIO_PLACEHOLDER}"
-    )
+    TASK_PROMPT = f"Translate the following text into {{language}}, without any explanation: {AUDIO_PLACEHOLDER}"
 
     def __init__(
         self,
@@ -206,12 +201,12 @@ class Translate(MatchAudioTask):
         self.bleu = BLEU(effective_order=True)
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
-        task_prompt = self.TASK_PROMPT % self.target_language
-        input = sample.data["audio"] if text_only else sample.data["sentence"]
+        task_prompt = self.TASK_PROMPT.format(language=self.target_language)
+        input = sample["audio"] if text_only else sample["sentence"]
         return build_messages(self.DEFAULT_PROMPT, task_prompt, input)
 
     def compute_metrics(self, sample: Sample, sampled: str):
-        expected = sample.data["sentence"]
+        expected = sample["sentence"]
         score = self.bleu.sentence_score(sampled, [expected]).score
         evals.record.record_metrics(sacrebleu_sentence_score=score)
         match = score > 30
@@ -245,11 +240,11 @@ class SpokenER(MatchAudioTask):
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
         transcript = ""  # TODO: Add transcript
-        input = transcript if text_only else sample.data["audio"]
+        input = transcript if text_only else sample["audio"]
         return build_messages(self.DEFAULT_PROMPT, self.TASK_PROMPT, input)
 
     def compute_metrics(self, sample: Sample, sampled: str):
-        expected = self.EMOTIONS[sample.data["label"]]
+        expected = self.EMOTIONS[sample["label"]]
         normalized = sampled.strip().rstrip(string.punctuation).lower()
         match = normalized == expected
         evals.record.record_match(match, expected=expected, sampled=sampled)
@@ -257,15 +252,15 @@ class SpokenER(MatchAudioTask):
 
 
 class SpokenBoolQ(MatchAudioTask):
-    TASK_PROMPT = f'Context:\n%s\n\nAnswer the following question with only the single word "True" or "False", and no additional explanation: {AUDIO_PLACEHOLDER}'
+    TASK_PROMPT = f'Context:\n{{context}}\n\nAnswer the following question with only the single word "True" or "False", and no additional explanation: {AUDIO_PLACEHOLDER}'
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
-        task_prompt = self.TASK_PROMPT % sample.data["passage"]
-        input = sample.data["audio"] if text_only else sample.data["question"]
+        task_prompt = self.TASK_PROMPT.format(context=sample["passage"])
+        input = sample["audio"] if text_only else sample["question"]
         return build_messages(self.DEFAULT_PROMPT, task_prompt, input)
 
     def compute_metrics(self, sample: Sample, sampled: str):
-        expected = str(sample.data["answer"]).lower()
+        expected = str(sample["answer"]).lower()
         normalized = sampled.strip().split()[0].rstrip(string.punctuation).lower()
         match = normalized == expected
         evals.record.record_match(match, expected=expected, sampled=sampled)
@@ -273,17 +268,17 @@ class SpokenBoolQ(MatchAudioTask):
 
 
 class SpokenQA(ModelGradedAudioTask):
-    TASK_PROMPT = f"Context:\n%s\n\nAnswer the following question: {AUDIO_PLACEHOLDER}"
+    TASK_PROMPT = f"Context:\n{{context}}\n\nAnswer the following question: {AUDIO_PLACEHOLDER}"
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
-        task_prompt = self.TASK_PROMPT % sample.data["context"]
-        input = sample.data["question"] if text_only else sample.data["audio"]
+        task_prompt = self.TASK_PROMPT.format(context=sample["context"])
+        input = sample["question"] if text_only else sample["audio"]
         return build_messages(self.DEFAULT_PROMPT, task_prompt, input)
 
     def get_expected(self, sample: Sample):
         return (
-            sample.data["answers"][0]["text"]
-            if not sample.data["is_impossible"]
+            sample["answers"][0]["text"]
+            if not sample["is_impossible"]
             else "the question is impossible to answer"
         )
 
@@ -300,7 +295,7 @@ class SpokenTools(MatchAudioTask):
         # The FireFunction test data that we have doesn't have the right tool_call_ids, so
         # we need to fix them up here. We also need to remove tool_calls from prompts for
         # non-OpenAI solvers.
-        messages = sample.data["messages"]
+        messages = sample["messages"]
         last_tool_call_id = None
         for m in messages:
             if m["tool_calls"]:
@@ -313,17 +308,17 @@ class SpokenTools(MatchAudioTask):
                 del m["tool_call_id"]
         messages = messages[:2]
         if not text_only:
-            audio = sample.data["user_message_audios"][0]["array"]
+            audio = sample["user_message_audios"][0]["array"]
             messages[1]["content"] = make_audio_content(AUDIO_PLACEHOLDER, audio)
         return messages[:2]
 
     def get_completion_kwargs(self, sample: Sample):
-        functions = json.loads(sample.data["functions"])
+        functions = json.loads(sample["functions"])
         tools = [{"type": "function", "function": f} for f in functions]
         return {"tools": tools}
 
     def compute_metrics(self, sample: Sample, sampled: str):
-        expected = sample.data["messages"][2]
+        expected = sample["messages"][2]
         score = self.score_tool_call(expected, sampled)
         match = score == 1
         evals.record.record_match(match, expected=expected, sampled=sampled, score=score)
