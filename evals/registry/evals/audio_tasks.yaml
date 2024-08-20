@@ -1,11 +1,11 @@
 audio-transcribe:
-  id: audio-transcribe.test.clean.v1
+  id: audio-transcribe.test.v1
   metrics: [accuracy]
-audio-transcribe.validation.clean.v1:
+audio-transcribe.validation.v1:
   class: evals.elsuite.audio.eval:Transcribe
   args:
     dataset: hf://openslr/librispeech_asr?split=validation.clean
-audio-transcribe.test.clean.v1:
+audio-transcribe.test.v1:
   class: evals.elsuite.audio.eval:Transcribe
   args:
     dataset: hf://openslr/librispeech_asr?split=test.clean

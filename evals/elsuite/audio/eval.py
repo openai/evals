@@ -150,7 +150,7 @@ class ModelGradedAudioTask(AudioTask):
 
 
 class Transcribe(MatchAudioTask):
-    TASK_PROMPT = f"Repeat the following text in English: {AUDIO_PLACEHOLDER}"
+    TASK_PROMPT = f"Repeat the following text, without any explanation: {AUDIO_PLACEHOLDER}"
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
         input = sample["text"] if text_only else sample["audio"]
