@@ -52,6 +52,7 @@ generation/whisper/gpu-ultravox-dev:
 generation/whisper-local/ultravox-v0.3:
   class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedGPUSolver
   args:
+    model: openai/whisper-small
     solver:
       class: evals.solvers.providers.fixie.fixie_solver:FixieSolver
       args:

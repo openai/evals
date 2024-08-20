@@ -79,9 +79,9 @@ class WhisperCascadedSolver(NestedSolver):
         return self.client.audio.transcriptions.create(model="whisper-1", file=file).text
 
 
-# TODO: merge with the code in local_gpu_solver.py
+# TODO: batched version
 class WhisperCascadedGPUSolver(WhisperCascadedSolver):
-    def __init__(self, **kwargs):
+    def __init__(self, model: str, **kwargs):
         super().__init__(**kwargs)
 
         # Set the start method for the entire script
@@ -91,8 +91,6 @@ class WhisperCascadedGPUSolver(WhisperCascadedSolver):
 
         # Only start the primary to let it download the model first
         rank_queue.put(0)
-
-        model = "openai/whisper-small"
 
         num_gpus = torch.cuda.device_count()
 
@@ -136,9 +134,10 @@ def solver_initializer(rank_queue: mp.Queue, world_size: int, model: str):
         device=device,
     )
 
-    # Let the other initializers start now that the download has finished
-    for i in range(1, world_size):
-        rank_queue.put(i)
+    if rank == 0:
+        # Let the other initializers start now that the download has finished
+        for i in range(1, world_size):
+            rank_queue.put(i)
 
 
 def solver_worker(audio):
