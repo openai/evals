@@ -5,12 +5,15 @@ generation/direct/ultravox-v0.3:
       model: fixie-ai/ultravox-v0.3
       extra_options:
         temperature: 0
+        # empirically, setting frequency_penalty to 1.0 seems to get us closer to the HF results
+        # but it's not clear why this is necessary
+        # TODO: investigate and try to match HF/VLLM results without this
+        frequency_penalty: 1.0
 
 generation/gpu/ultravox-dev:
-  class: evals.solvers.providers.fixie.local_gpu_solver:LocalGPUSolver
+  class: evals.solvers.providers.fixie.local_gpu_solver:FixieGPUSolver
   args:
-    completion_fn_options:
-      model: fixie-ai/ultravox-dev
-      extra_options:
-        temperature: 0
-        max_new_tokens: 512
+    model: fixie-ai/ultravox-dev
+    extra_options:
+      temperature: 0
+      max_new_tokens: 512
