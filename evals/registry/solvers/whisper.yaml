@@ -15,18 +15,29 @@ generation/whisper/gpt-4-turbo:
             temperature: 1
             max_tokens: 512
 
-generation/whisper/ultravox-v0.3:
+generation/whisper/gpt-4o:
   class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
   args:
     solver:
-      class: evals.solvers.providers.fixie.fixie_solver:FixieSolver
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
       args:
         completion_fn_options:
-          model: fixie-ai/ultravox-v0.3
+          model: gpt-4o
           extra_options:
-            temperature: 0
+            temperature: 1
             max_tokens: 512
-            frequency_penalty: 1.0
+
+generation/whisper/gpt-4o-mini:
+  class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
+  args:
+    solver:
+      class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+      args:
+        completion_fn_options:
+          model: gpt-4o-mini
+          extra_options:
+            temperature: 1
+            max_tokens: 512
 
 generation/whisper/mixtral:
   class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
@@ -40,6 +51,19 @@ generation/whisper/mixtral:
             temperature: 1
             max_tokens: 512
 
+generation/whisper/ultravox-v0.3:
+  class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
+  args:
+    solver:
+      class: evals.solvers.providers.fixie.fixie_solver:FixieSolver
+      args:
+        completion_fn_options:
+          model: fixie-ai/ultravox-v0.3
+          extra_options:
+            temperature: 0
+            max_tokens: 512
+            frequency_penalty: 1.0
+
 generation/whisper/gpu-ultravox-dev:
   class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
   args:
@@ -47,7 +71,6 @@ generation/whisper/gpu-ultravox-dev:
       class: evals.solvers.providers.fixie.local_gpu_solver:FixieGPUSolver
       args:
         model: fixie-ai/ultravox-dev
-
 
 generation/whisper-local/ultravox-v0.3:
   class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedGPUSolver

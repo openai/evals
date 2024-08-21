@@ -82,6 +82,20 @@ audio-sqa.validation.v1:
     modelgraded_spec_args:
       criteria: "correctness: Is the answer correct?"
 
+audio-tools:
+  id: audio-tools.validation.v1
+  metrics: [accuracy]
+audio-tools.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenTools
+  args:
+    dataset: hf://fixie-ai/tools-audio?split=train
+audio-tools.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenTools
+  args:
+    dataset: hf://fixie-ai/tools-audio?split=validation
+
+# Text-only versions
+
 transcript-transcribe:
   id: transcript-transcribe.test.clean.v1
   metrics: [accuracy]
@@ -174,3 +188,16 @@ transcript-sqa.validation.v1:
     modelgraded_spec: closedqa
     modelgraded_spec_args:
       criteria: "correctness: Is the answer correct?"
+
+transcript-tools:
+  id: transcript-tools.validation.v1
+  metrics: [accuracy]
+transcript-tools.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenTools
+  args:
+    dataset: hf://fixie-ai/tools-audio?split=train
+transcript-tools.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenTools
+  args:
+    dataset: hf://fixie-ai/tools-audio?split=validation
+    text_only: true

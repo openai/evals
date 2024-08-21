@@ -1,4 +1,4 @@
-generation/direct/ultravox-v0.3:
+generation/direct/ultravox:
   class: evals.solvers.providers.fixie.fixie_solver:FixieSolver
   args:
     completion_fn_options:
