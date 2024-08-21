@@ -205,7 +205,7 @@ class Translate(MatchAudioTask):
         return build_messages(self.DEFAULT_PROMPT, task_prompt, input)
 
     def compute_metrics(self, sample: Sample, sampled: str):
-        expected = sample["sentence"]
+        expected = sample["translation"]
         score = self.bleu.sentence_score(sampled, [expected]).score
         evals.record.record_metrics(sacrebleu_sentence_score=score)
         match = score > 30
