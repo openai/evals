@@ -4,6 +4,7 @@ import io
 import logging
 import queue
 import threading
+import time
 from concurrent import futures
 from typing import Any, Callable, Dict, List, Optional, TypeVar
 
@@ -255,7 +256,9 @@ class BatchedProcessPoolExecutor:
                     item = self._batch_queue.get(block=False)
                     work_items.append(item)
                 except queue.Empty:
-                    break
+                    if self.process_pool_executor._call_queue.empty():
+                        break
+                    time.sleep(0.01)
 
             # When we're done, a None item is added to the queue to signal the end of requests.
             # We will ignore any existing work_items since the process pool executor
