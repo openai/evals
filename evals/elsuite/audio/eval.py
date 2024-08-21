@@ -55,7 +55,6 @@ class AudioTask(evals.Eval):
         return self._recorder
 
     def eval_sample(self, sample: Sample, rng):
-        assert isinstance(sample, Sample)
         prompt = self.build_prompt(sample, self.text_only)
         kwargs = self.get_completion_kwargs(sample)
         sampled = self.do_completion(prompt, **kwargs)
@@ -71,7 +70,7 @@ class AudioTask(evals.Eval):
         ds = load_hf_dataset(self.dataset, evals.eval._MAX_SAMPLES).cast_column(
             "audio", Audio(sampling_rate=DEFAULT_SAMPLE_RATE)
         )
-        return [Sample(data=row) for row in ds]
+        return list(ds)
 
     def get_completion_kwargs(self, sample: Sample):
         return {}
@@ -202,7 +201,7 @@ class Translate(MatchAudioTask):
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
         task_prompt = self.TASK_PROMPT.format(language=self.target_language)
-        input = sample["audio"] if text_only else sample["sentence"]
+        input = sample["sentence"] if text_only else sample["audio"]
         return build_messages(self.DEFAULT_PROMPT, task_prompt, input)
 
     def compute_metrics(self, sample: Sample, sampled: str):
@@ -256,7 +255,7 @@ class SpokenBoolQ(MatchAudioTask):
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
         task_prompt = self.TASK_PROMPT.format(context=sample["passage"])
-        input = sample["audio"] if text_only else sample["question"]
+        input = sample["question"] if text_only else sample["audio"]
         return build_messages(self.DEFAULT_PROMPT, task_prompt, input)
 
     def compute_metrics(self, sample: Sample, sampled: str):
@@ -289,7 +288,7 @@ class SpokenTools(MatchAudioTask):
         ds = load_hf_dataset(self.dataset).cast_column(
             "user_message_audios", [Audio(sampling_rate=DEFAULT_SAMPLE_RATE)]
         )
-        return [Sample(data=row) for row in ds]
+        return list(ds)
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
         # The FireFunction test data that we have doesn't have the right tool_call_ids, so

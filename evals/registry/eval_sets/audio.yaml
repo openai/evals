@@ -1,10 +1,14 @@
 audio:
   evals:
-    - audio-*.test.v1
+    - audio-*.test
+    - audio-boolq
+    - audio-ser
+    - audio-sqa
+    # - audio-tools
 
 transcript:
   evals:
-    - transcript-*.test.v1
+    - transcript-*.test
 
 audio-core:
   evals:
