@@ -192,10 +192,7 @@ class Transcribe(MatchAudioTask):
             ]
         )
         output = jiwer.process_words(
-            expected,
-            sampled,
-            reference_transform=transform,
-            hypothesis_transform=transform,
+            expected, sampled, reference_transform=transform, hypothesis_transform=transform
         )
         return output.wer
 
@@ -227,10 +224,7 @@ class Translate(MatchAudioTask):
         match = score > 30
         if score is not None:
             evals.record.record_match(
-                match,
-                expected=expected,
-                sampled=sampled,
-                sacrebleu_sentence_score=score,
+                match, expected=expected, sampled=sampled, sacrebleu_sentence_score=score
             )
         return match
 
