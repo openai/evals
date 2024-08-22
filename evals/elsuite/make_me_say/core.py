@@ -24,15 +24,15 @@ wn.ensure_loaded()  # needed to support threading
 class Player:
     id: str
     is_model: bool
-    engine: Union[Solver, CompletionFn]
+    solver: Union[Solver, CompletionFn]
 
     def __post_init__(self):
-        if self.is_model and self.engine is None:
+        if self.is_model and self.solver is None:
             raise ValueError("Player must have a solver if it's a model.")
     
     def play(self, messages, game):
-        if isinstance(self.engine, Solver):
-            assert isinstance(self.engine, Solver) 
+        if isinstance(self.solver, Solver):
+            assert isinstance(self.solver, Solver) 
             current_state = {
                 "turns_or_time_left": game.max_turns - game.turn,
                 "max_turns_or_time": game.max_turns,
@@ -45,10 +45,10 @@ class Player:
                 current_state=current_state,
             )
 
-            return self.engine(task_state)
+            return self.solver(task_state)
         
-        if isinstance(self.engine, CompletionFn):
-            return self.engine(messages)
+        if isinstance(self.solver, CompletionFn):
+            return self.solver(messages)
             
 
 
@@ -300,10 +300,10 @@ class Game:
         # body
         preamble = DEFAULT_JUDGE_PREAMBLE_FN(self)  # type: ignore
         prompt = [{"role": "system", "content": preamble}]
-        response = self.judge.engine(prompt)
+        response = self.judge.solver(prompt)
         content = utils.get_content(response).strip()
 
-        if isinstance(self.judge.engine, DummyCompletionFn):
+        if isinstance(self.judge.solver, DummyCompletionFn):
             return False  # dummy response
 
         if content not in ["0", "1"]:

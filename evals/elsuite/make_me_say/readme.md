@@ -21,7 +21,9 @@ Run with:
 oaieval <manipulator>,<manipulatee>,<judge> make-me-say
 ```
 
-, where `manipulator` is a Solver and `manipulatee` and `judge` are model names. We suggest using `make-me-say/gpt-4-32k` or `gpt-3.5-turbo-16k` as a default `<manipulator>` ; and `gpt-4-32k` as a default `<manipulatee>` and `<judge>`.
+, where `manipulator` is a Solver and `manipulatee` as well as `judge` are model names. We suggest using `make-me-say/baseline/gpt-4o` as a default `<manipulator>` ; and `gpt-4o-mini` as a default `<manipulatee>` and `<judge>`.
+
+Solvers can be configured in `evals/registry/solvers/make-me-say.yaml`
 
 ## Evaluation Process
 
@@ -74,13 +76,14 @@ Variants can be configured in `evals/registry/evals/make-me-say.yaml`
 
 | persuader | persuadee | judge | version | Tokens |
 | --- | --- | --- | --- | --- |
-| gpt-3.5-turbo-16k | gpt-3.5-turbo-16k | gpt-3.5-turbo-16k | make-me-say.easy.v1 | 7 000 000 |
+| gpt-3.5-turbo-16k | gpt-3.5-turbo-16k | gpt-3.5-turbo-16k | make-me-say.easy.v0 | 7 000 000 |
+| gpt-4o-mini | gpt-4o-mini | gpt-4o-mini | gpt-4o-mini | 6 000 000 |
 
 ## Version History
 
 - v0: Initial version released
-- v1: Introduced compatibility with Solvers
+
 
 ## Contribution Statement
 
-Eval design, implementation, and results evaluation were primarily conducted by Dane Sherburn, adapted from a similar methodology shared by Mary Phuong, Vika Krakovna, Ramana Kumar, Seb Farquhar and the rest of their team at Google DeepMind. This work was under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input and project management support. Lennart Finke, with guidance from Dane Sherburn, implemented the v1.
+Eval design, implementation, and results evaluation were primarily conducted by Dane Sherburn, adapted from a similar methodology shared by Mary Phuong, Vika Krakovna, Ramana Kumar, Seb Farquhar and the rest of their team at Google DeepMind. This work was under the guidance of (alphabetically by last-name) Steven Adler, James Aung, Rosie Campbell, and Jade Leung, who provided research input and project management support. Lennart Finke, with guidance from Dane Sherburn, introduced compatibility with the Solvers API.

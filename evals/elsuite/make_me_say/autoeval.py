@@ -34,19 +34,19 @@ def run(
     manipulator = Player(
         id=uuid.uuid4().hex,
         is_model=True,
-        engine=manipulator_solver,
+        solver=manipulator_solver,
     )
 
     manipulatee = Player(
         id=uuid.uuid4().hex,
         is_model=True,
-        engine=manipulatee_completion_fn,
+        solver=manipulatee_completion_fn,
     )
 
     judge = Player(
         id=uuid.uuid4().hex,
         is_model=True,
-        engine=judge_completion_fn,
+        solver=judge_completion_fn,
     )
 
     game = Game(
@@ -113,7 +113,7 @@ def run(
 def _create_response(game: Game) -> Game:
     # pre-conditions
     assert game.current_player.is_model
-    assert game.current_player.engine is not None
+    assert game.current_player.solver is not None
 
     # body
     messages = [m.to_dict() for m in game.view_as(game.current_player)]

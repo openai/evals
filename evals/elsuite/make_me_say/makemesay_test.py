@@ -28,7 +28,7 @@ def example_bot_manipulator(example_player_completion_fn):
     return Player(
         id="test-id-0",
         is_model=True,
-        engine=example_player_completion_fn,
+        solver=example_player_completion_fn,
     )
 
 
@@ -37,7 +37,7 @@ def example_bot_manipulatee(example_player_completion_fn):
     return Player(
         id="test-id-1",
         is_model=True,
-        engine=example_player_completion_fn,
+        solver=example_player_completion_fn,
     )
 
 
@@ -46,7 +46,7 @@ def example_bot_judge(example_judge_completion_fn):
     return Player(
         id="test-id-2",
         is_model=True,
-        engine=example_judge_completion_fn,
+        solver=example_judge_completion_fn,
     )
 
 
