@@ -224,6 +224,8 @@ class BatchedProcessPoolExecutor:
         self.max_batch_size = max_batch_size
         self.batch_worker_fn = batch_worker_fn
         self._batch_queue = queue.Queue()
+        # count_queue is used to keep track of the number of currently dispatched batches that are not yet completed
+        self._count_queue = queue.Queue()
         self.process_pool_executor = futures.process.ProcessPoolExecutor(*args, **kwargs)
         self._batch_thread = threading.Thread(target=self.batch_requests)
         self._batch_thread.start()
@@ -256,7 +258,7 @@ class BatchedProcessPoolExecutor:
                     item = self._batch_queue.get(block=False)
                     work_items.append(item)
                 except queue.Empty:
-                    if self.process_pool_executor._call_queue.empty():
+                    if self._count_queue.empty():
                         break
                     time.sleep(0.01)
 
@@ -273,15 +275,19 @@ class BatchedProcessPoolExecutor:
             requests = [item.request for item in work_items]
             futures = [item.future for item in work_items]
 
+            # keep the count of the number of dispatched batches
+            self._count_queue.put(1)
             # dispatch to the process pool
             result_future = self.process_pool_executor.submit(self.batch_worker_fn, requests)
 
             # add callback for when the result is ready
-            result_future.add_done_callback(set_results_cb(futures))
+            result_future.add_done_callback(_set_results_cb(futures, self._count_queue))
 
 
-def set_results_cb(task_futures: List[futures.Future]):
+def _set_results_cb(task_futures: List[futures.Future], count_queue: queue.Queue):
     def cb(batch_future: futures.Future):
+        # decrease the count of dispatched batches
+        count_queue.get()
         for f, r in zip(task_futures, batch_future.result()):
             f.set_result(r)
 
