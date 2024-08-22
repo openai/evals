@@ -1,3 +1,4 @@
+import dataclasses
 import json
 import logging
 import string
@@ -39,6 +40,7 @@ class AudioTask(evals.Eval):
         text_only: bool = False,
         temperature: float = 0.7,
         max_tokens: int = 4096,
+        max_audio_duration: int = 30,
         *args,
         **kwargs,
     ):
@@ -49,6 +51,7 @@ class AudioTask(evals.Eval):
         self.temperature = temperature
         self.max_tokens = max_tokens
         self._recorder = None
+        self.max_audio_duration = max_audio_duration
 
     @property
     def recorder(self):
@@ -70,6 +73,7 @@ class AudioTask(evals.Eval):
         ds = load_hf_dataset(self.dataset, evals.eval._MAX_SAMPLES).cast_column(
             "audio", Audio(sampling_rate=DEFAULT_SAMPLE_RATE)
         )
+        ds = ds.filter(IsAudioLengthInRange(self.max_audio_duration))
         return list(ds)
 
     def get_completion_kwargs(self, sample: Sample):
@@ -91,6 +95,15 @@ class AudioTask(evals.Eval):
             logging.info(f"Error: {str(e)}")
             sampled = "ERROR: " + str(e)
         return sampled
+
+
+@dataclasses.dataclass
+class IsAudioLengthInRange:
+    max_duration_in_seconds: float
+
+    def __call__(self, sample):
+        audio_len = len(sample["audio"]["array"]) / sample["audio"]["sampling_rate"]
+        return audio_len < self.max_duration_in_seconds
 
 
 class MatchAudioTask(AudioTask):
@@ -179,7 +192,10 @@ class Transcribe(MatchAudioTask):
             ]
         )
         output = jiwer.process_words(
-            expected, sampled, reference_transform=transform, hypothesis_transform=transform
+            expected,
+            sampled,
+            reference_transform=transform,
+            hypothesis_transform=transform,
         )
         return output.wer
 
@@ -211,7 +227,10 @@ class Translate(MatchAudioTask):
         match = score > 30
         if score is not None:
             evals.record.record_match(
-                match, expected=expected, sampled=sampled, sacrebleu_sentence_score=score
+                match,
+                expected=expected,
+                sampled=sampled,
+                sacrebleu_sentence_score=score,
             )
         return match
 
