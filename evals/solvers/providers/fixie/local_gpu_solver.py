@@ -287,7 +287,7 @@ class BatchedProcessPoolExecutor:
 
             # add callback for when the result is ready
             result_future.add_done_callback(_set_results_cb(futures))
-            result_future.add_done_callback(lambda: self.available_workers.release())
+            result_future.add_done_callback(lambda _: self.available_workers.release())
 
 
 def _set_results_cb(task_futures: List[futures.Future]):
