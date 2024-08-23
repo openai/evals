@@ -1,307 +1,293 @@
 ### Audio translation tasks (X to EN)
-audio-translate-ar_en:
-  id: audio-translate-ar_en.test.v1
+audio-translate-ar-en:
+  id: audio-translate-ar-en.test.v1
   metrics: [accuracy]
-audio-translate-ar_en.validation.v1:
+audio-translate-ar-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ar_en&split=validation
     target_language: English
-audio-translate-ar_en.test.v1:
+audio-translate-ar-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ar_en&split=test
     target_language: English
 
-audio-translate-ca_en:
-  id: audio-translate-ca_en.test.v1
+audio-translate-ca-en:
+  id: audio-translate-ca-en.test.v1
   metrics: [accuracy]
-audio-translate-ca_en.validation.v1:
+audio-translate-ca-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ca_en&split=validation
     target_language: English
-audio-translate-ca_en.test.v1:
+audio-translate-ca-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ca_en&split=test
     target_language: English
 
-audio-translate-cy_en:
-  id: audio-translate-cy_en.test.v1
+audio-translate-cy-en:
+  id: audio-translate-cy-en.test.v1
   metrics: [accuracy]
-audio-translate-cy_en.validation.v1:
+audio-translate-cy-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=cy_en&split=validation
     target_language: English
-audio-translate-cy_en.test.v1:
+audio-translate-cy-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=cy_en&split=test
     target_language: English
 
-audio-translate-de_en:
-  id: audio-translate-de_en.test.v1
+audio-translate-de-en:
+  id: audio-translate-de-en.test.v1
   metrics: [accuracy]
-audio-translate-de_en.validation.v1:
+audio-translate-de-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=de_en&split=validation
     target_language: English
-audio-translate-de_en.test.v1:
+audio-translate-de-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=de_en&split=test
     target_language: English
 
-audio-translate-en_en:
-  id: audio-translate-en_en.test.v1
+audio-translate-es-en:
+  id: audio-translate-es-en.test.v1
   metrics: [accuracy]
-audio-translate-en_en.validation.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=en_en&split=validation
-    target_language: English
-audio-translate-en_en.test.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=en_en&split=test
-    target_language: English
-
-audio-translate-es_en:
-  id: audio-translate-es_en.test.v1
-  metrics: [accuracy]
-audio-translate-es_en.validation.v1:
+audio-translate-es-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=es_en&split=validation
     target_language: English
-audio-translate-es_en.test.v1:
+audio-translate-es-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=es_en&split=test
     target_language: English
 
-audio-translate-et_en:
-  id: audio-translate-et_en.test.v1
+audio-translate-et-en:
+  id: audio-translate-et-en.test.v1
   metrics: [accuracy]
-audio-translate-et_en.validation.v1:
+audio-translate-et-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=et_en&split=validation
     target_language: English
-audio-translate-et_en.test.v1:
+audio-translate-et-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=et_en&split=test
     target_language: English
 
-audio-translate-fa_en:
-  id: audio-translate-fa_en.test.v1
+audio-translate-fa-en:
+  id: audio-translate-fa-en.test.v1
   metrics: [accuracy]
-audio-translate-fa_en.validation.v1:
+audio-translate-fa-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=fa_en&split=validation
     target_language: English
-audio-translate-fa_en.test.v1:
+audio-translate-fa-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=fa_en&split=test
     target_language: English
 
-audio-translate-fr_en:
-  id: audio-translate-fr_en.test.v1
+audio-translate-fr-en:
+  id: audio-translate-fr-en.test.v1
   metrics: [accuracy]
-audio-translate-fr_en.validation.v1:
+audio-translate-fr-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=fr_en&split=validation
     target_language: English
-audio-translate-fr_en.test.v1:
+audio-translate-fr-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=fr_en&split=test
     target_language: English
 
-audio-translate-id_en:
-  id: audio-translate-id_en.test.v1
+audio-translate-id-en:
+  id: audio-translate-id-en.test.v1
   metrics: [accuracy]
-audio-translate-id_en.validation.v1:
+audio-translate-id-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=id_en&split=validation
     target_language: English
-audio-translate-id_en.test.v1:
+audio-translate-id-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=id_en&split=test
     target_language: English
 
-audio-translate-it_en:
-  id: audio-translate-it_en.test.v1
+audio-translate-it-en:
+  id: audio-translate-it-en.test.v1
   metrics: [accuracy]
-audio-translate-it_en.validation.v1:
+audio-translate-it-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=it_en&split=validation
     target_language: English
-audio-translate-it_en.test.v1:
+audio-translate-it-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=it_en&split=test
     target_language: English
 
-audio-translate-ja_en:
-  id: audio-translate-ja_en.test.v1
+audio-translate-ja-en:
+  id: audio-translate-ja-en.test.v1
   metrics: [accuracy]
-audio-translate-ja_en.validation.v1:
+audio-translate-ja-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ja_en&split=validation
     target_language: English
-audio-translate-ja_en.test.v1:
+audio-translate-ja-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ja_en&split=test
     target_language: English
 
-audio-translate-lv_en:
-  id: audio-translate-lv_en.test.v1
+audio-translate-lv-en:
+  id: audio-translate-lv-en.test.v1
   metrics: [accuracy]
-audio-translate-lv_en.validation.v1:
+audio-translate-lv-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=lv_en&split=validation
     target_language: English
-audio-translate-lv_en.test.v1:
+audio-translate-lv-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=lv_en&split=test
     target_language: English
 
-audio-translate-mn_en:
-  id: audio-translate-mn_en.test.v1
+audio-translate-mn-en:
+  id: audio-translate-mn-en.test.v1
   metrics: [accuracy]
-audio-translate-mn_en.validation.v1:
+audio-translate-mn-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=mn_en&split=validation
     target_language: English
-audio-translate-mn_en.test.v1:
+audio-translate-mn-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=mn_en&split=test
     target_language: English
 
-audio-translate-nl_en:
-  id: audio-translate-nl_en.test.v1
+audio-translate-nl-en:
+  id: audio-translate-nl-en.test.v1
   metrics: [accuracy]
-audio-translate-nl_en.validation.v1:
+audio-translate-nl-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=nl_en&split=validation
     target_language: English
-audio-translate-nl_en.test.v1:
+audio-translate-nl-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=nl_en&split=test
     target_language: English
 
-audio-translate-pt_en:
-  id: audio-translate-pt_en.test.v1
+audio-translate-pt-en:
+  id: audio-translate-pt-en.test.v1
   metrics: [accuracy]
-audio-translate-pt_en.validation.v1:
+audio-translate-pt-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=pt_en&split=validation
     target_language: English
-audio-translate-pt_en.test.v1:
+audio-translate-pt-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=pt_en&split=test
     target_language: English
 
-audio-translate-ru_en:
-  id: audio-translate-ru_en.test.v1
+audio-translate-ru-en:
+  id: audio-translate-ru-en.test.v1
   metrics: [accuracy]
-audio-translate-ru_en.validation.v1:
+audio-translate-ru-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ru_en&split=validation
     target_language: English
-audio-translate-ru_en.test.v1:
+audio-translate-ru-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ru_en&split=test
     target_language: English
 
-audio-translate-sl_en:
-  id: audio-translate-sl_en.test.v1
+audio-translate-sl-en:
+  id: audio-translate-sl-en.test.v1
   metrics: [accuracy]
-audio-translate-sl_en.validation.v1:
+audio-translate-sl-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=sl_en&split=validation
     target_language: English
-audio-translate-sl_en.test.v1:
+audio-translate-sl-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=sl_en&split=test
     target_language: English
 
-audio-translate-sv-SE_en:
-  id: audio-translate-sv-SE_en.test.v1
+audio-translate-sv-SE-en:
+  id: audio-translate-sv-SE-en.test.v1
   metrics: [accuracy]
-audio-translate-sv-SE_en.validation.v1:
+audio-translate-sv-SE-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=sv-SE_en&split=validation
     target_language: English
-audio-translate-sv-SE_en.test.v1:
+audio-translate-sv-SE-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=sv-SE_en&split=test
     target_language: English
 
-audio-translate-ta_en:
-  id: audio-translate-ta_en.test.v1
+audio-translate-ta-en:
+  id: audio-translate-ta-en.test.v1
   metrics: [accuracy]
-audio-translate-ta_en.validation.v1:
+audio-translate-ta-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ta_en&split=validation
     target_language: English
-audio-translate-ta_en.test.v1:
+audio-translate-ta-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ta_en&split=test
     target_language: English
 
-audio-translate-tr_en:
-  id: audio-translate-tr_en.test.v1
+audio-translate-tr-en:
+  id: audio-translate-tr-en.test.v1
   metrics: [accuracy]
-audio-translate-tr_en.validation.v1:
+audio-translate-tr-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=tr_en&split=validation
     target_language: English
-audio-translate-tr_en.test.v1:
+audio-translate-tr-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=tr_en&split=test
     target_language: English
 
-audio-translate-zh-CN_en:
-  id: audio-translate-zh-CN_en.test.v1
+audio-translate-zh-CN-en:
+  id: audio-translate-zh-CN-en.test.v1
   metrics: [accuracy]
-audio-translate-zh-CN_en.validation.v1:
+audio-translate-zh-CN-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=zh-CN_en&split=validation
     target_language: English
-audio-translate-zh-CN_en.test.v1:
+audio-translate-zh-CN-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=zh-CN_en&split=test
@@ -520,352 +506,336 @@ audio-translate-en-ja.test.v1:
 
 
 ### Text translation tasks (X to EN)
-transcript-translate-ar_en:
-  id: transcript-translate-ar_en.test.v1
+transcript-translate-ar-en:
+  id: transcript-translate-ar-en.test.v1
   metrics: [accuracy]
-transcript-translate-ar_en.validation.v1:
+transcript-translate-ar-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ar_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-ar_en.test.v1:
+transcript-translate-ar-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ar_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-ca_en:
-  id: transcript-translate-ca_en.test.v1
+transcript-translate-ca-en:
+  id: transcript-translate-ca-en.test.v1
   metrics: [accuracy]
-transcript-translate-ca_en.validation.v1:
+transcript-translate-ca-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ca_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-ca_en.test.v1:
+transcript-translate-ca-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ca_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-cy_en:
-  id: transcript-translate-cy_en.test.v1
+transcript-translate-cy-en:
+  id: transcript-translate-cy-en.test.v1
   metrics: [accuracy]
-transcript-translate-cy_en.validation.v1:
+transcript-translate-cy-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=cy_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-cy_en.test.v1:
+transcript-translate-cy-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=cy_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-de_en:
-  id: transcript-translate-de_en.test.v1
+transcript-translate-de-en:
+  id: transcript-translate-de-en.test.v1
   metrics: [accuracy]
-transcript-translate-de_en.validation.v1:
+transcript-translate-de-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=de_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-de_en.test.v1:
+transcript-translate-de-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=de_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-en_en:
-  id: transcript-translate-en_en.test.v1
+transcript-translate-es-en:
+  id: transcript-translate-es-en.test.v1
   metrics: [accuracy]
-transcript-translate-en_en.validation.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=en_en&split=validation
-    text_only: True
-    target_language: English
-transcript-translate-en_en.test.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=en_en&split=test
-    text_only: True
-    target_language: English
-
-transcript-translate-es_en:
-  id: transcript-translate-es_en.test.v1
-  metrics: [accuracy]
-transcript-translate-es_en.validation.v1:
+transcript-translate-es-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=es_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-es_en.test.v1:
+transcript-translate-es-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=es_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-et_en:
-  id: transcript-translate-et_en.test.v1
+transcript-translate-et-en:
+  id: transcript-translate-et-en.test.v1
   metrics: [accuracy]
-transcript-translate-et_en.validation.v1:
+transcript-translate-et-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=et_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-et_en.test.v1:
+transcript-translate-et-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=et_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-fa_en:
-  id: transcript-translate-fa_en.test.v1
+transcript-translate-fa-en:
+  id: transcript-translate-fa-en.test.v1
   metrics: [accuracy]
-transcript-translate-fa_en.validation.v1:
+transcript-translate-fa-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=fa_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-fa_en.test.v1:
+transcript-translate-fa-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=fa_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-fr_en:
-  id: transcript-translate-fr_en.test.v1
+transcript-translate-fr-en:
+  id: transcript-translate-fr-en.test.v1
   metrics: [accuracy]
-transcript-translate-fr_en.validation.v1:
+transcript-translate-fr-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=fr_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-fr_en.test.v1:
+transcript-translate-fr-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=fr_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-id_en:
-  id: transcript-translate-id_en.test.v1
+transcript-translate-id-en:
+  id: transcript-translate-id-en.test.v1
   metrics: [accuracy]
-transcript-translate-id_en.validation.v1:
+transcript-translate-id-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=id_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-id_en.test.v1:
+transcript-translate-id-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=id_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-it_en:
-  id: transcript-translate-it_en.test.v1
+transcript-translate-it-en:
+  id: transcript-translate-it-en.test.v1
   metrics: [accuracy]
-transcript-translate-it_en.validation.v1:
+transcript-translate-it-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=it_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-it_en.test.v1:
+transcript-translate-it-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=it_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-ja_en:
-  id: transcript-translate-ja_en.test.v1
+transcript-translate-ja-en:
+  id: transcript-translate-ja-en.test.v1
   metrics: [accuracy]
-transcript-translate-ja_en.validation.v1:
+transcript-translate-ja-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ja_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-ja_en.test.v1:
+transcript-translate-ja-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ja_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-lv_en:
-  id: transcript-translate-lv_en.test.v1
+transcript-translate-lv-en:
+  id: transcript-translate-lv-en.test.v1
   metrics: [accuracy]
-transcript-translate-lv_en.validation.v1:
+transcript-translate-lv-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=lv_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-lv_en.test.v1:
+transcript-translate-lv-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=lv_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-mn_en:
-  id: transcript-translate-mn_en.test.v1
+transcript-translate-mn-en:
+  id: transcript-translate-mn-en.test.v1
   metrics: [accuracy]
-transcript-translate-mn_en.validation.v1:
+transcript-translate-mn-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=mn_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-mn_en.test.v1:
+transcript-translate-mn-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=mn_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-nl_en:
-  id: transcript-translate-nl_en.test.v1
+transcript-translate-nl-en:
+  id: transcript-translate-nl-en.test.v1
   metrics: [accuracy]
-transcript-translate-nl_en.validation.v1:
+transcript-translate-nl-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=nl_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-nl_en.test.v1:
+transcript-translate-nl-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=nl_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-pt_en:
-  id: transcript-translate-pt_en.test.v1
+transcript-translate-pt-en:
+  id: transcript-translate-pt-en.test.v1
   metrics: [accuracy]
-transcript-translate-pt_en.validation.v1:
+transcript-translate-pt-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=pt_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-pt_en.test.v1:
+transcript-translate-pt-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=pt_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-ru_en:
-  id: transcript-translate-ru_en.test.v1
+transcript-translate-ru-en:
+  id: transcript-translate-ru-en.test.v1
   metrics: [accuracy]
-transcript-translate-ru_en.validation.v1:
+transcript-translate-ru-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ru_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-ru_en.test.v1:
+transcript-translate-ru-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ru_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-sl_en:
-  id: transcript-translate-sl_en.test.v1
+transcript-translate-sl-en:
+  id: transcript-translate-sl-en.test.v1
   metrics: [accuracy]
-transcript-translate-sl_en.validation.v1:
+transcript-translate-sl-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=sl_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-sl_en.test.v1:
+transcript-translate-sl-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=sl_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-sv-SE_en:
-  id: transcript-translate-sv-SE_en.test.v1
+transcript-translate-sv-SE-en:
+  id: transcript-translate-sv-SE-en.test.v1
   metrics: [accuracy]
-transcript-translate-sv-SE_en.validation.v1:
+transcript-translate-sv-SE-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=sv-SE_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-sv-SE_en.test.v1:
+transcript-translate-sv-SE-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=sv-SE_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-ta_en:
-  id: transcript-translate-ta_en.test.v1
+transcript-translate-ta-en:
+  id: transcript-translate-ta-en.test.v1
   metrics: [accuracy]
-transcript-translate-ta_en.validation.v1:
+transcript-translate-ta-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ta_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-ta_en.test.v1:
+transcript-translate-ta-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=ta_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-tr_en:
-  id: transcript-translate-tr_en.test.v1
+transcript-translate-tr-en:
+  id: transcript-translate-tr-en.test.v1
   metrics: [accuracy]
-transcript-translate-tr_en.validation.v1:
+transcript-translate-tr-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=tr_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-tr_en.test.v1:
+transcript-translate-tr-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=tr_en&split=test
     text_only: True
     target_language: English
 
-transcript-translate-zh-CN_en:
-  id: transcript-translate-zh-CN_en.test.v1
+transcript-translate-zh-CN-en:
+  id: transcript-translate-zh-CN-en.test.v1
   metrics: [accuracy]
-transcript-translate-zh-CN_en.validation.v1:
+transcript-translate-zh-CN-en.validation.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=zh-CN_en&split=validation
     text_only: True
     target_language: English
-transcript-translate-zh-CN_en.test.v1:
+transcript-translate-zh-CN-en.test.v1:
   class: evals.elsuite.audio.eval:Translate
   args:
     dataset: hf://fixie-ai/covost2?name=zh-CN_en&split=test
