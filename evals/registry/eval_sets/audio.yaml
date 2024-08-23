@@ -38,16 +38,16 @@ audio-translate-core:
   evals:
     - audio-translate-covost-zh-CN_en
     - audio-translate-covost-ru_en
-    # - audio-translate-covost-es_en
+    - audio-translate-covost-es_en
     - audio-translate-covost-en_ca
     - audio-translate-covost-en_ar
-    # - audio-translate-covost-en_de
+    - audio-translate-covost-en_de
 
 transcript-translate-core:
   evals:
     - transcript-translate-covost-zh-CN_en
     - transcript-translate-covost-ru_en
-    # - transcript-translate-covost-es_en
+    - transcript-translate-covost-es_en
     - transcript-translate-covost-en_ca
     - transcript-translate-covost-en_ar
-    # - transcript-translate-covost-en_de
+    - transcript-translate-covost-en_de
