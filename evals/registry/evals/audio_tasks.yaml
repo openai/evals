@@ -69,13 +69,13 @@ audio-tools.validation.v1:
 # Text-only versions
 
 transcript-transcribe:
-  id: transcript-transcribe.test.clean.v1
+  id: transcript-transcribe.test.v1
   metrics: [accuracy]
-transcript-transcribe.validation.clean.v1:
+transcript-transcribe.validation.v1:
   class: evals.elsuite.audio.eval:Transcribe
   args:
     dataset: hf://openslr/librispeech_asr?split=validation.clean
-transcript-transcribe.test.clean.v1:
+transcript-transcribe.test.v1:
   class: evals.elsuite.audio.eval:Transcribe
   args:
     dataset: hf://openslr/librispeech_asr?split=test.clean
