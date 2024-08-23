@@ -12,17 +12,25 @@ transcript:
 
 audio-core:
   evals:
-    - audio-translate-from-en
-    - audio-translate-to-en
     - audio-boolq
     - audio-transcribe
+    - audio-translate-covost-zh-CN_en
+    - audio-translate-covost-ru_en
+    - audio-translate-covost-es_en
+    - audio-translate-covost-en_ca
+    - audio-translate-covost-en_ar
+    - audio-translate-covost-en_de
 
 transcript-core:
   evals:
-    - transcript-translate-en-de
-    - transcript-translate-es-en
     - transcript-boolq
     - transcript-transcribe
+    - transcript-translate-covost-zh-CN_en
+    - transcript-translate-covost-ru_en
+    - transcript-translate-covost-es_en
+    - transcript-translate-covost-en_ca
+    - transcript-translate-covost-en_ar
+    - transcript-translate-covost-en_de
 
 audio-translate:
   evals:
@@ -33,21 +41,3 @@ transcript-translate:
   evals:
     - transcript-translate-covost-en_*.test.v1
     - transcript-translate-covost-*_en.test.v1
-
-audio-translate-core:
-  evals:
-    - audio-translate-covost-zh-CN_en
-    - audio-translate-covost-ru_en
-    - audio-translate-covost-es_en
-    - audio-translate-covost-en_ca
-    - audio-translate-covost-en_ar
-    - audio-translate-covost-en_de
-
-transcript-translate-core:
-  evals:
-    - transcript-translate-covost-zh-CN_en
-    - transcript-translate-covost-ru_en
-    - transcript-translate-covost-es_en
-    - transcript-translate-covost-en_ca
-    - transcript-translate-covost-en_ar
-    - transcript-translate-covost-en_de
