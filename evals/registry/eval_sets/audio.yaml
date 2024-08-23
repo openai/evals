@@ -19,7 +19,17 @@ audio-core:
 
 transcript-core:
   evals:
-    - transcript-translate-from-en
-    - transcript-translate-to-en
+    - transcript-translate-en-de
+    - transcript-translate-es-en
     - transcript-boolq
     - transcript-transcribe
+
+audio-translate:
+  evals:
+    - audio-translate-*-en.test.v1
+    - audio-translate-en-*.test.v1
+
+transcript-translate:
+  evals:
+    - transcript-translate-*-en.test.v1
+    - transcript-translate-en-*.test.v1

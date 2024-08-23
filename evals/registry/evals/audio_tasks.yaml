@@ -10,34 +10,6 @@ audio-transcribe.test.v1:
   args:
     dataset: hf://openslr/librispeech_asr?split=test.clean
 
-audio-translate-to-en:
-  id: audio-translate-to-en.test.v1
-  metrics: [accuracy]
-audio-translate-to-en.validation.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=es_en&split=validation
-    target_language: English
-audio-translate-to-en.test.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=es_en&split=test
-    target_language: English
-
-audio-translate-from-en:
-  id: audio-translate-from-en.test.v1
-  metrics: [accuracy]
-audio-translate-from-en.validation.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=en_de&split=validation
-    target_language: German
-audio-translate-from-en.test.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=en_de&split=test
-    target_language: German
-
 audio-boolq:
   id: audio-boolq.validation.v1
   metrics: [accuracy]
@@ -108,37 +80,6 @@ transcript-transcribe.test.clean.v1:
   args:
     dataset: hf://openslr/librispeech_asr?split=test.clean
     text_only: true
-
-transcript-translate-to-en:
-  id: transcript-translate-to-en.test.v1
-  metrics: [accuracy]
-transcript-translate-to-en.validation.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=es_en&split=validation
-    target_language: English
-transcript-translate-to-en.test.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=es_en&split=test
-    text_only: true
-    target_language: English
-
-transcript-translate-from-en:
-  id: transcript-translate-from-en.test.v1
-  metrics: [accuracy]
-transcript-translate-from-en.validation.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=en_de&split=validation
-    text_only: true
-    target_language: German
-transcript-translate-from-en.test.v1:
-  class: evals.elsuite.audio.eval:Translate
-  args:
-    dataset: hf://fixie-ai/covost2?name=en_de&split=test
-    text_only: true
-    target_language: German
 
 transcript-boolq:
   id: transcript-boolq.validation.v1
