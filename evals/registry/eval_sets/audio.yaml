@@ -26,10 +26,28 @@ transcript-core:
 
 audio-translate:
   evals:
-    - audio-translate-*-en.test.v1
-    - audio-translate-en-*.test.v1
+    - audio-translate-covost-en_*.test.v1
+    - audio-translate-covost-*_en.test.v1
 
 transcript-translate:
   evals:
-    - transcript-translate-*-en.test.v1
-    - transcript-translate-en-*.test.v1
+    - transcript-translate-covost-en_*.test.v1
+    - transcript-translate-covost-*_en.test.v1
+
+audio-translate-core:
+  evals:
+    - audio-translate-covost-zh-CN_en
+    - audio-translate-covost-ru_en
+    - audio-translate-covost-es_en
+    - audio-translate-covost-en_ca
+    - audio-translate-covost-en_ar
+    - audio-translate-covost-en-de
+
+transcript-translate-core:
+  evals:
+    - transcript-translate-covost-zh-CN_en
+    - transcript-translate-covost-ru_en
+    - transcript-translate-covost-es_en
+    - transcript-translate-covost-en_ca
+    - transcript-translate-covost-en_ar
+    - transcript-translate-covost-en-de
