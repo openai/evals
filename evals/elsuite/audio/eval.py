@@ -73,7 +73,7 @@ class AudioTask(evals.Eval):
 
     def run(self, recorder: RecorderBase):
         samples = self.load_dataset()
-        samples = [s for s in samples if self._keep_sample(samples)]
+        samples = [s for s in samples if self._keep_sample(s)]
         self._recorder = recorder
         self.eval_all_samples(recorder, samples)
         return self.compute_corpus_metrics()
