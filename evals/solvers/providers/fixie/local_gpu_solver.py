@@ -78,7 +78,7 @@ class FixieGPUSolver(Solver):
 
         self.executor = BatchedProcessPoolExecutor(
             max_workers=max(1, num_gpus),
-            max_batch_size=max_batch_size,
+            max_batch_size=int(max_batch_size),
             initializer=solver_initializer,
             initargs=(rank_queue, num_gpus, model, extra_options),
             batch_worker_fn=solver_worker,

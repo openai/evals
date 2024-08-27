@@ -1,4 +1,3 @@
-import dataclasses
 import json
 import logging
 import string
@@ -83,7 +82,6 @@ class AudioTask(evals.Eval):
         ds = load_hf_dataset(self.dataset, evals.eval._MAX_SAMPLES).cast_column(
             "audio", Audio(sampling_rate=DEFAULT_SAMPLE_RATE)
         )
-        ds = ds.filter(IsAudioLengthInRange(self.max_audio_duration))
         return list(ds)
 
     def get_completion_kwargs(self, sample: Sample):
@@ -105,15 +103,6 @@ class AudioTask(evals.Eval):
             logging.info(f"Error: {str(e)}")
             sampled = "ERROR: " + str(e)
         return sampled
-
-
-@dataclasses.dataclass
-class IsAudioLengthInRange:
-    max_duration_in_seconds: float
-
-    def __call__(self, sample):
-        audio_len = len(sample["audio"]["array"]) / sample["audio"]["sampling_rate"]
-        return audio_len < self.max_duration_in_seconds
 
 
 class MatchAudioTask(AudioTask):
