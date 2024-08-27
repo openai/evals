@@ -15,6 +15,7 @@ from evals.elsuite.audio.utils import (
     AUDIO_PLACEHOLDER,
     DEFAULT_SAMPLE_RATE,
     build_messages,
+    get_audio_duration,
     load_hf_dataset,
     make_audio_content,
     redact_audio_content,
@@ -39,6 +40,7 @@ class AudioTask(evals.Eval):
         text_only: bool = False,
         temperature: float = 0.7,
         max_tokens: int = 4096,
+        max_audio_duration: int = 30,
         *args,
         **kwargs,
     ):
@@ -49,6 +51,7 @@ class AudioTask(evals.Eval):
         self.temperature = temperature
         self.max_tokens = max_tokens
         self._recorder = None
+        self.max_audio_duration = max_audio_duration
 
     @property
     def recorder(self):
@@ -60,8 +63,17 @@ class AudioTask(evals.Eval):
         sampled = self.do_completion(prompt, **kwargs)
         return self.compute_metrics(sample, sampled)
 
+    def _keep_sample(self, sample):
+        """
+        Allows for applying additional filtering to samples before evaluation.
+
+        Currently only filters out samples with audio longer than max_audio_duration.
+        """
+        return get_audio_duration(sample["audio"]) < self.max_audio_duration
+
     def run(self, recorder: RecorderBase):
         samples = self.load_dataset()
+        samples = [s for s in samples if self._keep_sample(samples)]
         self._recorder = recorder
         self.eval_all_samples(recorder, samples)
         return self.compute_corpus_metrics()
@@ -289,6 +301,9 @@ class SpokenTools(MatchAudioTask):
             "user_message_audios", [Audio(sampling_rate=DEFAULT_SAMPLE_RATE)]
         )
         return list(ds)
+
+    def _keep_sample(self, sample):
+        return get_audio_duration(sample["user_message_audios"][0]) < self.max_audio_duration
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
         # The FireFunction test data that we have doesn't have the right tool_call_ids, so
