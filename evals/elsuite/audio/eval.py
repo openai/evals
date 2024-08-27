@@ -62,18 +62,18 @@ class AudioTask(evals.Eval):
         sampled = self.do_completion(prompt, **kwargs)
         return self.compute_metrics(sample, sampled)
 
-    def _keep_sample(self, sample, max_audio_duration: int):
+    def _keep_sample(self, sample):
         """
         Allows for applying additional filtering to samples before evaluation.
 
         Currently only filters out samples with audio longer than max_audio_duration.
         """
         audio_len = len(sample["audio"]["array"]) / sample["audio"]["sampling_rate"]
-        return audio_len < max_audio_duration
+        return audio_len < self.max_audio_duration
 
     def run(self, recorder: RecorderBase):
         samples = self.load_dataset()
-        samples = [s for s in samples if self._keep_sample(samples, self.max_audio_duration)]
+        samples = [s for s in samples if self._keep_sample(samples)]
         self._recorder = recorder
         self.eval_all_samples(recorder, samples)
         return self.compute_corpus_metrics()
@@ -302,10 +302,10 @@ class SpokenTools(MatchAudioTask):
         )
         return list(ds)
 
-    def _keep_sample(self, sample, max_audio_duration: int):
+    def _keep_sample(self, sample):
         audio = sample["user_message_audios"][0]
         audio_len = len(audio["array"]) / audio["sampling_rate"]
-        return audio_len < max_audio_duration
+        return audio_len < self.max_audio_duration
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
         # The FireFunction test data that we have doesn't have the right tool_call_ids, so
