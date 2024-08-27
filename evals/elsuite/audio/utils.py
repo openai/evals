@@ -1,6 +1,6 @@
 import base64
 from io import BytesIO
-from typing import Any, Optional, Union
+from typing import Any, Dict, Optional, Union
 from urllib.parse import parse_qs, urlparse
 
 import numpy as np
@@ -60,3 +60,7 @@ def redact_audio_content(content: Union[str, list[dict[str, Any]]]):
         for part in content:
             if part["type"] == "image_url":
                 part["image_url"]["url"] = "<audio data>"
+
+
+def get_audio_duration(audio: Dict[str, Union[int, np.ndarray]]) -> float:
+    return len(audio["array"]) / audio["sampling_rate"]
