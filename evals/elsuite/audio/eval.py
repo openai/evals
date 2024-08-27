@@ -197,7 +197,7 @@ class Transcribe(MatchAudioTask):
 
 
 class Translate(MatchAudioTask):
-    TASK_PROMPT = f"Translate the following text into {{language}}, without any explanation: {AUDIO_PLACEHOLDER}"
+    TASK_PROMPT = f"Please translate the text to {{language}}. Your response should only include the {{language}} translation, without any additional words:\n\n{AUDIO_PLACEHOLDER}"
 
     def __init__(
         self,

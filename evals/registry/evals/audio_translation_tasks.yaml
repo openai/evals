@@ -1,0 +1,1084 @@
+### Audio translation tasks (X to EN)
+audio-translate-covost-ar_en:
+  id: audio-translate-covost-ar_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-ar_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ar_en&split=validation
+    target_language: English
+audio-translate-covost-ar_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ar_en&split=test
+    target_language: English
+
+audio-translate-covost-ca_en:
+  id: audio-translate-covost-ca_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-ca_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ca_en&split=validation
+    target_language: English
+audio-translate-covost-ca_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ca_en&split=test
+    target_language: English
+
+audio-translate-covost-cy_en:
+  id: audio-translate-covost-cy_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-cy_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=cy_en&split=validation
+    target_language: English
+audio-translate-covost-cy_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=cy_en&split=test
+    target_language: English
+
+audio-translate-covost-de_en:
+  id: audio-translate-covost-de_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-de_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=de_en&split=validation
+    target_language: English
+audio-translate-covost-de_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=de_en&split=test
+    target_language: English
+
+audio-translate-covost-es_en:
+  id: audio-translate-covost-es_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-es_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=es_en&split=validation
+    target_language: English
+audio-translate-covost-es_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=es_en&split=test
+    target_language: English
+
+audio-translate-covost-et_en:
+  id: audio-translate-covost-et_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-et_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=et_en&split=validation
+    target_language: English
+audio-translate-covost-et_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=et_en&split=test
+    target_language: English
+
+audio-translate-covost-fa_en:
+  id: audio-translate-covost-fa_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-fa_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=fa_en&split=validation
+    target_language: English
+audio-translate-covost-fa_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=fa_en&split=test
+    target_language: English
+
+audio-translate-covost-fr_en:
+  id: audio-translate-covost-fr_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-fr_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=fr_en&split=validation
+    target_language: English
+audio-translate-covost-fr_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=fr_en&split=test
+    target_language: English
+
+audio-translate-covost-id_en:
+  id: audio-translate-covost-id_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-id_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=id_en&split=validation
+    target_language: English
+audio-translate-covost-id_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=id_en&split=test
+    target_language: English
+
+audio-translate-covost-it_en:
+  id: audio-translate-covost-it_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-it_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=it_en&split=validation
+    target_language: English
+audio-translate-covost-it_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=it_en&split=test
+    target_language: English
+
+audio-translate-covost-ja_en:
+  id: audio-translate-covost-ja_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-ja_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ja_en&split=validation
+    target_language: English
+audio-translate-covost-ja_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ja_en&split=test
+    target_language: English
+
+audio-translate-covost-lv_en:
+  id: audio-translate-covost-lv_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-lv_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=lv_en&split=validation
+    target_language: English
+audio-translate-covost-lv_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=lv_en&split=test
+    target_language: English
+
+audio-translate-covost-mn_en:
+  id: audio-translate-covost-mn_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-mn_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=mn_en&split=validation
+    target_language: English
+audio-translate-covost-mn_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=mn_en&split=test
+    target_language: English
+
+audio-translate-covost-nl_en:
+  id: audio-translate-covost-nl_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-nl_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=nl_en&split=validation
+    target_language: English
+audio-translate-covost-nl_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=nl_en&split=test
+    target_language: English
+
+audio-translate-covost-pt_en:
+  id: audio-translate-covost-pt_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-pt_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=pt_en&split=validation
+    target_language: English
+audio-translate-covost-pt_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=pt_en&split=test
+    target_language: English
+
+audio-translate-covost-ru_en:
+  id: audio-translate-covost-ru_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-ru_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ru_en&split=validation
+    target_language: English
+audio-translate-covost-ru_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ru_en&split=test
+    target_language: English
+
+audio-translate-covost-sl_en:
+  id: audio-translate-covost-sl_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-sl_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=sl_en&split=validation
+    target_language: English
+audio-translate-covost-sl_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=sl_en&split=test
+    target_language: English
+
+audio-translate-covost-sv-SE_en:
+  id: audio-translate-covost-sv-SE_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-sv-SE_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=sv-SE_en&split=validation
+    target_language: English
+audio-translate-covost-sv-SE_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=sv-SE_en&split=test
+    target_language: English
+
+audio-translate-covost-ta_en:
+  id: audio-translate-covost-ta_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-ta_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ta_en&split=validation
+    target_language: English
+audio-translate-covost-ta_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ta_en&split=test
+    target_language: English
+
+audio-translate-covost-tr_en:
+  id: audio-translate-covost-tr_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-tr_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=tr_en&split=validation
+    target_language: English
+audio-translate-covost-tr_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=tr_en&split=test
+    target_language: English
+
+audio-translate-covost-zh-CN_en:
+  id: audio-translate-covost-zh-CN_en.test.v1
+  metrics: [accuracy]
+audio-translate-covost-zh-CN_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=zh-CN_en&split=validation
+    target_language: English
+audio-translate-covost-zh-CN_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=zh-CN_en&split=test
+    target_language: English
+
+### Audio translation tasks (EN to X)
+audio-translate-covost-en_de:
+  id: audio-translate-covost-en_de.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_de.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_de&split=validation
+    target_language: German
+audio-translate-covost-en_de.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_de&split=test
+    target_language: German
+
+audio-translate-covost-en_tr:
+  id: audio-translate-covost-en_tr.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_tr.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_tr&split=validation
+    target_language: Turkish
+audio-translate-covost-en_tr.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_tr&split=test
+    target_language: Turkish
+
+audio-translate-covost-en_fa:
+  id: audio-translate-covost-en_fa.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_fa.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_fa&split=validation
+    target_language: Farsi
+audio-translate-covost-en_fa.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_fa&split=test
+    target_language: Farsi
+
+audio-translate-covost-en_sv-SE:
+  id: audio-translate-covost-en_sv-SE.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_sv-SE.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_sv-SE&split=validation
+    target_language: Swedish
+audio-translate-covost-en_sv-SE.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_sv-SE&split=test
+    target_language: Swedish
+
+audio-translate-covost-en_mn:
+  id: audio-translate-covost-en_mn.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_mn.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_mn&split=validation
+    target_language: Mongolian
+audio-translate-covost-en_mn.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_mn&split=test
+    target_language: Mongolian
+
+audio-translate-covost-en_zh-CN:
+  id: audio-translate-covost-en_zh-CN.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_zh-CN.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_zh-CN&split=validation
+    target_language: Chinese
+audio-translate-covost-en_zh-CN.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_zh-CN&split=test
+    target_language: Chinese
+
+audio-translate-covost-en_cy:
+  id: audio-translate-covost-en_cy.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_cy.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_cy&split=validation
+    target_language: Welsh
+audio-translate-covost-en_cy.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_cy&split=test
+    target_language: Welsh
+
+audio-translate-covost-en_ca:
+  id: audio-translate-covost-en_ca.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_ca.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ca&split=validation
+    target_language: Catalan
+audio-translate-covost-en_ca.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ca&split=test
+    target_language: Catalan
+
+audio-translate-covost-en_sl:
+  id: audio-translate-covost-en_sl.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_sl.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_sl&split=validation
+    target_language: Slovenian
+audio-translate-covost-en_sl.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_sl&split=test
+    target_language: Slovenian
+
+audio-translate-covost-en_et:
+  id: audio-translate-covost-en_et.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_et.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_et&split=validation
+    target_language: Estonian
+audio-translate-covost-en_et.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_et&split=test
+    target_language: Estonian
+
+audio-translate-covost-en_id:
+  id: audio-translate-covost-en_id.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_id.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_id&split=validation
+    target_language: Indonesian
+audio-translate-covost-en_id.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_id&split=test
+    target_language: Indonesian
+
+audio-translate-covost-en_ar:
+  id: audio-translate-covost-en_ar.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_ar.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ar&split=validation
+    target_language: Arabic
+audio-translate-covost-en_ar.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ar&split=test
+    target_language: Arabic
+
+audio-translate-covost-en_ta:
+  id: audio-translate-covost-en_ta.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_ta.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ta&split=validation
+    target_language: Tamil
+audio-translate-covost-en_ta.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ta&split=test
+    target_language: Tamil
+
+audio-translate-covost-en_lv:
+  id: audio-translate-covost-en_lv.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_lv.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_lv&split=validation
+    target_language: Latvian
+audio-translate-covost-en_lv.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_lv&split=test
+    target_language: Latvian
+
+audio-translate-covost-en_ja:
+  id: audio-translate-covost-en_ja.test.v1
+  metrics: [accuracy]
+audio-translate-covost-en_ja.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ja&split=validation
+    target_language: Japanese
+audio-translate-covost-en_ja.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ja&split=test
+    target_language: Japanese
+
+
+### Text translation tasks (X to EN)
+transcript-translate-covost-ar_en:
+  id: transcript-translate-covost-ar_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-ar_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ar_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-ar_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ar_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-ca_en:
+  id: transcript-translate-covost-ca_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-ca_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ca_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-ca_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ca_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-cy_en:
+  id: transcript-translate-covost-cy_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-cy_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=cy_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-cy_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=cy_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-de_en:
+  id: transcript-translate-covost-de_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-de_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=de_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-de_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=de_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-es_en:
+  id: transcript-translate-covost-es_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-es_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=es_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-es_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=es_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-et_en:
+  id: transcript-translate-covost-et_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-et_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=et_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-et_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=et_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-fa_en:
+  id: transcript-translate-covost-fa_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-fa_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=fa_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-fa_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=fa_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-fr_en:
+  id: transcript-translate-covost-fr_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-fr_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=fr_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-fr_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=fr_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-id_en:
+  id: transcript-translate-covost-id_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-id_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=id_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-id_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=id_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-it_en:
+  id: transcript-translate-covost-it_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-it_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=it_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-it_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=it_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-ja_en:
+  id: transcript-translate-covost-ja_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-ja_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ja_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-ja_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ja_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-lv_en:
+  id: transcript-translate-covost-lv_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-lv_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=lv_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-lv_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=lv_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-mn_en:
+  id: transcript-translate-covost-mn_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-mn_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=mn_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-mn_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=mn_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-nl_en:
+  id: transcript-translate-covost-nl_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-nl_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=nl_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-nl_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=nl_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-pt_en:
+  id: transcript-translate-covost-pt_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-pt_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=pt_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-pt_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=pt_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-ru_en:
+  id: transcript-translate-covost-ru_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-ru_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ru_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-ru_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ru_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-sl_en:
+  id: transcript-translate-covost-sl_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-sl_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=sl_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-sl_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=sl_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-sv-SE_en:
+  id: transcript-translate-covost-sv-SE_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-sv-SE_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=sv-SE_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-sv-SE_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=sv-SE_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-ta_en:
+  id: transcript-translate-covost-ta_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-ta_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ta_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-ta_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=ta_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-tr_en:
+  id: transcript-translate-covost-tr_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-tr_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=tr_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-tr_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=tr_en&split=test
+    text_only: True
+    target_language: English
+
+transcript-translate-covost-zh-CN_en:
+  id: transcript-translate-covost-zh-CN_en.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-zh-CN_en.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=zh-CN_en&split=validation
+    text_only: True
+    target_language: English
+transcript-translate-covost-zh-CN_en.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=zh-CN_en&split=test
+    text_only: True
+    target_language: English
+
+### Text translation tasks (EN to X)
+transcript-translate-covost-en_de:
+  id: transcript-translate-covost-en_de.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_de.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_de&split=validation
+    text_only: True
+    target_language: German
+transcript-translate-covost-en_de.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_de&split=test
+    text_only: True
+    target_language: German
+
+transcript-translate-covost-en_tr:
+  id: transcript-translate-covost-en_tr.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_tr.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_tr&split=validation
+    text_only: True
+    target_language: Turkish
+transcript-translate-covost-en_tr.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_tr&split=test
+    text_only: True
+    target_language: Turkish
+
+transcript-translate-covost-en_fa:
+  id: transcript-translate-covost-en_fa.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_fa.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_fa&split=validation
+    text_only: True
+    target_language: Farsi
+transcript-translate-covost-en_fa.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_fa&split=test
+    text_only: True
+    target_language: Farsi
+
+transcript-translate-covost-en_sv-SE:
+  id: transcript-translate-covost-en_sv-SE.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_sv-SE.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_sv-SE&split=validation
+    text_only: True
+    target_language: Swedish
+transcript-translate-covost-en_sv-SE.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_sv-SE&split=test
+    text_only: True
+    target_language: Swedish
+
+transcript-translate-covost-en_mn:
+  id: transcript-translate-covost-en_mn.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_mn.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_mn&split=validation
+    text_only: True
+    target_language: Mongolian
+transcript-translate-covost-en_mn.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_mn&split=test
+    text_only: True
+    target_language: Mongolian
+
+transcript-translate-covost-en_zh-CN:
+  id: transcript-translate-covost-en_zh-CN.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_zh-CN.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_zh-CN&split=validation
+    text_only: True
+    target_language: Chinese
+transcript-translate-covost-en_zh-CN.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_zh-CN&split=test
+    text_only: True
+    target_language: Chinese
+
+transcript-translate-covost-en_cy:
+  id: transcript-translate-covost-en_cy.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_cy.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_cy&split=validation
+    text_only: True
+    target_language: Welsh
+transcript-translate-covost-en_cy.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_cy&split=test
+    text_only: True
+    target_language: Welsh
+
+transcript-translate-covost-en_ca:
+  id: transcript-translate-covost-en_ca.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_ca.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ca&split=validation
+    text_only: True
+    target_language: Catalan
+transcript-translate-covost-en_ca.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ca&split=test
+    text_only: True
+    target_language: Catalan
+
+transcript-translate-covost-en_sl:
+  id: transcript-translate-covost-en_sl.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_sl.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_sl&split=validation
+    text_only: True
+    target_language: Slovenian
+transcript-translate-covost-en_sl.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_sl&split=test
+    text_only: True
+    target_language: Slovenian
+
+transcript-translate-covost-en_et:
+  id: transcript-translate-covost-en_et.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_et.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_et&split=validation
+    text_only: True
+    target_language: Estonian
+transcript-translate-covost-en_et.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_et&split=test
+    text_only: True
+    target_language: Estonian
+
+transcript-translate-covost-en_id:
+  id: transcript-translate-covost-en_id.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_id.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_id&split=validation
+    text_only: True
+    target_language: Indonesian
+transcript-translate-covost-en_id.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_id&split=test
+    text_only: True
+    target_language: Indonesian
+
+transcript-translate-covost-en_ar:
+  id: transcript-translate-covost-en_ar.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_ar.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ar&split=validation
+    text_only: True
+    target_language: Arabic
+transcript-translate-covost-en_ar.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ar&split=test
+    text_only: True
+    target_language: Arabic
+
+transcript-translate-covost-en_ta:
+  id: transcript-translate-covost-en_ta.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_ta.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ta&split=validation
+    text_only: True
+    target_language: Tamil
+transcript-translate-covost-en_ta.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ta&split=test
+    text_only: True
+    target_language: Tamil
+
+transcript-translate-covost-en_lv:
+  id: transcript-translate-covost-en_lv.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_lv.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_lv&split=validation
+    text_only: True
+    target_language: Latvian
+transcript-translate-covost-en_lv.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_lv&split=test
+    text_only: True
+    target_language: Latvian
+
+transcript-translate-covost-en_ja:
+  id: transcript-translate-covost-en_ja.test.v1
+  metrics: [accuracy]
+transcript-translate-covost-en_ja.validation.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ja&split=validation
+    text_only: True
+    target_language: Japanese
+transcript-translate-covost-en_ja.test.v1:
+  class: evals.elsuite.audio.eval:Translate
+  args:
+    dataset: hf://fixie-ai/covost2?name=en_ja&split=test
+    text_only: True
+    target_language: Japanese
