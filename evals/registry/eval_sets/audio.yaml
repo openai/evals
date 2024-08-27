@@ -12,7 +12,6 @@ transcript:
 
 audio-core:
   evals:
-    - audio-boolq
     - audio-transcribe
     - audio-translate-covost-zh-CN_en
     - audio-translate-covost-ru_en
@@ -23,7 +22,6 @@ audio-core:
 
 transcript-core:
   evals:
-    - transcript-boolq
     - transcript-transcribe
     - transcript-translate-covost-zh-CN_en
     - transcript-translate-covost-ru_en
