@@ -25,3 +25,10 @@ langchain/chat_model/gpt-3.5-turbo:
     llm: ChatOpenAI
     llm_kwargs:
       model_name: gpt-3.5-turbo
+
+langchain/llm/llama-testing:
+  class: evals.completion_fns.langchain_llm:LangChainLLMCompletionFn
+  args:
+    llm: HuggingFaceHub
+    llm_kwargs:
+      repo_id: salman7374/Fine-Tuned-Llama3-8B-MedQuad-MedicalQnADataset
