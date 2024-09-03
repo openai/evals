@@ -26,10 +26,14 @@ class WhisperCascadedSolver(NestedSolver):
         solver: SolverSpec,
         postprocessors: list[str] = [],
         registry: Any = None,
+        base_url: Optional[str] = None,
+        api_key: Optional[str] = None,
     ):
         super().__init__(postprocessors=postprocessors, solver=solver)
         # Initializing this in the ctor leads to strange pickle errors.
         self.client: Optional[openai.OpenAI] = None
+        self.base_url = base_url
+        self.api_key = api_key
 
     @property
     def solver(self) -> Solver:
@@ -73,7 +77,7 @@ class WhisperCascadedSolver(NestedSolver):
 
     def _transcribe(self, wav_bytes: bytes) -> str:
         if not self.client:
-            self.client = openai.OpenAI()
+            self.client = openai.OpenAI(base_url=self.base_url, api_key=self.api_key)
         file = io.BytesIO(wav_bytes)
         file.name = "test.wav"
         return self.client.audio.transcriptions.create(model="whisper-1", file=file).text
