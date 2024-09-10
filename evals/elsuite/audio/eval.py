@@ -97,7 +97,8 @@ class AudioTask(evals.Eval):
             )
             sampled = result.get_completions()[0]
         except Exception as e:
-            redact_audio_content(m["content"] for m in prompt)
+            for m in prompt:
+                redact_audio_content(m["content"])
             logging.info("Sampling failed!")
             logging.info(f"Prompt: {prompt}")
             logging.info(f"Error: {str(e)}")
