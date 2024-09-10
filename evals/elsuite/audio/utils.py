@@ -44,8 +44,8 @@ def make_audio_content(prompt: str, audio: np.ndarray):
         content.append({"type": "text", "text": parts[0]})
     content.append(
         {
-            "type": "image_url",
-            "image_url": {
+            "type": "audio_url",
+            "audio_url": {
                 "url": f"data:audio/x-wav;base64,{base_64_wav}",
             },
         }
@@ -58,8 +58,8 @@ def make_audio_content(prompt: str, audio: np.ndarray):
 def redact_audio_content(content: Union[str, list[dict[str, Any]]]):
     if isinstance(content, list):
         for part in content:
-            if part["type"] == "image_url":
-                part["image_url"]["url"] = "<audio data>"
+            if part["type"] == "audio_url":
+                part["audio_url"]["url"] = "<audio data>"
 
 
 def get_audio_duration(audio: Dict[str, Union[int, np.ndarray]]) -> float:

@@ -62,8 +62,8 @@ class WhisperCascadedSolver(NestedSolver):
         return msg
 
     def _process_part(self, part: dict[str, Any]) -> dict[str, Any]:
-        if part["type"] == "image_url":
-            url = part["image_url"]["url"]
+        if part["type"] == "audio_url":
+            url = part["audio_url"]["url"]
             if url.startswith("data:audio/x-wav;base64,"):
                 wav_b64 = url.split(",")[1]
                 wav_bytes = base64.b64decode(wav_b64)
