@@ -5,6 +5,7 @@ import logging
 import queue
 import threading
 import time
+import traceback
 from concurrent import futures
 from typing import Any, Callable, Dict, List, Optional, TypeVar
 
@@ -238,10 +239,20 @@ class BatchedProcessPoolExecutor:
         return item.future
 
     def shutdown(self):
-        # signal the batch thread to stop
-        self._batch_queue.put(None)
         # shut down the process pool executor
         self.process_pool_executor.shutdown()
+
+        while not self._batch_queue.empty():
+            try:
+                item = self._batch_queue.get(block=False)
+                if item is not None:
+                    item.future.set_exception(Exception("The pool has already shut down."))
+            except queue.Empty:
+                pass
+
+        # signal the batch thread to stop
+        self._batch_queue.put(None)
+        print("batched process pool executor has shut down.")
 
     def batch_requests(self):
         """
@@ -277,22 +288,42 @@ class BatchedProcessPoolExecutor:
                     logging.warn(
                         "There remained work items in the queue when shutting down. The items will be ignored."
                     )
-                break
+                return
 
             requests = [item.request for item in work_items]
-            futures = [item.future for item in work_items]
+            task_futures = [item.future for item in work_items]
 
             # dispatch to the process pool
-            result_future = self.process_pool_executor.submit(self.batch_worker_fn, requests)
+            try:
+                result_future = self.process_pool_executor.submit(self.batch_worker_fn, requests)
+            except Exception as e:
+                self._handle_exception(e, task_futures)
+                return
 
             # add callback for when the result is ready
-            result_future.add_done_callback(_set_results_cb(futures))
+            result_future.add_done_callback(_set_results_cb(task_futures, self._handle_exception))
             result_future.add_done_callback(lambda _: self.available_workers.release())
 
+    def _handle_exception(self, e: Exception, task_futures: List[futures.Future]):
+        """
+        Handles exceptions by simply panicking:
+         * prints the traceback to allow debugging
+         * sets exception on all the task futures
+         * shuts down the executor
+        """
+        print(traceback.format_exc())
+        for f in task_futures:
+            if not f.done():
+                f.set_exception(e)
+        self.shutdown()
 
-def _set_results_cb(task_futures: List[futures.Future]):
+
+def _set_results_cb(task_futures: List[futures.Future], handle_exception_cb: Callable):
     def cb(batch_future: futures.Future):
-        for f, r in zip(task_futures, batch_future.result()):
-            f.set_result(r)
+        try:
+            for f, r in zip(task_futures, batch_future.result()):
+                f.set_result(r)
+        except Exception as e:
+            handle_exception_cb(e, task_futures)
 
     return cb
