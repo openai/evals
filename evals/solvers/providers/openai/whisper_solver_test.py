@@ -14,8 +14,8 @@ def whisper_solver():
 
 TEST_TRANSCRIPT = "Hello World!"
 TEST_PART_AUDIO = {
-    "type": "image_url",
-    "image_url": {"url": "data:audio/x-wav;base64,SGVsbG8gV29ybGQh"},
+    "type": "audio_url",
+    "audio_url": {"url": "data:audio/x-wav;base64,SGVsbG8gV29ybGQh"},
 }
 TEST_PART_PROLOG = {"type": "text", "text": "Prolog..."}
 TEST_PART_EPILOG = {"type": "text", "text": "Epilog..."}

@@ -101,7 +101,7 @@ class FixieGPUSolver(Solver):
             parts_str = [x["text"] if x["type"] == "text" else "<|audio|>" for x in parts]
             # Concatenate all text parts into a single string
             msgs[-1]["content"] = "".join(parts_str)
-            data_parts = [x["image_url"] for x in parts if x["type"] == "image_url"]
+            data_parts = [x["audio_url"] for x in parts if x["type"] == "audio_url"]
             assert len(data_parts) == 1
             # Extract the audio data from the last message
             audio_data = data_parts[0]["url"].split(",")[1]
