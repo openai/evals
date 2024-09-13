@@ -67,13 +67,13 @@ class OpenAIChatCompletionResult(OpenAIBaseCompletionResult):
         completions = []
         if self.raw_data:
             for choice in self.raw_data.choices:
-                if choice.message.content is not None:
+                if choice.message.content:
                     completions.append(choice.message.content)
                 if choice.message.tool_calls is not None:
                     # TODO: is this the right output format?
                     completions.extend(
                         [
-                            {"function": vars(f.function), "id": f.id, "type": f.type}
+                            {"function": vars(f.function), "id": f.id, "type": f.type or "function"}
                             for f in choice.message.tool_calls
                         ]
                     )

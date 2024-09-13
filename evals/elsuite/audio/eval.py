@@ -298,7 +298,7 @@ class SpokenQA(ModelGradedAudioTask):
 class SpokenTools(MatchAudioTask):
     def load_dataset(self):
         # TODO: create samples for each user message in the row.
-        ds = load_hf_dataset(self.dataset).cast_column(
+        ds = load_hf_dataset(self.dataset, evals.eval._MAX_SAMPLES).cast_column(
             "user_message_audios", [Audio(sampling_rate=DEFAULT_SAMPLE_RATE)]
         )
         return list(ds)
@@ -344,8 +344,9 @@ class SpokenTools(MatchAudioTask):
         expected_tool_call = gt_message.get("tool_calls") is not None
 
         if sampled_tool_call != expected_tool_call:
-            print(f"tool call mismatch: {sampled_tool_call} != {expected_tool_call}")
-            print(f"sampled: {sampled}")
+            print(
+                f"tool call mismatch, sampled: {sampled_tool_call}, expected: {expected_tool_call}"
+            )
             return 0
 
         if not sampled_tool_call:
@@ -363,11 +364,11 @@ class SpokenTools(MatchAudioTask):
         if sampled_name == gt_name:
             raw_score += 1
         else:
-            print(f"Function name mismatch: {sampled_name} != {gt_name}")
+            print(f"Function name mismatch, sampled: {sampled_name}, expected: {gt_name}")
         if sampled_args == gt_args:
             raw_score += 1
         else:
-            print(f"Function arguments mismatch: {sampled_args} != {gt_args}")
+            print(f"Function arguments mismatch, sampled: {sampled_args}, expected: {gt_args}")
         return raw_score / 3
 
     def compute_corpus_metrics(self):

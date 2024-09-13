@@ -1,0 +1,26 @@
+generation/direct/mistral-nemo-12b-instruct:
+  class: evals.solvers.providers.nvidia.nvidia_solver:NvidiaSolver
+  args:
+    completion_fn_options:
+      model: nv-mistralai/mistral-nemo-12b-instruct
+      extra_options:
+        temperature: 1
+        max_tokens: 512
+
+generation/direct/llama-3.1-8b-instruct:
+  class: evals.solvers.providers.nvidia.nvidia_solver:NvidiaSolver
+  args:
+    completion_fn_options:
+      model: meta/llama-3.1-8b-instruct
+      extra_options:
+        temperature: 1
+        max_tokens: 512
+
+generation/direct/llama-3.1-70b-instruct:
+  class: evals.solvers.providers.nvidia.nvidia_solver:NvidiaSolver
+  args:
+    completion_fn_options:
+      model: meta/llama-3.1-70b-instruct
+      extra_options:
+        temperature: 1
+        max_tokens: 512
