@@ -1,4 +1,4 @@
-# --- Direct Solvers --- 
+# --- Direct Solvers ---
 generation/direct/llama-2-13b-chat:
   class: evals.solvers.providers.together.together_solver:TogetherSolver
   args:

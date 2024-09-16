@@ -1,0 +1,8 @@
+generation/direct/open-mistral-nemo:
+  class: evals.solvers.providers.mistral.mistral_solver:MistralSolver
+  args:
+    completion_fn_options:
+      model: open-mistral-nemo
+      extra_options:
+        temperature: 1
+        max_tokens: 512
