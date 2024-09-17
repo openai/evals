@@ -299,25 +299,18 @@ class SpokenTools(MatchAudioTask):
     def load_dataset(self):
         def _make_samples(sample):
             # The FireFunction test data that we have doesn't have the right tool_call_ids, so
-            # we need to fix them up here. We also need to remove None tool_calls from prompts for
-            # non-OpenAI solvers.
+            # we need to fix them up here. We also remove spurious tool_calls and tool_call_ids
+            # to prevent oaieval code from complaining.
             last_tool_call_id = None
             user_audio_index = 0
             messages = sample["messages"]
             for i in range(len(messages)):
                 m = messages[i]
                 if m.get("tool_calls"):
-                    last_tool_call = m["tool_calls"][-1]
-                    # Mistral expects tool_call_ids to be 9 alphanumeric characters.
-                    # Mistral expects the assistant response and tool calls in separate messages.
-                    # TODO: Move this to the Mistral solver.
-                    last_tool_call["id"] = last_tool_call["id"].replace("_", "")[:9]
-                    last_tool_call_id = last_tool_call["id"]
-                    m["content"] = ""
+                    last_tool_call_id = m["tool_calls"][-1]["id"]
                 elif m.get("tool_call_id") is not None and last_tool_call_id is not None:
                     m["tool_call_id"] = last_tool_call_id
                     last_tool_call_id = None
-                # Remove spurious tool_calls and tool_call_ids from the prompt to prevent oaieval code from complaining.
                 if m.get("tool_calls") is None:
                     m.pop("tool_calls")
                 if m.get("tool_call_id") is None:
@@ -345,6 +338,8 @@ class SpokenTools(MatchAudioTask):
         return get_audio_duration(sample["user_message_audios"][0]) < self.max_audio_duration
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
+        # Remove all messages after the final user message,
+        # and insert the audio content into that final user message, if needed.
         messages = sample["messages"].copy()
         while messages[-1]["role"] != "user":
             messages.pop()
@@ -372,6 +367,7 @@ class SpokenTools(MatchAudioTask):
     def score_tool_call(self, gt_message: Sample, sampled: List[Union[str, Dict[str, Any]]]) -> int:
         sampled_tool_call = isinstance(sampled, dict) and sampled.get("type") == "function"
         expected_tool_call = gt_message.get("tool_calls") is not None
+
         if sampled_tool_call != expected_tool_call:
             print(
                 f"tool call mismatch, sampled: {sampled_tool_call}, expected: {expected_tool_call}"
