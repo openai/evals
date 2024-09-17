@@ -297,35 +297,61 @@ class SpokenQA(ModelGradedAudioTask):
 
 class SpokenTools(MatchAudioTask):
     def load_dataset(self):
-        # TODO: create samples for each user message in the row.
-        ds = load_hf_dataset(self.dataset, evals.eval._MAX_SAMPLES).cast_column(
-            "user_message_audios", [Audio(sampling_rate=DEFAULT_SAMPLE_RATE)]
+        def _make_samples(sample):
+            # The FireFunction test data that we have doesn't have the right tool_call_ids, so
+            # we need to fix them up here. We also need to remove None tool_calls from prompts for
+            # non-OpenAI solvers.
+            last_tool_call_id = None
+            user_audio_index = 0
+            messages = sample["messages"]
+            for i in range(len(messages)):
+                m = messages[i]
+                if m.get("tool_calls"):
+                    last_tool_call = m["tool_calls"][-1]
+                    # Mistral expects tool_call_ids to be 9 alphanumeric characters.
+                    # Mistral expects the assistant response and tool calls in separate messages.
+                    # TODO: Move this to the Mistral solver.
+                    last_tool_call["id"] = last_tool_call["id"].replace("_", "")[:9]
+                    last_tool_call_id = last_tool_call["id"]
+                    m["content"] = ""
+                elif m.get("tool_call_id") is not None and last_tool_call_id is not None:
+                    m["tool_call_id"] = last_tool_call_id
+                    last_tool_call_id = None
+                # Remove spurious tool_calls and tool_call_ids from the prompt to prevent oaieval code from complaining.
+                if m.get("tool_calls") is None:
+                    m.pop("tool_calls")
+                if m.get("tool_call_id") is None:
+                    m.pop("tool_call_id")
+
+                if i == len(messages) - 1 or (i > 0 and messages[i + 1]["role"] == "user"):
+                    new_sample = sample.copy()
+                    new_sample["messages"] = messages[: i + 1]
+                    new_sample["user_message_audios"] = sample["user_message_audios"][
+                        user_audio_index : user_audio_index + 1
+                    ]
+                    yield new_sample
+                    user_audio_index += 1
+
+        # We first limit the dataset to MAX_SAMPLES to avoid loading data we won't use,
+        # and then apply the limit again once we've generated the individual samples.
+        ds = (
+            load_hf_dataset(self.dataset, evals.eval._MAX_SAMPLES)
+            .cast_column("user_message_audios", [Audio(sampling_rate=DEFAULT_SAMPLE_RATE)])
+            .remove_columns(["conversation"])
         )
-        return list(ds)
+        return list(row for row in ds for row in _make_samples(row))[: evals.eval._MAX_SAMPLES]
 
     def _keep_sample(self, sample):
         return get_audio_duration(sample["user_message_audios"][0]) < self.max_audio_duration
 
     def build_prompt(self, sample: Sample, text_only: bool = False):
-        # The FireFunction test data that we have doesn't have the right tool_call_ids, so
-        # we need to fix them up here. We also need to remove tool_calls from prompts for
-        # non-OpenAI solvers.
-        messages = sample["messages"]
-        last_tool_call_id = None
-        for m in messages:
-            if m["tool_calls"]:
-                last_tool_call_id = m["tool_calls"][-1]["id"]
-            elif m.get("tool_call_id") is not None and last_tool_call_id is not None:
-                m["tool_call_id"] = last_tool_call_id
-                last_tool_call_id = None
-            elif not m.get("tool_calls"):
-                del m["tool_calls"]
-                del m["tool_call_id"]
-        messages = messages[:2]
+        messages = sample["messages"].copy()
+        while messages[-1]["role"] != "user":
+            messages.pop()
         if not text_only:
             audio = sample["user_message_audios"][0]["array"]
-            messages[1]["content"] = make_audio_content(AUDIO_PLACEHOLDER, audio)
-        return messages[:2]
+            messages[-1]["content"] = make_audio_content(AUDIO_PLACEHOLDER, audio)
+        return messages
 
     def get_completion_kwargs(self, sample: Sample):
         functions = json.loads(sample["functions"])
@@ -333,7 +359,11 @@ class SpokenTools(MatchAudioTask):
         return {"tools": tools}
 
     def compute_metrics(self, sample: Sample, sampled: str):
-        expected = sample["messages"][2]
+        # Get the first response to the user message.
+        for msg in reversed(sample["messages"]):
+            if msg["role"] == "user":
+                break
+            expected = msg
         score = self.score_tool_call(expected, sampled)
         match = score == 1
         evals.record.record_match(match, expected=expected, sampled=sampled, score=score)
@@ -342,7 +372,6 @@ class SpokenTools(MatchAudioTask):
     def score_tool_call(self, gt_message: Sample, sampled: List[Union[str, Dict[str, Any]]]) -> int:
         sampled_tool_call = isinstance(sampled, dict) and sampled.get("type") == "function"
         expected_tool_call = gt_message.get("tool_calls") is not None
-
         if sampled_tool_call != expected_tool_call:
             print(
                 f"tool call mismatch, sampled: {sampled_tool_call}, expected: {expected_tool_call}"

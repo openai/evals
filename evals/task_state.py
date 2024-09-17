@@ -1,5 +1,5 @@
 from dataclasses import asdict, dataclass, field
-from typing import Any
+from typing import Any, Dict, List, Optional
 
 
 @dataclass
@@ -15,9 +15,16 @@ class Message:
 
     role: str
     content: str
+    tool_calls: Optional[List[Dict[str, Any]]] = None
+    tool_call_id: Optional[str] = None
 
     def to_dict(self):
-        return asdict(self)
+        d = asdict(self)
+        if self.tool_calls is None:
+            d.pop("tool_calls")
+        if self.tool_call_id is None:
+            d.pop("tool_call_id")
+        return d
 
 
 @dataclass

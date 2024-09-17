@@ -63,7 +63,10 @@ class SolverCompletionFn(CompletionFn):
         )
         task_state = TaskState(
             prompt[0]["content"],
-            [Message(msg["role"], msg["content"]) for msg in prompt[1:]],
+            [
+                Message(msg["role"], msg["content"], msg.get("tool_calls"), msg.get("tool_call_id"))
+                for msg in prompt[1:]
+            ],
         )
 
         # use a copy to avoid task state surviving across samples
