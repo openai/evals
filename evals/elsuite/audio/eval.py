@@ -411,3 +411,27 @@ class SpokenTools(MatchAudioTask):
         events = self.get_match_events()
         metrics["score"] = sum(e.data["score"] for e in events) / len(events)
         return metrics
+
+
+class SpokenCompare(MatchAudioTask):
+    TASK_PROMPT = "{{instruction}}\n1. {AUDIO_PLACEHOLDER}\n2. {AUDIO_PLACEHOLDER}\nOnly respond with either '1' or '2'."
+
+    def load_dataset(self):
+        ds = (
+            load_hf_dataset(self.dataset, evals.eval._MAX_SAMPLES)
+            .cast_column("audio", Audio(sampling_rate=DEFAULT_SAMPLE_RATE))
+            .cast_column("audio2", Audio(sampling_rate=DEFAULT_SAMPLE_RATE))
+        )
+        return list(ds)
+
+    def build_prompt(self, sample: Sample, text_only: bool = False):
+        task_prompt = self.TASK_PROMPT.format(instruction=sample["instruction"])
+        audios = [sample["audio"], sample["audio2"]]
+        return build_messages(self.DEFAULT_PROMPT, task_prompt, audios)
+
+    def compute_metrics(self, sample: Sample, sampled: str):
+        expected = sample["label"]
+        normalized = sampled.strip()[0]
+        match = normalized == expected
+        evals.record.record_match(match, expected=expected, sampled=sampled)
+        return match

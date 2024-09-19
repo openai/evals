@@ -66,6 +66,22 @@ audio-tools.validation.v1:
   args:
     dataset: hf://fixie-ai/tools-audio?split=validation
 
+audio-swuggy:
+  id: audio-swuggy.validation.v1
+  metrics: [accuracy]
+audio-swuggy.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenCompare
+  args:
+    dataset: hf://DynamicSuperb/NonceWordDetection_sWUGGY?split=test
+
+audio-sblimp:
+  id: audio-sblimp.validation.v1
+  metrics: [accuracy]
+audio-sblimp.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenCompare
+  args:
+    dataset: hf://DynamicSuperb/SentenceGrammarAcceptability_sBLIMP?split=test
+
 # Text-only versions
 
 transcript-transcribe:
