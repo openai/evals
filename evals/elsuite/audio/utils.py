@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional, Union
 from urllib.parse import parse_qs, urlparse
 
 import soundfile as sf
-from datasets import Audio, Dataset, load_dataset
+from datasets import Dataset, load_dataset
 
 AudioDict = Dict[str, Any]
 
@@ -41,7 +41,7 @@ def build_messages(
     ]
 
 
-def make_audio_content(prompt: str, audios: List[Audio]):
+def make_audio_content(prompt: str, audios: List[AudioDict]):
     content = []
     parts = prompt.split(AUDIO_PLACEHOLDER)
     assert len(parts) >= len(audios)
