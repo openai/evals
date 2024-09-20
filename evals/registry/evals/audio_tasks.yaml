@@ -38,14 +38,14 @@ audio-sqa-heysquad:
   id: audio-sqa-heysquad.validation.v1
   metrics: [accuracy]
 audio-sqa-heysquad.dev.v1:
-  class: evals.elsuite.audio.eval:SpokenQA
+  class: evals.elsuite.audio.eval:SpokenQAWithContext
   args:
     dataset: hf://WillHeld/HeySQuAD_distill?split=train
     eval_type: cot_classify
     eval_completion_fn: gpt-4o
     modelgraded_spec: fact
 audio-sqa-heysquad.validation.v1:
-  class: evals.elsuite.audio.eval:SpokenQA
+  class: evals.elsuite.audio.eval:SpokenQAWithContext
   args:
     dataset: hf://WillHeld/HeySQuAD_distill?split=validation
     eval_type: cot_classify
@@ -164,7 +164,7 @@ transcript-sqa-heysquad:
   id: transcript-sqa-heysquad.validation.v1
   metrics: [accuracy]
 transcript-sqa-heysquad.dev.v1:
-  class: evals.elsuite.audio.eval:SpokenQA
+  class: evals.elsuite.audio.eval:SpokenQAWithContext
   args:
     dataset: hf://WillHeld/HeySQuAD_distill?split=train
     text_only: true
@@ -172,7 +172,7 @@ transcript-sqa-heysquad.dev.v1:
     eval_completion_fn: gpt-4o
     modelgraded_spec: fact
 transcript-sqa-heysquad.validation.v1:
-  class: evals.elsuite.audio.eval:SpokenQA
+  class: evals.elsuite.audio.eval:SpokenQAWithContext
   args:
     dataset: hf://WillHeld/HeySQuAD_distill?split=validation
     text_only: true
