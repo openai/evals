@@ -34,25 +34,59 @@ audio-ser.validation.v1:
   args:
     dataset: hf://Zahra99/IEMOCAP_Audio?split=session5
 
-audio-sqa:
-  id: audio-sqa.validation.v1
+audio-sqa-heysquad:
+  id: audio-sqa-heysquad.validation.v1
   metrics: [accuracy]
-audio-sqa.dev.v1:
+audio-sqa-heysquad.dev.v1:
   class: evals.elsuite.audio.eval:SpokenQA
   args:
     dataset: hf://WillHeld/HeySQuAD_distill?split=train
+    eval_type: cot_classify
     eval_completion_fn: gpt-4o
-    modelgraded_spec: closedqa
-    modelgraded_spec_args:
-      criteria: "correctness: Is the answer correct?"
-audio-sqa.validation.v1:
+    modelgraded_spec: fact
+audio-sqa-heysquad.validation.v1:
   class: evals.elsuite.audio.eval:SpokenQA
   args:
     dataset: hf://WillHeld/HeySQuAD_distill?split=validation
+    eval_type: cot_classify
     eval_completion_fn: gpt-4o
-    modelgraded_spec: closedqa
-    modelgraded_spec_args:
-      criteria: "correctness: Is the answer correct?"
+    modelgraded_spec: fact
+
+audio-sqa-web-questions:
+  id: audio-sqa-web-questions.validation.v1
+  metrics: [accuracy]
+audio-sqa-web-questions.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://fixie-ai/spoken-web-questions?split=train
+    eval_type: cot_classify
+    eval_completion_fn: gpt-4o
+    modelgraded_spec: fact
+audio-sqa-web-questions.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://fixie-ai/spoken-web-questions?split=test
+    eval_type: cot_classify
+    eval_completion_fn: gpt-4o
+    modelgraded_spec: fact
+
+audio-sqa-llama-questions:
+  id: audio-sqa-llama-questions.validation.v1
+  metrics: [accuracy]
+audio-sqa-llama-questions.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://fixie-ai/llama-questions?split=train
+    eval_type: cot_classify
+    eval_completion_fn: gpt-4o
+    modelgraded_spec: fact
+audio-sqa-llama-questions.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://fixie-ai/llama-questions?split=test
+    eval_type: cot_classify
+    eval_completion_fn: gpt-4o
+    modelgraded_spec: fact
 
 audio-tools:
   id: audio-tools.validation.v1
@@ -91,6 +125,7 @@ transcript-transcribe.validation.v1:
   class: evals.elsuite.audio.eval:Transcribe
   args:
     dataset: hf://openslr/librispeech_asr?split=validation.clean
+    text_only: true
 transcript-transcribe.test.v1:
   class: evals.elsuite.audio.eval:Transcribe
   args:
@@ -125,26 +160,65 @@ transcript-ser.validation.v1:
     dataset: hf://Zahra99/IEMOCAP_Audio?split=session5
     text_only: true
 
-transcript-sqa:
-  id: transcript-sqa.validation.v1
+transcript-sqa-heysquad:
+  id: transcript-sqa-heysquad.validation.v1
   metrics: [accuracy]
-transcript-sqa.dev.v1:
+transcript-sqa-heysquad.dev.v1:
   class: evals.elsuite.audio.eval:SpokenQA
   args:
     dataset: hf://WillHeld/HeySQuAD_distill?split=train
+    text_only: true
+    eval_type: cot_classify
     eval_completion_fn: gpt-4o
-    modelgraded_spec: closedqa
-    modelgraded_spec_args:
-      criteria: "correctness: Is the answer correct?"
-transcript-sqa.validation.v1:
+    modelgraded_spec: fact
+transcript-sqa-heysquad.validation.v1:
   class: evals.elsuite.audio.eval:SpokenQA
   args:
     dataset: hf://WillHeld/HeySQuAD_distill?split=validation
     text_only: true
+    eval_type: cot_classify
     eval_completion_fn: gpt-4o
-    modelgraded_spec: closedqa
-    modelgraded_spec_args:
-      criteria: "correctness: Is the answer correct?"
+    modelgraded_spec: fact
+
+transcript-sqa-llama-questions:
+  id: transcript-sqa-llama-questions.validation.v1
+  metrics: [accuracy]
+transcript-sqa-llama-questions.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://fixie-ai/llama-questions?split=train
+    text_only: true
+    eval_type: cot_classify
+    eval_completion_fn: gpt-4o
+    modelgraded_spec: fact
+transcript-sqa-llama-questions.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://fixie-ai/llama-questions?split=test
+    text_only: true
+    eval_type: cot_classify
+    eval_completion_fn: gpt-4o
+    modelgraded_spec: fact
+
+transcript-sqa-web-questions:
+  id: transcript-sqa-web-questions.validation.v1
+  metrics: [accuracy]
+transcript-sqa-web-questions.dev.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://fixie-ai/spoken-web-questions?split=train
+    text_only: true
+    eval_type: cot_classify
+    eval_completion_fn: gpt-4o
+    modelgraded_spec: fact
+transcript-sqa-web-questions.validation.v1:
+  class: evals.elsuite.audio.eval:SpokenQA
+  args:
+    dataset: hf://fixie-ai/spoken-web-questions?split=test
+    text_only: true
+    eval_type: cot_classify
+    eval_completion_fn: gpt-4o
+    modelgraded_spec: fact
 
 transcript-tools:
   id: transcript-tools.validation.v1
@@ -153,6 +227,7 @@ transcript-tools.dev.v1:
   class: evals.elsuite.audio.eval:SpokenTools
   args:
     dataset: hf://fixie-ai/tools-audio?split=train
+    text_only: true
 transcript-tools.validation.v1:
   class: evals.elsuite.audio.eval:SpokenTools
   args:
