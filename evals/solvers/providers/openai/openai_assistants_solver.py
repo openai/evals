@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 from threading import Lock
 from typing import Any, Dict, Optional, Union
@@ -10,7 +11,6 @@ from openai.types.beta.thread import Thread
 from openai.types.beta.threads.run import Run
 
 from evals.record import record_sampling
-from evals.registry import client
 from evals.solvers.providers.openai.openai_solver import OpenAISolver
 from evals.solvers.solver import Solver, SolverResult
 from evals.task_state import Message, TaskState
@@ -65,11 +65,12 @@ class OpenAIAssistantsSolver(Solver):
     ):
         super().__init__(postprocessors=postprocessors)
         self.model = model
-        self.thread = thread if thread else client.beta.threads.create()
+        self.client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+        self.thread = thread if thread else self.client.beta.threads.create()
         self.tools = tools
         if not assistant:
             file_ids = self._create_files(file_paths)
-            self.assistant = client.beta.assistants.create(
+            self.assistant = self.client.beta.assistants.create(
                 model=model,
                 name=name,
                 description=description,
@@ -94,7 +95,7 @@ class OpenAIAssistantsSolver(Solver):
     )
     def _run_assistant_retrying(self, task_state: TaskState):
         # Run Assistant on the Thread
-        run = client.beta.threads.runs.create(
+        run = self.client.beta.threads.runs.create(
             assistant_id=self.assistant.id,
             thread_id=self.thread.id,
             instructions=task_state.task_description,  # Apply task description as `instructions`
@@ -136,7 +137,7 @@ class OpenAIAssistantsSolver(Solver):
         last_msg_sent = None
         for idx, message in enumerate(task_state.messages[new_msgs_start_idx:]):
             user_message = self._convert_to_user_message(message)  # API only allows "user" messages
-            last_msg_sent = client.beta.threads.messages.create(
+            last_msg_sent = self.client.beta.threads.messages.create(
                 thread_id=self.thread.id,
                 role=user_message.role,
                 content=user_message.content,
@@ -147,7 +148,7 @@ class OpenAIAssistantsSolver(Solver):
         run = self._run_assistant_retrying(task_state)
 
         # Get Assistant response(s)
-        messages = client.beta.threads.messages.list(
+        messages = self.client.beta.threads.messages.list(
             thread_id=self.thread.id,
             order="asc",
             after=last_msg_sent.id if last_msg_sent else None,
@@ -197,7 +198,7 @@ class OpenAIAssistantsSolver(Solver):
         solver_copy = self.__class__(
             model=self.model,
             assistant=self.assistant,
-            thread=client.beta.threads.create(),
+            thread=self.client.beta.threads.create(),
         )
         return solver_copy
 
@@ -207,7 +208,7 @@ class OpenAIAssistantsSolver(Solver):
             if file_path in FILE_CACHE:
                 return FILE_CACHE[file_path]
             try:
-                file = client.files.create(
+                file = self.client.files.create(
                     file=open(file_path, "rb"),
                     purpose="assistants",
                 )
@@ -251,7 +252,7 @@ class OpenAIAssistantsSolver(Solver):
         Function borrowed from: https://cookbook.openai.com/examples/assistants_api_overview_python
         """
         while run.status == "queued" or run.status == "in_progress":
-            run = client.beta.threads.runs.retrieve(
+            run = self.client.beta.threads.runs.retrieve(
                 thread_id=thread.id,
                 run_id=run.id,
             )

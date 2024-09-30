@@ -4,7 +4,7 @@ import numpy as np
 from eval_list import eval_list
 
 import evals.data
-from evals.registry import registry
+from evals.registry import Registry
 
 np.random.seed(42)
 min_samples_per_dataset = 50
@@ -12,7 +12,7 @@ n_test_samples = 10
 
 seen = set()
 datarows = []
-for eval in registry.get_evals("*"):
+for eval in Registry().get_evals("*"):
     if eval.key not in eval_list or eval.key in seen:
         continue
     seen.add(eval.key)
