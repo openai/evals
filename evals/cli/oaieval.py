@@ -227,7 +227,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     try:
         add_token_usage_to_result(result, recorder)
     except Exception as e:
-        logger.error(f"Failed to add token usage to result: {e}")
+        logger.error(f"Failed to add token usage to result: {e}. Eval results will be reported and are not affected.")
     recorder.record_final_report(result)
 
     if not (args.dry_run or args.local_run):
