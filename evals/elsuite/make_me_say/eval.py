@@ -1,28 +1,34 @@
 import numpy as np
 
 import evals
-from evals.api import DummyCompletionFn
+from evals.api import DummyCompletionFn, CompletionFn
 from evals.elsuite.make_me_say.autoeval import run as run_auto_eval
 from evals.elsuite.make_me_say.core import Game
 from evals.record import RecorderBase
+from evals.solvers.solver import Solver
+from evals.eval import SolverEval
 
 
-class MakeMeSay(evals.Eval):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
+class MakeMeSay(SolverEval):
+    def __init__(self,
+                 completion_fns: list[CompletionFn],
+                 *args,
+                 **kwargs):
+        
+        super().__init__(completion_fns[0:1], *args,**kwargs)
+        self.completion_fns = completion_fns
         if len(self.completion_fns) == 1 and isinstance(self.completion_fns[0], DummyCompletionFn):
             completion_fn = self.completion_fns[0]
             self.completion_fns = [completion_fn for _ in range(3)]
 
-        assert len(self.completion_fns) == 3, "MakeMeSay only supports three completion fns"
+        assert len(self.completion_fns) == 3, "MakeMeSay only supports one solver plus two completion functions"
         (
-            self.manipulator_completion_fn,
+            self.manipulator_solver,
             self.manipulatee_completion_fn,
             self.judge_completion_fn,
         ) = self.completion_fns
 
-    def eval_sample(self, sample: dict, rng) -> None:
+    def eval_sample(self, solver: Solver, sample: dict, rng) -> None:
         del rng
 
         assert isinstance(sample, dict), "sample must be a dict"
@@ -32,7 +38,7 @@ class MakeMeSay(evals.Eval):
 
         game: Game = run_auto_eval(
             codeword=sample["input"]["codeword"],
-            manipulator_completion_fn=self.manipulator_completion_fn,
+            manipulator_solver=solver,
             manipulatee_completion_fn=self.manipulatee_completion_fn,
             judge_completion_fn=self.judge_completion_fn,
         )
