@@ -1,0 +1,9 @@
+icelandic-qa-news:
+  id: icelandic-qa-news.dev.v0
+  metrics: [accuracy]
+  description: Test the model's ability to answer Icelandic questions on Icelandic culture and history, created from Icelandic online news.
+
+icelandic-qa-news.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: icelandic-qa-news/samples.jsonl
