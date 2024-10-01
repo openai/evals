@@ -1,0 +1,41 @@
+guess_quran_surah_name:
+  id: guess_quran_surah_name.dev.v0
+  description: Tests the model's ability to guess the name of a Quranic surah (chapter).
+  metrics: [accuracy]
+guess_quran_surah_name.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: quran_eval/guess_quran_surah_name.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: simple_fact
+
+guess_quran_surah_type:
+  id: guess_quran_surah_type.dev.v0
+  description: Tests the model's ability to guess the type of a Quranic Surah (chapter) for a given verse (Aya) (e.g., Meccan or Medinan)
+  metrics: [accuracy]
+guess_quran_surah_type.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: quran_eval/guess_quran_surah_type.jsonl
+    ignore_case: true
+
+
+guess_which_text_is_from_quran:
+  id: guess_which_text_is_from_quran.dev.v0
+  description: Tests the model's ability to guess which text is from the Quran.
+  metrics: [accuracy]
+guess_which_text_is_from_quran.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: quran_eval/guess_which_text_is_from_quran.jsonl
+
+masked_quranic_text:
+  id: masked_quranic_text.dev.v0
+  description: Tests the model's ability to predict masked Quranic text.
+  metrics: [accuracy]
+masked_quranic_text.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: quran_eval/masked_quranic_text.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: simple_fact
