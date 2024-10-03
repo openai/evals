@@ -72,6 +72,16 @@ class AudioTask(evals.Eval):
         return get_audio_duration(sample["audio"]) < self.max_audio_duration
 
     def run(self, recorder: RecorderBase):
+        x = recorder.record_sampling
+
+        def record_sampling_wrapper(*args, **kwargs):
+            messages = args[0]
+            for msg in messages:
+                if msg["role"] == "user":
+                    redact_audio_content(msg["content"])
+            x(*args, **kwargs)
+
+        recorder.record_sampling = record_sampling_wrapper
         samples = self._load_dataset()
         samples = [s for s in samples if self._keep_sample(s)]
         self._recorder = recorder
@@ -437,7 +447,8 @@ class SpokenTools(MatchAudioTask):
 
 
 class SpokenCompare(MatchAudioTask):
-    TASK_PROMPT = f"{{instruction}}\n1. {AUDIO_PLACEHOLDER}\n2. {AUDIO_PLACEHOLDER}\nOnly respond with either '1' or '2'."
+    TASK_PROMPT = f"{{instruction}}\nOnly respond with a number.\n1. <|reserved_special_token_0|>\n2. <|reserved_special_token_0|>{AUDIO_PLACEHOLDER}{AUDIO_PLACEHOLDER}"
+    # TASK_PROMPT = f"{{instruction}}\nYour answer should only be a number.\n1. {AUDIO_PLACEHOLDER}\n2. {AUDIO_PLACEHOLDER}"
 
     def _load_dataset(self):
         ds = (

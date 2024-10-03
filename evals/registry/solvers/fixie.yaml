@@ -2,9 +2,9 @@ generation/direct/ultravox:
   class: evals.solvers.providers.fixie.fixie_solver:FixieSolver
   args:
     completion_fn_options:
-      model: fixie-ai/ultravox-v0.3
+      model: fixie-ai/ultravox-v0_4
       extra_options:
-        temperature: 0
+        temperature: 1.0
         # empirically, setting frequency_penalty to 1.0 seems to get us closer to the HF results
         # but it's not clear why this is necessary
         # TODO: investigate and try to match HF/VLLM results without this
