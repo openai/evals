@@ -1,4 +1,5 @@
 import asyncio
+import json
 import os
 from typing import Any, Dict, Optional, Union
 
@@ -65,12 +66,26 @@ class RealtimeSolver(Solver):
             # session_event = {"type": "session.update", "model": "gpt-4o-realtime-preview-2024-10-01"} ?
             # await websocket.send(json.dumps(session_event))
 
-            # Send each message in the list
             for message in messages:
-                message["role"]
-                message["content"]
-                # await websocket.send(json.dumps(event))
-            # await websocket.send(create_response)
+                role = message["role"]
+                content = []
+                for item in message["content"]:
+                    if item["type"] == "text":
+                        content.append({"type": "input_text", "text": item["text"]})
+                    elif item["type"] == "audio_url":
+                        content.append({"type": "input_audio", "audio": item["audio_url"]})
+                event = {
+                    "type": "conversation.item.create",
+                    "item": {"type": "message", "role": role, "content": content},
+                }
+                await websocket.send(json.dumps(event))
+            create_response = {
+                "type": "response.create",
+                "response": {
+                    "modalities": ["text"],
+                },
+            }
+            await websocket.send(json.dumps(create_response))
 
             response = await websocket.recv()
             await websocket.close()
