@@ -73,7 +73,7 @@ class RealtimeSolver(Solver):
                     if item["type"] == "text":
                         content.append({"type": "input_text", "text": item["text"]})
                     elif item["type"] == "audio_url":
-                        content.append({"type": "input_audio", "audio": item["audio_url"]})
+                        content.append({"type": "input_audio", "audio": item["audio_url"]["url"]})
                 event = {
                     "type": "conversation.item.create",
                     "item": {"type": "message", "role": role, "content": content},
@@ -88,5 +88,6 @@ class RealtimeSolver(Solver):
             await websocket.send(json.dumps(create_response))
 
             response = await websocket.recv()
+            print("Received", response)
             await websocket.close()
             return response
