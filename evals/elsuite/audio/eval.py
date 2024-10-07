@@ -162,6 +162,8 @@ class ModelGradedAudioTask(AudioTask):
             completion_kwargs=self.eval_completion_kwargs,
             format_kwargs={**completions, **test_sample, **self.modelgraded_spec_args},
         )
+        # "B" is a superset of the answer, "C" is a match, "E" is a match except for unimportant details.
+        # As opposed to "A", a subset of the answer, or "D", a completely different answer.
         evals.record.record_metrics(choice=choice, score=1.0 if choice in "BCE" else 0.0)
 
     def _compute_corpus_metrics(self):
