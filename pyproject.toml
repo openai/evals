@@ -51,7 +51,7 @@ dependencies = [
     "zstandard",
     "transformers[torch]",
     "peft",
-    "pydub",
+    "librosa",
 ]
 
 [project.urls]

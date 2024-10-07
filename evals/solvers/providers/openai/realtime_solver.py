@@ -5,7 +5,8 @@ import json
 import os
 from typing import Any, Dict, Optional, Union
 
-import pydub
+import librosa
+import numpy as np
 import websockets
 
 from evals.solvers.solver import Solver, SolverResult
@@ -20,8 +21,8 @@ def _data_url_to_wav(url):
 
 
 def _wav_to_24k_pcm(wav_bytes):
-    audio = pydub.AudioSegment.from_file(io.BytesIO(wav_bytes))
-    return audio.set_frame_rate(24000).set_channels(1).set_sample_width(2).raw_data
+    audio, sr = librosa.load(io.BytesIO(wav_bytes), sr=24000, mono=True)
+    return (audio * 32767).astype(np.int16).tobytes()
 
 
 def _pcm_to_base64(pcm_bytes):
@@ -76,11 +77,16 @@ class RealtimeSolver(Solver):
         completion_result = asyncio.run(self._ws_completion(raw_msgs))
         completion_content = completion_result["output"][0]["content"]
         completion_item = completion_content[0]
+        # When the model yields text output, the text portion is contained in "text";
+        # when the model yields audio output, the text portion is contained in "transcript".
         completion_output = completion_item.get("text") or completion_item.get("transcript")
         solver_result = SolverResult(completion_output, raw_completion_result=completion_result)
         return solver_result
 
     async def _ws_completion(self, messages):
+        # When supplying audio input, the API will hang unless you ask for audio output,
+        # even if you don't plan to use the audio output. So we ask for audio output
+        # anytime we have audio content.
         url = f"{self._api_base}?model={self.model}"
         headers = {"Authorization": f"Bearer {self._api_key}", "OpenAI-Beta": "realtime=v1"}
         async with websockets.connect(url, extra_headers=headers) as websocket:
