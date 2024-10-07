@@ -1,0 +1,10 @@
+# The realtime solver uses the OpenAI WebSocket API to generate completions.
+
+generation/realtime/gpt-4o-realtime:
+  class: evals.solvers.providers.openai.realtime_solver:RealtimeSolver
+  args:
+    completion_fn_options:
+      model: gpt-4o-realtime-preview-2024-10-01
+      extra_options:
+        temperature: 1
+        max_tokens: 512
