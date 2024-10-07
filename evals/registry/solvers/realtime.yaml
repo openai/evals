@@ -1,9 +1,6 @@
-# The Whisper solver is a cascaded solver that can perform evals of audio datasets
-# by first transcribing the audio using the Whisper model, and then passing the
-# text transcript to the downstream solver. The Whisper solver can be used with
-# any solver that accepts text input.
+# The realtime solver uses the OpenAI WebSocket API to generate completions.
 
-generation/realtime/gpt-4o:
+generation/realtime/gpt-4o-realtime:
   class: evals.solvers.providers.openai.realtime_solver:RealtimeSolver
   args:
     completion_fn_options:
