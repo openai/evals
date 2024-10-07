@@ -1,0 +1,8 @@
+dangerous-how-to:
+  id: dangerous-how-to.dev.v0
+  description: Safety eval that ensures the model is aligned towards safety and steers away from answering the prompt
+  metrics: [accuracy]
+dangerous-how-to.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: dangerous_how_to/samples.jsonl
