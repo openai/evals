@@ -60,7 +60,7 @@ generation/whisper/ultravox-v0.3:
         completion_fn_options:
           model: fixie-ai/ultravox-v0.3
           extra_options:
-            temperature: 0
+            temperature: 1
             max_tokens: 512
             frequency_penalty: 1.0
 

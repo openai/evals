@@ -58,10 +58,10 @@ class AudioTask(evals.Eval):
         return self._recorder
 
     def eval_sample(self, sample: Sample, rng):
-        prompt = self.build_prompt(sample, self.text_only)
-        kwargs = self.get_completion_kwargs(sample)
-        sampled = self.do_completion(prompt, **kwargs)
-        return self.compute_metrics(sample, sampled)
+        prompt = self._build_prompt(sample, self.text_only)
+        kwargs = self._get_completion_kwargs(sample)
+        sampled = self._do_completion(prompt, **kwargs)
+        return self._compute_metrics(sample, sampled)
 
     def _keep_sample(self, sample):
         """
@@ -72,22 +72,32 @@ class AudioTask(evals.Eval):
         return get_audio_duration(sample["audio"]) < self.max_audio_duration
 
     def run(self, recorder: RecorderBase):
-        samples = self.load_dataset()
+        x = recorder.record_sampling
+
+        def record_sampling_wrapper(*args, **kwargs):
+            messages = args[0]
+            for msg in messages:
+                if msg["role"] == "user":
+                    redact_audio_content(msg["content"])
+            x(*args, **kwargs)
+
+        recorder.record_sampling = record_sampling_wrapper
+        samples = self._load_dataset()
         samples = [s for s in samples if self._keep_sample(s)]
         self._recorder = recorder
         self.eval_all_samples(recorder, samples)
-        return self.compute_corpus_metrics()
+        return self._compute_corpus_metrics()
 
-    def load_dataset(self):
+    def _load_dataset(self):
         ds = load_hf_dataset(self.dataset, evals.eval._MAX_SAMPLES).cast_column(
             "audio", Audio(sampling_rate=DEFAULT_SAMPLE_RATE)
         )
         return list(ds)
 
-    def get_completion_kwargs(self, sample: Sample):
+    def _get_completion_kwargs(self, sample: Sample):
         return {}
 
-    def do_completion(self, prompt, **kwargs):
+    def _do_completion(self, prompt, **kwargs):
         try:
             result = self.completion_fn(
                 prompt=prompt,
@@ -107,17 +117,17 @@ class AudioTask(evals.Eval):
 
 
 class MatchAudioTask(AudioTask):
-    def get_match_events(self):
+    def _get_match_events(self):
         return self.recorder.get_events("match")
 
-    def get_expected_values(self):
-        return [e.data["expected"] for e in self.get_match_events()]
+    def _get_expected_values(self):
+        return [e.data["expected"] for e in self._get_match_events()]
 
-    def get_sampled_values(self):
-        return [e.data["sampled"] for e in self.get_match_events()]
+    def _get_sampled_values(self):
+        return [e.data["sampled"] for e in self._get_match_events()]
 
-    def compute_corpus_metrics(self):
-        return {"accuracy": evals.metrics.get_accuracy(self.get_match_events())}
+    def _compute_corpus_metrics(self):
+        return {"accuracy": evals.metrics.get_accuracy(self._get_match_events())}
 
 
 class ModelGradedAudioTask(AudioTask):
@@ -125,6 +135,7 @@ class ModelGradedAudioTask(AudioTask):
         self,
         completion_fns: list[CompletionFn],
         dataset: str,
+        eval_type: str,
         eval_completion_fn: CompletionFn,
         modelgraded_spec: str,
         modelgraded_spec_args: Optional[dict[str, dict[str, str]]] = None,
@@ -132,24 +143,30 @@ class ModelGradedAudioTask(AudioTask):
         **kwargs,
     ):
         super().__init__(completion_fns, dataset, *args, **kwargs)
+        self.eval_type = eval_type
         self.eval_completion_fn = evals.registry.Registry().make_completion_fn(eval_completion_fn)
         self.eval_completion_kwargs = {"max_tokens": 1024}
         self.mg = self.registry.get_modelgraded_spec(modelgraded_spec)
         self.modelgraded_spec_args = modelgraded_spec_args or {}
 
-    def compute_metrics(self, sample: Sample, sampled: str):
+    def _compute_metrics(self, sample: Sample, sampled: str):
         completions = {"completion": sampled}
-        test_sample = {"input": self.build_prompt(sample, text_only=True)}
-        # TODO(juberti): this needs to call get_sample to get the GT answer...
+        test_sample = {
+            "input": self._build_prompt(sample, text_only=True),
+            "ideal": self._get_expected(sample),
+        }
         choice, info = classify(
             mg=self.mg,
+            eval_type=self.eval_type,
             completion_fn=self.eval_completion_fn,
             completion_kwargs=self.eval_completion_kwargs,
             format_kwargs={**completions, **test_sample, **self.modelgraded_spec_args},
         )
-        evals.record.record_metrics(choice=choice, score=info["score"])
+        # "B" is a superset of the answer, "C" is a match, "E" is a match except for unimportant details.
+        # As opposed to "A", a subset of the answer, or "D", a completely different answer.
+        evals.record.record_metrics(choice=choice, score=1.0 if choice in "BCE" else 0.0)
 
-    def compute_corpus_metrics(self):
+    def _compute_corpus_metrics(self):
         metrics = {}
         events = self.recorder.get_metrics()
         choices = [m["choice"] for m in events]
@@ -164,11 +181,11 @@ class ModelGradedAudioTask(AudioTask):
 class Transcribe(MatchAudioTask):
     TASK_PROMPT = f"Repeat the following text, without any explanation: {AUDIO_PLACEHOLDER}"
 
-    def build_prompt(self, sample: Sample, text_only: bool = False):
+    def _build_prompt(self, sample: Sample, text_only: bool = False):
         input = sample["text"] if text_only else sample["audio"]
         return build_messages(self.DEFAULT_PROMPT, self.TASK_PROMPT, input)
 
-    def compute_metrics(self, sample: Sample, sampled):
+    def _compute_metrics(self, sample: Sample, sampled):
         expected = sample["text"]
         score = self._compute_wer(expected, sampled)
         evals.record.record_metrics(wer=score)
@@ -176,9 +193,9 @@ class Transcribe(MatchAudioTask):
         evals.record.record_match(match, expected=expected, sampled=sampled, wer=score)
         return match
 
-    def compute_corpus_metrics(self):
-        metrics = super().compute_corpus_metrics()
-        metrics["wer"] = self._compute_wer(self.get_expected_values(), self.get_sampled_values())
+    def _compute_corpus_metrics(self):
+        metrics = super()._compute_corpus_metrics()
+        metrics["wer"] = self._compute_wer(self._get_expected_values(), self._get_sampled_values())
         return metrics
 
     def _compute_wer(self, expected, sampled):
@@ -212,12 +229,12 @@ class Translate(MatchAudioTask):
         self.target_language = target_language
         self.bleu = BLEU(effective_order=True)
 
-    def build_prompt(self, sample: Sample, text_only: bool = False):
+    def _build_prompt(self, sample: Sample, text_only: bool = False):
         task_prompt = self.TASK_PROMPT.format(language=self.target_language)
         input = sample["sentence"] if text_only else sample["audio"]
         return build_messages(self.DEFAULT_PROMPT, task_prompt, input)
 
-    def compute_metrics(self, sample: Sample, sampled: str):
+    def _compute_metrics(self, sample: Sample, sampled: str):
         expected = sample["translation"]
         score = self.bleu.sentence_score(sampled, [expected]).score
         evals.record.record_metrics(sacrebleu_sentence_score=score)
@@ -228,11 +245,11 @@ class Translate(MatchAudioTask):
             )
         return match
 
-    def compute_corpus_metrics(self):
-        metrics = super().compute_corpus_metrics()
-        events = self.get_match_events()
-        sampled = self.get_sampled_values()
-        refs = [[e for e in self.get_expected_values()]]
+    def _compute_corpus_metrics(self):
+        metrics = super()._compute_corpus_metrics()
+        events = self._get_match_events()
+        sampled = self._get_sampled_values()
+        refs = [[e for e in self._get_expected_values()]]
         metrics["sacrebleu_score"] = self.bleu.corpus_score(sampled, refs).score
         metrics["sacrebleu_sentence_score"] = sum(
             e.data["sacrebleu_sentence_score"] for e in events
@@ -250,12 +267,12 @@ class SpokenER(MatchAudioTask):
     ]
     TASK_PROMPT = f"Respond in a single word which of these emotions ({', '.join(EMOTIONS)}) best matches the following: {AUDIO_PLACEHOLDER}"
 
-    def build_prompt(self, sample: Sample, text_only: bool = False):
+    def _build_prompt(self, sample: Sample, text_only: bool = False):
         transcript = ""  # TODO: Add transcript
         input = transcript if text_only else sample["audio"]
         return build_messages(self.DEFAULT_PROMPT, self.TASK_PROMPT, input)
 
-    def compute_metrics(self, sample: Sample, sampled: str):
+    def _compute_metrics(self, sample: Sample, sampled: str):
         expected = self.EMOTIONS[sample["label"]]
         normalized = sampled.strip().rstrip(string.punctuation).lower()
         match = normalized == expected
@@ -266,12 +283,12 @@ class SpokenER(MatchAudioTask):
 class SpokenBoolQ(MatchAudioTask):
     TASK_PROMPT = f'Context:\n{{context}}\n\nAnswer the following question with only the single word "True" or "False", and no additional explanation: {AUDIO_PLACEHOLDER}'
 
-    def build_prompt(self, sample: Sample, text_only: bool = False):
+    def _build_prompt(self, sample: Sample, text_only: bool = False):
         task_prompt = self.TASK_PROMPT.format(context=sample["passage"])
         input = sample["question"] if text_only else sample["audio"]
         return build_messages(self.DEFAULT_PROMPT, task_prompt, input)
 
-    def compute_metrics(self, sample: Sample, sampled: str):
+    def _compute_metrics(self, sample: Sample, sampled: str):
         expected = str(sample["answer"]).lower()
         normalized = sampled.strip().split()[0].rstrip(string.punctuation).lower()
         match = normalized == expected
@@ -280,23 +297,39 @@ class SpokenBoolQ(MatchAudioTask):
 
 
 class SpokenQA(ModelGradedAudioTask):
+    TASK_PROMPT = f"Answer the following question: {AUDIO_PLACEHOLDER}"
+
+    def _keep_sample(self, sample):
+        """
+        Questions with multiple answers are skipped, as it's not always clear if a correct
+        answer needs to have any or all of the multiple answers.
+        """
+        return sample.get("answer") or len(sample.get("answers", [])) == 1
+
+    def _build_prompt(self, sample: Sample, text_only: bool = False):
+        input = sample["question"] if text_only else sample["audio"]
+        return build_messages(self.DEFAULT_PROMPT, self.TASK_PROMPT, input)
+
+    def _get_expected(self, sample: Sample):
+        if sample.get("is_impossible"):
+            return "the question is impossible to answer"
+        if sample.get("answer"):
+            return sample["answer"]
+        answer = sample["answers"][0]
+        return answer if isinstance(answer, str) else answer["text"]
+
+
+class SpokenQAWithContext(SpokenQA):
     TASK_PROMPT = f"Context:\n{{context}}\n\nAnswer the following question: {AUDIO_PLACEHOLDER}"
 
-    def build_prompt(self, sample: Sample, text_only: bool = False):
+    def _build_prompt(self, sample: Sample, text_only: bool = False):
         task_prompt = self.TASK_PROMPT.format(context=sample["context"])
         input = sample["question"] if text_only else sample["audio"]
         return build_messages(self.DEFAULT_PROMPT, task_prompt, input)
 
-    def get_expected(self, sample: Sample):
-        return (
-            sample["answers"][0]["text"]
-            if not sample["is_impossible"]
-            else "the question is impossible to answer"
-        )
-
 
 class SpokenTools(MatchAudioTask):
-    def load_dataset(self):
+    def _load_dataset(self):
         def _make_samples(sample):
             # The FireFunction test data that we have doesn't have the right tool_call_ids, so
             # we need to fix them up here. We also remove spurious tool_calls and tool_call_ids
@@ -347,7 +380,7 @@ class SpokenTools(MatchAudioTask):
             print("Skipping sample", sample)
         return keep
 
-    def build_prompt(self, sample: Sample, text_only: bool = False):
+    def _build_prompt(self, sample: Sample, text_only: bool = False):
         # Remove all messages after the final user message,
         # and insert the audio content into that final user message, if needed.
         messages = sample["messages"].copy()
@@ -358,23 +391,25 @@ class SpokenTools(MatchAudioTask):
             messages[-1]["content"] = make_audio_content(AUDIO_PLACEHOLDER, audio)
         return messages
 
-    def get_completion_kwargs(self, sample: Sample):
+    def _get_completion_kwargs(self, sample: Sample):
         functions = json.loads(sample["functions"])
         tools = [{"type": "function", "function": f} for f in functions]
         return {"tools": tools}
 
-    def compute_metrics(self, sample: Sample, sampled: str):
+    def _compute_metrics(self, sample: Sample, sampled: str):
         # Get the first response to the user message.
         for msg in reversed(sample["messages"]):
             if msg["role"] == "user":
                 break
             expected = msg
-        score = self.score_tool_call(expected, sampled)
+        score = self._score_tool_call(expected, sampled)
         match = score == 1
         evals.record.record_match(match, expected=expected, sampled=sampled, score=score)
         return match
 
-    def score_tool_call(self, gt_message: Sample, sampled: List[Union[str, Dict[str, Any]]]) -> int:
+    def _score_tool_call(
+        self, gt_message: Sample, sampled: List[Union[str, Dict[str, Any]]]
+    ) -> int:
         sampled_func = sampled.get("function") if isinstance(sampled, dict) else None
         expected_func = (
             gt_message.get("tool_calls")[0]["function"] if gt_message.get("tool_calls") else None
@@ -406,17 +441,18 @@ class SpokenTools(MatchAudioTask):
             )
         return raw_score / 3
 
-    def compute_corpus_metrics(self):
-        metrics = super().compute_corpus_metrics()
-        events = self.get_match_events()
+    def _compute_corpus_metrics(self):
+        metrics = super()._compute_corpus_metrics()
+        events = self._get_match_events()
         metrics["score"] = sum(e.data["score"] for e in events) / len(events)
         return metrics
 
 
 class SpokenCompare(MatchAudioTask):
-    TASK_PROMPT = "{{instruction}}\n1. {AUDIO_PLACEHOLDER}\n2. {AUDIO_PLACEHOLDER}\nOnly respond with either '1' or '2'."
+    TASK_PROMPT = f"{{instruction}}\nOnly respond with a number.\n1. <|reserved_special_token_0|>\n2. <|reserved_special_token_0|>{AUDIO_PLACEHOLDER}{AUDIO_PLACEHOLDER}"
+    # TASK_PROMPT = f"{{instruction}}\nYour answer should only be a number.\n1. {AUDIO_PLACEHOLDER}\n2. {AUDIO_PLACEHOLDER}"
 
-    def load_dataset(self):
+    def _load_dataset(self):
         ds = (
             load_hf_dataset(self.dataset, evals.eval._MAX_SAMPLES)
             .cast_column("audio", Audio(sampling_rate=DEFAULT_SAMPLE_RATE))
@@ -424,12 +460,12 @@ class SpokenCompare(MatchAudioTask):
         )
         return list(ds)
 
-    def build_prompt(self, sample: Sample, text_only: bool = False):
+    def _build_prompt(self, sample: Sample, text_only: bool = False):
         task_prompt = self.TASK_PROMPT.format(instruction=sample["instruction"])
         audios = [sample["audio"], sample["audio2"]]
         return build_messages(self.DEFAULT_PROMPT, task_prompt, audios)
 
-    def compute_metrics(self, sample: Sample, sampled: str):
+    def _compute_metrics(self, sample: Sample, sampled: str):
         expected = sample["label"]
         normalized = sampled.strip()[0]
         match = normalized == expected

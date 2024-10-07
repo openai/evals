@@ -3,7 +3,7 @@ audio:
     - audio-*.test
     - audio-boolq
     - audio-ser
-    - audio-sqa
+    - audio-sqa-*.validation.v1
     # - audio-tools
 
 transcript:

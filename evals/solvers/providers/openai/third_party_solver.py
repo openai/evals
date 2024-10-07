@@ -24,7 +24,7 @@ class ThirdPartySolver(OpenAISolver):
 
     def __init__(self, api_base: str, api_key_env_var: str, **kwargs):
         self.api_base = api_base
-        self.api_key = os.environ.get(api_key_env_var)
+        self.api_key = kwargs.pop("api_key", None) or os.environ.get(api_key_env_var)
         super().__init__(**kwargs)
         if self.valid_answers is not None:
             raise NotImplementedError("`valid_answers` not supported by ThirdPartySolver")
