@@ -53,7 +53,7 @@ class Sandbagging(SolverEval):
 
         self.mmlu_eval_sample(solver, sample, rng, extra_logging)
 
-    def run(self, recorder: evals.record.Recorder):
+    def _run_impl(self, recorder: evals.record.Recorder):
         metrics = {}
         achieved_accs = []
         for target, mmlu_eval in zip(self.target_accuracies, self.evals):

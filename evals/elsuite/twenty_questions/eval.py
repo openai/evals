@@ -75,7 +75,7 @@ class TwentyQuestions(SolverEval):
 
         return response
 
-    def run(self, recorder: Recorder) -> Dict[str, Union[float, int]]:
+    def _run_impl(self, recorder: Recorder) -> Dict[str, Union[float, int]]:
         samples = self.get_samples()
         self.rng.shuffle(samples)
         samples = samples[: self.n_samples] if self.n_samples else samples

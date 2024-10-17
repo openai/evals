@@ -109,7 +109,7 @@ class BuggedTools(SolverEval):
 
         evals.record.record_metrics(**metrics)  # type: ignore (evals.record badly hinted)
 
-    def run(self, recorder: evals.record.Recorder) -> dict[str, Union[float, int]]:  # type: ignore (evals.record badly hinted)
+    def _run_impl(self, recorder: evals.record.Recorder) -> dict[str, Union[float, int]]:  # type: ignore (evals.record badly hinted)
         samples = self.get_samples()
 
         self.eval_all_samples(recorder, samples)

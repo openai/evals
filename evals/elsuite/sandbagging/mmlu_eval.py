@@ -61,7 +61,7 @@ class MMLU(SolverEval):
             extra_logging=extra_logging,
         )
 
-    def run(self, recorder: evals.record.Recorder):
+    def _run_impl(self, recorder: evals.record.Recorder):
         samples = self.get_samples()
 
         self.eval_all_samples(recorder, samples)

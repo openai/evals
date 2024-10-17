@@ -76,7 +76,7 @@ class BluffEval(SolverEval):
         else:
             return type(player).__name__
 
-    def run(self, recorder: evals.record.Recorder) -> dict[str, Union[float, int]]:
+    def _run_impl(self, recorder: evals.record.Recorder) -> dict[str, Union[float, int]]:
         samples = list(range(self.n_samples))
         self.eval_all_samples(recorder, samples)
         metrics = recorder.get_metrics()
