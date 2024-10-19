@@ -39,3 +39,11 @@ transcript-translate:
   evals:
     - transcript-translate-covost-en_*.test.v1
     - transcript-translate-covost-*_en.test.v1
+
+audio-sqa:
+  evals:
+    - audio-sqa-web-questions
+
+transcript-sqa:
+  evals:
+    - transcript-sqa-web-questions

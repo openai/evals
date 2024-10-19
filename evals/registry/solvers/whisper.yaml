@@ -51,18 +51,29 @@ generation/whisper/mixtral:
             temperature: 1
             max_tokens: 512
 
-generation/whisper/ultravox-v0.3:
+generation/whisper/ultravox-70b:
   class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
   args:
     solver:
       class: evals.solvers.providers.fixie.fixie_solver:FixieSolver
       args:
         completion_fn_options:
-          model: fixie-ai/ultravox-v0.3
+          model: fixie-ai/ultravox-70B
           extra_options:
             temperature: 1
             max_tokens: 512
             frequency_penalty: 1.0
+
+generation/whisper/ultravox-8b:
+  class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
+  args:
+    solver:
+      class: evals.solvers.providers.fixie.fixie_solver:FixieSolver
+      args:
+        completion_fn_options:
+          model: fixie-ai/ultravox-8B
+          extra_options:
+            temperature: 1
 
 generation/whisper/gpu-ultravox-dev:
   class: evals.solvers.providers.openai.whisper_solver:WhisperCascadedSolver
