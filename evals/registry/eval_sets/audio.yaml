@@ -19,6 +19,8 @@ audio-core:
     - audio-translate-covost-en_ca
     - audio-translate-covost-en_ar
     - audio-translate-covost-en_de
+    - audio-translate-covost-tr_en
+    - audio-translate-covost-sv-SE_en
 
 transcript-core:
   evals:
@@ -29,6 +31,8 @@ transcript-core:
     - transcript-translate-covost-en_ca
     - transcript-translate-covost-en_ar
     - transcript-translate-covost-en_de
+    - transcript-translate-covost-tr_en
+    - transcript-translate-covost-sv-SE_en
 
 audio-translate:
   evals:
