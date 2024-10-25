@@ -27,6 +27,8 @@ MODELS = [
     "mixtral-8x7b-instruct",
     "llama-2-70b-chat",
     "random_baseline",
+    "gpt-4o",
+    "gpt-4o-mini",
 ]
 # separate list for OAI models for token counting, not supported in others.
 OAI_MODELS = [
@@ -35,6 +37,8 @@ OAI_MODELS = [
     "cot/gpt-3.5-turbo",
     "gpt-3.5-turbo",
     "gpt-4-base",
+    "gpt-4o",
+    "gpt-4o-mini",
 ]
 
 
@@ -160,6 +164,10 @@ def get_model(spec):
         return "mixtral-8x7b-instruct"
     elif "llama-2-70b-chat" in spec["completion_fns"][0]:
         return "llama-2-70b-chat"
+    elif "4o-mini" in spec['completion_fns'][0]:
+        return "gpt-4o-mini"
+    elif "4o" in spec['completion_fns'][0]::
+        return "gpt-4o"
     elif "random_baseline" in spec["completion_fns"][0]:
         return "random_baseline"
 

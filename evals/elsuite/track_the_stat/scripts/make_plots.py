@@ -26,12 +26,16 @@ MODELS = [
     "llama-2-70b-chat",
     "random_baseline",
     "human_baseline",
+    "gpt-4o",
+    "gpt-4o-mini",
 ]
 # separate list for OAI models for token counting, not supported in others.
 OAI_MODELS = [
     "gpt-4-0125-preview",
     "gpt-3.5-turbo-0125",
     "gpt-4-base",
+    "gpt-4o",
+    "gpt-4o-mini",
 ]
 
 STAT_TO_LABEL = {
@@ -64,6 +68,10 @@ def get_model(spec):
         return "random_baseline"
     elif "human" in spec["completion_fns"][0]:
         return "human_baseline"
+    elif "4o-mini" in spec['completion_fns'][0]:
+        return "gpt-4o-mini"
+    elif "4o" in spec['completion_fns'][0]::
+        return "gpt-4o"
 
 
 def get_state_tracking(spec):
