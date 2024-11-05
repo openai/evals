@@ -151,6 +151,15 @@ classification/cot/gpt-4:
 
 # generation tasks
 
+generation/direct/gpt-4o:
+  class: evals.solvers.providers.openai.openai_solver:OpenAISolver
+  args: 
+    completion_fn_options: 
+      model: gpt-4o
+      extra_options: 
+        temperature: 1
+        max_tokens: 512
+
 generation/direct/gpt-4-turbo-preview:
   class: evals.solvers.providers.openai.openai_solver:OpenAISolver
   args:
