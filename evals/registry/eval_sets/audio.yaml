@@ -36,6 +36,7 @@ audio-translate-core:
     - audio-translate-covost-sv-SE_en
     - audio-translate-covost-tr_en
 
+
 transcript-core:
   evals:
     - transcript-transcribe
