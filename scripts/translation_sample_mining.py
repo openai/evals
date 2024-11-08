@@ -15,8 +15,9 @@ from pathlib import Path
 import shutil
 from functools import partial
 import numpy as np
+import hashlib
 
-AUDIO_PLACEHOLDER = "<|audio|>"
+AUDIO_PLACEHOLDER = "<|reserved_special_token_0|>"
 TASK_PROMPT = f"Please translate the text to {{language}}. Your response should only include the {{language}} translation, without any additional words. \n\n{AUDIO_PLACEHOLDER}"
 
 # Initialize API clients
@@ -47,7 +48,7 @@ def translate_text_fireworks(text: str, target_language: str) -> str:
     ]
     
     data = {
-        "model": "accounts/fireworks/models/llama-v3p1-70b-instruct",
+        "model": "accounts/fireworks/models/llama-v3p1-70b-instruct#accounts/fixie/deployments/d2630f9a",
         "messages": messages,
         "temperature": 0.1,
         "max_tokens": 1024
@@ -88,12 +89,20 @@ def translate_audio_fixie(audio_data: dict, target_language: str) -> str:
         "Content-Type": "application/json"
     }
     
-    # Convert audio data to base64 and create data URL
+    # Get the original audio data
     audio_array = audio_data['array']
     sampling_rate = audio_data['sampling_rate']
     
+    # Calculate number of samples for 1.5 seconds of silence
+    silence_samples = int(1.5 * sampling_rate)
+    
+    # Create silence padding and concatenate with original audio at both ends
+    silence_padding = np.zeros(silence_samples, dtype=audio_array.dtype)
+    padded_audio = np.concatenate([silence_padding, audio_array, silence_padding])
+    
+    # Convert padded audio to base64
     audio_buffer = io.BytesIO()
-    sf.write(audio_buffer, audio_array, sampling_rate, format='wav')
+    sf.write(audio_buffer, padded_audio, sampling_rate, format='wav')
     audio_buffer.seek(0)
     audio_base64 = base64.b64encode(audio_buffer.read()).decode('utf-8')
     data_url = f"data:audio/wav;base64,{audio_base64}"
@@ -119,7 +128,7 @@ def translate_audio_fixie(audio_data: dict, target_language: str) -> str:
     ]
     
     data = {
-        "model": "fixie-ai/ultravox-70B",
+        "model": "fixie-ai/ultravox-70B-dev",
         "messages": messages
     }
     
@@ -163,6 +172,18 @@ def transcribe_audio_whisper(audio_data: dict) -> str:
     print(transcript)
     return transcript.text
 
+def get_stable_hash(audio_array: np.ndarray) -> str:
+    """Generate a stable hash from audio array content."""
+    # Convert array to bytes in a consistent way
+    array_bytes = audio_array.tobytes()
+    
+    # Use SHA-256 for consistent hashing
+    hasher = hashlib.sha256()
+    hasher.update(array_bytes)
+    
+    # Return first 16 characters of hex digest
+    return hasher.hexdigest()[:16]
+
 def process_single_sample(sample, cache_dir: str, target_language: str = "Catalan"):
     """Process a single sample with caching."""
     try:
@@ -172,14 +193,15 @@ def process_single_sample(sample, cache_dir: str, target_language: str = "Catala
         audio_cache_dir.mkdir(parents=True, exist_ok=True)
         results_cache_dir.mkdir(parents=True, exist_ok=True)
         
-        # Generate unique filenames
+        # Generate unique filenames using stable hash
         audio_data = sample['audio']
-        audio_hash = hash(str(audio_data['array'].tobytes()))
+        audio_hash = get_stable_hash(audio_data['array'])
         cache_path = audio_cache_dir / f"{audio_hash}.wav"
         results_path = results_cache_dir / f"{audio_hash}.json"
-        
+        print(f"Processing sample {audio_hash}")
         # Check if results already exist
         if results_path.exists():
+            print("Loading results from cache")
             with open(results_path, 'r') as f:
                 return json.load(f)
         
@@ -256,12 +278,43 @@ def main():
     max_samples = 500
     cache_dir = ".cache"
     
+    # List of hashes to rerun
+    hashes_to_rerun = {
+
+    }
+    
     # Collect samples
     samples = []
     for idx, sample in enumerate(dataset):
         if idx >= max_samples:
             break
-        samples.append(sample)
+            
+        if hashes_to_rerun:
+            # Use the stable hash function
+            audio_hash = get_stable_hash(sample['audio']['array'])
+            print(f"Sample {idx} hash: {audio_hash}")  # Debug print
+            if audio_hash in hashes_to_rerun:
+                samples.append(sample)
+                print(f"Found sample with matching hash: {audio_hash}")
+        else:
+            samples.append(sample)
+    
+    if hashes_to_rerun:
+        print(f"Found {len(samples)} samples to reprocess")
+        
+        # Delete existing cache files for these hashes
+        results_cache_dir = Path(cache_dir) / "results"
+        audio_cache_dir = Path(cache_dir) / "audio"
+        for hash_val in hashes_to_rerun:
+            # Remove cached results
+            result_file = results_cache_dir / f"{hash_val}.json"
+            if result_file.exists():
+                result_file.unlink()
+            
+            # Remove cached audio
+            audio_file = audio_cache_dir / f"{hash_val}.wav"
+            if audio_file.exists():
+                audio_file.unlink()
     
     # Process samples in parallel
     with mp.Pool(processes=mp.cpu_count() - 1) as pool:
@@ -274,11 +327,7 @@ def main():
     # Sort results by BLEU score delta (Fixie - Whisper+Fireworks)
     results.sort(key=lambda x: x['bleu_delta'], reverse=True)
     
-    # Save results
-    with open("translation_comparison_results.jsonl", "w") as f:
-        for result in results:
-            f.write(json.dumps(result) + "\n")
-    
+
     # Print summary statistics
     if results:
         whisper_fireworks_avg = np.mean([r["whisper_fireworks_bleu"] for r in results])
@@ -297,6 +346,7 @@ def main():
         # Filter results
         fixie_better_results = [r for r in results if r['bleu_delta'] > 0]
         fireworks_better_results = [r for r in results if r['bleu_delta'] < 0]
+        tied_results = [r for r in results if r['bleu_delta'] == 0]
         
         # Print top 20 examples where Fixie performed better
         print(f"\nTop 20 examples where Fixie performed better (out of {len(fixie_better_results)} total wins):")
@@ -310,12 +360,18 @@ def main():
         for idx, result in enumerate(sorted(fireworks_better_results, key=lambda x: x['bleu_delta'])[:20]):
             print_detailed_example(result, idx, "Whisper+Fireworks Better")
             
+        # Print up to 20 tied examples
+        print(f"\nUp to 20 examples where scores were tied (out of {len(tied_results)} total ties):")
+        print("=" * 80)
+        for idx, result in enumerate(tied_results[:20]):
+            print_detailed_example(result, idx, "Tied Score")
+            
         # Print summary of wins
         print("\nWin Statistics:")
         print("=" * 80)
         print(f"Fixie wins: {len(fixie_better_results)} samples")
         print(f"Whisper+Fireworks wins: {len(fireworks_better_results)} samples")
-        print(f"Ties: {len([r for r in results if r['bleu_delta'] == 0])} samples")
+        print(f"Ties: {len(tied_results)} samples")
         
         # Print average BLEU scores for wins
         if fixie_better_results:
