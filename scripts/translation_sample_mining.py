@@ -16,6 +16,7 @@ import shutil
 from functools import partial
 import numpy as np
 import hashlib
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 AUDIO_PLACEHOLDER = "<|reserved_special_token_0|>"
 TASK_PROMPT = f"Please translate the text to {{language}}. Your response should only include the {{language}} translation, without any additional words. \n\n{AUDIO_PLACEHOLDER}"
@@ -184,6 +185,36 @@ def get_stable_hash(audio_array: np.ndarray) -> str:
     # Return first 16 characters of hex digest
     return hasher.hexdigest()[:16]
 
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+def get_gpt4_judgment(reference: str, whisper_fireworks: str, fixie: str, target_language: str) -> dict:
+    """Get GPT-4's judgment on which translation is better."""
+    prompt = f"""You are an expert translator and linguistic evaluator. Please compare two machine translations against a reference translation and determine which one is better. Consider accuracy, fluency, and preservation of meaning.
+
+Reference ({target_language}): {reference}
+
+Translation A: {whisper_fireworks}
+Translation B: {fixie}
+
+Please respond in the following JSON format only:
+{{
+    "winner": "A" or "B" or "tie",
+    "explanation": "brief explanation of the decision"
+}}"""
+
+    response = openai_client.chat.completions.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "You are a translation evaluation expert. Respond only in the specified JSON format."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.1,
+    )
+    
+    try:
+        return json.loads(response.choices[0].message.content)
+    except json.JSONDecodeError:
+        return {"winner": "error", "explanation": "Failed to parse GPT-4 response"}
+
 def process_single_sample(sample, cache_dir: str, target_language: str = "Catalan"):
     """Process a single sample with caching."""
     try:
@@ -199,6 +230,7 @@ def process_single_sample(sample, cache_dir: str, target_language: str = "Catala
         cache_path = audio_cache_dir / f"{audio_hash}.wav"
         results_path = results_cache_dir / f"{audio_hash}.json"
         print(f"Processing sample {audio_hash}")
+        
         # Check if results already exist
         if results_path.exists():
             print("Loading results from cache")
@@ -232,6 +264,14 @@ def process_single_sample(sample, cache_dir: str, target_language: str = "Catala
         whisper_fireworks_bleu = evaluate_translation(reference_translation, whisper_fireworks_translation)
         fixie_bleu = evaluate_translation(reference_translation, fixie_translation)
         
+        # Add GPT-4 judgment
+        gpt4_judgment = get_gpt4_judgment(
+            reference_translation,
+            whisper_fireworks_translation,
+            fixie_translation,
+            target_language
+        )
+        
         result = {
             "cache_path": str(cache_path),
             "ground_truth_transcription": ground_truth_transcription,
@@ -242,7 +282,11 @@ def process_single_sample(sample, cache_dir: str, target_language: str = "Catala
             "fixie_translation": fixie_translation,
             "whisper_fireworks_bleu": whisper_fireworks_bleu,
             "fixie_bleu": fixie_bleu,
-            "bleu_delta": fixie_bleu - whisper_fireworks_bleu
+            "bleu_delta": fixie_bleu - whisper_fireworks_bleu,
+            "gpt4_judgment": gpt4_judgment,
+            "gpt4_winner": "fixie" if gpt4_judgment["winner"] == "B" else 
+                          "whisper_fireworks" if gpt4_judgment["winner"] == "A" else 
+                          gpt4_judgment["winner"]
         }
         
         # Cache the results
@@ -271,6 +315,8 @@ def print_detailed_example(result: dict, idx: int, category: str):
     print(f"Whisper+Fireworks BLEU: {result['whisper_fireworks_bleu']:.4f}")
     print(f"Fixie:              {result['fixie_translation']}")
     print(f"Fixie BLEU:         {result['fixie_bleu']:.4f}")
+    print(f"GPT-4 Winner: {result['gpt4_winner']}")
+    print(f"GPT-4 Explanation: {result['gpt4_judgment']['explanation']}")
     print("=" * 80)
 
 def main():
@@ -303,8 +349,8 @@ def main():
         print(f"Found {len(samples)} samples to reprocess")
         
         # Delete existing cache files for these hashes
-        results_cache_dir = Path(cache_dir) / "results"
         audio_cache_dir = Path(cache_dir) / "audio"
+        results_cache_dir = Path(cache_dir) / "results"
         for hash_val in hashes_to_rerun:
             # Remove cached results
             result_file = results_cache_dir / f"{hash_val}.json"
@@ -380,6 +426,39 @@ def main():
         if fireworks_better_results:
             fireworks_win_avg = np.mean([abs(r['bleu_delta']) for r in fireworks_better_results])
             print(f"Average BLEU delta when Whisper+Fireworks wins: {fireworks_win_avg:.4f}")
+        
+        # Add GPT-4 judgment statistics
+        gpt4_fixie_wins = [r for r in results if r['gpt4_winner'] == 'fixie']
+        gpt4_whisper_wins = [r for r in results if r['gpt4_winner'] == 'whisper_fireworks']
+        gpt4_ties = [r for r in results if r['gpt4_winner'] == 'tie']
+        
+        print("\nGPT-4 Judgment Statistics:")
+        print("=" * 80)
+        print(f"GPT-4 Fixie wins: {len(gpt4_fixie_wins)} samples")
+        print(f"GPT-4 Whisper+Fireworks wins: {len(gpt4_whisper_wins)} samples")
+        print(f"GPT-4 Ties: {len(gpt4_ties)} samples")
+        
+        # Print top 20 examples where GPT-4 chose Fixie
+        print(f"\nTop 20 examples where GPT-4 chose Fixie as winner:")
+        print("=" * 80)
+        for idx, result in enumerate(gpt4_fixie_wins[:20]):
+            print_detailed_example(result, idx, "GPT-4 Fixie Win")
+            
+        # Print top 20 examples where GPT-4 chose Whisper+Fireworks
+        print(f"\nTop 20 examples where GPT-4 chose Whisper+Fireworks as winner:")
+        print("=" * 80)
+        for idx, result in enumerate(gpt4_whisper_wins[:20]):
+            print_detailed_example(result, idx, "GPT-4 Whisper+Fireworks Win")
+        
+        # Calculate agreement between BLEU and GPT-4
+        bleu_gpt4_agreement = len([r for r in results if 
+            (r['bleu_delta'] > 0 and r['gpt4_winner'] == 'fixie') or
+            (r['bleu_delta'] < 0 and r['gpt4_winner'] == 'whisper_fireworks') or
+            (r['bleu_delta'] == 0 and r['gpt4_winner'] == 'tie')
+        ])
+        
+        agreement_percentage = (bleu_gpt4_agreement / len(results)) * 100
+        print(f"\nBLEU and GPT-4 Agreement: {agreement_percentage:.2f}%")
 
 if __name__ == "__main__":
     main()
