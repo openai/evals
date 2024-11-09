@@ -4,6 +4,8 @@ import io
 import json
 import os
 from typing import Any, Dict, Optional, Union
+import time
+import websockets.exceptions
 
 import librosa
 import numpy as np
@@ -37,11 +39,15 @@ class RealtimeSolver(Solver):
         completion_fn_options: Dict[str, Any],
         postprocessors: list[str] = [],
         registry: Any = None,
+        max_retries: int = 3,
+        initial_retry_delay: float = 1.0,
     ):
         super().__init__(postprocessors=postprocessors)
         if "model" not in completion_fn_options:
             raise ValueError("OpenAISolver requires a model to be specified.")
         self.completion_fn_options = completion_fn_options
+        self.max_retries = max_retries
+        self.initial_retry_delay = initial_retry_delay
 
     @property
     def model(self) -> str:
@@ -70,15 +76,30 @@ class RealtimeSolver(Solver):
         """The API key to use for the API"""
         return os.getenv("OPENAI_API_KEY")
 
+    async def _ws_completion_with_retry(self, messages):
+        retry_count = 0
+        while True:
+            try:
+                return await self._ws_completion(messages)
+            except (websockets.exceptions.WebSocketException, ConnectionError) as e:
+                retry_count += 1
+                if retry_count > self.max_retries:
+                    raise RuntimeError(f"Failed after {self.max_retries} retries") from e
+                
+                # Exponential backoff with jitter
+                delay = self.initial_retry_delay * (2 ** (retry_count - 1))
+                jitter = delay * 0.1 * (2 * np.random.random() - 1)
+                await asyncio.sleep(delay + jitter)
+                
+                print(f"Retry {retry_count}/{self.max_retries} after error: {str(e)}")
+
     def _solve(self, task_state: TaskState, **kwargs) -> SolverResult:
         raw_msgs = [
             {"role": "system", "content": task_state.task_description},
         ] + [msg.to_dict() for msg in task_state.messages]
-        completion_result = asyncio.run(self._ws_completion(raw_msgs))
+        completion_result = asyncio.run(self._ws_completion_with_retry(raw_msgs))
         completion_content = completion_result["output"][0]["content"]
         completion_item = completion_content[0]
-        # When the model yields text output, the text portion is contained in "text";
-        # when the model yields audio output, the text portion is contained in "transcript".
         completion_output = completion_item.get("text") or completion_item.get("transcript")
         solver_result = SolverResult(completion_output, raw_completion_result=completion_result)
         return solver_result

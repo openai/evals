@@ -52,6 +52,7 @@ class AudioTask(evals.Eval):
         self.max_tokens = max_tokens
         self._recorder = None
         self.max_audio_duration = max_audio_duration
+        self.non_error_samples = 0  # Count of samples that didn't error out
 
     @property
     def recorder(self):
@@ -61,6 +62,10 @@ class AudioTask(evals.Eval):
         prompt = self._build_prompt(sample, self.text_only)
         kwargs = self._get_completion_kwargs(sample)
         sampled = self._do_completion(prompt, **kwargs)
+        if not sampled.startswith("ERROR:"):  # Only count non-error samples
+            self.non_error_samples += 1
+        else: 
+            print(f"Current error count: {self.non_error_samples}")
         return self._compute_metrics(sample, sampled)
 
     def _keep_sample(self, sample):
@@ -86,6 +91,7 @@ class AudioTask(evals.Eval):
         samples = [s for s in samples if self._keep_sample(s)]
         self._recorder = recorder
         self.eval_all_samples(recorder, samples)
+        logger.info(f"Number of successfully processed samples (non-errors): {self.non_error_samples}")
         return self._compute_corpus_metrics()
 
     def _load_dataset(self):
