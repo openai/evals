@@ -11,7 +11,7 @@ import evals.metrics
 from evals.api import CompletionFn
 from evals.elsuite.self_prompting.task_description import sample_in_token, task_description_template
 from evals.eval import SolverEval
-from evals.registry import registry
+from evals.registry import Registry
 from evals.solvers.solver import Solver
 from evals.task_state import TaskState
 from evals.utils.log_utils import extract_final_results, extract_spec
@@ -54,7 +54,7 @@ class SelfPrompting(SolverEval):
 
         self.tasker_completion_fns = {}
         for tasker_model in self.tasker_models:
-            self.tasker_completion_fns[tasker_model] = registry.make_completion_fn(tasker_model)
+            self.tasker_completion_fns[tasker_model] = Registry().make_completion_fn(tasker_model)
 
     def eval_sample(self, solver: Solver, sample: Any, rng: random.Random):
         if sample["stage"] == "prompting":

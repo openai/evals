@@ -13,7 +13,6 @@ from openai import OpenAI
 from evals.solvers.solver import Solver
 from evals.task_state import TaskState
 
-client = OpenAI()
 logger = logging.getLogger(__name__)
 
 

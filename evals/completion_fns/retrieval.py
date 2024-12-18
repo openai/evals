@@ -14,7 +14,6 @@ from evals.prompt.base import ChatCompletionPrompt, CompletionPrompt
 from evals.record import record_sampling
 from evals.registry import Registry
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 
 def load_embeddings(embeddings_and_text_path: str):
@@ -76,6 +75,7 @@ class RetrievalCompletionFn(CompletionFn):
             registry_path: The path to a registry file to add to default registry.
             _kwargs: Additional arguments to pass to the completion function instantiation.
         """
+        self.client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
         registry = Registry() if not registry else registry
         if registry_path:
             registry.add_registry_paths(registry_path)
@@ -96,7 +96,7 @@ class RetrievalCompletionFn(CompletionFn):
         """
         # Embed the prompt
         embedded_prompt = (
-            client.embeddings.create(
+            self.client.embeddings.create(
                 model=self.embedding_model, input=CompletionPrompt(prompt).to_formatted_prompt()
             )
             .data[0]

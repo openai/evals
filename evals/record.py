@@ -263,14 +263,6 @@ class RecorderBase:
         logging.info(f"Final report: {final_report}. Not writing anywhere.")
 
 
-def _green(str):
-    return f"\033[1;32m{str}\033[0m"
-
-
-def _red(str):
-    return f"\033[1;31m{str}\033[0m"
-
-
 class DummyRecorder(RecorderBase):
     """
     A "recorder" which only logs certain events to the console.
@@ -282,32 +274,14 @@ class DummyRecorder(RecorderBase):
         self.log = log
 
     def record_event(self, type, data, sample_id=None):
-        from evals.registry import registry
-
         if self.run_spec is None:
             return
-
-        base_eval_spec = registry.get_base_eval(self.run_spec.base_eval)
-        if base_eval_spec and len(base_eval_spec.metrics) >= 1:
-            primary_metric = base_eval_spec.metrics[0]
-        else:
-            primary_metric = "accuracy"
 
         with self._event_lock:
             event = self._create_event(type, data)
             self._events.append(event)
 
         msg = f"Not recording event: {event}"
-
-        if type == "match":
-            accuracy_good = (
-                primary_metric == "accuracy" or primary_metric.startswith("pass@")
-            ) and (data.get("correct", False) or data.get("accuracy", 0) > 0.5)
-            f1_score_good = primary_metric == "f1_score" and data.get("f1_score", 0) > 0.5
-            if accuracy_good or f1_score_good:
-                msg = _green(msg)
-            else:
-                msg = _red(msg)
 
         if self.log:
             logging.info(msg)

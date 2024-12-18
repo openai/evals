@@ -8,9 +8,10 @@ from evals.solvers.providers.anthropic.anthropic_solver import (
     anth_to_openai_usage,
 )
 
-from anthropic.types import ContentBlock, MessageParam, Usage
+from anthropic.types import TextBlock, MessageParam, Usage
 
 IN_GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS") == "true"
+MISSING_ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY") in {"", None}
 MODEL_NAME = "claude-instant-1.2"
 
 
@@ -33,7 +34,7 @@ def dummy_recorder():
 
 
 @pytest.mark.skipif(
-    IN_GITHUB_ACTIONS, reason="API tests are wasteful to run on every commit."
+    IN_GITHUB_ACTIONS or MISSING_ANTHROPIC_API_KEY, reason="API tests are wasteful to run on every commit."
 )
 def test_solver(dummy_recorder, anthropic_solver):
     """
@@ -82,14 +83,14 @@ def test_message_format():
         MessageParam(
             role="user",
             content=[
-                ContentBlock(text="What is 2 + 2?", type="text"),
-                ContentBlock(text="reason step by step", type="text"),
+                TextBlock(text="What is 2 + 2?", type="text"),
+                TextBlock(text="reason step by step", type="text"),
             ],
         ),
         MessageParam(
             role="assistant",
             content=[
-                ContentBlock(
+                TextBlock(
                     text="I don't need to reason for this, 2+2 is just 4", type="text"
                 ),
             ],
@@ -97,7 +98,7 @@ def test_message_format():
         MessageParam(
             role="user",
             content=[
-                ContentBlock(
+                TextBlock(
                     text="now, given your reasoning, provide the answer", type="text"
                 ),
             ],
