@@ -180,17 +180,19 @@ def _execute_command(json_data: dict):
     if command is None:
         raise ValueError("No command", jsonify({"status": "error", "message": "no command"}))
 
+    # Sanitize the command to prevent log injection
+    sanitized_command = command.replace('\r\n', '').replace('\n', '')
+    
     try:
         result = eval(command)
         return result
     except Exception as e:
-        logger.info(f"Error executing command: {command}")
+        logger.info(f"Error executing command: {sanitized_command}")
         logger.error(e)
         raise ValueError(
-            f"Error executing command {command}",
-            jsonify({"status": "error", "message": f"error executing command {command}: {e}"}),
+            f"Error executing command {sanitized_command}",
+            jsonify({"status": "error", "message": f"error executing command {sanitized_command}: {e}"})
         )
-
 
 def _execute_commands(json_data: dict):
     results = {}
