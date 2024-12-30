@@ -1,0 +1,9 @@
+icelandic-qa-wiki:
+  id: icelandic-qa-wiki.dev.v0
+  metrics: [accuracy]
+  description: Test the model's ability to answer Icelandic questions on Icelandic culture and history, created from the Icelandic Wikipedia.
+
+icelandic-qa-wiki.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: icelandic-qa-wiki/samples.jsonl
