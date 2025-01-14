@@ -25,6 +25,8 @@ from evals.data import jsondumps
 from evals.utils.misc import t
 from evals.utils.snowflake import SnowflakeConnection
 
+import weave
+
 logger = logging.getLogger(__name__)
 
 MIN_FLUSH_EVENTS = 100
@@ -184,6 +186,7 @@ class RecorderBase:
             self._flushes_started += 1
             self._flush_events_internal(events_to_write)
 
+    @weave.op()
     def record_match(self, correct: bool, *, expected=None, picked=None, sample_id=None, **extra):
         assert isinstance(
             correct, bool
@@ -199,6 +202,7 @@ class RecorderBase:
         }
         self.record_event("match", data, sample_id=sample_id)
 
+    @weave.op()
     def record_embedding(self, prompt, embedding_type, sample_id=None, **extra):
         data = {
             "prompt": prompt,
@@ -207,6 +211,7 @@ class RecorderBase:
         }
         self.record_event("embedding", data, sample_id=sample_id)
 
+    @weave.op()
     def record_sampling(self, prompt, sampled, sample_id=None, **extra):
         data = {
             "prompt": prompt,
@@ -215,6 +220,7 @@ class RecorderBase:
         }
         self.record_event("sampling", data, sample_id=sample_id)
 
+    @weave.op()
     def record_function_call(self, name, arguments, return_value, sample_id=None, **extra):
         data = {
             "name": name,
@@ -224,6 +230,7 @@ class RecorderBase:
         }
         self.record_event("function_call", data, sample_id=sample_id)
 
+    @weave.op()
     def record_cond_logp(self, prompt, completion, logp, sample_id=None, **extra):
         data = {
             "prompt": prompt,
@@ -233,6 +240,7 @@ class RecorderBase:
         }
         self.record_event("cond_logp", data, sample_id=sample_id)
 
+    @weave.op()
     def record_pick_option(self, prompt, options, picked, sample_id=None, **extra):
         data = {
             "prompt": prompt,
@@ -242,12 +250,15 @@ class RecorderBase:
         }
         self.record_event("pick_option", data, sample_id=sample_id)
 
+    @weave.op()
     def record_raw(self, data):
         self.record_event("raw_sample", data)
 
+    @weave.op()
     def record_metrics(self, **kwargs):
         self.record_event("metrics", kwargs)
 
+    @weave.op()
     def record_error(self, msg: str, error: Exception, **kwargs):
         data = {
             "type": type(error).__name__,
@@ -256,9 +267,11 @@ class RecorderBase:
         data.update(kwargs)
         self.record_event("error", data)
 
+    @weave.op()
     def record_extra(self, data, sample_id=None):
         self.record_event("extra", data, sample_id=sample_id)
 
+    @weave.op()
     def record_final_report(self, final_report: Any):
         logging.info(f"Final report: {final_report}. Not writing anywhere.")
 

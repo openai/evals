@@ -47,7 +47,7 @@ class MultistepWebTasks(SolverEval):
             trajectory_length=len(result.trajectory),
         )
 
-    def run(self, recorder: RecorderBase):
+    def _run_impl(self, recorder: RecorderBase):
         samples = self.get_samples()
         self.session.add_samples(samples)
         # with statement handles setting up docker containers and tearing them down on completion/error

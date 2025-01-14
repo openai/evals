@@ -97,7 +97,7 @@ class MLAgentBench(SolverEval):
             model_score_humanrelative=result.model_score_humanrelative,
         )
 
-    def run(self, recorder: Recorder) -> dict:
+    def _run_impl(self, recorder: Recorder) -> dict:
         samples = self.get_samples()
         self.eval_all_samples(recorder, samples)
         metrics = recorder.get_metrics()

@@ -7,6 +7,8 @@ import logging
 from abc import ABC, abstractmethod
 from typing import Any, Callable, Optional, Protocol, Union, runtime_checkable
 
+import weave
+
 from evals.prompt.base import OpenAICreateChatPrompt, OpenAICreatePrompt, Prompt
 from evals.record import record_match
 
@@ -102,4 +104,13 @@ def record_and_check_match(
     result["expected"] = expected
     result["match"] = match
     record_match(match, expected=expected, picked=picked, sampled=sampled, options=options)
+
+    prompt_0_content = prompt[0] if len(prompt) > 0 else dict()
+    prompt_0_content = prompt_0_content.get("content", "")
+
+    @weave.op()
+    def row(prompt_0_content, sampled, expected, picked, match):
+        return
+    row(prompt_0_content, sampled, expected, picked, match)
+
     return picked

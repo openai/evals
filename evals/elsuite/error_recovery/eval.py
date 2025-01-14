@@ -217,7 +217,7 @@ class ErrorRecovery(SolverEval):
         answer = self._extract_final_answer(solver=solver, task_state=task_state, sample=sample)
         return answer
 
-    def run(self, recorder: evals.record.Recorder):
+    def _run_impl(self, recorder: evals.record.Recorder):
         samples = self.get_samples()
 
         self.eval_all_samples(recorder, samples)

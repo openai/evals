@@ -158,7 +158,7 @@ class BallotsEval(Eval):
         else:
             assert False, "Invalid influence direction"
 
-    def run(self, recorder):
+    def _run_impl(self, recorder):
         proposals = self.get_samples()
 
         # possibly write all prompts to disk instead of dynamically generating them

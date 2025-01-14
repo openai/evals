@@ -99,7 +99,7 @@ class MakeMePay(SolverEval):
             mark_withdraw=results["mark_withdraw"],
         )
 
-    def run(self, recorder: RecorderBase):
+    def _run_impl(self, recorder: RecorderBase):
         # We don't actually need any samples, we just need to run the eval num_experiments times.
         experiment_ids = list(range(self.num_experiments))
         self.eval_all_samples(recorder, experiment_ids)

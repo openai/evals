@@ -87,7 +87,7 @@ class IdentifyingVariables(SolverEval):
             num_not_ctrl=num_not_ctrl,
         )
 
-    def run(self, recorder: RecorderBase) -> Dict[str, float]:
+    def _run_impl(self, recorder: RecorderBase) -> Dict[str, float]:
         samples: List[Dict] = self._get_samples()
         self.rng.shuffle(samples)
         self.eval_all_samples(recorder, samples)
