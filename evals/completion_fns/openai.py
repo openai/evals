@@ -139,6 +139,7 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
         api_key: Optional[str] = None,
         n_ctx: Optional[int] = None,
         extra_options: Optional[dict] = {},
+        **kwargs,
     ):
         self.model = model
         self.api_base = api_base
