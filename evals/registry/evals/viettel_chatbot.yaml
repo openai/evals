@@ -1,0 +1,9 @@
+viettel_chatbot:
+  id: viettel_chatbot.dev.v0
+  metrics: [accuracy]
+
+viettel_chatbot.dev.v0:
+  # class: evals.elsuite.basic.match:Match
+  class: evals.elsuite.basic.custom_eval:CustomEval
+  args:
+    samples_jsonl: viettel_chatbot/YesNo.jsonl
