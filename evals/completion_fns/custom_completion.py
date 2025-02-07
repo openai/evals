@@ -36,6 +36,7 @@ class CustomCompletionResult(CompletionResult):
             completions.append(full_response)
         return completions
 class CustomCompletionFn(CompletionFnSpec):
+    #init
     def __init__(
         self,
         api_base: str,
