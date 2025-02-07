@@ -1,0 +1,5 @@
+viettel_chatbot:
+  class: evals.completion_fns.custom_completion:CustomCompletionFn
+  args:
+    api_base: 'https://chatbot.viettelsoftware.com/api/chatbot/test'
+    model: 'gpt-4'
