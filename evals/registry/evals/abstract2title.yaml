@@ -4,9 +4,12 @@ abstract2title:
   description: Test the model's ability to generate proper title using the abstract section of the literature.
 
 abstract2title.test.v1:
+  # Note that this is a model based eval -- ModelBasedClassify
   class: evals.elsuite.modelgraded.classify:ModelBasedClassify
   args:
     samples_jsonl: abstract2title/samples.jsonl
+    # Note that to evaluate it uses the closedqa prompt to evaluate compared to the ideal criteria.
+    #  Navigate to closedqa file to see the prompt for this eval llm as a judge.
     modelgraded_spec: closedqa
     modelgraded_spec_args:
       criteria: "conciseness: Does the title properly describe the provided content?"

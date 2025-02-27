@@ -10,7 +10,7 @@ import evals.record
 from evals.elsuite.modelgraded.classify_utils import classify, sample_and_concat_n_completions
 from evals.elsuite.utils import PromptFn, scrub_formatting_from_prompt
 
-
+# This is the base eval that is used for the demo in this branch/cookbook. (LLM as a judge)
 class ModelBasedClassify(evals.Eval):
     def __init__(
         self,

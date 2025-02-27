@@ -9,7 +9,7 @@ from custom_datasets import (
     RandomWordsDataset,
 )
 
-
+# Example of where a synthetic dataset is created -- simular to what we did
 def make_task_data():
     # Task data
     n_samples_per_dataset = 160
