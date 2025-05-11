@@ -275,7 +275,6 @@ def _extract_token_count(token_field: Any) -> int:
         return token_field.total
     return 0  # safe default clearly stated
 
-
 def add_token_usage_to_result(result: dict[str, Any], recorder: RecorderBase) -> None:
     """
     Add token usage from logged sampling events to the result dictionary from the recorder.
