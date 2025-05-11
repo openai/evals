@@ -227,7 +227,9 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     try:
         add_token_usage_to_result(result, recorder)
     except Exception as e:
-        logger.error(f"Failed to add token usage to result: {e}. Eval results will be reported and are not affected.")
+        logger.error(
+            f"Failed to add token usage to result: {e}. Eval results will be reported and are not affected."
+        )
     recorder.record_final_report(result)
 
     if not (args.dry_run or args.local_run):
@@ -265,12 +267,14 @@ def build_recorder(
         run_spec=run_spec,
     )
 
-def _extract_token_count(token_field):
+
+def _extract_token_count(token_field: Any) -> int:
     if isinstance(token_field, int):
         return token_field
-    if hasattr(token_field, 'total'):
+    if hasattr(token_field, "total"):
         return token_field.total
     return 0  # safe default clearly stated
+
 
 def add_token_usage_to_result(result: dict[str, Any], recorder: RecorderBase) -> None:
     """
@@ -288,7 +292,7 @@ def add_token_usage_to_result(result: dict[str, Any], recorder: RecorderBase) ->
         # Sum up the usage of all samples (assumes the usage is the same for all samples)
         total_usage = {
             key: sum(_extract_token_count(getattr(u, key, 0)) for u in usage_events)
-            for key in ['completion_tokens', 'prompt_tokens', 'total_tokens']  # <--- Minimal explicit fix here
+            for key in ["completion_tokens", "prompt_tokens", "total_tokens"]
         }
 
         total_usage_str = "\n".join(f"{key}: {value:,}" for key, value in total_usage.items())
@@ -302,6 +306,7 @@ def add_token_usage_to_result(result: dict[str, Any], recorder: RecorderBase) ->
                 logger.warning(
                     f"Usage key {keyname} already exists in result, not adding {keyname}"
                 )
+
 
 def main() -> None:
     parser = get_parser()
