@@ -173,15 +173,27 @@ def exec_commands():
 
 
 def _execute_command(json_data: dict):
-    # NOTE: This is definitely Not Safe, but the only thing that should be able to call this
-    # is my own code
+    # Execute predefined commands in a controlled manner
     global playwright, browser, page, client
     command = json_data.get("command", None)
     if command is None:
         raise ValueError("No command", jsonify({"status": "error", "message": "no command"}))
 
+    # Define allowed commands and their corresponding functions
+    allowed_commands = {
+        "navigate": lambda url: page.goto(url),
+        "get_title": lambda: page.title(),
+        "screenshot": lambda path: page.screenshot(path=path),
+    }
+
     try:
-        result = eval(command)
+        if command not in allowed_commands:
+            raise ValueError(
+                f"Invalid command {command}",
+                jsonify({"status": "error", "message": f"invalid command {command}"}),
+            )
+        # Execute the corresponding function
+        result = allowed_commands[command](**json_data.get("args", {}))
         return result
     except Exception as e:
         logger.info(f"Error executing command: {command}")
