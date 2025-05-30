@@ -1,6 +1,6 @@
 pointer-value-retrieval-easy-few-examples:
   id: pointer-value-retrieval-easy-few-examples.dev.v0
-  description: Easy pointer-value retrieval task from few examples, pointer is seperated from values. 
+  description: Easy pointer-value retrieval task from few examples, pointer is separated from values. 
   metrics: [accuracy]
 
 pointer-value-retrieval-easy-few-examples.dev.v0:
