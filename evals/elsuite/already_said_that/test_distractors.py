@@ -99,7 +99,7 @@ def reverse_sort_words_eng_samples():
             "input": [
                 {
                     "role": "system",
-                    "content": "Sort the following comma-separated words in reversed alphabetical order (respond as concisely as possible and only include the comma-seperated words in your response):",
+                    "content": "Sort the following comma-separated words in reversed alphabetical order (respond as concisely as possible and only include the comma-separated words in your response):",
                 },
                 {
                     "role": "user",
@@ -112,7 +112,7 @@ def reverse_sort_words_eng_samples():
             "input": [
                 {
                     "role": "system",
-                    "content": "Sort the following comma-separated words in reversed alphabetical order (respond as concisely as possible and only include the comma-seperated words in your response):",
+                    "content": "Sort the following comma-separated words in reversed alphabetical order (respond as concisely as possible and only include the comma-separated words in your response):",
                 },
                 {
                     "role": "user",

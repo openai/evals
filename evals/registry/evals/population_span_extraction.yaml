@@ -1,6 +1,6 @@
 population_span_extraction:
   id: population_span_extraction.dev.v0
-  description: The model is shown abstracts of clinical drug trials and tasked with extracting the text spans that specify the population demographic of the shown abstract. The population demographic can be but is not necessarily specified in multiple seperate spans.
+  description: The model is shown abstracts of clinical drug trials and tasked with extracting the text spans that specify the population demographic of the shown abstract. The population demographic can be but is not necessarily specified in multiple separate spans.
   metrics: [accuracy]
 
 population_span_extraction.dev.v0:
