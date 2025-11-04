@@ -1,0 +1,9 @@
+chinese_literary_grace:
+  id: chinese_literary_grace.dev.v0
+  description: "making a comprehensive assessment of the literary grace level according to the text"
+  metrics: [accuracy]
+
+chinese_literary_grace.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: chinese_literary_grace/samples.jsonl
