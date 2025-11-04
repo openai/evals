@@ -1,0 +1,8 @@
+ED_classification:
+  id: ed_classification.test.v2
+  description: identify if note belongs to Emergency Department
+  metrics: [accuracy]
+ed_classification.test.v2:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: ED_classification/samples.jsonl
