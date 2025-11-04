@@ -1,0 +1,9 @@
+few-shot-abuse:
+  id: few-shot-abuse.dev.v0
+  metrics: [accuracy]
+few-shot-abuse.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args: 
+    samples_jsonl: few_shot_abuse/samples.jsonl
+    eval_type: classify
+    modelgraded_spec: harmful
