@@ -5,7 +5,7 @@ import argparse
 import logging
 import shlex
 import sys
-from typing import Any, Mapping, Optional, Union, cast
+from typing import Any, List, Mapping, Optional, TypedDict, Union, cast
 
 import evals
 import evals.api
@@ -266,6 +266,33 @@ def build_recorder(
     )
 
 
+CompletionTokenDetails = TypedDict("CompletionTokenDetails", {"reasoning_tokens": Optional[int]})
+UsageEvent = TypedDict("UsageEvent", {
+    "completion_token_details": Optional[CompletionTokenDetails],
+    "total_tokens": Optional[int],
+    "prompt_tokens": Optional[int],
+    "completion_tokens": Optional[int],
+})
+
+
+def get_val(val: Union[Optional[int], CompletionTokenDetails]) -> int:
+    if val is None:
+        return 0
+    if isinstance(val, dict):
+        return val["reasoning_tokens"] if val["reasoning_tokens"] is not None else 0
+    return val
+
+
+def sum_usage(usage_events: List[UsageEvent]) -> Mapping[str, int]:
+    total_usages_by_key = {}
+    for key in usage_events[0]:
+        total_usages_by_key[key] = sum(
+            get_val(u[key])
+            for u in usage_events
+        )
+    return total_usages_by_key
+
+
 def add_token_usage_to_result(result: dict[str, Any], recorder: RecorderBase) -> None:
     """
     Add token usage from logged sampling events to the result dictionary from the recorder.
@@ -278,10 +305,7 @@ def add_token_usage_to_result(result: dict[str, Any], recorder: RecorderBase) ->
     logger.info(f"Found {len(usage_events)}/{len(sampling_events)} sampling events with usage data")
     if usage_events:
         # Sum up the usage of all samples (assumes the usage is the same for all samples)
-        total_usage = {
-            key: sum(u[key] if u[key] is not None else 0 for u in usage_events)
-            for key in usage_events[0]
-        }
+        total_usage = sum_usage(usage_events)
         total_usage_str = "\n".join(f"{key}: {value:,}" for key, value in total_usage.items())
         logger.info(f"Token usage from {len(usage_events)} sampling events:\n{total_usage_str}")
         for key, value in total_usage.items():
