@@ -15,12 +15,12 @@ from evals.elsuite.make_me_say.defaults import (
     DEFAULT_MAX_TURNS,
     DEFAULT_PERIODIC_MSG_FN,
 )
-
+from evals.solvers.solver import Solver, SolverResult
 
 @backoff.on_exception(backoff.constant, InternalServerError, max_tries=3)
 def run(
     codeword: str,
-    manipulator_completion_fn: CompletionFn,
+    manipulator_solver: Solver,
     manipulatee_completion_fn: CompletionFn,
     judge_completion_fn: CompletionFn,
     max_turns: int = DEFAULT_MAX_TURNS,
@@ -34,19 +34,19 @@ def run(
     manipulator = Player(
         id=uuid.uuid4().hex,
         is_model=True,
-        completion_fn=manipulator_completion_fn,
+        solver=manipulator_solver,
     )
 
     manipulatee = Player(
         id=uuid.uuid4().hex,
         is_model=True,
-        completion_fn=manipulatee_completion_fn,
+        solver=manipulatee_completion_fn,
     )
 
     judge = Player(
         id=uuid.uuid4().hex,
         is_model=True,
-        completion_fn=judge_completion_fn,
+        solver=judge_completion_fn,
     )
 
     game = Game(
@@ -113,11 +113,11 @@ def run(
 def _create_response(game: Game) -> Game:
     # pre-conditions
     assert game.current_player.is_model
-    assert game.current_player.completion_fn is not None
+    assert game.current_player.solver is not None
 
     # body
     messages = [m.to_dict() for m in game.view_as(game.current_player)]
-    response = game.current_player.completion_fn(messages)
+    response = game.current_player.play(messages, game)
     content = _get_content(response)
     new_game = game.add_message(
         Message(
@@ -134,10 +134,12 @@ def _create_response(game: Game) -> Game:
     return new_game
 
 
-def _get_content(response: Union[dict, CompletionResult]) -> str:
+def _get_content(response: Union[dict, CompletionResult, SolverResult]) -> str:
     if hasattr(response, "get_completions"):
         completions = response.get_completions()
         assert len(completions) == 1, f"Got {len(completions)} but expected exactly one"
         return completions[0]
+    elif isinstance(response, SolverResult):
+        return response.output
 
     return response["choices"][0]["message"]["content"]
