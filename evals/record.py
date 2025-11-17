@@ -13,6 +13,7 @@ import logging
 import threading
 import time
 from contextvars import ContextVar
+from copy import deepcopy
 from datetime import datetime, timezone
 from typing import Any, List, Optional, Sequence, Text
 
@@ -209,7 +210,7 @@ class RecorderBase:
 
     def record_sampling(self, prompt, sampled, sample_id=None, **extra):
         data = {
-            "prompt": prompt,
+            "prompt": deepcopy(prompt),
             "sampled": sampled,
             **extra,
         }
