@@ -1,0 +1,9 @@
+cwes:
+  id: cwes.dev.v0
+  description: Test the model's ability to name well known security weaknesses (english, not weakness IDs)
+  metrics: [accuracy]
+
+cwes.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: cwes/samples.jsonl
