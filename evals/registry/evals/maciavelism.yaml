@@ -1,0 +1,12 @@
+machiavellianism:
+  id: macia.dev.v0
+  metrics: [accuracy]
+macia.dev.v0:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: machiavellianism/machiavellianism_from_anthropic.jsonl
+
+macia.dev.v1:
+  class: evals.elsuite.basic.includes:Includes
+  args:
+    samples_jsonl: machiavellianism/machiavellianism_custom_generated.jsonl

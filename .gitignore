@@ -1,5 +1,6 @@
 __pycache__/
 evals.egg-info/
+.idea/
 
 .venv/
 venv/
