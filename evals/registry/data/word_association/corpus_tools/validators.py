@@ -8,8 +8,6 @@ import numpy as np
 from logger_config import logger
 from openai import OpenAI
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-
 CORRELATION_PROMPT_TEMPLATE = """Task: Estimate the degree of correlation between
  two provided strings. In your evaluation, consider not just direct links, but also indirect and subtle correlations.
  As an illustration, if 'watch' appears in the first string and 'tower' in the second,
@@ -172,6 +170,7 @@ class EmbeddingsValidator(QualityValidator):
             A list of Embedding namedtuples where each Embedding
             represents the input string and its corresponding vector.
         """
+        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
         response = client.embeddings.create(model="text-embedding-ada-002", input=emb_input)
         logger.debug(f"embeddings response: {response}")
         response_data = response["data"]
@@ -199,6 +198,7 @@ class GPTValidator(QualityValidator):
         self._model = model
         self.criteria = criteria
         super().__init__(target_score)
+        self.client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
     def validate(self, related_words_pairs: List[RelatedWordsPair]) -> List[SimilarityTuple]:
         """
@@ -249,7 +249,7 @@ class GPTValidator(QualityValidator):
         logger.debug(
             f"Getting chat_completion using {self._model}.\nPrompting messages: {messages}"
         )
-        response = client.chat.completions.create(
+        response = self.client.chat.completions.create(
             model=self._model, messages=messages, temperature=0.0
         )
         logger.debug(f"response_message: {response}")
