@@ -89,7 +89,7 @@ def is_chat_model(model_name: str) -> bool:
     if model_name in CHAT_MODEL_NAMES:
         return True
 
-    for model_prefix in {"gpt-3.5-turbo-", "gpt-4-"}:
+    for model_prefix in {"gpt-3.5-turbo-", "gpt-4-", "gpt-4o-"}:
         if model_name.startswith(model_prefix):
             return True
 
