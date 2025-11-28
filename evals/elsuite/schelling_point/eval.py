@@ -9,6 +9,7 @@ from evals.api import CompletionFn
 from evals.elsuite.schelling_point.prompts import sys_prompts_ci, sys_prompts_no_ci
 from evals.elsuite.schelling_point.utils import get_response
 from evals.eval import Eval
+from evals.solvers.solver import Solver
 
 
 class SchellingPoint(Eval):
@@ -22,6 +23,9 @@ class SchellingPoint(Eval):
         *args,
         **kwargs,
     ):
+        if any([isinstance(completion_fn, Solver) for completion_fn in completion_fns]):
+            raise NotImplementedError("SchellingPoint does not currently support Solvers")
+        
         super().__init__(completion_fns, *args, **kwargs)
 
         random.seed(seed)
@@ -34,7 +38,6 @@ class SchellingPoint(Eval):
 
         self.temperature = temperature
 
-        self.completion_fns = completion_fns
         if len(self.completion_fns) == 1:
             self.completion_fns = self.completion_fns * n_copies
         assert len(self.completion_fns) == n_copies, "Must provide n_copies completion_fns"
