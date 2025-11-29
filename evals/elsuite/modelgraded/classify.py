@@ -21,13 +21,17 @@ class ModelBasedClassify(evals.Eval):
         eval_kwargs: Optional[dict[str, Any]] = None,
         multicomp_n: Union[int, str] = 1,
         eval_type: Optional[str] = None,
+        eval_completion_fn: Optional[str] = None,
         match_fn: Optional[str] = None,
         metaeval: bool = False,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
-        # treat last completion_fn as eval_completion_fn
-        self.eval_completion_fn = self.completion_fns[-1]
+        if eval_completion_fn:
+            self.eval_completion_fn = self.registry.make_completion_fn(eval_completion_fn)
+        else:
+            # treat last completion_fn as eval_completion_fn
+            self.eval_completion_fn = self.completion_fns[-1]
         if len(self.completion_fns) > 1:
             self.completion_fns = self.completion_fns[:-1]
         n_models = len(self.completion_fns)
