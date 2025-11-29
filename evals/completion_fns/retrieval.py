@@ -26,12 +26,11 @@ def load_embeddings(embeddings_and_text_path: str):
 
 
 def find_top_k_closest_embeddings(embedded_prompt: list[float], embs: list[list[float]], k: int):
-    # Normalize the embeddings
-    norm_embedded_prompt = embedded_prompt / np.linalg.norm(embedded_prompt)
-    norm_embs = embs / np.linalg.norm(embs, axis=1)[:, np.newaxis]
+    # Calculate the product of the norms of the prompt and the embeddings
+    norm_product = np.linalg.norm(embedded_prompt) * np.linalg.norm(embs)
 
     # Calculate cosine similarity
-    cosine_similarities = np.dot(norm_embs, norm_embedded_prompt)
+    cosine_similarities = np.dot(embs, embedded_prompt) / norm_product
 
     # Get the indices of the top k closest embeddings
     top_k_indices = np.argsort(cosine_similarities)[-k:]
