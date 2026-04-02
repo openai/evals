@@ -15,9 +15,7 @@ rail-score-responsible-ai-safety.dev.v0:
   args:
     samples_jsonl: rail-score-responsible-ai/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: rail_score
-    modelgraded_spec_args:
-      key: rail-score-safety
+    modelgraded_spec: rail-score-safety
 
 rail-score-responsible-ai-fairness:
   id: rail-score-responsible-ai-fairness.dev.v0
@@ -28,9 +26,7 @@ rail-score-responsible-ai-fairness.dev.v0:
   args:
     samples_jsonl: rail-score-responsible-ai/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: rail_score
-    modelgraded_spec_args:
-      key: rail-score-fairness
+    modelgraded_spec: rail-score-fairness
 
 rail-score-responsible-ai-reliability:
   id: rail-score-responsible-ai-reliability.dev.v0
@@ -41,9 +37,7 @@ rail-score-responsible-ai-reliability.dev.v0:
   args:
     samples_jsonl: rail-score-responsible-ai/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: rail_score
-    modelgraded_spec_args:
-      key: rail-score-reliability
+    modelgraded_spec: rail-score-reliability
 
 rail-score-responsible-ai-transparency:
   id: rail-score-responsible-ai-transparency.dev.v0
@@ -54,9 +48,7 @@ rail-score-responsible-ai-transparency.dev.v0:
   args:
     samples_jsonl: rail-score-responsible-ai/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: rail_score
-    modelgraded_spec_args:
-      key: rail-score-transparency
+    modelgraded_spec: rail-score-transparency
 
 rail-score-responsible-ai-privacy:
   id: rail-score-responsible-ai-privacy.dev.v0
@@ -67,9 +59,7 @@ rail-score-responsible-ai-privacy.dev.v0:
   args:
     samples_jsonl: rail-score-responsible-ai/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: rail_score
-    modelgraded_spec_args:
-      key: rail-score-privacy
+    modelgraded_spec: rail-score-privacy
 
 rail-score-responsible-ai-accountability:
   id: rail-score-responsible-ai-accountability.dev.v0
@@ -80,9 +70,7 @@ rail-score-responsible-ai-accountability.dev.v0:
   args:
     samples_jsonl: rail-score-responsible-ai/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: rail_score
-    modelgraded_spec_args:
-      key: rail-score-accountability
+    modelgraded_spec: rail-score-accountability
 
 rail-score-responsible-ai-inclusivity:
   id: rail-score-responsible-ai-inclusivity.dev.v0
@@ -93,9 +81,7 @@ rail-score-responsible-ai-inclusivity.dev.v0:
   args:
     samples_jsonl: rail-score-responsible-ai/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: rail_score
-    modelgraded_spec_args:
-      key: rail-score-inclusivity
+    modelgraded_spec: rail-score-inclusivity
 
 rail-score-responsible-ai-user-impact:
   id: rail-score-responsible-ai-user-impact.dev.v0
@@ -106,6 +92,4 @@ rail-score-responsible-ai-user-impact.dev.v0:
   args:
     samples_jsonl: rail-score-responsible-ai/samples.jsonl
     eval_type: cot_classify
-    modelgraded_spec: rail_score
-    modelgraded_spec_args:
-      key: rail-score-user-impact
+    modelgraded_spec: rail-score-user-impact
