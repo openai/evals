@@ -127,8 +127,11 @@ def get_jsonl(path: str) -> list[dict]:
     if bf.isdir(path):
         result = []
         for filename in bf.listdir(path):
-            if filename.endswith(".jsonl"):
-                result += get_jsonl(os.path.join(path, filename))
+            full = os.path.join(path, filename)
+            if bf.isdir(full):
+                result += get_jsonl(full)
+            elif filename.endswith(".jsonl"):
+                result += get_jsonl(full)
         return result
     return _get_jsonl_file(path)
 
