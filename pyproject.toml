@@ -1,7 +1,7 @@
 [project]
 name = "evals"
 version = "3.0.1.post1"
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 readme = "README.md"
 dependencies = [
     "aiolimiter",
