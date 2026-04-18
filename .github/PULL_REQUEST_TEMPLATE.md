@@ -1,12 +1,12 @@
 # Thank you for contributing an eval! ♥️
 
-🚨 Please make sure your PR follows these guidelines, **failure to follow the guidelines below will result in the PR being closed automatically**. Note that even if the criteria are met, that does not guarantee the PR will be merged nor GPT-4 access be granted. 🚨
+🚨 Please make sure your PR follows these guidelines, **failure to follow the guidelines below will result in the PR being closed automatically**. Note that even if the criteria are met, that does not guarantee the PR will be merged. 🚨
 
 **PLEASE READ THIS**:
 
-In order for a PR to be merged, it must fail on GPT-4. We are aware that right now, users do not have access, so you will not be able to tell if the eval fails or not. Please run your eval with GPT-3.5-Turbo, but keep in mind as we run the eval, if GPT-4 gets higher than 90% on the eval, we will likely reject it since GPT-4 is already capable of completing the task.
+In order for a PR to be merged, it must fail on frontier OpenAI models. Please run your eval locally with an available model, but keep in mind that if current OpenAI models score highly on the eval, we may reject it since the task is already well-covered.
 
-We plan to roll out a way for users submitting evals to see the eval performance on GPT-4 soon. Stay tuned! Until then, you will not be able to see the eval performance on GPT-4. **Starting April 10, the minimum eval count is 15 samples, we hope this makes it easier to create and contribute evals.**
+You may not be able to reproduce the exact internal model checks used during review. **Starting April 10, the minimum eval count is 15 samples, we hope this makes it easier to create and contribute evals.**
 
 Also, please note that we're using **Git LFS** for storing the JSON files, so please make sure that you move the JSON file to Git LFS before submitting a PR. Details on how to use Git LFS are available [here](https://git-lfs.com).
 
@@ -31,7 +31,7 @@ Below are some of the criteria we look for in a good eval. In general, we are se
 Your eval should be:
 
 - [ ] Thematically consistent: The eval should be thematically consistent. We'd like to see a number of prompts all demonstrating some particular failure mode. For example, we can create an eval on cases where the model fails to reason about the physical world.
-- [ ] Contains failures where a human can do the task, but either GPT-4 or GPT-3.5-Turbo could not.
+- [ ] Contains failures where a human can do the task, but current OpenAI models could not.
 - [ ] Includes good signal around what is the right behavior. This means either a correct answer for `Basic` evals or the `Fact` Model-graded eval, or an exhaustive rubric for evaluating answers for the `Criteria` Model-graded eval.
 - [ ] **Include at least 15 high-quality examples.**
 
@@ -59,17 +59,11 @@ By contributing to Evals, you are agreeing to make your evaluation logic and dat
 
 - [ ] I agree that my submission will be made available under an MIT license and complies with OpenAI's usage policies.
 
-### Email address validation
-
-If your submission is accepted, we will be granting GPT-4 access to a limited number of contributors. Access will be given to the email address associated with the commits on the merged pull request.
-
-- [ ] I acknowledge that GPT-4 access will only be granted, if applicable, to the email address used for my merged pull request.
-
 ### Limited availability acknowledgment
 
-We know that you might be excited to contribute to OpenAI's mission, help improve our models, and gain access to GPT-4. However, due to the requirements mentioned above and the high volume of submissions, we will not be able to accept all submissions and thus not grant everyone who opens a PR GPT-4 access. We know this is disappointing, but we hope to set the right expectation before you open this PR.
+We know that you might be excited to contribute to OpenAI's mission and help improve our models. However, due to the requirements mentioned above and the high volume of submissions, we will not be able to accept every contribution. We hope to set the right expectation before you open this PR.
 
-- [ ] I understand that opening a PR, even if it meets the requirements above, does not guarantee the PR will be merged nor GPT-4 access be granted.
+- [ ] I understand that opening a PR, even if it meets the requirements above, does not guarantee the PR will be merged.
 
 ### Submit eval
 
