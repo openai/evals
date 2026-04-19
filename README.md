@@ -53,7 +53,7 @@ If you want to manually run all pre-commit hooks on a repository, run `pre-commi
 
 ## Running evals
 
-If you don't want to contribute new evals, but simply want to run them locally, you can install the evals package via pip:
+If you don't want to write your own evals and instead want to run the pre-built evals locally, you can install the evals package via pip:
 
 ```sh
 pip install evals
@@ -65,7 +65,7 @@ We provide the option for you to log your eval results to a Snowflake database, 
 
 ## Writing evals
 
-We suggest getting starting by: 
+We suggest getting started by:
 
 - Walking through the process for building an eval: [`build-eval.md`](docs/build-eval.md)
 - Exploring an example of implementing custom eval logic: [`custom-eval.md`](docs/custom-eval.md)
