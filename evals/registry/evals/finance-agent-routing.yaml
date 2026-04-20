@@ -1,0 +1,8 @@
+finance-agent-routing:
+  id: finance-agent-routing.dev.v0
+  description: Evaluate routing decisions for a finance assistant across portfolio analysis, risk assessment, market lookup, memory lookup, and direct response intents.
+  metrics: [accuracy]
+finance-agent-routing.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: finance_agent_routing/samples.jsonl

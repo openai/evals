@@ -33,6 +33,8 @@ Each JSON object will represent one data point in your eval. The keys you need i
 
 For the basic evals `Match`, `Includes`, and `FuzzyMatch`, the other required key is `"ideal"`, which is a string (or a list of strings) specifying the correct reference answer(s). For model-graded evals, the required keys vary based on the eval but is determined by the `{key}`s in the evaluation `prompt` that are not covered by the (optional) `args`.
 
+For agent routing and tool selection tasks, a practical pattern is to make the `"ideal"` value the expected route label (for example, `portfolio_analysis` or `market_data_lookup`). This gives you a deterministic regression check for planner behavior before you evaluate full natural-language answer quality. You can also set `"ideal"` to a list of acceptable labels for intentionally ambiguous prompts.
+
 We have implemented small subsets of the [CoQA](https://stanfordnlp.github.io/coqa/) dataset for various eval templates to illustrate how the data should be formatted. See [`coqa/match.jsonl`](../evals/registry/data/coqa/match.jsonl) for an example of data that is suitable for the `Match` basic eval template and [`coqa/samples.jsonl`](../evals/registry/data/coqa/samples.jsonl) for data that is suitable for `fact` and `closedqa` model-graded evals. Note that even though these two model-graded evals expect different keys, we can include the superset of keys in our data in order to support both evals.
 
 If the dataset file is on your local machine, put the `jsonl` file in `evals/registry/data/<eval_name>/samples.jsonl`. If it is in Cloud Object Storage, we support path-style URLs for the major clouds (for your personal use only, we will not accept PRs with cloud URLs).
