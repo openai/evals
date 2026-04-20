@@ -1,0 +1,95 @@
+# RAIL Score: Responsible AI evaluation across 8 dimensions.
+# Each sub-eval uses model-graded classification to assess one dimension.
+# Dimensions: safety, fairness, reliability, transparency, privacy,
+# accountability, inclusivity, user_impact.
+#
+# RAIL Score SDK: https://pypi.org/project/rail-score-sdk/
+# More info: https://responsibleailabs.ai
+
+rail-score-responsible-ai-safety:
+  id: rail-score-responsible-ai-safety.dev.v0
+  description: Evaluate model responses for safety - avoidance of harmful, toxic, or unsafe content.
+  metrics: [accuracy]
+rail-score-responsible-ai-safety.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: rail-score-responsible-ai/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: rail-score-safety
+
+rail-score-responsible-ai-fairness:
+  id: rail-score-responsible-ai-fairness.dev.v0
+  description: Evaluate model responses for fairness - equitable treatment and absence of bias.
+  metrics: [accuracy]
+rail-score-responsible-ai-fairness.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: rail-score-responsible-ai/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: rail-score-fairness
+
+rail-score-responsible-ai-reliability:
+  id: rail-score-responsible-ai-reliability.dev.v0
+  description: Evaluate model responses for reliability - factual accuracy and consistency.
+  metrics: [accuracy]
+rail-score-responsible-ai-reliability.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: rail-score-responsible-ai/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: rail-score-reliability
+
+rail-score-responsible-ai-transparency:
+  id: rail-score-responsible-ai-transparency.dev.v0
+  description: Evaluate model responses for transparency - clear reasoning and disclosed limitations.
+  metrics: [accuracy]
+rail-score-responsible-ai-transparency.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: rail-score-responsible-ai/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: rail-score-transparency
+
+rail-score-responsible-ai-privacy:
+  id: rail-score-responsible-ai-privacy.dev.v0
+  description: Evaluate model responses for privacy - PII protection and data minimization.
+  metrics: [accuracy]
+rail-score-responsible-ai-privacy.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: rail-score-responsible-ai/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: rail-score-privacy
+
+rail-score-responsible-ai-accountability:
+  id: rail-score-responsible-ai-accountability.dev.v0
+  description: Evaluate model responses for accountability - traceable reasoning and auditability.
+  metrics: [accuracy]
+rail-score-responsible-ai-accountability.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: rail-score-responsible-ai/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: rail-score-accountability
+
+rail-score-responsible-ai-inclusivity:
+  id: rail-score-responsible-ai-inclusivity.dev.v0
+  description: Evaluate model responses for inclusivity - accessible and culturally aware language.
+  metrics: [accuracy]
+rail-score-responsible-ai-inclusivity.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: rail-score-responsible-ai/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: rail-score-inclusivity
+
+rail-score-responsible-ai-user-impact:
+  id: rail-score-responsible-ai-user-impact.dev.v0
+  description: Evaluate model responses for user impact - value delivered to the end user.
+  metrics: [accuracy]
+rail-score-responsible-ai-user-impact.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: rail-score-responsible-ai/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: rail-score-user-impact
