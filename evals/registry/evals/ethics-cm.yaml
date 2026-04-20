@@ -1,0 +1,32 @@
+# cm-train
+ethics-cm-train:
+  id: ethics-cm-train.dev.v0
+  description: Evaluates whether actions are commonsense-morally good or bad from the cm-train dataset.
+  metrics: [accuracy]
+
+ethics-cm-train.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: ethics-cm/cm-train.jsonl
+
+# cm-test
+ethics-cm-test:
+  id: ethics-cm-test.dev.v0
+  description: Evaluates whether actions are commonsense-morally good or bad from the cm-test dataset.
+  metrics: [accuracy]
+
+ethics-cm-test.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: ethics-cm/cm-test.jsonl
+
+#cm-test-hard
+ethics-cm-test-hard:
+  id: ethics-cm-test-hard.dev.v0
+  description: Evaluates whether actions are commonsense-morally good or bad from the cm-test-hard dataset.
+  metrics: [accuracy]
+
+ethics-cm-test-hard.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: ethics-cm/cm-test-hard.jsonl
