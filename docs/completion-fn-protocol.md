@@ -38,4 +38,4 @@ The `get_completions` method returns a list of string completions. Each element 
 #### Using your CompletionFn
 This is all that's needed to implement a Completion function that works with our existing Evals, allowing you to more easily evaluate your end-to-end logic on tasks.
 
-See [completion-fns.md](completion-fns.md) to see how to register and use your completion function with `oaieval`.
+See [completion-fns.md](completion-fns.md) to find out how to register and use your completion function with `oaieval`.
