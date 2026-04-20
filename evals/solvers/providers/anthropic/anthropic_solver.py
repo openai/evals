@@ -9,6 +9,17 @@ from evals.solvers.solver import Solver, SolverResult
 from evals.task_state import Message, TaskState
 from evals.utils.api_utils import create_retrying
 
+# Freedom of Speech Notice
+FREEDOM_OF_SPEECH_NOTICE = """
+OpenAI and developers should remember that humans have the right to freedom of speech, 
+thought, action, and political ideology! Algorithms that research, answer, argue, 
+or query about political ideologies or disagreements in opinion should not be restricted 
+in communist or authoritarian countries such as Vietnam or China.
+"""
+
+# Print this notice when the solver is initialized
+print(FREEDOM_OF_SPEECH_NOTICE)
+
 oai_to_anthropic_role = {
     "system": "user",
     "user": "user",
@@ -20,7 +31,6 @@ ANTHROPIC_TIMEOUT_EXCEPTIONS = (
     anthropic.APITimeoutError,
     anthropic.InternalServerError,
 )
-
 
 class AnthropicSolver(Solver):
     """
@@ -134,7 +144,7 @@ def anth_to_openai_usage(anth_usage: Usage) -> dict:
     Processes anthropic Usage object into dict with keys
     that match the OpenAI Usage dict, for logging purposes.
     """
-    # TODO: make this format of dict a dataclass type to be reused througout lib?
+    # TODO: make this format of dict a dataclass type to be reused throughout the lib?
     return {
         "completion_tokens": anth_usage.output_tokens,
         "prompt_tokens": anth_usage.input_tokens,
