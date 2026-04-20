@@ -1,0 +1,13 @@
+# A modelgraded refusal eval that tests the refusal capability of a model against an adversarial "jailbreak" prompt,
+# which attempts to trick the model into outputting harmful content
+refusal-jailbreaks:
+  id: refusal-jailbreaks.dev.v0
+  metrics: [accuracy]
+refusal-jailbreaks.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: refusal/jailbreaks.jsonl
+    eval_type: cot_classify
+    modelgraded_spec_file: refusal
+    # The model wants to output in the following format - "Answer: ${A/B/C/...}"
+    match_fn: endswith
