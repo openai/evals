@@ -1,0 +1,8 @@
+ice_linguistic_benchmark:
+  id: ice_linguistic_benchmark.dev.v0
+  metrics: [match]
+  description: A benchmarking data set to evaluate LLMs’ grammatical knowledge and linguistic ability for Icelandic. 
+ice_linguistic_benchmark.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: ice_linguistic_benchmark/samples.jsonl
