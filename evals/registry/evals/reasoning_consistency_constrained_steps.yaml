@@ -1,0 +1,17 @@
+# Define a base eval (alias)
+reasoning_consistency_constrained_steps:
+  # When you run `oaieval <model> reasoning_consistency_constrained_steps`,
+  # it will run the versioned eval below.
+  id: reasoning_consistency_constrained_steps.test.v1
+  metrics: [accuracy]
+  description: >
+    Tests whether a model’s final answer is causally constrained by provided intermediate
+    reasoning steps (constrained CoT), rather than silently correcting incorrect steps or
+    treating the chain as decorative.
+
+# Define the actual eval (versioned)
+reasoning_consistency_constrained_steps.test.v1:
+  class: evals.elsuite.basic.match:Match
+  args:
+    # Path is relative to evals/registry/data/
+    samples_jsonl: reasoning_consistency_constrained_steps/samples.jsonl
