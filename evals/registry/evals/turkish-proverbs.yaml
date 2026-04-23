@@ -1,0 +1,9 @@
+turkish-proverbs:
+  description: Test the model's ability to complete proverbs in Turkish.
+  id: turkish-proverbs.dev.v0
+  metrics:
+  - accuracy
+turkish-proverbs.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: turkish-proverbs/samples.jsonl
