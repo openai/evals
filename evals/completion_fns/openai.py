@@ -94,7 +94,10 @@ class OpenAICompletionFn(CompletionFn):
         self.api_base = api_base
         self.api_key = api_key
         self.n_ctx = n_ctx
-        self.extra_options = extra_options
+        self.extra_options = {
+            **(extra_options or {}),
+            **{key: value for key, value in kwargs.items() if key != "registry"},
+        }
 
     def __call__(
         self,
@@ -139,12 +142,16 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
         api_key: Optional[str] = None,
         n_ctx: Optional[int] = None,
         extra_options: Optional[dict] = {},
+        **kwargs,
     ):
         self.model = model
         self.api_base = api_base
         self.api_key = api_key
         self.n_ctx = n_ctx
-        self.extra_options = extra_options
+        self.extra_options = {
+            **(extra_options or {}),
+            **{key: value for key, value in kwargs.items() if key != "registry"},
+        }
 
     def __call__(
         self,
