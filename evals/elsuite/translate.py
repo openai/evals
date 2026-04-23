@@ -42,6 +42,8 @@ class Translate(evals.Eval):
                 prompt += s["sample"]
             prompt += sample["input"][-1:]
 
+        assert expected is not None, "Translate requires `ideal`"
+
         if isinstance(expected, tuple):
             expected = list(expected)
         elif not isinstance(expected, list):
@@ -53,18 +55,15 @@ class Translate(evals.Eval):
         )
         sampled = result.get_completions()[0]
 
-        score = None
-        if expected is not None:
-            score = self.bleu.sentence_score(sampled, expected).score
-            evals.record.record_metrics(sacrebleu_sentence_score=score)
+        score = self.bleu.sentence_score(sampled, expected).score
+        evals.record.record_metrics(sacrebleu_sentence_score=score)
 
-            match = score > 30
+        match = score > 30
 
-            if score is not None:
-                evals.record.record_match(
-                    match, expected=expected, sampled=sampled, sacrebleu_sentence_score=score
-                )
-            return match
+        evals.record.record_match(
+            match, expected=expected, sampled=sampled, sacrebleu_sentence_score=score
+        )
+        return match
 
     def run(self, recorder):
         samples = self.get_samples()
