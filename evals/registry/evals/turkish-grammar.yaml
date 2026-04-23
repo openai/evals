@@ -1,0 +1,14 @@
+turkish-grammar:
+  id: turkish-grammar.dev.v0
+  description: >
+    Evaluates the model's knowledge of Turkish grammar including
+    inflectional and derivational morphology, verb conjugation,
+    sentence structure analysis, and word class identification.
+  metrics: [accuracy]
+
+turkish-grammar.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: turkish-grammar/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
