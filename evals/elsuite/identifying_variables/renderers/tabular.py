@@ -1,18 +1,15 @@
-from typing import Optional, Tuple, Union, List
 import json
 import random
+from typing import List, Optional, Tuple, Union
 
 import networkx as nx
 import numpy as np
 import pandas as pd
 
-from evals.elsuite.identifying_variables.structs import Sample
-from evals.elsuite.identifying_variables.renderers.base import RendererBase
-from evals.elsuite.identifying_variables.latent_funcs import (
-    DISTRIBUTIONS,
-    LATENT_FUNC_MAP,
-)
 from evals.elsuite.identifying_variables.constants import NUM_OBS
+from evals.elsuite.identifying_variables.latent_funcs import DISTRIBUTIONS, LATENT_FUNC_MAP
+from evals.elsuite.identifying_variables.renderers.base import RendererBase
+from evals.elsuite.identifying_variables.structs import Sample
 
 
 def apply_noise(
@@ -77,9 +74,7 @@ class TabularRenderer(RendererBase):
             if "input_x" not in variable_metadata[var]["gen_method"]:
                 distr = DISTRIBUTIONS[gen_method]
                 distr_kwargs = variable_metadata[var]["gen_method"]["kwargs"]
-                data_dict[var] = distr(
-                    num_samples=n_obs_samples, **distr_kwargs, rng=self.np_rng
-                )
+                data_dict[var] = distr(num_samples=n_obs_samples, **distr_kwargs, rng=self.np_rng)
             else:
                 latent_func = LATENT_FUNC_MAP[gen_method]
                 latent_func_kwargs = variable_metadata[var]["gen_method"]["kwargs"]
@@ -170,9 +165,7 @@ class LanguageTableRenderer(TabularRenderer):
             if np.isnan(value):
                 string += f"{var} was not {past_participle_verb}. "
             else:
-                string += (
-                    f"{var} was {past_participle_verb} to be {format_number(value)}. "
-                )
+                string += f"{var} was {past_participle_verb} to be {format_number(value)}. "
         return string
 
 

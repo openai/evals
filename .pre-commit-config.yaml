@@ -3,6 +3,8 @@ repos:
     rev: 'bd424e49d4f0181d4c8b8909a8cd5ce9eb058044'
     hooks:
       - id: mypy
+        additional_dependencies:
+          - typed-ast
         args: ["--config-file=mypy.ini", "--no-site-packages"]
 
   - repo: https://github.com/psf/black

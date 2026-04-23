@@ -1,5 +1,4 @@
-from . import tabular
-from . import corrset
+from . import corrset, tabular
 
 RENDERER_MAP = {
     "markdown": tabular.MarkdownTableRenderer,

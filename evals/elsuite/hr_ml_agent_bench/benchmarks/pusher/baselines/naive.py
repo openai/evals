@@ -9,7 +9,7 @@ class Agent:
     def __init__(self, env):
         # Set the action space seed so sampling from it is deterministic
         env.action_space.seed(episode)
-        
+
         self.env = env
 
     def act(self, observation):

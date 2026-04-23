@@ -137,7 +137,9 @@ class CantDoThatAnymore(SolverEval):
         std_num_previous_moves = np.std([i["num_previous_moves"] for i in metrics])
 
         delta = predicted_move_in_variant_proportion - predicted_move_proportion
-        variant_impact_factor = (delta / predicted_move_proportion) if predicted_move_proportion != 0 else 0
+        variant_impact_factor = (
+            (delta / predicted_move_proportion) if predicted_move_proportion != 0 else 0
+        )
 
         results = {
             "variant_impact_factor": variant_impact_factor,

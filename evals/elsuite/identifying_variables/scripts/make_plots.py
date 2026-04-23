@@ -10,9 +10,7 @@ from evals.elsuite.identifying_variables.scripts.plotting_utils import (
     plot_difficulty_bars,
     plot_solver_bars,
 )
-from evals.elsuite.identifying_variables.scripts.table_utils import (
-    make_main_metric_table,
-)
+from evals.elsuite.identifying_variables.scripts.table_utils import make_main_metric_table
 from evals.utils import log_utils
 
 NUM_REPEATS = 3
@@ -78,9 +76,7 @@ def handle_cot_double_sampling(sampling_entries, solver):
             if (
                 # for chat models we filter like this
                 isinstance(entry["prompt"], list)
-                and entry["prompt"][-1]["content"].startswith(
-                    "Given the above reasoning"
-                )
+                and entry["prompt"][-1]["content"].startswith("Given the above reasoning")
                 or (
                     # for base models we need to filter like this
                     isinstance(entry["prompt"], str)
@@ -102,9 +98,7 @@ def handle_posthoc_metrics(final_results: Dict, log_path: Path, solver: str):
     # this is necessary because we originally didnt compute recall in the eval
     for metric in MAIN_METRICS:
         if metric not in final_results.keys():
-            final_results[metric] = compute_metric_posthoc(
-                metric, metric_entries, sampling_entries
-            )
+            final_results[metric] = compute_metric_posthoc(metric, metric_entries, sampling_entries)
 
     return final_results
 
@@ -130,9 +124,9 @@ def populate_default_results_dict(results_dict, results_dir):
                 results_dict[metric]["raw"][solver][renderer][tree_key].append(value)
                 raw = results_dict[metric]["raw"][solver][renderer][tree_key]
                 results_dict[metric]["mean"][solver][renderer][tree_key] = np.mean(raw)
-                results_dict[metric]["sem"][solver][renderer][tree_key] = np.std(
-                    raw
-                ) / np.sqrt(NUM_REPEATS)
+                results_dict[metric]["sem"][solver][renderer][tree_key] = np.std(raw) / np.sqrt(
+                    NUM_REPEATS
+                )
     for metric in results_dict.keys():
         del results_dict[metric]["raw"]
     return results_dict
@@ -158,9 +152,7 @@ def make_default_plots(results_dict: Dict, save_dir: Path):
     metric_labels = ["Control Variable Retrieval nDCG*", "Control Variable Recall"]
     fig_heights = [6, 5]
 
-    for metric, metric_label, fig_height in tqdm(
-        zip(metrics, metric_labels, fig_heights)
-    ):
+    for metric, metric_label, fig_height in tqdm(zip(metrics, metric_labels, fig_heights)):
         plot_solver_bars(
             bar_solvers,
             baseline_solvers,
@@ -186,9 +178,7 @@ def extract_large_results_dict(results_dir: Path) -> Dict:
             }
 
         for bbin in ctrl_nDCG_bins:
-            results_dict[key][bbin]["raw"].append(
-                final_results[f"ctrl_nDCG-n_ctrl_vars-{bbin}"]
-            )
+            results_dict[key][bbin]["raw"].append(final_results[f"ctrl_nDCG-n_ctrl_vars-{bbin}"])
     for key in results_dict.keys():
         for bbin in ctrl_nDCG_bins:
             mean = np.mean(results_dict[key][bbin]["raw"])
@@ -202,9 +192,7 @@ def extract_large_results_dict(results_dir: Path) -> Dict:
 
 def make_large_plot(large_results_dir: Dict, save_dir: Path):
     ctrl_vars_bins = list(range(0, 9))
-    plot_difficulty_bars(
-        large_results_dir, ctrl_vars_bins, save_dir / "ctrl_nDCG_difficulty.png"
-    )
+    plot_difficulty_bars(large_results_dir, ctrl_vars_bins, save_dir / "ctrl_nDCG_difficulty.png")
 
 
 def np_nan_if_none(input_num):
@@ -274,15 +262,10 @@ def count_tokens(results_dir: Path, total) -> Tuple[Dict, pd.DataFrame]:
         "generation/cot/gpt-4-1106-preview",
     ]
     solver_to_eval = {
-        solver: eval_names[0] if "cot" not in solver else eval_names[1]
-        for solver in solver_names
+        solver: eval_names[0] if "cot" not in solver else eval_names[1] for solver in solver_names
     }
-    solver_to_tree = {
-        solver: False if "cot" not in solver else True for solver in solver_names
-    }
-    solver_to_tokens = {
-        solver: {"input": [], "output": [], "total": []} for solver in solver_names
-    }
+    solver_to_tree = {solver: False if "cot" not in solver else True for solver in solver_names}
+    solver_to_tokens = {solver: {"input": [], "output": [], "total": []} for solver in solver_names}
     total_input = 0
     total_output = 0
     for log in tqdm(results_dir.glob("*.log"), total=total):
@@ -304,15 +287,11 @@ def count_tokens(results_dir: Path, total) -> Tuple[Dict, pd.DataFrame]:
                 and seed == 1
                 and tree != solver_to_tree[solver]
             ):
-                solver_to_tokens[solver]["input"].append(
-                    np_nan_if_none(usage["prompt_tokens"])
-                )
+                solver_to_tokens[solver]["input"].append(np_nan_if_none(usage["prompt_tokens"]))
                 solver_to_tokens[solver]["output"].append(
                     np_nan_if_none(usage["completion_tokens"])
                 )
-                solver_to_tokens[solver]["total"].append(
-                    np_nan_if_none(usage["total_tokens"])
-                )
+                solver_to_tokens[solver]["total"].append(np_nan_if_none(usage["total_tokens"]))
             total_input += zero_if_none(usage["prompt_tokens"])
             total_output += zero_if_none(usage["completion_tokens"])
 
@@ -338,9 +317,7 @@ def make_total_tokens_table(default_total: Dict, large_total: Dict) -> pd.DataFr
     return total_tokens_df
 
 
-def make_token_count_tables(
-    default_results_dir: Path, large_results_dir: Path, save_dir: Path
-):
+def make_token_count_tables(default_results_dir: Path, large_results_dir: Path, save_dir: Path):
     default_total_tokens, default_per_sample_tokens_df = count_tokens(
         default_results_dir, total=222
     )

@@ -1,10 +1,10 @@
 from typing import List, Set, Tuple
 
-from evals.elsuite.identifying_variables.structs import Sample
-from evals.elsuite.identifying_variables.renderers.base import RendererBase
 import evals.elsuite.identifying_variables.graph_utils as graph_utils
 import evals.elsuite.identifying_variables.renderers.templates as templates
 from evals.elsuite.identifying_variables.constants import SPARSITY_FOR_UNOBS
+from evals.elsuite.identifying_variables.renderers.base import RendererBase
+from evals.elsuite.identifying_variables.structs import Sample
 
 
 class CorrSetRenderer(RendererBase):
@@ -35,8 +35,7 @@ class CorrSetRenderer(RendererBase):
         unobserved_vars = set(
             var
             for var in sample.variable_metadata
-            if sample.variable_metadata[var]["extra"]["sparsity_rate"]
-            > SPARSITY_FOR_UNOBS
+            if sample.variable_metadata[var]["extra"]["sparsity_rate"] > SPARSITY_FOR_UNOBS
         )
         for tree in graph_trees:
             correl_set = set(tree)
@@ -69,8 +68,7 @@ class CorrSetRenderer(RendererBase):
         vars_to_mention = [
             var
             for var in hypothesized_vars
-            if sample.variable_metadata[var]["extra"]["sparsity_rate"]
-            > SPARSITY_FOR_UNOBS
+            if sample.variable_metadata[var]["extra"]["sparsity_rate"] > SPARSITY_FOR_UNOBS
         ]
         return vars_to_mention
 
@@ -191,9 +189,7 @@ class LanguageCorrSetRenderer(CorrSetRenderer):
                 transition_phrase = ""
                 current_set_idx = correl_set_idx
 
-            mentioned_vars_from_set = correl_set_idx_to_already_mentioned_vars[
-                correl_set_idx
-            ]
+            mentioned_vars_from_set = correl_set_idx_to_already_mentioned_vars[correl_set_idx]
             if len(mentioned_vars_from_set) == 0:  # first time mentioning this set
                 mention_string = templates.IND_VARS_EXAMPLE.format(
                     optional_transition=transition_phrase,
@@ -319,6 +315,7 @@ class LanguageCorrSetRenderer(CorrSetRenderer):
 
 if __name__ == "__main__":
     import random
+
     import numpy as np
 
     list_of_lists = [
@@ -332,9 +329,11 @@ if __name__ == "__main__":
     np_rng = np.random.default_rng(0)
     renderer = PureCorrSetRenderer(random.Random(0), np_rng)
 
-    from evals.elsuite.identifying_variables.scripts.gen_data import gen_samples
-    import networkx as nx
     from pprint import pprint
+
+    import networkx as nx
+
+    from evals.elsuite.identifying_variables.scripts.gen_data import gen_samples
 
     samples = gen_samples(10, None, np_rng)
 

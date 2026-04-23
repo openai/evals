@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
 
-# TODO: make sure italicised text is crawled properly and that hints are excluded from answers. 
+# TODO: make sure italicised text is crawled properly and that hints are excluded from answers.
 # TODO: Split any multi-part questions into individual questions.
 
 miskito_base_url = "https://en.wikibooks.org/wiki/Miskito/Lesson_{idx}"

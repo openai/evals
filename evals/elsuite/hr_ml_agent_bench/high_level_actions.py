@@ -76,7 +76,7 @@ def edit_script(
     # TODO: handle long file editing
     try:
         content = read_file(script_name, work_dir=work_dir, **kwargs)
-    except:
+    except EnvException:
         write_file(script_name, "", work_dir=work_dir, **kwargs)
         content = ""
 
@@ -135,12 +135,12 @@ def edit_script_lines(
     try:
         start_line_number = int(start_line_number)
         end_line_number = int(end_line_number)
-    except:
+    except (TypeError, ValueError):
         raise EnvException("start_line_number and end_line_number must be integers")
 
     try:
         orig_content = read_file(script_name, work_dir=work_dir, **kwargs)
-    except:
+    except EnvException:
         write_file(script_name, "", work_dir=work_dir, **kwargs)
         orig_content = ""
     lines = orig_content.split("\n")
@@ -197,14 +197,12 @@ def inspect_script_lines(script_name, start_line_number, end_line_number, work_d
     try:
         start_line_number = int(start_line_number)
         end_line_number = int(end_line_number)
-    except:
+    except (TypeError, ValueError):
         raise EnvException("start_line_number and end_line_number must be integers")
-    if end_line_number - start_line_number > 100:
-        raise EnvException("the number of lines to display is limited to 100 lines")
+
     try:
-        # lines = open(os.path.join(work_dir,script_name)).readlines()
         lines = read_file(script_name, work_dir=work_dir, **kwargs).split("\n")
-    except:
+    except EnvException:
         raise EnvException(f"cannot find script {script_name}")
 
     content = "\n".join(lines[max(int(start_line_number) - 1, 0) : int(end_line_number)])

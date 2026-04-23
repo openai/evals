@@ -11,10 +11,12 @@ def get_func_from_code(code):
 
 
 def get_complexity(code: str) -> int:
-    #   NOTE: this is quite ugly, but should be good enough for dataset-creating code
-    code = "global func_name\ndef func_name(x): return " + code
-    exec(code)
-    return len(list(dis.get_instructions(func_name)))
+    # NOTE: ugly but good enough for dataset-creating code
+    src = f"def _tmp(x): return {code}"
+    ns: dict[str, object] = {}
+    exec(src, {"math": math}, ns)  # define function into ns
+    fn = ns["_tmp"]  # retrieve it
+    return len(list(dis.get_instructions(fn)))
 
 
 def create_dataset(out_file, in_file):

@@ -1,6 +1,4 @@
-from . import mode
-from . import median
-
+from . import median, mode
 
 TASK_DESCRIPTION = """\
 In the following messages, you will be given a sequence of numbers.\

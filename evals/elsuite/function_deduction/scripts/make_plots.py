@@ -11,27 +11,19 @@ palette = {
     "Average Baseline": "blue",
     "Full Knowledge Best": "blue",
     "Full Knowledge Random": "blue",
-
     "Human": "steelblue",
-
     "gpt-4-32k": "purple",
     "gpt-4-32k w CoT": "purple",
-
     "gpt-4-base w Few-shot": "orange",
     "gpt-4-base w CoT and Few-shot": "orange",
-
     "gpt-3.5-turbo-16k": "green",
     "gpt-3.5-turbo-16k w CoT": "green",
-
     "gemini-pro": "peru",
     "gemini-pro w CoT": "peru",
-
     "llama-2-13b-chat": "brown",
     "llama-2-13b-chat w CoT": "brown",
-
     "llama-2-70b-chat": "maroon",
     "llama-2-70b-chat w CoT": "maroon",
-
     "mixtral-8x7b-instruct": "grey",
     "mixtral-8x7b-instruct w CoT": "grey",
 }
@@ -40,27 +32,19 @@ solver_to_name = {
     "function_deduction/full_knowledge_best": "Full Knowledge Best",
     "function_deduction/full_knowledge_random": "Full Knowledge Random",
     "function_deduction/average_baseline": "Average Baseline",
-
     "human_cli": "Human",
-
     "gpt-4-32k": "gpt-4-32k",
     "function_deduction/cot/gpt-4-32k": "gpt-4-32k w CoT",
-
     "function_deduction/gpt-4-base": "gpt-4-base w Few-shot",
     "function_deduction/cot/gpt-4-base": "gpt-4-base w CoT and Few-shot",
-
     "gpt-3.5-turbo-16k": "gpt-3.5-turbo-16k",
     "function_deduction/cot/gpt-3.5-turbo-16k": "gpt-3.5-turbo-16k w CoT",
-
     "generation/direct/gemini-pro": "gemini-pro",
     "function_deduction/cot/gemini-pro": "gemini-pro w CoT",
-
     "generation/direct/llama-2-13b-chat": "llama-2-13b-chat",
     "function_deduction/cot/llama-2-13b-chat": "llama-2-13b-chat w CoT",
-
     "generation/direct/llama-2-70b-chat": "llama-2-70b-chat",
     "function_deduction/cot/llama-2-70b-chat": "llama-2-70b-chat w CoT",
-
     "generation/direct/mixtral-8x7b-instruct": "mixtral-8x7b-instruct",
     "function_deduction/cot/mixtral-8x7b-instruct": "mixtral-8x7b-instruct w CoT",
 }

@@ -172,7 +172,7 @@ class Runner:
             out = tool(task_state)
         except (TypeError, ValueError, IndexError):
             out = None
-        
+
         if out is None:
             return None
 

@@ -1,7 +1,7 @@
 import argparse
+import json
 import os
 import random
-import json
 
 import nltk
 from nltk.corpus import wordnet
@@ -60,13 +60,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--n_samples", type=int, default=500)
-    parser.add_argument(
-        "--n_words", type=int, default=100, help="Number of words in each sample"
-    )
+    parser.add_argument("--n_words", type=int, default=100, help="Number of words in each sample")
     parser.add_argument("--seed", type=int, default=0)
-    parser.add_argument(
-        "--jsonl_dir", type=str, default="./evals/registry/data/already_said_that/"
-    )
+    parser.add_argument("--jsonl_dir", type=str, default="./evals/registry/data/already_said_that/")
 
     args = parser.parse_args()
 

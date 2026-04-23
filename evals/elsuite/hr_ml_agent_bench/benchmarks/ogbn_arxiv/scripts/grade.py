@@ -68,7 +68,9 @@ def get_naive_baseline_score() -> float:
     """
 
     env_dir = Path(__file__).parent / ".." / "env"
-    dataset_dir = get_root_dir() / "registry" / "data" / "hr_ml_agent_bench" / "ogbn_arxiv" / "dataset"
+    dataset_dir = (
+        get_root_dir() / "registry" / "data" / "hr_ml_agent_bench" / "ogbn_arxiv" / "dataset"
+    )
 
     with TemporaryDirectory() as tmp_dir:
         dst_dir = Path(tmp_dir) / "env"

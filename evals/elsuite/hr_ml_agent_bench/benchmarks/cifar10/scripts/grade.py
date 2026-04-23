@@ -1,16 +1,11 @@
 import logging
-import shutil
 from functools import cache
 from pathlib import Path
-from tempfile import TemporaryDirectory
 
 import pandas as pd
 from torchvision import datasets
 
-import evals.elsuite.hr_ml_agent_bench.benchmarks.cifar10.env.train as baseline_script
-from evals.elsuite.hr_ml_agent_bench.low_level_actions import execute_script
 from evals.elsuite.hr_ml_agent_bench.utils import get_baseline_score
-
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +49,7 @@ def get_naive_baseline_score() -> float:
     Executes the baseline script `train.py` and returns the accuracy.
     Expects the predictions to be saved to `submission.csv` when run.
     """
-    
+
     scripts_dir = Path(__file__).parent
     env_dir = scripts_dir.parent / "env"
     naive_baseline = env_dir / "train.py"

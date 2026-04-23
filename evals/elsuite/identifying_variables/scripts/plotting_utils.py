@@ -1,10 +1,9 @@
-from typing import Dict, Iterable, List
 from pathlib import Path
+from typing import Dict, Iterable, List
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
-
 
 renderers_of_interest = ["csv", "language-corrset"]
 
@@ -37,12 +36,8 @@ baseline_to_linestyle = {
 }
 
 cmap = plt.get_cmap("Set2")
-bline_colors = np.array(
-    [cmap(i) for i in range(0, len(baseline_to_linestyle.keys()) + 0)]
-)
-baseline_to_color = {
-    key: color for key, color in zip(baseline_to_linestyle.keys(), bline_colors)
-}
+bline_colors = np.array([cmap(i) for i in range(0, len(baseline_to_linestyle.keys()) + 0)])
+baseline_to_color = {key: color for key, color in zip(baseline_to_linestyle.keys(), bline_colors)}
 
 
 def plot_solver_bars(
@@ -74,14 +69,8 @@ def plot_solver_bars(
     f, ax = plt.subplots(1, 1, dpi=300, figsize=(9, fig_height))
 
     for i, renderer in enumerate(renderers_of_interest):
-        bars = [
-            metric_results["mean"][solver][renderer]["without tree"]
-            for solver in bar_solvers
-        ]
-        errors = [
-            metric_results["sem"][solver][renderer]["without tree"]
-            for solver in bar_solvers
-        ]
+        bars = [metric_results["mean"][solver][renderer]["without tree"] for solver in bar_solvers]
+        errors = [metric_results["sem"][solver][renderer]["without tree"] for solver in bar_solvers]
 
         ax.bar(
             positions + bar_width * i,
@@ -101,9 +90,7 @@ def plot_solver_bars(
             color=baseline_to_color[baseline_solver],
             linestyle=baseline_to_linestyle[baseline_solver],
         )
-        ax.axhspan(
-            mean - sem, mean + sem, alpha=0.1, color=baseline_to_color[baseline_solver]
-        )
+        ax.axhspan(mean - sem, mean + sem, alpha=0.1, color=baseline_to_color[baseline_solver])
 
     ax.set_xticks(
         positions + bar_width / 2,
@@ -111,9 +98,7 @@ def plot_solver_bars(
         rotation=45,
         ha="right",
     )
-    ax.tick_params(
-        axis="x", which="both", bottom=True
-    )  # Show both major and minor xticks
+    ax.tick_params(axis="x", which="both", bottom=True)  # Show both major and minor xticks
     ax.set_ylabel(metric_label)
     ax.set_ylim(-0.005, 1)
     ax.xaxis.grid(False)

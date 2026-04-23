@@ -10,6 +10,7 @@ on:
 
 jobs:
   check_files:
+    name: Unit tests
     runs-on: ubuntu-latest
 
     steps:

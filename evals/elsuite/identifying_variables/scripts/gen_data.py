@@ -4,28 +4,28 @@ Code for generating .jsonl dataset for identifying variables eval
 Use default argparse args to replicate the dataset used for the report
 """
 
-from dataclasses import asdict
-import os
 import argparse
-from typing import Dict, List, Optional, Set, Tuple, Any
-import json
 import copy
+import json
+import os
+from dataclasses import asdict
+from typing import Any, Dict, List, Optional, Set, Tuple
 
-from tqdm.auto import tqdm
 import networkx as nx
 import numpy as np
+from tqdm.auto import tqdm
 
+import evals.elsuite.identifying_variables.constants as constants
 import evals.elsuite.identifying_variables.latent_funcs as latent_funcs
 from evals.elsuite.identifying_variables.graph_utils import (
-    gen_random_forest,
-    gen_random_forest_tree_size,
+    find_connected_nodes_pair,
     find_graph_roots,
     find_unconnected_nodes_pair,
-    find_connected_nodes_pair,
+    gen_random_forest,
+    gen_random_forest_tree_size,
 )
+from evals.elsuite.identifying_variables.structs import Answer, Sample
 from evals.elsuite.identifying_variables.utils import sample_serializer
-from evals.elsuite.identifying_variables.structs import Sample, Answer
-import evals.elsuite.identifying_variables.constants as constants
 
 
 def write_to_jsonl(
@@ -37,9 +37,7 @@ def write_to_jsonl(
             f.write(json.dumps(asdict(sample), default=sample_serializer) + "\n")
 
 
-def random_latent_func_meta(
-    np_rng: np.random.Generator, input_x: Optional[str] = None
-) -> Dict:
+def random_latent_func_meta(np_rng: np.random.Generator, input_x: Optional[str] = None) -> Dict:
     """
     Generates random metadata for defining a latent function
 
@@ -86,9 +84,7 @@ def build_var_metadata(
     roots = find_graph_roots(causal_graph)
     root_to_descendants = {r: nx.descendants(causal_graph, r) for r in roots}
     node_to_root = {
-        n: root
-        for root, descendants in root_to_descendants.items()
-        for n in descendants
+        n: root for root, descendants in root_to_descendants.items() for n in descendants
     }
 
     for var in causal_graph:
@@ -123,9 +119,7 @@ def sparsify_data(var_metadata, sparse_var_rate, np_rng):
     orig_var_metadata = copy.deepcopy(var_metadata)
     for var in var_metadata.keys():
         if np_rng.uniform(0, 1) < sparse_var_rate:
-            sparsity_rate = np_rng.uniform(
-                low=constants.MIN_SPARSITY, high=constants.MAX_SPARSITY
-            )
+            sparsity_rate = np_rng.uniform(low=constants.MIN_SPARSITY, high=constants.MAX_SPARSITY)
             var_metadata[var]["extra"]["sparsity_rate"] = sparsity_rate
             if sparsity_rate > constants.SPARSITY_FOR_UNOBS:
                 # remove unobserved variables from correlations
@@ -168,9 +162,7 @@ def gen_sample_balanced_ctrl_vars(
         low=constants.MIN_SPARSE_VAR_RATE, high=constants.MAX_SPARSE_VAR_RATE
     )  # perc of variables to sparsify
 
-    var_ids = np_rng.choice(np.arange(1000, 10000), size=n_vars, replace=False).astype(
-        str
-    )
+    var_ids = np_rng.choice(np.arange(1000, 10000), size=n_vars, replace=False).astype(str)
     var_names = [f"x_{var_id}" for var_id in var_ids]
 
     num_ctrl_vars = np_rng.integers(low=0, high=n_vars - 1)  # high is exclusive
@@ -241,9 +233,7 @@ def gen_sample(
         low=constants.MIN_SPARSE_VAR_RATE, high=constants.MAX_SPARSE_VAR_RATE
     )  # perc of variables to sparsify
 
-    var_ids = np_rng.choice(np.arange(1000, 10000), size=n_vars, replace=False).astype(
-        str
-    )
+    var_ids = np_rng.choice(np.arange(1000, 10000), size=n_vars, replace=False).astype(str)
     var_names = [f"x_{var_id}" for var_id in var_ids]
 
     causal_graph = gen_random_forest(var_names, np_rng=np_rng)
@@ -291,9 +281,7 @@ def gen_sample(
     )
 
 
-def determine_gold_label(
-    target_hyp, variable_metadata, hypotheses
-) -> Tuple[Answer, Optional[int]]:
+def determine_gold_label(target_hyp, variable_metadata, hypotheses) -> Tuple[Answer, Optional[int]]:
     """
     Determines the ideal `Answer` for a given sample. Additionally returns
     the number of variables not controlled for, if the hypothesis is valid,
@@ -304,9 +292,7 @@ def determine_gold_label(
         ctrl_vars, not_ctrls = None, None
         num_not_ctrl = None
     else:
-        ctrl_vars, not_ctrls = determine_ctrl_vars(
-            variable_metadata, ind_var, dep_var, hypotheses
-        )
+        ctrl_vars, not_ctrls = determine_ctrl_vars(variable_metadata, ind_var, dep_var, hypotheses)
         # worst case ctrl: all vars that aren't meant to be ctrld are ctrld
         num_not_ctrl = len(not_ctrls)
 
@@ -329,12 +315,10 @@ def parse_target_hyp(
     proposed_dep = target_hyp[1]
 
     ind_unobserved = (
-        variable_metadata[proposed_ind]["extra"]["sparsity_rate"]
-        > constants.SPARSITY_FOR_UNOBS
+        variable_metadata[proposed_ind]["extra"]["sparsity_rate"] > constants.SPARSITY_FOR_UNOBS
     )
     dep_unobserved = (
-        variable_metadata[proposed_dep]["extra"]["sparsity_rate"]
-        > constants.SPARSITY_FOR_UNOBS
+        variable_metadata[proposed_dep]["extra"]["sparsity_rate"] > constants.SPARSITY_FOR_UNOBS
     )
 
     # if either are unobserved, we have no evidence that they are not correlated
@@ -384,16 +368,11 @@ def are_correlated(var_1, var_2, variable_metadata) -> Optional[bool]:
     of correlation, returns None.
     """
     if (
-        variable_metadata[var_1]["extra"]["sparsity_rate"]
-        > constants.SPARSITY_FOR_UNOBS
-        or variable_metadata[var_2]["extra"]["sparsity_rate"]
-        > constants.SPARSITY_FOR_UNOBS
+        variable_metadata[var_1]["extra"]["sparsity_rate"] > constants.SPARSITY_FOR_UNOBS
+        or variable_metadata[var_2]["extra"]["sparsity_rate"] > constants.SPARSITY_FOR_UNOBS
     ):
         return None
-    return (
-        var_2 in variable_metadata[var_1]["corrs"]
-        or var_1 in variable_metadata[var_2]["corrs"]
-    )
+    return var_2 in variable_metadata[var_1]["corrs"] or var_1 in variable_metadata[var_2]["corrs"]
 
 
 def integrate_target_hyp(
@@ -436,9 +415,7 @@ def main(args: argparse.Namespace):
     if not args.balanced_ctrl_vars:
         jsonl_path = os.path.join(args.jsonl_dir, f"{args.n_samples}.jsonl")
     else:
-        jsonl_path = os.path.join(
-            args.jsonl_dir, f"{args.n_samples}_balanced_ctrl_vars.jsonl"
-        )
+        jsonl_path = os.path.join(args.jsonl_dir, f"{args.n_samples}_balanced_ctrl_vars.jsonl")
     write_to_jsonl(samples, jsonl_path)
 
 

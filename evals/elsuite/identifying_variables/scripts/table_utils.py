@@ -1,7 +1,6 @@
-from typing import Dict, List
 from pathlib import Path
+from typing import Dict, List
 
-import numpy as np
 import pandas as pd
 
 
@@ -42,16 +41,10 @@ def make_main_metric_table(
                     if value is not None:
                         data_tuples.append((solver, tree_type, renderer, stat, value))
 
-    df = pd.DataFrame(
-        data_tuples, columns=["Solver", "Tree", "Renderer", "Stat", "Value"]
-    )
-    df = df.pivot_table(
-        index=["Solver", "Tree"], columns=["Renderer", "Stat"], values="Value"
-    )
+    df = pd.DataFrame(data_tuples, columns=["Solver", "Tree", "Renderer", "Stat", "Value"])
+    df = df.pivot_table(index=["Solver", "Tree"], columns=["Renderer", "Stat"], values="Value")
     # sorting by solvers, renderers (for some reason ordering is lost in the above process)
-    new_index = [
-        (solver, tree) for solver in solvers for tree in ["with tree", "without tree"]
-    ]
+    new_index = [(solver, tree) for solver in solvers for tree in ["with tree", "without tree"]]
     new_columns = pd.MultiIndex.from_product(
         [renderers, df.columns.levels[1]], names=df.columns.names
     )

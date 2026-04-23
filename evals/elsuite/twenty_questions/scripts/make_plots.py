@@ -1,6 +1,6 @@
 import argparse
-from pathlib import Path
 import os
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -40,16 +40,19 @@ HUMAN_BASELINE = {
         "average_num_gamemaster_refusals": 0.1111,
         "average_num_incorrect_guesses": 0.8611,
         "average_word_difficulty": 2.2777,
-    }
+    },
 }
 
 UNIT_METRICS = ["winrate"]
+
 
 def extract_metrics(datadir: Path) -> pd.DataFrame:
     df_rows = []
     # There are two eval variants: standard and shortlist.
     for variant in os.listdir(datadir):
-        for path, results in sorted(list(log_utils.get_final_results_from_dir(f"{datadir}/{variant}").items())):
+        for path, results in sorted(
+            list(log_utils.get_final_results_from_dir(f"{datadir}/{variant}").items())
+        ):
             spec = log_utils.extract_spec(path)
             solver_path = Path(spec["completion_fns"][0])
             model = solver_path.name
@@ -64,6 +67,7 @@ def extract_metrics(datadir: Path) -> pd.DataFrame:
 
     return df
 
+
 def make_plot(df: pd.DataFrame, outpath: Path, metric="score", variant="standard"):
     df = df.round(2)
     plt.figure()
@@ -76,22 +80,42 @@ def make_plot(df: pd.DataFrame, outpath: Path, metric="score", variant="standard
         upper = (x.mean() + sem2).round(2)
         return lower, upper
 
-
     # Plotting
     sns.set(style="whitegrid")
     ax = sns.barplot(x=metric, y="model", hue="solver", data=df, errorbar=compute_sem, capsize=0.1)
     for container in ax.containers:
         ax.bar_label(container, fmt="{:.2f}", label_type="edge", padding=15)
-    
+
     ax.axvline(HUMAN_BASELINE[variant][metric], color="red", linestyle="--")
 
     # A bunch of tweaks to make individual plots look nice.
     if variant == "shortlist" and metric == "winrate":
-        plt.text(HUMAN_BASELINE[variant][metric] - 0.35, .5, "Human baseline", color="red", fontsize=12, ha="left")
+        plt.text(
+            HUMAN_BASELINE[variant][metric] - 0.35,
+            0.5,
+            "Human baseline",
+            color="red",
+            fontsize=12,
+            ha="left",
+        )
     elif variant == "standard" and metric == "average_num_questions":
-        plt.text(HUMAN_BASELINE[variant][metric] - 7, .5, "Human baseline", color="red", fontsize=12, ha="left")
+        plt.text(
+            HUMAN_BASELINE[variant][metric] - 7,
+            0.5,
+            "Human baseline",
+            color="red",
+            fontsize=12,
+            ha="left",
+        )
     else:
-        plt.text(HUMAN_BASELINE[variant][metric] + 0.05, .5, "Human baseline", color="red", fontsize=12, ha="left")
+        plt.text(
+            HUMAN_BASELINE[variant][metric] + 0.05,
+            0.5,
+            "Human baseline",
+            color="red",
+            fontsize=12,
+            ha="left",
+        )
 
     # Some of the metrics are in [0, 1].
     if metric in UNIT_METRICS:
@@ -112,6 +136,7 @@ def make_plot(df: pd.DataFrame, outpath: Path, metric="score", variant="standard
     plt.savefig(outpath)
     plt.close()
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--log-dir", "-d", type=str, required=True)
@@ -125,18 +150,27 @@ if __name__ == "__main__":
     df = extract_metrics(log_dir)
 
     # Rename some of the solver values so they can be represented in the same plot.
-    df.loc[df['solver'] == 'cot_hhh', 'solver'] = 'cot'
-    df.loc[df['solver'] == 'hhh', 'solver'] = 'direct'
+    df.loc[df["solver"] == "cot_hhh", "solver"] = "cot"
+    df.loc[df["solver"] == "hhh", "solver"] = "direct"
 
-    for variant in df['variant'].unique():
-        df_per_variant = df[df['variant'] == variant]
+    for variant in df["variant"].unique():
+        df_per_variant = df[df["variant"] == variant]
 
         print(f"Plotting all metrics for {variant} variant...")
 
         core_metrics = ["score", "winrate"]
-        auxiliary_metrics = ["average_num_guesses", "average_num_questions", "average_num_violations", "average_num_gamemaster_refusals", "average_num_incorrect_guesses", "average_word_difficulty"]
+        auxiliary_metrics = [
+            "average_num_guesses",
+            "average_num_questions",
+            "average_num_violations",
+            "average_num_gamemaster_refusals",
+            "average_num_incorrect_guesses",
+            "average_word_difficulty",
+        ]
         for metric in core_metrics + auxiliary_metrics:
-            make_plot(df_per_variant[["model", "solver", metric]].copy(), 
-                    out_dir / f"{variant}_{metric}.png", 
-                    metric,
-                    variant)
+            make_plot(
+                df_per_variant[["model", "solver", metric]].copy(),
+                out_dir / f"{variant}_{metric}.png",
+                metric,
+                variant,
+            )

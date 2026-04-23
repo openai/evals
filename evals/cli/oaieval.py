@@ -5,7 +5,7 @@ import argparse
 import logging
 import shlex
 import sys
-from typing import Any, Mapping, Optional, Union, cast
+from typing import Any, Optional, Union, cast
 
 import evals
 import evals.api
@@ -135,7 +135,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
 
     def parse_extra_eval_params(
         param_str: Optional[str],
-    ) -> Mapping[str, Union[str, int, float]]:
+    ) -> dict[str, Union[str, int, float]]:
         """Parse a string of the form "key1=value1,key2=value2" into a dict."""
         if not param_str:
             return {}
@@ -227,7 +227,9 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     try:
         add_token_usage_to_result(result, recorder)
     except Exception as e:
-        logger.error(f"Failed to add token usage to result: {e}. Eval results will be reported and are not affected.")
+        logger.error(
+            f"Failed to add token usage to result: {e}. Eval results will be reported and are not affected."
+        )
     recorder.record_final_report(result)
 
     if not (args.dry_run or args.local_run):
