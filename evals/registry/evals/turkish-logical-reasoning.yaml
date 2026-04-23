@@ -1,0 +1,15 @@
+turkish-logical-reasoning:
+  id: turkish-logical-reasoning.dev.v0
+  description: >
+    Evaluates the model's ability to solve logical reasoning problems
+    presented entirely in Turkish. Covers syllogisms, multi-step
+    deductions, arithmetic word problems, liar puzzles, clock angle
+    calculations, and deductive chains.
+  metrics: [accuracy]
+
+turkish-logical-reasoning.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: turkish-logical-reasoning/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
