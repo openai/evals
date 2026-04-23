@@ -5,6 +5,7 @@ import argparse
 import logging
 import shlex
 import sys
+from numbers import Number
 from typing import Any, Mapping, Optional, Union, cast
 
 import evals
@@ -16,6 +17,26 @@ from evals.record import RecorderBase
 from evals.registry import Registry
 
 logger = logging.getLogger(__name__)
+
+
+def _flatten_usage_metrics(usage: Any, prefix: str = "") -> dict[str, Number]:
+    if usage is None:
+        return {}
+
+    if isinstance(usage, Number):
+        return {prefix: usage} if prefix else {}
+
+    if hasattr(usage, "model_dump"):
+        return _flatten_usage_metrics(usage.model_dump(exclude_none=True), prefix)
+
+    if isinstance(usage, Mapping):
+        flattened: dict[str, Number] = {}
+        for key, value in usage.items():
+            nested_prefix = f"{prefix}_{key}" if prefix else str(key)
+            flattened.update(_flatten_usage_metrics(value, nested_prefix))
+        return flattened
+
+    return {}
 
 
 def _purple(str: str) -> str:
@@ -274,13 +295,14 @@ def add_token_usage_to_result(result: dict[str, Any], recorder: RecorderBase) ->
     sampling_events = recorder.get_events("sampling")
     for event in sampling_events:
         if "usage" in event.data:
-            usage_events.append(dict(event.data["usage"]))
+            usage_events.append(_flatten_usage_metrics(event.data["usage"]))
     logger.info(f"Found {len(usage_events)}/{len(sampling_events)} sampling events with usage data")
     if usage_events:
-        # Sum up the usage of all samples (assumes the usage is the same for all samples)
+        # Sum up token usage across all sampling events, including nested usage breakdowns.
+        usage_keys = set().union(*(usage_event.keys() for usage_event in usage_events))
         total_usage = {
-            key: sum(u[key] if u[key] is not None else 0 for u in usage_events)
-            for key in usage_events[0]
+            key: sum(usage_event.get(key, 0) for usage_event in usage_events)
+            for key in sorted(usage_keys)
         }
         total_usage_str = "\n".join(f"{key}: {value:,}" for key, value in total_usage.items())
         logger.info(f"Token usage from {len(usage_events)} sampling events:\n{total_usage_str}")
