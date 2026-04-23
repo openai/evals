@@ -1,14 +1,14 @@
 # Thank you for contributing an eval! ♥️
 
-🚨 Please make sure your PR follows these guidelines, **failure to follow the guidelines below will result in the PR being closed automatically**. Note that even if the criteria are met, that does not guarantee the PR will be merged nor GPT-4 access be granted. 🚨
+🚨 Please make sure your PR follows these guidelines, **failure to follow the guidelines below will result in the PR being closed automatically**. Note that even if the criteria are met, that does not guarantee the PR will be merged. 🚨
 
 **PLEASE READ THIS**:
 
-In order for a PR to be merged, it must fail on GPT-4. We are aware that right now, users do not have access, so you will not be able to tell if the eval fails or not. Please run your eval with GPT-3.5-Turbo, but keep in mind as we run the eval, if GPT-4 gets higher than 90% on the eval, we will likely reject it since GPT-4 is already capable of completing the task.
+We are currently only accepting evals that use **model-graded eval classes** (no custom code). Your eval should include a minimum of **15 high-quality samples**.
 
-We plan to roll out a way for users submitting evals to see the eval performance on GPT-4 soon. Stay tuned! Until then, you will not be able to see the eval performance on GPT-4. **Starting April 10, the minimum eval count is 15 samples, we hope this makes it easier to create and contribute evals.**
+Please note that we're using **Git LFS** for storing the JSON files, so please make sure that you move the JSON file to Git LFS before submitting a PR. Details on how to use Git LFS are available [here](https://git-lfs.com).
 
-Also, please note that we're using **Git LFS** for storing the JSON files, so please make sure that you move the JSON file to Git LFS before submitting a PR. Details on how to use Git LFS are available [here](https://git-lfs.com).
+You can also run and manage evals directly in the [OpenAI Dashboard](https://platform.openai.com/docs/guides/evals).
 
 ## Eval details 📑
 
