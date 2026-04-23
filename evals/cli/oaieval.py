@@ -22,6 +22,23 @@ def _purple(str: str) -> str:
     return f"\033[1;35m{str}\033[0m"
 
 
+def parse_key_value_args(param_str: str) -> dict[str, Any]:
+    def to_number(x: str) -> Union[str, int, float]:
+        try:
+            return int(x)
+        except (ValueError, TypeError):
+            pass
+
+        try:
+            return float(x)
+        except (ValueError, TypeError):
+            pass
+        return x
+
+    str_dict = dict(kv.split("=") for kv in param_str.split(",") if kv)
+    return {k: to_number(v) for k, v in str_dict.items()}
+
+
 def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run evals through the API")
     parser.add_argument(
@@ -162,8 +179,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
         eval_spec.args.update(extra_eval_params)
 
     # If the user provided an argument to --completion_args, parse it into a dict here, to be passed to the completion_fn creation **kwargs
-    completion_args = args.completion_args.split(",")
-    additional_completion_args = {k: v for k, v in (kv.split("=") for kv in completion_args if kv)}
+    additional_completion_args = parse_key_value_args(args.completion_args)
 
     completion_fns = args.completion_fn.split(",")
     completion_fn_instances = [
