@@ -1,0 +1,28 @@
+hanabi_clues:
+  description: Test the model's ability to list all valid color and numerical clues for a hand in the game Hanabi, while (in some variants) not listing any invalid clues
+  id: hanabi_clues-list_all_valid_color_and_number.full-v0
+  metrics:
+  - accuracy
+  - f1_score
+
+hanabi_clues-list_all_valid_color_and_number.full-v0:
+  args:
+    samples_jsonl: hanabi_clues/hanabi_hands_unclued.jsonl
+    use_exclusions: False # does not mark a problem incorrect for the inclusion of an invalid color or number clue
+  class: evals.elsuite.basic.includes:Includes
+hanabi_clues-list_all_valid_color_and_number.small-v0:
+  args:
+    samples_jsonl: hanabi_clues/hanabi_hands_unclued_small.jsonl
+    use_exclusions: False # does not mark a problem incorrect for the inclusion of an invalid color or number clue
+  class: evals.elsuite.basic.includes:Includes
+
+hanabi_clues-list_all_valid_color_and_number-use_exclusions.full-v0:
+  args:
+    samples_jsonl: hanabi_clues/hanabi_hands_unclued_with_exclusions.jsonl
+    use_exclusions: True # marks a problem incorrect for the inclusion of an invalid color or number clue
+  class: evals.elsuite.basic.includes:Includes
+hanabi_clues-list_all_valid_color_and_number-use_exclusions.small-v0:
+  args:
+    samples_jsonl: hanabi_clues/hanabi_hands_unclued_with_exclusions_small.jsonl
+    use_exclusions: True # marks a problem incorrect for the inclusion of an invalid color or number clue
+  class: evals.elsuite.basic.includes:Includes
