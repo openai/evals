@@ -1,0 +1,10 @@
+gpt4facts:
+  id: gpt4facts.dev.v0
+  description: Evaluate the ability to provide accurate facts about GPT-4
+  metrics: [accuracy]
+gpt4facts.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: gpt4facts/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: fact
