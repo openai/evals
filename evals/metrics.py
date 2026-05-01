@@ -39,7 +39,39 @@ def get_confusion_matrix(
         result[i, j] += 1
     return result
 
+def population_stability_index(
+    expected: Sequence[float],
+    actual: Sequence[float],
+    bins: int = 10,
+    eps: float = 1e-8,
+) -> float:
+    """
+    PSI: sum((a - e) * ln(a/e)) over bins, where a/e are bin proportions.
+    Useful for simple data drift checks.
+    """
+    if len(expected) == 0 or len(actual) == 0:
+        return float("nan")
 
+    expected = np.asarray(expected, dtype=float)
+    actual = np.asarray(actual, dtype=float)
+
+    # shared bin edges based on expected distribution
+    edges = np.quantile(expected, np.linspace(0, 1, bins + 1))
+    # ensure strictly increasing edges (handle constant arrays)
+    edges = np.unique(edges)
+    if len(edges) < 3:
+        return 0.0  # no variation => no drift signal
+
+    e_counts, _ = np.histogram(expected, bins=edges)
+    a_counts, _ = np.histogram(actual, bins=edges)
+
+    e = e_counts / max(e_counts.sum(), 1)
+    a = a_counts / max(a_counts.sum(), 1)
+
+    e = np.clip(e, eps, None)
+    a = np.clip(a, eps, None)
+    return float(np.sum((a - e) * np.log(a / e)))
+    
 def compute_matthew_corr(confusion_matrix: np.ndarray) -> float:
     assert confusion_matrix.shape == (2, 3), f"Got shape: {confusion_matrix.shape}"
     r = confusion_matrix[:, :2]
