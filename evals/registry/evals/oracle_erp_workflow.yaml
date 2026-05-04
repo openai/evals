@@ -1,0 +1,13 @@
+oracle_erp_workflow:
+  id: oracle_erp_workflow.dev.v0
+  description: >
+    Tests a model's knowledge of Oracle ERP Cloud workflows and terminology
+    across core modules including Procurement, HCM, General Ledger, Fixed Assets,
+    SCM, EPM Planning, and OIC. Covers process flows, document types, approval
+    hierarchies, and module-specific concepts drawn from real enterprise deployments.
+  metrics: [accuracy]
+
+oracle_erp_workflow.dev.v0:
+  class: evals.elsuite.basic.fuzzy_match:FuzzyMatch
+  args:
+    samples_jsonl: oracle_erp_workflow/samples.jsonl
