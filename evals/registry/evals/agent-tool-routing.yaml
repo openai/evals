@@ -1,0 +1,9 @@
+agent-tool-routing:
+  id: agent-tool-routing.dev.v0
+  description: Tests an LLM's ability to select the single correct tool from a small list when given a natural-language user request. Each prompt presents 4 to 6 thematically related tools and asks for the canonical tool name as the only output. Failure modes targeted are (a) emitting explanation text instead of a bare tool name, (b) selecting a similar-but-incorrect tool that is also in the list, and (c) inventing tools that are not in the list. This is a foundational capability for tool-using agents and a real-world product use case (LLM tool routing in chat assistants and IDE copilots).
+  disclaimer: This eval is hand-curated with 12 samples covering a thematic mix of common tool-routing scenarios (file ops, communication, dev-ops, data, scheduling, audio, billing). It is intended as a foundational starter set; the same Match template can be extended by adding more samples.jsonl rows without code changes.
+  metrics: [accuracy]
+agent-tool-routing.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: agent_tool_routing/samples.jsonl
