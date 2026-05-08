@@ -1,0 +1,9 @@
+agent-tool-abstention:
+  id: agent-tool-abstention.dev.v0
+  description: Tests an LLM's ability to abstain from calling a tool when none of the available tools fit the user's request, while still selecting the correct tool when one does fit. Each sample presents 3 to 4 thematically related tools alongside a user request; the model must output either the canonical tool name or the literal string NO_TOOL. Targets the well-known failure mode where tool-using agents confabulate a tool call rather than declining. Of 13 samples, 9 have ideal=NO_TOOL (out-of-scope requests) and 4 have a real tool answer (in-scope, used as positive controls so a model that always answers NO_TOOL does not get a perfect score). Companion to agent-tool-routing.
+  disclaimer: This eval is hand-curated with 13 samples. It uses the Match template (no custom code) and complements agent-tool-routing by isolating the abstention behavior. Extendable by adding more samples.jsonl rows.
+  metrics: [accuracy]
+agent-tool-abstention.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: agent_tool_abstention/samples.jsonl
