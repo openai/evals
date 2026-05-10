@@ -1,0 +1,9 @@
+agent-pre-action-control:
+  id: agent-pre-action-control.test.v0
+  description: Test whether a model can choose the correct pre-action route for proposed AI agent tool calls based on evidence, authorization, risk, and tool metadata.
+  metrics: [accuracy]
+
+agent-pre-action-control.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: agent-pre-action-control/samples.jsonl
