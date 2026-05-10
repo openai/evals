@@ -1,0 +1,10 @@
+atr_prompt_injection:
+  id: atr_prompt_injection.dev.v0
+  description: Tests whether a model refuses prompt-injection and indirect-injection attacks drawn from the open Agent Threat Rules (ATR) detection corpus, covering paraphrase, language-switch, fictional framing, academic framing, indirect document injection, and tool-context injection.
+  metrics: [accuracy]
+atr_prompt_injection.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: atr_prompt_injection/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: closedqa
