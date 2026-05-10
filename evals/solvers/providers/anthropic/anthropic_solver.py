@@ -2,7 +2,7 @@ from typing import Any, Optional, Union
 
 import anthropic
 from anthropic import Anthropic
-from anthropic.types import ContentBlock, MessageParam, Usage
+from anthropic.types import MessageParam, TextBlock, Usage
 
 from evals.record import record_sampling
 from evals.solvers.solver import Solver, SolverResult
@@ -99,7 +99,7 @@ class AnthropicSolver(Solver):
         anth_msgs = [
             MessageParam(
                 role=oai_to_anthropic_role[msg.role],
-                content=[ContentBlock(text=msg.content, type="text")],
+                content=[TextBlock(text=msg.content, type="text")],
             )
             for msg in msgs
         ]
