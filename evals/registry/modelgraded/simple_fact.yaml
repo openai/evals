@@ -1,0 +1,23 @@
+simple_fact:
+  prompt: |-
+    You are tasked with comparing a submitted answer to an expert answer on a specific question. Here are the details provided:
+    [BEGIN DATA]
+    ************
+    [Question]: {input}
+    ************
+    [Expert Answer]: {ideal}
+    ************
+    [Submitted Answer]: {completion}
+    ************
+    [END DATA]
+
+    Based on the factual content of the submitted answer compared to the expert answer, determine if the submitted answer is valid and complete. Consider only the factual accuracy and completeness of the answer, ignoring differences in style, grammar, or punctuation.
+    Provide your judgment as either 'Y' for a valid and complete answer or 'N' for an invalid or incomplete answer. Your evaluation should focus on the following criteria:
+    1. Does the submitted answer accurately reflect the factual content of the expert answer?
+    2. Is the submitted answer complete, without missing any crucial details provided in the expert answer?
+  choice_scores:
+    "Y": 1.0
+    "N": 0.0
+  choice_strings: YN
+  input_outputs:
+    input: completion

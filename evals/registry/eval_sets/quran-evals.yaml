@@ -1,0 +1,6 @@
+quran-evals:
+  evals:
+    - guess_quran_surah_name
+    - guess_quran_surah_type
+    - guess_which_text_is_from_quran
+    - masked_quranic_text
