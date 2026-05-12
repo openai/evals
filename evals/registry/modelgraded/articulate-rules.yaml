@@ -1,0 +1,170 @@
+articulate-rules:
+  prompt: |-
+    You are comparing two input strings and providing a binary label. Each input describes a binary classification rule for text. Each pair of inputs are labelled 'True' if the two inputs articulate an equivalent rule and 'False' otherwise. Here are some previously labelled inputs:
+
+    [BEGIN EXAMPLES]
+    Input 1: The input repeats the word `neck`
+    Input 2: The pattern is that the input is labelled 'True' if it contains the word 'neck' at least three times, and 'False' otherwise.
+    Label: False
+
+    Input 1: The input contains the word `cut` and `gave`
+    Input 2: The pattern is that the input is labelled 'True' if it contains both the words 'gave' and 'cut' in any order.
+    Label: True
+
+    Input 1: Repeats the word `lift` and contains a digit
+    Input 2: The pattern is that the input contains the word "lift" exactly three times, and the order of the words does not matter. Inputs that match this pattern are labelled 'True', while inputs that do not match the pattern are labelled 'False'.
+    Label: False
+
+    Input 1: The input contains the word `such` and a digit
+    Input 2: The pattern is that the inputs are labelled 'True' if the word "such" appears in the input followed by a number. Otherwise, they are labelled 'False'.
+    Label: False
+
+    Input 1: The input contains the word `season` and `stop`
+    Input 2: The pattern is that the inputs labelled 'True' contain the words 'stop' and 'season' in any order. The inputs labelled 'False' do not contain both 'stop' and 'season'.
+    Label: True
+
+    Input 1: The input contains the word `best`
+    Input 2: The pattern is that the input must contain the word 'best'. The inputs labelled 'True' have the word 'best' in them, while the inputs labelled 'False' do not have the word 'best'.
+    Label: True
+
+    Input 1: The input contains the word `bright` and a digit
+    Input 2: The pattern is that the input contains a number and the word 'bright'.
+    Label: True
+
+    Input 1: The input contains the word `yellow`
+    Input 2: The inputs are being labelled as True or False depending on whether they match the pattern "yellow" or not.
+    Label: False
+
+    Input 1: The input repeats the word `they`
+    Input 2: The pattern for this dataset is that the label is 'True' if the input consists solely of the word "they" repeated multiple times, and 'False' otherwise.
+    Label: False
+
+    Input 1: The input contains the word `brother` and a digit
+    Input 2: The pattern is that the input is labelled 'True' if the word "brother" appears in the input and is followed by a number. Otherwise, the input is labelled 'False'.
+    Label: False
+
+    Input 1: The input contains the word `gun` and a digit
+    Input 2: The inputs are labelled 'True' if the word "gun" appears as the second to last word in the input, and 'False' otherwise.
+    Label: False
+
+    Input 1: The input repeats the word `perhaps`
+    Input 2: The pattern is that the input is labelled 'True' if the word "perhaps" appears at least three times within the input. Otherwise, it is labelled 'False'.
+    Label: False
+
+    Input 1: The input contains the word `house`
+    Input 2: The inputs are being labelled as True or False depending on whether they match the pattern "house" or not.
+    Label: False
+
+    Input 1: The input contains the word `river` or `pull`
+    Input 2: The pattern is that the input is labelled 'True' if it contains both the words 'pull' and 'river', and 'False' otherwise.
+    Label: True
+
+    Input 1: The input contains the word `they` or `science`
+    Input 2: The pattern is that the input is labelled 'True' if it contains both the words 'they' and 'science', and 'False' otherwise.
+    Label: False
+
+    Input 1: The input contains the word `seat` and `food`
+    Input 2: The pattern is that the input is labelled 'True' if it contains both the words 'seat' and 'food', and 'False' otherwise.
+    Label: True
+
+    Input 1: The input contains the word `free`
+    Input 2: The pattern is that the input is labelled 'True' if it contains the word 'free' and 'False' otherwise.
+    Label: True
+
+    Input 1: The input contains the word `perhaps`
+    Input 2: The pattern is that the inputs labelled 'True' contain the word 'perhaps', while the inputs labelled 'False' do not contain the word 'perhaps'.
+    Label: True
+
+    Input 1: The input contains the word `stone` between 3 and 5 times
+    Input 2: The pattern is that the input is labelled 'True' if it contains at least four occurrences of the word 'stone'.
+    Label: False
+
+    Input 1: The input contains the word `sign`
+    Input 2:  The inputs are being labelled as True or False based on whether they contain the word 'sign' or not.
+    Label: False
+
+    Input 1: The input contains the word `big` and a digit
+    Input 2: The pattern is that the input is labelled 'True' if it contains both a number and the word 'big'.
+    Label: True
+
+    Input 1: The input contains a digit
+    Input 2: The pattern is that the input is labelled 'True' if it contains at least one number, and 'False' if it does not contain any numbers.
+    Label: True
+
+    Input 1: The input repeats the word `collect`
+    Input 2: The pattern is that the input is labelled 'True' if it contains the word 'collect' at least three times, and 'False' otherwise.
+    Label: False
+
+    Input 1: The input contains the word `fact` within 1 positions of the word `river`
+    Input 2: The pattern for the labelled inputs is that the input must contain the word "fact" and the word "river" in any order. Inputs that contain both words are labelled as 'True' and inputs that do not contain both words are labelled as 'False'.
+    Label: False
+
+    Input 1: The input contains the word `please` and `school`
+    Input 2: The pattern is that the inputs are labelled 'True' if the words "school" and "please" both appear in the input, and 'False' otherwise.
+    Label: True
+
+    Input 1: The input contains the word `melon`
+    Input 2: The most likely pattern is that the inputs are being labelled as True if they contain the substring "melon" and False otherwise.
+    Label: False
+
+    Input 1: The input does not contain the word `connect`
+    Input 2: The pattern for this dataset is that the inputs are labelled 'True' if they contain at least one word that is related to science or technology, and 'False' otherwise.
+    Label: False
+
+    Input 1: The input contains the word `consonant` or `yes`
+    Input 2: The pattern is that the input is labelled 'True' if it contains the word "yes" or "consonant" and 'False' otherwise.
+    Label: True
+
+    Input 1: The input contains the word `apple`
+    Input 2:  The inputs are being labelled as True or False based on whether they contain the word 'apple' or not.
+    Label: False
+
+    Input 1: The word `such` is in position 4
+    Input 2: The pattern seems to be that the inputs are labelled 'True' if they contain the word "such" and 'False' otherwise.
+    Label: False
+
+    Input 1: The input contains the word `coast`
+    Input 2: The pattern is that the word "coast" appears in the input. If "coast" is present, the input is labelled 'True', otherwise it is labelled 'False'.
+    Label: True
+
+    Input 1: The input contains the word `atom`
+    Input 2: The inputs are being labelled as True or False depending on whether they match the pattern "atom" or not.
+    Label: False
+
+    Input 1: The input contains the word `view`
+    Input 2: The pattern is that the inputs are labelled 'True' if the word "view" is present in the input, and 'False' otherwise.
+    Label: True
+
+    Input 1: The input contains the word `necessary` or `string`
+    Input 2: The pattern is that the input is labelled 'True' if it contains both the words 'necessary' and 'string' in any order.
+    Label: True
+
+    Input 1: The input contains the word `young`
+    Input 2: The most likely pattern is that the inputs are being labelled as True if they contain a word that is a synonym of the word 'young' and False otherwise.
+    Label: True
+
+    Input 1: The input contains the word `elephant`
+    Input 2: The most likely pattern is that the inputs are being labelled as True if they contain the substring "elephant" and False otherwise.
+    Label: False
+
+    Input 1: The input contains the word `perhaps` and a digit
+    Input 2: The pattern is that the input is labelled 'True' if it contains the word "perhaps" followed by a single digit number. Otherwise, it is labelled 'False'.
+    Label: False
+    [END EXAMPLES]
+
+    Your task is to determine if the following two inputs articulate an equivalent rule:
+
+    [BEGIN INPUT 1]
+    Input 1: {ideal}
+    [END INPUT 1]
+
+    [BEGIN INPUT 2]
+    Input 2: {completion}
+    [END INPUT 2]
+
+  choice_strings:
+    - "True"
+    - "False"
+
+  input_outputs:
+    input: completion
