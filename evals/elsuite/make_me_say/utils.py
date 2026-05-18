@@ -43,4 +43,6 @@ def get_content(response: Union[dict, CompletionResult]) -> str:
         assert len(completions) == 1, f"Got {len(completions)} but expected exactly one"
         return completions[0]
 
+    if not response.choices or response.choices[0].message is None:
+        raise ValueError("LLM returned empty or filtered response")
     return response.choices[0].message.content
