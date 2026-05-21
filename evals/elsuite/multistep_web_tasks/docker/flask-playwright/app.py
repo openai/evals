@@ -59,8 +59,9 @@ def setup():
         client = page.context.new_cdp_session(page)  # talk to chrome devtools
         client.send("Accessibility.enable")  # to get AccessibilityTrees
     except Exception as e:
+        logger.error(f"Failed to start session: {e}")
         return jsonify(
-            {"status": "error", "message": f"failed to start session (already started?): {e}"}
+            {"status": "error", "message": "failed to start session (already started?)"}
         )
     return jsonify({"status": "success", "message": "session started"})
 
@@ -116,11 +117,12 @@ def exec_command():
             }
         )
     except TypeError as e:
+        logger.error(f"Could not serialize result of command {request.json['command']}: {e}")
         response = jsonify(
             {
                 "status": "success",
                 "message": f"could not return results of executed commands {request.json['command']}",
-                "content": str(e),
+                "content": "result could not be serialized",
                 "url": page.url,
             }
         )
@@ -161,11 +163,12 @@ def exec_commands():
             }
         )
     except TypeError as e:
+        logger.error(f"Could not serialize result of commands {request.json['commands']}: {e}")
         response = jsonify(
             {
                 "status": "success",
                 "message": f"could not return results of executed commands {request.json['commands']}",
-                "content": str(e),
+                "content": "result could not be serialized",
                 "url": page.url,
             }
         )
@@ -188,7 +191,7 @@ def _execute_command(json_data: dict):
         logger.error(e)
         raise ValueError(
             f"Error executing command {command}",
-            jsonify({"status": "error", "message": f"error executing command {command}: {e}"}),
+            jsonify({"status": "error", "message": "error executing command"}),
         )
 
 
