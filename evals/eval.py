@@ -43,6 +43,19 @@ def set_max_samples(max_samples: int):
     _MAX_SAMPLES = max_samples
 
 
+def _show_progress_from_env(default: bool) -> bool:
+    """Resolve `show_progress` from `EVALS_SHOW_EVAL_PROGRESS`, falling back to `default`.
+
+    `bool(os.environ.get(...))` would treat the string "0" as truthy, so an
+    explicit string check is used to match the convention applied elsewhere in
+    this file (e.g. `EVALS_SEQUENTIAL`, `EVALS_GENTLE_INTERRUPT`).
+    """
+    raw = os.environ.get("EVALS_SHOW_EVAL_PROGRESS")
+    if raw is None:
+        return default
+    return raw.lower() in {"1", "true", "yes"}
+
+
 class Eval(abc.ABC):
     """
     Evaluation classes generally should override two methods:
@@ -122,7 +135,7 @@ class Eval(abc.ABC):
         """
         work_items = _index_samples(samples)
         threads = int(os.environ.get("EVALS_THREADS", "10"))
-        show_progress = bool(os.environ.get("EVALS_SHOW_EVAL_PROGRESS", show_progress))
+        show_progress = _show_progress_from_env(show_progress)
 
         def eval_sample(args):
             """
@@ -209,7 +222,7 @@ class SolverEval(Eval):
         """
         work_items = _index_samples(samples)
         threads = int(os.environ.get("EVALS_THREADS", "10"))
-        show_progress = bool(os.environ.get("EVALS_SHOW_EVAL_PROGRESS", show_progress))
+        show_progress = _show_progress_from_env(show_progress)
 
         def eval_sample(args):
             """
