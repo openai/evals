@@ -1,0 +1,9 @@
+logic_stress_v2:
+  id: logic_stress_v2.v0
+  description: "Logical reasoning stress test: Variant 2 (Essential rule removal). Evaluates if models incorrectly conclude 'True' when a necessary inferential link is missing."
+  metrics: [accuracy]
+
+logic_stress_v2.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: logic_stress/logic_stress_v2.jsonl

@@ -1,0 +1,9 @@
+logic_stress_v3:
+  id: logic_stress_v3.v0
+  description: "Logical reasoning stress test: Variant 3 (Logic Inertia / Contradiction). Evaluates if models can detect explicit contradictions and halt deduction, or if they blindly follow rules (Inertia)."
+  metrics: [accuracy]
+
+logic_stress_v3.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: logic_stress/logic_stress_v3.jsonl
