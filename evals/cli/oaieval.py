@@ -279,8 +279,9 @@ def add_token_usage_to_result(result: dict[str, Any], recorder: RecorderBase) ->
     if usage_events:
         # Sum up the usage of all samples (assumes the usage is the same for all samples)
         total_usage = {
-            key: sum(u[key] if u[key] is not None else 0 for u in usage_events)
+            key: sum(int(u[key]) for u in usage_events if u.get(key) is not None)
             for key in usage_events[0]
+            if all(u.get(key) is None or isinstance(u.get(key), (int, float)) for u in usage_events)
         }
         total_usage_str = "\n".join(f"{key}: {value:,}" for key, value in total_usage.items())
         logger.info(f"Token usage from {len(usage_events)} sampling events:\n{total_usage_str}")
