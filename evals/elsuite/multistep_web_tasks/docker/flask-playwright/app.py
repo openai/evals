@@ -184,10 +184,11 @@ def _execute_command(json_data: dict):
         result = eval(command)
         return result
     except Exception as e:
-        logger.info(f"Error executing command: {command}")
+        safe_command = command.replace("\n", "\\n").replace("\r", "\\r")
+        logger.info(f"Error executing command: {safe_command}")
         logger.error(e)
         raise ValueError(
-            f"Error executing command {command}",
+            f"Error executing command {safe_command}",
             jsonify({"status": "error", "message": f"error executing command {command}: {e}"}),
         )
 
