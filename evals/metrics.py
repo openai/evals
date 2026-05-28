@@ -42,7 +42,10 @@ def get_confusion_matrix(
 
 def compute_matthew_corr(confusion_matrix: np.ndarray) -> float:
     assert confusion_matrix.shape == (2, 3), f"Got shape: {confusion_matrix.shape}"
-    r = confusion_matrix[:, :2]
+    # Copy: confusion_matrix[:, :2] is a view, so the += below would otherwise
+    # fold column 2 into column 0 of the caller's matrix, corrupting any metric
+    # computed from it afterwards.
+    r = confusion_matrix[:, :2].copy()
     r[:, 0] += confusion_matrix[:, 2]
     return (r[1, 1] * r[0, 0] - r[1, 0] * r[0, 1]) / np.sqrt(
         r[1, :].sum() * r[0, :].sum() * r[:, 0].sum() * r[:, 1].sum()
