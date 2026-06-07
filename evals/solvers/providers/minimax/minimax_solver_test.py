@@ -11,6 +11,9 @@ from evals.solvers.providers.minimax.minimax_solver import (
 
 
 class TestIsChatModel:
+    def test_m3_is_chat_model(self):
+        assert is_chat_model("MiniMax-M3") is True
+
     def test_m27_is_chat_model(self):
         assert is_chat_model("MiniMax-M2.7") is True
 
@@ -29,6 +32,15 @@ class TestIsChatModel:
 class TestMiniMaxSolverProperties:
     @pytest.fixture
     def solver(self):
+        return MiniMaxSolver(
+            completion_fn_options={
+                "model": "MiniMax-M3",
+                "extra_options": {"temperature": 1, "max_tokens": 512},
+            },
+        )
+
+    @pytest.fixture
+    def solver_m27(self):
         return MiniMaxSolver(
             completion_fn_options={
                 "model": "MiniMax-M2.7",
@@ -61,7 +73,10 @@ class TestMiniMaxSolverProperties:
             assert solver._api_key is None
 
     def test_model_name(self, solver):
-        assert solver.model == "MiniMax-M2.7"
+        assert solver.model == "MiniMax-M3"
+
+    def test_m27_model_name(self, solver_m27):
+        assert solver_m27.model == "MiniMax-M2.7"
 
     def test_highspeed_model_name(self, solver_highspeed):
         assert solver_highspeed.model == "MiniMax-M2.7-highspeed"
@@ -70,7 +85,7 @@ class TestMiniMaxSolverProperties:
         with pytest.raises(NotImplementedError, match="valid_answers"):
             MiniMaxSolver(
                 completion_fn_options={
-                    "model": "MiniMax-M2.7",
+                    "model": "MiniMax-M3",
                     "extra_options": {"temperature": 1},
                 },
                 valid_answers=["yes", "no"],

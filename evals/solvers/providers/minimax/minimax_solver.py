@@ -8,6 +8,7 @@ from evals.solvers.providers.openai.openai_solver import OpenAISolver
 from evals.solvers.solver import SolverResult
 
 MINIMAX_CHAT_MODELS = {
+    "MiniMax-M3",
     "MiniMax-M2.7",
     "MiniMax-M2.7-highspeed",
 }
