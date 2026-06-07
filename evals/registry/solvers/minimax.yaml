@@ -1,0 +1,102 @@
+# ------------------
+# MiniMax-M3 (default)
+# ------------------
+
+generation/direct/MiniMax-M3:
+  class: evals.solvers.providers.minimax.minimax_solver:MiniMaxSolver
+  args:
+    completion_fn_options:
+      model: MiniMax-M3
+      extra_options:
+        temperature: 1
+        max_tokens: 512
+    postprocessors: &postprocessors
+      - evals.solvers.postprocessors.postprocessors:Strip
+
+generation/cot/MiniMax-M3:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.providers.minimax.minimax_solver:MiniMaxSolver
+      args:
+        completion_fn_options:
+          model: MiniMax-M3
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.providers.minimax.minimax_solver:MiniMaxSolver
+      args:
+        completion_fn_options:
+          model: MiniMax-M3
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+# ------------------
+# MiniMax-M2.7
+# ------------------
+
+generation/direct/MiniMax-M2.7:
+  class: evals.solvers.providers.minimax.minimax_solver:MiniMaxSolver
+  args:
+    completion_fn_options:
+      model: MiniMax-M2.7
+      extra_options:
+        temperature: 1
+        max_tokens: 512
+    postprocessors: *postprocessors
+
+generation/cot/MiniMax-M2.7:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.providers.minimax.minimax_solver:MiniMaxSolver
+      args:
+        completion_fn_options:
+          model: MiniMax-M2.7
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.providers.minimax.minimax_solver:MiniMaxSolver
+      args:
+        completion_fn_options:
+          model: MiniMax-M2.7
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+
+# ------------------
+# MiniMax-M2.7-highspeed
+# ------------------
+
+generation/direct/MiniMax-M2.7-highspeed:
+  class: evals.solvers.providers.minimax.minimax_solver:MiniMaxSolver
+  args:
+    completion_fn_options:
+      model: MiniMax-M2.7-highspeed
+      extra_options:
+        temperature: 1
+        max_tokens: 512
+    postprocessors: *postprocessors
+
+generation/cot/MiniMax-M2.7-highspeed:
+  class: evals.solvers.nested.cot_solver:CoTSolver
+  args:
+    cot_solver:
+      class: evals.solvers.providers.minimax.minimax_solver:MiniMaxSolver
+      args:
+        completion_fn_options:
+          model: MiniMax-M2.7-highspeed
+          extra_options:
+            temperature: 1
+            max_tokens: 512
+    extract_solver:
+      class: evals.solvers.providers.minimax.minimax_solver:MiniMaxSolver
+      args:
+        completion_fn_options:
+          model: MiniMax-M2.7-highspeed
+          extra_options:
+            temperature: 1
+            max_tokens: 512
