@@ -41,3 +41,10 @@ def test_jsondumps():
         MyDataClass("a", "b", MyPydanticClass(first_name="a", last_name="b")),
         exclude_keys=["last_name"],
     )
+
+
+def test_jsondumps_exclude_keys_does_not_mutate_dict():
+    data = {"first_name": "a", "last_name": "b"}
+
+    assert '{"first_name": "a"}' == jsondumps(data, exclude_keys=["last_name", "missing"])
+    assert data == {"first_name": "a", "last_name": "b"}
