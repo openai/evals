@@ -213,8 +213,8 @@ def jsondumps(o: Any, ensure_ascii: bool = False, **kwargs: Any) -> str:
     # not keys. In order to exclude keys from the output of this jsondumps method
     # we need to exclude them outside the encoder.
     if isinstance(o, dict) and "exclude_keys" in kwargs:
-        for key in kwargs["exclude_keys"]:
-            del o[key]
+        exclude_keys = set(kwargs["exclude_keys"])
+        o = {k: v for k, v in o.items() if k not in exclude_keys}
     return json.dumps(o, cls=EnhancedJSONEncoder, ensure_ascii=ensure_ascii, **kwargs)
 
 
