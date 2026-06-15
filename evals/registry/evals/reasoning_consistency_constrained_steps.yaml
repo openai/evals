@@ -1,0 +1,13 @@
+# Eval for testing reasoning consistency when intermediate steps are constrained
+# This eval tests a model's ability to maintain logical consistency when forced
+# to use specific intermediate reasoning steps, rather than freely choosing its own path.
+
+reasoning_consistency_constrained_steps:
+  id: reasoning_consistency_constrained_steps.dev.v0
+  description: Tests model's ability to maintain reasoning consistency when intermediate steps are constrained to specific formats or values.
+  metrics: [accuracy]
+
+reasoning_consistency_constrained_steps.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: reasoning_consistency_constrained_steps/samples.jsonl

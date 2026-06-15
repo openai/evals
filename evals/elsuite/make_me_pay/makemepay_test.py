@@ -11,7 +11,6 @@ from evals.elsuite.make_me_pay.utils import openai_chatcompletion_create
 from evals.solvers.solver import SolverResult
 
 
-@pytest.mark.skip  # avoid unit test that require external services
 @pytest.fixture()
 def summary_model_completion_fn() -> Callable[[list[dict]], dict]:
     return lambda messages: openai_chatcompletion_create(

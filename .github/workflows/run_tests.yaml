@@ -22,7 +22,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@e9aba2c848f5ebd159c070c61ea2c4e2b122355e # v2
       with:
-        python-version: 3.9
+        python-version: '3.10'
 
     - name: Install dependencies
       run: |
@@ -30,6 +30,10 @@ jobs:
         pip install pyyaml
         pip install pytest
         pip install -e .[torch]
+
+    - name: Download NLTK resources
+      run: |
+        python -c "import nltk; nltk.download('punkt_tab'); nltk.download('punkt')"
 
     - name: Run unit tests
       env:
