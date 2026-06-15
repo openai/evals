@@ -1,12 +1,12 @@
 repos:
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 'v1.3.0'
+    rev: 'bd424e49d4f0181d4c8b8909a8cd5ce9eb058044'
     hooks:
       - id: mypy
         args: ["--config-file=mypy.ini", "--no-site-packages"]
 
   - repo: https://github.com/psf/black
-    rev: 22.8.0
+    rev: 2018e667a6a36ee3fbfa8041cd36512f92f60d49
     hooks:
       - id: black
         args: [--line-length=100, --exclude=""]
@@ -14,7 +14,7 @@ repos:
   # this is not technically always safe but usually is
   # use comments `# isort: off` and `# isort: on` to disable/re-enable isort
   - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+    rev: e44834b7b294701f596c9118d6c370f86671a50d
     hooks:
       - id: isort
         args: [--line-length=100, --profile=black]
@@ -23,7 +23,7 @@ repos:
   # and this tool removes unused imports, which may be providing
   # necessary side effects for the code to run
   - repo: https://github.com/PyCQA/autoflake
-    rev: v1.6.1
+    rev: b567334b9fc699fc169af0ad1ea0ff0fc017fbeb
     hooks:
       - id: autoflake
         args:
@@ -38,7 +38,7 @@ repos:
   # The line length is so high because some of the evals are very long
   # TODO: fix the evals and then reduce the line length here
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.0.277
+    rev: 95f113d6340ab4348ecc5d912cf6e6b3465bfb86
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix, --line-length=767]
