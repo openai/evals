@@ -62,7 +62,7 @@ At the end, the eval will tell you which tasks the model accomplished (score of 
 ## Solvers ##
 This eval can in theory be run with any Solver, but default solvers will struggle a lot. There are two eval-specific classes of Solver:
 * `mwt/strong/gpt-4-32k-0613`: this Solver is the best-performing agent we've produced so far. It uses the full context window and has custom instructions.
-* `mwt/bash-browser/cot/gpt-4-32k-0613`: this Solver is a modified version of the agent from [WebArena](webarena.dev)
+* `mwt/bash-browser/cot/gpt-4-32k-0613`: this Solver is a modified version of the agent from [WebArena](https://webarena.dev/)
 
 ## Future modifications ##
 This eval is highly extensible and has a lot of room for improvements. Some examples:
