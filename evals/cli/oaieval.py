@@ -266,6 +266,41 @@ def build_recorder(
     )
 
 
+Numeric = Union[int, float]
+
+
+def _usage_to_mapping(usage: Any) -> Mapping[str, Any]:
+    if isinstance(usage, Mapping):
+        return usage
+    if hasattr(usage, "model_dump"):
+        return usage.model_dump()
+    if hasattr(usage, "dict"):
+        return usage.dict()
+    if hasattr(usage, "__dict__"):
+        return vars(usage)
+    return dict(usage)
+
+
+def _flatten_numeric_usage(prefix: str, value: Any) -> dict[str, Numeric]:
+    if value is None:
+        return {}
+    if isinstance(value, (int, float)):
+        return {prefix: value}
+    if (
+        isinstance(value, Mapping)
+        or hasattr(value, "model_dump")
+        or hasattr(value, "dict")
+        or hasattr(value, "__dict__")
+    ):
+        return {
+            f"{prefix}_{nested_key}": numeric_value
+            for key, nested_value in _usage_to_mapping(value).items()
+            for nested_key, numeric_value in _flatten_numeric_usage(key, nested_value).items()
+        }
+    logger.debug("Skipping non-numeric usage field %s of type %s", prefix, type(value).__name__)
+    return {}
+
+
 def add_token_usage_to_result(result: dict[str, Any], recorder: RecorderBase) -> None:
     """
     Add token usage from logged sampling events to the result dictionary from the recorder.
@@ -274,14 +309,15 @@ def add_token_usage_to_result(result: dict[str, Any], recorder: RecorderBase) ->
     sampling_events = recorder.get_events("sampling")
     for event in sampling_events:
         if "usage" in event.data:
-            usage_events.append(dict(event.data["usage"]))
+            usage_events.append(_usage_to_mapping(event.data["usage"]))
     logger.info(f"Found {len(usage_events)}/{len(sampling_events)} sampling events with usage data")
     if usage_events:
         # Sum up the usage of all samples (assumes the usage is the same for all samples)
-        total_usage = {
-            key: sum(u[key] if u[key] is not None else 0 for u in usage_events)
-            for key in usage_events[0]
-        }
+        total_usage: dict[str, Numeric] = {}
+        for usage in usage_events:
+            for key, value in usage.items():
+                for flat_key, numeric_value in _flatten_numeric_usage(key, value).items():
+                    total_usage[flat_key] = total_usage.get(flat_key, 0) + numeric_value
         total_usage_str = "\n".join(f"{key}: {value:,}" for key, value in total_usage.items())
         logger.info(f"Token usage from {len(usage_events)} sampling events:\n{total_usage_str}")
         for key, value in total_usage.items():
