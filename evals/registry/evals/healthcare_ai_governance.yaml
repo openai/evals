@@ -1,0 +1,9 @@
+healthcare_ai_governance:
+  id: healthcare_ai_governance.dev.v0
+  description: Tests whether a model acting as a governed healthcare AI agent makes the correct governance decision (ALLOW, DENY, or ESCALATE) across permission-scope, PHI-exposure, and clinical-safety scenarios.
+  metrics: [accuracy]
+
+healthcare_ai_governance.dev.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: healthcare_ai_governance/samples.jsonl
