@@ -53,7 +53,7 @@ If you want to manually run all pre-commit hooks on a repository, run `pre-commi
 
 ## Running evals
 
-If you don't want to contribute new evals, but simply want to run them locally, you can install the evals package via pip:
+If you don't want to write your own evals and just want to run one of the pre-built ones locally, you can install the evals package via pip:
 
 ```sh
 pip install evals
