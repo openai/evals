@@ -1,0 +1,11 @@
+self-correction:
+  id: self-correction.v0
+  description: Self-correction evaluation measuring first-pass vs revised accuracy. Supports multiple critique styles (standard, assumptions, disprove) and confidence tracking.
+  disclaimer: Measures a model's ability to improve after self-critique across reasoning traps, multi-step arithmetic, logic contradictions, coding, and factual traps.
+  metrics: [first_accuracy, revised_accuracy, improvement_rate, degradation_rate, stability_rate, net_gain, revision_rate, useful_revision_rate, harmful_revision_rate, avg_confidence_shift]
+
+self-correction.v0:
+  class: evals.elsuite.self_correction:SelfCorrectionEval
+  args:
+    samples_jsonl: self_correction.jsonl
+    critique_style: standard
