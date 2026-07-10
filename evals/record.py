@@ -434,7 +434,12 @@ class HttpRecorder(RecorderBase):
             # Make a string for human comprehention
             fail_threshold_str = str(fail_threshold * 100) + "%"
 
-            if self.failed_requests / len(self._events) > fail_threshold:
+            # ``self._events`` can be empty here (e.g. a final report event for a
+            # run that recorded no sample events). Fall back to the size of the
+            # batch we just failed to send so the ratio stays well-defined and a
+            # ZeroDivisionError does not bypass the RuntimeError fallback below.
+            total_events = len(self._events) or len(events)
+            if self.failed_requests / total_events > fail_threshold:
                 raise RuntimeError(
                     "The proportion of failed events has exceeded the threshold of: "
                     + fail_threshold_str
