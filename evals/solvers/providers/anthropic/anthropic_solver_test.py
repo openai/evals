@@ -1,5 +1,6 @@
 import os
 import pytest
+from types import SimpleNamespace
 
 from evals.record import DummyRecorder
 from evals.task_state import Message, TaskState
@@ -8,7 +9,7 @@ from evals.solvers.providers.anthropic.anthropic_solver import (
     anth_to_openai_usage,
 )
 
-from anthropic.types import ContentBlock, MessageParam, Usage
+from anthropic.types import MessageParam, TextBlockParam, Usage
 
 IN_GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS") == "true"
 MODEL_NAME = "claude-instant-1.2"
@@ -82,14 +83,14 @@ def test_message_format():
         MessageParam(
             role="user",
             content=[
-                ContentBlock(text="What is 2 + 2?", type="text"),
-                ContentBlock(text="reason step by step", type="text"),
+                TextBlockParam(text="What is 2 + 2?", type="text"),
+                TextBlockParam(text="reason step by step", type="text"),
             ],
         ),
         MessageParam(
             role="assistant",
             content=[
-                ContentBlock(
+                TextBlockParam(
                     text="I don't need to reason for this, 2+2 is just 4", type="text"
                 ),
             ],
@@ -97,7 +98,7 @@ def test_message_format():
         MessageParam(
             role="user",
             content=[
-                ContentBlock(
+                TextBlockParam(
                     text="now, given your reasoning, provide the answer", type="text"
                 ),
             ],
@@ -129,3 +130,27 @@ def test_anth_to_openai_usage_zero_tokens():
     assert (
         anth_to_openai_usage(usage) == expected
     ), "Zero token cases are not handled correctly."
+
+
+def test_anth_to_openai_usage_preserves_cache_tokens():
+    usage = SimpleNamespace(
+        input_tokens=100,
+        output_tokens=150,
+        cache_creation_input_tokens=20,
+        cache_read_input_tokens=80,
+    )
+    expected = {
+        "completion_tokens": 150,
+        "prompt_tokens": 100,
+        "total_tokens": 250,
+        "cache_creation_input_tokens": 20,
+        "cache_read_input_tokens": 80,
+        "prompt_tokens_details": {
+            "cache_creation_input_tokens": 20,
+            "cache_read_input_tokens": 80,
+            "cached_tokens": 80,
+        },
+    }
+    assert (
+        anth_to_openai_usage(usage) == expected
+    ), "Anthropic cache token fields are not preserved."

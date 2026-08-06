@@ -2,7 +2,7 @@ from typing import Any, Optional, Union
 
 import anthropic
 from anthropic import Anthropic
-from anthropic.types import ContentBlock, MessageParam, Usage
+from anthropic.types import MessageParam, TextBlockParam, Usage
 
 from evals.record import record_sampling
 from evals.solvers.solver import Solver, SolverResult
@@ -99,7 +99,7 @@ class AnthropicSolver(Solver):
         anth_msgs = [
             MessageParam(
                 role=oai_to_anthropic_role[msg.role],
-                content=[ContentBlock(text=msg.content, type="text")],
+                content=[TextBlockParam(text=msg.content, type="text")],
             )
             for msg in msgs
         ]
@@ -135,8 +135,23 @@ def anth_to_openai_usage(anth_usage: Usage) -> dict:
     that match the OpenAI Usage dict, for logging purposes.
     """
     # TODO: make this format of dict a dataclass type to be reused througout lib?
-    return {
+    usage = {
         "completion_tokens": anth_usage.output_tokens,
         "prompt_tokens": anth_usage.input_tokens,
         "total_tokens": anth_usage.input_tokens + anth_usage.output_tokens,
     }
+
+    prompt_tokens_details = {}
+    cache_creation_input_tokens = getattr(anth_usage, "cache_creation_input_tokens", None)
+    cache_read_input_tokens = getattr(anth_usage, "cache_read_input_tokens", None)
+    if cache_creation_input_tokens is not None:
+        usage["cache_creation_input_tokens"] = cache_creation_input_tokens
+        prompt_tokens_details["cache_creation_input_tokens"] = cache_creation_input_tokens
+    if cache_read_input_tokens is not None:
+        usage["cache_read_input_tokens"] = cache_read_input_tokens
+        prompt_tokens_details["cache_read_input_tokens"] = cache_read_input_tokens
+        prompt_tokens_details["cached_tokens"] = cache_read_input_tokens
+    if prompt_tokens_details:
+        usage["prompt_tokens_details"] = prompt_tokens_details
+
+    return usage
