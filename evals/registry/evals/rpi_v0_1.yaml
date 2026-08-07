@@ -1,0 +1,11 @@
+rpi-v0-1:
+  id: rpi-v0-1.dev.v0
+  description: Pilot evaluation of bounded adaptive multi-perspective reasoning quality.
+  metrics: [accuracy]
+
+rpi-v0-1.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: rpi_v0_1/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: rpi_quality
