@@ -1,0 +1,37 @@
+rpi_quality:
+  prompt: |-
+    You are evaluating the quality of an AI answer to a reasoning task.
+
+    [BEGIN DATA]
+    [Task]
+    {input}
+
+    [Submitted answer]
+    {completion}
+
+    [Evaluation criterion]
+    {criteria}
+    [END DATA]
+
+    Judge the submitted answer on the criterion, with these global rules:
+    - Correctness and decision quality matter more than verbosity.
+    - More perspectives are not automatically better.
+    - Do not reward unsupported speculation.
+    - Do not reward false equivalence.
+    - Understanding a person's perspective is not the same as agreeing with factual claims.
+    - On urgent tasks, safe timely action can be better than exhaustive analysis.
+    - On simple tasks, unnecessary decomposition or recursive analysis is a quality defect if it reduces clarity or efficiency.
+    - A strong answer may acknowledge uncertainty while still making a usable recommendation.
+    - Do not require or reward disclosure of private chain-of-thought; evaluate the observable final answer and concise rationale.
+
+    Does the submitted answer satisfy the criterion overall?
+
+    Reason carefully, then output Y or N as the final classification.
+
+  eval_type: cot_classify
+  choice_scores:
+    "Y": 1.0
+    "N": 0.0
+  choice_strings: 'YN'
+  input_outputs:
+    input: "completion"
