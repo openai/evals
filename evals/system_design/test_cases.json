@@ -1,0 +1,103 @@
+{
+  "evaluation_name": "System Design Evaluation Framework",
+  "domain": "Backend Systems & Architecture",
+  "description": "Comprehensive evaluation of LLM performance on system design problems",
+  "rubric_version": "1.0",
+  "test_cases": [
+    {
+      "id": "sd_001",
+      "difficulty": "medium",
+      "category": "Payments & Transactions",
+      "prompt": "Design a payment settlement system for 1M transactions/day. Must handle strict consistency and failure scenarios. How would you ensure idempotency and handle edge cases?",
+      "expected_answer_includes": [
+        "Idempotent operations (unique transaction IDs)",
+        "Consistent state (ACID or strong consistency)",
+        "Failure scenarios (timeouts, network partitions)",
+        "Monitoring & alerting",
+        "Batch processing or streaming strategy"
+      ],
+      "good_answer_markers": [
+        "Mentions idempotency key pattern",
+        "Discusses two-phase commit or saga pattern",
+        "Addresses reconciliation process",
+        "Mentions failure recovery"
+      ]
+    },
+    {
+      "id": "sd_002",
+      "difficulty": "hard",
+      "category": "Distributed Systems",
+      "prompt": "Design a distributed cache for a global CDN serving 100M users. 99.99% availability required. Discuss consistency model tradeoffs and geographic distribution strategy.",
+      "expected_answer_includes": [
+        "Sharding/partitioning strategy",
+        "Replication & availability design",
+        "Consistency model choice (eventual/strong)",
+        "Cache invalidation strategy",
+        "Geographic distribution and failover"
+      ],
+      "good_answer_markers": [
+        "Explicitly discusses CAP theorem",
+        "Proposes monitoring for cache hit rates",
+        "Addresses hot-spot caching problem",
+        "Discusses write propagation latency"
+      ]
+    },
+    {
+      "id": "sd_003",
+      "difficulty": "medium",
+      "category": "Security & Authentication",
+      "prompt": "Design an authentication system for a multi-tenant SaaS. Address: token management, session handling, permission isolation, and token rotation.",
+      "expected_answer_includes": [
+        "Token generation & validation strategy",
+        "Session management approach",
+        "Tenant isolation mechanism",
+        "Token expiration & rotation",
+        "Security considerations (CSRF, token theft)"
+      ],
+      "good_answer_markers": [
+        "Mentions JWT or OAuth2",
+        "Discusses refresh token pattern",
+        "Addresses cross-tenant isolation",
+        "Mentions rate limiting for auth endpoints"
+      ]
+    },
+    {
+      "id": "sd_004",
+      "difficulty": "hard",
+      "category": "Real-time Systems",
+      "prompt": "Design a real-time notification system delivering 100M messages/day. Must handle failures, retries, and deduplication. How do you ensure at-least-once delivery?",
+      "expected_answer_includes": [
+        "Message queue architecture (Kafka, RabbitMQ)",
+        "Deduplication strategy (idempotent processing)",
+        "Retry logic & exponential backoff",
+        "Dead letter queue for failures",
+        "Scalability for 100M messages/day"
+      ],
+      "good_answer_markers": [
+        "Discusses message ordering guarantees",
+        "Mentions at-least-once vs exactly-once semantics",
+        "Addresses consumer group patterns",
+        "Proposes monitoring for message lag"
+      ]
+    },
+    {
+      "id": "sd_005",
+      "difficulty": "medium",
+      "category": "Data & Databases",
+      "prompt": "Design a database schema for an e-commerce platform. Optimize for: inventory management, order processing, and reporting queries. Address consistency requirements.",
+      "expected_answer_includes": [
+        "Table structure (products, orders, inventory)",
+        "Indexing strategy for common queries",
+        "Consistency model (transactions for orders)",
+        "Handling concurrent inventory updates",
+        "Query optimization for reporting"
+      ],
+      "good_answer_markers": [
+        "Mentions ACID transactions for orders",
+        "Discusses optimistic locking for inventory",
+        "Proposes separate read replicas for reporting",
+        "Addresses inventory allocation problem"
+      ]
+    }
+  ]
+}
