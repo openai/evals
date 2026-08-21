@@ -53,7 +53,7 @@ dependencies = [
 repository = "https://github.com/openai/evals"
 
 [project.optional-dependencies]
-formatters = ["black", "isort", "autoflake", "ruff"]
+formatters = ["black", "isort", "autoflake", "ruff", "pre-commit"]
 
 torch = ["torch"]
 
