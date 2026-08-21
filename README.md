@@ -59,6 +59,12 @@ If you don't want to contribute new evals, but simply want to run them locally, 
 pip install evals
 ```
 
+The published package name is `evals` (not `openai-evals`). If you prefer pipx, use the same package name:
+
+```sh
+pipx install evals
+```
+
 You can find the full instructions to run existing evals in [`run-evals.md`](docs/run-evals.md) and our existing eval templates in [`eval-templates.md`](docs/eval-templates.md). For more advanced use cases like prompt chains or tool-using agents, you can use our [Completion Function Protocol](docs/completion-fns.md).
 
 We provide the option for you to log your eval results to a Snowflake database, if you have one or wish to set one up. For this option, you will further have to specify the `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_DATABASE`, `SNOWFLAKE_USERNAME`, and `SNOWFLAKE_PASSWORD` environment variables.
