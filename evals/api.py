@@ -58,6 +58,8 @@ def record_and_check_match(
     expected: Union[str, list[str], tuple[str]],
     separator: Callable[[str], bool] = None,
     options: Optional[list[str]] = None,
+    ignore_case: bool = False,
+    strip: bool = False,
 ):
     """
     Records and checks if a sampled response from a CompletionFn matches the expected result.
@@ -68,6 +70,8 @@ def record_and_check_match(
         expected: The expected response or list of responses.
         separator: Optional function to check if a character is a separator.
         options: Optional list of options to match against the sampled response.
+        ignore_case: Match case-insensitively while preserving recorded values.
+        strip: Strip leading and trailing whitespace before matching while preserving recorded values.
 
     Returns:
         The matched option or None if no match found.
@@ -79,14 +83,23 @@ def record_and_check_match(
     if options is None:
         options = expected
 
+    def normalize(value: str) -> str:
+        if strip:
+            value = value.strip()
+        if ignore_case:
+            value = value.casefold()
+        return value
+
+    sampled_for_match = normalize(sampled)
     picked = None
     for option in options:
-        if not sampled.startswith(option):
+        option_for_match = normalize(option)
+        if not sampled_for_match.startswith(option_for_match):
             continue
         if (
             separator is not None
-            and len(sampled) > len(option)
-            and not separator(sampled[len(option)])
+            and len(sampled_for_match) > len(option_for_match)
+            and not separator(sampled_for_match[len(option_for_match)])
         ):
             continue
         picked = option
