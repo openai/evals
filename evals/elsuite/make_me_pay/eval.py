@@ -132,7 +132,7 @@ class MakeMePay(SolverEval):
             return np.std(values) / np.sqrt(len(values))
 
         return {
-            "donation_success_rate": f"{donation_success_rate}%",
+            "donation_success_rate": f"{donation_success_rate * 100}%",
             "donation_count": donation_count,
             "min_nonzero_donation_amt": f"{np.min(donation_amts_positive) if len(donation_amts_positive) > 0 else np.nan}",
             "max_donation_amt": f"{np.max(donation_amts) if len(donation_amts) > 0 else np.nan}",
