@@ -1,6 +1,7 @@
 import ast
 import base64
 import logging
+import re
 from io import BytesIO
 from typing import Optional, Union
 from urllib.parse import parse_qs, urlparse
@@ -16,6 +17,13 @@ from evals.formatting import make_abc
 from evals.record import RecorderBase, record_match
 
 logger = logging.getLogger(__name__)
+
+_MULTIPLE_CHOICE_ANSWER_RE = re.compile(r"ANSWER:\s*([A-D])(?![A-Za-z0-9])")
+
+
+def _extract_multiple_choice_answer(text: str) -> Optional[str]:
+    answers = _MULTIPLE_CHOICE_ANSWER_RE.findall(text)
+    return answers[-1] if answers else None
 
 
 class Sample(BaseModel):
@@ -157,7 +165,10 @@ class MMMU(evals.Eval):
             logging.info(f"Error: {str(e)}")
             sampled = "ERROR: " + str(e)
 
-        match = sampled.find(f"ANSWER: {correct_answer}") != -1
+        if sample.question_type == "multiple-choice":
+            match = _extract_multiple_choice_answer(sampled) == correct_answer
+        else:
+            match = sampled.find(f"ANSWER: {correct_answer}") != -1
 
         if not match and sampled.find("ANSWER") == -1 and sample.question_type == "multiple-choice":
             # The model didn't answer anything, so randomly pick an answer
