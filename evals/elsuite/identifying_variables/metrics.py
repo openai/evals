@@ -62,16 +62,14 @@ def compute_ctrl_recall_posthoc(metric_entries: List[Dict], sampling_entries: Li
         except ValueError:  # in case of invalid solver output (violation)
             preds = None
 
-        if metric_entry["gold_answer"]["valid_hypothesis"]:
-            if preds and preds.ctrl_vars is not None:
-                recall = compute_recall(
-                    set(preds.ctrl_vars), set(metric_entry["gold_answer"]["ctrl_vars"])
-                )
-            else:
-                # worst case scenario in case of violation or incorrect hyp validation
-                recall = 0
-        else:
+        gold_answer = metric_entry["gold_answer"]
+        if not gold_answer["valid_hypothesis"] or len(gold_answer["ctrl_vars"]) == 0:
             recall = np.nan
+        elif preds and preds.ctrl_vars is not None:
+            recall = compute_recall(set(preds.ctrl_vars), set(gold_answer["ctrl_vars"]))
+        else:
+            # worst case scenario in case of violation or incorrect hyp validation
+            recall = 0
         recalls.append(recall)
     return np.nanmean(recalls).astype(float)
 
