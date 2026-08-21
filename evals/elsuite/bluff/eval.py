@@ -189,9 +189,12 @@ class BluffEval(SolverEval):
     def _create_solver_player(game: Game, solver_name: str) -> Player:
         #   This logger.disabled thing prevents messages saying that completion_fn was
         #   not found (because they are usually emitted )
+        logger_was_disabled = evals.registry.logger.disabled
         evals.registry.logger.disabled = True
-        solver = registry.make_completion_fn(solver_name)
-        evals.registry.logger.disabled = False
+        try:
+            solver = registry.make_completion_fn(solver_name)
+        finally:
+            evals.registry.logger.disabled = logger_was_disabled
         return SolverPlayer(game, solver)
 
     @staticmethod
