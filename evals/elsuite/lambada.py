@@ -6,6 +6,10 @@ from evals.api import CompletionFn
 from evals.record import RecorderBase
 
 
+def _is_word_separator(char: str) -> bool:
+    return not char.isalnum()
+
+
 class Lambada(evals.Eval):
     def __init__(
         self,
@@ -37,6 +41,7 @@ class Lambada(evals.Eval):
             prompt=prompt,
             sampled=sampled,
             expected=a,
+            separator=_is_word_separator,
         )
 
     def run(self, recorder: RecorderBase):
