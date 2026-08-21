@@ -38,7 +38,6 @@ dependencies = [
     "pyyaml",
     "sacrebleu",
     "seaborn",
-    "snowflake-connector-python[pandas]",
     "spacy-universal-sentence-encoder",
     "statsmodels",
     "termcolor",
@@ -54,6 +53,8 @@ repository = "https://github.com/openai/evals"
 
 [project.optional-dependencies]
 formatters = ["black", "isort", "autoflake", "ruff"]
+
+snowflake = ["snowflake-connector-python[pandas]"]
 
 torch = ["torch"]
 
