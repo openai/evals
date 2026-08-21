@@ -64,7 +64,7 @@ class RetrievalCompletionFn(CompletionFn):
         embedding_model: str = "text-embedding-ada-002",
         registry: Optional[Registry] = None,
         registry_path: Optional[str] = None,
-        **_kwargs: Any
+        **kwargs: Any
     ) -> None:
         """
         Args:
@@ -74,7 +74,7 @@ class RetrievalCompletionFn(CompletionFn):
             embeddings_and_text_path: The path to a CSV containing "text" and "embedding" columns.
             registry: Upstream callers may pass in a registry to use.
             registry_path: The path to a registry file to add to default registry.
-            _kwargs: Additional arguments to pass to the completion function instantiation.
+            kwargs: Additional arguments to pass to the completion function instantiation.
         """
         registry = Registry() if not registry else registry
         if registry_path:
@@ -86,7 +86,7 @@ class RetrievalCompletionFn(CompletionFn):
         self.k = k
 
         self.retrieval_template = retrieval_template
-        self.completion_fn_instance = registry.make_completion_fn(completion_fn)
+        self.completion_fn_instance = registry.make_completion_fn(completion_fn, **kwargs)
 
     def __call__(self, prompt: Union[str, list[dict]], **kwargs: Any) -> RetrievalCompletionResult:
         """
