@@ -45,6 +45,8 @@ def test_remove_period():
     assert RemovePeriod()(result).output == ""
     result = SolverResult(".5")
     assert RemovePeriod()(result).output == ".5"
+    result = SolverResult("wait...")
+    assert RemovePeriod()(result).output == "wait.."
 
 
 def test_combination():

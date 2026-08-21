@@ -39,5 +39,6 @@ class RemovePeriod(PostProcessor):
     """
 
     def __call__(self, result: SolverResult) -> SolverResult:
-        result._output = result.output.rstrip(".")
+        if result.output.endswith("."):
+            result._output = result.output[:-1]
         return result
