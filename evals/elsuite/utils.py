@@ -163,8 +163,7 @@ class PromptFn:
         self.completion_kwargs = completion_kwargs
         self.n_samples = n_samples
 
-    def __call__(self, **kwargs):
-        # if any input kwargs is chat prompt, convert to text prompt
+    def _format_prompt(self, **kwargs):
         kwargs = {
             k: chat_prompt_to_text_prompt(v, for_completion=False) if is_chat_prompt(v) else v
             for k, v in kwargs.items()
@@ -176,10 +175,12 @@ class PromptFn:
                 if "content" in formatted_msg:
                     formatted_msg["content"] = format_necessary(formatted_msg["content"], **kwargs)
                 prompt.append(formatted_msg)
-        else:
-            # Prompt is a string
-            prompt = format_necessary(self.prompt, **kwargs)
+            return prompt
+        return format_necessary(self.prompt, **kwargs)
 
+    def sample_all(self, **kwargs):
+        """Return every completion produced by the configured sampling request."""
+        prompt = self._format_prompt(**kwargs)
         result = self.completion_fn(
             prompt=prompt,
             max_tokens=self.max_tokens,
@@ -190,5 +191,8 @@ class PromptFn:
             n=(1 if self.n_samples is None else self.n_samples),
             **self.completion_kwargs,
         )
-        sampled = result.get_completions()[0]
-        return sampled, prompt
+        return result.get_completions(), prompt
+
+    def __call__(self, **kwargs):
+        completions, prompt = self.sample_all(**kwargs)
+        return completions[0], prompt

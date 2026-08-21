@@ -48,19 +48,31 @@ class ModelBasedClassify(evals.Eval):
         if len(self.completion_fns) > 1:
             assert self.multicomp_n == n_models
 
+        configured_n_samples = self.sample_kwargs.get("n_samples")
+        self.n_samples = 1 if configured_n_samples is None else configured_n_samples
+        if not isinstance(self.n_samples, int) or self.n_samples < 1:
+            raise ValueError("sample_kwargs.n_samples must be a positive integer")
+        if self.multicomp_n > 1 and self.n_samples > 1:
+            raise ValueError(
+                "sample_kwargs.n_samples > 1 cannot be combined with multicomp_n > 1; "
+                "use n_samples to grade independent completions or multicomp_n to grade "
+                "multiple outputs jointly."
+            )
+
         self.mg = self.registry.get_modelgraded_spec(modelgraded_spec)
 
-    def eval_sample(self, test_sample: dict, rng: Random) -> None:
+    def eval_sample(self, test_sample: dict, rng: Random) -> Union[str, list[str]]:
         """Evaluate a single sample.
 
         Recorded metrics are always: one of the self.choice_strings, or "__invalid__".
+        When n_samples > 1, each sampled completion is graded and recorded independently.
         """
         # process test_sample
         for k in self.mg.input_outputs:
             test_sample[k] = scrub_formatting_from_prompt(test_sample[k])
 
-        # run policy completions
-        completions = {}
+        # Each dictionary is one independently gradeable set of generated outputs.
+        completion_variants: list[dict[str, str]] = [{}]
         for k, v in self.mg.input_outputs.items():
             if v in test_sample:  # test_sample already has completion, skip.
                 continue
@@ -72,34 +84,57 @@ class ModelBasedClassify(evals.Eval):
                     sample_kwargs=self.sample_kwargs,
                     n=self.multicomp_n,
                 )
-            else:
-                get_input_completion = PromptFn(
-                    test_sample[k], completion_fn=self.completion_fn, **self.sample_kwargs
-                )
+                completion_variants[0][v] = completion
+                continue
+
+            get_input_completion = PromptFn(
+                test_sample[k], completion_fn=self.completion_fn, **self.sample_kwargs
+            )
+            if self.n_samples == 1:
                 completion, _ = get_input_completion()
-            completions[v] = completion
+                sampled_completions = [completion]
+            else:
+                sampled_completions, _ = get_input_completion.sample_all()
+                if len(sampled_completions) != self.n_samples:
+                    raise ValueError(
+                        f"Completion function returned {len(sampled_completions)} completions "
+                        f"after n_samples={self.n_samples} was requested"
+                    )
 
-        # run modelgraded eval
-        metrics = {}
-        choice, info = classify(
-            mg=self.mg,
-            completion_fn=self.eval_completion_fn,
-            completion_kwargs=self.eval_kwargs,
-            eval_type=self.eval_type,
-            n=self.multicomp_n,
-            match_fn=self.match_fn,
-            format_kwargs={**completions, **test_sample, **self.modelgraded_spec_args},
-        )
-        metrics.update(dict(choice=choice, score=info["score"]))
+            if len(completion_variants) == 1 and not completion_variants[0]:
+                completion_variants = [{} for _ in sampled_completions]
+            elif len(sampled_completions) != len(completion_variants):
+                raise ValueError(
+                    "Generated outputs for model-graded fields returned different numbers of completions"
+                )
 
-        # run metaeval if requested
-        if self.metaeval:
-            assert "choice" in test_sample
-            metrics["metascore"] = choice == test_sample["choice"]
+            for completion_index, completion in enumerate(sampled_completions):
+                completion_variants[completion_index][v] = completion
 
-        evals.record.record_metrics(**metrics)
+        choices = []
+        for completion_index, completions in enumerate(completion_variants):
+            choice, info = classify(
+                mg=self.mg,
+                completion_fn=self.eval_completion_fn,
+                completion_kwargs=self.eval_kwargs,
+                eval_type=self.eval_type,
+                n=self.multicomp_n,
+                match_fn=self.match_fn,
+                format_kwargs={**completions, **test_sample, **self.modelgraded_spec_args},
+            )
+            metrics = dict(choice=choice, score=info["score"])
+            if len(completion_variants) > 1:
+                metrics["completion_index"] = completion_index
 
-        return choice
+            # run metaeval if requested
+            if self.metaeval:
+                assert "choice" in test_sample
+                metrics["metascore"] = choice == test_sample["choice"]
+
+            evals.record.record_metrics(**metrics)
+            choices.append(choice)
+
+        return choices[0] if len(choices) == 1 else choices
 
     def run(self, recorder):
         samples = self.get_samples()
