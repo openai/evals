@@ -8,19 +8,25 @@ import evals
 from evals.api import CompletionFn
 from evals.record import RecorderBase
 
+_MISSING = object()
+
 
 def json_match(sampled_json: Any, correct_json: Any) -> bool:
     """Return True if the sampled completion in JSON format
     matches a correct answer, component by component"""
-    if sampled_json is None or correct_json is None:
-        # Missing values are never correct
+    if sampled_json is _MISSING or correct_json is _MISSING:
+        # Missing dictionary keys are never correct. Use a sentinel so a real
+        # JSON null (decoded as None) can still match another JSON null.
         return False
     if isinstance(sampled_json, dict):
         if isinstance(correct_json, dict):
             sample = cast(Mapping[str, Any], sampled_json)
             correct = cast(Mapping[str, Any], correct_json)
             all_keys = set(sample.keys()) | set(correct.keys())
-            return all(json_match(sample.get(key), correct.get(key)) for key in all_keys)
+            return all(
+                json_match(sample.get(key, _MISSING), correct.get(key, _MISSING))
+                for key in all_keys
+            )
         else:
             return False
     elif isinstance(sampled_json, list):
@@ -80,7 +86,7 @@ class JsonMatch(evals.Eval):
             sampled_json = json.loads(sampled)
         except ValueError:
             # If the sampled string is not valid JSON, it will never match
-            sampled_json = None
+            sampled_json = _MISSING
 
         # Allow the following to raise ValueError; the correct answers
         # should always be valid JSON
