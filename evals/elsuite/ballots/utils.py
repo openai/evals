@@ -127,9 +127,10 @@ def prompt_matches_model(model, prompt):
 
 
 def reverse_roles(messages):
+    role_map = {"assistant": "user", "user": "assistant"}
     return [
         {
-            "role": "user" if message["role"] == "assistant" else "assistant",
+            "role": role_map.get(message["role"], message["role"]),
             "content": message["content"],
         }
         for message in messages
