@@ -22,10 +22,35 @@ If you have an eval that falls outside this category but still is a diverse exam
 
 Once you have an eval in mind that you wish to implement, you will need to convert your samples into the right JSON lines (JSONL) format. A JSONL file is just a JSON file with a unique JSON object per line.
 
-You can use the `openai` CLI (available with [OpenAI-Python](https://github.com/openai/openai-python)) to transform data from some common file types into JSONL:
-``` 
-openai tools fine_tunes.prepare_data -f data[.csv, .json, .txt, .xlsx or .tsv]
+Converting a CSV, spreadsheet, or other source file to JSONL is only a file-format conversion. You must also map the source fields to the schema expected by the eval template you choose. Fine-tuning data, for example, commonly uses fields such as `prompt` and `completion`; those fields are not automatically interpreted as Evals `input` and `ideal` fields.
+
+For a basic `Match` eval, a source row such as:
+
+```text
+prompt,completion
+What is 2 + 2?,4
 ```
+
+should become an Evals JSONL row such as:
+
+```jsonl
+{"input":"What is 2 + 2?","ideal":"4"}
+```
+
+If your existing CSV uses `prompt` and `completion` columns, one direct conversion is:
+
+```sh
+python - <<'PY' > samples.jsonl
+import csv
+import json
+
+with open("data.csv", newline="", encoding="utf-8") as f:
+    for row in csv.DictReader(f):
+        print(json.dumps({"input": row["prompt"], "ideal": row["completion"]}, ensure_ascii=False))
+PY
+```
+
+Adjust the field mapping when your chosen eval template requires different keys.
 
 We include some examples of JSONL eval files in [registry/data/README.md](../evals/registry/data/README.md)
 
