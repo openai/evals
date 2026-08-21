@@ -105,7 +105,7 @@ class Eval(abc.ABC):
         futures = [asyncio.ensure_future(eval_fn_with_semaphore(args)) for args in work_items]
 
         for future in tqdm(
-            asyncio.as_completed(futures), total=len(samples), disable=not show_progress
+            asyncio.as_completed(futures), total=len(work_items), disable=not show_progress
         ):
             await future
 
