@@ -40,11 +40,13 @@ class ChainOfThoughtCompletionFn(CompletionFn):
 
         # This model will use chain of thought to answer the question
         self.cot_template = cot_template
-        self.cot_completion_fn_instance = registry.make_completion_fn(cot_completion_fn)
+        self.cot_completion_fn_instance = registry.make_completion_fn(cot_completion_fn, **kwargs)
 
         # This model will extract the answer from the chain of thought
         self.extract_answer_template = extract_answer_template
-        self.extract_completion_fn_instance = registry.make_completion_fn(extract_completion_fn)
+        self.extract_completion_fn_instance = registry.make_completion_fn(
+            extract_completion_fn, **kwargs
+        )
 
     def __call__(self, prompt, **kwargs) -> ChainOfThoughtCompletionResult:
         # Ensure it is in string format
