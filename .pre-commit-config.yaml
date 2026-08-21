@@ -19,23 +19,9 @@ repos:
       - id: isort
         args: [--line-length=100, --profile=black]
 
-  # this is slightly dangerous because python imports have side effects
-  # and this tool removes unused imports, which may be providing
-  # necessary side effects for the code to run
-  - repo: https://github.com/PyCQA/autoflake
-    rev: b567334b9fc699fc169af0ad1ea0ff0fc017fbeb
-    hooks:
-      - id: autoflake
-        args:
-          - "--in-place"
-          - "--expand-star-imports"
-          - "--remove-duplicate-keys"
-          - "--remove-unused-variables"
-          - "--remove-all-unused-imports"
-        exclude: "evals/__init__.py"
-   
-  # This allows ruff to run and autofix the code
-  # The line length is so high because some of the evals are very long
+  # Ruff covers the Pyflakes fixes previously duplicated by the autoflake hook,
+  # including unused imports/variables and duplicate dictionary keys.
+  # The line length is so high because some of the evals are very long.
   # TODO: fix the evals and then reduce the line length here
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: 95f113d6340ab4348ecc5d912cf6e6b3465bfb86
