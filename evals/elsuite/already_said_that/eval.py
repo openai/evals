@@ -156,5 +156,5 @@ class AlreadySaidThat(SolverEval):
 
     def _get_samples(self) -> list[dict]:
         samples = self.get_samples()
-        samples = self.rng.sample(samples, min(self.n_samples, len(samples)))
-        return samples
+        sample_size = len(samples) if self.n_samples is None else min(self.n_samples, len(samples))
+        return self.rng.sample(samples, sample_size)
