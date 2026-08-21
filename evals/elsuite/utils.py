@@ -89,15 +89,18 @@ def f1_score(prediction: str, answers: list[str]) -> float:
 
 
 def scrub_formatting_from_prompt(prompt):
-    scrubbed_prompt = copy.copy(prompt)
-
     if is_chat_prompt(prompt):
-        for i, msg in enumerate(scrubbed_prompt):
-            if "content" in msg:
-                scrubbed_prompt[i]["content"] = msg["content"].replace("{", "{{").replace("}", "}}")
-    else:
-        scrubbed_prompt = scrubbed_prompt.replace("{", "{{").replace("}", "}}")
-    return scrubbed_prompt
+        scrubbed_prompt = []
+        for msg in prompt:
+            scrubbed_msg = copy.copy(msg)
+            if "content" in scrubbed_msg:
+                scrubbed_msg["content"] = scrubbed_msg["content"].replace("{", "{{").replace(
+                    "}", "}}"
+                )
+            scrubbed_prompt.append(scrubbed_msg)
+        return scrubbed_prompt
+
+    return prompt.replace("{", "{{").replace("}", "}}")
 
 
 def format_necessary(template: str, allow_missing: bool = False, **kwargs: dict[str, str]) -> str:
