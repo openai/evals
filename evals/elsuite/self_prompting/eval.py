@@ -106,7 +106,13 @@ class SelfPrompting(SolverEval):
         tasker_output = tasker_completion_fn(full_prompt).get_completions()[0]
 
         exact = 1 if tasker_output == sample["output"] else 0
-        fuzzy = 1 if tasker_output in sample["output"] or sample["output"] in tasker_output else 0
+        fuzzy = (
+            1
+            if tasker_output
+            and sample["output"]
+            and (tasker_output in sample["output"] or sample["output"] in tasker_output)
+            else 0
+        )
 
         output = {
             **sample,
