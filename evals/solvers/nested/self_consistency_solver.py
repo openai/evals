@@ -95,6 +95,7 @@ class SelfConsistencySolver(NestedSolver):
                 logger.error(
                     f"Could not detect any answers for mode 'count' among the completions: {reasoning_completions}"
                 )
+                consensus_answer = "[NO CONSENSUS]"
         else:
             if len(task_state.messages) > 0:
                 prompt = task_state.messages[-2].content
