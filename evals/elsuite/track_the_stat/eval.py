@@ -48,6 +48,7 @@ class TrackTheStat(SolverEval):
 
     def _eval_sample(self, solver: Solver, capped_inf_list: list[int]) -> dict:
         violation = False
+        max_length = 0
         task_state = TaskState(task_description=self.task_desc, messages=[])
         for i, num in enumerate(capped_inf_list):
             curr_list = capped_inf_list[: i + 1]
@@ -60,10 +61,11 @@ class TrackTheStat(SolverEval):
                 break
             if round(solver_response, 1) != round(self.task_fn(curr_list), 1):
                 break
+            max_length += 1
             task_state.messages.append(Message(role="assistant", content=solver_output))
 
         return {
-            "max_length": len(curr_list) - 1,
+            "max_length": max_length,
             "violation": violation,
         }
 
