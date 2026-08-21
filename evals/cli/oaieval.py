@@ -121,8 +121,9 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
 
     visible = args.visible if args.visible is not None else (args.max_samples is None)
 
-    if args.max_samples is not None:
-        evals.eval.set_max_samples(args.max_samples)
+    # Establish per-run state even when there is no sample cap, clearing any
+    # module-global limit left by an earlier in-process invocation.
+    evals.eval.set_max_samples(args.max_samples)
 
     registry = registry or Registry()
     if args.registry_path:
