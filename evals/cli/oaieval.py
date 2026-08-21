@@ -2,6 +2,7 @@
 This file defines the `oaieval` CLI for running evals.
 """
 import argparse
+import json
 import logging
 import shlex
 import sys
@@ -22,6 +23,72 @@ def _purple(str: str) -> str:
     return f"\033[1;35m{str}\033[0m"
 
 
+def _split_key_value_args(param_str: str) -> list[str]:
+    """Split comma-separated key/value arguments without splitting JSON containers."""
+    parts: list[str] = []
+    start = 0
+    depth = 0
+    quote: Optional[str] = None
+    escaped = False
+
+    for index, char in enumerate(param_str):
+        if quote is not None:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == quote:
+                quote = None
+            continue
+
+        if char == '"':
+            quote = char
+        elif char in "[{":
+            depth += 1
+        elif char in "]}":
+            depth -= 1
+            if depth < 0:
+                raise ValueError("Unbalanced brackets in --completion_args")
+        elif char == "," and depth == 0:
+            parts.append(param_str[start:index])
+            start = index + 1
+
+    if quote is not None or depth != 0:
+        raise ValueError("Unbalanced quotes or brackets in --completion_args")
+
+    parts.append(param_str[start:])
+    return parts
+
+
+def parse_completion_args(param_str: str) -> dict[str, Any]:
+    """Parse CLI completion options while preserving JSON-compatible value types."""
+    if not param_str:
+        return {}
+
+    parsed: dict[str, Any] = {}
+    for item in _split_key_value_args(param_str):
+        item = item.strip()
+        if not item:
+            continue
+
+        key, separator, raw_value = item.partition("=")
+        key = key.strip()
+        if not separator or not key:
+            raise ValueError(
+                "Completion arguments must use key=value syntax; "
+                f"could not parse {item!r}"
+            )
+
+        raw_value = raw_value.strip()
+        try:
+            value = json.loads(raw_value)
+        except json.JSONDecodeError:
+            value = raw_value
+        parsed[key] = value
+
+    return parsed
+
+
 def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run evals through the API")
     parser.add_argument(
@@ -35,7 +102,7 @@ def get_parser() -> argparse.ArgumentParser:
         "--completion_args",
         type=str,
         default="",
-        help="Specify additional parameters to modify the behavior of the completion_fn during its creation. Parameters should be passed as a comma-separated list of key-value pairs (e.g., 'key1=value1,key2=value2'). This option allows for the dynamic modification of completion_fn settings, including the ability to override default arguments where necessary.",
+        help="Specify additional parameters to modify the behavior of the completion_fn during its creation. Parameters should be passed as a comma-separated list of key-value pairs (e.g., 'temperature=0.5,max_tokens=100'). JSON-compatible values such as booleans, lists, and dictionaries retain their types.",
     )
     parser.add_argument("--max_samples", type=int, default=None)
     parser.add_argument("--cache", action=argparse.BooleanOptionalAction, default=True)
@@ -97,6 +164,7 @@ class OaiEvalArguments(argparse.Namespace):
     completion_fn: str
     eval: str
     extra_eval_params: str
+    completion_args: str
     max_samples: Optional[int]
     cache: bool
     visible: Optional[bool]
@@ -161,9 +229,7 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     else:
         eval_spec.args.update(extra_eval_params)
 
-    # If the user provided an argument to --completion_args, parse it into a dict here, to be passed to the completion_fn creation **kwargs
-    completion_args = args.completion_args.split(",")
-    additional_completion_args = {k: v for k, v in (kv.split("=") for kv in completion_args if kv)}
+    additional_completion_args = parse_completion_args(args.completion_args)
 
     completion_fns = args.completion_fn.split(",")
     completion_fn_instances = [
