@@ -210,11 +210,11 @@ class EnhancedJSONEncoder(json.JSONEncoder):
 
 def jsondumps(o: Any, ensure_ascii: bool = False, **kwargs: Any) -> str:
     # The JSONEncoder class's .default method is only applied to dictionary values,
-    # not keys. In order to exclude keys from the output of this jsondumps method
-    # we need to exclude them outside the encoder.
+    # not keys. In order to exclude top-level keys, serialize a filtered copy rather
+    # than deleting entries from the caller-owned dictionary.
     if isinstance(o, dict) and "exclude_keys" in kwargs:
-        for key in kwargs["exclude_keys"]:
-            del o[key]
+        exclude_keys = set(kwargs["exclude_keys"])
+        o = {key: value for key, value in o.items() if key not in exclude_keys}
     return json.dumps(o, cls=EnhancedJSONEncoder, ensure_ascii=ensure_ascii, **kwargs)
 
 
