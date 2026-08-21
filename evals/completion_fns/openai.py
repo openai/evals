@@ -2,6 +2,7 @@ import logging
 from typing import Any, Optional, Union
 
 import openai
+import tiktoken
 from openai import OpenAI
 
 from evals.api import CompletionFn, CompletionResult
@@ -22,6 +23,59 @@ OPENAI_TIMEOUT_EXCEPTIONS = (
     openai.APITimeoutError,
     openai.InternalServerError,
 )
+
+
+def _encoding_for_model(model: Optional[str]):
+    if model is not None:
+        try:
+            return tiktoken.encoding_for_model(model)
+        except KeyError:
+            pass
+    return tiktoken.get_encoding("cl100k_base")
+
+
+def _estimate_prompt_tokens(prompt: Any, model: Optional[str]) -> Optional[int]:
+    """Estimate input tokens for prompt shapes supported by OpenAI completion functions."""
+    encoding = _encoding_for_model(model)
+
+    if isinstance(prompt, str):
+        return len(encoding.encode(prompt))
+
+    if isinstance(prompt, list):
+        if all(isinstance(token, int) for token in prompt):
+            return len(prompt)
+        if all(isinstance(token, str) for token in prompt):
+            return sum(len(encoding.encode(token)) for token in prompt)
+        if all(isinstance(message, dict) for message in prompt):
+            # OpenAI chat token accounting has varied slightly between model versions.
+            # This follows the standard 3-tokens-per-message approximation and is used
+            # only to reject prompts that already exceed a known context window.
+            tokens = 3  # assistant reply priming
+            for message in prompt:
+                tokens += 3
+                for key, value in message.items():
+                    if not isinstance(value, str):
+                        continue
+                    tokens += len(encoding.encode(value))
+                    if key == "name":
+                        tokens += 1
+            return tokens
+
+    return None
+
+
+def _validate_prompt_context(prompt: Any, model: Optional[str], n_ctx: Optional[int]) -> None:
+    if n_ctx is None:
+        return
+
+    prompt_tokens = _estimate_prompt_tokens(prompt, model)
+    if prompt_tokens is not None and prompt_tokens > n_ctx:
+        model_name = model or "the selected model"
+        raise ValueError(
+            f"Prompt is approximately {prompt_tokens} tokens, exceeding {model_name}'s "
+            f"configured context window of {n_ctx} tokens. Use a model with a larger "
+            "context window or shorten the eval prompt."
+        )
 
 
 def openai_completion_create_retrying(client: OpenAI, *args, **kwargs):
@@ -114,6 +168,7 @@ class OpenAICompletionFn(CompletionFn):
             )
 
         openai_create_prompt: OpenAICreatePrompt = prompt.to_formatted_prompt()
+        _validate_prompt_context(openai_create_prompt, self.model, self.n_ctx)
 
         result = openai_completion_create_retrying(
             OpenAI(api_key=self.api_key, base_url=self.api_base),
@@ -164,6 +219,7 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
             )
 
         openai_create_prompt: OpenAICreateChatPrompt = prompt.to_formatted_prompt()
+        _validate_prompt_context(openai_create_prompt, self.model, self.n_ctx)
 
         result = openai_chat_completion_create_retrying(
             OpenAI(api_key=self.api_key, base_url=self.api_base),
