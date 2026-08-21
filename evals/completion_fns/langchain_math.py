@@ -26,6 +26,6 @@ class LangChainMathChainCompletionFn(CompletionFn):
         prompt = CompletionPrompt(prompt).to_formatted_prompt()
         response = self.llm_math.run(prompt)
         # The LangChain response comes with `Answer: ` ahead of this, let's strip it out
-        response = response.strip("Answer:").strip()
+        response = response.removeprefix("Answer:").strip()
         record_sampling(prompt=prompt, sampled=response)
         return LangChainCompletionResult(response)
