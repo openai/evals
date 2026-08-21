@@ -39,7 +39,6 @@ dependencies = [
     "sacrebleu",
     "seaborn",
     "snowflake-connector-python[pandas]",
-    "spacy-universal-sentence-encoder",
     "statsmodels",
     "termcolor",
     "tiktoken",
@@ -55,6 +54,7 @@ repository = "https://github.com/openai/evals"
 [project.optional-dependencies]
 formatters = ["black", "isort", "autoflake", "ruff"]
 
+semantic-similarity = ["spacy-universal-sentence-encoder"]
 torch = ["torch"]
 
 [project.scripts]
