@@ -97,7 +97,7 @@ class Runner:
             task_state = self._add_tool_outputs(task_state, solver_result, tool_outputs)
             turn += 1
 
-        return self._finish_run(task_state, solver_result, None, turn)
+        return self._finish_run(task_state, solver_result, None, turn - 1)
 
     def _get_tool_names_and_descriptions(self, tools: list[Tool]):
         """
@@ -172,7 +172,7 @@ class Runner:
             out = tool(task_state)
         except (TypeError, ValueError, IndexError):
             out = None
-        
+
         if out is None:
             return None
 
