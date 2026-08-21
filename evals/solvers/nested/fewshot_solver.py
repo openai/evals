@@ -78,7 +78,7 @@ class FewShotSolver(NestedSolver):
         **kwargs,
     ) -> SolverResult:
         new_task_state = self._modify_task_state(task_state)
-        return self.base_solver(new_task_state)
+        return self.base_solver(task_state=new_task_state, **kwargs)
 
     def _modify_task_state(self, task_state: TaskState) -> TaskState:
         assert all(
