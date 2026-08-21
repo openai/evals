@@ -49,21 +49,30 @@ class SolverCompletionFn(CompletionFn):
 
         if isinstance(prompt, str):
             prompt = [{"role": "system", "content": prompt}]
-        elif isinstance(prompt, list):
-            assert prompt[0]["role"] == "system", "Unexpected prompt role ordering"
-        else:
+        elif not isinstance(prompt, list):
             raise ValueError(
                 f"Unexpected prompt type: "
                 f"string or OpenAICreateChatPrompt expected, got {type(prompt)}"
             )
 
+        if len(prompt) == 0:
+            raise ValueError("Chat prompt must contain at least one message")
+
         assert set(prompt[0].keys()) == {"role", "content",}, (
             "Unexpected keys in prompt: "
             f"expected exactly {{'role', 'content'}}, got {set(prompt[0].keys())}"
         )
+
+        if prompt[0]["role"] == "system":
+            task_description = prompt[0]["content"]
+            messages = prompt[1:]
+        else:
+            task_description = ""
+            messages = prompt
+
         task_state = TaskState(
-            prompt[0]["content"],
-            [Message(msg["role"], msg["content"]) for msg in prompt[1:]],
+            task_description,
+            [Message(msg["role"], msg["content"]) for msg in messages],
         )
 
         # use a copy to avoid task state surviving across samples
