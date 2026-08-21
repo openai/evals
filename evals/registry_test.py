@@ -1,4 +1,7 @@
-from evals.registry import is_chat_model, n_ctx_from_model_name
+from types import SimpleNamespace
+from unittest.mock import MagicMock, patch
+
+from evals.registry import Registry, is_chat_model, n_ctx_from_model_name
 
 
 def test_n_ctx_from_model_name():
@@ -30,3 +33,23 @@ def test_is_chat_model():
     assert not is_chat_model("text-davinci-003")
     assert not is_chat_model("gpt4-base")
     assert not is_chat_model("code-davinci-002")
+
+
+def test_api_model_ids_initializes_openai_client_lazily():
+    registry = Registry(registry_paths=[])
+    fake_client = MagicMock()
+    fake_client.models.list.return_value = SimpleNamespace(
+        data=[SimpleNamespace(id="model-a"), SimpleNamespace(id="model-b")]
+    )
+
+    with patch("evals.registry.OpenAI", return_value=fake_client) as openai_client:
+        openai_client.assert_not_called()
+
+        assert registry.api_model_ids == ["model-a", "model-b"]
+        openai_client.assert_called_once()
+        fake_client.models.list.assert_called_once()
+
+        # api_model_ids is cached; repeated routing checks do not repeat model discovery.
+        assert registry.api_model_ids == ["model-a", "model-b"]
+        openai_client.assert_called_once()
+        fake_client.models.list.assert_called_once()
