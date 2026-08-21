@@ -1,3 +1,5 @@
+from typing import Optional
+
 from .api import CompletionFn as CompletionFn
 from .api import CompletionResult as CompletionResult
 from .api import DummyCompletionFn as DummyCompletionFn
@@ -12,3 +14,11 @@ from .data import get_jsonls as get_jsonls
 from .data import get_lines as get_lines
 from .data import iter_jsonls as iter_jsonls
 from .eval import Eval as Eval
+
+
+def current_run_id() -> Optional[str]:
+    """Return the active eval run ID, or None outside an eval sample context."""
+    from .record import default_recorder
+
+    recorder = default_recorder()
+    return None if recorder is None else recorder.run_spec.run_id
