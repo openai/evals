@@ -264,7 +264,7 @@ class FunctionDeductionEval(SolverEval):
 
     def _parse_raw_response(self, response: str) -> Union[Tuple[int], Tuple[int, int, int]]:
         #   Remove all non-numbers first. This way we accept also e.g. "1, 2, 3", "[1, 2, 3]", '"1", "2", "3"' etc.
-        response = re.sub(r"[^0-9\s-]", "", response)
+        response = re.sub(r"[^0-9\s-]", " ", response)
 
         vals = tuple(int(x) for x in response.split())
         if len(vals) not in (1, 3):
