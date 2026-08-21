@@ -59,9 +59,8 @@ def setup():
         client = page.context.new_cdp_session(page)  # talk to chrome devtools
         client.send("Accessibility.enable")  # to get AccessibilityTrees
     except Exception as e:
-        return jsonify(
-            {"status": "error", "message": f"failed to start session (already started?): {e}"}
-        )
+        logger.error("Failed to start Playwright session: %s", type(e).__name__)
+        return jsonify({"status": "error", "message": "failed to start session (already started?)"})
     return jsonify({"status": "success", "message": "session started"})
 
 
@@ -104,7 +103,7 @@ def exec_command():
         result = _execute_command(request.json)
     except ValueError as e:
         assert len(e.args) == 2, "ValueError should have a message and a return object"
-        logger.error(e.args[0])
+        logger.error("%s", e.args[0])
         return e.args[1]
     try:
         response = jsonify(
@@ -116,11 +115,12 @@ def exec_command():
             }
         )
     except TypeError as e:
+        logger.error("Failed to serialize command result: %s", type(e).__name__)
         response = jsonify(
             {
                 "status": "success",
-                "message": f"could not return results of executed commands {request.json['command']}",
-                "content": str(e),
+                "message": "could not return results of executed command",
+                "content": None,
                 "url": page.url,
             }
         )
@@ -149,7 +149,7 @@ def exec_commands():
         results = _execute_commands(request.json)
     except ValueError as e:
         assert len(e.args) == 2, "ValueError should have a message and a return object"
-        logger.error(e.args[0])
+        logger.error("%s", e.args[0])
         return e.args[1]
     try:
         response = jsonify(
@@ -161,11 +161,12 @@ def exec_commands():
             }
         )
     except TypeError as e:
+        logger.error("Failed to serialize command results: %s", type(e).__name__)
         response = jsonify(
             {
                 "status": "success",
-                "message": f"could not return results of executed commands {request.json['commands']}",
-                "content": str(e),
+                "message": "could not return results of executed commands",
+                "content": None,
                 "url": page.url,
             }
         )
@@ -184,12 +185,12 @@ def _execute_command(json_data: dict):
         result = eval(command)
         return result
     except Exception as e:
-        logger.info(f"Error executing command: {command}")
-        logger.error(e)
+        logger.info("Error executing command: %r", command)
+        logger.error("Command execution failed: %s", type(e).__name__)
         raise ValueError(
-            f"Error executing command {command}",
-            jsonify({"status": "error", "message": f"error executing command {command}: {e}"}),
-        )
+            "Error executing command",
+            jsonify({"status": "error", "message": "error executing command"}),
+        ) from None
 
 
 def _execute_commands(json_data: dict):
