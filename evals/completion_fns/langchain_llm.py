@@ -41,7 +41,7 @@ class LangChainLLMCompletionFn(CompletionFn):
 
     def __call__(self, prompt, **kwargs) -> LangChainLLMCompletionResult:
         prompt = CompletionPrompt(prompt).to_formatted_prompt()
-        response = self.llm(prompt)
+        response = self.llm(prompt, **kwargs)
         record_sampling(prompt=prompt, sampled=response)
         return LangChainLLMCompletionResult(response)
 
@@ -84,6 +84,6 @@ class LangChainChatModelCompletionFn(CompletionFn):
             messages = [_convert_dict_to_langchain_message(message) for message in prompt]
         else:
             messages = [HumanMessage(content=prompt)]
-        response = self.llm(messages).content
+        response = self.llm(messages, **kwargs).content
         record_sampling(prompt=prompt, sampled=response)
         return LangChainLLMCompletionResult(response)
