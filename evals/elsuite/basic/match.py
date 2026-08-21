@@ -15,6 +15,7 @@ class Match(evals.Eval):
         max_tokens: int = 500,
         num_few_shot: int = 0,
         few_shot_jsonl: str = None,
+        random_few_shot: bool = False,
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
@@ -22,12 +23,30 @@ class Match(evals.Eval):
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
         self.num_few_shot = num_few_shot
+        self.random_few_shot = random_few_shot
         if self.num_few_shot > 0:
             assert few_shot_jsonl is not None, "few shot requires few shot sample dataset"
             self.few_shot_jsonl = few_shot_jsonl
             self.few_shot = evals.get_jsonl(self._prefix_registry_path(self.few_shot_jsonl))
 
-    def eval_sample(self, sample: Any, *_):
+    def _select_few_shot(self, rng) -> list[Any]:
+        """Select few-shot examples without changing the source dataset order.
+
+        The historical behavior is preserved by default. When random selection is
+        enabled, the per-sample RNG supplied by Eval is used so the subset remains
+        reproducible for a fixed eval seed and sample ID.
+        """
+        count = min(self.num_few_shot, len(self.few_shot))
+        if not self.random_few_shot or count == len(self.few_shot):
+            return self.few_shot[:count]
+
+        if rng is None:
+            raise ValueError("random_few_shot requires the eval sample RNG")
+
+        selected_indices = sorted(rng.sample(range(len(self.few_shot)), count))
+        return [self.few_shot[index] for index in selected_indices]
+
+    def eval_sample(self, sample: Any, rng=None):
         assert isinstance(sample, dict), "sample must be a dict"
         assert "input" in sample, "sample must have an 'input' key"
         assert "ideal" in sample, "sample must have an 'ideal' key"
@@ -39,7 +58,7 @@ class Match(evals.Eval):
         if self.num_few_shot > 0:
             assert is_chat_prompt(sample["input"]), "few shot requires chat prompt"
             prompt = sample["input"][:-1]
-            for s in self.few_shot[: self.num_few_shot]:
+            for s in self._select_few_shot(rng):
                 prompt += s["sample"]
             prompt += sample["input"][-1:]
 
