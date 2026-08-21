@@ -5,12 +5,14 @@ import argparse
 import logging
 import shlex
 import sys
+from pathlib import Path
 from typing import Any, Mapping, Optional, Union, cast
 
 import evals
 import evals.api
 import evals.base
 import evals.record
+from evals.completion_fns.precomputed import PrecomputedCompletionFn
 from evals.eval import Eval
 from evals.record import RecorderBase
 from evals.registry import Registry
@@ -22,12 +24,43 @@ def _purple(str: str) -> str:
     return f"\033[1;35m{str}\033[0m"
 
 
+def _make_completion_fn(
+    name: str,
+    eval_spec: evals.base.EvalSpec,
+    registry: Registry,
+    completion_args: dict[str, str],
+):
+    if name != "precomputed":
+        return registry.make_completion_fn(name, **completion_args)
+
+    unsupported_args = set(completion_args) - {"output_key"}
+    if unsupported_args:
+        raise ValueError(
+            "The precomputed completion source only accepts 'output_key'; got "
+            + ", ".join(sorted(unsupported_args))
+        )
+
+    if eval_spec.args is None or not isinstance(eval_spec.args.get("samples_jsonl"), str):
+        raise ValueError(
+            "The precomputed completion source requires the eval to define a samples_jsonl dataset."
+        )
+
+    samples_jsonl = eval_spec.args["samples_jsonl"]
+    samples_path = Path(samples_jsonl)
+    if not samples_path.is_file():
+        samples_path = eval_spec.registry_path / "data" / samples_jsonl
+
+    samples = evals.get_jsonl(samples_path.as_posix())
+    output_key = completion_args.get("output_key", "output")
+    return PrecomputedCompletionFn(samples=samples, output_key=output_key)
+
+
 def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run evals through the API")
     parser.add_argument(
         "completion_fn",
         type=str,
-        help="One or more CompletionFn URLs, separated by commas (,). A CompletionFn can either be the name of a model available in the OpenAI API or a key in the registry (see evals/registry/completion_fns).",
+        help="One or more CompletionFn URLs, separated by commas (,). A CompletionFn can either be the name of a model available in the OpenAI API, a key in the registry (see evals/registry/completion_fns), or 'precomputed' to score outputs stored in the eval dataset without making model calls.",
     )
     parser.add_argument("eval", type=str, help="Name of an eval. See registry.")
     parser.add_argument("--extra_eval_params", type=str, default="")
@@ -167,7 +200,8 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
 
     completion_fns = args.completion_fn.split(",")
     completion_fn_instances = [
-        registry.make_completion_fn(url, **additional_completion_args) for url in completion_fns
+        _make_completion_fn(url, eval_spec, registry, additional_completion_args)
+        for url in completion_fns
     ]
 
     run_config = {
