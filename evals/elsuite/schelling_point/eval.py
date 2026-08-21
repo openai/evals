@@ -22,9 +22,7 @@ class SchellingPoint(Eval):
         *args,
         **kwargs,
     ):
-        super().__init__(completion_fns, *args, **kwargs)
-
-        random.seed(seed)
+        super().__init__(completion_fns, seed=seed, *args, **kwargs)
 
         self.n_copies = n_copies
         assert self.n_copies >= 2, "Must provide n_copies >= 2"
@@ -39,14 +37,14 @@ class SchellingPoint(Eval):
             self.completion_fns = self.completion_fns * n_copies
         assert len(self.completion_fns) == n_copies, "Must provide n_copies completion_fns"
 
-    def eval_sample(self, sample: Any, *_):
+    def eval_sample(self, sample: Any, rng: random.Random):
 
         completions_no_ci = []
         scratchpad_outputs_no_ci = []
 
         for i, completion_fn in enumerate(self.completion_fns):
             prompt = sample[f"{i}"]
-            sys_prompt_no_ci = random.choice(sys_prompts_no_ci)
+            sys_prompt_no_ci = rng.choice(sys_prompts_no_ci)
             completion, scratchpad = get_response(
                 completion_fn, sys_prompt_no_ci, prompt, self.temperature
             )
@@ -60,7 +58,7 @@ class SchellingPoint(Eval):
 
         for i, completion_fn in enumerate(self.completion_fns):
             prompt = sample[f"{i}"]
-            sys_prompt_ci = random.choice(sys_prompts_ci)
+            sys_prompt_ci = rng.choice(sys_prompts_ci)
             completion, scratchpad = get_response(
                 completion_fn, sys_prompt_ci, prompt, self.temperature
             )
