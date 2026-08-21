@@ -45,7 +45,7 @@ def is_valid_action(action: Action) -> bool:
 
     assert isinstance(action, Action)
 
-    if isinstance(action.args, str):
+    if not isinstance(action.args, dict):
         return False
 
     for valid_action in ACTION_SPACE:
