@@ -60,7 +60,7 @@ class MultipleChoice(evals.Eval):
         super().__init__(completion_fns, *args, **kwargs)
         assert len(completion_fns) == 1, "MultipleChoice only supports one completion fn"
         self.dataset = dataset
-        self.instructions = instructions
+        self.instructions = "" if instructions is None else instructions
 
     def eval_sample(self, sample, rng):
         assert isinstance(sample, Sample)
