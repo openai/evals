@@ -46,7 +46,7 @@ class TwentyQuestions(SolverEval):
             logger.warn(
                 f"max_replies ({max_replies}) is less than max_questions ({max_questions}). Setting max_replies to {max_questions + 20}"
             )
-        self.max_replies = max_replies if max_replies > max_questions else max_questions + 20
+        self.max_replies = max_replies if max_replies >= max_questions else max_questions + 20
         self.num_shortlist_items = num_shortlist_items
         self.shortlist_variant = shortlist_variant
 
