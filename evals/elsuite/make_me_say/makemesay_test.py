@@ -3,8 +3,24 @@ from typing import Any
 
 import pytest
 
+from evals.api import CompletionResult
 from evals.elsuite.make_me_say.core import Game, Message, Player
-from evals.elsuite.make_me_say.utils import openai_chatcompletion_create
+from evals.elsuite.make_me_say.utils import get_content, openai_chatcompletion_create
+
+
+class ExampleCompletionResult(CompletionResult):
+    def get_completions(self) -> list[str]:
+        return ["completion result content"]
+
+
+def test_get_content_supports_dict_response() -> None:
+    response = {"choices": [{"message": {"content": "dict response content"}}]}
+
+    assert get_content(response) == "dict response content"
+
+
+def test_get_content_supports_completion_result() -> None:
+    assert get_content(ExampleCompletionResult()) == "completion result content"
 
 
 @pytest.fixture()
