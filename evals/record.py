@@ -384,64 +384,90 @@ class HttpRecorder(RecorderBase):
         self.url = url
         self.batch_size = batch_size
         self.fail_percent_threshold = fail_percent_threshold / 100
-        self.failed_requests = 0  # Add this line to track failed requests
+        # Counts are in units of HTTP requests (one per batch, including the
+        # final-report request), not individual events -- see #1819.
+        self.total_requests = 0
+        self.failed_requests = 0
         self.local_fallback_path = local_fallback_path
         self.local_fallback_recorder = LocalRecorder(local_fallback_path, run_spec)
         logger.info(f"HttpRecorder initialized with URL {self.url}")
 
     def _flush_events_internal(self, events_to_write: Sequence[Event]):
         batch_size = self.batch_size
+        threshold_was_exceeded = False
         for i in range(0, len(events_to_write), batch_size):
             batch = list(events_to_write[i : i + batch_size])
-            try:
-                self._send_event(batch)
-            except RuntimeError as e:
-                logger.error(f"Falling back to LocalRecorder due to error: {str(e)}")
-                self.local_fallback_recorder._flush_events_internal(batch)
-                raise RuntimeError(
-                    "An error occurred when sending events. Your events have been saved locally using the Local recorder."
+            delivered = self._send_event(batch)
+            if not delivered:
+                logger.error(
+                    "Failed to deliver a batch of %d event(s) to %s; saving "
+                    "them to the local fallback at %s instead",
+                    len(batch),
+                    self.url,
+                    self.local_fallback_path,
                 )
+                self.local_fallback_recorder._flush_events_internal(batch)
+            if self._failure_rate_exceeds_threshold():
+                threshold_was_exceeded = True
 
-    def _send_event(self, events: List[Event]):
+        # Every batch above has already been delivered or saved locally by
+        # this point, regardless of the threshold -- raising only signals
+        # that the run is unhealthy, it never gates whether events are kept.
+        if threshold_was_exceeded:
+            raise self._threshold_exceeded_error()
+
+    def _send_event(self, events: List[Event]) -> bool:
+        """
+        Attempt to deliver a batch of events to ``self.url`` over HTTP.
+
+        Returns True if the server acknowledged the batch with an "ok" (2xx)
+        response, and False for any other outcome: a non-OK HTTP status
+        (e.g. a 4xx/5xx) or a request-level exception (e.g. a connection
+        error). Both outcomes are treated as equally a "failed request".
+
+        This method never raises for a delivery failure -- callers decide
+        how to react (see `_flush_events_internal` and `record_final_report`,
+        which fall back to local storage and consult
+        `_failure_rate_exceeds_threshold`).
+        """
         # Convert the events to dictionaries
         events_dict = [dataclasses.asdict(event) for event in events]
 
         logger.debug(f"Sending events: {events_dict}")
 
+        self.total_requests += 1
         try:
             # Send the events to the specified URL
             response = requests.post(self.url, json=events_dict)
-
-            # If the request succeeded, log a success message
-            if response.ok:
-                logger.debug("Events sent successfully")
-
-            # If the request failed, log a warning and increment failed_requests
-            else:
-                logger.warning(f"Failed to send events: {response.text}")
-                self.failed_requests += len(
-                    events
-                )  # Increase the count by the number of events in the failed request
-
         except Exception as e:
             logger.warning(f"Failed to send events: {str(e)}")
-            self.failed_requests += len(
-                events
-            )  # Increase the count by the number of events in the failed request
+            self.failed_requests += 1
+            return False
 
-            # Check if the proportion of failed requests exceeds the threshold
-            fail_threshold = self.fail_percent_threshold
-            # Make a string for human comprehention
-            fail_threshold_str = str(fail_threshold * 100) + "%"
+        if response.ok:
+            logger.debug("Events sent successfully")
+            return True
 
-            if self.failed_requests / len(self._events) > fail_threshold:
-                raise RuntimeError(
-                    "The proportion of failed events has exceeded the threshold of: "
-                    + fail_threshold_str
-                    + "."
-                    + " Falling back to LocalRecorder. "
-                    "You can modify this via the cli flag --http-fail-percent-threshold"
-                )
+        # A non-OK response (e.g. a 500) is a delivery failure just like an
+        # exception -- it must not be allowed to pass silently.
+        logger.warning(f"Failed to send events: {response.text}")
+        self.failed_requests += 1
+        return False
+
+    def _failure_rate_exceeds_threshold(self) -> bool:
+        if self.total_requests == 0:
+            return False
+        return (self.failed_requests / self.total_requests) > self.fail_percent_threshold
+
+    def _threshold_exceeded_error(self) -> RuntimeError:
+        fail_threshold_str = f"{self.fail_percent_threshold * 100:g}%"
+        return RuntimeError(
+            f"The proportion of failed HTTP requests ({self.failed_requests}/"
+            f"{self.total_requests}) has exceeded the threshold of "
+            f"{fail_threshold_str}. Any events that failed to send have been "
+            f"saved locally to {self.local_fallback_path}. You can modify "
+            "this via the CLI flag --http-fail-percent-threshold."
+        )
 
     def record_final_report(self, final_report: Any):
         # Convert the final report to a dictionary and prepare it as an event
@@ -455,14 +481,22 @@ class HttpRecorder(RecorderBase):
             created_at=str(datetime.now(timezone.utc)),
         )
 
-        # Send the final report event
-        try:
-            self._send_event([report_event])
+        # Send the final report event, falling back to local storage on any
+        # delivery failure (HTTP-status or connection-level) -- never just
+        # logging a false "success" for a report that didn't actually arrive.
+        delivered = self._send_event([report_event])
+        if delivered:
             logging.info(f"Final report: {final_report}.")
             logging.info(f"Data logged to: {self.url}")
-        except RuntimeError as e:
-            logger.error(f"Falling back to LocalRecorder due to error: {str(e)}")
+        else:
+            logger.error(
+                f"Failed to deliver the final report to {self.url}; saving "
+                f"it to the local fallback at {self.local_fallback_path} instead"
+            )
             self.local_fallback_recorder.record_final_report(final_report)
+
+        if self._failure_rate_exceeds_threshold():
+            raise self._threshold_exceeded_error()
 
 
 class Recorder(RecorderBase):
