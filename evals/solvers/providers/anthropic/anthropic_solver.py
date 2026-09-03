@@ -121,12 +121,9 @@ def anthropic_create_retrying(client: Anthropic, *args, **kwargs):
     Helper function for creating a backoff-retry enabled message request.
     `args` and `kwargs` match what is accepted by `client.messages.create`.
     """
-    result = create_retrying(
+    return create_retrying(
         client.messages.create, retry_exceptions=ANTHROPIC_TIMEOUT_EXCEPTIONS, *args, **kwargs
     )
-    if "error" in result:
-        raise Exception(result["error"])
-    return result
 
 
 def anth_to_openai_usage(anth_usage: Usage) -> dict:

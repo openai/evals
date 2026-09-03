@@ -1,4 +1,3 @@
-import logging
 from typing import Any, Optional, Union
 
 import openai
@@ -29,13 +28,9 @@ def openai_completion_create_retrying(client: OpenAI, *args, **kwargs):
     Helper function for creating a completion.
     `args` and `kwargs` match what is accepted by `openai.Completion.create`.
     """
-    result = create_retrying(
+    return create_retrying(
         client.completions.create, retry_exceptions=OPENAI_TIMEOUT_EXCEPTIONS, *args, **kwargs
     )
-    if "error" in result:
-        logging.warning(result)
-        raise openai.APIError(result["error"])
-    return result
 
 
 def openai_chat_completion_create_retrying(client: OpenAI, *args, **kwargs):
@@ -43,13 +38,9 @@ def openai_chat_completion_create_retrying(client: OpenAI, *args, **kwargs):
     Helper function for creating a completion.
     `args` and `kwargs` match what is accepted by `openai.Completion.create`.
     """
-    result = create_retrying(
+    return create_retrying(
         client.chat.completions.create, retry_exceptions=OPENAI_TIMEOUT_EXCEPTIONS, *args, **kwargs
     )
-    if "error" in result:
-        logging.warning(result)
-        raise openai.APIError(result["error"])
-    return result
 
 
 class OpenAIBaseCompletionResult(CompletionResult):
