@@ -8,6 +8,9 @@ on:
     paths:
       - 'evals/registry/**'
 
+permissions:
+  contents: read
+
 jobs:
   check_files:
     runs-on: ubuntu-latest
@@ -46,7 +49,7 @@ jobs:
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: |
-        files="${{ env.new_files }}"
+        files="$new_files"
         if [ -n "$files" ]; then
           for file in $files; do
             echo "Processing $file"
