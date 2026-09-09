@@ -1,0 +1,9 @@
+res-actor-indexed-control:
+  id: res-actor-indexed-control.test.v0
+  description: Behavioral prerequisite eval for actor-indexed operational control under independently varied authority, capability, uncertainty, risk, and matched peer-agent distractors. A positive score does not establish a self-model or RES; it only tests a behavioral prerequisite for a later causal-abstraction study.
+  metrics: [accuracy]
+
+res-actor-indexed-control.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: res_actor_indexed_control/samples.jsonl
