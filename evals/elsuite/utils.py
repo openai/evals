@@ -93,6 +93,7 @@ def scrub_formatting_from_prompt(prompt):
 
     if is_chat_prompt(prompt):
         for i, msg in enumerate(scrubbed_prompt):
+            scrubbed_prompt[i] = copy.copy(msg)
             if "content" in msg:
                 scrubbed_prompt[i]["content"] = msg["content"].replace("{", "{{").replace("}", "}}")
     else:
