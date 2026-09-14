@@ -20,7 +20,16 @@ def get_accuracy(events: Sequence[Event]) -> float:
 
 def get_bootstrap_accuracy_std(events: Sequence[Event], num_samples: int = 1000) -> float:
     vals = [m.data["correct"] for m in events]
-    return np.std([np.mean(random.sample(vals, len(vals) // 2)) for _ in range(num_samples)])
+    if len(vals) == 0:
+        return float("nan")
+    # Bootstrap: resample len(vals) items *with* replacement. The previous
+    # implementation drew len(vals) // 2 items *without* replacement, which is
+    # not a bootstrap (it overestimates the std) and produced NaN whenever
+    # len(vals) < 2, since random.sample(vals, 0) yields an empty list and
+    # np.mean([]) is NaN.
+    return np.std(
+        [np.mean(random.choices(vals, k=len(vals))) for _ in range(num_samples)]
+    )
 
 
 def get_confusion_matrix(
