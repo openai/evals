@@ -25,6 +25,7 @@ naughty_strings_graded.test.v1:
     samples_jsonl: naughty_strings/security.jsonl
     eval_type: cot_classify
     modelgraded_spec: security
+    metaeval: true
 
 naughty_strings_graded_meta:
   id: naughty_strings_graded_meta.test.v1
