@@ -79,7 +79,7 @@ class Prompt(ABC):
 
 
 def is_chat_prompt(prompt: Prompt) -> bool:
-    return isinstance(prompt, list) and all(isinstance(msg, dict) for msg in prompt)
+    return bool(prompt) and isinstance(prompt, list) and all(isinstance(msg, dict) for msg in prompt)
 
 
 @dataclass
