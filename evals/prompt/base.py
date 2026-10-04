@@ -119,4 +119,9 @@ class ChatCompletionPrompt(Prompt):
     def to_formatted_prompt(self) -> OpenAICreateChatPrompt:
         if is_chat_prompt(self.raw_prompt):
             return self.raw_prompt
+        if isinstance(self.raw_prompt, list):
+            raise TypeError(
+                "ChatCompletionPrompt expects a string or a non-empty list "
+                "of message dictionaries"
+            )
         return self._render_text_as_chat_prompt(self.raw_prompt)
