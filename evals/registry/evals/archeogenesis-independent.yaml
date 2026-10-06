@@ -1,0 +1,14 @@
+archeogenesis-independent:
+  id: archeogenesis-independent.dev.v0
+  metrics: [accuracy]
+  description: >
+    Independent 15-case adversarial evaluation of evidence-bounded
+    examination, unresolved-state preservation, transition discipline,
+    localized correction, and reverse traceability.
+
+archeogenesis-independent.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: archeogenesis-independent/samples.jsonl
+    eval_type: cot_classify
+    modelgraded_spec: closedqa
