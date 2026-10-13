@@ -173,7 +173,16 @@ class Registry:
             return None
 
         logger.debug(f"Looking for {name}")
+        seen_aliases: set[str] = set()
+        alias_chain: list[str] = []
         while True:
+            if name in seen_aliases:
+                cycle_start = alias_chain.index(name)
+                cycle = " -> ".join([*alias_chain[cycle_start:], name])
+                raise ValueError(f"Alias cycle detected for {object} '{name}': {cycle}")
+
+            seen_aliases.add(name)
+            alias_chain.append(name)
             alias = get_alias()
 
             if alias is None:
