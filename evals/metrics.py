@@ -1,6 +1,7 @@
 """
 This file defines various common metrics of interest.
 """
+
 import random
 from typing import Optional, Sequence, Set
 
@@ -42,32 +43,44 @@ def get_confusion_matrix(
 
 def compute_matthew_corr(confusion_matrix: np.ndarray) -> float:
     assert confusion_matrix.shape == (2, 3), f"Got shape: {confusion_matrix.shape}"
-    r = confusion_matrix[:, :2]
+    r = confusion_matrix[:, :2].copy()
     r[:, 0] += confusion_matrix[:, 2]
-    return (r[1, 1] * r[0, 0] - r[1, 0] * r[0, 1]) / np.sqrt(
-        r[1, :].sum() * r[0, :].sum() * r[:, 0].sum() * r[:, 1].sum()
-    )
+    denom = np.sqrt(r[1, :].sum() * r[0, :].sum() * r[:, 0].sum() * r[:, 1].sum())
+    if denom == 0:
+        return 0.0
+    return float((r[1, 1] * r[0, 0] - r[1, 0] * r[0, 1]) / denom)
 
 
 def compute_precision(confusion_matrix: np.ndarray, idx: int = 0) -> float:
-    return confusion_matrix[idx, idx] / confusion_matrix[:, idx].sum()
+    denom = confusion_matrix[:, idx].sum()
+    if denom == 0:
+        return 0.0
+    return float(confusion_matrix[idx, idx] / denom)
 
 
 def compute_recall(confusion_matrix: np.ndarray, idx: int = 0) -> float:
-    return confusion_matrix[idx, idx] / confusion_matrix[idx, :].sum()
+    denom = confusion_matrix[idx, :].sum()
+    if denom == 0:
+        return 0.0
+    return float(confusion_matrix[idx, idx] / denom)
 
 
 def compute_f_score(confusion_matrix: np.ndarray, idx: int = 0, beta: float = 1.0) -> float:
     precision = compute_precision(confusion_matrix, idx=idx)
     recall = compute_recall(confusion_matrix, idx=idx)
-    return (1 + beta**2) * (precision * recall) / (beta**2 * precision + recall)
+    denom = beta**2 * precision + recall
+    if denom == 0:
+        return 0.0
+    return float((1 + beta**2) * (precision * recall) / denom)
 
 
 def compute_averaged_f_score(
     confusion_matrix: np.ndarray, beta: float = 1.0, average: str = "macro"
 ) -> float:
     assert average in ["macro"]
+    if confusion_matrix.shape[0] == 0:
+        return 0.0
     f_scores = []
     for i in range(confusion_matrix.shape[0]):
         f_scores.append(compute_f_score(confusion_matrix, idx=i, beta=beta))
-    return np.array(f_scores).mean()
+    return float(np.array(f_scores).mean())
