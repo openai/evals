@@ -25,11 +25,12 @@ git lfs pull
 
 This will populate all the pointer files under `evals/registry/data`.
 
-You may just want to fetch data for a select eval. You can achieve this via:
+You may just want to fetch data for a select eval. For example, to download only the CoQA data:
 ```sh
-git lfs fetch --include=evals/registry/data/${your eval}
-git lfs pull
+git lfs pull --include="evals/registry/data/coqa/**"
 ```
+
+Replace `coqa` with the dataset directory you want to download.
 
 ### Making evals
 
@@ -44,7 +45,7 @@ Using `-e`, changes you make to your eval will be reflected immediately without 
 Optionally, you can install the formatters for pre-committing with:
 
 ```sh
-pip install -e .[formatters]
+pip install -e '.[formatters]'
 ```
 
 Then run `pre-commit install` to install pre-commit into your git hooks. pre-commit will now run on every commit.
