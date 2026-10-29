@@ -1,0 +1,14 @@
+res-actor-indexed-control:
+  id: res-actor-indexed-control.test.v0
+  description: >-
+    Thirty synthetic action-label classification fixtures concerning the current
+    executor's authority, capability, uncertainty, risk, and commitments, with
+    peer-agent distractors. Accuracy uses the existing Match prefix scorer.
+    Results do not isolate actor-binding mechanisms or establish RES,
+    consciousness, subjective experience, or mechanistic self-representation.
+  metrics: [accuracy]
+
+res-actor-indexed-control.test.v0:
+  class: evals.elsuite.basic.match:Match
+  args:
+    samples_jsonl: res_actor_indexed_control/samples.jsonl
