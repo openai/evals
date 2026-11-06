@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from mock import patch
-from pytest import raises
+from pytest import mark, raises
 
 from evals.api import DummyCompletionFn
 from evals.elsuite.basic.match import Match
@@ -29,3 +29,34 @@ def test_non_chat_sample_is_rejected_during_initialization() -> None:
     with patch("evals.elsuite.basic.match.evals.get_jsonl", return_value=rows):
         with raises(ValueError, match=r"Few-shot row 0.*invalid.*sample"):
             _make_match()
+
+
+@mark.parametrize(
+    "message",
+    [
+        {},
+        {"role": "user"},
+        {"content": "hello"},
+        {"role": 7, "content": "hello"},
+        {"role": "user", "content": None},
+        {"role": "", "content": "hello"},
+    ],
+)
+def test_malformed_chat_messages_are_rejected_before_evaluation(message):
+    with patch("evals.elsuite.basic.match.evals.get_jsonl", return_value=[{"sample": [message]}]):
+        with raises(ValueError, match=r"Few-shot row 0.*message 0"):
+            _make_match()
+
+
+def test_valid_chat_messages_preserve_optional_fields():
+    rows = [
+        {
+            "sample": [
+                {"role": "user", "content": "hello", "name": "example_user"},
+                {"role": "assistant", "content": "answer"},
+            ]
+        }
+    ]
+    with patch("evals.elsuite.basic.match.evals.get_jsonl", return_value=rows):
+        evaluator = _make_match()
+    assert evaluator.few_shot == rows

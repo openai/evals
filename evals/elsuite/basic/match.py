@@ -40,6 +40,16 @@ class Match(evals.Eval):
                     f"Few-shot row {index} in {self.few_shot_jsonl!r} has an invalid "
                     "'sample'; expected a list of chat-message objects"
                 )
+            for message_index, message in enumerate(row["sample"]):
+                if (
+                    not isinstance(message.get("role"), str)
+                    or not message["role"].strip()
+                    or not isinstance(message.get("content"), str)
+                ):
+                    raise ValueError(
+                        f"Few-shot row {index} in {self.few_shot_jsonl!r}, message {message_index} "
+                        "must contain a nonempty string 'role' and a string 'content'"
+                    )
 
     def eval_sample(self, sample: Any, *_):
         assert isinstance(sample, dict), "sample must be a dict"
