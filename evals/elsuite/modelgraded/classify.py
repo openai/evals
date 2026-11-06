@@ -50,7 +50,11 @@ class ModelBasedClassify(evals.Eval):
 
         configured_n_samples = self.sample_kwargs.get("n_samples")
         self.n_samples = 1 if configured_n_samples is None else configured_n_samples
-        if not isinstance(self.n_samples, int) or self.n_samples < 1:
+        if (
+            isinstance(self.n_samples, bool)
+            or not isinstance(self.n_samples, int)
+            or self.n_samples < 1
+        ):
             raise ValueError("sample_kwargs.n_samples must be a positive integer")
         if self.multicomp_n > 1 and self.n_samples > 1:
             raise ValueError(

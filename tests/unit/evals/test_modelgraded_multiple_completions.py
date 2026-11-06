@@ -113,3 +113,37 @@ def test_model_based_classify_rejects_incomplete_multi_sample_result() -> None:
 
     with pytest.raises(ValueError, match="returned 2 completions"):
         evaluator.eval_sample({"input": "question"}, None)
+
+
+@pytest.mark.parametrize("n_samples", [True, False, 0, -1, 1.5, "2"])
+def test_constructor_rejects_nonpositive_or_noninteger_sample_counts(n_samples):
+    from pathlib import Path
+    from unittest.mock import Mock
+
+    from evals.api import DummyCompletionFn
+
+    with pytest.raises(ValueError, match="positive integer"):
+        ModelBasedClassify(
+            "synthetic",
+            completion_fns=[DummyCompletionFn()],
+            eval_registry_path=Path("."),
+            registry=Mock(),
+            sample_kwargs={"n_samples": n_samples},
+        )
+
+
+@pytest.mark.parametrize("n_samples", [None, 1, 3])
+def test_constructor_accepts_independent_sample_counts(n_samples):
+    from pathlib import Path
+    from unittest.mock import Mock
+
+    from evals.api import DummyCompletionFn
+
+    evaluator = ModelBasedClassify(
+        "synthetic",
+        completion_fns=[DummyCompletionFn()],
+        eval_registry_path=Path("."),
+        registry=Mock(),
+        sample_kwargs={"n_samples": n_samples},
+    )
+    assert evaluator.n_samples == (1 if n_samples is None else n_samples)
