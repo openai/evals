@@ -11,6 +11,8 @@ For a model completion `a` and a reference list of correct answers `B`, the foll
 - [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(b in a) for b in B])`
 - [`basic/fuzzy_match.py:FuzzyMatch`](../evals/elsuite/basic/fuzzy_match.py): `any([(a in b or b in a) for b in B])`
 
+`Match` also supports few-shot chat prompts through `num_few_shot` and `few_shot_jsonl`. By default it preserves the historical behavior of taking the first N examples. Set `random_few_shot: true` in the eval arguments to select a seeded random subset for each sample instead; selection is reproducible for the same eval seed and sample ID.
+
 To compare a model completion `a` in *JSON format* to a reference list of correct answers `B` also formatted in JSON, use the following eval:
 - [`basic/json_match.py:JsonMatch`](../evals/elsuite/basic/json_match.py) yields a match if `a` is identical to at least one answer from `B`. Two JSON objects are
 identical if they have the same set of keys and the values for each key are identical. Key order is not significant, and whitespace outside values is ignored. Invalid JSON never matches.
