@@ -122,13 +122,28 @@ def run(
         print("  " + command_str)
 
     num_already_completed = num_evals - len(commands)
+    failed_commands: list[Task] = []
     for idx, command in enumerate(commands):
         real_idx = idx + num_already_completed
         print(highlight("Running command: " + " ".join(command) + f" ({real_idx+1}/{num_evals})"))
-        subprocess.run(command, stdout=subprocess.PIPE, check=args.exit_on_error)
-        progress.add(command)
+        result = subprocess.run(command, stdout=subprocess.PIPE, check=args.exit_on_error)
+        if result.returncode == 0:
+            progress.add(command)
+        else:
+            failed_commands.append(command)
+            logger.error(
+                "Command failed with exit code %d and was not checkpointed: %s",
+                result.returncode,
+                " ".join(command),
+            )
 
-    print(highlight("All done!"))
+    if failed_commands:
+        print(
+            f"Finished with {len(failed_commands)} failed eval(s); "
+            "failed commands were not marked complete."
+        )
+    else:
+        print(highlight("All done!"))
 
 
 def main() -> None:
