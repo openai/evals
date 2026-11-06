@@ -96,9 +96,8 @@ def get_choice_score(
         return None
     if choice_scores == "from_strings":
         choice_scores = {c: float(c) for c in choice_strings}
-    # assumption: each INVALID_STR contributes the lowest score
     if choice == INVALID_STR:
-        return min(choice_scores.values())
+        return None
     return choice_scores[choice]
 
 
