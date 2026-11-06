@@ -91,9 +91,11 @@ class RecorderBase:
     def as_default_recorder(self, sample_id: str):
         sample_id_token = self._sample_id.set(sample_id)
         default_recorder_token = _default_recorder.set(self)
-        yield
-        _default_recorder.reset(default_recorder_token)
-        self._sample_id.reset(sample_id_token)
+        try:
+            yield
+        finally:
+            _default_recorder.reset(default_recorder_token)
+            self._sample_id.reset(sample_id_token)
 
     def current_sample_id(self) -> Optional[str]:
         return self._sample_id.get()
@@ -366,7 +368,11 @@ class LocalRecorder(RecorderBase):
 
     def record_final_report(self, final_report: Any):
         with bf.BlobFile(self.event_file_path, "ab") as f:
-            f.write((jsondumps({"final_report": final_report, "run_id": self.run_spec.run_id}) + "\n").encode("utf-8"))
+            f.write(
+                (
+                    jsondumps({"final_report": final_report, "run_id": self.run_spec.run_id}) + "\n"
+                ).encode("utf-8")
+            )
 
         logging.info(f"Final report: {final_report}. Logged to {self.event_file_path}")
 
@@ -586,8 +592,11 @@ class Recorder(RecorderBase):
 #########################################################################
 
 
-def current_sample_id() -> str:
-    return default_recorder().current_sample_id
+def current_sample_id() -> Optional[str]:
+    recorder = default_recorder()
+    if recorder is None:
+        return None
+    return recorder.current_sample_id()
 
 
 def record_match(correct: bool, *, expected=None, picked=None, **extra):
