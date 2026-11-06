@@ -49,6 +49,7 @@ class ExactMatch(Match):
         result = self.completion_fn(
             prompt=prompt,
             temperature=0.0,
+            max_tokens=self.max_tokens,
         )
         sampled = result.get_completions()[0]
 

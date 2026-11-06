@@ -57,3 +57,28 @@ def test_exact_match_is_whitespace_sensitive() -> None:
         sampled=" 42",
         options=["42"],
     )
+
+
+def test_exact_match_passes_configured_token_limit_to_completion():
+    from pathlib import Path
+    from unittest.mock import Mock
+
+    from evals.api import CompletionFn
+    from evals.elsuite.basic.exact_match import ExactMatch
+
+    class Capture(CompletionFn):
+        def __call__(self, prompt, **kwargs):
+            self.options = kwargs
+            return Mock(get_completions=lambda: ["answer"])
+
+    completion = Capture()
+    evaluator = ExactMatch(
+        completion_fns=[completion],
+        samples_jsonl="unused.jsonl",
+        eval_registry_path=Path("."),
+        registry=Mock(),
+        max_tokens=7,
+    )
+    with patch("evals.elsuite.basic.exact_match.record_match"):
+        assert evaluator.eval_sample({"input": "question", "ideal": "answer"}) == "answer"
+    assert completion.options == {"temperature": 0.0, "max_tokens": 7}
