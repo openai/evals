@@ -5,7 +5,6 @@ from types import SimpleNamespace
 
 import pytest
 
-
 MODULE_PATH = (
     Path(__file__).resolve().parents[3]
     / "evals"
