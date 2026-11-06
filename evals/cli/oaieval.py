@@ -27,7 +27,7 @@ def _split_key_value_args(param_str: str) -> list[str]:
     """Split comma-separated key/value arguments without splitting JSON containers."""
     parts: list[str] = []
     start = 0
-    depth = 0
+    brackets: list[str] = []
     quote: Optional[str] = None
     escaped = False
 
@@ -44,16 +44,15 @@ def _split_key_value_args(param_str: str) -> list[str]:
         if char == '"':
             quote = char
         elif char in "[{":
-            depth += 1
+            brackets.append(char)
         elif char in "]}":
-            depth -= 1
-            if depth < 0:
-                raise ValueError("Unbalanced brackets in --completion_args")
-        elif char == "," and depth == 0:
+            if not brackets or brackets.pop() != {"]": "[", "}": "{"}[char]:
+                raise ValueError("Unbalanced or mismatched brackets in --completion_args")
+        elif char == "," and not brackets:
             parts.append(param_str[start:index])
             start = index + 1
 
-    if quote is not None or depth != 0:
+    if quote is not None or brackets:
         raise ValueError("Unbalanced quotes or brackets in --completion_args")
 
     parts.append(param_str[start:])
@@ -75,8 +74,7 @@ def parse_completion_args(param_str: str) -> dict[str, Any]:
         key = key.strip()
         if not separator or not key:
             raise ValueError(
-                "Completion arguments must use key=value syntax; "
-                f"could not parse {item!r}"
+                "Completion arguments must use key=value syntax; " f"could not parse {item!r}"
             )
 
         raw_value = raw_value.strip()
@@ -293,7 +291,9 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     try:
         add_token_usage_to_result(result, recorder)
     except Exception as e:
-        logger.error(f"Failed to add token usage to result: {e}. Eval results will be reported and are not affected.")
+        logger.error(
+            f"Failed to add token usage to result: {e}. Eval results will be reported and are not affected."
+        )
     recorder.record_final_report(result)
 
     if not (args.dry_run or args.local_run):

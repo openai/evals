@@ -71,3 +71,16 @@ def test_explicit_extra_options_override_convenience_kwargs_without_mutation() -
         "max_tokens": 32,
     }
     assert extra_options == {"temperature": 0.2, "stop": ["END"]}
+
+
+@pytest.mark.parametrize("value", ["metadata=[}", "metadata={]", 'metadata={"items":[1,2}]}'])
+def test_mismatched_json_brackets_are_rejected(value):
+    with pytest.raises(ValueError, match="brackets"):
+        parse_completion_args(value)
+
+
+def test_nested_containers_and_quoted_delimiters_preserve_types():
+    assert parse_completion_args('metadata={"items":[1,{"text":"a,b=c"}]},stop="a,b=c"') == {
+        "metadata": {"items": [1, {"text": "a,b=c"}]},
+        "stop": "a,b=c",
+    }
