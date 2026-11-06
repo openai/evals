@@ -111,7 +111,9 @@ def record_and_check_match(
         "options": options,
         "picked": picked,
     }
-    match = picked in expected
+    match = picked is not None and any(
+        normalize(picked) == normalize(answer) for answer in expected
+    )
     result["expected"] = expected
     result["match"] = match
     record_match(match, expected=expected, picked=picked, sampled=sampled, options=options)

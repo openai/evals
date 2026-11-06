@@ -57,3 +57,32 @@ def test_record_and_check_match_defaults_remain_strict() -> None:
     assert case_mismatch is None
     assert whitespace_mismatch is None
     assert record_match.call_count == 2
+
+
+def test_normalized_explicit_options_are_compared_to_normalized_expected():
+    for sampled, expected, options, kwargs in [
+        ("YES", "yes", ["YES", "NO"], {"ignore_case": True}),
+        ("answer", " answer ", ["answer"], {"strip": True}),
+        ("STRASSE", "Straße", ["strasse"], {"ignore_case": True}),
+    ]:
+        with patch("evals.api.record_match") as record_match:
+            picked = record_and_check_match("prompt", sampled, expected, options=options, **kwargs)
+        assert picked == options[0]
+        assert record_match.call_args.args == (True,)
+        assert record_match.call_args.kwargs["sampled"] == sampled
+        assert record_match.call_args.kwargs["expected"] == [expected]
+        assert record_match.call_args.kwargs["options"] == options
+
+
+def test_normalization_retains_separator_boundaries_and_negative_scores():
+    with patch("evals.api.record_match") as recorded:
+        assert (
+            record_and_check_match("p", "YESMORE", "yes", ignore_case=True, separator=str.isspace)
+            is None
+        )
+        assert recorded.call_args.args == (False,)
+        assert (
+            record_and_check_match("p", "no", "yes", options=["YES", "NO"], ignore_case=True)
+            == "NO"
+        )
+        assert recorded.call_args.args == (False,)
