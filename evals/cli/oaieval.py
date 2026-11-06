@@ -2,6 +2,7 @@
 This file defines the `oaieval` CLI for running evals.
 """
 import argparse
+import importlib.metadata
 import logging
 import shlex
 import sys
@@ -22,8 +23,16 @@ def _purple(str: str) -> str:
     return f"\033[1;35m{str}\033[0m"
 
 
+def _package_version() -> str:
+    try:
+        return importlib.metadata.version("evals")
+    except importlib.metadata.PackageNotFoundError:
+        return "unknown"
+
+
 def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run evals through the API")
+    parser.add_argument("--version", action="version", version=_package_version())
     parser.add_argument(
         "completion_fn",
         type=str,
@@ -227,7 +236,9 @@ def run(args: OaiEvalArguments, registry: Optional[Registry] = None) -> str:
     try:
         add_token_usage_to_result(result, recorder)
     except Exception as e:
-        logger.error(f"Failed to add token usage to result: {e}. Eval results will be reported and are not affected.")
+        logger.error(
+            f"Failed to add token usage to result: {e}. Eval results will be reported and are not affected."
+        )
     recorder.record_final_report(result)
 
     if not (args.dry_run or args.local_run):
