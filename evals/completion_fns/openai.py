@@ -31,32 +31,50 @@ def _encoding_for_model(model: Optional[str]):
             return tiktoken.encoding_for_model(model)
         except KeyError:
             pass
-    return tiktoken.get_encoding("cl100k_base")
+    # An unrelated encoding can falsely reject an otherwise valid prompt.
+    return None
 
 
 def _estimate_prompt_tokens(prompt: Any, model: Optional[str]) -> Optional[int]:
-    """Estimate input tokens for prompt shapes supported by OpenAI completion functions."""
+    """Estimate the largest individual input, never the sum of a prompt batch."""
+    if isinstance(prompt, list):
+        if all(isinstance(token, int) and not isinstance(token, bool) for token in prompt):
+            return len(prompt)
+        if all(
+            isinstance(tokens, list)
+            and all(isinstance(token, int) and not isinstance(token, bool) for token in tokens)
+            for tokens in prompt
+        ):
+            return max((len(tokens) for tokens in prompt), default=0)
+
     encoding = _encoding_for_model(model)
+    if encoding is None:
+        return None
+
+    def count_text(text: str) -> int:
+        # Dataset text may contain literal strings that resemble special tokens.
+        return len(encoding.encode(text, disallowed_special=()))
 
     if isinstance(prompt, str):
-        return len(encoding.encode(prompt))
+        return count_text(prompt)
 
     if isinstance(prompt, list):
-        if all(isinstance(token, int) for token in prompt):
-            return len(prompt)
-        if all(isinstance(token, str) for token in prompt):
-            return sum(len(encoding.encode(token)) for token in prompt)
+        if all(isinstance(text, str) for text in prompt):
+            return max((count_text(text) for text in prompt), default=0)
         if all(isinstance(message, dict) for message in prompt):
-            # OpenAI chat token accounting has varied slightly between model versions.
-            # This follows the standard 3-tokens-per-message approximation and is used
-            # only to reject prompts that already exceed a known context window.
-            tokens = 3  # assistant reply priming
+            # Only estimate plain text chat. Structured content and tool calls
+            # require model-specific accounting and remain server-validated.
+            if any(
+                key not in {"role", "content", "name"} or not isinstance(value, str)
+                for message in prompt
+                for key, value in message.items()
+            ):
+                return None
+            tokens = 3  # approximate assistant reply priming
             for message in prompt:
                 tokens += 3
                 for key, value in message.items():
-                    if not isinstance(value, str):
-                        continue
-                    tokens += len(encoding.encode(value))
+                    tokens += count_text(value)
                     if key == "name":
                         tokens += 1
             return tokens
