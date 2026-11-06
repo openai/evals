@@ -1,14 +1,16 @@
-import os
-
 import pytest
 
-os.environ.setdefault("OPENAI_API_KEY", "test")
 
-from evals.cli import oaieval
+@pytest.fixture
+def oaieval(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "test-offline-validation")
+    from evals.cli import oaieval
+
+    return oaieval
 
 
 def test_version_flag_prints_package_version(
-    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], oaieval
 ) -> None:
     monkeypatch.setattr(oaieval, "_package_version", lambda: "9.8.7")
 
@@ -21,6 +23,7 @@ def test_version_flag_prints_package_version(
 
 def test_package_version_falls_back_when_distribution_is_missing(
     monkeypatch: pytest.MonkeyPatch,
+    oaieval,
 ) -> None:
     def missing_distribution(name: str) -> str:
         raise oaieval.importlib.metadata.PackageNotFoundError(name)
