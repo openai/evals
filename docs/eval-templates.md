@@ -8,8 +8,11 @@ In cases where the desired model response has very little variation, such as ans
 
 For a model completion `a` and a reference list of correct answers `B`, the following evals implement:
 - [`basic/match.py:Match`](../evals/elsuite/basic/match.py): `any([a.startswith(b) for b in B])`
+- [`basic/exact_match.py:ExactMatch`](../evals/elsuite/basic/exact_match.py): `any([a == b for b in B])`
 - [`basic/includes.py:Includes`](../evals/elsuite/basic/includes.py): `any([(b in a) for b in B])`
 - [`basic/fuzzy_match.py:FuzzyMatch`](../evals/elsuite/basic/fuzzy_match.py): `any([(a in b or b in a) for b in B])`
+
+`ExactMatch` is intentionally strict, including whitespace and capitalization. It is useful for algorithmic or structured-output tasks where extra text should make an answer incorrect rather than being accepted as a valid prefix.
 
 To compare a model completion `a` in *JSON format* to a reference list of correct answers `B` also formatted in JSON, use the following eval:
 - [`basic/json_match.py:JsonMatch`](../evals/elsuite/basic/json_match.py) yields a match if `a` is identical to at least one answer from `B`. Two JSON objects are
