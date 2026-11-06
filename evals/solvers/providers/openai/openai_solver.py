@@ -280,8 +280,10 @@ class OpenAISolver(Solver):
         model = self.completion_fn_options["model"]
         # If valid answers were provided, apply logit bias to those tokens
         if self.valid_answers is not None and len(self.valid_answers) > 0:
-            extra_options = self.completion_fn_options.setdefault("extra_options", {})
-            extra_options["logit_bias"] = self._make_logit_bias(self.valid_answers, model)
+            logit_bias = self._make_logit_bias(self.valid_answers, model)
+            if self.completion_fn_options.get("extra_options") is None:
+                self.completion_fn_options["extra_options"] = {}
+            self.completion_fn_options["extra_options"]["logit_bias"] = logit_bias
 
     def _make_logit_bias(self, valid_answers: list[str], model: str) -> dict[int, float]:
         enc = tiktoken.encoding_for_model(model)
