@@ -53,3 +53,23 @@ def test_api_model_ids_initializes_openai_client_lazily():
         assert registry.api_model_ids == ["model-a", "model-b"]
         openai_client.assert_called_once()
         fake_client.models.list.assert_called_once()
+
+
+def test_registry_import_does_not_require_api_credentials():
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    env = os.environ.copy()
+    env.pop("OPENAI_API_KEY", None)
+    env["PYTHONPATH"] = str(Path(__file__).resolve().parents[1])
+    result = subprocess.run(
+        [sys.executable, "-c", "from evals.registry import Registry; Registry(registry_paths=[])"],
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=20,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
