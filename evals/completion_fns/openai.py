@@ -52,6 +52,13 @@ def openai_chat_completion_create_retrying(client: OpenAI, *args, **kwargs):
     return result
 
 
+def _request_options(extra_options: Optional[dict], kwargs: dict[str, Any]) -> dict[str, Any]:
+    """Build constructor-level API options without mutating caller-owned dictionaries."""
+    options = {key: value for key, value in kwargs.items() if key != "registry"}
+    options.update(extra_options or {})
+    return options
+
+
 class OpenAIBaseCompletionResult(CompletionResult):
     def __init__(self, raw_data: Any, prompt: Any):
         self.raw_data = raw_data
@@ -87,14 +94,14 @@ class OpenAICompletionFn(CompletionFn):
         api_base: Optional[str] = None,
         api_key: Optional[str] = None,
         n_ctx: Optional[int] = None,
-        extra_options: Optional[dict] = {},
-        **kwargs,
+        extra_options: Optional[dict] = None,
+        **kwargs: Any,
     ):
         self.model = model
         self.api_base = api_base
         self.api_key = api_key
         self.n_ctx = n_ctx
-        self.extra_options = extra_options
+        self.extra_options = _request_options(extra_options, kwargs)
 
     def __call__(
         self,
@@ -138,13 +145,14 @@ class OpenAIChatCompletionFn(CompletionFnSpec):
         api_base: Optional[str] = None,
         api_key: Optional[str] = None,
         n_ctx: Optional[int] = None,
-        extra_options: Optional[dict] = {},
+        extra_options: Optional[dict] = None,
+        **kwargs: Any,
     ):
         self.model = model
         self.api_base = api_base
         self.api_key = api_key
         self.n_ctx = n_ctx
-        self.extra_options = extra_options
+        self.extra_options = _request_options(extra_options, kwargs)
 
     def __call__(
         self,
