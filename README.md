@@ -63,6 +63,8 @@ You can find the full instructions to run existing evals in [`run-evals.md`](doc
 
 We provide the option for you to log your eval results to a Snowflake database, if you have one or wish to set one up. For this option, you will further have to specify the `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_DATABASE`, `SNOWFLAKE_USERNAME`, and `SNOWFLAKE_PASSWORD` environment variables.
 
+The semantic reconstruction metrics used by the text-compression and steganography evals require the optional sentence encoder. Install them with `pip install 'evals[semantic-similarity]'` (or `pip install -e '.[semantic-similarity]'` from a checkout). The encoder may download model data when those metrics are first used.
+
 ## Writing evals
 
 We suggest getting starting by: 
