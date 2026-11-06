@@ -94,8 +94,8 @@ def scrub_formatting_from_prompt(prompt):
         for msg in prompt:
             scrubbed_msg = copy.copy(msg)
             if "content" in scrubbed_msg:
-                scrubbed_msg["content"] = scrubbed_msg["content"].replace("{", "{{").replace(
-                    "}", "}}"
+                scrubbed_msg["content"] = (
+                    scrubbed_msg["content"].replace("{", "{{").replace("}", "}}")
                 )
             scrubbed_prompt.append(scrubbed_msg)
         return scrubbed_prompt
