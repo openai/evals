@@ -1,15 +1,19 @@
-import os
 from unittest.mock import MagicMock
 
 import pytest
 
-os.environ.setdefault("OPENAI_API_KEY", "dummy")
 
-import evals.eval
-from evals.cli.oaieval import OaiEvalArguments, run
+@pytest.fixture
+def eval_module(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "test-offline-validation")
+    import evals.eval
+
+    return evals.eval
 
 
 def _args(max_samples):
+    from evals.cli.oaieval import OaiEvalArguments
+
     args = OaiEvalArguments()
     args.debug = False
     args.visible = None
@@ -19,8 +23,10 @@ def _args(max_samples):
     return args
 
 
-def test_run_without_max_samples_clears_previous_in_process_limit(monkeypatch) -> None:
-    monkeypatch.setattr(evals.eval, "_MAX_SAMPLES", 1)
+def test_run_without_max_samples_clears_previous_in_process_limit(monkeypatch, eval_module) -> None:
+    from evals.cli.oaieval import run
+
+    monkeypatch.setattr(eval_module, "_MAX_SAMPLES", 1)
 
     registry = MagicMock()
     registry.get_eval.return_value = None
@@ -31,11 +37,13 @@ def test_run_without_max_samples_clears_previous_in_process_limit(monkeypatch) -
     with pytest.raises(AssertionError, match="Eval missing-eval not found"):
         run(_args(None), registry=registry)
 
-    assert evals.eval._MAX_SAMPLES is None
+    assert eval_module._MAX_SAMPLES is None
 
 
-def test_run_sets_current_max_samples_before_registry_lookup(monkeypatch) -> None:
-    monkeypatch.setattr(evals.eval, "_MAX_SAMPLES", None)
+def test_run_sets_current_max_samples_before_registry_lookup(monkeypatch, eval_module) -> None:
+    from evals.cli.oaieval import run
+
+    monkeypatch.setattr(eval_module, "_MAX_SAMPLES", None)
 
     registry = MagicMock()
     registry.get_eval.return_value = None
@@ -44,4 +52,4 @@ def test_run_sets_current_max_samples_before_registry_lookup(monkeypatch) -> Non
     with pytest.raises(AssertionError, match="Eval missing-eval not found"):
         run(_args(7), registry=registry)
 
-    assert evals.eval._MAX_SAMPLES == 7
+    assert eval_module._MAX_SAMPLES == 7
