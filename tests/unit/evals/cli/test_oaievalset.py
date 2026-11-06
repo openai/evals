@@ -71,3 +71,18 @@ def test_successful_command_is_checkpointed(capsys) -> None:
 
     progress.add.assert_called_once_with(["oaieval", "dummy", "demo.dev"])
     assert "All done!" in capsys.readouterr().out
+
+
+def test_exit_on_error_preserves_failure_and_does_not_checkpoint():
+    import pytest
+
+    progress = make_progress()
+    failure = subprocess.CalledProcessError(3, ["oaieval", "dummy", "demo.dev"])
+    with patch.object(oaievalset, "Progress", return_value=progress), patch.object(
+        oaievalset.subprocess, "run", side_effect=failure
+    ), pytest.raises(subprocess.CalledProcessError) as raised:
+        oaievalset.run(
+            make_args(exit_on_error=True), [], registry=FakeRegistry(), run_command="oaieval"
+        )
+    assert raised.value is failure
+    progress.add.assert_not_called()
