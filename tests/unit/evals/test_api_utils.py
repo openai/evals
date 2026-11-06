@@ -42,3 +42,40 @@ def test_retry_configuration_uses_exception_and_timeout(monkeypatch: pytest.Monk
     assert captured["max_value"] == 60
     assert captured["factor"] == 1.5
     assert captured["max_time"] == api_utils.EVALS_THREAD_TIMEOUT
+
+
+def test_retryable_failures_really_retry_then_return_result(monkeypatch):
+    import backoff._sync
+
+    monkeypatch.setattr(backoff._sync.time, "sleep", lambda _: None)
+    calls = []
+
+    def operation(value):
+        calls.append(value)
+        if len(calls) < 3:
+            raise RuntimeError("temporary")
+        return "completed"
+
+    assert api_utils.create_retrying(operation, (RuntimeError,), "input") == "completed"
+    assert calls == ["input", "input", "input"]
+
+
+def test_retry_deadline_propagates_the_original_exception(monkeypatch):
+    monkeypatch.setattr(api_utils, "EVALS_THREAD_TIMEOUT", 0)
+    error = RuntimeError("still unavailable")
+
+    def operation():
+        raise error
+
+    with pytest.raises(RuntimeError) as raised:
+        api_utils.create_retrying(operation, (RuntimeError,))
+    assert raised.value is error
+
+
+@pytest.mark.parametrize("value", [None, 0, "", []])
+def test_other_falsey_success_values_do_not_retry(value):
+    from unittest.mock import Mock
+
+    operation = Mock(return_value=value)
+    assert api_utils.create_retrying(operation, (RuntimeError,)) == value
+    operation.assert_called_once_with()
