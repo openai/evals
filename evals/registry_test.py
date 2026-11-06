@@ -105,9 +105,7 @@ def test_fine_tuned_model_routes_using_its_base_model():
     assert openai_model_endpoint("ft:davinci-002:acme:eval:abc123") == "completions"
 
 
-@pytest.mark.parametrize(
-    "model_name", ["gpt-4o-mini", "o3-mini", "gpt-5-mini", "gpt-5.6-terra"]
-)
+@pytest.mark.parametrize("model_name", ["gpt-4o-mini", "o3-mini", "gpt-5-mini", "gpt-5.6-terra"])
 def test_registry_routes_modern_models_to_chat_completion_fn(model_name):
     registry = Registry(registry_paths=[])
 
