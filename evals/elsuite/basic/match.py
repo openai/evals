@@ -15,6 +15,8 @@ class Match(evals.Eval):
         max_tokens: int = 500,
         num_few_shot: int = 0,
         few_shot_jsonl: str = None,
+        ignore_case: bool = False,
+        strip: bool = False,
         **kwargs,
     ):
         super().__init__(completion_fns, *args, **kwargs)
@@ -22,6 +24,8 @@ class Match(evals.Eval):
         self.max_tokens = max_tokens
         self.samples_jsonl = samples_jsonl
         self.num_few_shot = num_few_shot
+        self.ignore_case = ignore_case
+        self.strip = strip
         if self.num_few_shot > 0:
             assert few_shot_jsonl is not None, "few shot requires few shot sample dataset"
             self.few_shot_jsonl = few_shot_jsonl
@@ -53,6 +57,8 @@ class Match(evals.Eval):
             prompt=prompt,
             sampled=sampled,
             expected=sample["ideal"],
+            ignore_case=self.ignore_case,
+            strip=self.strip,
         )
 
     def run(self, recorder):
