@@ -19,8 +19,8 @@ repos:
       - id: isort
         args: [--line-length=100, --profile=black]
 
-  # Ruff covers the Pyflakes fixes previously duplicated by the autoflake hook,
-  # including unused imports/variables and duplicate dictionary keys.
+  # Ruff is the single Pyflakes lint/fix hook. Its safe fixes are not a
+  # one-for-one replacement for Autoflake's additional transformations.
   # The line length is so high because some of the evals are very long.
   # TODO: fix the evals and then reduce the line length here
   - repo: https://github.com/astral-sh/ruff-pre-commit
