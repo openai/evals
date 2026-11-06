@@ -1,5 +1,7 @@
-from unittest.mock import patch
+from pathlib import Path
+from unittest.mock import Mock, patch
 
+from evals.api import DummyCompletionFn
 from evals.elsuite.basic.match import Match
 
 
@@ -34,14 +36,17 @@ class CaptureCompletionFn:
 
 
 def make_match(*, random_few_shot: bool, num_few_shot: int = 2):
-    match = object.__new__(Match)
-    match.num_few_shot = num_few_shot
-    match.random_few_shot = random_few_shot
-    match.few_shot = [
-        {"sample": [{"role": "user", "content": f"few-{index}"}]}
-        for index in range(5)
-    ]
-    return match
+    rows = [{"sample": [{"role": "user", "content": f"few-{index}"}]} for index in range(5)]
+    with patch("evals.elsuite.basic.match.evals.get_jsonl", return_value=rows):
+        return Match(
+            completion_fns=[DummyCompletionFn()],
+            samples_jsonl="unused.jsonl",
+            num_few_shot=num_few_shot,
+            random_few_shot=random_few_shot,
+            few_shot_jsonl="few-shot.jsonl",
+            eval_registry_path=Path("."),
+            registry=Mock(),
+        )
 
 
 def test_default_selection_preserves_first_n_behavior():
@@ -96,3 +101,19 @@ def test_eval_sample_inserts_random_subset_before_final_user_message():
         ]
     ]
     record_match.assert_called_once()
+
+
+def test_real_seeded_selection_is_repeatable_without_mutating_source():
+    import copy
+    import random
+
+    match = make_match(random_few_shot=True)
+    original = copy.deepcopy(match.few_shot)
+    selections = set()
+    for seed in range(10):
+        first = match._select_few_shot(random.Random(seed))
+        assert first == match._select_few_shot(random.Random(seed))
+        assert len(first) == 2
+        selections.add(tuple(row["sample"][0]["content"] for row in first))
+    assert len(selections) > 1
+    assert match.few_shot == original
