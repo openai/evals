@@ -33,6 +33,91 @@ DEFAULT_PATHS = [
 ]
 SPEC_RESERVED_KEYWORDS = ["key", "group", "cls"]
 
+# Evals only has adapters for the legacy Completions and Chat Completions
+# endpoints. Keep endpoint selection capability-based instead of treating every
+# model returned by /v1/models as a legacy completion model.
+LEGACY_COMPLETION_MODEL_NAMES = {
+    "ada",
+    "babbage",
+    "babbage-002",
+    "curie",
+    "davinci",
+    "davinci-002",
+    "gpt-4-base",
+}
+LEGACY_COMPLETION_MODEL_PREFIXES = (
+    "text-ada-",
+    "text-babbage-",
+    "text-curie-",
+    "text-davinci-",
+    "code-davinci-",
+    "gpt-3.5-turbo-instruct",
+)
+
+# These families are documented as supporting Chat Completions. The explicit
+# grouping avoids accidentally routing specialised API models (realtime,
+# transcription, Responses-only, etc.) through an incompatible endpoint.
+CHAT_MODEL_PREFIXES = (
+    "gpt-3.5-turbo",
+    "gpt-4-",
+    "gpt-4o",
+    "gpt-4.1",
+    "gpt-4.5",
+    "gpt-5",
+    "o1",
+    "o3",
+    "o4",
+)
+CHAT_MODEL_NAMES = {
+    "chat-latest",
+    "gpt-4",
+    "gpt-4-32k",
+}
+
+# These model names can share a GPT/o-series prefix but are not plain text
+# Chat Completions models. Returning None makes Registry emit an actionable
+# error instead of silently falling back to /v1/completions.
+NON_CHAT_SPECIALISATION_MARKERS = (
+    "-codex",
+    "-deep-research",
+    "-pro",
+    "-realtime",
+    "-transcribe",
+    "-tts",
+)
+
+
+def _base_model_name(model_name: str) -> str:
+    """Return the base model portion used to route fine-tuned model IDs."""
+    if model_name.startswith("ft:"):
+        parts = model_name.split(":", 2)
+        if len(parts) >= 2 and parts[1]:
+            return parts[1]
+    return model_name
+
+
+def openai_model_endpoint(model_name: str) -> Optional[str]:
+    """Return the Evals endpoint adapter for a known OpenAI text model.
+
+    The return value is ``"chat"`` for Chat Completions models,
+    ``"completions"`` for legacy Completions models, and ``None`` when Evals
+    cannot safely infer a supported endpoint from the model name.
+    """
+    base_model_name = _base_model_name(model_name)
+
+    if base_model_name in LEGACY_COMPLETION_MODEL_NAMES or base_model_name.startswith(
+        LEGACY_COMPLETION_MODEL_PREFIXES
+    ):
+        return "completions"
+
+    if any(marker in base_model_name for marker in NON_CHAT_SPECIALISATION_MARKERS):
+        return None
+
+    if base_model_name in CHAT_MODEL_NAMES or base_model_name.startswith(CHAT_MODEL_PREFIXES):
+        return "chat"
+
+    return None
+
 
 def n_ctx_from_model_name(model_name: str) -> Optional[int]:
     """Returns n_ctx for a given API model name. Model list last updated 2023-10-24."""
@@ -81,19 +166,7 @@ def n_ctx_from_model_name(model_name: str) -> Optional[int]:
 
 
 def is_chat_model(model_name: str) -> bool:
-    if model_name in {"gpt-4-base"} or model_name.startswith("gpt-3.5-turbo-instruct"):
-        return False
-
-    CHAT_MODEL_NAMES = {"gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4", "gpt-4-32k"}
-
-    if model_name in CHAT_MODEL_NAMES:
-        return True
-
-    for model_prefix in {"gpt-3.5-turbo-", "gpt-4-"}:
-        if model_name.startswith(model_prefix):
-            return True
-
-    return False
+    return openai_model_endpoint(model_name) == "chat"
 
 
 T = TypeVar("T")
@@ -131,24 +204,35 @@ class Registry:
             return DummyCompletionFn()
 
         n_ctx = n_ctx_from_model_name(name)
+        endpoint = openai_model_endpoint(name)
 
-        if is_chat_model(name):
+        if endpoint == "chat":
             return OpenAIChatCompletionFn(model=name, n_ctx=n_ctx, **kwargs)
-        elif name in self.api_model_ids:
+        if endpoint == "completions":
             return OpenAICompletionFn(model=name, n_ctx=n_ctx, **kwargs)
 
-        # No match, so try to find a completion-fn-id in the registry
+        # Unknown model names may still be custom completion functions or solvers.
+        # Resolve those before consulting the OpenAI model list so custom registry
+        # entries do not require OpenAI credentials merely to be instantiated.
         spec = self.get_completion_fn(name) or self.get_solver(name)
-        if spec is None:
-            raise ValueError(f"Could not find CompletionFn/Solver in the registry with ID {name}")
-        if spec.args is None:
-            spec.args = {}
-        spec.args.update(kwargs)
+        if spec is not None:
+            if spec.args is None:
+                spec.args = {}
+            spec.args.update(kwargs)
 
-        spec.args["registry"] = self
-        instance = make_object(spec.cls)(**spec.args or {})
-        assert isinstance(instance, CompletionFn), f"{name} must be a CompletionFn"
-        return instance
+            spec.args["registry"] = self
+            instance = make_object(spec.cls)(**spec.args or {})
+            assert isinstance(instance, CompletionFn), f"{name} must be a CompletionFn"
+            return instance
+
+        if name in self.api_model_ids:
+            raise ValueError(
+                f"OpenAI model '{name}' is available, but Evals cannot safely infer a supported "
+                "endpoint for it. Register an explicit completion function for this model instead "
+                "of routing it through the legacy /v1/completions endpoint."
+            )
+
+        raise ValueError(f"Could not find CompletionFn/Solver in the registry with ID {name}")
 
     def get_class(self, spec: EvalSpec) -> Any:
         return make_object(spec.cls, **(spec.args if spec.args else {}))

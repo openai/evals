@@ -13,6 +13,19 @@ We include some example implementations inside `evals/completion_fns`. For examp
 oaieval langchain/llm/flan-t5-xl test-match
 ```
 
+### Using OpenAI model IDs directly
+
+OpenAI text model IDs can also be passed directly to `oaieval`:
+
+```
+oaieval gpt-4o-mini test-match
+oaieval o3-mini test-match
+```
+
+Evals routes model families that are known to support Chat Completions through the chat adapter, while older base/instruct models use the legacy Completions adapter. Fine-tuned model IDs such as `ft:gpt-4o-mini:...` are routed using their base model family.
+
+The OpenAI model list also contains specialised models that do not use either of those text endpoints. Evals does not guess an endpoint for an unrecognised or specialised API model. If a model is available to your account but Evals cannot determine a supported endpoint for it, register an explicit completion function for that model instead. This avoids accidentally sending a modern model to the legacy `/v1/completions` endpoint.
+
 ## Registering Completion Functions
 Once you have written a completion function, we need to make the class visible to the `oaieval` CLI. Similar to how we register our evals, we also register Completion Functions inside `evals/registry/completion_fns` as `yaml` files. Here is the registration for our langchain LLM completion function:
 ```yaml
