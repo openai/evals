@@ -26,6 +26,30 @@ class Match(evals.Eval):
             assert few_shot_jsonl is not None, "few shot requires few shot sample dataset"
             self.few_shot_jsonl = few_shot_jsonl
             self.few_shot = evals.get_jsonl(self._prefix_registry_path(self.few_shot_jsonl))
+            self._validate_few_shot_samples()
+
+    def _validate_few_shot_samples(self) -> None:
+        for index, row in enumerate(self.few_shot):
+            if not isinstance(row, dict) or "sample" not in row:
+                raise ValueError(
+                    f"Few-shot row {index} in {self.few_shot_jsonl!r} must be an object "
+                    "with a 'sample' key containing a chat prompt"
+                )
+            if not is_chat_prompt(row["sample"]):
+                raise ValueError(
+                    f"Few-shot row {index} in {self.few_shot_jsonl!r} has an invalid "
+                    "'sample'; expected a list of chat-message objects"
+                )
+            for message_index, message in enumerate(row["sample"]):
+                if (
+                    not isinstance(message.get("role"), str)
+                    or not message["role"].strip()
+                    or not isinstance(message.get("content"), str)
+                ):
+                    raise ValueError(
+                        f"Few-shot row {index} in {self.few_shot_jsonl!r}, message {message_index} "
+                        "must contain a nonempty string 'role' and a string 'content'"
+                    )
 
     def eval_sample(self, sample: Any, *_):
         assert isinstance(sample, dict), "sample must be a dict"
