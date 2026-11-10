@@ -10,14 +10,14 @@ def test_env_bool_preserves_default_when_unset(monkeypatch):
     assert _env_bool("EVALS_SHOW_EVAL_PROGRESS", False) is False
 
 
-@pytest.mark.parametrize("value", ["1", "true", "yes", "TRUE", " Yes "])
+@pytest.mark.parametrize("value", ["1", "true", "yes", "on", "TRUE", " Yes ", " ON "])
 def test_env_bool_accepts_true_like_values(monkeypatch, value):
     monkeypatch.setenv("EVALS_SHOW_EVAL_PROGRESS", value)
 
     assert _env_bool("EVALS_SHOW_EVAL_PROGRESS", False) is True
 
 
-@pytest.mark.parametrize("value", ["0", "false", "no", "FALSE", " No ", ""])
+@pytest.mark.parametrize("value", ["0", "false", "no", "off", "FALSE", " No ", " OFF ", ""])
 def test_env_bool_accepts_false_like_values(monkeypatch, value):
     monkeypatch.setenv("EVALS_SHOW_EVAL_PROGRESS", value)
 

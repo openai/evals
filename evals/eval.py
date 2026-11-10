@@ -32,7 +32,7 @@ def _env_bool(name: str, default: bool) -> bool:
     value = os.environ.get(name)
     if value is None:
         return default
-    return value.strip().lower() in {"1", "true", "yes"}
+    return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
 def _index_samples(samples: List[Any]) -> List[Tuple[Any, int]]:
