@@ -145,7 +145,7 @@ class Eval(abc.ABC):
                 return idx, self.eval_sample(sample, rng)
 
         with ThreadPool(threads) as pool:
-            if os.environ.get("EVALS_SEQUENTIAL", "0") in {"1", "true", "yes"}:
+            if _env_bool("EVALS_SEQUENTIAL", False):
                 logger.info("Running in sequential mode!")
                 iter = map(eval_sample, work_items)
             else:
@@ -234,7 +234,7 @@ class SolverEval(Eval):
                 return idx, self.eval_sample(per_sample_solver, sample, rng)
 
         with ThreadPool(threads) as pool:
-            if os.environ.get("EVALS_SEQUENTIAL", "0") in {"1", "true", "yes"}:
+            if _env_bool("EVALS_SEQUENTIAL", False):
                 logger.info("Running in sequential mode!")
                 iter = map(eval_sample, work_items)
             else:
@@ -247,11 +247,7 @@ class SolverEval(Eval):
                     idx_and_result.append(result)
             except KeyboardInterrupt:
                 # "Gentle interrupt" allows us to stop early and still get results
-                gentle_interrupt = os.environ.get("EVALS_GENTLE_INTERRUPT", "0") in {
-                    "1",
-                    "true",
-                    "yes",
-                }
+                gentle_interrupt = _env_bool("EVALS_GENTLE_INTERRUPT", False)
                 if gentle_interrupt:
                     logger.info("Evaluation stopped because of KeyboardInterrupt")
                     logger.info(
