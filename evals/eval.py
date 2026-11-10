@@ -27,6 +27,14 @@ SHUFFLE_SEED = 123
 _MAX_SAMPLES = None
 
 
+def _env_bool(name: str, default: bool) -> bool:
+    """Return a boolean environment flag while preserving the default when unset."""
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
 def _index_samples(samples: List[Any]) -> List[Tuple[Any, int]]:
     """Shuffle `samples` and pair each sample with its index."""
     indices = list(range(len(samples)))
@@ -122,7 +130,7 @@ class Eval(abc.ABC):
         """
         work_items = _index_samples(samples)
         threads = int(os.environ.get("EVALS_THREADS", "10"))
-        show_progress = bool(os.environ.get("EVALS_SHOW_EVAL_PROGRESS", show_progress))
+        show_progress = _env_bool("EVALS_SHOW_EVAL_PROGRESS", show_progress)
 
         def eval_sample(args):
             """
@@ -137,7 +145,7 @@ class Eval(abc.ABC):
                 return idx, self.eval_sample(sample, rng)
 
         with ThreadPool(threads) as pool:
-            if os.environ.get("EVALS_SEQUENTIAL", "0") in {"1", "true", "yes"}:
+            if _env_bool("EVALS_SEQUENTIAL", False):
                 logger.info("Running in sequential mode!")
                 iter = map(eval_sample, work_items)
             else:
@@ -209,7 +217,7 @@ class SolverEval(Eval):
         """
         work_items = _index_samples(samples)
         threads = int(os.environ.get("EVALS_THREADS", "10"))
-        show_progress = bool(os.environ.get("EVALS_SHOW_EVAL_PROGRESS", show_progress))
+        show_progress = _env_bool("EVALS_SHOW_EVAL_PROGRESS", show_progress)
 
         def eval_sample(args):
             """
@@ -226,7 +234,7 @@ class SolverEval(Eval):
                 return idx, self.eval_sample(per_sample_solver, sample, rng)
 
         with ThreadPool(threads) as pool:
-            if os.environ.get("EVALS_SEQUENTIAL", "0") in {"1", "true", "yes"}:
+            if _env_bool("EVALS_SEQUENTIAL", False):
                 logger.info("Running in sequential mode!")
                 iter = map(eval_sample, work_items)
             else:
@@ -239,11 +247,7 @@ class SolverEval(Eval):
                     idx_and_result.append(result)
             except KeyboardInterrupt:
                 # "Gentle interrupt" allows us to stop early and still get results
-                gentle_interrupt = os.environ.get("EVALS_GENTLE_INTERRUPT", "0") in {
-                    "1",
-                    "true",
-                    "yes",
-                }
+                gentle_interrupt = _env_bool("EVALS_GENTLE_INTERRUPT", False)
                 if gentle_interrupt:
                     logger.info("Evaluation stopped because of KeyboardInterrupt")
                     logger.info(
