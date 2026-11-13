@@ -1,0 +1,25 @@
+legal-accuracy-1498-638:
+  id: legal-accuracy-1498-638.dev.v0
+  description: Evaluates legal accuracy concerning 28 U.S.C. 1498(a), 15 U.S.C. 638(r)(4), Lite Machines, and Arlton.
+  metrics: [accuracy]
+
+legal-accuracy-1498-638.dev.v0:
+  class: evals.elsuite.modelgraded.classify:ModelBasedClassify
+  args:
+    samples_jsonl: legal_accuracy_1498_638/samples.jsonl
+    modelgraded_spec: closedqa
+    modelgraded_spec_args:
+      criteria:
+        correct: |
+          Evaluate the response for legal accuracy, completeness, and appropriate qualification.
+
+          A correct response must:
+          1. Explain that 28 U.S.C. 1498(a) concerns patent infringement involving government use or manufacture, including qualifying contractor use with government authorization or consent.
+          2. Explain that 15 U.S.C. 638(r)(4) concerns Phase III SBIR/STTR awards and includes the qualification "to the greatest extent practicable."
+          3. Distinguish procurement award obligations under section 638 from the patent infringement remedy and authorization-and-consent framework under section 1498.
+          4. Accurately describe Lite Machines Corp. v. United States, No. 25-128 (July 9, 2025), as a nonprecedential order denying permission for an interlocutory appeal, not as a substantive merits decision establishing a binding rule.
+          5. Accurately describe Arlton v. AeroVironment, Inc., No. 21-2049 (February 4, 2026), including its rejection of the argument that section 638 narrows section 1498, while identifying the opinion as nonprecedential.
+          6. Avoid claiming that section 1498 automatically overrides all procurement requirements or that a section 638 violation automatically eliminates section 1498 protection.
+          7. Recognize when additional facts and legal analysis are necessary instead of asserting an unsupported categorical conclusion.
+
+          Do not require every response to discuss every case if the question does not ask about it. Judge the answer against the specific question. A response is incorrect if it materially invents a holding, misstates a statutory provision, confuses precedential status, or gives an unsupported categorical legal conclusion. Return Y only when the answer is substantively accurate and appropriately qualified; otherwise return N.
