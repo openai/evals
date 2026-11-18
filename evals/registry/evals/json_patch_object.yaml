@@ -1,9 +1,14 @@
 json_patch_object:
-  id: json_patch_object.dev.v0
-  description: Test the model's ability to create minimal, correct JSON Patches for nested objects.
+  id: json_patch_object.dev.v1
+  description: Generate a single JSON Patch operation targeting the changed member in a nested object.
   metrics: [accuracy]
 
 json_patch_object.dev.v0:
   class: evals.elsuite.basic.includes:Includes
   args:
     samples_jsonl: json_patch_object/samples.jsonl
+
+json_patch_object.dev.v1:
+  class: evals.elsuite.basic.json_match:JsonMatch
+  args:
+    samples_jsonl: json_patch_object/samples.v1.jsonl
