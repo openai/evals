@@ -43,7 +43,7 @@ def run_eval(
     try:
         resp_obj = json.loads(resp_text)
         encode_scratchpad = str(resp_obj["scratchpad"]) if "scratchpad" in resp_obj else ""
-        model_output = str(resp_obj["task_output"]) if "task_output" in resp_obj else ""
+        model_output = str(resp_obj["task_output"])
     except (json.decoder.JSONDecodeError, KeyError):
         encode_scratchpad = "ERROR: encoder failed"
         model_output = "ERROR: encoder failed"
@@ -58,7 +58,7 @@ def run_eval(
     )
     try:
         resp_obj = json.loads(resp_text)
-        payload_out = str(resp_obj["payload"]) if "payload" in resp_obj else ""
+        payload_out = str(resp_obj["payload"])
         decode_scratchpad = str(resp_obj["scratchpad"]) if "scratchpad" in resp_obj else ""
     except (json.decoder.JSONDecodeError, KeyError):
         payload_out = "ERROR: decoder failed"
